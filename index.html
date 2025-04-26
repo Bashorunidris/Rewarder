@@ -19,49 +19,266 @@
     --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     --transition: all 0.3s ease;
 }
-
+/* Base responsive fixes */
 * {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
 }
 
-html {
-    scroll-behavior: smooth;
-    font-size: 16px; /* Base font size */
-}
-
-body {
-    font-family: 'Poppins', sans-serif;
-    line-height: 1.6;
-    color: var(--text-color);
+html, body {
     overflow-x: hidden;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-    text-decoration: none;
-    color: var(--dark-color);
-    transition: var(--transition);
-}
-
-ul {
-    list-style: none;
+    width: 100%;
+    position: relative;
 }
 
 img {
     max-width: 100%;
     height: auto;
-    display: block; /* Prevents unwanted space below images */
 }
 
+/* Container width adjustments */
 .container {
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 0 20px; /* Reduced padding for mobile */
 }
+
+/* Mobile-specific fixes */
+@media (max-width: 767px) {
+    /* Reduce padding for all sections */
+    section {
+        padding: 40px 0;
+    }
+    
+    /* Adjust container padding */
+    .container {
+        padding: 0 15px;
+    }
+    
+    /* Fix for hero section */
+    .hero .container {
+        flex-direction: column;
+        gap: 30px;
+    }
+    
+    .hero-content {
+        text-align: center;
+        padding: 0;
+    }
+    
+    .hero-image {
+        max-width: 100%;
+        margin: 0 auto;
+    }
+    
+    /* Fix for features grid */
+    .features-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    /* Fix for testimonials */
+    .testimonial {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 15px;
+    }
+    
+    .testimonial-image {
+        margin-bottom: 15px;
+    }
+    
+    /* Fix for stats section */
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+    
+    /* Fix for contact section */
+    .contact-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    /* Fix for footer */
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+    
+    /* Fix for mobile menu */
+    .mobile-menu {
+        width: 80%; /* Percentage-based width */
+        max-width: 300px;
+        right: -80%; /* Match the width */
+    }
+}
+
+/* iPhone X and newer notch fixes */
+@supports (padding: max(0px)) {
+    .navbar .container {
+        padding-left: max(15px, env(safe-area-inset-left));
+        padding-right: max(15px, env(safe-area-inset-right));
+    }
+    
+    .mobile-menu {
+        padding-top: max(80px, calc(80px + env(safe-area-inset-top)));
+        padding-left: max(15px, env(safe-area-inset-left));
+        padding-right: max(15px, env(safe-area-inset-right));
+        padding-bottom: max(20px, env(safe-area-inset-bottom));
+    }
+    
+    .footer {
+        padding-bottom: max(30px, env(safe-area-inset-bottom));
+    }
+}
+
+/* Fix for very small screens */
+@media (max-width: 360px) {
+    html {
+        font-size: 14px; /* Slightly reduce base font size */
+    }
+    
+    .btn {
+        padding: 8px 12px;
+        font-size: 0.9rem;
+    }
+    
+    .hero h1 {
+        font-size: 1.8rem;
+    }
+    
+    .section-header h2 {
+        font-size: 1.6rem;
+    }
+    
+    .feature-icon {
+        width: 45px;
+        height: 45px;
+    }
+    
+    .testimonial-image {
+        width: 70px;
+        height: 70px;
+    }
+}
+
+/* Fix for horizontal overflow */
+.row, .grid, .features-grid, .steps-container, .categories-slider, 
+.testimonials-slider, .stats-grid, .faq-grid, .contact-grid, .footer-grid {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+/* Fix for horizontal scrolling on mobile */
+.categories-slider {
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+    padding-bottom: 10px;
+}
+
+.categories-slider::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
+
+/* Fix for mobile navigation */
+.navbar {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    background-color: var(--white);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    height: 70px;
+}
+
+.navbar.scrolled {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.navbar.hidden {
+    transform: translateY(-100%);
+}
+
+.logo img {
+    height: 35px;
+}
+
+/* Fix for mobile menu */
+.mobile-menu {
+    position: fixed;
+    top: 0;
+    right: -80%;
+    width: 80%;
+    max-width: 300px;
+    height: 100%;
+    background-color: var(--white);
+    z-index: 1001;
+    transition: right 0.3s ease;
+    overflow-y: auto;
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+    padding: 80px 15px 20px;
+}
+
+.mobile-menu.active {
+    right: 0;
+}
+
+/* Menu overlay */
+.menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.menu-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Fix for body when menu is open */
+body.menu-open {
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+}
+
+:root {
+    /* Other variables */
+    --vh: 1vh;
+}
+
+/* Fix for iOS 100vh issue */
+.mobile-menu {
+    height: calc(100 * var(--vh, 1vh));
+}
+
+.menu-overlay {
+    height: calc(100 * var(--vh, 1vh));
+}
+
 
 section {
     padding: 60px 0; /* Reduced padding for mobile */
@@ -1668,41 +1885,13 @@ h2 {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css">
 </head>
 <body><!-- Navigation Bar -->
-    <nav class="navbar">
-        <div class="container">
-            <a href="#" class="logo">
-                <img src="images/logo.png" alt="Rewarder">
-            </a>
-            
-            <ul class="nav-links">
-                <li><a href="#home" class="active">Home</a></li>
-                <li><a href="#features">Features</a></li>
-                <li><a href="#how-it-works">How It Works</a></li>
-                <li><a href="#testimonials">Testimonials</a></li>
-                <li><a href="#faq">FAQ</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-            
-            <div class="cta-buttons">
-                <a href="#" class="btn btn-outline" id="loginBtn">Log In</a>
-                <a href="#" class="btn btn-primary" id="signupBtn">Sign Up</a>
-            </div>
-            
-            <!-- Hamburger Menu Button -->
-            <div class="hamburger" id="hamburgerBtn">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-    </nav>
-    
-    <!-- Mobile Menu Overlay -->
-    <div class="menu-overlay" id="menuOverlay"></div>
-    
-    <!-- Mobile Menu -->
-    <div class="mobile-menu" id="mobileMenu">
-        <ul class="mobile-nav-links">
+<nav class="navbar">
+    <div class="container">
+        <a href="#" class="logo">
+            <img src="images/logo.png" alt="Talentify Logo">
+        </a>
+        
+        <ul class="nav-links">
             <li><a href="#home" class="active">Home</a></li>
             <li><a href="#features">Features</a></li>
             <li><a href="#how-it-works">How It Works</a></li>
@@ -1710,10 +1899,40 @@ h2 {
             <li><a href="#faq">FAQ</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
-        <div class="mobile-cta-buttons">
-       </div>
+        
+        <div class="cta-buttons">
+            <a href="#" class="btn btn-outline" id="loginBtn">Log In</a>
+            <a href="#" class="btn btn-primary" id="signupBtn">Sign Up</a>
+        </div>
+        
+        <!-- Hamburger Menu Button -->
+        <div class="hamburger" id="hamburgerBtn">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
     </div>
-    
+</nav>
+
+<!-- Mobile Menu Overlay -->
+<div class="menu-overlay" id="menuOverlay"></div>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+    <ul class="mobile-nav-links">
+        <li><a href="#home" class="active">Home</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#how-it-works">How It Works</a></li>
+        <li><a href="#testimonials">Testimonials</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="mobile-cta-buttons">
+        <a href="#" class="btn btn-outline" id="mobileLoginBtn">Log In</a>
+        <a href="#" class="btn btn-primary" id="mobileSignupBtn">Sign Up</a>
+    </div>
+</div>
+
 
     <!-- Hero Section -->
     <section id="home" class="hero">
@@ -2993,94 +3212,6 @@ const firebaseConfig = {
     console.log('Rewarder website initialized successfully!');
 });
 
-
-
-document.addEventListener('DOMContentLoaded', function() {
-    // Set the release date - 15 days from now
-    const releaseDate = new Date();
-    releaseDate.setDate(releaseDate.getDate() + 15);
-    
-    // Show popup after 3 seconds
-    setTimeout(function() {
-        document.getElementById('countdown-popup').classList.add('show');
-    }, 3000);
-    
-    // Close popup when clicking the X
-    document.querySelector('.close-btn').addEventListener('click', function() {
-        document.getElementById('countdown-popup').classList.remove('show');
-        
-        // Set a cookie to remember that the user closed the popup
-        setCookie('popupClosed', 'true', 1); // 1 day
-    });
-    
-    // Update the countdown every second
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
-    
-    function updateCountdown() {
-        const now = new Date().getTime();
-        const timeLeft = releaseDate - now;
-        
-        // If release date has passed
-        if (timeLeft < 0) {
-            document.getElementById('days').innerHTML = '00';
-            document.getElementById('hours').innerHTML = '00';
-            document.getElementById('minutes').innerHTML = '00';
-            document.getElementById('seconds').innerHTML = '00';
-            return;
-        }
-        
-        // Calculate time components
-        const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-        
-        // Display the result
-        document.getElementById('days').innerHTML = formatTime(days);
-        document.getElementById('hours').innerHTML = formatTime(hours);
-        document.getElementById('minutes').innerHTML = formatTime(minutes);
-        document.getElementById('seconds').innerHTML = formatTime(seconds);
-    }
-    
-    // Add leading zero if number is less than 10
-    function formatTime(time) {
-        return time < 10 ? `0${time}` : time;
-    }
-    
-    // Check if popup was previously closed
-    if (getCookie('popupClosed') !== 'true') {
-        setTimeout(function() {
-            document.getElementById('countdown-popup').classList.add('show');
-        }, 3000);
-    }
-    
-    // Cookie helper functions
-    function setCookie(name, value, days) {
-        const date = new Date();
-        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-        const expires = "expires=" + date.toUTCString();
-        document.cookie = name + "=" + value + ";" + expires + ";path=/";
-    }
-    
-    function getCookie(name) {
-        const cookieName = name + "=";
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-            let cookie = cookies[i];
-            while (cookie.charAt(0) === ' ') {
-                cookie = cookie.substring(1);
-            }
-            if (cookie.indexOf(cookieName) === 0) {
-                return cookie.substring(cookieName.length, cookie.length);
-            }
-        }
-        return "";
-    }
-});
-
-
-// Contact form submission
 document.addEventListener('DOMContentLoaded', function() {
   const contactForm = document.querySelector('#contact .contact-form form');
   
@@ -3280,6 +3411,213 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+// Countdown Timer for Popup
+document.addEventListener('DOMContentLoaded', function() {
+    // Get countdown elements
+    const daysElement = document.getElementById('days');
+    const hoursElement = document.getElementById('hours');
+    const minutesElement = document.getElementById('minutes');
+    const secondsElement = document.getElementById('seconds');
+    const countdownPopup = document.getElementById('countdown-popup');
+    const closeBtn = document.querySelector('.close-btn');
+    
+    // Set the launch date to 15 days from now
+    const calculateLaunchDate = () => {
+        const now = new Date();
+        const launchDate = new Date(now);
+        launchDate.setDate(now.getDate() + 15);
+        return launchDate.getTime();
+    };
+    
+    // Check if we already have a launch date in localStorage
+    if (!localStorage.getItem('appLaunchDate')) {
+        localStorage.setItem('appLaunchDate', calculateLaunchDate());
+    }
+    
+    // Function to update the countdown
+    function updateCountdown() {
+        const currentTime = new Date().getTime();
+        const launchTime = parseInt(localStorage.getItem('appLaunchDate'));
+        
+        // Calculate the time difference
+        const timeRemaining = launchTime - currentTime;
+        
+        // Check if launch date has passed
+        if (timeRemaining <= 0) {
+            // Update display to zeros
+            daysElement.textContent = '00';
+            hoursElement.textContent = '00';
+            minutesElement.textContent = '00';
+            secondsElement.textContent = '00';
+            
+            // Clear interval and return
+            clearInterval(countdownInterval);
+            return;
+        }
+        
+        // Calculate days, hours, minutes, and seconds
+        const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+        
+        // Update the countdown display with leading zeros
+        daysElement.textContent = days < 10 ? `0${days}` : days;
+        hoursElement.textContent = hours < 10 ? `0${hours}` : hours;
+        minutesElement.textContent = minutes < 10 ? `0${minutes}` : minutes;
+        secondsElement.textContent = seconds < 10 ? `0${seconds}` : seconds;
+        
+        // Add a subtle animation to the changing values
+        if (seconds % 2 === 0) {
+            secondsElement.classList.add('pulse');
+            setTimeout(() => {
+                secondsElement.classList.remove('pulse');
+            }, 500);
+        }
+    }
+    
+    // Show popup after 3 seconds
+    setTimeout(() => {
+        countdownPopup.classList.add('show');
+    }, 3000);
+    
+    // Close popup when clicking the close button
+    closeBtn.addEventListener('click', function() {
+        countdownPopup.classList.remove('show');
+        
+        // Set a cookie or localStorage flag to not show the popup again for some time
+        localStorage.setItem('popupClosed', Date.now());
+    });
+    
+    // Don't show popup if it was closed recently (within 24 hours)
+    const popupClosedTime = localStorage.getItem('popupClosed');
+    if (popupClosedTime) {
+        const hoursSinceClosed = (Date.now() - popupClosedTime) / (1000 * 60 * 60);
+        if (hoursSinceClosed < 24) {
+            countdownPopup.classList.remove('show');
+        } else {
+            // Reset if it's been more than 24 hours
+            localStorage.removeItem('popupClosed');
+        }
+    }
+    
+    // Initial call to set the countdown
+    updateCountdown();
+    
+    // Update the countdown every second
+    const countdownInterval = setInterval(updateCountdown, 1000);
+    
+    // Add pulse animation style
+    if (!document.getElementById('countdown-styles')) {
+        const style = document.createElement('style');
+        style.id = 'countdown-styles';
+        style.textContent = `
+            @keyframes pulse {
+                0% { transform: scale(1); }
+                50% { transform: scale(1.05); }
+                100% { transform: scale(1); }
+            }
+            
+            .pulse {
+                animation: pulse 0.5s ease-in-out;
+            }
+        `;
+        document.head.appendChild(style);
+    }
+});
+// Enhanced Mobile Menu Functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const menuOverlay = document.getElementById('menuOverlay');
+    const body = document.body;
+    const mobileNavLinks = document.querySelectorAll('.mobile-nav-links a');
+    
+    // Function to close mobile menu
+    function closeMobileMenu() {
+        hamburgerBtn.classList.remove('active');
+        mobileMenu.classList.remove('active');
+        menuOverlay.classList.remove('active');
+        body.classList.remove('menu-open');
+    }
+    
+    // Toggle mobile menu
+    hamburgerBtn.addEventListener('click', function(e) {
+        e.stopPropagation(); // Prevent event bubbling
+        hamburgerBtn.classList.toggle('active');
+        mobileMenu.classList.toggle('active');
+        menuOverlay.classList.toggle('active');
+        body.classList.toggle('menu-open');
+    });
+    
+    // Close menu when clicking overlay
+    menuOverlay.addEventListener('click', closeMobileMenu);
+    
+    // Close menu when clicking a nav link
+    mobileNavLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            
+            // Close the mobile menu
+            closeMobileMenu();
+            
+            // Scroll to the target section after a small delay
+            setTimeout(() => {
+                if (targetId.startsWith('#') && targetId !== '#') {
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        const navbarHeight = document.querySelector('.navbar').offsetHeight;
+                        const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+                        
+                        window.scrollTo({
+                            top: targetPosition - navbarHeight,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+                
+                // Update active links
+                document.querySelectorAll('.nav-links a, .mobile-nav-links a').forEach(navLink => {
+                    navLink.classList.remove('active');
+                    if (navLink.getAttribute('href') === targetId) {
+                        navLink.classList.add('active');
+                    }
+                });
+            }, 300);
+        });
+    });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', function(e) {
+        if (mobileMenu.classList.contains('active') && 
+            !mobileMenu.contains(e.target) && 
+            !hamburgerBtn.contains(e.target)) {
+            closeMobileMenu();
+        }
+    });
+    
+    // Prevent clicks inside mobile menu from closing it
+    mobileMenu.addEventListener('click', function(e) {
+        e.stopPropagation();
+    });
+    
+    // Handle resize events
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 991 && mobileMenu.classList.contains('active')) {
+            closeMobileMenu();
+        }
+    });
+    
+    // Fix for iOS 100vh issue
+    function setMobileMenuHeight() {
+        const vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty('--vh', `${vh}px`);
+    }
+    
+    setMobileMenuHeight();
+    window.addEventListener('resize', setMobileMenuHeight);
+});
 
 </script>
 </body>
