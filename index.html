@@ -1,0 +1,3181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rewarder - Showcase Your Talent & Win Cash</title>
+    <style>
+    
+
+/* Base Styles */
+:root {
+    --primary-color: #D0A933;
+    --secondary-color: #333148;
+    --dark-color: #333333;
+    --light-color: #f8f9fa;
+    --text-color: #4a4a4a;
+    --white: #ffffff;
+    --gray: #6c757d;
+    --light-gray: #e9ecef;
+    --border-radius: 8px;
+    --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    overflow-x: hidden;
+}
+
+a {
+    text-decoration: none;
+    color: var(--dark-color);
+    transition: var(--transition);
+}
+
+ul {
+    list-style: none;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+section {
+    padding: 80px 0;
+    position: relative;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.section-header h2 {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    color: var(--dark-color);
+}
+
+.section-header p {
+    font-size: 1.1rem;
+    color: var(--gray);
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    padding: 12px 24px;
+    border-radius: var(--border-radius);
+    font-weight: 600;
+    text-align: center;
+    cursor: pointer;
+    transition: var(--transition);
+    border: none;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+
+.btn-primary:hover {
+    background-color: #5a52d5;
+    transform: translateY(-3px);
+}
+
+.btn-secondary {
+    background-color: var(--secondary-color);
+    color: var(--white);
+}
+
+.btn-secondary:hover {
+    background-color: #ff5252;
+    transform: translateY(-3px);
+}
+
+.btn-outline {
+    background-color: transparent;
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+}
+
+.btn-outline:hover {
+    background-color: var(--primary-color);
+    color: var(--white);
+    transform: translateY(-3px);
+}
+
+.btn-large {
+    padding: 14px 30px;
+    font-size: 1.1rem;
+}
+
+/* Navigation */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: var(--white);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: var(--transition);
+}
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+}
+
+.logo img {
+    height: 40px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 25px;
+}
+
+.nav-links a {
+    font-weight: 500;
+    position: relative;
+}
+
+.nav-links a:hover {
+    color: var(--primary-color);
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--primary-color);
+    transition: var(--transition);
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+.cta-buttons {
+    display: flex;
+    gap: 15px;
+}
+
+.hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.hamburger span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background-color: var(--dark-color);
+    margin-bottom: 5px;
+    border-radius: 3px;
+    transition: var(--transition);
+}
+
+/* Hero Section */
+.hero {
+    padding-top: 150px;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.hero .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+}
+
+.hero-content {
+    flex: 1;
+}
+
+.hero-content h1 {
+    font-size: 3.5rem;
+    line-height: 1.2;
+    margin-bottom: 20px;
+    color: var(--dark-color);
+}
+
+.hero-content p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    color: var(--gray);
+}
+
+.hero-cta {
+    display: flex;
+    gap: 15px;
+}
+
+.hero-image {
+    flex: 1;
+    position: relative;
+}
+
+.floating-element {
+    position: absolute;
+    background-color: var(--white);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--box-shadow);
+    animation: float 3s ease-in-out infinite;
+}
+
+.floating-1 {
+    top: 10%;
+    left: 0;
+    width: 60px;
+    height: 60px;
+    color: var(--primary-color);
+    animation-delay: 0s;
+}
+
+.floating-2 {
+    top: 40%;
+    right: 5%;
+    width: 50px;
+    height: 50px;
+    color: var(--secondary-color);
+    animation-delay: 0.5s;
+}
+
+.floating-3 {
+    bottom: 15%;
+    left: 10%;
+    width: 45px;
+    height: 45px;
+    color: #ffc107;
+    animation-delay: 1s;
+}
+
+.floating-4, .floating-5 {
+    width: 55px;
+    height: 55px;
+}
+
+.floating-4 {
+    top: 15%;
+    right: 10%;
+    color: var(--secondary-color);
+    animation-delay: 0.3s;
+}
+
+.floating-5 {
+    bottom: 20%;
+    left: 5%;
+    color: var(--primary-color);
+    animation-delay: 0.8s;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-15px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+.wave-divider {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    line-height: 0;
+}
+
+/* Features Section */
+.features {
+    background-color: var(--white);
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+}
+
+.feature-card {
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    padding: 30px;
+    box-shadow: var(--box-shadow);
+    transition: var(--transition);
+    text-align: center;
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+}
+
+.feature-icon {
+    width: 70px;
+    height: 70px;
+    background-color: rgba(108, 99, 255, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    color: var(--primary-color);
+    font-size: 1.8rem;
+}
+
+.feature-card h3 {
+    margin-bottom: 15px;
+    color: var(--dark-color);
+}
+
+/* How It Works Section */
+.how-it-works {
+    background-color: var(--light-color);
+}
+
+.steps {
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+}
+
+.step {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.step-number {
+    width: 60px;
+    height: 60px;
+    background-color: var(--primary-color);
+    color: var(--white);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.step-content {
+    flex: 1;
+}
+
+.step-content h3 {
+    margin-bottom: 10px;
+    color: var(--dark-color);
+}
+
+.step-image {
+    flex: 1;
+    max-width: 300px;
+    box-shadow: var(--box-shadow);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+}
+
+/* Events Categories Section */
+.events {
+    background-color: var(--white);
+}
+
+.categories-slider {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    padding: 20px 0;
+    scroll-behavior: smooth;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.categories-slider::-webkit-scrollbar {
+    display: none;
+}
+
+.category {
+    min-width: 280px;
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    overflow: hidden;
+    transition: var(--transition);
+}
+
+.category:hover {
+    transform: translateY(-10px);
+}
+
+.category-image {
+    height: 180px;
+    overflow: hidden;
+}
+
+.category-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--transition);
+}
+
+.category:hover .category-image img {
+    transform: scale(1.1);
+}
+
+.category h3 {
+    padding: 15px 20px 5px;
+    color: var(--dark-color);
+}
+
+.category p {
+    padding: 0 20px 20px;
+    color: var(--gray);
+}
+
+.categories-nav {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.prev-btn, .next-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--white);
+    border: 1px solid var(--light-gray);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.prev-btn:hover, .next-btn:hover {
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+
+/* Testimonials Section */
+.testimonials {
+    background-color: var(--light-color);
+    position: relative;
+}
+
+.testimonials-slider {
+    display: flex;
+    gap: 30px;
+    overflow-x: hidden;
+}
+
+.testimonial {
+    min-width: 100%;
+    display: flex;
+    gap: 30px;
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    padding: 30px;
+    box-shadow: var(--box-shadow);
+}
+
+.testimonial-image {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.testimonial-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.testimonial-content {
+    flex: 1;
+}
+
+.stars {
+    color: #ffc107;
+    margin-bottom: 15px;
+}
+
+.testimonial-content p {
+    font-style: italic;
+    margin-bottom: 20px;
+}
+
+.testimonial-content h4 {
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.testimonial-content span {
+    color: var(--gray);
+}
+
+.testimonials-nav {
+    position: absolute;
+    bottom: 30px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+/* Stats Section */
+.stats {
+    background-color: var(--primary-color);
+    color: var(--white);
+    padding: 60px 0;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 30px;
+    text-align: center;
+}
+
+.stat-number {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.stat-label {
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+/* FAQ Section */
+.faq {
+    background-color: var(--white);
+}
+
+.faq-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+    gap: 20px;
+}
+
+.faq-item {
+    border: 1px solid var(--light-gray);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+}
+
+.faq-question {
+    padding: 20px;
+    background-color: var(--white);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.faq-question h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.toggle-icon {
+    color: var(--primary-color);
+    transition: var(--transition);
+}
+
+.faq-answer {
+    .faq-answer {
+    padding: 0 20px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.faq-item.active .faq-answer {
+    padding: 0 20px 20px;
+    max-height: 200px;
+}
+
+.faq-item.active .toggle-icon {
+    transform: rotate(45deg);
+}
+
+/* Download App Section */
+.download {
+    background: linear-gradient(135deg, #6c63ff 0%, #5a52d5 100%);
+    color: var(--white);
+}
+
+.download .container {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.download-content {
+    flex: 1;
+}
+
+.download-content h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+.download-content p {
+    margin-bottom: 30px;
+    opacity: 0.9;
+}
+
+.app-buttons {
+    display: flex;
+    gap: 15px;
+}
+
+.app-button img {
+    height: 50px;
+}
+
+.download-image {
+    flex: 1;
+    position: relative;
+}
+
+/* Contact Section */
+.contact {
+    background-color: var(--light-color);
+}
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+}
+
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.contact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+}
+
+.contact-icon {
+    width: 50px;
+    height: 50px;
+    background-color: var(--primary-color);
+    color: var(--white);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.contact-details h3 {
+    margin-bottom: 5px;
+}
+
+.social-links {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.social-links a {
+    width: 40px;
+    height: 40px;
+    background-color: var(--primary-color);
+    color: var(--white);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+}
+
+.social-links a:hover {
+    transform: translateY(-5px);
+    background-color: var(--secondary-color);
+}
+
+.contact-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid var(--light-gray);
+    border-radius: var(--border-radius);
+    font-family: inherit;
+    font-size: 1rem;
+    transition: var(--transition);
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+/* Footer */
+.footer {
+    background-color: var(--dark-color);
+    color: var(--white);
+    padding: 80px 0 30px;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 40px;
+    margin-bottom: 50px;
+}
+
+.footer-logo img {
+    height: 40px;
+    margin-bottom: 15px;
+}
+
+.footer-logo p {
+    opacity: 0.8;
+}
+
+.footer-links h3 {
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+}
+
+.footer-links ul {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.footer-links a {
+    color: var(--white);
+    opacity: 0.8;
+    transition: var(--transition);
+}
+
+.footer-links a:hover {
+    opacity: 1;
+    color: var(--primary-color);
+}
+
+.footer-newsletter h3 {
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+}
+
+.footer-newsletter p {
+    margin-bottom: 15px;
+    opacity: 0.8;
+}
+
+.footer-newsletter form {
+    display: flex;
+    gap: 10px;
+}
+
+.footer-newsletter input {
+    flex: 1;
+    padding: 10px 15px;
+    border: none;
+    border-radius: var(--border-radius);
+    font-family: inherit;
+}
+
+.footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 30px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-bottom p {
+    opacity: 0.7;
+}
+
+.footer-social {
+    display: flex;
+    gap: 15px;
+}
+
+.footer-social a {
+    color: var(--white);
+    opacity: 0.7;
+    transition: var(--transition);
+}
+
+.footer-social a:hover {
+    opacity: 1;
+    color: var(--primary-color);
+}
+
+/* Back to Top Button */
+.back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background-color: var(--primary-color);
+    color: var(--white);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    box-shadow: var(--box-shadow);
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--transition);
+    z-index: 999;
+}
+
+.back-to-top.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.back-to-top:hover {
+    background-color: var(--secondary-color);
+    transform: translateY(-5px);
+}
+
+/* Responsive Styles */
+@media (max-width: 1024px) {
+    .hero-content h1 {
+        font-size: 3rem;
+    }
+    
+    .step {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .step-image {
+        max-width: 100%;
+    }
+    
+    .download .container {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .app-buttons {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar .container {
+        padding: 15px;
+    }
+    
+    .nav-links, .cta-buttons {
+        display: none;
+    }
+    
+    .hamburger {
+        display: flex;
+    }
+    
+    .hero .container {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .hero-content h1 {
+        font-size: 2.5rem;
+    }
+    
+    .hero-cta {
+        justify-content: center;
+    }
+    
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .contact-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .faq-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .testimonial {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    
+    .footer-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    
+    .footer-links ul {
+        align-items: center;
+    }
+    
+    .footer-newsletter form {
+        flex-direction: column;
+    }
+    
+    .footer-bottom {
+        flex-direction: column;
+        gap: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .section-header h2 {
+        font-size: 2rem;
+    }
+    
+    .hero-content h1 {
+        font-size: 2rem;
+    }
+    
+    .hero-cta {
+        flex-direction: column;
+    }
+    
+    .app-buttons {
+        flex-direction: column;
+    }
+}
+
+
+.signup-icon {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  background-image: url('images/signup-icon.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+    
+</style>
+
+
+<style>
+/* Contact Section */
+.contact {
+    padding: 80px 0;
+    background-color: #f9f9f9;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.section-header h2 {
+    font-size: 36px;
+    margin-bottom: 15px;
+    color: #333;
+    font-weight: 700;
+}
+
+.section-header p {
+    font-size: 18px;
+    color: #666;
+}
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+}
+
+.contact-info {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.contact-icon {
+    width: 50px;
+    height: 50px;
+    background-color: #5c6bc0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+}
+
+.contact-icon i {
+    color: #fff;
+    font-size: 20px;
+}
+
+.contact-details h3 {
+    font-size: 18px;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.contact-details p {
+    font-size: 16px;
+    color: #666;
+}
+
+.social-links {
+    display: flex;
+    margin-top: 30px;
+}
+
+.social-links a {
+    width: 40px;
+    height: 40px;
+    background-color: #5c6bc0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+    color: #fff;
+    transition: all 0.3s ease;
+}
+
+.social-links a:hover {
+    background-color: #3f51b5;
+    transform: translateY(-3px);
+}
+
+.contact-form {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: #5c6bc0;
+    outline: none;
+}
+
+.btn-primary {
+    background-color: #5c6bc0;
+    color: #fff;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #3f51b5;
+    transform: translateY(-3px);
+}
+
+/* Footer */
+.footer {
+    background-color: #222;
+    color: #fff;
+    padding: 70px 0 20px;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+    margin-bottom: 50px;
+}
+
+.footer-logo img {
+    height: 50px;
+    margin-bottom: 15px;
+}
+
+.footer-logo p {
+    font-size: 16px;
+    color: #bbb;
+    margin-bottom: 20px;
+}
+
+.footer-links h3 {
+    font-size: 18px;
+    margin-bottom: 20px;
+    color: #fff;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.footer-links h3:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 40px;
+    height: 2px;
+    background-color: #5c6bc0;
+}
+
+.footer-links ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-links ul li {
+    margin-bottom: 10px;
+}
+
+.footer-links ul li a {
+    color: #bbb;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-links ul li a:hover {
+    color: #5c6bc0;
+}
+
+.footer-newsletter h3 {
+    font-size: 18px;
+    margin-bottom: 20px;
+    color: #fff;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.footer-newsletter h3:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 40px;
+    height: 2px;
+    background-color: #5c6bc0;
+}
+
+.footer-newsletter p {
+    font-size: 16px;
+    color: #bbb;
+    margin-bottom: 20px;
+}
+
+.footer-newsletter form {
+    display: flex;
+}
+
+.footer-newsletter input {
+    flex: 1;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px 0 0 5px;
+    font-size: 14px;
+}
+
+.footer-newsletter button {
+    border-radius: 0 5px 5px 0;
+    padding: 10px 15px;
+}
+
+.footer-bottom {
+    border-top: 1px solid #444;
+    padding-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-bottom p {
+    font-size: 14px;
+    color: #bbb;
+}
+
+.footer-social {
+    display: flex;
+}
+
+.footer-social a {
+    width: 35px;
+    height: 35px;
+    background-color: #333;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 10px;
+    color: #fff;
+    transition: all 0.3s ease;
+}
+
+.footer-social a:hover {
+    background-color: #5c6bc0;
+    transform: translateY(-3px);
+}
+
+/* Back to Top Button */
+.back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background-color: #5c6bc0;
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 999;
+}
+
+.back-to-top.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.back-to-top:hover {
+    background-color: #3f51b5;
+    transform: translateY(-3px);
+}
+
+/* Responsive Styles */
+@media (max-width: 992px) {
+    .contact-grid,
+    .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .contact-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .footer-social {
+        margin-top: 15px;
+    }
+}
+
+@media (max-width: 576px) {
+    .footer-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .footer-newsletter form {
+        flex-direction: column;
+    }
+    
+    .footer-newsletter input {
+        border-radius: 5px;
+        margin-bottom: 10px;
+    }
+    
+    .footer-newsletter button {
+        border-radius: 5px;
+    }
+}
+
+    </style>
+
+
+<style>
+
+/* Popup Styles */
+.popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.popup.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.popup-content {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 500px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+}
+
+.popup.show .popup-content {
+    transform: translateY(0);
+}
+
+.close-btn, .close-modal {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #888;
+    transition: color 0.2s;
+}
+
+.close-btn:hover, .close-modal:hover {
+    color: #333;
+}
+
+h2 {
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 24px;
+}
+
+.countdown-timer {
+    display: flex;
+    justify-content: space-between;
+    margin: 30px 0;
+}
+
+.time-section {
+    flex: 1;
+    margin: 0 5px;
+}
+
+.time-value {
+    font-size: 36px;
+    font-weight: bold;
+    color: #2c3e50;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    padding: 10px 0;
+    margin-bottom: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.time-label {
+    font-size: 14px;
+    color: #7f8c8d;
+}
+
+.cta-section {
+    margin-top: 20px;
+}
+
+.cta-section p {
+    margin-bottom: 15px;
+    color: #555;
+}
+
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s;
+    flex: 1;
+}
+
+button:hover {
+    background-color: #2980b9;
+}
+
+/* Modal Styles */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.modal.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 600px;
+    position: relative;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.modal.show .modal-content {
+    transform: translateY(0);
+}
+
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #333;
+}
+
+.form-group input[type="text"],
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.form-group textarea {
+    resize: vertical;
+}
+
+.image-preview {
+    margin-top: 10px;
+    max-width: 100%;
+    height: 150px;
+    border: 1px dashed #ddd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #888;
+}
+
+.image-preview img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.submit-btn {
+    background-color: #27ae60;
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.submit-btn:hover {
+    background-color: #219653;
+}
+
+/* Talents Page Styles */
+.talents-page {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    z-index: 1500;
+    display: none;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.talents-page.show {
+    display: flex;
+}
+
+.talents-header {
+    padding: 20px;
+    background-color: #3498db;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.back-btn {
+    background-color: white;
+    color: #3498db;
+    padding: 8px 15px;
+}
+
+.talents-container {
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.talent-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+.talent-card:hover {
+    transform: translateY(-5px);
+}
+
+.talent-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.talent-info {
+    padding: 15px;
+}
+
+.talent-name {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.talent-description {
+    color: #666;
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+.talent-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.like-btn {
+    display: flex;
+    align-items: center;
+    background: none;
+    border: none;
+    color: #e74c3c;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.like-btn i {
+    margin-right: 5px;
+}
+
+.like-count {
+    color: #888;
+    font-size: 14px;
+}
+
+.loading {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 30px;
+    color: #888;
+}
+
+@media (max-width: 480px) {
+    .countdown-timer {
+        flex-wrap: wrap;
+    }
+    
+    .time-section {
+        flex-basis: 45%;
+        margin-bottom: 15px;
+    }
+    
+    .time-value {
+        font-size: 28px;
+    }
+    
+    .button-group {
+        flex-direction: column;
+    }
+    
+    .talents-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+</style>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <img src="images/rewarder-logo.png" alt="Rewarder Logo">
+            </div>
+            <div class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#how-it-works">How It Works</a>
+                <a href="#events">Events</a>
+                <a href="#testimonials">Success Stories</a>
+
+            </div>
+            <div class="cta-buttons">
+                <a href="#download" class="btn btn-secondary">Get into Rewarder</a>
+               </div>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content" data-aos="fade-right">
+                <h1>Showcase Your Talent & Win Big</h1>
+                <p>Join exciting talent competitions, get votes from fans, and win cash prizes with Rewarder - Be a Winner.</p>
+                <div class="hero-cta">
+                      </div>
+            </div>
+            <div class="hero-image" data-aos="fade-left">
+    <img src="https://i.ibb.co/tPH2XDZH/Turn-your-TAlent-to-Cash-2.png" alt="Turn-your-TAlent-to-Cash-2" border="0">
+                <div class="floating-element floating-1"><i class="fas fa-trophy"></i></div>
+                <div class="floating-element floating-2"><i class="fas fa-star"></i></div>
+                <div class="floating-element floating-3"><i class="fas fa-naira-sign"></i></div>
+            </div>
+        </div>
+        <div class="wave-divider">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+                <path fill="#ffffff" fill-opacity="1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,149.3C960,160,1056,160,1152,138.7C1248,117,1344,75,1392,53.3L1440,32L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2>Why Choose Rewarder?</h2>
+                <p>The ultimate platform to showcase your talent and earn rewards</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-icon">
+                        <i class="fas fa-microphone"></i>
+                    </div>
+                    <h3>Multiple Talent Categories</h3>
+                    <p>From singing and dancing to tech pitches and more - showcase your unique skills in various categories.</p>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <h3>Generous Prize Distribution</h3>
+                    <p>Top 3 winners get rewarded: 1st place (60%), 2nd place (25%), and 3rd place (15%) of the prize pool.</p>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Community Voting</h3>
+                    <p>Get votes from fans and supporters who believe in your talent and want to see you win.</p>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Easy-to-Use Platform</h3>
+                    <p>Our intuitive app makes it simple to join events, upload performances, and track your progress.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="how-it-works">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2>How Rewarder Works</h2>
+                <p>Your journey from signup to winning in 4 simple steps</p>
+            </div>
+            <div class="steps">
+                <div class="step" data-aos="fade-right">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Sign Up to the Rewarder Webapp</h3>
+                        <p> create your profile, and Preview others talent and Support by voting .</p>
+                    </div>
+                        <i class="fa fa-user-plus" aria-hidden="true" title="Sign Up Process"></i>
+
+                    
+                </div>
+                <div class="step" data-aos="fade-left">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Join Events & Competitions</h3>
+                        <p>Browse available events in your talent category, pay the entry fee, and submit your performance.</p>
+                    </div>
+                         </div>
+                <div class="step" data-aos="fade-right">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Get Votes & Support</h3>
+                        <p>Share your performance with friends and fans who can vote for you by paying a small fee.</p>
+                    </div>
+                    
+                </div>
+                <div class="step" data-aos="fade-left">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>Win Prizes & Get Recognized</h3>
+                        <p>Top 3 performers win cash prizes and gain recognition in the Rewarder community.</p>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+       
+    </section>
+
+    <!-- Events Categories Section -->
+    <section id="events" class="events">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2>Explore Event Categories</h2>
+                <p>Find the perfect stage for your unique talents</p>
+            </div>
+            <div class="categories-slider" data-aos="fade-up">
+                <div class="category">
+                    <div class="category-image">
+                        <img src="https://i.ibb.co/JfWy9Gw/singing.jpg" alt="singing" border="0"> </div>
+                    <h3>Singing</h3>
+                    <p>Showcase your vocal talent and captivate audiences with your unique sound.</p>
+                </div>
+                <div class="category">
+                    <div class="category-image">
+                        <img src="https://i.ibb.co/F4BQ6Sx0/dancing.jpg" alt="dancing" border="0">
+                    </div>
+                    <h3>Dancing</h3>
+                    <p>Express yourself through movement and wow judges with your choreography.</p>
+                </div>
+                <div class="category">
+                    <div class="category-image">
+                    <img src="https://i.ibb.co/3YL2mLwB/tech.jpg" alt="tech" border="0">
+                    </div>
+                    <h3>Tech </h3>
+                    <p>Present your innovative tech ideas and solutions to win funding and support.</p>
+                </div>
+                <div class="category">
+                    <div class="category-image">
+                        <img src="https://i.ibb.co/xSYkcP8s/comedy.png" alt="comedy" border="0">
+                    </div>
+                    <h3>Comedy</h3>
+                    <p>Make audiences laugh with your original humor and comedic timing.</p>
+                </div>
+                <div class="category">
+                    <div class="category-image">
+                        <img src="https://i.ibb.co/zpp7Knh/art.jpg" alt="art" border="0">
+                    </div>
+                    <h3>Visual Arts</h3>
+                    <p>Display your artistic creations and gain recognition for your creative vision.</p>
+                </div>
+            </div>
+            <div class="categories-nav">
+                <button class="prev-btn"><i class="fas fa-chevron-left"></i></button>
+                <button class="next-btn"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="testimonials">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2>Success Stories</h2>
+                <p>Hear from talents who found success through Rewarder</p>
+            </div>
+           
+                        <p>Coming Soon</p>
+                            </div>
+                </div>
+                
+               
+        <div class="testimonials-nav">
+            <button class="prev-btn"><i class="fas fa-chevron-left"></i></button>
+            <button class="next-btn"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </div>
+</section>
+
+<!-- Stats Section -->
+<section class="stats">
+    <div class="container">
+        <div class="stats-grid" data-aos="fade-up">
+            <div class="stat-item">
+                <div class="stat-number" data-count="0">0</div>
+                <div class="stat-label">Active Users</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" data-count="0">0</div>
+                <div class="stat-label">Events Completed</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" data-count="0">0</div>
+                <div class="stat-label">Winners Rewarded</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" data-count="0">0</div>
+                <div class="stat-label">Prize Money Awarded (?)</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Section -->
+<section id="faq" class="faq">
+    <div class="container">
+        <div class="section-header" data-aos="fade-up">
+            <h2>Answered Questions</h2>
+            <p>Everything you need to know about Rewarder</p>
+        </div>
+        <div class="faq-grid" data-aos="fade-up">
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>How do I join a competition?</h3>
+                    <span class="toggle-icon"><i class="fas fa-plus"></i></span>
+                </div>
+                <div class="faq-answer">
+                    <p>Locate the webapp , create an account, browse available events in your talent category, pay the entry fee, and submit your performance according to the event guidelines.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>How much is the entry fee?</h3>
+                    <span class="toggle-icon"><i class="fas fa-plus"></i></span>
+                </div>
+                <div class="faq-answer">
+                    <p>Entry fees vary by event type and prize pool. Most events range from 10 to 150 Talent coin  to enter. Premium events with larger prize pools may have higher entry fees.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>How does voting work?</h3>
+                    <span class="toggle-icon"><i class="fas fa-plus"></i></span>
+                </div>
+                <div class="faq-answer">
+                    <p>Users can vote for their favorite performers by paying a small fee (usually  10 to 150 Talent coinper vote). The more votes you get, the higher your chances of winning. You can share your performance link with friends and family to gather more votes.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>How are winners selected?</h3>
+                    <span class="toggle-icon"><i class="fas fa-plus"></i></span>
+                </div>
+                <div class="faq-answer">
+                    <p>Winners are determined by the total number of votes received during the competition period. The top 3 performers with the most votes win 1st (60%), 2nd (25%), and 3rd (15%) places respectively.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>How do I receive my prize money?</h3>
+                    <span class="toggle-icon"><i class="fas fa-plus"></i></span>
+                </div>
+                <div class="faq-answer">
+                    <p>Prize money is transferred to your Rewarder wallet within 7 days after the competition ends. You can then withdraw to your bank account,  or other supported payment methods.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>What talent categories are available?</h3>
+                    <span class="toggle-icon"><i class="fas fa-plus"></i></span>
+                </div>
+                <div class="faq-answer">
+                    <p>We currently support singing, dancing, comedy, tech pitches, visual arts, cooking, fashion design, spoken word, instrumental music, and more. New categories are added regularly based on user demand.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Download App Section -->
+<section id="download" class="download">
+    <div class="container">
+       
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="contact">
+    <div class="container">
+        <div class="section-header" data-aos="fade-up">
+            <h2>Get In Touch</h2>
+            <p>Have questions? We're here to help!</p>
+        </div>
+        <div class="contact-grid">
+            <div class="contact-info" data-aos="fade-right">
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="contact-details">
+                        <h3>Email Us</h3>
+                        <p>support@rewarderapp.com</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-phone-alt"></i>
+                    </div>
+                   
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    
+                </div>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-tiktok"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="contact-form" data-aos="fade-left">
+                <form>
+                    <div class="form-group">
+                        <input type="text" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" placeholder="Your Email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" placeholder="Subject">
+                    </div>
+                    <div class="form-group">
+                        <textarea placeholder="Your Message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+    <div id="countdown-popup" class="popup">
+        <div class="popup-content">
+            <span class="close-btn">&times;</span>
+            <h2>Our App is Launching Soon!</h2>
+            <div class="countdown-timer">
+                <div class="time-section">
+                    <div id="days" class="time-value">00</div>
+                    <div class="time-label">Days</div>
+                </div>
+                <div class="time-section">
+                    <div id="hours" class="time-value">00</div>
+                    <div class="time-label">Hours</div>
+                </div>
+                <div class="time-section">
+                    <div id="minutes" class="time-value">00</div>
+                    <div class="time-label">Minutes</div>
+                </div>
+                <div class="time-section">
+                    <div id="seconds" class="time-value">00</div>
+                    <div class="time-label">Seconds</div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    
+    
+</div>
+
+<!-- Back to Top Button -->
+<a href="#" class="back-to-top">
+    <i class="fas fa-arrow-up"></i>
+</a>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<!-- Add this in the head section, before your main.js script -->
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-analytics-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
+
+<script>
+    // Firebase configuration
+const firebaseConfig = {
+    apiKey: "AIzaSyBm9PmWgTKGKlzZ1xrJwhUXd93bCClSrEE",
+    authDomain: "billsandmallng.firebaseapp.com",
+    projectId: "billsandmallng",
+    storageBucket: "billsandmallng.firebasestorage.app",
+    messagingSenderId: "242278413301",
+    appId: "1:242278413301:web:fad95e8c553a18b8e2a6bc",
+    measurementId: "G-8GEQEC5SXQ"
+};
+
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    // Initialize Firebase
+    try {
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const analytics = firebase.analytics();
+        const db = firebase.firestore();
+        const storage = firebase.storage();
+        console.log("Firebase initialized successfully");
+    } catch (error) {
+        console.error("Firebase initialization error:", error);
+    }
+
+    // Initialize AOS (Animate On Scroll)
+    AOS.init({
+        duration: 800,
+        easing: 'ease',
+        once: true,
+        offset: 100
+    });
+
+    // Mobile Navigation Toggle
+    const hamburger = document.querySelector('.hamburger');
+    const ctaButtons = document.querySelector('.cta-buttons');
+    
+    if (hamburger) {
+        hamburger.addEventListener('click', function() {
+            this.classList.toggle('active');
+            
+            if (navLinks.style.display === 'flex') {
+                navLinks.style.display = 'none';
+                ctaButtons.style.display = 'none';
+            } else {
+                navLinks.style.display = 'flex';
+                navLinks.style.flexDirection = 'column';
+                ctaButtons.style.display = 'flex';
+                ctaButtons.style.flexDirection = 'column';
+            }
+        });
+    }
+
+    // Sticky Navigation
+    const navbar = document.querySelector('.navbar');
+    
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 50) {
+            navbar.classList.add('sticky');
+        } else {
+            navbar.classList.remove('sticky');
+        }
+    });
+
+    // Back to Top Button
+    const backToTopButton = document.querySelector('.back-to-top');
+    
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 300) {
+            backToTopButton.classList.add('active');
+        } else {
+            backToTopButton.classList.remove('active');
+        }
+    });
+    
+    if (backToTopButton) {
+        backToTopButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    }
+
+    // Categories Slider Navigation
+    const categoriesSlider = document.querySelector('.categories-slider');
+    const prevBtn = document.querySelector('.categories-nav .prev-btn');
+    const nextBtn = document.querySelector('.categories-nav .next-btn');
+    
+    if (prevBtn && nextBtn && categoriesSlider) {
+        prevBtn.addEventListener('click', function() {
+            categoriesSlider.scrollBy({
+                left: -300,
+                behavior: 'smooth'
+            });
+        });
+        
+        nextBtn.addEventListener('click', function() {
+            categoriesSlider.scrollBy({
+                left: 300,
+                behavior: 'smooth'
+            });
+        });
+    }
+
+    // Testimonials Slider
+    const testimonials = document.querySelectorAll('.testimonial');
+    const testimonialsSlider = document.querySelector('.testimonials-slider');
+    const testimonialPrevBtn = document.querySelector('.testimonials-nav .prev-btn');
+    const testimonialNextBtn = document.querySelector('.testimonials-nav .next-btn');
+    
+    let currentTestimonial = 0;
+    
+    if (testimonials.length > 0 && testimonialPrevBtn && testimonialNextBtn) {
+        // Show first testimonial
+        showTestimonial(currentTestimonial);
+        
+        testimonialPrevBtn.addEventListener('click', function() {
+            currentTestimonial = (currentTestimonial - 1 + testimonials.length) % testimonials.length;
+            showTestimonial(currentTestimonial);
+        });
+        
+        testimonialNextBtn.addEventListener('click', function() {
+            currentTestimonial = (currentTestimonial + 1) % testimonials.length;
+            showTestimonial(currentTestimonial);
+        });
+        
+        // Auto slide testimonials
+        setInterval(function() {
+            currentTestimonial = (currentTestimonial + 1) % testimonials.length;
+            showTestimonial(currentTestimonial);
+        }, 5000);
+    }
+    
+    function showTestimonial(index) {
+        if (testimonialsSlider) {
+            testimonialsSlider.style.transform = `translateX(-${index * 100}%)`;
+        }
+    }
+
+    // FAQ Accordion
+    const faqItems = document.querySelectorAll('.faq-item');
+    
+    faqItems.forEach(item => {
+        const question = item.querySelector('.faq-question');
+        
+        question.addEventListener('click', function() {
+            // Close all other items
+            faqItems.forEach(otherItem => {
+                if (otherItem !== item) {
+                    otherItem.classList.remove('active');
+                }
+            });
+            
+            // Toggle current item
+            item.classList.toggle('active');
+        });
+    });
+
+    // Animated Counter for Stats
+    const statNumbers = document.querySelectorAll('.stat-number');
+    
+    function animateCounter() {
+        statNumbers.forEach(stat => {
+            const target = parseInt(stat.getAttribute('data-count'));
+            const duration = 2000; // 2 seconds
+            const increment = target / (duration / 16); // 60fps
+            let current = 0;
+            
+            const counter = setInterval(function() {
+                current += increment;
+                
+                if (current >= target) {
+                    stat.textContent = target.toLocaleString();
+                    clearInterval(counter);
+                } else {
+                    stat.textContent = Math.floor(current).toLocaleString();
+                }
+            }, 16);
+        });
+    }
+    
+    // Trigger counter animation when stats section is in view
+    const statsSection = document.querySelector('.stats');
+    
+    if (statsSection) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounter();
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        observer.observe(statsSection);
+    }
+
+    // Form Submission
+    const contactForm = document.querySelector('.contact-form form');
+    const newsletterForm = document.querySelector('.footer-newsletter form');
+    
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your message! We will get back to you soon.');
+            contactForm.reset();
+        });
+    }
+    
+    if (newsletterForm) {
+        newsletterForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for subscribing to our newsletter!');
+            newsletterForm.reset();
+        });
+    }
+
+    // Smooth Scrolling for Navigation Links
+    const navLinks = document.querySelectorAll('a[href^="#"]');
+    
+    navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            // Only if the link points to an anchor on the same page
+            if (this.getAttribute('href').startsWith('#')) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                
+                // Skip if it's just "#" with no specific target
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    // Close mobile menu if open
+                    const hamburger = document.querySelector('.hamburger');
+                    if (hamburger && hamburger.classList.contains('active')) {
+                        hamburger.click();
+                    }
+                    
+                    // Calculate offset for fixed header
+                    const navbarHeight = document.querySelector('.navbar').offsetHeight;
+                    const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - navbarHeight;
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            }
+        });
+    });
+
+    // Floating Elements Animation Enhancement
+    const floatingElements = document.querySelectorAll('.floating-element');
+    
+    floatingElements.forEach((element, index) => {
+        // Add random horizontal movement
+        element.style.animation = `float ${3 + index * 0.2}s ease-in-out infinite, floatHorizontal ${4 + index * 0.3}s ease-in-out infinite`;
+    });
+
+    // Add keyframes for horizontal floating
+    const style = document.createElement('style');
+    style.innerHTML = `
+        @keyframes floatHorizontal {
+            0% {
+                transform: translateX(0) translateY(0);
+            }
+            50% {
+                transform: translateX(10px) translateY(-15px);
+            }
+            100% {
+                transform: translateX(0) translateY(0);
+            }
+        }
+    `;
+    document.head.appendChild(style);
+
+    // Image Hover Effects
+    const categoryImages = document.querySelectorAll('.category-image');
+    
+    categoryImages.forEach(image => {
+        image.addEventListener('mouseenter', function() {
+            this.querySelector('img').style.transform = 'scale(1.1)';
+        });
+        
+        image.addEventListener('mouseleave', function() {
+            this.querySelector('img').style.transform = 'scale(1)';
+        });
+    });
+
+    // Navbar Scroll Effect
+    window.addEventListener('scroll', function() {
+        const navbar = document.querySelector('.navbar');
+        
+        if (window.scrollY > 100) {
+            navbar.style.padding = '10px 0';
+            navbar.style.backgroundColor = 'rgba(255, 255, 255, 0.95)';
+            navbar.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
+        } else {
+            navbar.style.padding = '15px 0';
+            navbar.style.backgroundColor = 'var(--white)';
+            navbar.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.05)';
+        }
+    });
+
+    // Active Navigation Link Highlighting
+    function setActiveNavLink() {
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav-links a');
+        
+        let currentSection = '';
+        
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.offsetHeight;
+            const navbarHeight = document.querySelector('.navbar').offsetHeight;
+            
+            if (window.scrollY >= sectionTop - navbarHeight - 50) {
+                currentSection = section.getAttribute('id');
+            }
+        });
+        
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === `#${currentSection}`) {
+                link.classList.add('active');
+            }
+        });
+    }
+    
+    window.addEventListener('scroll', setActiveNavLink);
+    window.addEventListener('load', setActiveNavLink);
+
+    // Mobile Navigation Enhancement
+    const mobileNavLinks = document.querySelectorAll('.nav-links a');
+    
+    mobileNavLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            const hamburger = document.querySelector('.hamburger');
+            if (window.innerWidth <= 768 && hamburger.classList.contains('active')) {
+                hamburger.click();
+            }
+        });
+    });
+
+    // Add CSS for active nav links
+    const navStyle = document.createElement('style');
+    navStyle.innerHTML = `
+        .nav-links a.active {
+            color: var(--primary-color);
+        }
+        .nav-links a.active::after {
+            width: 100%;
+        }
+    `;
+    document.head.appendChild(navStyle);
+
+    // Preloader
+    const preloader = document.createElement('div');
+    preloader.className = 'preloader';
+    preloader.innerHTML = `
+        <div class="spinner"></div>
+    `;
+    document.body.appendChild(preloader);
+    
+    // Add preloader styles
+    const preloaderStyle = document.createElement('style');
+    preloaderStyle.innerHTML = `
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--white);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(108, 99, 255, 0.2);
+            border-radius: 50%;
+            border-top-color: var(--primary-color);
+            animation: spin 1s ease-in-out infinite;
+        }
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    `;
+    document.head.appendChild(preloaderStyle);
+    
+    // Hide preloader when page is loaded
+    window.addEventListener('load', function() {
+        setTimeout(function() {
+            preloader.style.opacity = '0';
+            preloader.style.visibility = 'hidden';
+            
+            // Remove preloader after transition
+            setTimeout(function() {
+                preloader.remove();
+            }, 500);
+        }, 500);
+    });
+
+    // Enhance buttons with hover effect
+    const buttons = document.querySelectorAll('.btn');
+    
+    buttons.forEach(button => {
+        button.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-3px)';
+            this.style.boxShadow = '0 7px 15px rgba(0, 0, 0, 0.2)';
+        });
+        
+        button.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0)';
+            this.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.1)';
+        });
+    });
+
+    // ===== MODIFIED FEATURES =====
+
+    // 1. Download App - Show "Coming Soon" popup
+    const downloadButtons = document.querySelectorAll('a[href="#download"], .app-button, .btn-primary:contains("Download")');
+    
+    downloadButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Create modal for "Coming Soon"
+            showComingSoonModal();
+            
+            // Log analytics event if Firebase is initialized
+            try {
+                if (firebase && firebase.analytics) {
+                    firebase.analytics().logEvent('coming_soon_clicked', {
+                        feature: 'app_download'
+                    });
+                }
+            } catch (error) {
+                console.error("Analytics logging error:", error);
+            }
+        });
+    });
+
+    // 2. Sign Up - Change to "Mark Yourself as Future User"
+    const signupButtons = document.querySelectorAll('a[href="#signup"], .btn-primary:contains("Sign Up")');
+    
+    signupButtons.forEach(button => {
+        button.textContent = "Mark as Future User";
+        
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Show future user registration modal
+            showFutureUserModal();
+        });
+    });
+    // Create and show Coming Soon Modal
+    function showComingSoonModal() {
+        // Create modal container
+        const modalContainer = document.createElement('div');
+        modalContainer.className = 'modal-container';
+        
+        // Create modal content
+        modalContainer.innerHTML = `
+            <div class="modal coming-soon-modal">
+                <div class="modal-header">
+                    <h3>Coming Soon!</h3>
+                    <button class="close-modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <p>Our app is currently under development and will be available soon.</p>
+                    <p>Join our waitlist to be notified when we launch!</p>
+                    <form id="waitlist-form">
+                        <div class="form-group">
+                            <input type="email" id="waitlist-email" placeholder="Your email address" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Join Waitlist</button>
+                    </form>
+                </div>
+            </div>
+        `;
+        
+        // Add modal to body
+        document.body.appendChild(modalContainer);
+        
+        // Add modal styles
+        const modalStyle = document.createElement('style');
+        modalStyle.innerHTML = `
+            .modal-container {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.5);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 9999;
+                opacity: 0;
+                visibility: hidden;
+                transition: opacity 0.3s ease, visibility 0.3s ease;
+            }
+            
+            .modal-container.active {
+                opacity: 1;
+                visibility: visible;
+            }
+            
+            .modal {
+                background-color: var(--white);
+                border-radius: var(--border-radius);
+                width: 90%;
+                max-width: 500px;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+                transform: translateY(20px);
+                transition: transform 0.3s ease;
+                overflow: hidden;
+            }
+            
+            .modal-container.active .modal {
+                transform: translateY(0);
+            }
+            
+            .modal-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 20px;
+                background-color: var(--primary-color);
+                color: var(--white);
+            }
+            
+            .modal-header h3 {
+                margin: 0;
+                font-size: 1.5rem;
+            }
+            
+            .close-modal {
+                background: none;
+                border: none;
+                color: var(--white);
+                font-size: 1.5rem;
+                cursor: pointer;
+                transition: var(--transition);
+            }
+            
+            .close-modal:hover {
+                transform: scale(1.1);
+            }
+            
+            .modal-body {
+                padding: 30px;
+                text-align: center;
+            }
+            
+            .modal-icon {
+                font-size: 3rem;
+                color: var(--primary-color);
+                margin-bottom: 20px;
+            }
+            
+            .modal-body p {
+                margin-bottom: 15px;
+            }
+            
+            .modal-body form {
+                margin-top: 20px;
+            }
+            
+            .coming-soon-modal .form-group {
+                margin-bottom: 15px;
+            }
+            
+            .coming-soon-modal input {
+                width: 100%;
+                padding: 12px 15px;
+                border: 1px solid var(--light-gray);
+                border-radius: var(--border-radius);
+                font-family: inherit;
+                font-size: 1rem;
+            }
+            
+            .future-user-modal .form-group {
+                margin-bottom: 15px;
+                text-align: left;
+            }
+            
+            .future-user-modal label {
+                display: block;
+                margin-bottom: 5px;
+                font-weight: 500;
+            }
+            
+            .checkbox-group {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                margin-bottom: 15px;
+            }
+            
+            .checkbox-group input {
+                width: auto;
+            }
+        `;
+        document.head.appendChild(modalStyle);
+        
+        // Show modal with animation
+        setTimeout(() => {
+            modalContainer.classList.add('active');
+        }, 10);
+        
+        // Close modal when clicking close button
+        const closeButton = modalContainer.querySelector('.close-modal');
+        closeButton.addEventListener('click', () => {
+            closeModal(modalContainer);
+        });
+        
+        // Close modal when clicking outside
+        modalContainer.addEventListener('click', (e) => {
+            if (e.target === modalContainer) {
+                closeModal(modalContainer);
+            }
+        });
+        
+        // Handle waitlist form submission
+        const waitlistForm = document.getElementById('waitlist-form');
+        waitlistForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('waitlist-email').value;
+            
+            // Save to Firebase
+            try {
+                if (firebase && firebase.firestore) {
+                    firebase.firestore().collection('waitlist').add({
+                        email: email,
+                        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                    })
+                    .then(() => {
+                        // Show success message
+                        waitlistForm.innerHTML = `
+                            <div class="success-message">
+                                <i class="fas fa-check-circle"></i>
+                                <p>Thank you for joining our waitlist! We'll notify you when the app launches.</p>
+                            </div>
+                        `;
+                        
+                        // Log analytics event
+                        firebase.analytics().logEvent('waitlist_signup', {
+                            source: 'download_modal'
+                        });
+                        
+                        // Close modal after delay
+                        setTimeout(() => {
+                            closeModal(modalContainer);
+                        }, 3000);
+                    })
+                    .catch((error) => {
+                        console.error("Error adding to waitlist:", error);
+                        alert("There was an error. Please try again later.");
+                    });
+                } else {
+                    // Fallback if Firebase is not available
+                    waitlistForm.innerHTML = `
+                        <div class="success-message">
+                            <i class="fas fa-check-circle"></i>
+                            <p>Thank you for joining our waitlist! We'll notify you when the app launches.</p>
+                        </div>
+                    `;
+                    
+                    // Close modal after delay
+                    setTimeout(() => {
+                        closeModal(modalContainer);
+                    }, 3000);
+                }
+            } catch (error) {
+                console.error("Firebase error:", error);
+                
+                // Fallback if Firebase has an error
+                waitlistForm.innerHTML = `
+                    <div class="success-message">
+                        <i class="fas fa-check-circle"></i>
+                        <p>Thank you for joining our waitlist! We'll notify you when the app launches.</p>
+                    </div>
+                `;
+                
+                // Close modal after delay
+                setTimeout(() => {
+                    closeModal(modalContainer);
+                }, 3000);
+            }
+        });
+    }
+    
+    // Create and show Future User Modal
+    function showFutureUserModal() {
+        // Create modal container
+        const modalContainer = document.createElement('div');
+        modalContainer.className = 'modal-container';
+        
+        // Create modal content
+        modalContainer.innerHTML = `
+            <div class="modal future-user-modal">
+                <div class="modal-header">
+                    <h3>Become a Future User</h3>
+                    <button class="close-modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p>Register your interest in Rewarder and be among the first to experience our app when it launches!</p>
+                    <form id="future-user-form">
+                        <div class="form-group">
+                            <label for="future-name">Full Name</label>
+                            <input type="text" id="future-name" placeholder="Your full name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="future-email">Email Address</label>
+                            <input type="email" id="future-email" placeholder="Your email address" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="future-phone">Phone Number (optional)</label>
+                            <input type="tel" id="future-phone" placeholder="Your phone number">
+                        </div>
+                        <div class="form-group">
+                            <label>I'm interested in:</label>
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="interest-earning" value="earning">
+                                <label for="interest-earning">Earning rewards</label>
+                            </div>
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="interest-business" value="business">
+                                <label for="interest-business">Business opportunities</label>
+                            </div>
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="interest-investing" value="investing">
+                                <label for="interest-investing">Investing in Rewarder</label>
+                            </div>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="future-terms" required>
+                            <label for="future-terms">I agree to receive updates about Rewarder</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Register Interest</button>
+                    </form>
+                </div>
+            </div>
+        `;
+        
+        // Add modal to body
+        document.body.appendChild(modalContainer);
+        
+        // Show modal with animation
+        setTimeout(() => {
+            modalContainer.classList.add('active');
+        }, 10);
+        
+        // Close modal when clicking close button
+        const closeButton = modalContainer.querySelector('.close-modal');
+        closeButton.addEventListener('click', () => {
+            closeModal(modalContainer);
+        });
+        
+        // Close modal when clicking outside
+        modalContainer.addEventListener('click', (e) => {
+            if (e.target === modalContainer) {
+                closeModal(modalContainer);
+            }
+        });
+        
+        // Handle future user form submission
+        const futureUserForm = document.getElementById('future-user-form');
+        futureUserForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Get form data
+            const name = document.getElementById('future-name').value;
+            const email = document.getElementById('future-email').value;
+            const phone = document.getElementById('future-phone').value;
+            
+            // Get interests
+            const interests = [];
+            if (document.getElementById('interest-earning').checked) interests.push('earning');
+            if (document.getElementById('interest-business').checked) interests.push('business');
+            if (document.getElementById('interest-investing').checked) interests.push('investing');
+            
+            // Save to Firebase
+            try {
+                if (firebase && firebase.firestore) {
+                    firebase.firestore().collection('futureUsers').add({
+                        name: name,
+                        email: email,
+                        phone: phone,
+                        interests: interests,
+                        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                    })
+                    .then(() => {
+                        // Show success message
+                        futureUserForm.innerHTML = `
+                            <div class="success-message">
+                                <i class="fas fa-check-circle"></i>
+                                <p>Thank you for registering your interest! We'll keep you updated on our progress.</p>
+                            </div>
+                        `;
+                        
+                        // Log analytics event
+                        firebase.analytics().logEvent('future_user_signup');
+                        
+                        // Close modal after delay
+                        setTimeout(() => {
+                            closeModal(modalContainer);
+                        }, 3000);
+                    })
+                    .catch((error) => {
+                        console.error("Error registering future user:", error);
+                        alert("There was an error. Please try again later.");
+                    });
+                } else {
+                    // Fallback if Firebase is not available
+                    futureUserForm.innerHTML = `
+                        <div class="success-message">
+                            <i class="fas fa-check-circle"></i>
+                            <p>Thank you for registering your interest! We'll keep you updated on our progress.</p>
+                        </div>
+                    `;
+                    
+                    // Close modal after delay
+                    setTimeout(() => {
+                        closeModal(modalContainer);
+                    }, 3000);
+                }
+            } catch (error) {
+                console.error("Firebase error:", error);
+                
+                // Fallback if Firebase has an error
+                futureUserForm.innerHTML = `
+                    <div class="success-message">
+                        <i class="fas fa-check-circle"></i>
+                        <p>Thank you for registering your interest! We'll keep you updated on our progress.</p>
+                    </div>
+                `;
+                
+                // Close modal after delay
+                setTimeout(() => {
+                    closeModal(modalContainer);
+                }, 3000);
+            }
+        });
+    }
+    
+    // Function to close modal
+    function closeModal(modalContainer) {
+        modalContainer.classList.remove('active');
+        
+        // Remove modal after animation
+        setTimeout(() => {
+            modalContainer.remove();
+        }, 300);
+    }
+
+    // Add success message styles
+    const successStyle = document.createElement('style');
+    successStyle.innerHTML = `
+        .success-message {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .success-message i {
+            font-size: 3rem;
+            color: #4CAF50;
+            margin-bottom: 15px;
+        }
+        
+        .success-message p {
+            font-size: 1.1rem;
+        }
+    `;
+    document.head.appendChild(successStyle);
+
+    // Initialize any additional functionality here
+    console.log('Rewarder website initialized successfully!');
+});
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Set the release date - 15 days from now
+    const releaseDate = new Date();
+    releaseDate.setDate(releaseDate.getDate() + 15);
+    
+    // Show popup after 3 seconds
+    setTimeout(function() {
+        document.getElementById('countdown-popup').classList.add('show');
+    }, 3000);
+    
+    // Close popup when clicking the X
+    document.querySelector('.close-btn').addEventListener('click', function() {
+        document.getElementById('countdown-popup').classList.remove('show');
+        
+        // Set a cookie to remember that the user closed the popup
+        setCookie('popupClosed', 'true', 1); // 1 day
+    });
+    
+    // Update the countdown every second
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+    
+    function updateCountdown() {
+        const now = new Date().getTime();
+        const timeLeft = releaseDate - now;
+        
+        // If release date has passed
+        if (timeLeft < 0) {
+            document.getElementById('days').innerHTML = '00';
+            document.getElementById('hours').innerHTML = '00';
+            document.getElementById('minutes').innerHTML = '00';
+            document.getElementById('seconds').innerHTML = '00';
+            return;
+        }
+        
+        // Calculate time components
+        const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+        
+        // Display the result
+        document.getElementById('days').innerHTML = formatTime(days);
+        document.getElementById('hours').innerHTML = formatTime(hours);
+        document.getElementById('minutes').innerHTML = formatTime(minutes);
+        document.getElementById('seconds').innerHTML = formatTime(seconds);
+    }
+    
+    // Add leading zero if number is less than 10
+    function formatTime(time) {
+        return time < 10 ? `0${time}` : time;
+    }
+    
+    // Check if popup was previously closed
+    if (getCookie('popupClosed') !== 'true') {
+        setTimeout(function() {
+            document.getElementById('countdown-popup').classList.add('show');
+        }, 3000);
+    }
+    
+    // Cookie helper functions
+    function setCookie(name, value, days) {
+        const date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        const expires = "expires=" + date.toUTCString();
+        document.cookie = name + "=" + value + ";" + expires + ";path=/";
+    }
+    
+    function getCookie(name) {
+        const cookieName = name + "=";
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            let cookie = cookies[i];
+            while (cookie.charAt(0) === ' ') {
+                cookie = cookie.substring(1);
+            }
+            if (cookie.indexOf(cookieName) === 0) {
+                return cookie.substring(cookieName.length, cookie.length);
+            }
+        }
+        return "";
+    }
+});
+
+
+// Contact form submission
+document.addEventListener('DOMContentLoaded', function() {
+  const contactForm = document.querySelector('#contact .contact-form form');
+  
+  contactForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // Get form values
+    const name = contactForm.querySelector('input[type="text"]').value;
+    const email = contactForm.querySelector('input[type="email"]').value;
+    const subject = contactForm.querySelectorAll('input[type="text"]')[1].value;
+    const message = contactForm.querySelector('textarea').value;
+    
+    // Disable submit button during submission
+    const submitButton = contactForm.querySelector('button[type="submit"]');
+    submitButton.disabled = true;
+    submitButton.textContent = 'Sending...';
+    
+    // Save message to Firebase
+    db.collection('messages').add({
+      name: name,
+      email: email,
+      subject: subject,
+      message: message,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp()
+    })
+    .then(() => {
+      // Success message
+      showNotification('Message sent successfully!', 'success');
+      
+      // Reset form
+      contactForm.reset();
+    })
+    .catch((error) => {
+      // Error message
+      showNotification('Error sending message: ' + error.message, 'error');
+    })
+    .finally(() => {
+      // Re-enable submit button
+      submitButton.disabled = false;
+      submitButton.textContent = 'Send Message';
+    });
+  });
+  
+  // Function to show notification
+  function showNotification(message, type) {
+    const notification = document.createElement('div');
+    notification.className = `notification ${type}`;
+    notification.textContent = message;
+    
+    document.querySelector('#contact .contact-form').appendChild(notification);
+    
+    // Remove notification after 5 seconds
+    setTimeout(() => {
+      notification.remove();
+    }, 5000);
+  }
+});
+
+</script>
+</body>
+</html>
