@@ -6414,7 +6414,9 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Reset PIN inputs
         resetPinInputs();
-        
+         // Check if PIN reset is in progress
+    checkPinResetStatus();
+    
         // Show wallet modal
         if (walletModal) {
             walletModal.style.display = 'flex';
@@ -6692,15 +6694,6 @@ function checkPinResetStatus() {
     }
 }
 
-// Add this to your openWallet function
-function openWallet() {
-    // ... existing code ...
-    
-    // Check if PIN reset is in progress
-    checkPinResetStatus();
-    
-    // ... rest of existing code ...
-}
 
     
     // Load wallet dashboard
