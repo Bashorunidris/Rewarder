@@ -6629,308 +6629,77 @@ function handleForgotPin() {
     console.log('Handling forgot PIN');
     
     // Show confirmation dialog
-    if (confirm('Are you sure you want to reset your wallet PIN? An OTP will be sent to your registered email for verification.')) {
-        // Show OTP verification screen
-        showOtpVerificationScreen();
-    }
-}
-
-// Show OTP verification screen
-function showOtpVerificationScreen() {
-    // Create OTP verification screen if it doesn't exist
-    let otpScreen = document.getElementById('otpVerificationScreen');
-    
-    if (!otpScreen) {
-        otpScreen = document.createElement('div');
-        otpScreen.id = 'otpVerificationScreen';
-        otpScreen.className = 'wallet-screen';
-        
-        otpScreen.innerHTML = `
-            <div class="pin-setup">
-                <div class="pin-icon">
-                    <i class="fas fa-envelope"></i>
-                </div>
-                <h3>Verify Your Identity</h3>
-                <p>We've sent a 6-digit OTP to your registered email address. Please enter it below to reset your PIN.</p>
-                
-                <div class="otp-input-container">
-                    <input type="text" class="otp-digit" maxlength="1" pattern="[0-9]*" inputmode="numeric">
-                    <input type="text" class="otp-digit" maxlength="1" pattern="[0-9]*" inputmode="numeric">
-                    <input type="text" class="otp-digit" maxlength="1" pattern="[0-9]*" inputmode="numeric">
-                    <input type="text" class="otp-digit" maxlength="1" pattern="[0-9]*" inputmode="numeric">
-                    <input type="text" class="otp-digit" maxlength="1" pattern="[0-9]*" inputmode="numeric">
-                    <input type="text" class="otp-digit" maxlength="1" pattern="[0-9]*" inputmode="numeric">
-                </div>
-                
-                <div class="resend-otp">
-                    <span id="otpTimer">Resend OTP in <span id="otpCountdown">60</span>s</span>
-                    <button id="resendOtpBtn" class="text-btn" disabled>Resend OTP</button>
-                </div>
-                
-                <button id="verifyOtpBtn" class="wallet-btn primary-btn">Verify OTP</button>
-                <button id="cancelOtpBtn" class="wallet-btn secondary-btn">Cancel</button>
-            </div>
-        `;
-        
-        // Add to wallet modal
-        const walletContainer = document.querySelector('.wallet-container');
-        if (walletContainer) {
-            walletContainer.appendChild(otpScreen);
-        }
-        
-        // Setup OTP input fields
-        const otpDigits = otpScreen.querySelectorAll('.otp-digit');
-        setupPinInputs(otpDigits);
-        
-        // Add event listeners
-        const verifyOtpBtn = document.getElementById('verifyOtpBtn');
-        const cancelOtpBtn = document.getElementById('cancelOtpBtn');
-        const resendOtpBtn = document.getElementById('resendOtpBtn');
-        
-        if (verifyOtpBtn) {
-            verifyOtpBtn.addEventListener('click', verifyOtp);
-            verifyOtpBtn.addEventListener('touchend', function(e) {
-                e.preventDefault();
-                verifyOtp();
-            }, { passive: false });
-        }
-        
-        if (cancelOtpBtn) {
-            cancelOtpBtn.addEventListener('click', cancelOtpVerification);
-            cancelOtpBtn.addEventListener('touchend', function(e) {
-                e.preventDefault();
-                cancelOtpVerification();
-            }, { passive: false });
-        }
-        
-        if (resendOtpBtn) {
-            resendOtpBtn.addEventListener('click', resendOtp);
-            resendOtpBtn.addEventListener('touchend', function(e) {
-                e.preventDefault();
-                resendOtp();
-            }, { passive: false });
-        }
-    }
-    
-    // Hide PIN screens and show OTP screen
-    if (pinScreen) pinScreen.classList.add('hidden');
-    otpScreen.classList.remove('hidden');
-    
-    // Focus on first OTP input
-    const otpDigits = document.querySelectorAll('.otp-digit');
-    if (otpDigits.length > 0) {
-        otpDigits[0].focus();
-    }
-    
-    // Send OTP to user's email
-    sendOtpToEmail();
-    
-    // Start countdown timer
-    startOtpCountdown();
-}
-
-// Send OTP to user's email
-function sendOtpToEmail() {
-    // Get user email
-    let userEmail = '';
-    
-    try {
-        const user = firebase.auth().currentUser;
-        if (user) {
-            userEmail = user.email;
-        }
-    } catch (error) {
-        console.log('Firebase auth not initialized, using mock email');
-        userEmail = 'user@example.com'; // For testing without Firebase
-    }
-    
-    if (!userEmail) {
-        showToast('User email not found', 'error');
-        return;
-    }
-    
-    // Generate a 6-digit OTP
-    const otp = Math.floor(100000 + Math.random() * 900000).toString();
-    
-    // Store OTP in session storage (in a real app, this would be stored server-side)
-    sessionStorage.setItem('resetPinOtp', otp);
-    sessionStorage.setItem('resetPinOtpExpiry', Date.now() + 60000); // 1 minute expiry
-    
-    // In a real app, you would send this OTP to the user's email using a server-side function
-    // For demo purposes, we'll just log it and show a toast
-    console.log(`OTP sent to ${userEmail}: ${otp}`);
-    showToast(`OTP sent to ${userEmail.substring(0, 3)}...${userEmail.substring(userEmail.indexOf('@'))}`, 'info');
-    
-    // In a production environment, you would use Firebase Cloud Functions:
-    /*
-    firebase.functions().httpsCallable('sendOtpEmail')({
-        email: userEmail,
-        otp: otp
-    }).then(() => {
-        showToast(`OTP sent to ${userEmail.substring(0, 3)}...${userEmail.substring(userEmail.indexOf('@'))}`, 'info');
-    }).catch(error => {
-        console.error('Error sending OTP:', error);
-        showToast('Failed to send OTP. Please try again.', 'error');
-    });
-    */
-}
-
-// Start OTP countdown timer
-function startOtpCountdown() {
-    const countdownElement = document.getElementById('otpCountdown');
-    const resendOtpBtn = document.getElementById('resendOtpBtn');
-    const otpTimer = document.getElementById('otpTimer');
-    
-    if (!countdownElement || !resendOtpBtn || !otpTimer) return;
-    
-    let timeLeft = 60;
-    countdownElement.textContent = timeLeft;
-    
-    // Disable resend button
-    resendOtpBtn.disabled = true;
-    otpTimer.style.display = 'inline';
-    resendOtpBtn.style.display = 'none';
-    
-    const countdownInterval = setInterval(() => {
-        timeLeft--;
-        
-        if (countdownElement) {
-            countdownElement.textContent = timeLeft;
-        }
-        
-        if (timeLeft <= 0) {
-            clearInterval(countdownInterval);
+    if (confirm('Are you sure you want to reset your wallet PIN? A verification email will be sent to your registered email address.')) {
+        try {
+            const user = firebase.auth().currentUser;
             
-            if (resendOtpBtn) {
-                resendOtpBtn.disabled = false;
-                otpTimer.style.display = 'none';
-                resendOtpBtn.style.display = 'inline';
+            if (!user) {
+                showToast('You must be logged in to reset your PIN', 'error');
+                return;
             }
+            
+            const email = user.email;
+            
+            // Send password reset email using Firebase Authentication
+            firebase.auth().sendPasswordResetEmail(email)
+                .then(() => {
+                    // Password reset email sent successfully
+                    showToast(`Verification email sent to ${email.substring(0, 3)}...${email.substring(email.indexOf('@'))}`, 'success');
+                    
+                    // Show instructions
+                    alert('Please check your email and follow the password reset link to verify your identity. After verifying, return to this app to set a new PIN.');
+                    
+                    // Flag that PIN reset is in progress
+                    localStorage.setItem('pinResetInProgress', 'true');
+                    
+                    // Close wallet modal
+                    closeWallet();
+                })
+                .catch((error) => {
+                    console.error('Error sending reset email:', error);
+                    showToast('Failed to send verification email. Please try again.', 'error');
+                });
+        } catch (error) {
+            console.error('Firebase auth error:', error);
+            showToast('Authentication error. Please try again.', 'error');
         }
-    }, 1000);
-    
-    // Store interval ID to clear it if needed
-    sessionStorage.setItem('otpCountdownInterval', countdownInterval);
-}
-
-// Verify OTP
-function verifyOtp() {
-    // Get entered OTP
-    const otpDigits = document.querySelectorAll('.otp-digit');
-    const enteredOtp = Array.from(otpDigits).map(input => input.value).join('');
-    
-    // Validate OTP
-    if (enteredOtp.length !== 6) {
-        showToast('Please enter the 6-digit OTP', 'error');
-        return;
-    }
-    
-    // Get stored OTP and expiry time
-    const storedOtp = sessionStorage.getItem('resetPinOtp');
-    const expiryTime = parseInt(sessionStorage.getItem('resetPinOtpExpiry') || '0');
-    
-    // Check if OTP is expired
-    if (Date.now() > expiryTime) {
-        showToast('OTP has expired. Please request a new one.', 'error');
-        return;
-    }
-    
-    // Check if OTP is correct
-    if (storedOtp !== enteredOtp) {
-        showToast('Incorrect OTP. Please try again.', 'error');
-        return;
-    }
-    
-    // OTP is valid, proceed with PIN reset
-    showToast('Identity verified successfully', 'success');
-    
-    // Clear stored PIN
-    localStorage.removeItem('walletPin');
-    
-    // Clear OTP data
-    sessionStorage.removeItem('resetPinOtp');
-    sessionStorage.removeItem('resetPinOtpExpiry');
-    
-    // Clear countdown interval
-    const countdownInterval = sessionStorage.getItem('otpCountdownInterval');
-    if (countdownInterval) {
-        clearInterval(parseInt(countdownInterval));
-        sessionStorage.removeItem('otpCountdownInterval');
-    }
-    
-    // Hide OTP screen
-    const otpScreen = document.getElementById('otpVerificationScreen');
-    if (otpScreen) {
-        otpScreen.classList.add('hidden');
-    }
-    
-    // Show PIN setup screen
-    if (pinScreen) pinScreen.classList.remove('hidden');
-    if (pinSetupSection) pinSetupSection.classList.remove('hidden');
-    if (pinEntrySection) pinEntrySection.classList.add('hidden');
-    
-    // Reset PIN inputs
-    resetPinInputs();
-    
-    // Focus on first PIN input
-    if (pinDigits.length > 0) {
-        pinDigits[0].focus();
     }
 }
 
-// Cancel OTP verification
-function cancelOtpVerification() {
-    // Clear OTP data
-    sessionStorage.removeItem('resetPinOtp');
-    sessionStorage.removeItem('resetPinOtpExpiry');
-    
-    // Clear countdown interval
-    const countdownInterval = sessionStorage.getItem('otpCountdownInterval');
-    if (countdownInterval) {
-        clearInterval(parseInt(countdownInterval));
-        sessionStorage.removeItem('otpCountdownInterval');
-    }
-    
-    // Hide OTP screen
-    const otpScreen = document.getElementById('otpVerificationScreen');
-    if (otpScreen) {
-        otpScreen.classList.add('hidden');
-    }
-    
-    // Show PIN entry screen
-    if (pinScreen) pinScreen.classList.remove('hidden');
-    if (pinSetupSection) pinSetupSection.classList.add('hidden');
-    if (pinEntrySection) pinEntrySection.classList.remove('hidden');
-    
-    // Reset PIN inputs
-    resetPinInputs();
-    
-    // Focus on first PIN login input
-    if (pinLoginDigits.length > 0) {
-        pinLoginDigits[0].focus();
+// Check if PIN reset is in progress when opening wallet
+function checkPinResetStatus() {
+    if (localStorage.getItem('pinResetInProgress') === 'true') {
+        // Clear the flag
+        localStorage.removeItem('pinResetInProgress');
+        
+        // Clear stored PIN
+        localStorage.removeItem('walletPin');
+        
+        // Show PIN setup screen
+        if (pinScreen) pinScreen.classList.remove('hidden');
+        if (pinSetupSection) pinSetupSection.classList.remove('hidden');
+        if (pinEntrySection) pinEntrySection.classList.add('hidden');
+        
+        // Reset PIN inputs
+        resetPinInputs();
+        
+        // Focus on first PIN input
+        if (pinDigits.length > 0) {
+            pinDigits[0].focus();
+        }
+        
+        showToast('Identity verified. Please set a new PIN.', 'success');
     }
 }
 
-// Resend OTP
-function resendOtp() {
-    // Clear existing OTP data
-    sessionStorage.removeItem('resetPinOtp');
-    sessionStorage.removeItem('resetPinOtpExpiry');
+// Add this to your openWallet function
+function openWallet() {
+    // ... existing code ...
     
-    // Send new OTP
-    sendOtpToEmail();
+    // Check if PIN reset is in progress
+    checkPinResetStatus();
     
-    // Restart countdown
-    startOtpCountdown();
-    
-    // Reset OTP inputs
-    const otpDigits = document.querySelectorAll('.otp-digit');
-    otpDigits.forEach(input => input.value = '');
-    
-    // Focus on first OTP input
-    if (otpDigits.length > 0) {
-        otpDigits[0].focus();
-    }
+    // ... rest of existing code ...
 }
 
     
