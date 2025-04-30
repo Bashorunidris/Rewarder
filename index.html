@@ -1751,6 +1751,803 @@ input:checked + .slider:before {
     }
 }
 
+
+/* Wallet Feature Styles */
+:root {
+    --primary-color: #6c5ce7;
+    --primary-light: #a29bfe;
+    --primary-dark: #5641e5;
+    --secondary-color: #00b894;
+    --secondary-light: #55efc4;
+    --secondary-dark: #00a785;
+    --danger-color: #e74c3c;
+    --warning-color: #f39c12;
+    --success-color: #2ecc71;
+    --info-color: #3498db;
+    --text-color: #333;
+    --text-light: #666;
+    --text-lighter: #999;
+    --bg-color: #fff;
+    --bg-light: #f8f9fa;
+    --bg-dark: #eee;
+    --border-color: #ddd;
+    --border-radius: 10px;
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s ease;
+}
+
+/* Modal Base Styles */
+.wallet-modal,
+.feature-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.wallet-modal.active,
+.feature-modal.active {
+    display: flex;
+}
+
+.wallet-container,
+.feature-modal-content {
+    background-color: var(--bg-color);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    width: 90%;
+    max-width: 480px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    z-index: 1001;
+    animation: modalFadeIn 0.3s ease;
+}
+
+.wallet-header,
+.feature-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.wallet-header h2,
+.feature-modal-header h2 {
+    margin: 0;
+    font-size: 1.25rem;
+    color: var(--text-color);
+    font-weight: 600;
+}
+
+.close-wallet,
+.close-feature-modal {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: var(--text-light);
+    padding: 0;
+    line-height: 1;
+}
+
+.wallet-screen,
+.feature-modal-body {
+    padding: 20px;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    display: none;
+}
+
+.modal-overlay.active {
+    display: block;
+}
+
+/* PIN Setup/Entry Styles */
+.pin-setup,
+.pin-entry {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.pin-icon {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background-color: var(--primary-light);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+.pin-setup h3,
+.pin-entry h3 {
+    margin: 0 0 10px;
+    font-size: 1.2rem;
+    color: var(--text-color);
+}
+
+.pin-setup p,
+.pin-entry p {
+    margin: 0 0 20px;
+    color: var(--text-light);
+    font-size: 0.95rem;
+}
+
+.pin-input-container,
+.otp-input-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.pin-digit,
+.pin-confirm-digit,
+.pin-login-digit,
+.withdraw-pin-digit,
+.current-pin-digit,
+.new-pin-digit,
+.confirm-new-pin-digit,
+.transfer-pin-digit,
+.otp-digit {
+    width: 45px;
+    height: 45px;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--text-color);
+    background-color: var(--bg-light);
+    transition: var(--transition);
+}
+
+.pin-digit:focus,
+.pin-confirm-digit:focus,
+.pin-login-digit:focus,
+.withdraw-pin-digit:focus,
+.current-pin-digit:focus,
+.new-pin-digit:focus,
+.confirm-new-pin-digit:focus,
+.transfer-pin-digit:focus,
+.otp-digit:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(108, 92, 231, 0.2);
+}
+
+.otp-input-container {
+    gap: 8px;
+}
+
+.otp-digit {
+    width: 40px;
+    height: 40px;
+}
+
+/* Button Styles */
+.wallet-btn {
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    border: none;
+    font-size: 0.95rem;
+    display: inline-block;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.primary-btn {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.primary-btn:hover {
+    background-color: var(--primary-dark);
+}
+
+.secondary-btn {
+    background-color: var(--bg-dark);
+    color: var(--text-color);
+}
+
+.secondary-btn:hover {
+    background-color: var(--border-color);
+}
+
+.text-btn {
+    background: none;
+    color: var(--primary-color);
+    padding: 8px 16px;
+}
+
+.text-btn:hover {
+    text-decoration: underline;
+}
+
+/* Wallet Dashboard Styles */
+.wallet-info {
+    margin-bottom: 20px;
+}
+
+.wallet-id-container {
+    display: flex;
+    align-items: center;
+    background-color: var(--bg-light);
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.wallet-id-label {
+    color: var(--text-light);
+    font-size: 0.9rem;
+    margin-right: 8px;
+}
+
+.wallet-id {
+    font-weight: 600;
+    color: var(--text-color);
+    font-size: 0.95rem;
+    flex-grow: 1;
+}
+
+.copy-btn {
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    cursor: pointer;
+    padding: 5px;
+    font-size: 0.9rem;
+}
+
+.balance-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.balance-card {
+    background-color: var(--bg-light);
+    border-radius: var(--border-radius);
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+d.talent-coin {
+    background-color: var(--primary-light);
+    color: white;
+}
+
+.balance-card.commission {
+    background-color: var(--secondary-light);
+    color: white;
+}
+
+.balance-icon {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.balance-details h3 {
+    margin: 0 0 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    opacity: 0.9;
+}
+
+.balance-amount {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.balance-equivalent {
+    font-size: 0.85rem;
+    opacity: 0.8;
+}
+
+.wallet-actions {
+    margin-bottom: 25px;
+}
+
+.action-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.wallet-action-btn {
+    background-color: var(--bg-light);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.wallet-action-btn:hover {
+    background-color: var(--bg-dark);
+    transform: translateY(-2px);
+}
+
+.wallet-action-btn .action-icon {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    margin-bottom: 8px;
+}
+
+.wallet-action-btn span {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+/* Transaction History Styles */
+.transaction-history {
+    border-top: 1px solid var(--border-color);
+    padding-top: 20px;
+}
+
+.transaction-history h3 {
+    margin: 0 0 15px;
+    font-size: 1.1rem;
+    color: var(--text-color);
+}
+
+.transaction-list {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.empty-transactions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 0;
+    color: var(--text-lighter);
+}
+
+.empty-transactions i {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.transaction-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.transaction-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--bg-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 12px;
+    color: var(--primary-color);
+}
+
+.transaction-details {
+    flex-grow: 1;
+}
+
+.transaction-title {
+    font-weight: 500;
+    color: var(--text-color);
+    font-size: 0.95rem;
+    margin-bottom: 4px;
+}
+
+.transaction-date {
+    font-size: 0.8rem;
+    color: var(--text-lighter);
+}
+
+.transaction-amount {
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+}
+
+.amount-value {
+    font-weight: 600;
+    color: var(--text-color);
+    font-size: 0.95rem;
+}
+
+.amount-value.credit {
+    color: var(--success-color);
+}
+
+.amount-value.debit {
+    color: var(--danger-color);
+}
+
+.amount-status {
+    font-size: 0.75rem;
+    color: var(--text-lighter);
+    text-transform: uppercase;
+}
+
+.amount-status.pending {
+    color: var(--warning-color);
+}
+
+.amount-status.completed {
+    color: var(--success-color);
+}
+
+.amount-status.failed {
+    color: var(--danger-color);
+}
+
+/* Feature Modal Specific Styles */
+.tabs {
+    display: flex;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 20px;
+}
+
+.tab {
+    padding: 12px 20px;
+    cursor: pointer;
+    font-weight: 500;
+    color: var(--text-light);
+    position: relative;
+    transition: var(--transition);
+}
+
+.tab.active {
+    color: var(--primary-color);
+}
+
+.tab.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: var(--primary-color);
+    border-radius: 3px 3px 0 0;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--text-color);
+    font-size: 0.95rem;
+}
+
+.input-group input,
+.input-group select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 0.95rem;
+    color: var(--text-color);
+    background-color: var(--bg-light);
+    transition: var(--transition);
+}
+
+.input-group input:focus,
+.input-group select:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(108, 92, 231, 0.2);
+}
+
+.input-group input:disabled {
+    background-color: var(--bg-dark);
+    cursor: not-allowed;
+}
+
+.input-note {
+    font-size: 0.8rem;
+    color: var(--text-lighter);
+    margin-top: 5px;
+}
+
+.naira-equivalent {
+    background-color: var(--bg-light);
+    padding: 12px 15px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.naira-equivalent .amount {
+    font-weight: 600;
+    color: var(--primary-color);
+    font-size: 1.1rem;
+}
+
+.account-details {
+    background-color: var(--bg-light);
+    border-radius: var(--border-radius);
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.account-details h3 {
+    margin: 0 0 10px;
+    font-size: 1rem;
+    color: var(--text-color);
+}
+
+.account-info {
+    margin-bottom: 15px;
+}
+
+.account-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.account-row .label {
+    color: var(--text-light);
+    font-size: 0.9rem;
+    margin-right: 8px;
+    min-width: 120px;
+}
+
+.account-row .value {
+    font-weight: 500;
+    color: var(--text-color);
+    flex-grow: 1;
+}
+
+.instructions {
+    font-size: 0.9rem;
+    color: var(--text-light);
+}
+
+.instructions p {
+    margin: 8px 0;
+}
+
+.file-upload {
+    position: relative;
+    margin-top: 10px;
+}
+
+.file-upload input[type="file"] {
+    position: absolute;
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    z-index: -1;
+}
+
+.file-upload-btn {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: var(--bg-dark);
+    color: var(--text-color);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.file-upload-btn:hover {
+    background-color: var(--border-color);
+}
+
+.file-name {
+    margin-top: 8px;
+    font-size: 0.85rem;
+    color: var(--text-light);
+    word-break: break-all;
+}
+
+.verification-options {
+    margin-bottom: 20px;
+}
+
+.verification-options h3 {
+    margin: 0 0 15px;
+    font-size: 1.1rem;
+    color: var(--text-color);
+}
+
+.option-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.option-btn {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+    background-color: var(--bg-light);
+    border: 2px solid var(--border-color);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.option-btn.active {
+    border-color: var(--primary-color);
+    background-color: rgba(108, 92, 231, 0.1);
+}
+
+.option-btn i {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    margin-bottom: 8px;
+}
+
+.option-btn span {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+.verification-section {
+    margin-bottom: 20px;
+}
+
+.resend-otp {
+    text-align: center;
+    margin: 10px 0;
+    font-size: 0.85rem;
+    color: var(--text-light);
+}
+
+.fee-calculation {
+    background-color: var(--bg-light);
+    border-radius: var(--border-radius);
+    padding: 15px;
+    margin: 20px 0;
+}
+
+.fee-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+    color: var(--text-color);
+}
+
+.fee-row.total {
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: var(--primary-color);
+}
+
+.fee-divider {
+    height: 1px;
+    background-color: var(--border-color);
+    margin: 10px 0;
+}
+
+.fee-note {
+    display: flex;
+    align-items: center;
+    font-size: 0.85rem;
+    color: var(--text-light);
+    margin-bottom: 20px;
+}
+
+.fee-note i {
+    margin-right: 8px;
+    color: var(--info-color);
+}
+
+/* Utility Classes */
+.hidden {
+    display: none !important;
+}
+
+/* Animation */
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Media Queries */
+@media (max-width: 480px) {
+    .balance-cards {
+        grid-template-columns: 1fr;
+    }
+    
+    .action-row {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+    
+    .option-buttons {
+        flex-direction: column;
+    }
+    
+    .pin-digit,
+    .pin-confirm-digit,
+    .pin-login-digit,
+    .withdraw-pin-digit,
+    .current-pin-digit,
+    .new-pin-digit,
+    .confirm-new-pin-digit,
+    .transfer-pin-digit {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .otp-digit {
+        width: 35px;
+        height: 35px;
+    }
+}
+
+/* Fix for notched iPhones */
+@supports (padding: max(0px)) {
+    .wallet-container,
+    .feature-modal-content {
+        padding-bottom: max(20px, env(safe-area-inset-bottom));
+    }
+}
+
+
   </style>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -2182,6 +2979,471 @@ input:checked + .slider:before {
     </div>
 </div>
 
+
+<!-- Wallet Modal -->
+<div class="wallet-modal" id="walletModal">
+    <div class="wallet-container">
+        <!-- PIN Setup/Entry Screen (shown first if no PIN exists) -->
+        <div class="wallet-screen" id="pinScreen">
+            <div class="wallet-header">
+                <h2>Wallet Access</h2>
+                <button class="close-wallet" id="closeWalletBtn">&times;</button>
+            </div>
+            
+            <div class="pin-setup" id="pinSetupSection">
+                <div class="pin-icon">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <h3>Create Your Wallet PIN</h3>
+                <p>Set a 4-digit PIN to secure your wallet and transactions.</p>
+                
+                <div class="pin-input-container">
+                    <input type="password" maxlength="1" class="pin-digit" data-index="0">
+                    <input type="password" maxlength="1" class="pin-digit" data-index="1">
+                    <input type="password" maxlength="1" class="pin-digit" data-index="2">
+                    <input type="password" maxlength="1" class="pin-digit" data-index="3">
+                </div>
+                
+                <div class="pin-confirm-container hidden" id="pinConfirmContainer">
+                    <p>Confirm your PIN</p>
+                    <div class="pin-input-container">
+                        <input type="password" maxlength="1" class="pin-confirm-digit" data-index="0">
+                        <input type="password" maxlength="1" class="pin-confirm-digit" data-index="1">
+                        <input type="password" maxlength="1" class="pin-confirm-digit" data-index="2">
+                        <input type="password" maxlength="1" class="pin-confirm-digit" data-index="3">
+                    </div>
+                </div>
+                
+                <button class="wallet-btn primary-btn" id="createPinBtn">Create PIN</button>
+            </div>
+            
+            <div class="pin-entry hidden" id="pinEntrySection">
+                <div class="pin-icon">
+                    <i class="fas fa-unlock-alt"></i>
+                </div>
+                <h3>Enter Your Wallet PIN</h3>
+                <p>Enter your 4-digit PIN to access your wallet.</p>
+                
+                <div class="pin-input-container">
+                    <input type="password" maxlength="1" class="pin-login-digit" data-index="0">
+                    <input type="password" maxlength="1" class="pin-login-digit" data-index="1">
+                    <input type="password" maxlength="1" class="pin-login-digit" data-index="2">
+                    <input type="password" maxlength="1" class="pin-login-digit" data-index="3">
+                </div>
+                
+                <button class="wallet-btn primary-btn" id="loginPinBtn">Access Wallet</button>
+                <button class="wallet-btn text-btn" id="forgotPinBtn">Forgot PIN?</button>
+            </div>
+        </div>
+        
+        <!-- Main Wallet Dashboard (shown after PIN verification) -->
+        <div class="wallet-screen hidden" id="walletDashboard">
+            <div class="wallet-header">
+                <h2>My Wallet</h2>
+                <button class="close-wallet" id="closeWalletDashboardBtn">&times;</button>
+            </div>
+            
+            <div class="wallet-info">
+                <div class="wallet-id-container">
+                    <span class="wallet-id-label">Wallet ID:</span>
+                    <span class="wallet-id" id="walletIdDisplay">WL123456789</span>
+                    <button class="copy-btn" id="copyWalletIdBtn">
+                        <i class="fas fa-copy"></i>
+                    </button>
+                </div>
+                
+                <div class="balance-cards">
+                    <div class="balance-card talent-coin">
+                        <div class="balance-icon">
+                            <i class="fas fa-coins"></i>
+                        </div>
+                        <div class="balance-details">
+                            <h3>Talent Coin Balance</h3>
+                            <div class="balance-amount" id="talentCoinBalance">0</div>
+                            <div class="balance-equivalent">≈ ₦<span id="nairaEquivalent">0</span></div>
+                        </div>
+                    </div>
+                    
+                    <div class="balance-card commission">
+                        <div class="balance-icon">
+                            <i class="fas fa-hand-holding-usd"></i>
+                        </div>
+                        <div class="balance-details">
+                            <h3>Commission Balance</h3>
+                            <div class="balance-amount" id="commissionBalance">0</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="wallet-actions">
+                <div class="action-row">
+                    <button class="wallet-action-btn" id="buyCoinsBtn">
+                        <div class="action-icon">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <span>Buy Talent Coin</span>
+                    </button>
+                    
+                    <button class="wallet-action-btn" id="withdrawBtn">
+                        <div class="action-icon">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </div>
+                        <span>Withdraw</span>
+                    </button>
+                </div>
+                
+                <div class="action-row">
+                    <button class="wallet-action-btn" id="changePinBtn">
+                        <div class="action-icon">
+                            <i class="fas fa-key"></i>
+                        </div>
+                        <span>Change PIN</span>
+                    </button>
+                    
+                    <button class="wallet-action-btn" id="transferBtn">
+                        <div class="action-icon">
+                            <i class="fas fa-paper-plane"></i>
+                        </div>
+                        <span>Transfer</span>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="transaction-history">
+                <h3>Transaction History</h3>
+                <div class="transaction-list" id="transactionList">
+                    <!-- Transactions will be loaded here -->
+                    <div class="empty-transactions">
+                        <i class="fas fa-history"></i>
+                        <p>No transactions yet</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Buy Talent Coin Modal -->
+<div class="feature-modal" id="buyCoinsModal">
+    <div class="feature-modal-content">
+        <div class="feature-modal-header">
+            <h2>Buy Talent Coin</h2>
+            <button class="close-feature-modal">&times;</button>
+        </div>
+        
+        <div class="feature-modal-body">
+            <div class="tabs">
+                <div class="tab active" data-tab="payment">Payment Details</div>
+                <div class="tab" data-tab="confirmation">Confirm Transfer</div>
+            </div>
+            
+            <div class="tab-content active" id="paymentTab">
+                <div class="input-group">
+                    <label for="coinAmount">Amount of Talent Coins</label>
+                    <input type="number" id="coinAmount" placeholder="Enter amount">
+                    <div class="input-note">1 Talent Coin = ₦10</div>
+                </div>
+                
+                <div class="naira-equivalent">
+                    <span>You'll pay:</span>
+                    <span class="amount">₦<span id="paymentAmount">0</span></span>
+                </div>
+                
+                <div class="account-details">
+                    <h3>Transfer to:</h3>
+                    <div class="account-info">
+                        <div class="account-row">
+                            <span class="label">Account Name:</span>
+                            <span class="value">Rewarder Quest</span>
+                        </div>
+                        <div class="account-row">
+                            <span class="label">Account Number (Opay):</span>
+                            <span class="value">9078139367</span>
+                            <button class="copy-btn" id="copyAccountBtn">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="instructions">
+                        <p>1. Transfer the exact amount to the account above</p>
+                        <p>2. After payment, click "Next" to confirm your transfer</p>
+                        <p>3. Your coins will be credited within 1-30 minutes after verification</p>
+                    </div>
+                </div>
+                
+                <button class="wallet-btn primary-btn next-tab-btn">Next</button>
+            </div>
+            
+            <div class="tab-content" id="confirmationTab">
+                <div class="input-group">
+                    <label for="transferReference">Transfer Reference/ID</label>
+                    <input type="text" id="transferReference" placeholder="Enter transfer reference">
+                </div>
+                
+                <div class="input-group">
+                    <label for="transferDate">Date of Transfer</label>
+                    <input type="date" id="transferDate">
+                </div>
+                
+                <div class="input-group">
+                    <label for="transferAmount">Amount Transferred (₦)</label>
+                    <input type="number" id="transferAmount" placeholder="Enter amount">
+                </div>
+                
+                <div class="input-group">
+                    <label for="transferScreenshot">Screenshot of Transfer (Optional)</label>
+                    <div class="file-upload">
+                        <input type="file" id="transferScreenshot" accept="image/*">
+                        <label for="transferScreenshot" class="file-upload-btn">
+                            <i class="fas fa-upload"></i> Upload Screenshot
+                        </label>
+                        <div class="file-name" id="fileName"></div>
+                    </div>
+                </div>
+                
+                <button class="wallet-btn primary-btn" id="confirmTransferBtn">Confirm Transfer</button>
+                <button class="wallet-btn secondary-btn prev-tab-btn">Back</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Withdraw Modal -->
+<div class="feature-modal" id="withdrawModal">
+    <div class="feature-modal-content">
+        <div class="feature-modal-header">
+            <h2>Withdraw Funds</h2>
+            <button class="close-feature-modal">&times;</button>
+        </div>
+        
+        <div class="feature-modal-body">
+            <div class="pin-verification" id="withdrawPinVerification">
+                <h3>Enter your PIN to continue</h3>
+                <div class="pin-input-container">
+                    <input type="password" maxlength="1" class="withdraw-pin-digit" data-index="0">
+                    <input type="password" maxlength="1" class="withdraw-pin-digit" data-index="1">
+                    <input type="password" maxlength="1" class="withdraw-pin-digit" data-index="2">
+                    <input type="password" maxlength="1" class="withdraw-pin-digit" data-index="3">
+                </div>
+                <button class="wallet-btn primary-btn" id="verifyWithdrawPinBtn">Verify</button>
+            </div>
+            
+            <div class="withdraw-form hidden" id="withdrawForm">
+                <div class="input-group">
+                    <label for="withdrawAmount">Amount (Talent Coins)</label>
+                    <input type="number" id="withdrawAmount" placeholder="Enter amount">
+                    <div class="input-note">1 Talent Coin = ₦10</div>
+                </div>
+                
+                <div class="naira-equivalent">
+                    <span>You'll receive:</span>
+                    <span class="amount">₦<span id="withdrawNairaAmount">0</span></span>
+                </div>
+                
+                <div class="input-group">
+                    <label for="bankName">Bank Name</label>
+                    <select id="bankName">
+                        <option value="">Select Bank</option>
+                        <option value="access">Access Bank</option>
+                        <option value="gtb">Guaranty Trust Bank</option>
+                        <option value="firstbank">First Bank</option>
+                        <option value="uba">UBA</option>
+                        <option value="zenith">Zenith Bank</option>
+                        <option value="opay">OPay</option>
+                        <option value="palmpay">PalmPay</option>
+                        <option value="kuda">Kuda Bank</option>
+                        <!-- Add more banks as needed -->
+                    </select>
+                </div>
+                
+                <div class="input-group">
+                    <label for="accountNumber">Account Number</label>
+                    <input type="text" id="accountNumber" placeholder="Enter account number" maxlength="10">
+                </div>
+                
+                <div class="input-group">
+                    <label for="accountName">Account Name</label>
+                    <input type="text" id="accountName" placeholder="Enter account name">
+                </div>
+                
+                <div class="instructions">
+                    <p>Note: Withdrawal will be processed within 1-30 minutes after confirmation.</p>
+                </div>
+                
+                <button class="wallet-btn primary-btn" id="confirmWithdrawBtn">Withdraw Funds</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Change PIN Modal -->
+<div class="feature-modal" id="changePinModal">
+    <div class="feature-modal-content">
+        <div class="feature-modal-header">
+            <h2>Change PIN</h2>
+            <button class="close-feature-modal">&times;</button>
+        </div>
+        
+        <div class="feature-modal-body">
+            <div class="verification-options">
+                <h3>Verify your identity</h3>
+                <div class="option-buttons">
+                    <button class="option-btn active" data-option="pin">
+                        <i class="fas fa-key"></i>
+                        <span>Use Current PIN</span>
+                    </button>
+                    <button class="option-btn" data-option="otp">
+                        <i class="fas fa-envelope"></i>
+                        <span>Use OTP</span>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="verification-section" id="pinVerificationSection">
+                <div class="input-group">
+                    <label>Enter Current PIN</label>
+                    <div class="pin-input-container">
+                        <input type="password" maxlength="1" class="current
+                        -pin-digit" data-index="0">
+                        <input type="password" maxlength="1" class="current-pin-digit" data-index="1">
+                        <input type="password" maxlength="1" class="current-pin-digit" data-index="2">
+                        <input type="password" maxlength="1" class="current-pin-digit" data-index="3">
+                    </div>
+                </div>
+                <button class="wallet-btn primary-btn" id="verifyCurrentPinBtn">Verify</button>
+            </div>
+            
+            <div class="verification-section hidden" id="otpVerificationSection">
+                <div class="input-group">
+                    <label for="emailForOtp">Email Address</label>
+                    <input type="email" id="emailForOtp" placeholder="Enter your registered email" disabled>
+                </div>
+                <button class="wallet-btn primary-btn" id="sendOtpBtn">Send OTP</button>
+                
+                <div class="otp-input-section hidden" id="otpInputSection">
+                    <div class="input-group">
+                        <label>Enter OTP sent to your email</label>
+                        <div class="otp-input-container">
+                            <input type="text" maxlength="1" class="otp-digit" data-index="0">
+                            <input type="text" maxlength="1" class="otp-digit" data-index="1">
+                            <input type="text" maxlength="1" class="otp-digit" data-index="2">
+                            <input type="text" maxlength="1" class="otp-digit" data-index="3">
+                            <input type="text" maxlength="1" class="otp-digit" data-index="4">
+                            <input type="text" maxlength="1" class="otp-digit" data-index="5">
+                        </div>
+                    </div>
+                    <div class="resend-otp">
+                        <span id="otpTimer">Resend in 60s</span>
+                        <button class="text-btn hidden" id="resendOtpBtn">Resend OTP</button>
+                    </div>
+                    <button class="wallet-btn primary-btn" id="verifyOtpBtn">Verify OTP</button>
+                </div>
+            </div>
+            
+            <div class="new-pin-section hidden" id="newPinSection">
+                <h3>Set New PIN</h3>
+                <div class="input-group">
+                    <label>Enter New PIN</label>
+                    <div class="pin-input-container">
+                        <input type="password" maxlength="1" class="new-pin-digit" data-index="0">
+                        <input type="password" maxlength="1" class="new-pin-digit" data-index="1">
+                        <input type="password" maxlength="1" class="new-pin-digit" data-index="2">
+                        <input type="password" maxlength="1" class="new-pin-digit" data-index="3">
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label>Confirm New PIN</label>
+                    <div class="pin-input-container">
+                        <input type="password" maxlength="1" class="confirm-new-pin-digit" data-index="0">
+                        <input type="password" maxlength="1" class="confirm-new-pin-digit" data-index="1">
+                        <input type="password" maxlength="1" class="confirm-new-pin-digit" data-index="2">
+                        <input type="password" maxlength="1" class="confirm-new-pin-digit" data-index="3">
+                    </div>
+                </div>
+                
+                <button class="wallet-btn primary-btn" id="updatePinBtn">Update PIN</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Transfer Modal -->
+<div class="feature-modal" id="transferModal">
+    <div class="feature-modal-content">
+        <div class="feature-modal-header">
+            <h2>Transfer Talent Coins</h2>
+            <button class="close-feature-modal">&times;</button>
+        </div>
+        
+        <div class="feature-modal-body">
+            <div class="input-group">
+                <label for="recipientWalletId">Recipient's Wallet ID</label>
+                <input type="text" id="recipientWalletId" placeholder="Enter wallet ID">
+            </div>
+            
+            <div class="input-group">
+                <label for="transferCoinAmount">Amount (Talent Coins)</label>
+                <input type="number" id="transferCoinAmount" placeholder="Enter amount">
+            </div>
+            
+            <div class="fee-calculation">
+                <div class="fee-row">
+                    <span>Transfer Amount:</span>
+                    <span><span id="transferAmount">0</span> Talent Coins</span>
+                </div>
+                <div class="fee-row">
+                    <span>Transfer Fee:</span>
+                    <span><span id="transferFee">0</span> Talent Coins</span>
+                </div>
+                <div class="fee-divider"></div>
+                <div class="fee-row total">
+                    <span>Total:</span>
+                    <span><span id="transferTotal">0</span> Talent Coins</span>
+                </div>
+            </div>
+            
+            <div class="fee-note">
+                <i class="fas fa-info-circle"></i>
+                <span>Transfer fee: 1 Talent Coin for every 15 Talent Coins sent</span>
+            </div>
+            
+            <div class="pin-verification" id="transferPinVerification">
+                <h3>Enter your PIN to confirm transfer</h3>
+                <div class="pin-input-container">
+                    <input type="password" maxlength="1" class="transfer-pin-digit" data-index="0">
+                    <input type="password" maxlength="1" class="transfer-pin-digit" data-index="1">
+                    <input type="password" maxlength="1" class="transfer-pin-digit" data-index="2">
+                    <input type="password" maxlength="1" class="transfer-pin-digit" data-index="3">
+                </div>
+            </div>
+            
+            <button class="wallet-btn primary-btn" id="confirmTransferCoinsBtn">Confirm Transfer</button>
+        </div>
+    </div>
+</div>
+
+<!-- Transaction Item Template (for JavaScript use) -->
+<template id="transactionTemplate">
+    <div class="transaction-item">
+        <div class="transaction-icon">
+            <i class="fas fa-exchange-alt"></i>
+        </div>
+        <div class="transaction-details">
+            <div class="transaction-title">Transaction Title</div>
+            <div class="transaction-date">Date</div>
+        </div>
+        <div class="transaction-amount">
+            <span class="amount-value">0</span>
+            <span class="amount-status">pending</span>
+        </div>
+    </div>
+</template>
+
+<!-- Overlay for modals -->
+<div class="modal-overlay" id="modalOverlay"></div>
 
 <!-- Firebase SDK -->
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
@@ -5010,6 +6272,9 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+
+
 
 </script>
    </body>
