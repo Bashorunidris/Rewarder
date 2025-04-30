@@ -6274,6 +6274,848 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
+document.addEventListener('DOMContentLoaded', function() {
+    // DOM Elements
+    const walletBtn = document.querySelector('.wallet-btn');
+    const walletModal = document.getElementById('walletModal');
+    const closeWalletBtn = document.getElementById('closeWalletBtn');
+    const closeWalletDashboardBtn = document.getElementById('closeWalletDashboardBtn');
+    
+    // PIN Setup Elements
+    const pinScreen = document.getElementById('pinScreen');
+    const pinSetupSection = document.getElementById('pinSetupSection');
+    const pinEntrySection = document.getElementById('pinEntrySection');
+    const pinConfirmContainer = document.getElementById('pinConfirmContainer');
+    const createPinBtn = document.getElementById('createPinBtn');
+    const loginPinBtn = document.getElementById('loginPinBtn');
+    const forgotPinBtn = document.getElementById('forgotPinBtn');
+    
+    // Wallet Dashboard Elements
+    const walletDashboard = document.getElementById('walletDashboard');
+    const walletIdDisplay = document.getElementById('walletIdDisplay');
+    const copyWalletIdBtn = document.getElementById('copyWalletIdBtn');
+    const talentCoinBalance = document.getElementById('talentCoinBalance');
+    const nairaEquivalent = document.getElementById('nairaEquivalent');
+    const commissionBalance = document.getElementById('commissionBalance');
+    
+    // PIN Input Elements
+    const pinDigits = document.querySelectorAll('.pin-digit');
+    const pinConfirmDigits = document.querySelectorAll('.pin-confirm-digit');
+    const pinLoginDigits = document.querySelectorAll('.pin-login-digit');
+    
+    // Constants
+    const TALENT_COIN_RATE = 100; // 1 Talent Coin = ₦100 (example rate)
+    
+    // Fix for iOS touch events
+    if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+        document.documentElement.style.cursor = 'pointer';
+    }
+    
+    // Initialize wallet functionality
+    initWallet();
+    
+    // Event Listeners - Using both click and touchend for better mobile support
+    if (walletBtn) {
+        walletBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            openWallet();
+        });
+        
+        // Add touchend event for mobile
+        walletBtn.addEventListener('touchend', function(e) {
+            e.preventDefault();
+            openWallet();
+        }, { passive: false });
+    }
+    
+    if (closeWalletBtn) {
+        closeWalletBtn.addEventListener('click', closeWallet);
+        closeWalletBtn.addEventListener('touchend', function(e) {
+            e.preventDefault();
+            closeWallet();
+        }, { passive: false });
+    }
+    
+    if (closeWalletDashboardBtn) {
+        closeWalletDashboardBtn.addEventListener('click', closeWallet);
+        closeWalletDashboardBtn.addEventListener('touchend', function(e) {
+            e.preventDefault();
+            closeWallet();
+        }, { passive: false });
+    }
+    
+    if (createPinBtn) {
+        createPinBtn.addEventListener('click', handlePinCreation);
+        createPinBtn.addEventListener('touchend', function(e) {
+            e.preventDefault();
+            handlePinCreation();
+        }, { passive: false });
+    }
+    
+    if (loginPinBtn) {
+        loginPinBtn.addEventListener('click', handlePinLogin);
+        loginPinBtn.addEventListener('touchend', function(e) {
+            e.preventDefault();
+            handlePinLogin();
+        }, { passive: false });
+    }
+    
+    if (forgotPinBtn) {
+        forgotPinBtn.addEventListener('click', handleForgotPin);
+        forgotPinBtn.addEventListener('touchend', function(e) {
+            e.preventDefault();
+            handleForgotPin();
+        }, { passive: false });
+    }
+    
+    if (copyWalletIdBtn) {
+        copyWalletIdBtn.addEventListener('click', copyWalletId);
+        copyWalletIdBtn.addEventListener('touchend', function(e) {
+            e.preventDefault();
+            copyWalletId();
+        }, { passive: false });
+    }
+    
+    // Setup PIN input fields
+    setupPinInputs(pinDigits);
+    setupPinInputs(pinConfirmDigits);
+    setupPinInputs(pinLoginDigits);
+    
+    // Close modal when clicking outside
+    window.addEventListener('click', function(event) {
+        if (event.target === walletModal) {
+            closeWallet();
+        }
+    });
+    
+    // Initialize wallet
+    function initWallet() {
+        // Check if user is logged in
+        if (!isUserLoggedIn()) {
+            // We'll still allow wallet to open, but show login prompt inside
+            console.log('User not logged in, will prompt inside wallet');
+        }
+        
+        // Check if PIN is already set
+        const hasPin = localStorage.getItem('walletPin') !== null;
+        
+        if (hasPin) {
+            if (pinSetupSection) pinSetupSection.classList.add('hidden');
+            if (pinEntrySection) pinEntrySection.classList.remove('hidden');
+        } else {
+            if (pinSetupSection) pinSetupSection.classList.remove('hidden');
+            if (pinEntrySection) pinEntrySection.classList.add('hidden');
+        }
+    }
+    
+    // Open wallet modal
+    function openWallet() {
+        console.log('Opening wallet modal');
+        
+        // Reset PIN inputs
+        resetPinInputs();
+        
+        // Show wallet modal
+        if (walletModal) {
+            walletModal.style.display = 'flex';
+            
+            // Add overlay class to body
+            document.body.classList.add('modal-open');
+            
+            // Focus on first PIN input after a short delay (for mobile)
+            setTimeout(() => {
+                if (pinSetupSection && !pinSetupSection.classList.contains('hidden') && pinDigits.length > 0) {
+                    pinDigits[0].focus();
+                } else if (pinEntrySection && !pinEntrySection.classList.contains('hidden') && pinLoginDigits.length > 0) {
+                    pinLoginDigits[0].focus();
+                }
+            }, 300);
+        } else {
+            console.error('Wallet modal element not found');
+        }
+    }
+    
+    // Close wallet modal
+    function closeWallet() {
+        console.log('Closing wallet modal');
+        
+        if (walletModal) {
+            walletModal.style.display = 'none';
+            
+            // Reset PIN inputs
+            resetPinInputs();
+            
+            // Reset screens
+            if (pinScreen) pinScreen.classList.remove('hidden');
+            if (walletDashboard) walletDashboard.classList.add('hidden');
+            
+            // Remove body class to allow scrolling
+            document.body.classList.remove('modal-open');
+            
+            // Clean up any listeners
+            cleanupWallet();
+        }
+    }
+    
+    // Setup PIN input fields
+    function setupPinInputs(inputs) {
+        inputs.forEach((input, index) => {
+            // Handle input
+            input.addEventListener('input', function(e) {
+                // Allow only numbers
+                this.value = this.value.replace(/[^0-9]/g, '');
+                
+                // Move to next input if value is entered
+                if (this.value && index < inputs.length - 1) {
+                    inputs[index + 1].focus();
+                }
+                
+                // Check if all digits are filled
+                if (inputs === pinDigits) {
+                    checkPinComplete(pinDigits);
+                }
+            });
+            
+            // Handle backspace
+            input.addEventListener('keydown', function(e) {
+                if (e.key === 'Backspace' && !this.value && index > 0) {
+                    inputs[index - 1].focus();
+                }
+            });
+            
+            // Handle paste
+            input.addEventListener('paste', function(e) {
+                e.preventDefault();
+                const pastedData = e.clipboardData.getData('text').replace(/[^0-9]/g, '').slice(0, inputs.length);
+                
+                if (pastedData) {
+                    // Fill inputs with pasted data
+                    for (let i = 0; i < pastedData.length; i++) {
+                        if (index + i < inputs.length) {
+                            inputs[index + i].value = pastedData[i];
+                        }
+                    }
+                    
+                    // Focus on next empty input or last input
+                    const nextIndex = Math.min(index + pastedData.length, inputs.length - 1);
+                    inputs[nextIndex].focus();
+                    
+                    // Check if all digits are filled
+                    if (inputs === pinDigits) {
+                        checkPinComplete(pinDigits);
+                    }
+                }
+            });
+            
+            // Add touch support for mobile
+            input.addEventListener('touchend', function(e) {
+                this.focus();
+            });
+        });
+    }
+    
+    // Check if PIN is complete and show confirm section
+    function checkPinComplete(inputs) {
+        const isComplete = Array.from(inputs).every(input => input.value.length === 1);
+        
+        if (isComplete && pinConfirmContainer && !pinConfirmContainer.classList.contains('hidden')) {
+            return;
+        }
+        
+        if (isComplete && pinConfirmContainer) {
+            pinConfirmContainer.classList.remove('hidden');
+            if (pinConfirmDigits.length > 0) {
+                pinConfirmDigits[0].focus();
+            }
+        }
+    }
+    
+    // Reset PIN inputs
+    function resetPinInputs() {
+        // Reset PIN setup inputs
+        pinDigits.forEach(input => input.value = '');
+        pinConfirmDigits.forEach(input => input.value = '');
+        pinLoginDigits.forEach(input => input.value = '');
+        
+        // Hide confirm container
+        if (pinConfirmContainer) {
+            pinConfirmContainer.classList.add('hidden');
+        }
+    }
+    
+    // Handle PIN creation
+    function handlePinCreation() {
+        console.log('Handling PIN creation');
+        
+        // Get PIN values
+        const pin = Array.from(pinDigits).map(input => input.value).join('');
+        const confirmPin = Array.from(pinConfirmDigits).map(input => input.value).join('');
+        
+        // Validate PIN
+        if (pin.length !== 4) {
+            showToast('Please enter a 4-digit PIN', 'error');
+            return;
+        }
+        
+        // Check if confirm PIN is shown
+        if (pinConfirmContainer && pinConfirmContainer.classList.contains('hidden')) {
+            pinConfirmContainer.classList.remove('hidden');
+            if (pinConfirmDigits.length > 0) {
+                pinConfirmDigits[0].focus();
+            }
+            return;
+        }
+        
+        // Validate confirm PIN
+        if (confirmPin.length !== 4) {
+            showToast('Please confirm your PIN', 'error');
+            return;
+        }
+        
+        // Check if PINs match
+        if (pin !== confirmPin) {
+            showToast('PINs do not match. Please try again.', 'error');
+            resetPinInputs();
+            if (pinDigits.length > 0) {
+                pinDigits[0].focus();
+            }
+            return;
+        }
+        
+        // Save PIN (in a real app, this should be securely stored)
+        const hashedPin = hashPin(pin);
+        localStorage.setItem('walletPin', hashedPin);
+        
+        // Show success message
+        showToast('PIN created successfully', 'success');
+        
+        // Load wallet dashboard
+        loadWalletDashboard();
+    }
+    
+    // Handle PIN login
+    function handlePinLogin() {
+        console.log('Handling PIN login');
+        
+        // Get entered PIN
+        const enteredPin = Array.from(pinLoginDigits).map(input => input.value).join('');
+        
+        // Validate PIN
+        if (enteredPin.length !== 4) {
+            showToast('Please enter your 4-digit PIN', 'error');
+            return;
+        }
+        
+        // Get stored PIN
+        const storedPin = localStorage.getItem('walletPin');
+        
+        // Check if PIN is correct
+        if (storedPin !== hashPin(enteredPin)) {
+            showToast('Incorrect PIN. Please try again.', 'error');
+            resetPinInputs();
+            if (pinLoginDigits.length > 0) {
+                pinLoginDigits[0].focus();
+            }
+            return;
+        }
+        
+        // Load wallet dashboard
+        loadWalletDashboard();
+    }
+    
+    // Handle forgot PIN
+    function handleForgotPin() {
+        console.log('Handling forgot PIN');
+        
+        // Show confirmation dialog
+        if (confirm('Are you sure you want to reset your wallet PIN? This will require identity verification.')) {
+            // Clear stored PIN
+            localStorage.removeItem('walletPin');
+            
+            // Show PIN setup screen
+            if (pinSetupSection) pinSetupSection.classList.remove('hidden');
+            if (pinEntrySection) pinEntrySection.classList.add('hidden');
+            
+            // Reset PIN inputs
+            resetPinInputs();
+            
+            // Focus on first PIN input
+            if (pinDigits.length > 0) {
+                pinDigits[0].focus();
+            }
+            
+            showToast('PIN reset initiated', 'info');
+        }
+    }
+    
+    // Load wallet dashboard
+    function loadWalletDashboard() {
+        console.log('Loading wallet dashboard');
+        
+        // Hide PIN screen and show dashboard
+        if (pinScreen) pinScreen.classList.add('hidden');
+        if (walletDashboard) walletDashboard.classList.remove('hidden');
+        
+        // Show loading state
+        if (talentCoinBalance) talentCoinBalance.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+        if (commissionBalance) commissionBalance.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+        
+        // Check if user is logged in
+        if (!isUserLoggedIn()) {
+            // Show login prompt
+            showToast('Please log in to view your wallet balance', 'warning');
+            
+            // Set default values
+            if (talentCoinBalance) talentCoinBalance.textContent = '0';
+            if (commissionBalance) commissionBalance.textContent = '0';
+            if (nairaEquivalent) nairaEquivalent.textContent = '0';
+            
+            // Set default wallet ID
+            if (walletIdDisplay) walletIdDisplay.textContent = 'Login to view';
+            
+            return;
+        }
+        
+        // Get user ID
+        const userId = getUserId();
+        
+        if (!userId) {
+            showToast('User ID not found', 'error');
+            return;
+        }
+        
+        // Get wallet data from Firebase
+        try {
+            firebase.firestore().collection('users').doc(userId).get()
+                .then(doc => {
+                    if (doc.exists) {
+                        const userData = doc.data();
+                        
+                        // Set wallet ID
+                        if (walletIdDisplay) {
+                            walletIdDisplay.textContent = userData.walletId || 'WL' + userId.substring(0, 8);
+                        }
+                        
+                        // Get wallet balance
+                        return firebase.firestore().collection('wallets').doc(userId).get();
+                    } else {
+                        throw new Error('User data not found');
+                    }
+                })
+                .then(doc => {
+                    if (doc.exists) {
+                        const walletData = doc.data();
+                        
+                        // Set balances
+                        const talentCoins = walletData.talentCoins || 0;
+                        const commission = walletData.commission || 0;
+                        
+                        // Update UI
+                        if (talentCoinBalance) talentCoinBalance.textContent = formatNumber(talentCoins);
+                        if (commissionBalance) commissionBalance.textContent = formatNumber(commission);
+                        
+                        // Calculate Naira equivalent
+                        const nairaValue = talentCoins * TALENT_COIN_RATE;
+                        if (nairaEquivalent) nairaEquivalent.textContent = formatNumber(nairaValue);
+                    } else {
+                        // Create wallet if it doesn't exist
+                        return firebase.firestore().collection('wallets').doc(userId).set({
+                            talentCoins: 0,
+                            commission: 0,
+                            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                        }).then(() => {
+                            if (talentCoinBalance) talentCoinBalance.textContent = '0';
+                            if (commissionBalance) commissionBalance.textContent = '0';
+                            if (nairaEquivalent) nairaEquivalent.textContent = '0';
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading wallet data:', error);
+                    showToast('Failed to load wallet data', 'error');
+                    
+                    // Set default values
+                    if (talentCoinBalance) talentCoinBalance.textContent = '0';
+                    if (commissionBalance) commissionBalance.textContent = '0';
+                    if (nairaEquivalent) nairaEquivalent.textContent = '0';
+                });
+        } catch (error) {
+            console.error('Error in Firebase operation:', error);
+            
+            // Set default values for demo/testing
+            if (walletIdDisplay) walletIdDisplay.textContent = 'WL' + generateRandomId(8);
+            if (talentCoinBalance) talentCoinBalance.textContent = '1,000';
+            if (commissionBalance) commissionBalance.textContent = '250';
+            if (nairaEquivalent) nairaEquivalent.textContent = '100,000';
+        }
+    }
+    
+    // Copy wallet ID
+    function copyWalletId() {
+        if (!walletIdDisplay) return;
+        
+        const walletId = walletIdDisplay.textContent;
+        
+        // Copy to clipboard
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(walletId)
+                .then(() => {
+                    showToast('Wallet ID copied to clipboard', 'success');
+                })
+                .catch(err => {
+                    console.error('Could not copy text: ', err);
+                    fallbackCopyTextToClipboard(walletId);
+                });
+        } else {
+            fallbackCopyTextToClipboard(walletId);
+        }
+    }
+    
+    // Fallback copy to clipboard
+    function fallbackCopyTextToClipboard(text) {
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
+        textArea.style.position = 'fixed';
+        textArea.style.left = '-999999px';
+        textArea.style.top = '-999999px';
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        
+        try {
+            const successful = document.execCommand('copy');
+            showToast(successful ? 'Wallet ID copied to clipboard' : 'Failed to copy wallet ID', successful ? 'success' : 'error');
+        } catch (err) {
+            showToast('Failed to copy wallet ID', 'error');
+        }
+        
+        document.body.removeChild(textArea);
+    }
+    
+    // Helper function to check if user is logged in
+    function isUserLoggedIn() {
+        // For demo purposes, we'll consider the user logged in
+        // In a real app, check firebase.auth().currentUser
+        try {
+            return firebase.auth().currentUser !== null;
+        } catch (error) {
+            console.log('Firebase auth not initialized, using mock login state');
+            return true; // For testing without Firebase
+        }
+    }
+    
+    // Helper function to get user ID
+    function getUserId() {
+        try {
+            const user = firebase.auth().currentUser;
+            return user ? user.uid : generateRandomId(20);
+        } catch (error) {
+            console.log('Firebase auth not initialized, using mock user ID');
+            return generateRandomId(20); // For testing without Firebase
+        }
+    }
+    
+    // Generate random ID for testing
+    function generateRandomId(length) {
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        let result = '';
+        for (let i = 0; i < length; i++) {
+            result += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        return result;
+    }
+    
+    // Helper function to hash PIN (simple hash for demo)
+    function hashPin(pin) {
+        // In a real app, use a proper hashing algorithm
+        // This is just a simple hash for demonstration
+        let hash = 0;
+        for (let i = 0; i < pin.length; i++) {
+            const char = pin.charCodeAt(i);
+            hash = ((hash << 5) - hash) + char;
+            hash = hash & hash; // Convert to 32bit integer
+        }
+        return hash.toString();
+    }
+    
+    // Helper function to format numbers with commas
+    function formatNumber(num) {
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+    
+    // Function to show toast message
+    function showToast(message, type = 'info') {
+        console.log(`Toast: ${message} (${type})`);
+        
+        // Check if toast container exists, create if not
+        let toastContainer = document.getElementById('toastContainer');
+        if (!toastContainer) {
+            toastContainer = document.createElement('div');
+            toastContainer.id = 'toastContainer';
+            document.body.appendChild(toastContainer);
+            
+            // Add styles
+            const style = document.createElement('style');
+            style.textContent = `
+                #toastContainer {
+                    position: fixed;
+                    bottom: 20px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    z-index: 9999;
+                }
+                .toast {
+                    padding: 12px 20px;
+                    margin-bottom: 10px;
+                    border-radius: 8px;
+                    display: flex;
+                    align-items: center;
+                    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+                    animation: slideUp 0.3s ease-out forwards;
+                    max-width: 90vw;
+                }
+                .toast.success {
+                    background-color: #4CAF50;
+                    color: white;
+                }
+                .toast.error {
+                    background-color: #F44336;
+                    color: white;
+                }
+                .toast.info {
+                    background-color: #2196F3;
+                    color: white;
+                }
+                .toast.warning {
+                    background-color: #FF9800;
+                    color: white;
+                }
+                .toast i {
+                    margin-right: 10px;
+                    font-size: 18px;
+                }
+                @keyframes slideUp {
+                    from {
+                        opacity: 0;
+                        transform: translateY(20px);
+                    }
+                    to {
+                        opacity: 1;
+                        transform: translateY(0);
+                    }
+                }
+                @keyframes fadeOut {
+                    from {
+                        opacity: 1;
+                    }
+                    to {
+                        opacity: 0;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+        
+        // Create toast element
+        const toast = document.createElement('div');
+        toast.className = `toast ${type}`;
+        
+        // Set icon based on type
+        let icon;
+        switch (type) {
+            case 'success':
+                icon = 'fas fa-check-circle';
+                break;
+            case 'error':
+                icon = 'fas fa-times-circle';
+                break;
+            case 'warning':
+                icon = 'fas fa-exclamation-triangle';
+                break;
+            default:
+                icon = 'fas fa-info-circle';
+        }
+        
+        // Set content
+        toast.innerHTML = `<i class="${icon}"></i><span>${message}</span>`;
+        
+        // Add to container
+        toastContainer.appendChild(toast);
+        
+        // Remove after 3 seconds
+        setTimeout(() => {
+            toast.style.animation = 'fadeOut 0.3s ease-out forwards';
+            setTimeout(() => {
+                if (toastContainer.contains(toast)) {
+                    toastContainer.removeChild(toast);
+                }
+            }, 300);
+        }, 3000);
+    }
+    
+    // Add mobile-specific enhancements
+    function enhanceForMobile() {
+        // Detect if device is mobile
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        
+        if (isMobile) {
+            console.log('Mobile device detected, applying enhancements');
+            
+            // Add tap highlight color for better feedback
+            const style = document.createElement('style');
+            style.textContent = `
+                .pin-digit, .pin-confirm-digit, .pin-login-digit, 
+                .wallet-btn, .copy-btn, .close-wallet {
+                    -webkit-tap-highlight-color: rgba(0,0,0,0.1);
+                }
+                
+                /* Fix for iOS input styling */
+                input[type="password"] {
+                    -webkit-appearance: none;
+                    border-radius: 4px;
+                }
+                
+                /* Improve touch targets */
+                .wallet-btn, .copy-btn, .close-wallet {
+                    min-height: 44px;
+                }
+                
+                /* Active state for buttons */
+                .wallet-btn:active, .copy-btn:active, .close-wallet:active {
+                    opacity: 0.7;
+                }
+                
+                /* Fix for modal on iOS */
+                .wallet-modal {
+                    -webkit-overflow-scrolling: touch;
+                }
+                
+                /* Fix for iOS scrolling */
+                body.modal-open {
+                    position: fixed;
+                    width: 100%;
+                    height: 100%;
+                    overflow: hidden;
+                }
+            `;
+            document.head.appendChild(style);
+            
+            // Fix for iOS focus issues
+            const inputs = document.querySelectorAll('input');
+            inputs.forEach(input => {
+                input.addEventListener('focus', function() {
+                    // Scroll to input after a short delay
+                    setTimeout(() => {
+                        this.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }, 300);
+                });
+            });
+            
+            // Fix for iOS modal scrolling
+            if (walletModal) {
+                walletModal.addEventListener('touchmove', function(e) {
+                    // Allow scrolling inside the modal content but not the background
+                    if (e.target === walletModal) {
+                        e.preventDefault();
+                    }
+                }, { passive: false });
+            }
+        }
+    }
+    
+    // Add swipe to close functionality for mobile
+    function setupSwipeToClose() {
+        if (!walletModal) return;
+        
+        let touchStartY = 0;
+        let touchEndY = 0;
+        
+        walletModal.addEventListener('touchstart', function(e) {
+            touchStartY = e.changedTouches[0].screenY;
+        }, { passive: true });
+        
+        walletModal.addEventListener('touchend', function(e) {
+            touchEndY = e.changedTouches[0].screenY;
+            handleSwipe();
+        }, { passive: true });
+        
+        function handleSwipe() {
+            const swipeDistance = touchEndY - touchStartY;
+            
+            // If swiped down more than 100px, close the modal
+            if (swipeDistance > 100) {
+                closeWallet();
+            }
+        }
+    }
+    
+    // Clean up when wallet is closed
+    function cleanupWallet() {
+        // Any cleanup needed when wallet is closed
+        console.log('Cleaning up wallet resources');
+    }
+    
+    // Call mobile enhancements
+    enhanceForMobile();
+    setupSwipeToClose();
+    
+    // Debug helper - log when wallet button is clicked
+    console.log('Wallet script loaded, waiting for wallet button click');
+    
+    // Direct initialization for testing - remove in production
+    if (walletBtn) {
+        console.log('Wallet button found:', walletBtn);
+        
+        // Add visible active state for debugging
+        walletBtn.addEventListener('mousedown', function() {
+            console.log('Wallet button mousedown');
+            this.style.opacity = '0.7';
+        });
+        
+        walletBtn.addEventListener('mouseup', function() {
+            console.log('Wallet button mouseup');
+            this.style.opacity = '1';
+        });
+        
+        walletBtn.addEventListener('touchstart', function() {
+            console.log('Wallet button touchstart');
+            this.style.opacity = '0.7';
+        }, { passive: true });
+        
+        walletBtn.addEventListener('touchend', function() {
+            console.log('Wallet button touchend');
+            this.style.opacity = '1';
+        }, { passive: true });
+    } else {
+        console.error('Wallet button not found in the DOM');
+    }
+});
+
+// Add event listener outside DOMContentLoaded for maximum compatibility
+window.addEventListener('load', function() {
+    const walletBtn = document.querySelector('.wallet-btn');
+    
+    if (walletBtn) {
+        console.log('Adding additional wallet button listener on window load');
+        
+        // Force click handler for maximum compatibility
+        walletBtn.onclick = function(e) {
+            console.log('Wallet button clicked (onclick)');
+            e.preventDefault();
+            
+            // Get the walletModal element
+            const walletModal = document.getElementById('walletModal');
+            
+            // Show the modal
+            if (walletModal) {
+                walletModal.style.display = 'flex';
+                document.body.classList.add('modal-open');
+            } else {
+                console.error('Wallet modal not found');
+            }
+        };
+    }
+});
 
 
 </script>
