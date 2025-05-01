@@ -7812,30 +7812,49 @@ function resetBuyCoinsForm() {
     switchTab('payment');
 }
 
+
 // Upload screenshot to Firebase Storage
 function uploadScreenshot(file) {
-    if (!currentUser) {
+    // Get current user
+    const user = firebase.auth().currentUser;
+    if (!user) {
         showToast('You must be logged in to upload files', 'error');
         return;
     }
     
-    const storageRef = firebase.storage().ref();
-    const fileRef = storageRef.child(`screenshots/${currentUser.uid}/${Date.now()}_${file.name}`);
+    // Show loading state
+    showToast('Uploading screenshot...', 'info');
     
-    fileRef.put(file).then(snapshot => {
-        return snapshot.ref.getDownloadURL();
-    }).then(downloadURL => {
-        uploadedScreenshotURL = downloadURL;
-        showToast('Screenshot uploaded successfully', 'success');
-    }).catch(error => {
-        console.error('Error uploading file:', error);
-        showToast('Failed to upload screenshot', 'error');
-    });
+    // Ensure user is authenticated before proceeding
+    firebase.auth().currentUser.getIdToken(true)
+        .then(token => {
+            const storageRef = firebase.storage().ref();
+            const fileRef = storageRef.child(`screenshots/${user.uid}/${Date.now()}_${file.name}`);
+            
+            return fileRef.put(file);
+        })
+        .then(snapshot => {
+            return snapshot.ref.getDownloadURL();
+        })
+        .then(downloadURL => {
+            uploadedScreenshotURL = downloadURL;
+            showToast('Screenshot uploaded successfully', 'success');
+        })
+        .catch(error => {
+            console.error('Error uploading file:', error);
+            showToast('Failed to upload screenshot: ' + error.message, 'error');
+        });
 }
 
+    
+  
+             
+         
 // Submit buy request to Firestore
 function submitBuyRequest() {
-    if (!currentUser) {
+    // Get current user
+    const user = firebase.auth().currentUser;
+    if (!user) {
         showToast('You must be logged in to buy coins', 'error');
         return;
     }
@@ -7874,28 +7893,29 @@ function submitBuyRequest() {
         return;
     }
     
+    // Check if screenshot was uploaded
+    if (!uploadedScreenshotURL) {
+        showToast('Please upload a screenshot of your payment', 'error');
+        return;
+    }
+    
     // Show loading state
     showToast('Submitting your request...', 'info');
     
-    // Get user data
-    const db = firebase.firestore();
-    db.collection('users').doc(currentUser.uid).get()
-        .then(userDoc => {
-            if (!userDoc.exists) {
-                throw new Error('User profile not found');
-            }
-            
-            const userData = userDoc.data();
+    // Ensure user is authenticated before proceeding
+    firebase.auth().currentUser.getIdToken(true)
+        .then(token => {
+            const db = firebase.firestore();
             
             // Create the buy request document
             return db.collection('buyRequests').add({
-                userId: currentUser.uid,
-                username: userData.username || userData.displayName || 'Unknown User',
-                walletId: currentUser.uid, // Using userId as walletId for simplicity
+                userId: user.uid,
+                username: user.displayName || user.email || 'Unknown User',
+                walletId: user.uid,
                 amount: coinAmount,
                 nairaAmount: nairaAmount,
                 transferReference: transferReference,
-                paymentScreenshot: uploadedScreenshotURL || '',
+                paymentScreenshot: uploadedScreenshotURL,
                 transferDate: transferDate,
                 status: 'pending',
                 timestamp: firebase.firestore.FieldValue.serverTimestamp(),
@@ -7905,9 +7925,10 @@ function submitBuyRequest() {
         .then(docRef => {
             console.log('Buy request created with ID:', docRef.id);
             
+            const db = firebase.firestore();
             // Create activity record
             return db.collection('activity').add({
-                userId: currentUser.uid,
+                userId: user.uid,
                 type: 'buy',
                 title: 'Buy Request Submitted',
                 details: `${coinAmount} Talent Coins (₦${nairaAmount})`,
@@ -7924,16 +7945,22 @@ function submitBuyRequest() {
             // Reset the form
             resetBuyCoinsForm();
             
-            // Refresh wallet transactions
-            if (typeof loadWalletTransactions === 'function') {
-                loadWalletTransactions();
-            }
+            // Start listening for updates to this request
+            listenForBuyRequestUpdates();
         })
         .catch(error => {
             console.error('Error submitting buy request:', error);
             showToast('Failed to submit buy request: ' + error.message, 'error');
         });
 }
+
+
+
+
+
+
+
+
 
 // Listen for updates to buy requests
 function listenForBuyRequestUpdates() {
