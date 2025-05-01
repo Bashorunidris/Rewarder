@@ -7833,15 +7833,9 @@ function uploadScreenshot(file) {
     });
 }
 
-    
-  
-             
-         
 // Submit buy request to Firestore
 function submitBuyRequest() {
-    // Get current user
-    const user = firebase.auth().currentUser;
-    if (!user) {
+    if (!currentUser) {
         showToast('You must be logged in to buy coins', 'error');
         return;
     }
@@ -7880,29 +7874,28 @@ function submitBuyRequest() {
         return;
     }
     
-    // Check if screenshot was uploaded
-    if (!uploadedScreenshotURL) {
-        showToast('Please upload a screenshot of your payment', 'error');
-        return;
-    }
-    
     // Show loading state
     showToast('Submitting your request...', 'info');
     
-    // Ensure user is authenticated before proceeding
-    firebase.auth().currentUser.getIdToken(true)
-        .then(token => {
-            const db = firebase.firestore();
+    // Get user data
+    const db = firebase.firestore();
+    db.collection('users').doc(currentUser.uid).get()
+        .then(userDoc => {
+            if (!userDoc.exists) {
+                throw new Error('User profile not found');
+            }
+            
+            const userData = userDoc.data();
             
             // Create the buy request document
             return db.collection('buyRequests').add({
-                userId: user.uid,
-                username: user.displayName || user.email || 'Unknown User',
-                walletId: user.uid,
+                userId: currentUser.uid,
+                username: userData.username || userData.displayName || 'Unknown User',
+                walletId: currentUser.uid, // Using userId as walletId for simplicity
                 amount: coinAmount,
                 nairaAmount: nairaAmount,
                 transferReference: transferReference,
-                paymentScreenshot: uploadedScreenshotURL,
+                paymentScreenshot: uploadedScreenshotURL || '',
                 transferDate: transferDate,
                 status: 'pending',
                 timestamp: firebase.firestore.FieldValue.serverTimestamp(),
@@ -7912,10 +7905,9 @@ function submitBuyRequest() {
         .then(docRef => {
             console.log('Buy request created with ID:', docRef.id);
             
-            const db = firebase.firestore();
             // Create activity record
             return db.collection('activity').add({
-                userId: user.uid,
+                userId: currentUser.uid,
                 type: 'buy',
                 title: 'Buy Request Submitted',
                 details: `${coinAmount} Talent Coins (₦${nairaAmount})`,
@@ -7932,14 +7924,20 @@ function submitBuyRequest() {
             // Reset the form
             resetBuyCoinsForm();
             
-            // Start listening for updates to this request
-            listenForBuyRequestUpdates();
+            // Refresh wallet transactions
+            if (typeof loadWalletTransactions === 'function') {
+                loadWalletTransactions();
+            }
         })
         .catch(error => {
             console.error('Error submitting buy request:', error);
             showToast('Failed to submit buy request: ' + error.message, 'error');
         });
 }
+
+
+
+
 
 
 
