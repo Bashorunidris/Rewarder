@@ -6431,18 +6431,48 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         
-        // Check if PIN is already set
-        const hasPin = localStorage.getItem('walletPin') !== null;
+        // Get user ID
+        const userId = getUserId();
         
-        if (hasPin) {
-            if (pinSetupSection) pinSetupSection.classList.add('hidden');
-            if (pinEntrySection) pinEntrySection.classList.remove('hidden');
-            if (backupEmailSection) backupEmailSection.classList.add('hidden');
-        } else {
-            if (pinSetupSection) pinSetupSection.classList.remove('hidden');
-            if (pinEntrySection) pinEntrySection.classList.add('hidden');
-            if (backupEmailSection) backupEmailSection.classList.add('hidden');
+        if (!userId) {
+            showToast('User authentication failed', 'error');
+            return;
         }
+        
+        // Check if PIN is already set in Firebase
+        firebase.firestore().collection('users').doc(userId).get()
+            .then(doc => {
+                if (doc.exists) {
+                    const userData = doc.data();
+                    
+                    // Check if wallet PIN exists
+                    if (userData.walletPinHash) {
+                        // PIN exists, show login screen
+                        if (pinSetupSection) pinSetupSection.classList.add('hidden');
+                        if (pinEntrySection) pinEntrySection.classList.remove('hidden');
+                        if (backupEmailSection) backupEmailSection.classList.add('hidden');
+                    } else {
+                        // No PIN, show setup screen
+                        if (pinSetupSection) pinSetupSection.classList.remove('hidden');
+                        if (pinEntrySection) pinEntrySection.classList.add('hidden');
+                        if (backupEmailSection) backupEmailSection.classList.add('hidden');
+                    }
+                } else {
+                    // User document doesn't exist, show setup screen
+                    if (pinSetupSection) pinSetupSection.classList.remove('hidden');
+                    if (pinEntrySection) pinEntrySection.classList.add('hidden');
+                    if (backupEmailSection) backupEmailSection.classList.add('hidden');
+                }
+            })
+            .catch(error => {
+                console.error('Error checking PIN status:', error);
+                showToast('Failed to check PIN status', 'error');
+                
+                // Default to setup screen
+                if (pinSetupSection) pinSetupSection.classList.remove('hidden');
+                if (pinEntrySection) pinEntrySection.classList.add('hidden');
+                if (backupEmailSection) backupEmailSection.classList.add('hidden');
+            });
     }
     
     // Open wallet modal
@@ -6470,12 +6500,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.body.appendChild(newOverlay);
             }
             
-            // Focus on first PIN input
-            if (pinSetupSection && !pinSetupSection.classList.contains('hidden')) {
-                if (pinDigits && pinDigits.length > 0) pinDigits[0].focus();
-            } else if (pinEntrySection && !pinEntrySection.classList.contains('hidden')) {
-                if (pinLoginDigits && pinLoginDigits.length > 0) pinLoginDigits[0].focus();
-            }
+            // Initialize wallet to check PIN status
+            initWallet();
+            
+            // Focus on first PIN input after a short delay to ensure elements are visible
+            setTimeout(() => {
+                if (pinSetupSection && !pinSetupSection.classList.contains('hidden')) {
+                    if (pinDigits && pinDigits.length > 0) pinDigits[0].focus();
+                } else if (pinEntrySection && !pinEntrySection.classList.contains('hidden')) {
+                    if (pinLoginDigits && pinLoginDigits.length > 0) pinLoginDigits[0].focus();
+                }
+            }, 300);
             
             // Add body class to prevent scrolling
             document.body.classList.add('modal-open');
@@ -6641,16 +6676,52 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         
-        // Save PIN (in a real app, this should be securely stored)
-        const hashedPin = hashPin(pin);
-        localStorage.setItem('walletPin', hashedPin);
+        // Save PIN to Firebase
+        const userId = getUserId();
         
-        // Show success message
-        showToast('PIN created successfully', 'success');
+        if (!userId) {
+            showToast('User authentication failed', 'error');
+            return;
+        }
         
-        // Show backup email section
-        if (pinSetupSection) pinSetupSection.classList.add('hidden');
-        if (backupEmailSection) backupEmailSection.classList.remove('hidden');
+               // Show loading state
+               if (createPinBtn) {
+            createPinBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating...';
+            createPinBtn.disabled = true;
+        }
+        
+        // Hash the PIN before storing
+        const pinHash = hashPin(pin);
+        
+        // Save PIN to Firebase
+        firebase.firestore().collection('users').doc(userId).update({
+            walletPinHash: pinHash,
+            walletPinCreatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        })
+        .then(() => {
+            // Show success message
+            showToast('PIN created successfully', 'success');
+            
+            // Reset button state
+            if (createPinBtn) {
+                createPinBtn.innerHTML = 'Create PIN';
+                createPinBtn.disabled = false;
+            }
+            
+            // Show backup email section
+            if (pinSetupSection) pinSetupSection.classList.add('hidden');
+            if (backupEmailSection) backupEmailSection.classList.remove('hidden');
+        })
+        .catch(error => {
+            console.error('Error saving PIN:', error);
+            showToast('Failed to create PIN. Please try again.', 'error');
+            
+            // Reset button state
+            if (createPinBtn) {
+                createPinBtn.innerHTML = 'Create PIN';
+                createPinBtn.disabled = false;
+            }
+        });
     }
     
     // Save backup email
@@ -6666,7 +6737,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         
-        // Validate email format
+        // Simple email validation
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
             showToast('Please enter a valid email address', 'error');
@@ -6684,43 +6755,50 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         
-        // Save backup email (in a real app, this should be securely stored)
+        // Get user ID
         const userId = getUserId();
         
-        if (userId) {
-                      // Save to Firebase
-                      firebase.firestore().collection('users').doc(userId).update({
-                backupEmail: email,
-                backupPasswordHash: hashPassword(password),
-                backupSetAt: firebase.firestore.FieldValue.serverTimestamp()
-            })
-            .then(() => {
-                // Store locally for quick access
-                localStorage.setItem('walletBackupEmail', email);
-                
-                // Show success message
-                showToast('Backup email saved successfully', 'success');
-                
-                // Load wallet dashboard
-                if (backupEmailSection) backupEmailSection.classList.add('hidden');
-                loadWalletDashboard();
-            })
-            .catch(error => {
-                console.error('Error saving backup email:', error);
-                showToast('Failed to save backup email. Please try again.', 'error');
-            });
-        } else {
-            // Fallback to localStorage if Firebase is not available
-            localStorage.setItem('walletBackupEmail', email);
-            localStorage.setItem('walletBackupPassword', hashPassword(password));
-            
+        if (!userId) {
+            showToast('User authentication failed', 'error');
+            return;
+        }
+        
+        // Show loading state
+        if (saveBackupBtn) {
+            saveBackupBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+            saveBackupBtn.disabled = true;
+        }
+        
+        // Save to Firebase
+        firebase.firestore().collection('users').doc(userId).update({
+            backupEmail: email,
+            backupPasswordHash: hashPassword(password),
+            backupSetAt: firebase.firestore.FieldValue.serverTimestamp()
+        })
+        .then(() => {
             // Show success message
             showToast('Backup email saved successfully', 'success');
+            
+            // Reset button state
+            if (saveBackupBtn) {
+                saveBackupBtn.innerHTML = 'Save Backup';
+                saveBackupBtn.disabled = false;
+            }
             
             // Load wallet dashboard
             if (backupEmailSection) backupEmailSection.classList.add('hidden');
             loadWalletDashboard();
-        }
+        })
+        .catch(error => {
+            console.error('Error saving backup email:', error);
+            showToast('Failed to save backup email. Please try again.', 'error');
+            
+            // Reset button state
+            if (saveBackupBtn) {
+                saveBackupBtn.innerHTML = 'Save Backup';
+                saveBackupBtn.disabled = false;
+            }
+        });
     }
     
     // Handle PIN login
@@ -6736,35 +6814,105 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         
-        // Get stored PIN
-        const storedPin = localStorage.getItem('walletPin');
+        // Get user ID
+        const userId = getUserId();
         
-        // Check if PIN is correct
-        if (storedPin !== hashPin(enteredPin)) {
-            showToast('Incorrect PIN. Please try again.', 'error');
-            resetPinInputs();
-            if (pinLoginDigits && pinLoginDigits.length > 0) {
-                pinLoginDigits[0].focus();
-            }
+        if (!userId) {
+            showToast('User authentication failed', 'error');
             return;
         }
         
-        // Load wallet dashboard
-        loadWalletDashboard();
+        // Show loading state
+        if (loginPinBtn) {
+            loginPinBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Verifying...';
+            loginPinBtn.disabled = true;
+        }
+        
+        // Get stored PIN from Firebase
+        firebase.firestore().collection('users').doc(userId).get()
+            .then(doc => {
+                if (doc.exists) {
+                    const userData = doc.data();
+                    const storedPinHash = userData.walletPinHash;
+                    
+                    // Check if PIN is correct
+                    if (storedPinHash !== hashPin(enteredPin)) {
+                        showToast('Incorrect PIN. Please try again.', 'error');
+                        resetPinInputs();
+                        if (pinLoginDigits && pinLoginDigits.length > 0) {
+                            pinLoginDigits[0].focus();
+                        }
+                        
+                        // Reset button state
+                        if (loginPinBtn) {
+                            loginPinBtn.innerHTML = 'Login';
+                            loginPinBtn.disabled = false;
+                        }
+                        return;
+                    }
+                    
+                    // Reset button state
+                    if (loginPinBtn) {
+                        loginPinBtn.innerHTML = 'Login';
+                        loginPinBtn.disabled = false;
+                    }
+                    
+                    // Load wallet dashboard
+                    loadWalletDashboard();
+                } else {
+                    showToast('User data not found. Please try again.', 'error');
+                    
+                    // Reset button state
+                    if (loginPinBtn) {
+                        loginPinBtn.innerHTML = 'Login';
+                        loginPinBtn.disabled = false;
+                    }
+                }
+            })
+            .catch(error => {
+                console.error('Error verifying PIN:', error);
+                showToast('Failed to verify PIN. Please try again.', 'error');
+                
+                // Reset button state
+                if (loginPinBtn) {
+                    loginPinBtn.innerHTML = 'Login';
+                    loginPinBtn.disabled = false;
+                }
+            });
     }
     
     // Handle forgot PIN
     function handleForgotPin() {
-        // Check if backup email is set
-        const backupEmail = localStorage.getItem('walletBackupEmail');
+        // Get user ID
+        const userId = getUserId();
         
-        if (!backupEmail) {
-            showToast('No backup email found. Please contact support.', 'error');
+        if (!userId) {
+            showToast('User authentication failed', 'error');
             return;
         }
         
-        // Create reset PIN modal
-        createResetPinModal(backupEmail);
+        // Check if backup email is set in Firebase
+        firebase.firestore().collection('users').doc(userId).get()
+            .then(doc => {
+                if (doc.exists) {
+                    const userData = doc.data();
+                    const backupEmail = userData.backupEmail;
+                    
+                    if (!backupEmail) {
+                        showToast('No backup email found. Please contact support.', 'error');
+                        return;
+                    }
+                    
+                    // Create reset PIN modal
+                    createResetPinModal(backupEmail);
+                } else {
+                    showToast('User data not found. Please contact support.', 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error checking backup email:', error);
+                showToast('Failed to check backup email. Please try again.', 'error');
+            });
     }
     
     // Create reset PIN modal
@@ -6843,13 +6991,11 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         
-        // Get stored backup password
-        const storedPassword = localStorage.getItem('walletBackupPassword');
+        // Get user ID
         const userId = getUserId();
         
-        // Check if password is correct
-        if (storedPassword && storedPassword !== hashPassword(password)) {
-            showToast('Incorrect recovery password', 'error');
+        if (!userId) {
+            showToast('User authentication failed', 'error');
             return;
         }
         
@@ -6860,40 +7006,75 @@ document.addEventListener('DOMContentLoaded', function() {
             sendResetLinkBtn.disabled = true;
         }
         
-        // In a real app, this would send an actual email
-        // For this demo, we'll simulate sending an email
-        setTimeout(() => {
-            // Reset PIN in localStorage
-            localStorage.removeItem('walletPin');
-            
-            // Show success message
-            showToast('Reset link sent to your email', 'success');
-            
-            // Close reset modal
-            const resetPinModal = document.getElementById('resetPinModal');
-            if (resetPinModal) {
-                resetPinModal.classList.add('hidden');
-            }
-            
-            // Show PIN setup screen
-            if (pinScreen) pinScreen.classList.remove('hidden');
-            if (pinSetupSection) pinSetupSection.classList.remove('hidden');
-            if (pinEntrySection) pinEntrySection.classList.add('hidden');
-            
-            // Reset PIN inputs
-            resetPinInputs();
-            
-            // Focus on first PIN input
-            if (pinDigits && pinDigits.length > 0) {
-                pinDigits[0].focus();
-            }
-            
-            // Reset button state
-            if (sendResetLinkBtn) {
-                sendResetLinkBtn.innerHTML = 'Send Reset Link';
-                sendResetLinkBtn.disabled = false;
-            }
-        }, 2000);
+        // Verify recovery password against Firebase
+        firebase.firestore().collection('users').doc(userId).get()
+            .then(doc => {
+                if (doc.exists) {
+                    const userData = doc.data();
+                    const storedPasswordHash = userData.backupPasswordHash;
+                    
+                    // Check if password is correct
+                    if (storedPasswordHash !== hashPassword(password)) {
+                        showToast('Incorrect recovery password', 'error');
+                        
+                        // Reset button state
+                        if (sendResetLinkBtn) {
+                            sendResetLinkBtn.innerHTML = 'Send Reset Link';
+                            sendResetLinkBtn.disabled = false;
+                        }
+                        return;
+                    }
+                    
+                    // In a real app, this would send an actual email
+                    // For this demo, we'll simulate sending an email and reset the PIN directly
+                    
+                    // Remove PIN from Firebase
+                    return firebase.firestore().collection('users').doc(userId).update({
+                        walletPinHash: firebase.firestore.FieldValue.delete()
+                    });
+                } else {
+                    throw new Error('User data not found');
+                }
+            })
+            .then(() => {
+                // Show success message
+                showToast('Reset link sent to your email', 'success');
+                
+                // Close reset modal
+                const resetPinModal = document.getElementById('resetPinModal');
+                if (resetPinModal) {
+                    resetPinModal.classList.add('hidden');
+                }
+                
+                // Show PIN setup screen
+                if (pinScreen) pinScreen.classList.remove('hidden');
+                if (pinSetupSection) pinSetupSection.classList.remove('hidden');
+                if (pinEntrySection) pinEntrySection.classList.add('hidden');
+                
+                // Reset PIN inputs
+                resetPinInputs();
+                
+                // Focus on first PIN input
+                if (pinDigits && pinDigits.length > 0) {
+                    pinDigits[0].focus();
+                }
+                
+                // Reset button state
+                if (sendResetLinkBtn) {
+                    sendResetLinkBtn.innerHTML = 'Send Reset Link';
+                    sendResetLinkBtn.disabled = false;
+                }
+            })
+            .catch(error => {
+                console.error('Error resetting PIN:', error);
+                showToast('Failed to reset PIN. Please try again.', 'error');
+                
+                // Reset button state
+                if (sendResetLinkBtn) {
+                    sendResetLinkBtn.innerHTML = 'Send Reset Link';
+                    sendResetLinkBtn.disabled = false;
+                }
+            });
     }
     
     // Load wallet dashboard
@@ -7106,7 +7287,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                 .toast.warning {
                     background-color: #FF9800;
-                                      color: white;
+                    color: white;
                 }
                 .toast i {
                     margin-right: 10px;
@@ -7413,7 +7594,9 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Store unsubscribe function to clean up when wallet is closed
         if (walletModal) {
-            walletModal.setAttribute('data-unsubscribe', unsubscribe);
+            walletModal.setAttribute('data-unsubscribe', 'true');
+            // Store the unsubscribe function in a global variable
+            window.walletUnsubscribe = unsubscribe;
         }
     }
     
@@ -7445,11 +7628,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Clean up when wallet is closed
     function cleanupWallet() {
         // Unsubscribe from real-time updates
-        if (walletModal) {
-            const unsubscribe = walletModal.getAttribute('data-unsubscribe');
-            if (unsubscribe && typeof window[unsubscribe] === 'function') {
-                window[unsubscribe]();
-            }
+        if (window.walletUnsubscribe && typeof window.walletUnsubscribe === 'function') {
+            window.walletUnsubscribe();
+            window.walletUnsubscribe = null;
         }
     }
 });
