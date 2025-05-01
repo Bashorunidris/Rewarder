@@ -7635,6 +7635,830 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+
+// Global variables
+let uploadedScreenshotURL = null;
+let currentUser = null;
+
+// Initialize Firebase Auth listener
+document.addEventListener('DOMContentLoaded', function() {
+    // Listen for auth state changes
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+            currentUser = user;
+            // Initialize wallet functionality once user is authenticated
+            initializeBuyCoinFeature();
+            // Listen for buy request updates
+            listenForBuyRequestUpdates();
+        } else {
+            currentUser = null;
+            console.log('User not logged in');
+        }
+    });
+});
+
+// Initialize Buy Coin Feature
+function initializeBuyCoinFeature() {
+    // Buy Coins Button Click Event
+    const buyCoinsBtn = document.getElementById('buyCoinsBtn');
+    const buyCoinsModal = document.getElementById('buyCoinsModal');
+    
+    if (buyCoinsBtn) {
+        buyCoinsBtn.addEventListener('click', function() {
+            buyCoinsModal.style.display = 'block';
+            resetBuyCoinsForm();
+        });
+    }
+    
+    // Close modal when clicking the X button
+    const closeButtons = document.querySelectorAll('.close-feature-modal');
+    closeButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            buyCoinsModal.style.display = 'none';
+        });
+    });
+    
+    // Close modal when clicking outside
+    window.addEventListener('click', function(event) {
+        if (event.target === buyCoinsModal) {
+            buyCoinsModal.style.display = 'none';
+        }
+    });
+    
+    // Tab switching functionality
+    const tabs = document.querySelectorAll('.tab');
+    tabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+            const tabName = this.getAttribute('data-tab');
+            switchTab(tabName);
+        });
+    });
+    
+    // Next button functionality
+    const nextTabBtn = document.querySelector('.next-tab-btn');
+    if (nextTabBtn) {
+        nextTabBtn.addEventListener('click', function() {
+            // Validate input before proceeding
+            const coinAmount = document.getElementById('coinAmount').value;
+            if (!coinAmount || coinAmount <= 0) {
+                showToast('Please enter a valid coin amount', 'error');
+                return;
+            }
+            
+            // Set the transfer amount in the confirmation tab
+            document.getElementById('transferAmount').value = coinAmount * 10;
+            
+            // Set today's date as default
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('transferDate').value = today;
+            
+            // Switch to confirmation tab
+            switchTab('confirmation');
+        });
+    }
+    
+    // Previous button functionality
+    const prevTabBtn = document.querySelector('.prev-tab-btn');
+    if (prevTabBtn) {
+        prevTabBtn.addEventListener('click', function() {
+            switchTab('payment');
+        });
+    }
+    
+    // Calculate Naira equivalent as user types
+    const coinAmountInput = document.getElementById('coinAmount');
+    if (coinAmountInput) {
+        coinAmountInput.addEventListener('input', function() {
+            const amount = parseFloat(this.value) || 0;
+            const nairaAmount = amount * 10; // 1 Talent Coin = ₦10
+            document.getElementById('paymentAmount').textContent = nairaAmount.toFixed(0);
+        });
+    }
+    
+    // Copy account number functionality
+    const copyAccountBtn = document.getElementById('copyAccountBtn');
+    if (copyAccountBtn) {
+        copyAccountBtn.addEventListener('click', function() {
+            const accountNumber = '9078139367';
+            navigator.clipboard.writeText(accountNumber)
+                .then(() => {
+                    showToast('Account number copied to clipboard', 'success');
+                })
+                .catch(err => {
+                    console.error('Could not copy text: ', err);
+                    showToast('Failed to copy account number', 'error');
+                });
+        });
+    }
+    
+    // File upload handling
+    const transferScreenshot = document.getElementById('transferScreenshot');
+    const fileName = document.getElementById('fileName');
+    
+    if (transferScreenshot) {
+        transferScreenshot.addEventListener('change', function(e) {
+            if (e.target.files.length > 0) {
+                const file = e.target.files[0];
+                fileName.textContent = file.name;
+                
+                // Show loading state
+                showToast('Uploading screenshot...', 'info');
+                
+                // Upload the file to Firebase Storage
+                uploadScreenshot(file);
+            }
+        });
+    }
+    
+    // Confirm Transfer Button
+    const confirmTransferBtn = document.getElementById('confirmTransferBtn');
+    if (confirmTransferBtn) {
+        confirmTransferBtn.addEventListener('click', function() {
+            submitBuyRequest();
+        });
+    }
+}
+
+// Switch between tabs
+function switchTab(tabName) {
+    // Hide all tab contents
+    document.querySelectorAll('.tab-content').forEach(content => {
+        content.classList.remove('active');
+    });
+    
+    // Remove active class from all tabs
+    document.querySelectorAll('.tab').forEach(tab => {
+        tab.classList.remove('active');
+    });
+    
+    // Show the selected tab content
+    document.getElementById(tabName + 'Tab').classList.add('active');
+    
+    // Add active class to the selected tab
+    document.querySelector(`.tab[data-tab="${tabName}"]`).classList.add('active');
+}
+
+// Reset the buy coins form
+function resetBuyCoinsForm() {
+    document.getElementById('coinAmount').value = '';
+    document.getElementById('paymentAmount').textContent = '0';
+    document.getElementById('transferReference').value = '';
+    document.getElementById('transferAmount').value = '';
+    document.getElementById('transferScreenshot').value = '';
+    document.getElementById('fileName').textContent = '';
+    uploadedScreenshotURL = null;
+    
+    // Reset to first tab
+    switchTab('payment');
+}
+
+// Upload screenshot to Firebase Storage
+function uploadScreenshot(file) {
+    if (!currentUser) {
+        showToast('You must be logged in to upload files', 'error');
+        return;
+    }
+    
+    const storageRef = firebase.storage().ref();
+    const fileRef = storageRef.child(`screenshots/${currentUser.uid}/${Date.now()}_${file.name}`);
+    
+    fileRef.put(file).then(snapshot => {
+        return snapshot.ref.getDownloadURL();
+    }).then(downloadURL => {
+        uploadedScreenshotURL = downloadURL;
+        showToast('Screenshot uploaded successfully', 'success');
+    }).catch(error => {
+        console.error('Error uploading file:', error);
+        showToast('Failed to upload screenshot', 'error');
+    });
+}
+
+// Submit buy request to Firestore
+function submitBuyRequest() {
+    if (!currentUser) {
+        showToast('You must be logged in to buy coins', 'error');
+        return;
+    }
+    
+    // Get form values
+    const coinAmount = parseFloat(document.getElementById('coinAmount').value);
+    const nairaAmount = coinAmount * 10;
+    const transferReference = document.getElementById('transferReference').value;
+    const transferDate = document.getElementById('transferDate').value;
+    const transferAmount = parseFloat(document.getElementById('transferAmount').value);
+    
+    // Validate inputs
+    if (!coinAmount || coinAmount <= 0) {
+        showToast('Please enter a valid coin amount', 'error');
+        return;
+    }
+    
+    if (!transferReference) {
+        showToast('Please enter the transfer reference', 'error');
+        return;
+    }
+    
+    if (!transferDate) {
+        showToast('Please select the transfer date', 'error');
+        return;
+    }
+    
+    if (!transferAmount || transferAmount <= 0) {
+        showToast('Please enter a valid transfer amount', 'error');
+        return;
+    }
+    
+    // Validate that naira amount matches transfer amount
+    if (Math.abs(nairaAmount - transferAmount) > 0.01) {
+        showToast('Transfer amount must match the calculated amount', 'error');
+        return;
+    }
+    
+    // Show loading state
+    showToast('Submitting your request...', 'info');
+    
+    // Get user data
+    const db = firebase.firestore();
+    db.collection('users').doc(currentUser.uid).get()
+        .then(userDoc => {
+            if (!userDoc.exists) {
+                throw new Error('User profile not found');
+            }
+            
+            const userData = userDoc.data();
+            
+            // Create the buy request document
+            return db.collection('buyRequests').add({
+                userId: currentUser.uid,
+                username: userData.username || userData.displayName || 'Unknown User',
+                walletId: currentUser.uid, // Using userId as walletId for simplicity
+                amount: coinAmount,
+                nairaAmount: nairaAmount,
+                transferReference: transferReference,
+                paymentScreenshot: uploadedScreenshotURL || '',
+                transferDate: transferDate,
+                status: 'pending',
+                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                moderatorNotes: ''
+            });
+        })
+        .then(docRef => {
+            console.log('Buy request created with ID:', docRef.id);
+            
+            // Create activity record
+            return db.collection('activity').add({
+                userId: currentUser.uid,
+                type: 'buy',
+                title: 'Buy Request Submitted',
+                details: `${coinAmount} Talent Coins (₦${nairaAmount})`,
+                status: 'pending',
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            });
+        })
+        .then(() => {
+            showToast('Buy request submitted successfully', 'success');
+            
+            // Close the modal
+            document.getElementById('buyCoinsModal').style.display = 'none';
+            
+            // Reset the form
+            resetBuyCoinsForm();
+            
+            // Refresh wallet transactions
+            if (typeof loadWalletTransactions === 'function') {
+                loadWalletTransactions();
+            }
+        })
+        .catch(error => {
+            console.error('Error submitting buy request:', error);
+            showToast('Failed to submit buy request: ' + error.message, 'error');
+        });
+}
+
+// Listen for updates to buy requests
+function listenForBuyRequestUpdates() {
+    if (!currentUser) return;
+    
+    const db = firebase.firestore();
+    
+    // Listen for changes to user's buy requests
+    return db.collection('buyRequests')
+        .where('userId', '==', currentUser.uid)
+        .onSnapshot(snapshot => {
+            snapshot.docChanges().forEach(change => {
+                const data = change.doc.data();
+                
+                // If a request was updated
+                if (change.type === 'modified') {
+                    // Check if status changed to completed
+                    if (data.status === 'completed') {
+                        // Show notification to user
+                        showToast(`Your buy request for ${data.amount} Talent Coins has been approved!`, 'success');
+                        
+                        // Refresh wallet balance
+                        if (typeof refreshWalletBalance === 'function') {
+                            refreshWalletBalance();
+                        }
+                        
+                        // Refresh wallet transactions
+                        if (typeof loadWalletTransactions === 'function') {
+                            loadWalletTransactions();
+                        }
+                    } 
+                    // Check if status changed to rejected
+                    else if (data.status === 'rejected') {
+                        showToast(`Your buy request for ${data.amount} Talent Coins was rejected. Reason: ${data.moderatorNotes || 'No reason provided'}`, 'error');
+                        
+                        // Refresh wallet transactions
+                        if (typeof loadWalletTransactions === 'function') {
+                            loadWalletTransactions();
+                        }
+                    }
+                }
+            });
+        }, error => {
+            console.error('Error listening for buy request updates:', error);
+        });
+}
+
+// Show toast notification
+function showToast(message, type = 'info') {
+    // Check if toast container exists, if not create it
+    let toastContainer = document.getElementById('toast-container');
+    if (!toastContainer) {
+        toastContainer = document.createElement('div');
+        toastContainer.id = 'toast-container';
+        document.body.appendChild(toastContainer);
+    }
+    
+    // Create toast element
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+    toast.textContent = message;
+    
+    // Add toast to container
+    toastContainer.appendChild(toast);
+    
+    // Show toast
+    setTimeout(() => {
+        toast.classList.add('show');
+    }, 10);
+    
+    // Remove toast after 3 seconds
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => {
+            toastContainer.removeChild(toast);
+        }, 300);
+    }, 3000);
+}
+
+
+
+
+
+
+
+
+
+
+// Load Buy Coin Requests from Firestore
+function loadBuyCoinRequests(statusFilter = 'all') {
+    const requestsContainer = document.getElementById('buyRequestsContainer');
+    if (!requestsContainer) return;
+    
+    // Show loading state
+    requestsContainer.innerHTML = '<div class="loading-spinner"></div>';
+    
+    const db = firebase.firestore();
+    let query = db.collection('buyRequests').orderBy('timestamp', 'desc');
+    
+    // Apply status filter if not 'all'
+    if (statusFilter !== 'all') {
+        query = query.where('status', '==', statusFilter);
+    }
+    
+    query.get().then(snapshot => {
+        if (snapshot.empty) {
+            requestsContainer.innerHTML = '<div class="no-requests">No buy requests found</div>';
+            return;
+        }
+        
+        let requestsHTML = '';
+        snapshot.forEach(doc => {
+            const request = doc.data();
+            const requestId = doc.id;
+            const timestamp = request.timestamp ? new Date(request.timestamp.toDate()).toLocaleString() : 'Unknown';
+            
+            let statusClass = '';
+            switch(request.status) {
+                case 'pending':
+                    statusClass = 'status-pending';
+                    break;
+                case 'completed':
+                    statusClass = 'status-completed';
+                    break;
+                case 'rejected':
+                    statusClass = 'status-rejected';
+                    break;
+            }
+            
+            requestsHTML += `
+                <div class="request-card" data-id="${requestId}">
+                    <div class="request-header">
+                        <div class="request-user">
+                            <i class="fas fa-user"></i>
+                            <span>${request.username || 'Unknown User'}</span>
+                        </div>
+                        <div class="request-status ${statusClass}">
+                            ${request.status}
+                        </div>
+                    </div>
+                    <div class="request-details">
+                        <div class="detail-row">
+                            <span class="detail-label">Amount:</span>
+                            <span class="detail-value">${request.amount} Talent Coins</span>
+                        </div>
+                                             <div class="detail-row">
+                            <span class="detail-label">Naira:</span>
+                            <span class="detail-value">₦${request.nairaAmount}</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Date:</span>
+                            <span class="detail-value">${timestamp}</span>
+                        </div>
+                    </div>
+                    <div class="request-actions">
+                        <button class="view-details-btn" onclick="viewRequestDetails('${requestId}')">
+                            <i class="fas fa-eye"></i> View Details
+                        </button>
+                    </div>
+                </div>
+            `;
+        });
+        
+        requestsContainer.innerHTML = requestsHTML;
+    }).catch(error => {
+        console.error('Error loading buy requests:', error);
+        requestsContainer.innerHTML = '<div class="error-message">Error loading requests. Please try again.</div>';
+    });
+}
+
+// View Request Details
+function viewRequestDetails(requestId) {
+    const modal = document.getElementById('requestDetailsModal');
+    const modalContent = document.getElementById('requestDetailsContent');
+    
+    if (!modal || !modalContent) return;
+    
+    // Show loading state
+    modalContent.innerHTML = '<div class="loading-spinner"></div>';
+    modal.style.display = 'block';
+    
+    const db = firebase.firestore();
+    db.collection('buyRequests').doc(requestId).get()
+        .then(doc => {
+            if (!doc.exists) {
+                modalContent.innerHTML = '<div class="error-message">Request not found</div>';
+                return;
+            }
+            
+            const request = doc.data();
+            const timestamp = request.timestamp ? new Date(request.timestamp.toDate()).toLocaleString() : 'Unknown';
+            
+            let statusClass = '';
+            switch(request.status) {
+                case 'pending':
+                    statusClass = 'status-pending';
+                    break;
+                case 'completed':
+                    statusClass = 'status-completed';
+                    break;
+                case 'rejected':
+                    statusClass = 'status-rejected';
+                    break;
+            }
+            
+            // Prepare action buttons based on status
+            let actionButtons = '';
+            if (request.status === 'pending') {
+                actionButtons = `
+                    <button class="action-btn approve-btn" onclick="approveRequest('${requestId}')">
+                        <i class="fas fa-check"></i> Approve
+                    </button>
+                    <button class="action-btn reject-btn" onclick="rejectRequest('${requestId}')">
+                        <i class="fas fa-times"></i> Reject
+                    </button>
+                `;
+            }
+            
+            // Prepare screenshot display
+            let screenshotHTML = '';
+            if (request.paymentScreenshot) {
+                screenshotHTML = `
+                    <div class="screenshot-container">
+                        <h3>Payment Screenshot</h3>
+                        <img src="${request.paymentScreenshot}" alt="Payment Screenshot" class="payment-screenshot">
+                        <a href="${request.paymentScreenshot}" target="_blank" class="view-full-btn">
+                            <i class="fas fa-external-link-alt"></i> View Full Size
+                        </a>
+                    </div>
+                `;
+            } else {
+                screenshotHTML = `
+                    <div class="no-screenshot">
+                        <p>No payment screenshot provided</p>
+                    </div>
+                `;
+            }
+            
+            modalContent.innerHTML = `
+                <div class="request-detail-header">
+                    <h2>Buy Request Details</h2>
+                    <div class="request-id">ID: ${requestId}</div>
+                </div>
+                
+                <div class="request-detail-status ${statusClass}">
+                    Status: ${request.status}
+                </div>
+                
+                <div class="request-detail-section">
+                    <h3>User Information</h3>
+                    <div class="detail-row">
+                        <span class="detail-label">Username:</span>
+                        <span class="detail-value">${request.username || 'Unknown User'}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">User ID:</span>
+                        <span class="detail-value">${request.userId}</span>
+                    </div>
+                </div>
+                
+                <div class="request-detail-section">
+                    <h3>Payment Information</h3>
+                    <div class="detail-row">
+                        <span class="detail-label">Amount:</span>
+                        <span class="detail-value">${request.amount} Talent Coins</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Naira Amount:</span>
+                        <span class="detail-value">₦${request.nairaAmount}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Transfer Reference:</span>
+                        <span class="detail-value">${request.transferReference}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Transfer Date:</span>
+                        <span class="detail-value">${request.transferDate}</span>
+                    </div>
+                </div>
+                
+                ${screenshotHTML}
+                
+                <div class="request-detail-actions">
+                    ${actionButtons}
+                </div>
+                
+                ${request.status === 'pending' ? `
+                <div class="admin-notes-input">
+                    <label for="moderatorNotes">Admin Notes:</label>
+                    <textarea id="moderatorNotes" placeholder="Add notes about this request (optional)"></textarea>
+                </div>
+                ` : ''}
+            `;
+        })
+        .catch(error => {
+            console.error('Error loading request details:', error);
+            modalContent.innerHTML = '<div class="error-message">Error loading request details. Please try again.</div>';
+        });
+}
+
+// Approve Buy Request
+function approveRequest(requestId) {
+    // Get admin notes
+    const notesInput = document.getElementById('moderatorNotes');
+    const notes = notesInput ? notesInput.value : '';
+    
+    // Show loading state
+    showToast('Processing request...', 'info');
+    
+    const db = firebase.firestore();
+    
+    // Get the request data first
+    db.collection('buyRequests').doc(requestId).get()
+        .then(doc => {
+            if (!doc.exists) {
+                throw new Error('Request not found');
+            }
+            
+            const requestData = doc.data();
+            const userId = requestData.userId;
+            const amount = requestData.amount;
+            
+            // Use a transaction to update both the request and the wallet
+            return db.runTransaction(transaction => {
+                // Get the user's wallet
+                const walletRef = db.collection('wallets').doc(userId);
+                
+                return transaction.get(walletRef)
+                    .then(walletDoc => {
+                        // Get current admin user
+                        const adminUser = firebase.auth().currentUser;
+                        const adminName = adminUser ? adminUser.displayName || adminUser.email : 'Admin';
+                        
+                        // Create wallet if it doesn't exist
+                        if (!walletDoc.exists) {
+                            transaction.set(walletRef, {
+                                talentCoins: amount,
+                                commission: 0,
+                                lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
+                            });
+                        } else {
+                            // Update existing wallet
+                            const walletData = walletDoc.data();
+                            const currentBalance = walletData.talentCoins || 0;
+                            
+                            transaction.update(walletRef, {
+                                talentCoins: currentBalance + amount,
+                                lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
+                            });
+                        }
+                        
+                        // Update the request status
+                        const requestRef = db.collection('buyRequests').doc(requestId);
+                        transaction.update(requestRef, {
+                            status: 'completed',
+                            moderatorNotes: notes,
+                            completedAt: firebase.firestore.FieldValue.serverTimestamp(),
+                            moderator: adminName
+                        });
+                        
+                        // Create activity record
+                        const activityRef = db.collection('activity').doc();
+                        transaction.set(activityRef, {
+                            userId: userId,
+                            type: 'buy',
+                            title: 'Buy Request Approved',
+                            details: `${amount} Talent Coins added to wallet`,
+                            status: 'completed',
+                            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                        });
+                    });
+            });
+        })
+        .then(() => {
+            showToast('Buy request approved successfully', 'success');
+            
+            // Close details modal
+            document.getElementById('requestDetailsModal').style.display = 'none';
+            
+            // Reload buy requests to update the UI
+            loadBuyCoinRequests();
+        })
+        .catch(error => {
+            console.error("Error approving request:", error);
+            showToast('Failed to approve request: ' + error.message, 'error');
+        });
+}
+
+// Reject Buy Request
+function rejectRequest(requestId) {
+    // Get admin notes
+    const notesInput = document.getElementById('moderatorNotes');
+    const notes = notesInput ? notesInput.value : '';
+    
+    if (!notes) {
+        showToast('Please provide a reason for rejection in the Admin Notes field', 'error');
+        return;
+    }
+    
+    // Show loading state
+    showToast('Processing request...', 'info');
+    
+    const db = firebase.firestore();
+    
+    // Get the request data first
+    db.collection('buyRequests').doc(requestId).get()
+        .then(doc => {
+            if (!doc.exists) {
+                throw new Error('Request not found');
+            }
+            
+            const requestData = doc.data();
+            const userId = requestData.userId;
+            
+            // Get current admin user
+            const adminUser = firebase.auth().currentUser;
+            const adminName = adminUser ? adminUser.displayName || adminUser.email : 'Admin';
+            
+            // Update the request status
+            return db.collection('buyRequests').doc(requestId).update({
+                status: 'rejected',
+                moderatorNotes: notes,
+                completedAt: firebase.firestore.FieldValue.serverTimestamp(),
+                moderator: adminName
+            }).then(() => {
+                // Create activity record
+                return db.collection('activity').add({
+                    userId: userId,
+                    type: 'buy',
+                    title: 'Buy Request Rejected',
+                    details: `Reason: ${notes}`,
+                    status: 'rejected',
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                });
+            });
+        })
+        .then(() => {
+            showToast('Buy request rejected successfully', 'success');
+            
+            // Close details modal
+            document.getElementById('requestDetailsModal').style.display = 'none';
+            
+            // Reload buy requests to update the UI
+            loadBuyCoinRequests();
+        })
+        .catch(error => {
+            console.error("Error rejecting request:", error);
+            showToast('Failed to reject request: ' + error.message, 'error');
+        });
+}
+
+// Show toast notification
+function showToast(message, type = 'info') {
+    // Check if toast container exists, if not create it
+    let toastContainer = document.getElementById('toast-container');
+    if (!toastContainer) {
+        toastContainer = document.createElement('div');
+        toastContainer.id = 'toast-container';
+        document.body.appendChild(toastContainer);
+    }
+    
+    // Create toast element
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+    toast.textContent = message;
+    
+    // Add toast to container
+    toastContainer.appendChild(toast);
+    
+    // Show toast
+    setTimeout(() => {
+        toast.classList.add('show');
+    }, 10);
+    
+    // Remove toast after 3 seconds
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => {
+            toastContainer.removeChild(toast);
+        }, 300);
+    }, 3000);
+}
+
+// Initialize when document is ready
+document.addEventListener('DOMContentLoaded', function() {
+    // Load buy requests if we're on the admin page
+    const requestsContainer = document.getElementById('buyRequestsContainer');
+    if (requestsContainer) {
+        loadBuyCoinRequests();
+    }
+    
+    // Set up refresh button
+    const refreshBtn = document.getElementById('refreshRequestsBtn');
+    if (refreshBtn) {
+        refreshBtn.addEventListener('click', function() {
+            loadBuyCoinRequests();
+        });
+    }
+    
+    // Set up filter functionality
+    const statusFilter = document.getElementById('statusFilter');
+    if (statusFilter) {
+        statusFilter.addEventListener('change', function() {
+            loadBuyCoinRequests(this.value);
+        });
+    }
+    
+    // Set up request details modal close button
+    const closeModalBtn = document.querySelector('#requestDetailsModal .close-modal');
+    if (closeModalBtn) {
+        closeModalBtn.addEventListener('click', function() {
+            document.getElementById('requestDetailsModal').style.display = 'none';
+        });
+    }
+    
+    // Close modal when clicking outside
+    window.addEventListener('click', function(event) {
+        const modal = document.getElementById('requestDetailsModal');
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+});
+
+
 </script>
 </body>
 </html>
