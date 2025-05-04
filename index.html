@@ -2546,6 +2546,1924 @@ d.talent-coin {
         padding-bottom: max(20px, env(safe-area-inset-bottom));
     }
 }
+/* Admin Dashboard Styles */
+
+
+
+/* Hide dashboard by default */
+.dashboard, .feature-section {
+    display: none;
+}
+
+.dashboard.hidden, .feature-section.hidden {
+    display: none;
+}
+
+/* Show dashboard when active */
+.dashboard:not(.hidden) {
+    display: block;
+}
+
+.feature-section:not(.hidden) {
+    display: block;
+}
+
+/* App Header */
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: var(--border-radius);
+    margin-bottom: 1.5rem;
+    display: flex;
+   
+    flex-direction: column;
+    
+    overflow-x: hidden;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 650px;
+    background-color: #f8f9fa;
+    z-index: 1000;
+  
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+}
+
+.app-logo {
+    width: 40px;
+    height: 40px;
+    background-color: var(--primary-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+}
+
+.app-logo i {
+    color: white;
+    font-size: 1.2rem;
+}
+
+.app-header h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--gray-800);
+    margin: 0;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+}
+
+.moderator-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-right: 1rem;
+}
+
+.moderator-name {
+    font-weight: 600;
+    color: var(--gray-800);
+}
+
+.status-badge {
+    font-size: 0.75rem;
+    padding: 0.2rem 0.5rem;
+    border-radius: 12px;
+    font-weight: 500;
+}
+
+.status-badge.online {
+    background-color: rgba(40, 167, 69, 0.1);
+    color: var(--success-color);
+}
+
+.icon-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--gray-100);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.icon-btn:hover {
+    background-color: var(--gray-200);
+}
+
+.icon-btn i {
+    color: var(--gray-700);
+    font-size: 1rem;
+}
+/* Dashboard Content Styles */
+.dashboard-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 20px;
+    padding: 20px;
+    flex-direction: column;
+    height: 100vh;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: -50px;
+    background-color: #f8f9fa;
+    z-index: 1000;
+  
+
+}
+
+/* Stats Cards */
+.stats-card {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.stats-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.stats-card .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.stats-card .card-title {
+    font-size: 1rem;
+    color: #555;
+    font-weight: 500;
+    margin: 0;
+}
+
+.stats-card .card-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.2rem;
+}
+
+.stats-card .card-value {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin: 5px 0;
+    color: #333;
+}
+
+.stats-card .card-change {
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.stats-card .change-up {
+    color: #28a745;
+}
+
+.stats-card .change-down {
+    color: #dc3545;
+}
+
+/* Card colors */
+.stats-card.buy-coins .card-icon {
+    background-color: #4e73df;
+}
+
+.stats-card.withdrawals .card-icon {
+    background-color: #1cc88a;
+}
+
+.stats-card.transfers .card-icon {
+    background-color: #36b9cc;
+}
+
+.stats-card.reports .card-icon {
+    background-color: #f6c23e;
+}
+
+.stats-card.users .card-icon {
+    background-color: #e74a3b;
+}
+
+.stats-card.fees .card-icon {
+    background-color: #6f42c1;
+}
+
+/* Activity Feed */
+.activity-feed {
+    grid-column: 1 / 3;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    overflow: hidden;
+}
+
+.activity-feed .feed-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.activity-feed h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.activity-feed .feed-filter {
+    display: flex;
+    gap: 10px;
+}
+
+.activity-feed .filter-btn {
+    background: none;
+    border: none;
+    color: #777;
+    cursor: pointer;
+    font-size: 0.9rem;
+    padding: 5px 10px;
+    border-radius: 15px;
+    transition: all 0.2s ease;
+}
+
+.activity-feed .filter-btn:hover {
+    background-color: #f0f0f0;
+}
+
+.activity-feed .filter-btn.active {
+    background-color: #4e73df;
+    color: white;
+}
+
+.activity-list {
+    max-height: 400px;
+    overflow-y: auto;
+    padding-right: 5px;
+}
+
+.activity-list::-webkit-scrollbar {
+    width: 5px;
+}
+
+.activity-list::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.activity-list::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 10px;
+}
+
+.activity-list::-webkit-scrollbar-thumb:hover {
+    background: #aaa;
+}
+
+.activity-item {
+    display: flex;
+    align-items: flex-start;
+    padding: 12px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.activity-item:last-child {
+    border-bottom: none;
+}
+
+.activity-icon {
+    margin-right: 15px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #f8f9fc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.activity-icon i {
+    font-size: 0.8rem;
+}
+
+.activity-item .activity-details {
+    flex-grow: 1;
+}
+
+.activity-item .activity-title {
+    font-size: 0.95rem;
+    color: #333;
+    margin-bottom: 3px;
+}
+
+.activity-item .activity-time {
+    font-size: 0.8rem;
+    color: #888;
+}
+
+/* Activity types */
+.activity-item.buy-coin .activity-icon i {
+    color: #4e73df;
+}
+
+.activity-item.withdrawal .activity-icon i {
+    color: #1cc88a;
+}
+
+.activity-item.transfer .activity-icon i {
+    color: #36b9cc;
+}
+
+.activity-item.report .activity-icon i {
+    color: #f6c23e;
+}
+
+.activity-item.user .activity-icon i {
+    color: #e74a3b;
+}
+
+/* Pending Requests */
+.pending-requests {
+    grid-column: 3;
+    grid-row: 2;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    overflow: hidden;
+}
+
+.pending-requests .requests-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.pending-requests h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.pending-requests .view-all {
+    color: #4e73df;
+    font-size: 0.9rem;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.pending-requests .view-all:hover {
+    text-decoration: underline;
+}
+
+.requests-list {
+    max-height: 400px;
+    overflow-y: auto;
+    padding-right: 5px;
+}
+
+.requests-list::-webkit-scrollbar {
+    width: 5px;
+}
+
+.requests-list::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.requests-list::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 10px;
+}
+
+.requests-list::-webkit-scrollbar-thumb:hover {
+    background: #aaa;
+}
+
+.request-item {
+    padding: 12px;
+    border-radius: 8px;
+    background-color: #f8f9fc;
+    margin-bottom: 10px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+}
+
+.request-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.request-item .request-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.request-item .request-type {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #4e73df;
+}
+
+.request-item .request-time {
+    font-size: 0.8rem;
+    color: #888;
+}
+
+.request-item .request-user {
+    font-size: 0.9rem;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.request-item .request-amount {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #333;
+}
+
+/* Empty states */
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    color: #aaa;
+    text-align: center;
+}
+
+.empty-state i {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    opacity: 0.5;
+}
+
+.empty-state p {
+    font-size: 1rem;
+    margin: 0;
+}
+
+/* Status badges */
+.status-badge {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.status-badge.pending {
+    background-color: #fff8e1;
+    color: #f6c23e;
+}
+
+.status-badge.approved {
+    background-color: #e8f5e9;
+    color: #1cc88a;
+}
+
+.status-badge.rejected {
+    background-color: #feeae9;
+    color: #e74a3b;
+}
+
+.status-badge.processing {
+    background-color: #e3f2fd;
+    color: #4e73df;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+    .dashboard-content {
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    .stats-card:nth-child(3),
+    .stats-card:nth-child(6) {
+        grid-column: span 2;
+    }
+    
+    .activity-feed {
+        grid-column: span 2;
+    }
+    
+    .pending-requests {
+        grid-column: span 2;
+        grid-row: auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .dashboard-content {
+        grid-template-columns: 1fr;
+    }
+    
+    .stats-card,
+    .activity-feed,
+    .pending-requests {
+        grid-column: 1;
+    }
+}
+
+
+/* Action Cards */
+.action-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.action-card {
+    background-color: #fff;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    transition: var(--transition);
+    cursor: pointer;
+    position: relative;
+}
+
+.action-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.card-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: rgba(74, 108, 247, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+}
+
+.card-icon i {
+    color: var(--primary-color);
+    font-size: 1.5rem;
+}
+
+.card-content {
+    flex: 1;
+}
+
+.card-content h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--gray-800);
+    margin: 0 0 0.5rem 0;
+}
+
+.card-content p {
+    font-size: 0.9rem;
+    color: var(--gray-600);
+    margin: 0;
+}
+
+.badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: var(--danger-color);
+    color: white;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+/* Activity Summary */
+.activity-summary {
+    background-color: #fff;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.activity-summary h2 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--gray-800);
+    margin: 0 0 1rem 0;
+}
+
+.summary-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1rem;
+}
+
+.summary-card {
+    background-color: var(--gray-100);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    text-align: center;
+}
+
+.summary-value {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin: 0.5rem 0;
+}
+
+.summary-label {
+    font-size: 0.9rem;
+    color: var(--gray-600);
+}
+
+/* Recent Activity */
+.recent-activity {
+    background-color: #fff;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 1.5rem;
+}
+
+.recent-activity h2 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--gray-800);
+    margin: 0 0 1rem 0;
+}
+
+.activity-list {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.activity-item {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--gray-200);
+}
+
+.activity-item:last-child {
+    border-bottom: none;
+}
+
+.activity-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: rgba(74, 108, 247, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+}
+
+.activity-icon i {
+    color: var(--primary-color);
+    font-size: 1rem;
+}
+
+.activity-details {
+    flex: 1;
+}
+
+.activity-title {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--gray-800);
+    margin-bottom: 0.25rem;
+}
+
+.activity-time {
+    font-size: 0.8rem;
+    color: var(--gray-600);
+}
+
+/* Empty State */
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    color: var(--gray-500);
+}
+
+.empty-state i {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.empty-state p {
+    font-size: 1rem;
+}
+
+/* Feature Sections */
+.section-header {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: var(--border-radius);
+    margin-bottom: 1.5rem;
+}
+
+.back-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: var(--gray-100);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin-right: 1rem;
+    transition: var(--transition);
+}
+
+.back-btn:hover {
+    background-color: var(--gray-200);
+}
+
+.section-header h2 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--gray-800);
+    margin: 0;
+    flex: 1;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+}
+
+.filter-dropdown {
+    position: relative;
+    margin-right: 1rem;
+}
+
+.filter-btn {
+    display: flex;
+    align-items: center;
+    background-color: var(--gray-100);
+    border: none;
+    border-radius: var(--border-radius);
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.filter-btn:hover {
+    background-color: var(--gray-200);
+}
+
+.filter-btn i {
+    margin-right: 0.5rem;
+    color: var(--gray-700);
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #fff;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    min-width: 150px;
+    z-index: 10;
+    display: none;
+}
+
+.filter-dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+.dropdown-menu a {
+    display: block;
+    padding: 0.75rem 1rem;
+    color: var(--gray-700);
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.dropdown-menu a:hover {
+    background-color: var(--gray-100);
+}
+
+.dropdown-menu a.active {
+    background-color: rgba(74, 108, 247, 0.1);
+    color: var(--primary-color);
+    font-weight: 500;
+}
+
+.search-box {
+    position: relative;
+}
+
+.search-box input {
+    padding: 0.5rem 1rem 0.5rem 2.5rem;
+    border: 1px solid var(--gray-300);
+    border-radius: var(--border-radius);
+    width: 250px;
+}
+
+.search-box i {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gray-500);
+}
+
+/* Request Cards */
+.request-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    padding: 1rem;
+}
+
+.request-card {
+    background-color: #fff;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 1.5rem;
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.request-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.request-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+}
+
+.user-info .username {
+    font-weight: 600;
+    color: var(--gray-800);
+    margin-bottom: 0.25rem;
+}
+
+.request-id {
+    font-size: 0.8rem;
+    color: var(--gray-600);
+}
+
+.request-status .status-badge {
+    background-color: rgba(255, 193, 7, 0.1);
+    color: var(--warning-color);
+}
+
+.request-details {
+    border-top: 1px solid var(--gray-200);
+    padding-top: 1rem;
+}
+
+.detail-item {
+    display: flex;
+    margin-bottom: 0.5rem;
+}
+
+.detail-label {
+    font-size: 0.9rem;
+    color: var(--gray-600);
+    width: 80px;
+}
+
+.detail-value {
+    font-size: 0.9rem;
+    color: var(--gray-800);
+    font-weight: 500;
+}
+
+/* Transfer Tabs */
+.transfer-tabs {
+    display: flex;
+    background-color: #fff;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+}
+
+.tab {
+    padding: 1rem 1.5rem;
+    cursor: pointer;
+    transition: var(--transition);
+    font-weight: 500;
+    color: var(--gray-600);
+    border-bottom: 2px solid transparent;
+}
+
+.tab:hover {
+    color: var(--primary-color);
+    background-color: rgba(74, 108, 247, 0.05);
+}
+
+.tab.active {
+    color: var(--primary-color);
+    border-bottom: 2px solid var(--primary-color);
+}
+
+.tab-content {
+    display: none;
+}
+.tab-content.active {
+    display: block;
+}
+
+/* Transfer List */
+.transfer-list, .report-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.transfer-item, .report-item {
+    background-color: #fff;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 1.5rem;
+    transition: var(--transition);
+}
+
+.transfer-item:hover, .report-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.transfer-header, .report-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+}
+
+.transfer-info .transfer-title, .report-info .report-title {
+    font-weight: 600;
+    color: var(--gray-800);
+    margin-bottom: 0.25rem;
+}
+
+.transfer-id, .report-id {
+    font-size: 0.8rem;
+    color: var(--gray-600);
+}
+
+.transfer-status .status-badge, .report-status .status-badge {
+    background-color: rgba(255, 193, 7, 0.1);
+    color: var(--warning-color);
+}
+
+.status-badge.success, .status-badge.completed {
+    background-color: rgba(40, 167, 69, 0.1);
+    color: var(--success-color);
+}
+
+.status-badge.failed, .status-badge.rejected {
+    background-color: rgba(220, 53, 69, 0.1);
+    color: var(--danger-color);
+}
+
+.status-badge.pending {
+    background-color: rgba(255, 193, 7, 0.1);
+    color: var(--warning-color);
+}
+
+.transfer-details, .report-details {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 0.5rem 1rem;
+    margin-bottom: 1rem;
+}
+
+.report-message {
+    background-color: var(--gray-100);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    color: var(--gray-700);
+}
+
+.report-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+}
+
+.text-btn {
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.text-btn:hover {
+    color: var(--primary-dark);
+    text-decoration: underline;
+}
+
+/* Talent Coin Dispenser */
+.dispenser-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    padding: 1rem;
+}
+
+.dispenser-form {
+    background-color: #fff;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 1.5rem;
+}
+
+.input-group {
+    margin-bottom: 1.5rem;
+}
+
+.input-group label {
+    display: block;
+    font-weight: 500;
+    color: var(--gray-700);
+    margin-bottom: 0.5rem;
+}
+
+.input-group input[type="text"],
+.input-group input[type="number"],
+.input-group select,
+.input-group textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--gray-300);
+    border-radius: var(--border-radius);
+    transition: var(--transition);
+}
+
+.input-group input:focus,
+.input-group select:focus,
+.input-group textarea:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(74, 108, 247, 0.1);
+}
+
+.radio-group {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.radio-label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.radio-label input {
+    margin-right: 0.5rem;
+}
+
+.primary-btn {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    padding: 0.75rem 1.5rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    width: 100%;
+}
+
+.primary-btn:hover {
+    background-color: var(--primary-dark);
+}
+
+.secondary-btn {
+    background-color: var(--gray-200);
+    color: var(--gray-700);
+    border: none;
+    border-radius: var(--border-radius);
+    padding: 0.75rem 1.5rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.secondary-btn:hover {
+    background-color: var(--gray-300);
+}
+
+.user-info-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.user-info-header h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--gray-800);
+    margin: 0;
+}
+
+.refresh-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: var(--gray-100);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.refresh-btn:hover {
+    background-color: var(--gray-200);
+}
+
+.refresh-btn i {
+    color: var(--gray-700);
+}
+
+.user-info-content {
+    background-color: #fff;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.user-info-details {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+.user-info-details.hidden {
+    display: none;
+}
+
+.info-group {
+    display: flex;
+    align-items: center;
+}
+
+.info-label {
+    font-weight: 500;
+    color: var(--gray-600);
+    width: 150px;
+}
+
+.info-value {
+    font-weight: 500;
+    color: var(--gray-800);
+}
+
+.recent-transactions {
+    background-color: #fff;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 1.5rem;
+}
+
+.recent-transactions h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--gray-800);
+    margin: 0 0 1rem 0;
+}
+
+.transaction-list {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.transaction-item {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--gray-200);
+}
+
+.transaction-item:last-child {
+    border-bottom: none;
+}
+
+.transaction-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: rgba(74, 108, 247, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+}
+
+.transaction-icon i {
+    color: var(--primary-color);
+    font-size: 1rem;
+}
+
+.transaction-details {
+    flex: 1;
+}
+
+.transaction-title {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--gray-800);
+    margin-bottom: 0.25rem;
+}
+
+.transaction-time {
+    font-size: 0.8rem;
+    color: var(--gray-600);
+}
+
+.transaction-amount {
+    font-weight: 600;
+}
+
+.transaction-amount.positive {
+    color: var(--success-color);
+}
+
+.transaction-amount.negative {
+    color: var(--danger-color);
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    background-color: #fff;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--gray-200);
+}
+
+.modal-header h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--gray-800);
+    margin: 0;
+}
+
+.close-modal {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--gray-600);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.close-modal:hover {
+    color: var(--gray-800);
+}
+
+.modal-body {
+    padding: 1.5rem;
+}
+
+.modal-footer {
+    padding: 1.5rem;
+    border-top: 1px solid var(--gray-200);
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+}
+
+/* Request Details */
+.request-details-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.user-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: var(--gray-200);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+}
+
+.user-avatar i {
+    font-size: 1.5rem;
+    color: var(--gray-600);
+}
+
+.details-section {
+    background-color: var(--gray-100);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+}
+
+.details-section h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--gray-800);
+    margin: 0 0 1rem 0;
+}
+
+.details-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+}
+
+.detail-row {
+    display: flex;
+    align-items: center;
+}
+
+.screenshot-container {
+    width: 100%;
+    text-align: center;
+}
+
+.screenshot-container img {
+    max-width: 100%;
+    max-height: 300px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+}
+
+.action-notes {
+    margin-bottom: 1.5rem;
+}
+
+.action-notes label {
+    display: block;
+    font-weight: 500;
+    color: var(--gray-700);
+    margin-bottom: 0.5rem;
+}
+
+.action-notes textarea {
+    width: 100%;
+    height: 100px;
+    padding: 0.75rem;
+    border: 1px solid var(--gray-300);
+    border-radius: var(--border-radius);
+    resize: vertical;
+}
+
+.wallet-copy-field {
+    display: flex;
+    align-items: center;
+    background-color: var(--gray-200);
+    border-radius: var(--border-radius);
+    padding: 0.5rem 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.wallet-copy-field span {
+    flex: 1;
+    font-family: monospace;
+    font-size: 1rem;
+}
+
+.copy-btn {
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.copy-btn:hover {
+    color: var(--primary-dark);
+}
+
+.copy-message {
+    font-size: 0.8rem;
+    color: var(--gray-600);
+}
+
+.transfer-confirmation {
+    margin-bottom: 1.5rem;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: flex-start;
+    cursor: pointer;
+}
+
+.checkbox-label input {
+    margin-right: 0.5rem;
+    margin-top: 0.25rem;
+}
+
+
+
+.fee-summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.summary-card {
+    background-color: #fff;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 1.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.summary-card.total {
+    background-color: rgba(74, 108, 247, 0.1);
+}
+
+.summary-card.today {
+    background-color: rgba(40, 167, 69, 0.1);
+}
+
+.summary-card.week {
+    background-color: rgba(255, 193, 7, 0.1);
+}
+
+.summary-card.month {
+    background-color: rgba(23, 162, 184, 0.1);
+}
+
+.summary-card h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--gray-800);
+    margin: 0 0 1rem 0;
+}
+
+.summary-card .amount {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--gray-900);
+    margin: 0;
+}
+
+.card-icon {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    font-size: 2.5rem;
+    opacity: 0.2;
+    color: var(--gray-700);
+}
+
+.charts-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.chart-card {
+    background-color: #fff;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 1.5rem;
+}
+
+.chart-card h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--gray-800);
+    margin: 0 0 1.5rem 0;
+}
+
+.transactions-section {
+    background-color: #fff;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.section-header {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.section-header h2 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--gray-800);
+    margin: 0;
+}
+
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+}
+
+.search-container {
+    position: relative;
+    flex: 1;
+    min-width: 200px;
+}
+
+.search-container input {
+    width: 100%;
+    padding: 0.75rem 1rem 0.75rem 2.5rem;
+    border: 1px solid var(--gray-300);
+    border-radius: var(--border-radius);
+}
+
+.search-container i {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gray-500);
+}
+
+.filter-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.filter-container select {
+    padding: 0.75rem;
+    border: 1px solid var(--gray-300);
+    border-radius: var(--border-radius);
+    background-color: #fff;
+}
+
+.custom-date-range {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.custom-date-range input {
+    padding: 0.75rem;
+    border: 1px solid var(--gray-300);
+    border-radius: var(--border-radius);
+}
+
+.export-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: var(--gray-100);
+    border: none;
+    border-radius: var(--border-radius);
+    padding: 0.75rem 1rem;
+    font-weight: 500;
+    color: var(--gray-700);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.export-btn:hover {
+    background-color: var(--gray-200);
+}
+
+.table-container {
+    overflow-x: auto;
+    margin-bottom: 1.5rem;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    background-color: var(--gray-100);
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    color: var(--gray-700);
+    border-bottom: 2px solid var(--gray-200);
+    white-space: nowrap;
+}
+
+th i {
+    margin-left: 0.5rem;
+    cursor: pointer;
+}
+
+td {
+    padding: 1rem;
+    border-bottom: 1px solid var(--gray-200);
+    color: var(--gray-800);
+}
+
+tr:hover {
+    background-color: var(--gray-50);
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.pagination button {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: var(--gray-100);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.pagination button:hover {
+    background-color: var(--gray-200);
+}
+
+.pagination button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+#pageNumbers {
+    display: flex;
+    gap: 0.5rem;
+}
+
+#pageNumbers span {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+#pageNumbers span:hover {
+    background-color: var(--gray-200);
+}
+
+#pageNumbers span.active {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* Transaction Details Modal */
+.transaction-details {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.detail-row {
+    display: flex;
+    align-items: flex-start;
+}
+
+.detail-row .label {
+    font-weight: 500;
+    color: var(--gray-600);
+    width: 150px;
+    flex-shrink: 0;
+}
+
+.detail-row .value {
+    color: var(--gray-800);
+}
+
+.related-transaction {
+    border-top: 1px solid var(--gray-200);
+    padding-top: 1.5rem;
+}
+
+.related-transaction h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--gray-800);
+    margin: 0 0 1rem 0;
+}
+
+.view-related-btn {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    padding: 0.75rem 1.5rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.view-related-btn:hover {
+    background-color: var(--primary-dark);
+}
+
+/* Responsive Styles */
+@media (max-width: 992px) {
+    .dispenser-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .charts-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .app-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    
+    .header-right {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .header-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .search-box input {
+        width: 100%;
+    }
+    
+    .action-cards, .summary-cards {
+        grid-template-columns: 1fr;
+    }
+    
+    .request-cards {
+        grid-template-columns: 1fr;
+    }
+    
+    .transfer-tabs {
+        flex-wrap: wrap;
+    }
+    
+    .tab {
+        flex: 1;
+        text-align: center;
+        padding: 0.75rem;
+    }
+    
+    .modal-content {
+        width: 95%;
+    }
+}
+
+@media (max-width: 576px) {
+    .actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .search-container, .filter-container {
+        width: 100%;
+    }
+    
+    .export-btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .custom-date-range {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .detail-row {
+        flex-direction: column;
+    }
+    
+    .detail-row .label {
+        width: 100%;
+        margin-bottom: 0.25rem;
+    }
+}
 
 
   </style>
@@ -2554,7 +4472,9 @@ d.talent-coin {
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    
     <div class="container">
+        
         <div class="split-screen">
             <div class="left">
                 <div class="logo">
@@ -2687,6 +4607,895 @@ d.talent-coin {
             </div>
         </div>
     </div>
+
+    <!-- Main Dashboard -->
+    <div class="dashboard hidden" id="dashboard">
+       
+        
+        <main class="dashboard-content">
+            <header class="app-header">
+                <div class="header-left">
+                    <div class="app-logo">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h1>Support Dashboard</h1>
+                </div>
+                
+                <div class="header-right">
+                    <div class="moderator-info">
+                        <span class="moderator-name">Moderator</span>
+                        <span class="status-badge online">Online</span>
+                    </div>
+                    <button class="icon-btn" id="logoutBtn">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </div>
+            </header>
+            <div class="action-cards">
+                <div class="action-card" id="buyCoinSupportBtn">
+                    <div class="card-icon">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3>Buy Coin Support</h3>
+                        <p>Manage user coin purchase requests</p>
+                        <div class="badge" id="buyRequestsBadge">0</div>
+                    </div>
+                </div>
+                
+                <div class="action-card" id="withdrawSupportBtn">
+                    <div class="card-icon">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3>Withdraw Support</h3>
+                        <p>Process user withdrawal requests</p>
+                        <div class="badge" id="withdrawRequestsBadge">0</div>
+                    </div>
+                </div>
+                
+                <div class="action-card" id="transferSupportBtn">
+                    <div class="card-icon">
+                        <i class="fas fa-exchange-alt"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3>Transfer Support</h3>
+                        <p>Monitor and manage user transfers</p>
+                        <div class="badge" id="transferIssuesBadge">0</div>
+                    </div>
+                </div>
+                
+                <div class="action-card" id="talentCoinDispenserBtn">
+                    <div class="card-icon">
+                        <i class="fas fa-hand-holding-usd"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3>Talent Coin Dispenser</h3>
+                        <p>Credit or debit user wallets</p>
+                    </div>
+                </div>
+                
+                <!-- Add this to your action cards in the dashboard -->
+                <div class="action-card" id="feesReporterBtn">
+                    <div class="card-icon">
+                        <i class="fas fa-chart-pie"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3>Fees Reporter</h3>
+                        <p>View and analyze platform fees</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="activity-summary">
+                <h2>Today's Activity</h2>
+                <div class="summary-cards">
+                    <div class="summary-card">
+                        <div class="summary-value" id="todayBuyRequests">0</div>
+                        <div class="summary-label">Buy Requests</div>
+                    </div>
+                    
+                    <div class="summary-card">
+                        <div class="summary-value" id="todayWithdrawals">0</div>
+                        <div class="summary-label">Withdrawals</div>
+                    </div>
+                    
+                    <div class="summary-card">
+                        <div class="summary-value" id="todayTransfers">0</div>
+                        <div class="summary-label">Transfers</div>
+                    </div>
+                    
+                    <div class="summary-card">
+                        <div class="summary-value" id="todayIssues">0</div>
+                        <div class="summary-label">Issues</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="recent-activity">
+                <h2>Recent Activity</h2>
+                <div class="activity-list" id="recentActivityList">
+                    <!-- Activity items will be loaded here -->
+                    <div class="empty-state">
+                        <i class="fas fa-history"></i>
+                        <p>No recent activity</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Buy Coin Support Section -->
+    <div class="feature-section hidden" id="buyCoinSupport">
+        <header class="section-header">
+            <button class="back-btn" data-target="dashboard">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <h2>Buy Coin Support</h2>
+            <div class="header-actions">
+                <div class="filter-dropdown">
+                    <button class="filter-btn">
+                        <i class="fas fa-filter"></i>
+                        <span>Filter</span>
+                    </button>
+                    <div class="dropdown-menu">
+                        <a href="#" data-filter="all" class="active">All Requests</a>
+                        <a href="#" data-filter="pending">Pending</a>
+                        <a href="#" data-filter="completed">Completed</a>
+                        <a href="#" data-filter="rejected">Rejected</a>
+                    </div>
+                </div>
+                <div class="search-box">
+                    <input type="text" placeholder="Search by username or wallet ID">
+                    <i class="fas fa-search"></i>
+                </div>
+            </div>
+        </header>
+        
+        <div class="request-cards" id="buyRequestCards">
+            <!-- Request cards will be loaded here -->
+            <div class="empty-state">
+                <i class="fas fa-coins"></i>
+                <p>No buy requests available</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Withdraw Support Section -->
+    <div class="feature-section hidden" id="withdrawSupport">
+        <header class="section-header">
+            <button class="back-btn" data-target="dashboard">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <h2>Withdraw Support</h2>
+            <div class="header-actions">
+                <div class="filter-dropdown">
+                    <button class="filter-btn">
+                        <i class="fas fa-filter"></i>
+                        <span>Filter</span>
+                    </button>
+                    <div class="dropdown-menu">
+                        <a href="#" data-filter="all" class="active">All Requests</a>
+                        <a href="#" data-filter="pending">Pending</a>
+                        <a href="#" data-filter="completed">Completed</a>
+                        <a href="#" data-filter="rejected">Rejected</a>
+                    </div>
+                </div>
+                <div class="search-box">
+                    <input type="text" placeholder="Search by username or wallet ID">
+                    <i class="fas fa-search"></i>
+                </div>
+            </div>
+        </header>
+        
+        <div class="request-cards" id="withdrawRequestCards">
+            <!-- Request cards will be loaded here -->
+            <div class="empty-state">
+                <i class="fas fa-money-bill-wave"></i>
+                <p>No withdrawal requests available</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Transfer Support Section -->
+    <div class="feature-section hidden" id="transferSupport">
+        <header class="section-header">
+            <button class="back-btn" data-target="dashboard">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <h2>Transfer Support</h2>
+            <div class="header-actions">
+                <div class="filter-dropdown">
+                    <button class="filter-btn">
+                        <i class="fas fa-filter"></i>
+                        <span>Filter</span>
+                    </button>
+                    <div class="dropdown-menu">
+                        <a href="#" data-filter="all" class="active">All Transfers</a>
+                        <a href="#" data-filter="successful">Successful</a>
+                        <a href="#" data-filter="failed">Failed</a>
+                        <a href="#" data-filter="pending">Pending</a>
+                    </div>
+                </div>
+                <div class="search-box">
+                    <input type="text" placeholder="Search by username or wallet ID">
+                    <i class="fas fa-search"></i>
+                </div>
+            </div>
+        </header>
+        
+        <div class="transfer-tabs">
+            <div class="tab active" data-tab="allTransfers">All Transfers</div>
+            <div class="tab" data-tab="successfulTransfers">Successful</div>
+            <div class="tab" data-tab="failedTransfers">Failed</div>
+            <div class="tab" data-tab="pendingTransfers">Pending</div>
+            <div class="tab" data-tab="reportRoom">Report Room</div>
+        </div>
+        
+        <div class="tab-content active" id="allTransfersTab">
+            <div class="transfer-list" id="allTransfersList">
+                <!-- Transfer items will be loaded here -->
+                <div class="empty-state">
+                    <i class="fas fa-exchange-alt"></i>
+                    <p>No transfers available</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="tab-content" id="successfulTransfersTab">
+            <div class="transfer-list" id="successfulTransfersList">
+                <!-- Successful transfers will be loaded here -->
+                <div class="empty-state">
+                    <i class="fas fa-check-circle"></i>
+                    <p>No successful transfers</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="tab-content" id="failedTransfersTab">
+            <div class="transfer-list" id="failedTransfersList">
+                <!-- Failed transfers will be loaded here -->
+                <div class="empty-state">
+                    <i class="fas fa-times-circle"></i>
+                    <p>No failed transfers</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="tab-content" id="pendingTransfersTab">
+            <div class="transfer-list" id="pendingTransfersList">
+                <!-- Pending transfers will be loaded here -->
+                <div class="empty-state">
+                    <i class="fas fa-clock"></i>
+                    <p>No pending transfers</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="tab-content" id="reportRoomTab">
+            <div class="report-list" id="reportList">
+                <!-- Reports will be loaded here -->
+                <div class="empty-state">
+                    <i class="fas fa-flag"></i>
+                    <p>No reports available</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Talent Coin Dispenser Section -->
+    <div class="feature-section hidden" id="talentCoinDispenser">
+        <header class="section-header">
+            <button class="back-btn" data-target="dashboard">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <h2>Talent Coin Dispenser</h2>
+        </header>
+        
+        <div class="dispenser-container">
+            <div class="dispenser-form">
+                <div class="input-group">
+                    <label for="walletId">User Wallet ID</label>
+                    <input type="text" id="walletId" placeholder="Enter user's wallet ID">
+                </div>
+                
+                <div class="input-group">
+                    <label for="transactionType">Transaction Type</label>
+                    <div class="radio-group">
+                        <label class="radio-label">
+                            <input type="radio" name="transactionType" value="credit" checked>
+                            <span>Credit (Add Coins)</span>
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="transactionType" value="debit">
+                            <span>Debit (Remove Coins)</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label for="coinAmount">Amount (Talent Coins)</label>
+                    <input type="number" id="coinAmount" placeholder="Enter amount">
+                </div>
+                
+                <div class="input-group">
+                    <label for="transactionReason">Reason</label>
+                    <select id="transactionReason">
+                        <option value="">Select reason</option>
+                        <option value="buy">Buy Coin Verification</option>
+                        <option value="withdraw">Withdrawal Processing</option>
+                        <option value="refund">Refund</option>
+                        <option value="bonus">Bonus</option>
+                        <option value="correction">Balance Correction</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="input-group" id="otherReasonGroup" style="display: none;">
+                    <label for="otherReason">Specify Reason</label>
+                    <input type="text" id="otherReason" placeholder="Enter specific reason">
+                </div>
+                
+                <div class="input-group">
+                    <label for="transactionNotes">Notes (Optional)</label>
+                    <textarea id="transactionNotes" placeholder="Add any additional notes"></textarea>
+                </div>
+                
+                <button class="primary-btn" id="processTransactionBtn">Process Transaction</button>
+            </div>
+            
+            <div class="user-info-header">
+                <h3>User Information</h3>
+                <div class="refresh-btn" id="refreshUserInfo">
+                    <i class="fas fa-sync-alt"></i>
+                </div>
+            </div>
+            
+            <div class="user-info-content" id="userInfoContent">
+                <div class="empty-state">
+                    <i class="fas fa-user"></i>
+                    <p>Enter a wallet ID to view user information</p>
+                </div>
+            </div>
+            
+            <div class="user-info-details hidden" id="userInfoDetails">
+                <div class="info-group">
+                    <span class="info-label">Username:</span>
+                    <span class="info-value" id="userUsername">-</span>
+                </div>
+                
+                <div class="info-group">
+                    <span class="info-label">Wallet ID:</span>
+                    <span class="info-value" id="userWalletId">-</span>
+                </div>
+                
+                <div class="info-group">
+                    <span class="info-label">Current Balance:</span>
+                    <span class="info-value" id="userBalance">-</span>
+                </div>
+                
+                <div class="info-group">
+                    <span class="info-label">Commission Balance:</span>
+                    <span class="info-value" id="userCommission">-</span>
+                </div>
+                
+                <div class="info-group">
+                    <span class="info-label">Account Status:</span>
+                    <span class="info-value status-badge" id="userStatus">-</span>
+                </div>
+                
+                <div class="info-group">
+                    <span class="info-label">Last Transaction:</span>
+                    <span class="info-value" id="userLastTransaction">-</span>
+                </div>
+            </div>
+            
+            <div class="recent-transactions">
+                <h3>Recent Transactions</h3>
+                <div class="transaction-list" id="userTransactionList">
+                    <div class="empty-state">
+                        <i class="fas fa-history"></i>
+                        <p>No transactions to display</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fees Reporter Section -->
+    <div class="feature-section hidden" id="feesReporter">
+        <header class="section-header">
+            <button class="back-btn" data-target="dashboard">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <h2>Fees Reporter</h2>
+        </header>
+        
+        <!-- Fee Summary Cards -->
+        <div class="fee-summary">
+            <div class="summary-card total">
+                <h3>Total Fees Collected</h3>
+                <p class="amount"><span id="totalFees">0</span> TC</p>
+                <i class="fas fa-coins card-icon"></i>
+            </div>
+            <div class="summary-card today">
+                <h3>Today's Fees</h3>
+                <p class="amount"><span id="todayFees">0</span> TC</p>
+                <i class="fas fa-calendar-day card-icon"></i>
+            </div>
+            <div class="summary-card week">
+                <h3>This Week's Fees</h3>
+                <p class="amount"><span id="weekFees">0</span> TC</p>
+                <i class="fas fa-calendar-week card-icon"></i>
+            </div>
+            <div class="summary-card month">
+                <h3>This Month's Fees</h3>
+                <p class="amount"><span id="monthFees">0</span> TC</p>
+                <i class="fas fa-calendar-alt card-icon"></i>
+            </div>
+        </div>
+        
+        <!-- Charts Section -->
+        <div class="charts-container">
+            <div class="chart-card">
+                <h3>Fee Collection Trend</h3>
+                <canvas id="feesTrendChart"></canvas>
+            </div>
+            <div class="chart-card">
+                <h3>Fee Sources</h3>
+                <canvas id="feesSourceChart"></canvas>
+            </div>
+        </div>
+        
+        <!-- Fee Transactions Table -->
+        <div class="transactions-section">
+            <div class="section-header">
+                <h2>Fee Transactions</h2>
+                <div class="actions">
+                    <div class="search-container">
+                        <input type="text" id="searchInput" placeholder="Search by User ID...">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <div class="filter-container">
+                        <select id="dateFilter">
+                            <option value="all">All Time</option>
+                            <option value="today">Today</option>
+                            <option value="week">This Week</option>
+                            <option value="month">This Month</option>
+                            <option value="custom">Custom Range</option>
+                        </select>
+                        <div class="custom-date-range" id="customDateRange" style="display: none;">
+                            <input type="date" id="startDate">
+                            <span>to</span>
+                            <input type="date" id="endDate">
+                            <button id="applyDateRange">Apply</button>
+                        </div>
+                    </div>
+                    <button class="export-btn" id="exportBtn">
+                        <i class="fas fa-download"></i>
+                        Export
+                    </button>
+                </div>
+            </div>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date <i class="fas fa-sort"></i></th>
+                            <th>Transaction ID <i class="fas fa-sort"></i></th>
+                            <th>User ID <i class="fas fa-sort"></i></th>
+                            <th>Transaction Type <i class="fas fa-sort"></i></th>
+                            <th>Transaction Amount <i class="fas fa-sort"></i></th>
+                            <th>Fee Amount <i class="fas fa-sort"></i></th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="feeTransactionsTable">
+                        <!-- Table rows will be populated dynamically -->
+                        <!-- Empty state -->
+                        <tr id="emptyState">
+                            <td colspan="7">
+                                <div class="empty-state">
+                                    <i class="fas fa-search"></i>
+                                    <p>No fee transactions found</p>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Pagination -->
+            <div class="pagination">
+                <button id="prevPage" disabled><i class="fas fa-chevron-left"></i></button>
+                <div id="pageNumbers"></div>
+                <button id="nextPage"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+        
+        <!-- Transaction Details Modal -->
+        <div class="modal" id="transactionModal">
+            <div class="modal-content">
+                <button class="close-btn" id="closeModal"><i class="fas fa-times"></i></button>
+                <h2>Transaction Details</h2>
+                <div class="transaction-details">
+                    <div class="detail-row">
+                        <div class="label">Transaction ID:</div>
+                        <div class="value" id="modalTxId"></div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="label">Date:</div>
+                        <div class="value" id="modalDate"></div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="label">User ID:</div>
+                        <div class="value" id="modalUserId"></div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="label">User Email:</div>
+                        <div class="value" id="modalUserEmail"></div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="label">Transaction Type:</div>
+                        <div class="value" id="modalTxType"></div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="label">Transaction Amount:</div>
+                        <div class="value" id="modalTxAmount"></div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="label">Fee Amount:</div>
+                        <div class="value" id="modalFeeAmount"></div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="label">Fee Calculation:</div>
+                        <div class="value" id="modalFeeCalc"></div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="label">Status:</div>
+                        <div class="value" id="modalStatus"></div>
+                    </div>
+                </div>
+                <div class="related-transaction">
+                    <h3>Related Transaction</h3>
+                    <button class="view-related-btn" id="viewRelatedBtn">View Original Transaction</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Request Details Modal -->
+    <div class="modal" id="requestDetailsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Request Details</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            
+            <div class="modal-body" id="requestDetailsContent">
+                <!-- Request details will be loaded here -->
+            </div>
+            
+            <div class="modal-footer">
+                <div class="action-buttons" id="requestActionButtons">
+                    <button class="secondary-btn" id="rejectRequestBtn">Reject</button>
+                    <button class="primary-btn" id="approveRequestBtn">Approve</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div class="modal" id="confirmationModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="confirmationTitle">Confirmation</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            
+            <div class="modal-body">
+                <div class="confirmation-message" id="confirmationMessage">
+                    Are you sure you want to proceed with this action?
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button class="secondary-btn" id="cancelConfirmationBtn">Cancel</button>
+                <button class="primary-btn" id="confirmActionBtn">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Templates for dynamic content -->
+    <template id="activityItemTemplate">
+        <div class="activity-item">
+            <div class="activity-icon">
+                <i class="fas fa-circle"></i>
+            </div>
+            <div class="activity-details">
+                <div class="activity-title">Activity Title</div>
+                <div class="activity-time">Time</div>
+            </div>
+        </div>
+    </template>
+
+    <template id="requestCardTemplate">
+        <div class="request-card">
+            <div class="request-header">
+                <div class="user-info">
+                    <div class="username">Username</div>
+                    <div class="request-id">ID: REQ12345</div>
+                </div>
+                <div class="request-status">
+                    <span class="status-badge">Status</span>
+                </div>
+            </div>
+            <div class="request-details">
+                <div class="detail-item">
+                    <span class="detail-label">Amount:</span>
+                    <span class="detail-value">100 Talent Coins</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Date:</span>
+                    <span class="detail-value">2023-08-15 14:30</span>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="transferItemTemplate">
+        <div class="transfer-item">
+            <div class="transfer-header">
+                <div class="transfer-info">
+                    <div class="transfer-title">Transfer Title</div>
+                    <div class="transfer-id">ID: TRX12345</div>
+                </div>
+                <div class="transfer-status">
+                    <span class="status-badge">Status</span>
+                </div>
+            </div>
+            <div class="transfer-details">
+                <div class="detail-item">
+                    <span class="detail-label">From:</span>
+                    <span class="detail-value">WL123456</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">To:</span>
+                    <span class="detail-value">WL789012</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Amount:</span>
+                    <span class="detail-value">50 Talent Coins</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Date:</span>
+                    <span class="detail-value">2023-08-15 14:30</span>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="reportItemTemplate">
+        <div class="report-item">
+            <div class="report-header">
+                <div class="report-info">
+                    <div class="report-title">Report Title</div>
+                    <div class="report-id">ID: RPT12345</div>
+                </div>
+                <div class="report-status">
+                    <span class="status-badge">Status</span>
+                </div>
+            </div>
+            <div class="report-details">
+                <div class="detail-item">
+                    <span class="detail-label">Reported by:</span>
+                    <span class="detail-value">Username</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Transaction:</span>
+                    <span class="detail-value">TRX12345</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Date:</span>
+                    <span class="detail-value">2023-08-15 14:30</span>
+                </div>
+            </div>
+            <div class="report-message">
+                Report message goes here...
+            </div>
+            <div class="report-actions">
+                <button class="text-btn">View Details</button>
+                <button class="text-btn">Mark as Resolved</button>
+            </div>
+        </div>
+    </template>
+
+    <template id="transactionItemTemplate">
+        <div class="transaction-item">
+            <div class="transaction-icon">
+                <i class="fas fa-exchange-alt"></i>
+            </div>
+            <div class="transaction-details">
+                <div class="transaction-title">Transaction Title</div>
+                <div class="transaction-time">Time</div>
+            </div>
+            <div class="transaction-amount">
+                <span class="amount-value">0</span>
+            </div>
+        </div>
+    </template>
+
+    <template id="buyRequestDetailsTemplate">
+        <div class="request-details-container">
+            <div class="user-profile">
+                <div class="user-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="user-info">
+                    <div class="username">Username</div>
+                    <div class="wallet-id">Wallet ID: WL123456</div>
+                </div>
+            </div>
+            
+            <div class="details-section">
+                <h4>Request Information</h4>
+                <div class="details-grid">
+                    <div class="detail-row">
+                        <div class="detail-label">Request ID:</div>
+                        <div class="detail-value" id="requestId">REQ12345</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Amount:</div>
+                        <div class="detail-value" id="requestAmount">100 Talent Coins</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Naira Equivalent:</div>
+                        <div class="detail-value" id="nairaAmount">₦1,000</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Date Requested:</div>
+                        <div class="detail-value" id="requestDate">2023-08-15 14:30</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Status:</div>
+                        <div class="detail-value">
+                            <span class="status-badge" id="requestStatus">Pending</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="details-section">
+                <h4>Payment Information</h4>
+                <div class="details-grid">
+                    <div class="detail-row">
+                        <div class="detail-label">Transfer Reference:</div>
+                        <div class="detail-value" id="transferReference">TR123456789</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Transfer Date:</div>
+                        <div class="detail-value" id="transferDate">2023-08-15</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Transfer Amount:</div>
+                        <div class="detail-value" id="transferAmount">₦1,000</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="details-section" id="screenshotSection">
+                <h4>Payment Screenshot</h4>
+                <div class="screenshot-container">
+                    <img src="" alt="Payment Screenshot" id="paymentScreenshot">
+                </div>
+            </div>
+            
+            <div class="details-section">
+                <h4>Moderator Actions</h4>
+                <div class="action-notes">
+                    <label for="moderatorNotes">Notes (Optional):</label>
+                    <textarea id="moderatorNotes" placeholder="Add notes about this request"></textarea>
+                </div>
+                
+                <div class="copy-wallet-section">
+                    <div class="wallet-copy-field">
+                        <span id="walletIdToCopy">WL123456</span>
+                        <button class="copy-btn" id="copyWalletIdBtn">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                    </div>
+                    <div class="copy-message">Copy wallet ID to use in Talent Coin Dispenser</div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="withdrawRequestDetailsTemplate">
+        <div class="request-details-container">
+            <div class="user-profile">
+                <div class="user-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="user-info">
+                    <div class="username">Username</div>
+                    <div class="wallet-id">Wallet ID: WL123456</div>
+                </div>
+            </div>
+            
+            <div class="details-section">
+                <h4>Request Information</h4>
+                <div class="details-grid">
+                    <div class="detail-row">
+                        <div class="detail-label">Request ID:</div>
+                        <div class="detail-value" id="withdrawRequestId">REQ12345</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Amount:</div>
+                        <div class="detail-value" id="withdrawRequestAmount">100 Talent Coins</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Naira Equivalent:</div>
+                        <div class="detail-value" id="withdrawNairaAmount">₦1,000</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Date Requested:</div>
+                        <div class="detail-value" id="withdrawRequestDate">2023-08-15 14:30</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Status:</div>
+                        <div class="detail-value">
+                            <span class="status-badge" id="withdrawRequestStatus">Pending</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="details-section">
+                <h4>Bank Information</h4>
+                <div class="details-grid">
+                    <div class="detail-row">
+                        <div class="detail-label">Bank Name:</div>
+                        <div class="detail-value" id="bankName">Bank Name</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Account Number:</div>
+                        <div class="detail-value" id="accountNumber">1234567890</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Account Name:</div>
+                        <div class="detail-value" id="accountName">Account Holder Name</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="details-section">
+                <h4>Moderator Actions</h4>
+                <div class="action-notes">
+                    <label for="withdrawModeratorNotes">Notes (Optional):</label>
+                    <textarea id="withdrawModeratorNotes" placeholder="Add notes about this withdrawal"></textarea>
+                </div>
+                
+                <div class="transfer-confirmation">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="transferConfirmation">
+                        <span>I confirm that I have transferred ₦<span id="confirmAmount">1,000</span> to the user's bank account</span>
+                    </label>
+                </div>
+                
+                <div class="copy-wallet-section">
+                    <div class="wallet-copy-field">
+                        <span id="withdrawWalletIdToCopy">WL123456</span>
+                        <button class="copy-btn" id="copyWithdrawWalletIdBtn">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                    </div>
+                    <div class="copy-message">Copy wallet ID to use in Talent Coin Dispenser</div>
+                </div>
+            </div>
+        </div>
+    </template>
 
     <!-- Dashboard Page -->
 <div class="dashboard-page" id="dashboardPage">
@@ -3444,6 +6253,8 @@ d.talent-coin {
 
 <!-- Overlay for modals -->
 <div class="modal-overlay" id="modalOverlay"></div>
+  
+
 
 <!-- Firebase SDK -->
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
@@ -3470,315 +6281,150 @@ const auth = firebase.auth();
 const db = firebase.firestore();
 const analytics = firebase.analytics();
 
-// DOM Elements
-const loginForm = document.getElementById('loginFormElement');
-const signupForm = document.getElementById('signupFormElement');
-const googleBtns = document.querySelectorAll('.google-btn');
-const togglePasswordBtns = document.querySelectorAll('.toggle-password');
-const showSignupBtn = document.getElementById('showSignup');
-const showLoginBtn = document.getElementById('showLogin');
-const loginContainer = document.getElementById('loginForm');
-const signupContainer = document.getElementById('signupForm');
-const splitScreen = document.querySelector('.split-screen');
 
-// Create dashboard page if it doesn't exist
-let dashboardPage = document.getElementById('dashboardPage');
-if (!dashboardPage) {
-  dashboardPage = document.createElement('div');
-  dashboardPage.id = 'dashboardPage';
-  dashboardPage.className = 'dashboard-page';
-  document.querySelector('.container').appendChild(dashboardPage);
+// Constants
+const ADMIN_EMAIL = 'admin@talentcoin.com';
+const ADMIN_PASSWORD = 'BISA19';
+
+
+// DOM Elements
+const splitScreen = document.querySelector('.split-screen');
+const loginForm = document.getElementById('loginForm');
+const signupForm = document.getElementById('signupForm');
+const googleBtns = document.querySelectorAll('.google-btn');
+const dashboardPage = document.getElementById('dashboardPage');
+const passwordFields = document.querySelectorAll('.password-field');
+
+// Initialize UI
+document.addEventListener('DOMContentLoaded', function() {
+  // Setup password visibility toggle
+  setupPasswordToggle();
   
-  // Add dashboard HTML
-  dashboardPage.innerHTML = `
-    <!-- Top Navigation Bar -->
-    <div class="dashboard-nav">
-        <div class="user-info">
-            <div class="profile-circle">
-                <img src="https://via.placeholder.com/40" alt="Profile" id="userProfileImage">
-            </div>
-            <span class="username" id="usernameDisplay">Username</span>
-        </div>
-        
-        <div class="trophy-btn">
-            <i class="fas fa-trophy"></i>
-            <span>Trophy</span>
-        </div>
-        
-        <div class="hamburger-menu" id="hamburgerMenu">
-            <i class="fas fa-bars"></i>
-        </div>
-        
-        <!-- Dropdown menu (hidden by default) -->
-        <div class="dropdown-menu" id="dropdownMenu">
-            <div class="dropdown-item logout-btn" onclick="logout()">
-                <i class="fas fa-sign-out-alt"></i>
-                <span>Logout</span>
-            </div>
-        </div>
-    </div>
+  // Setup password strength meter
+  setupPasswordStrength();
+  
+  // Setup form switching
+  setupFormSwitching();
+});
+
+// Setup form switching
+function setupFormSwitching() {
+  const loginLink = document.querySelector('.login-link');
+  const signupLink = document.querySelector('.signup-link');
+  const loginPanel = document.querySelector('.login');
+  const signupPanel = document.querySelector('.signup');
+  
+  if (loginLink && signupLink && loginPanel && signupPanel) {
+    loginLink.addEventListener('click', function(e) {
+      e.preventDefault();
+      loginPanel.classList.add('active');
+      signupPanel.classList.remove('active');
+    });
     
-    <!-- Main Dashboard Container -->
-    <div class="dashboard-container">
-        <!-- Action Buttons Container - Single Row -->
-        <div class="action-buttons-row">
-            <div class="action-btn wallet-btn">
-                <div class="action-icon">
-                    <i class="fas fa-wallet"></i>
-                </div>
-                <span>Wallet</span>
-            </div>
-            
-            <div class="action-btn creator-btn">
-                <div class="action-icon">
-                    <i class="fas fa-video"></i>
-                </div>
-                <span>Creator</span>
-            </div>
-            
-            <div class="action-btn spin-btn">
-                <div class="action-icon spin-icon">
-                    <i class="fas fa-sync-alt"></i>
-                </div>
-                <span>Spin</span>
-            </div>
-            
-            <div class="action-btn notification-btn">
-                <div class="action-icon">
-                    <i class="fas fa-bell"></i>
-                </div>
-                <span>Alerts</span>
-            </div>
-        </div>
-    </div>
-  `;
+    signupLink.addEventListener('click', function(e) {
+      e.preventDefault();
+      signupPanel.classList.add('active');
+      loginPanel.classList.remove('active');
+    });
+  }
 }
 
-// Toast notification function
+// Show toast notification
 function showToast(message, type = 'success') {
-  // Create toast container if it doesn't exist
-  let toastContainer = document.querySelector('.toast-container');
-  if (!toastContainer) {
-    toastContainer = document.createElement('div');
-    toastContainer.className = 'toast-container';
-    document.body.appendChild(toastContainer);
+  const toast = document.getElementById('toast') || createToastElement();
+  
+  // Set toast type
+  toast.className = 'toast';
+  toast.classList.add(type);
+  
+  // Set message
+  toast.querySelector('.toast-message').textContent = message;
+  
+  // Set icon
+  const iconElement = toast.querySelector('.toast-icon i');
+  if (iconElement) {
+    iconElement.className = type === 'success' 
+      ? 'fas fa-check-circle' 
+      : 'fas fa-exclamation-circle';
   }
   
-  // Create toast element
-  const toast = document.createElement('div');
-  toast.className = `toast ${type}`;
-  toast.innerHTML = `
-    <div class="toast-content">
-      <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
-      <span>${message}</span>
-    </div>
-    <div class="toast-progress"></div>
-  `;
+  // Show toast
+  toast.classList.add('show');
   
-  toastContainer.appendChild(toast);
-  
-  // Show and hide toast with animation
-  setTimeout(() => toast.classList.add('visible'), 10);
-  
-  // Remove toast after animation
+  // Hide after 3 seconds
   setTimeout(() => {
-    toast.classList.remove('visible');
-    setTimeout(() => toastContainer.removeChild(toast), 300);
+    toast.classList.remove('show');
   }, 3000);
 }
 
-// Add CSS for toast if not already in your stylesheet
-const toastStyles = document.createElement('style');
-toastStyles.textContent = `
-  .toast-container {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 9999;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  .toast {
-    background-color: white;
-    color: #333;
-    padding: 12px 15px;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    display: flex;
-    flex-direction: column;
-    min-width: 250px;
-    max-width: 350px;
-    transform: translateX(100%);
-    opacity: 0;
-    transition: all 0.3s ease;
-    overflow: hidden;
-  }
-  
-  .toast.visible {
-    transform: translateX(0);
-    opacity: 1;
-  }
-  
-  .toast-content {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  
-  .toast.success i {
-    color: #2ecc71;
-  }
-  
-  .toast.error i {
-    color: #e74c3c;
-  }
-  
-  .toast-progress {
-    height: 3px;
-    background-color: #ddd;
-    width: 100%;
-    margin-top: 8px;
-    position: relative;
-  }
-  
-  .toast-progress::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    background-color: #2ecc71;
-    animation: progress 3s linear forwards;
-  }
-  
-  .toast.error .toast-progress::after {
-    background-color: #e74c3c;
-  }
-  
-  @keyframes progress {
-    0% { width: 100%; }
-    100% { width: 0%; }
-  }
-  
-  /* Dropdown menu styles */
-  .dropdown-menu {
-    position: absolute;
-    top: 55px;
-    right: 15px;
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    padding: 8px 0;
-    min-width: 150px;
-    display: none;
-    z-index: 200;
-  }
-  
-  .dropdown-menu.active {
-    display: block;
-    animation: fadeIn 0.2s ease forwards;
-  }
-  
-  .dropdown-item {
-    padding: 10px 15px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-  }
-  
-  .dropdown-item:hover {
-    background-color: #f5f5f5;
-  }
-  
-  .logout-btn i {
-    color: #e74c3c;
-  }
-  
-  /* Loading spinner for buttons */
-  .auth-btn.loading {
-    position: relative;
-    color: transparent !important;
-    pointer-events: none;
-  }
-  
-  .loading-spinner {
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    border-radius: 50%;
-    border-top-color: white;
-    animation: spin 0.8s linear infinite;
-    top: calc(50% - 10px);
-    left: calc(50% - 10px);
-  }
-  
-  @keyframes spin {
-    to { transform: rotate(360deg); }
-  }
-  
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-`;
-document.head.appendChild(toastStyles);
+// Create toast element if it doesn't exist
+function createToastElement() {
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+  toast.innerHTML = `
+    <div class="toast-icon">
+      <i class="fas fa-check-circle"></i>
+    </div>
+    <div class="toast-message"></div>
+  `;
+  document.body.appendChild(toast);
+  return toast;
+}
 
-// Toggle between login and signup forms
-if (showSignupBtn) {
-  showSignupBtn.addEventListener('click', function(e) {
-    e.preventDefault();
-    loginContainer.classList.add('hidden');
-    signupContainer.classList.remove('hidden');
+// Setup password visibility toggle
+function setupPasswordToggle() {
+  passwordFields.forEach(field => {
+    const toggleBtn = field.querySelector('.password-toggle');
+    const input = field.querySelector('input');
+    
+    if (toggleBtn && input) {
+      toggleBtn.addEventListener('click', function() {
+        const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
+        input.setAttribute('type', type);
+        
+        // Toggle icon
+        const icon = toggleBtn.querySelector('i');
+        if (icon) {
+          icon.className = type === 'password' ? 'fas fa-eye' : 'fas fa-eye-slash';
+        }
+      });
+    }
   });
 }
 
-if (showLoginBtn) {
-  showLoginBtn.addEventListener('click', function(e) {
-    e.preventDefault();
-    signupContainer.classList.add('hidden');
-    loginContainer.classList.remove('hidden');
-  });
-}
-
-// Toggle password visibility
-togglePasswordBtns.forEach(btn => {
-  btn.addEventListener('click', function() {
-    const passwordInput = this.parentElement.querySelector('input');
-    const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-    passwordInput.setAttribute('type', type);
-    this.classList.toggle('fa-eye');
-    this.classList.toggle('fa-eye-slash');
-  });
-});
-
-// Password strength checker
-const passwordInput = document.getElementById('signupPassword');
-if (passwordInput) {
-  const strengthSegments = document.querySelectorAll('.strength-segment');
-  const strengthText = document.querySelector('.strength-text');
-
-  passwordInput.addEventListener('input', function() {
-    updatePasswordStrength(this.value);
-  });
-
-  function updatePasswordStrength(password) {
-    // Reset all segments
-    strengthSegments.forEach(segment => {
-      segment.className = 'strength-segment';
+// Setup password strength meter
+function setupPasswordStrength() {
+  const passwordInput = document.getElementById('signupPassword');
+  const strengthMeter = document.querySelector('.password-strength-meter');
+  
+  if (passwordInput && strengthMeter) {
+    const strengthSegments = strengthMeter.querySelectorAll('.strength-segment');
+    const strengthText = strengthMeter.querySelector('.strength-text');
+    
+    passwordInput.addEventListener('input', function() {
+      updatePasswordStrength(this.value, strengthSegments, strengthText);
     });
     
-    if (!password) {
-      strengthText.textContent = 'Password strength';
-      return;
-    }
-    
-    // Check password strength
+    // Clear strength meter when input is empty
+    passwordInput.addEventListener('blur', function() {
+      if (!this.value) {
+        strengthSegments.forEach(segment => {
+          segment.className = 'strength-segment';
+        });
+        strengthText.textContent = '';
+      }
+    });
+  }
+}
+
+// Update password strength meter
+function updatePasswordStrength(password, strengthSegments, strengthText) {
+  // Reset strength segments
+  strengthSegments.forEach(segment => {
+    segment.className = 'strength-segment';
+  });
+  
+  if (password) {
     const hasLower = /[a-z]/.test(password);
     const hasUpper = /[A-Z]/.test(password);
     const hasNumber = /[0-9]/.test(password);
@@ -3829,51 +6475,210 @@ function setButtonLoading(button, isLoading) {
   }
 }
 
+// Check if user is admin
+function isAdmin(email) {
+  return email === ADMIN_EMAIL;
+}
+
 // Navigate to dashboard
-function navigateToDashboard(user) {
+function navigateToDashboard(user, isAdminUser = false) {
+  // Store admin status in localStorage for persistence
+  if (isAdminUser) {
+    localStorage.setItem('isAdmin', 'true');
+  } else {
+    localStorage.removeItem('isAdmin');
+  }
+
   // Hide authentication container
-  splitScreen.style.display = 'none';
+  if (splitScreen) {
+    splitScreen.style.display = 'none';
+  }
   
-  // Show dashboard
-  dashboardPage.classList.add('active');
-  
-  // Set username
-  const displayName = user.displayName || user.email.split('@')[0];
-  document.getElementById('usernameDisplay').textContent = displayName;
-  
-  // Set profile image if available
-  if (user.photoURL) {
-    document.getElementById('userProfileImage').src = user.photoURL;
+  // If admin, show admin dashboard instead of regular dashboard
+  if (isAdminUser) {
+    console.log('Showing admin dashboard for:', user.email);
+    
+    // Hide regular dashboard if it exists
+    if (dashboardPage) {
+      dashboardPage.classList.remove('active');
+    }
+    
+    // Show admin dashboard
+    const adminDashboard = document.getElementById('dashboard');
+    if (adminDashboard) {
+      adminDashboard.classList.remove('hidden');
+      
+      // Set moderator name if available
+      const moderatorName = document.querySelector('.moderator-name');
+      if (moderatorName) {
+        moderatorName.textContent = user.displayName || 'Administrator';
+      }
+      
+      // Initialize admin dashboard functionality
+      initializeAdminDashboard();
+      
+      showToast('Admin mode activated', 'success');
+    } else {
+      console.error('Admin dashboard element not found');
+      showToast('Error loading admin dashboard', 'error');
+    }
+  } else {
+    // Show regular dashboard
+    if (dashboardPage) {
+      dashboardPage.classList.add('active');
+      
+      // Set username
+      const displayName = user.displayName || user.email.split('@')[0];
+      const usernameDisplay = document.getElementById('usernameDisplay');
+      if (usernameDisplay) {
+        usernameDisplay.textContent = displayName;
+      }
+      
+      // Set profile image if available
+      const userProfileImage = document.getElementById('userProfileImage');
+      if (userProfileImage && user.photoURL) {
+        userProfileImage.src = user.photoURL;
+      }
+    }
   }
   
   // Prevent body scrolling
   document.body.style.overflow = 'hidden';
   
   // Log analytics event
-  analytics.logEvent('login', {
-    method: user.providerData[0].providerId
-  });
-  
-  // Setup hamburger menu
-  setupHamburgerMenu();
+  if (typeof analytics !== 'undefined') {
+    analytics.logEvent('login', {
+      method: user.providerData[0].providerId,
+      isAdmin: isAdminUser
+    });
+  }
 }
 
-// Setup hamburger menu
-function setupHamburgerMenu() {
-  const hamburgerMenu = document.getElementById('hamburgerMenu');
-  const dropdownMenu = document.getElementById('dropdownMenu');
+// Initialize admin dashboard
+function initializeAdminDashboard() {
+  console.log('Initializing admin dashboard');
   
-  if (hamburgerMenu && dropdownMenu) {
-    hamburgerMenu.addEventListener('click', function() {
-      dropdownMenu.classList.toggle('active');
+  // Set up logout button
+  const logoutBtn = document.getElementById('logoutBtn');
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', logout);
+  }
+  
+  // Set up action card buttons
+  const buyCoinSupportBtn = document.getElementById('buyCoinSupportBtn');
+  const withdrawSupportBtn = document.getElementById('withdrawSupportBtn');
+  const transferSupportBtn = document.getElementById('transferSupportBtn');
+  const talentCoinDispenserBtn = document.getElementById('talentCoinDispenserBtn');
+  
+  // Dashboard sections
+  const dashboard = document.getElementById('dashboard');
+  const buyCoinSupport = document.getElementById('buyCoinSupport');
+  const withdrawSupport = document.getElementById('withdrawSupport');
+  const transferSupport = document.getElementById('transferSupport');
+  const talentCoinDispenser = document.getElementById('talentCoinDispenser');
+  
+  // Function to show a specific section and hide others
+  function showSection(sectionToShow) {
+    // Hide all sections
+    [buyCoinSupport, withdrawSupport, transferSupport, talentCoinDispenser].forEach(section => {
+      if (section) section.classList.add('hidden');
     });
     
-    // Close dropdown when clicking outside
-    document.addEventListener('click', function(event) {
-      if (!hamburgerMenu.contains(event.target) && !dropdownMenu.contains(event.target)) {
-        dropdownMenu.classList.remove('active');
+    // Show the selected section
+    if (sectionToShow) {
+      sectionToShow.classList.remove('hidden');
+    }
+  }
+  
+  // Set up action card click handlers
+  if (buyCoinSupportBtn) {
+    buyCoinSupportBtn.addEventListener('click', () => showSection(buyCoinSupport));
+  }
+  
+  if (withdrawSupportBtn) {
+    withdrawSupportBtn.addEventListener('click', () => showSection(withdrawSupport));
+  }
+  
+  if (transferSupportBtn) {
+    transferSupportBtn.addEventListener('click', () => showSection(transferSupport));
+  }
+  
+  if (talentCoinDispenserBtn) {
+    talentCoinDispenserBtn.addEventListener('click', () => showSection(talentCoinDispenser));
+  }
+  
+  // Set up back buttons
+  const backButtons = document.querySelectorAll('.back-btn');
+  backButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.getAttribute('data-target');
+      if (target === 'dashboard') {
+        showSection(null); // Hide all feature sections
       }
     });
+  });
+  
+  // Load initial data for the dashboard
+  loadDashboardData();
+}
+
+// Load dashboard data
+function loadDashboardData() {
+  // This would normally fetch data from Firestore
+  // For now, we'll just set some placeholder values
+  
+  // Set badge counts
+  const buyRequestsBadge = document.getElementById('buyRequestsBadge');
+  const withdrawRequestsBadge = document.getElementById('withdrawRequestsBadge');
+  const transferIssuesBadge = document.getElementById('transferIssuesBadge');
+  
+  if (buyRequestsBadge) buyRequestsBadge.textContent = '5';
+  if (withdrawRequestsBadge) withdrawRequestsBadge.textContent = '3';
+  if (transferIssuesBadge) transferIssuesBadge.textContent = '2';
+  
+  // Set today's activity summary
+  const todayBuyRequests = document.getElementById('todayBuyRequests');
+  const todayWithdrawals = document.getElementById('todayWithdrawals');
+  const todayTransfers = document.getElementById('todayTransfers');
+  const todayIssues = document.getElementById('todayIssues');
+  
+  if (todayBuyRequests) todayBuyRequests.textContent = '8';
+  if (todayWithdrawals) todayWithdrawals.textContent = '6';
+  if (todayTransfers) todayTransfers.textContent = '15';
+  if (todayIssues) todayIssues.textContent = '2';
+  
+  // Load recent activity (placeholder)
+  const recentActivityList = document.getElementById('recentActivityList');
+  if (recentActivityList) {
+    // Clear empty state if it exists
+    const emptyState = recentActivityList.querySelector('.empty-state');
+    if (emptyState) {
+      emptyState.remove();
+    }
+    
+    // Add some sample activity items
+    const activityTemplate = document.getElementById('activityItemTemplate');
+    if (activityTemplate) {
+      const activities = [
+        { title: 'New buy request from user123', time: '5 minutes ago', icon: 'fa-coins' },
+        { title: 'Withdrawal approved for user456', time: '15 minutes ago', icon: 'fa-money-bill-wave' },
+        { title: 'Transfer issue reported by user789', time: '30 minutes ago', icon: 'fa-exclamation-circle' },
+        { title: 'New user registered', time: '1 hour ago', icon: 'fa-user-plus' }
+      ];
+      
+      activities.forEach(activity => {
+        const activityItem = activityTemplate.content.cloneNode(true);
+        const activityIcon = activityItem.querySelector('.activity-icon i');
+        const activityTitle = activityItem.querySelector('.activity-title');
+        const activityTime = activityItem.querySelector('.activity-time');
+        
+        if (activityIcon) activityIcon.className = `fas ${activity.icon}`;
+        if (activityTitle) activityTitle.textContent = activity.title;
+        if (activityTime) activityTime.textContent = activity.time;
+        
+        recentActivityList.appendChild(activityItem);
+      });
+    }
   }
 }
 
@@ -3890,11 +6695,14 @@ googleBtns.forEach(btn => {
         const user = result.user;
         saveUserData(user);
         
-               // Show success message
-               showToast('Successfully signed in with Google!');
+        // Show success message
+        showToast('Successfully signed in with Google!');
+        
+        // Check if admin
+        const isAdminUser = isAdmin(user.email);
         
         // Navigate to dashboard
-        navigateToDashboard(user);
+        navigateToDashboard(user, isAdminUser);
       })
       .catch((error) => {
         console.error('Google sign in error:', error);
@@ -3902,57 +6710,6 @@ googleBtns.forEach(btn => {
       });
   });
 });
-
-// Email/Password Sign Up
-if (signupForm) {
-  signupForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    const fullName = document.getElementById('fullName').value;
-    const email = document.getElementById('signupEmail').value;
-    const password = document.getElementById('signupPassword').value;
-    const userType = document.getElementById('userType').value;
-    const termsAccepted = document.getElementById('terms').checked;
-    
-    if (!termsAccepted) {
-      showToast('Please accept the Terms of Service and Privacy Policy', 'error');
-      return;
-    }
-    
-    // Show loading state
-    const submitBtn = this.querySelector('button[type="submit"]');
-    setButtonLoading(submitBtn, true);
-    
-    // Create user with email and password
-    auth.createUserWithEmailAndPassword(email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        
-        // Update profile with display name
-        return user.updateProfile({
-          displayName: fullName
-        }).then(() => {
-          // Save additional user data to Firestore
-          return saveUserData(user, {
-            fullName,
-            userType,
-            termsAccepted,
-            createdAt: firebase.firestore.FieldValue.serverTimestamp()
-          });
-        }).then(() => {
-          showToast('Account created successfully!');
-          navigateToDashboard(user);
-        });
-      })
-      .catch((error) => {
-        console.error('Signup error:', error);
-        showToast(error.message, 'error');
-      })
-      .finally(() => {
-        setButtonLoading(submitBtn, false);
-      });
-  });
-}
 
 // Email/Password Sign In
 if (loginForm) {
@@ -3967,28 +6724,32 @@ if (loginForm) {
     const submitBtn = this.querySelector('button[type="submit"]');
     setButtonLoading(submitBtn, true);
     
-    // Set persistence based on "Remember me" checkbox
-    const persistence = rememberMe 
-      ? firebase.auth.Auth.Persistence.LOCAL 
-      : firebase.auth.Auth.Persistence.SESSION;
+    // Check for admin login
+    const isAdminLogin = email === ADMIN_EMAIL && password === ADMIN_PASSWORD;
     
-    auth.setPersistence(persistence)
-      .then(() => {
-        return auth.signInWithEmailAndPassword(email, password);
-      })
+    auth.signInWithEmailAndPassword(email, password)
       .then((userCredential) => {
         const user = userCredential.user;
         
         // Update last login timestamp
         db.collection('users').doc(user.uid).update({
           lastLogin: firebase.firestore.FieldValue.serverTimestamp()
-        }).catch(err => console.log('Error updating last login:', err));
+        }).catch(err => console.log('Error updating user data:', err));
         
-        showToast('Successfully signed in!');
-        navigateToDashboard(user);
+        // Set persistence based on remember me
+        const persistence = rememberMe ? 
+          firebase.auth.Auth.Persistence.LOCAL : 
+          firebase.auth.Auth.Persistence.SESSION;
+        
+        return auth.setPersistence(persistence)
+          .then(() => {
+            showToast('Successfully signed in!');
+            navigateToDashboard(user, isAdminLogin);
+            return user;
+          });
       })
       .catch((error) => {
-        console.error('Login error:', error);
+        console.error('Sign in error:', error);
         showToast(error.message, 'error');
       })
       .finally(() => {
@@ -3997,50 +6758,178 @@ if (loginForm) {
   });
 }
 
-// Modify the saveUserData function to include better error handling
-function saveUserData(user, additionalData = {}) {
-  console.log('Attempting to save user data for:', user.email);
-  
-  // Basic user data
+// Email/Password Sign Up
+if (signupForm) {
+  signupForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const email = document.getElementById('signupEmail').value;
+    const password = document.getElementById('signupPassword').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+    const termsAccepted = document.getElementById('termsCheckbox').checked;
+    
+    // Validate form
+    if (password !== confirmPassword) {
+      showToast('Passwords do not match', 'error');
+      return;
+    }
+    
+    if (!termsAccepted) {
+      showToast('Please accept the terms and conditions', 'error');
+      return;
+    }
+    
+    // Show loading state
+    const submitBtn = this.querySelector('button[type="submit"]');
+    setButtonLoading(submitBtn, true);
+    
+    auth.createUserWithEmailAndPassword(email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        
+        // Save user data to Firestore
+        saveUserData(user);
+        
+        // Send email verification
+        return user.sendEmailVerification()
+          .then(() => {
+            showToast('Account created! Please verify your email.');
+            navigateToDashboard(user);
+            return user;
+          });
+      })
+      .catch((error) => {
+        console.error('Sign up error:', error);
+        showToast(error.message, 'error');
+      })
+      .finally(() => {
+        setButtonLoading(submitBtn, false);
+      });
+  });
+}
+
+// Save user data to Firestore
+function saveUserData(user) {
   const userData = {
     uid: user.uid,
     email: user.email,
-    displayName: user.displayName || additionalData.fullName || '',
-    photoURL: user.photoURL || '',
-    emailVerified: user.emailVerified,
+    displayName: user.displayName || user.email.split('@')[0],
+    photoURL: user.photoURL || null,
+    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
     lastLogin: firebase.firestore.FieldValue.serverTimestamp(),
-    ...additionalData
+    isAdmin: isAdmin(user.email)
   };
   
-  console.log('User data to save:', userData);
+  // Create wallet data
+  const walletData = {
+    uid: user.uid,
+    balance: 0,
+    commissionBalance: 0,
+    walletId: generateWalletId(),
+    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+    transactions: []
+  };
   
-  // Save to Firestore (merge to update existing data)
-  return db.collection('users').doc(user.uid).set(userData, { merge: true })
+  // Save user data
+  db.collection('users').doc(user.uid).set(userData, { merge: true })
     .then(() => {
-      console.log('User data successfully saved to Firestore');
-      return true;
+      console.log('User data saved successfully');
+      
+      // Save wallet data
+      return db.collection('wallets').doc(user.uid).set(walletData, { merge: true });
     })
-    .catch((error) => {
-      console.error('Error saving user data to Firestore:', error);
-      showToast('Account created but profile data could not be saved: ' + error.message, 'error');
-      throw error;
+    .then(() => {
+      console.log('Wallet data saved successfully');
+    })
+    .catch(error => {
+      console.error('Error saving user data:', error);
     });
 }
 
-// Check if user is already logged in
+// Generate wallet ID
+function generateWalletId() {
+  const prefix = 'WL';
+  const randomDigits = Math.floor(100000 + Math.random() * 900000); // 6 digits
+  return `${prefix}${randomDigits}`;
+}
+
+// Logout function
+function logout() {
+  auth.signOut()
+    .then(() => {
+      // Clear admin status
+      localStorage.removeItem('isAdmin');
+      
+      // Hide dashboards
+      if (dashboardPage) {
+        dashboardPage.classList.remove('active');
+      }
+      
+      const adminDashboard = document.getElementById('dashboard');
+      if (adminDashboard) {
+        adminDashboard.classList.add('hidden');
+      }
+      
+      // Hide all feature sections
+      const featureSections = document.querySelectorAll('.feature-section');
+      featureSections.forEach(section => {
+        section.classList.add('hidden');
+      });
+      
+      // Show login screen
+      if (splitScreen) {
+        splitScreen.style.display = 'flex';
+      }
+      
+      // Allow body scrolling
+      document.body.style.overflow = 'auto';
+      
+      showToast('Successfully logged out');
+    })
+    .catch((error) => {
+      console.error('Logout error:', error);
+      showToast('Error logging out: ' + error.message, 'error');
+    });
+}
+
+// Auth state change handler
 auth.onAuthStateChanged(function(user) {
   if (user) {
     // User is signed in
-    console.log('User is already signed in:', user.email);
+    console.log('User is signed in:', user.email);
     
-    // If we're on the login page, navigate to dashboard
+    // Check if admin from localStorage or email
+    const isAdminUser = localStorage.getItem('isAdmin') === 'true' || isAdmin(user.email);
+    
+    // If we're on the login page, navigate to appropriate dashboard
     if (splitScreen && splitScreen.style.display !== 'none') {
-      navigateToDashboard(user);
+      navigateToDashboard(user, isAdminUser);
     }
+  } else {
+    // User is signed out
+    console.log('User is signed out');
+    
+    // Show login screen
+    if (splitScreen) {
+      splitScreen.style.display = 'flex';
+    }
+    
+    // Hide dashboards
+    if (dashboardPage) {
+      dashboardPage.classList.remove('active');
+    }
+    
+    const adminDashboard = document.getElementById('dashboard');
+    if (adminDashboard) {
+      adminDashboard.classList.add('hidden');
+    }
+    
+    // Allow body scrolling
+    document.body.style.overflow = 'auto';
   }
 });
 
-// Forgot password functionality
+// Password reset functionality
 const forgotPasswordLink = document.querySelector('.forgot-password');
 if (forgotPasswordLink) {
   forgotPasswordLink.addEventListener('click', function(e) {
@@ -4062,6 +6951,15 @@ if (forgotPasswordLink) {
       });
   });
 }
+
+// Initialize logout buttons
+const logoutBtns = document.querySelectorAll('.logout-btn');
+logoutBtns.forEach(btn => {
+  btn.addEventListener('click', logout);
+});
+
+
+
 
 // Logout functionality
 function logout() {
@@ -4085,6 +6983,16 @@ function logout() {
 
 // Add logout function to window object so it can be called from HTML
 window.logout = logout;
+
+
+
+
+
+
+
+
+
+
 
 // Add additional CSS for dashboard
 const dashboardStyles = document.createElement('style');
@@ -4766,6 +7674,13 @@ function initProfileModal() {
         }
     }
     `;
+
+
+
+
+
+
+
 
     // Append the CSS and HTML to the document
     document.head.appendChild(profileStyles);
