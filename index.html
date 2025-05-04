@@ -13223,7 +13223,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-
 // Initialize Talent Coin Dispenser functionality
 document.addEventListener('DOMContentLoaded', function() {
     // DOM Elements
@@ -13250,12 +13249,31 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize Firebase Auth state listener
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
-            console.log("Admin signed in:", user.email);
+            console.log("User is signed in:", user.email);
+            // Check if user is admin
+            checkAdminStatus(user.uid);
         } else {
             console.log("No user is signed in");
             showToast("Please sign in to use this feature", "warning");
         }
     });
+    
+    // Function to check if user is admin
+    function checkAdminStatus(uid) {
+        const db = firebase.firestore();
+        db.collection("admins").doc(uid).get()
+            .then(doc => {
+                if (doc.exists && doc.data().role === 'admin') {
+                    console.log("User is an admin");
+                } else {
+                    console.log("User is not an admin");
+                    showToast("You need admin privileges to use this feature", "error");
+                }
+            })
+            .catch(error => {
+                console.error("Error checking admin status:", error);
+            });
+    }
     
     // Show/hide other reason input based on reason selection
     transactionReasonSelect.addEventListener('change', function() {
@@ -13298,10 +13316,13 @@ document.addEventListener('DOMContentLoaded', function() {
         
         console.log("Looking up wallet ID:", walletId);
         
-        // First try to find the wallet in the wallets collection
+        // First, we need to find which user has this wallet ID
+        // Since we can't query wallets by walletId field directly due to security rules,
+        // we'll use a different approach
+        
         const db = firebase.firestore();
         
-        // Get all wallets (since we can't query by walletId field)
+        // Try to get all wallets (this should work if you're an admin)
         db.collection("wallets").get()
             .then((querySnapshot) => {
                 let found = false;
@@ -13373,10 +13394,9 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Otherwise, check for transactions collection
         const db = firebase.firestore();
-        db.collection("transactions")
+        db.collection("activity")
             .where("userId", "==", userId)
-            .orderBy("timestamp", "desc")
-            .limit(5)
+            .where("type", "in", ["credit", "debit", "buy"])
             .get()
             .then((querySnapshot) => {
                 const transactions = [];
@@ -13436,7 +13456,7 @@ document.addEventListener('DOMContentLoaded', function() {
                    : new Date(transaction.timestamp).toLocaleString())
                 : 'Unknown date';
             
-            const isCredit = transaction.type === 'credit';
+            const isCredit = transaction.type === 'credit' || transaction.type === 'buy';
             const icon = isCredit ? 'fa-arrow-down' : 'fa-arrow-up';
             const cssClass = isCredit ? 'transaction-credit' : 'transaction-debit';
             const prefix = isCredit ? '+' : '-';
@@ -13514,94 +13534,65 @@ document.addEventListener('DOMContentLoaded', function() {
         // Get current user for admin info
         const currentAdmin = firebase.auth().currentUser;
         
-        // Create transaction object
-        const transactionData = {
-            userId: currentUserId,
-            walletId: currentUserData.walletId,
-            type: transactionType,
-            amount: amount,
-            reason: finalReason,
-            notes: notes,
-            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-            processedBy: currentAdmin ? currentAdmin.uid : 'unknown',
-            processedByEmail: currentAdmin ? currentAdmin.email : 'unknown'
-        };
-        
         const db = firebase.firestore();
         
-        // Start a batch operation
-        const batch = db.batch();
-        
-        // 1. Add transaction to transactions collection
-        const transactionRef = db.collection("transactions").doc();
-        batch.set(transactionRef, transactionData);
-        
-        // 2. Update wallet balance
+        // Update wallet balance
         const newBalance = transactionType === 'credit' 
             ? (currentUserData.balance || 0) + amount 
             : (currentUserData.balance || 0) - amount;
+        
+        // First update the wallet
+        db.collection("wallets").doc(currentUserId).update({
+            balance: newBalance,
+            lastTransactionDate: firebase.firestore.FieldValue.serverTimestamp()
+        })
+        .then(() => {
+            console.log("Wallet balance updated");
             
-        const walletRef = db.collection("wallets").doc(currentUserId);
-        batch.update(walletRef, {
-            balance: newBalance,
-            lastTransactionDate: firebase.firestore.FieldValue.serverTimestamp()
-        });
-        
-        // 3. Also update user balance if it exists in the users collection
-        const userRef = db.collection("users").doc(currentUserId);
-        batch.update(userRef, {
-            balance: newBalance,
-            lastTransactionDate: firebase.firestore.FieldValue.serverTimestamp()
-        });
-        
-        // 4. Add transaction to wallet's transactions array
-        batch.update(walletRef, {
-            transactions: firebase.firestore.FieldValue.arrayUnion(transactionData)
-        });
-        
-        // 5. Create notification
-        const messageRef = db.collection("messages").doc();
-        batch.set(messageRef, {
-            userId: currentUserId,
-            title: `${transactionType === 'credit' ? 'Credit' : 'Debit'} Transaction`,
-            content: `Your account has been ${transactionType === 'credit' ? 'credited with' : 'debited'} ${amount} Talent Coins. Reason: ${finalReason}`,
-            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-            read: false
-        });
-        
-        // Commit the batch
-        batch.commit()
-            .then(() => {
-                console.log("Transaction processed successfully");
-                showToast(`Transaction processed successfully!`, "success");
-                
-                // Update local data
-                currentUserData.balance = newBalance;
-                
-                // Update UI
-                userInfoBalance.textContent = newBalance + " Talent Coins";
-                
-                // Reload transactions
-                loadTransactions(currentUserId);
-                
-                // Reset form
-                coinAmountInput.value = "";
-                transactionNotesTextarea.value = "";
-                if (reason === 'other') {
-                    otherReasonInput.value = "";
-                }
-                transactionReasonSelect.selectedIndex = 0;
-                otherReasonGroup.style.display = 'none';
-            })
-            .catch((error) => {
-                console.error("Error processing transaction:", error);
-                showToast("Error: " + error.message, "error");
-            })
-            .finally(() => {
-                // Re-enable button
-                dispenseBtn.disabled = false;
-                dispenseBtn.innerHTML = "Process Transaction";
+            // Create activity log
+            return db.collection("activity").add({
+                userId: currentUserId,
+                type: transactionType,
+                amount: amount,
+                reason: finalReason,
+                notes: notes,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                processedBy: currentAdmin ? currentAdmin.uid : 'unknown',
+                processedByEmail: currentAdmin ? currentAdmin.email : 'unknown',
+                walletId: currentUserData.walletId
             });
+        })
+        .then((activityRef) => {
+            console.log("Activity log created with ID:", activityRef.id);
+            showToast(`Transaction processed successfully!`, "success");
+            
+            // Update local data
+            currentUserData.balance = newBalance;
+            
+            // Update UI
+            userInfoBalance.textContent = newBalance + " Talent Coins";
+            
+            // Reload transactions
+            loadTransactions(currentUserId);
+            
+            // Reset form
+            coinAmountInput.value = "";
+            transactionNotesTextarea.value = "";
+            if (reason === 'other') {
+                otherReasonInput.value = "";
+            }
+            transactionReasonSelect.selectedIndex = 0;
+            otherReasonGroup.style.display = 'none';
+        })
+        .catch((error) => {
+            console.error("Error processing transaction:", error);
+            showToast("Error: " + error.message, "error");
+        })
+        .finally(() => {
+            // Re-enable button
+            dispenseBtn.disabled = false;
+            dispenseBtn.innerHTML = "Process Transaction";
+        });
     }
     
     // Function to reset user info display
@@ -13887,6 +13878,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Log initialization
     console.log("Talent Coin Dispenser initialized");
 });
+
 
 </script>
 </body>
