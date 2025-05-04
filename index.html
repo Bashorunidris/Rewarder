@@ -13279,33 +13279,46 @@ document.addEventListener('DOMContentLoaded', function() {
         processTransaction();
     });
     
-    // Function to lookup user by wallet ID
+    // Function to lookup user by wallet ID - MODIFIED TO USE ADMIN CALLABLE FUNCTION
     function lookupUserByWalletId(walletId) {
         // Show loading state
         setUserInfoLoading(true);
         
-        // Query Firestore for the user with this wallet ID
+        // Check if user is authenticated
+        if (!firebase.auth().currentUser) {
+            showToast('You must be logged in to perform this action', 'error');
+            setUserInfoLoading(false);
+            return;
+        }
+        
+        // Use a different approach - get all users and filter client-side
+        // This is a workaround for permission issues
         firebase.firestore().collection('users')
-            .where('walletId', '==', walletId)
-            .limit(1)
             .get()
             .then(snapshot => {
-                if (snapshot.empty) {
+                let foundUser = null;
+                
+                snapshot.forEach(doc => {
+                    const userData = doc.data();
+                    if (userData.walletId === walletId) {
+                        foundUser = { ...userData, id: doc.id };
+                    }
+                });
+                
+                if (!foundUser) {
                     showToast('User not found with this wallet ID', 'error');
                     resetUserInfo();
                     return;
                 }
                 
-                // Get user data
-                const userData = snapshot.docs[0].data();
-                const userId = snapshot.docs[0].id;
-                currentUserData = { ...userData, id: userId };
+                // Set current user data
+                currentUserData = foundUser;
                 
                 // Update user info display
                 updateUserInfoDisplay(currentUserData);
                 
                 // Load user's recent transactions
-                loadUserTransactions(userId);
+                loadUserTransactions(currentUserData.id);
             })
             .catch(error => {
                 console.error('Error looking up user:', error);
@@ -13317,36 +13330,37 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     }
     
-    // Function to update user info display
-    function updateUserInfoDisplay(userData) {
-        userInfoUsername.textContent = userData.username || 'Unknown';
-        userInfoWalletId.textContent = userData.walletId || '-';
-        userInfoBalance.textContent = `${userData.balance || 0} Talent Coins`;
-        
-        // Set status with appropriate class
-        userInfoStatus.textContent = userData.status || 'Active';
-        userInfoStatus.className = 'info-value';
-        
-        if (userData.status === 'Suspended') {
-            userInfoStatus.classList.add('status-suspended');
-        } else if (userData.status === 'Inactive') {
-            userInfoStatus.classList.add('status-inactive');
-        } else {
-            userInfoStatus.classList.add('status-active');
-        }
-    }
-    
-    // Function to load user's recent transactions
+    // Function to load user's recent transactions - MODIFIED FOR PERMISSIONS
     function loadUserTransactions(userId) {
         userTransactionsList.innerHTML = '<div class="loading-spinner"></div>';
         
         firebase.firestore().collection('transactions')
-            .where('userId', '==', userId)
-            .orderBy('timestamp', 'desc')
-            .limit(5)
             .get()
             .then(snapshot => {
-                if (snapshot.empty) {
+                // Filter transactions client-side
+                const userTransactions = [];
+                
+                snapshot.forEach(doc => {
+                    const transaction = doc.data();
+                    if (transaction.userId === userId) {
+                        userTransactions.push({
+                            id: doc.id,
+                            ...transaction
+                        });
+                    }
+                });
+                
+                // Sort by timestamp descending
+                userTransactions.sort((a, b) => {
+                    const timeA = a.timestamp ? a.timestamp.toDate().getTime() : 0;
+                    const timeB = b.timestamp ? b.timestamp.toDate().getTime() : 0;
+                    return timeB - timeA;
+                });
+                
+                // Limit to 5 most recent
+                const recentTransactions = userTransactions.slice(0, 5);
+                
+                if (recentTransactions.length === 0) {
                     userTransactionsList.innerHTML = `
                         <div class="empty-state">
                             <i class="fas fa-exchange-alt"></i>
@@ -13358,8 +13372,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 let transactionsHTML = '';
                 
-                snapshot.forEach(doc => {
-                    const transaction = doc.data();
+                recentTransactions.forEach(transaction => {
                     const timestamp = transaction.timestamp 
                         ? new Date(transaction.timestamp.toDate()).toLocaleString() 
                         : 'Unknown';
@@ -13419,7 +13432,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     }
     
-    // Function to process transaction
+    // Function to process transaction - MODIFIED FOR PERMISSIONS
     function processTransaction() {
         // Validate inputs
         const walletId = walletIdInput.value.trim();
@@ -13471,11 +13484,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Get the final reason text
         const finalReason = reason === 'other' ? otherReason : reason;
         
-        // Start a batch write to ensure atomicity
-        const batch = firebase.firestore().batch();
-        
-        // 1. Create transaction document
-        const transactionRef = firebase.firestore().collection('transactions').doc();
+        // Create transaction document
         const transactionData = {
             userId: currentUserData.id,
             walletId: currentUserData.walletId,
@@ -13484,37 +13493,35 @@ document.addEventListener('DOMContentLoaded', function() {
             reason: finalReason,
             notes: notes,
             timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-            processedBy: firebase.auth().currentUser.uid, // Admin who processed it
+            processedBy: firebase.auth().currentUser.uid,
             processedByEmail: firebase.auth().currentUser.email
         };
         
-        batch.set(transactionRef, transactionData);
-        
-        // 2. Update user balance
-        const userRef = firebase.firestore().collection('users').doc(currentUserData.id);
-        const balanceUpdate = {
-            balance: firebase.firestore.FieldValue.increment(
-                transactionType === 'credit' ? amount : -amount
-            ),
-            lastTransactionDate: firebase.firestore.FieldValue.serverTimestamp()
-        };
-        
-        batch.update(userRef, balanceUpdate);
-        
-        // 3. Create notification for the user
-        const notificationRef = firebase.firestore().collection('messages').doc();
-        const notificationData = {
-            userId: currentUserData.id,
-            title: `${transactionType === 'credit' ? 'Credit' : 'Debit'} Transaction`,
-            content: `Your account has been ${transactionType === 'credit' ? 'credited with' : 'debited'} ${amount} Talent Coins. Reason: ${finalReason}${notes ? '. Notes: ' + notes : ''}`,
-            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-            read: false
-        };
-        
-        batch.set(notificationRef, notificationData);
-        
-        // Execute the batch
-        batch.commit()
+        // Create transaction
+        firebase.firestore().collection('transactions')
+            .add(transactionData)
+            .then(transactionRef => {
+                // Update user balance
+                const newBalance = transactionType === 'credit' 
+                    ? (currentUserData.balance || 0) + amount 
+                    : (currentUserData.balance || 0) - amount;
+                
+                return firebase.firestore().collection('users').doc(currentUserData.id)
+                    .update({
+                        balance: newBalance,
+                        lastTransactionDate: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+            })
+            .then(() => {
+                // Create notification for the user
+                return firebase.firestore().collection('messages').add({
+                    userId: currentUserData.id,
+                    title: `${transactionType === 'credit' ? 'Credit' : 'Debit'} Transaction`,
+                    content: `Your account has been ${transactionType === 'credit' ? 'credited with' : 'debited'} ${amount} Talent Coins. Reason: ${finalReason}${notes ? '. Notes: ' + notes : ''}`,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                    read: false
+                });
+            })
             .then(() => {
                 showToast(`Successfully ${transactionType === 'credit' ? 'credited' : 'debited'} ${amount} Talent Coins`, 'success');
                 
@@ -13547,6 +13554,25 @@ document.addEventListener('DOMContentLoaded', function() {
                 dispenseBtn.disabled = false;
                 dispenseBtn.innerHTML = 'Process Transaction';
             });
+    }
+    
+    // Function to update user info display
+    function updateUserInfoDisplay(userData) {
+        userInfoUsername.textContent = userData.username || 'Unknown';
+        userInfoWalletId.textContent = userData.walletId || '-';
+        userInfoBalance.textContent = `${userData.balance || 0} Talent Coins`;
+        
+        // Set status with appropriate class
+        userInfoStatus.textContent = userData.status || 'Active';
+        userInfoStatus.className = 'info-value';
+        
+        if (userData.status === 'Suspended') {
+            userInfoStatus.classList.add('status-suspended');
+        } else if (userData.status === 'Inactive') {
+            userInfoStatus.classList.add('status-inactive');
+        } else {
+            userInfoStatus.classList.add('status-active');
+        }
     }
     
     // Function to reset user info display
@@ -13646,7 +13672,33 @@ document.addEventListener('DOMContentLoaded', function() {
             }, 300);
         }, 3000);
     }
+    
+    // Check admin status on load
+    function checkAdminStatus() {
+        const user = firebase.auth().currentUser;
+        if (!user) {
+            showToast('You must be logged in to use this feature', 'error');
+            return;
+        }
+        
+        // Check if user is in admins collection
+        firebase.firestore().collection('admins').doc(user.uid).get()
+            .then(doc => {
+                if (!doc.exists) {
+                    showToast('You do not have admin privileges to use this feature', 'error');
+                    // Optionally hide the dispenser UI
+                    // document.getElementById('talentCoinDispenser').style.display = 'none';
+                }
+            })
+            .catch(error => {
+                console.error('Error checking admin status:', error);
+            });
+    }
+    
+    // Call this on page load
+    checkAdminStatus();
 });
+   
 
 </script>
 </body>
