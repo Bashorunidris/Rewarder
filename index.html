@@ -13223,6 +13223,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+
 // Initialize Talent Coin Dispenser functionality
 document.addEventListener('DOMContentLoaded', function() {
     // DOM Elements
@@ -13249,7 +13250,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize Firebase Auth state listener
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
-            console.log("User is signed in:", user.email);
+            console.log("Admin signed in:", user.email);
         } else {
             console.log("No user is signed in");
             showToast("Please sign in to use this feature", "warning");
@@ -13297,37 +13298,56 @@ document.addEventListener('DOMContentLoaded', function() {
         
         console.log("Looking up wallet ID:", walletId);
         
-        // Get all users (this is inefficient but works around permission issues)
+        // First try to find the wallet in the wallets collection
         const db = firebase.firestore();
-        db.collection("users").get()
+        
+        // Get all wallets (since we can't query by walletId field)
+        db.collection("wallets").get()
             .then((querySnapshot) => {
                 let found = false;
+                let userId = null;
+                let walletData = null;
                 
                 querySnapshot.forEach((doc) => {
-                    const user = doc.data();
-                    if (user.walletId === walletId) {
+                    const wallet = doc.data();
+                    if (wallet.walletId === walletId) {
                         found = true;
-                        currentUserData = user;
-                        currentUserId = doc.id;
-                        
-                        console.log("Found user:", user.username);
-                        
-                        // Update UI with user info
-                        userInfoUsername.textContent = user.username || "Unknown";
-                        userInfoWalletId.textContent = user.walletId || "-";
-                        userInfoBalance.textContent = (user.balance || 0) + " Talent Coins";
-                        userInfoStatus.textContent = user.status || "Active";
-                        
-                        // Load transactions
-                        loadTransactions(doc.id);
+                        userId = doc.id; // This is the user's UID
+                        walletData = wallet;
+                        console.log("Found wallet:", wallet);
                     }
                 });
                 
                 if (!found) {
-                    console.log("User not found");
-                    showToast("No user found with this wallet ID", "error");
-                    resetUserInfo();
+                    throw new Error("No wallet found with this ID");
                 }
+                
+                // Now get the user data using the userId
+                return db.collection("users").doc(userId).get().then(doc => {
+                    if (!doc.exists) {
+                        throw new Error("User not found for this wallet");
+                    }
+                    
+                    const userData = doc.data();
+                    console.log("Found user:", userData);
+                    
+                    // Combine user and wallet data
+                    currentUserData = {
+                        ...userData,
+                        ...walletData,
+                        id: userId
+                    };
+                    currentUserId = userId;
+                    
+                    // Update UI with user info
+                    userInfoUsername.textContent = userData.displayName || userData.username || "Unknown";
+                    userInfoWalletId.textContent = walletData.walletId || "-";
+                    userInfoBalance.textContent = (walletData.balance || 0) + " Talent Coins";
+                    userInfoStatus.textContent = userData.status || "Active";
+                    
+                    // Load transactions
+                    loadTransactions(userId);
+                });
             })
             .catch((error) => {
                 console.error("Error finding user:", error);
@@ -13345,70 +13365,29 @@ document.addEventListener('DOMContentLoaded', function() {
         
         console.log("Loading transactions for user:", userId);
         
+        // Check if the wallet has transactions array
+        if (currentUserData && currentUserData.transactions && Array.isArray(currentUserData.transactions)) {
+            displayTransactions(currentUserData.transactions);
+            return;
+        }
+        
+        // Otherwise, check for transactions collection
         const db = firebase.firestore();
-        db.collection("transactions").get()
+        db.collection("transactions")
+            .where("userId", "==", userId)
+            .orderBy("timestamp", "desc")
+            .limit(5)
+            .get()
             .then((querySnapshot) => {
-                const userTransactions = [];
-                
+                const transactions = [];
                 querySnapshot.forEach((doc) => {
-                    const transaction = doc.data();
-                    if (transaction.userId === userId) {
-                        userTransactions.push({
-                            id: doc.id,
-                            ...transaction
-                        });
-                    }
+                    transactions.push({
+                        id: doc.id,
+                        ...doc.data()
+                    });
                 });
                 
-                console.log("Found transactions:", userTransactions.length);
-                
-                if (userTransactions.length === 0) {
-                    userTransactionsList.innerHTML = `
-                        <div class="empty-state">
-                            <i class="fas fa-exchange-alt"></i>
-                            <p>No transactions available</p>
-                        </div>
-                    `;
-                    return;
-                }
-                
-                // Sort transactions by timestamp (newest first)
-                userTransactions.sort((a, b) => {
-                    const timeA = a.timestamp ? new Date(a.timestamp.seconds * 1000) : 0;
-                    const timeB = b.timestamp ? new Date(b.timestamp.seconds * 1000) : 0;
-                    return timeB - timeA;
-                });
-                
-                // Take only the 5 most recent transactions
-                const recentTransactions = userTransactions.slice(0, 5);
-                
-                // Build HTML for transactions
-                let transactionsHTML = '';
-                recentTransactions.forEach(transaction => {
-                    const date = transaction.timestamp 
-                        ? new Date(transaction.timestamp.seconds * 1000).toLocaleString() 
-                        : 'Unknown date';
-                    
-                    const isCredit = transaction.type === 'credit';
-                    const icon = isCredit ? 'fa-arrow-down' : 'fa-arrow-up';
-                    const cssClass = isCredit ? 'transaction-credit' : 'transaction-debit';
-                    const prefix = isCredit ? '+' : '-';
-                    
-                    transactionsHTML += `
-                        <div class="transaction-item ${cssClass}">
-                            <div class="transaction-icon">
-                                <i class="fas ${icon}"></i>
-                            </div>
-                            <div class="transaction-details">
-                                <div class="transaction-title">${transaction.reason || transaction.type}</div>
-                                <div class="transaction-date">${date}</div>
-                            </div>
-                            <div class="transaction-amount">${prefix}${transaction.amount} TC</div>
-                        </div>
-                    `;
-                });
-                
-                userTransactionsList.innerHTML = transactionsHTML;
+                displayTransactions(transactions);
             })
             .catch((error) => {
                 console.error("Error loading transactions:", error);
@@ -13418,6 +13397,65 @@ document.addEventListener('DOMContentLoaded', function() {
                     </div>
                 `;
             });
+    }
+    
+    // Function to display transactions
+    function displayTransactions(transactions) {
+        console.log("Displaying transactions:", transactions.length);
+        
+        if (!transactions || transactions.length === 0) {
+            userTransactionsList.innerHTML = `
+                <div class="empty-state">
+                    <i class="fas fa-exchange-alt"></i>
+                    <p>No transactions available</p>
+                </div>
+            `;
+            return;
+        }
+        
+        // Sort transactions by timestamp (newest first)
+        transactions.sort((a, b) => {
+            const timeA = a.timestamp ? 
+                (typeof a.timestamp.toDate === 'function' ? a.timestamp.toDate().getTime() : new Date(a.timestamp).getTime()) : 
+                0;
+            const timeB = b.timestamp ? 
+                (typeof b.timestamp.toDate === 'function' ? b.timestamp.toDate().getTime() : new Date(b.timestamp).getTime()) : 
+                0;
+            return timeB - timeA;
+        });
+        
+        // Take only the 5 most recent
+        const recentTransactions = transactions.slice(0, 5);
+        
+        // Build HTML
+        let transactionsHTML = '';
+        recentTransactions.forEach(transaction => {
+            const date = transaction.timestamp 
+                ? (typeof transaction.timestamp.toDate === 'function' 
+                   ? transaction.timestamp.toDate().toLocaleString() 
+                   : new Date(transaction.timestamp).toLocaleString())
+                : 'Unknown date';
+            
+            const isCredit = transaction.type === 'credit';
+            const icon = isCredit ? 'fa-arrow-down' : 'fa-arrow-up';
+            const cssClass = isCredit ? 'transaction-credit' : 'transaction-debit';
+            const prefix = isCredit ? '+' : '-';
+            
+            transactionsHTML += `
+                <div class="transaction-item ${cssClass}">
+                    <div class="transaction-icon">
+                        <i class="fas ${icon}"></i>
+                    </div>
+                    <div class="transaction-details">
+                        <div class="transaction-title">${transaction.reason || transaction.type}</div>
+                        <div class="transaction-date">${date}</div>
+                    </div>
+                    <div class="transaction-amount">${prefix}${transaction.amount} TC</div>
+                </div>
+            `;
+        });
+        
+        userTransactionsList.innerHTML = transactionsHTML;
     }
     
     // Function to process transaction
@@ -13476,9 +13514,8 @@ document.addEventListener('DOMContentLoaded', function() {
         // Get current user for admin info
         const currentAdmin = firebase.auth().currentUser;
         
-        // Create transaction record
-        const db = firebase.firestore();
-        db.collection("transactions").add({
+        // Create transaction object
+        const transactionData = {
             userId: currentUserId,
             walletId: currentUserData.walletId,
             type: transactionType,
@@ -13488,67 +13525,83 @@ document.addEventListener('DOMContentLoaded', function() {
             timestamp: firebase.firestore.FieldValue.serverTimestamp(),
             processedBy: currentAdmin ? currentAdmin.uid : 'unknown',
             processedByEmail: currentAdmin ? currentAdmin.email : 'unknown'
-        })
-        .then((docRef) => {
-            console.log("Transaction created with ID:", docRef.id);
+        };
+        
+        const db = firebase.firestore();
+        
+        // Start a batch operation
+        const batch = db.batch();
+        
+        // 1. Add transaction to transactions collection
+        const transactionRef = db.collection("transactions").doc();
+        batch.set(transactionRef, transactionData);
+        
+        // 2. Update wallet balance
+        const newBalance = transactionType === 'credit' 
+            ? (currentUserData.balance || 0) + amount 
+            : (currentUserData.balance || 0) - amount;
             
-            // Update user balance
-            const newBalance = transactionType === 'credit' 
-                ? (currentUserData.balance || 0) + amount 
-                : (currentUserData.balance || 0) - amount;
-            
-            return db.collection("users").doc(currentUserId).update({
-                balance: newBalance,
-                lastTransactionDate: firebase.firestore.FieldValue.serverTimestamp()
-            });
-        })
-        .then(() => {
-            console.log("User balance updated");
-            
-            // Create notification
-            return db.collection("messages").add({
-                userId: currentUserId,
-                title: `${transactionType === 'credit' ? 'Credit' : 'Debit'} Transaction`,
-                content: `Your account has been ${transactionType === 'credit' ? 'credited with' : 'debited'} ${amount} Talent Coins. Reason: ${finalReason}`,
-                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                read: false
-            });
-        })
-        .then(() => {
-            console.log("Notification created");
-            showToast(`Transaction processed successfully!`, "success");
-            
-            // Update local data
-            if (transactionType === 'credit') {
-                currentUserData.balance = (currentUserData.balance || 0) + amount;
-            } else {
-                currentUserData.balance = (currentUserData.balance || 0) - amount;
-            }
-            
-            // Update UI
-            userInfoBalance.textContent = currentUserData.balance + " Talent Coins";
-            
-            // Reload transactions
-            loadTransactions(currentUserId);
-            
-            // Reset form
-            coinAmountInput.value = "";
-            transactionNotesTextarea.value = "";
-            if (reason === 'other') {
-                otherReasonInput.value = "";
-            }
-            transactionReasonSelect.selectedIndex = 0;
-            otherReasonGroup.style.display = 'none';
-        })
-        .catch((error) => {
-            console.error("Error processing transaction:", error);
-            showToast("Error: " + error.message, "error");
-        })
-        .finally(() => {
-            // Re-enable button
-            dispenseBtn.disabled = false;
-            dispenseBtn.innerHTML = "Process Transaction";
+        const walletRef = db.collection("wallets").doc(currentUserId);
+        batch.update(walletRef, {
+            balance: newBalance,
+            lastTransactionDate: firebase.firestore.FieldValue.serverTimestamp()
         });
+        
+        // 3. Also update user balance if it exists in the users collection
+        const userRef = db.collection("users").doc(currentUserId);
+        batch.update(userRef, {
+            balance: newBalance,
+            lastTransactionDate: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        
+        // 4. Add transaction to wallet's transactions array
+        batch.update(walletRef, {
+            transactions: firebase.firestore.FieldValue.arrayUnion(transactionData)
+        });
+        
+        // 5. Create notification
+        const messageRef = db.collection("messages").doc();
+        batch.set(messageRef, {
+            userId: currentUserId,
+            title: `${transactionType === 'credit' ? 'Credit' : 'Debit'} Transaction`,
+            content: `Your account has been ${transactionType === 'credit' ? 'credited with' : 'debited'} ${amount} Talent Coins. Reason: ${finalReason}`,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+            read: false
+        });
+        
+        // Commit the batch
+        batch.commit()
+            .then(() => {
+                console.log("Transaction processed successfully");
+                showToast(`Transaction processed successfully!`, "success");
+                
+                // Update local data
+                currentUserData.balance = newBalance;
+                
+                // Update UI
+                userInfoBalance.textContent = newBalance + " Talent Coins";
+                
+                // Reload transactions
+                loadTransactions(currentUserId);
+                
+                // Reset form
+                coinAmountInput.value = "";
+                transactionNotesTextarea.value = "";
+                if (reason === 'other') {
+                    otherReasonInput.value = "";
+                }
+                transactionReasonSelect.selectedIndex = 0;
+                otherReasonGroup.style.display = 'none';
+            })
+            .catch((error) => {
+                console.error("Error processing transaction:", error);
+                showToast("Error: " + error.message, "error");
+            })
+            .finally(() => {
+                // Re-enable button
+                dispenseBtn.disabled = false;
+                dispenseBtn.innerHTML = "Process Transaction";
+            });
     }
     
     // Function to reset user info display
@@ -13639,6 +13692,7 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(() => {
             toast.classList.add('show');
         }, 10);
+        
         // Remove toast after 3 seconds
         setTimeout(() => {
             toast.classList.remove('show');
@@ -13758,6 +13812,70 @@ document.addEventListener('DOMContentLoaded', function() {
                     from { transform: rotate(0deg); }
                     to { transform: rotate(360deg); }
                 }
+                
+                .transaction-item {
+                    display: flex;
+                    align-items: center;
+                    padding: 12px;
+                    border-bottom: 1px solid #eee;
+                }
+                
+                .transaction-icon {
+                    width: 36px;
+                    height: 36px;
+                    border-radius: 50%;
+                    background-color: #f0f0f0;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    margin-right: 12px;
+                }
+                
+                .transaction-credit .transaction-icon {
+                    background-color: rgba(76, 175, 80, 0.1);
+                    color: #4CAF50;
+                }
+                
+                .transaction-debit .transaction-icon {
+                    background-color: rgba(244, 67, 54, 0.1);
+                    color: #F44336;
+                }
+                
+                .transaction-details {
+                    flex: 1;
+                }
+                
+                .transaction-title {
+                    font-weight: 500;
+                }
+                
+                .transaction-date {
+                    font-size: 0.8em;
+                    color: #777;
+                }
+                
+                .transaction-amount {
+                    font-weight: 600;
+                }
+                
+                .transaction-credit .transaction-amount {
+                    color: #4CAF50;
+                }
+                
+                .transaction-debit .transaction-amount {
+                    color: #F44336;
+                }
+                
+                .empty-state {
+                    text-align: center;
+                    padding: 30px 20px;
+                    color: #999;
+                }
+                
+                .empty-state i {
+                    font-size: 2em;
+                    margin-bottom: 10px;
+                }
             `;
             document.head.appendChild(style);
         }
@@ -13769,7 +13887,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Log initialization
     console.log("Talent Coin Dispenser initialized");
 });
-
 
 </script>
 </body>
