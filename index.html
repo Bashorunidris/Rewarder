@@ -1752,7 +1752,6 @@ input:checked + .slider:before {
 }
 
 
-/* Wallet Feature Styles */
 :root {
     --primary-color: #6c5ce7;
     --primary-light: #a29bfe;
@@ -1764,9 +1763,9 @@ input:checked + .slider:before {
     --warning-color: #f39c12;
     --success-color: #2ecc71;
     --info-color: #3498db;
-    --text-color: #333;
-    --text-light: #666;
-    --text-lighter: #999;
+    --text-color: #f3ecec;
+    --text-light: #f3efef;
+    --text-lighter: #eee7e7;
     --bg-color: #fff;
     --bg-light: #f8f9fa;
     --bg-dark: #eee;
@@ -1774,6 +1773,21 @@ input:checked + .slider:before {
     --border-radius: 10px;
     --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     --transition: all 0.3s ease;
+}
+
+/* Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    color: var(--text-color);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 /* Modal Base Styles */
@@ -1788,6 +1802,7 @@ input:checked + .slider:before {
     justify-content: center;
     align-items: center;
     z-index: 1000;
+    overflow: hidden;
 }
 
 .wallet-modal.active,
@@ -1807,6 +1822,8 @@ input:checked + .slider:before {
     position: relative;
     z-index: 1001;
     animation: modalFadeIn 0.3s ease;
+    display: flex;
+    flex-direction: column;
 }
 
 .wallet-header,
@@ -1816,6 +1833,10 @@ input:checked + .slider:before {
     align-items: center;
     padding: 16px 20px;
     border-bottom: 1px solid var(--border-color);
+    position: flex;
+    top: 0;
+    background-color: var(--bg-color);
+    z-index: 10;
 }
 
 .wallet-header h2,
@@ -1835,11 +1856,19 @@ input:checked + .slider:before {
     color: var(--text-light);
     padding: 0;
     line-height: 1;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .wallet-screen,
 .feature-modal-body {
     padding: 20px;
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
 }
 
 .modal-overlay {
@@ -1851,6 +1880,8 @@ input:checked + .slider:before {
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 999;
     display: none;
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
 }
 
 .modal-overlay.active {
@@ -1864,6 +1895,7 @@ input:checked + .slider:before {
     flex-direction: column;
     align-items: center;
     text-align: center;
+    padding: 10px 0;
 }
 
 .pin-icon {
@@ -1891,6 +1923,7 @@ input:checked + .slider:before {
     margin: 0 0 20px;
     color: var(--text-light);
     font-size: 0.95rem;
+    max-width: 280px;
 }
 
 .pin-input-container,
@@ -1899,6 +1932,8 @@ input:checked + .slider:before {
     justify-content: center;
     gap: 10px;
     margin: 20px 0;
+    width: 100%;
+    max-width: 280px;
 }
 
 .pin-digit,
@@ -1920,6 +1955,8 @@ input:checked + .slider:before {
     color: var(--text-color);
     background-color: var(--bg-light);
     transition: var(--transition);
+    -webkit-appearance: none;
+    -moz-appearance: textfield;
 }
 
 .pin-digit:focus,
@@ -1957,6 +1994,7 @@ input:checked + .slider:before {
     display: inline-block;
     text-align: center;
     margin-top: 10px;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .primary-btn {
@@ -1964,7 +2002,7 @@ input:checked + .slider:before {
     color: white;
 }
 
-.primary-btn:hover {
+.primary-btn:hover, .primary-btn:active {
     background-color: var(--primary-dark);
 }
 
@@ -1973,7 +2011,7 @@ input:checked + .slider:before {
     color: var(--text-color);
 }
 
-.secondary-btn:hover {
+.secondary-btn:hover, .secondary-btn:active {
     background-color: var(--border-color);
 }
 
@@ -1983,7 +2021,7 @@ input:checked + .slider:before {
     padding: 8px 16px;
 }
 
-.text-btn:hover {
+.text-btn:hover, .text-btn:active {
     text-decoration: underline;
 }
 
@@ -2012,6 +2050,7 @@ input:checked + .slider:before {
     color: var(--text-color);
     font-size: 0.95rem;
     flex-grow: 1;
+    word-break: break-all;
 }
 
 .copy-btn {
@@ -2021,6 +2060,9 @@ input:checked + .slider:before {
     cursor: pointer;
     padding: 5px;
     font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .balance-cards {
@@ -2038,7 +2080,8 @@ input:checked + .slider:before {
     flex-direction: column;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
-d.talent-coin {
+
+.balance-card.talent-coin {
     background-color: var(--primary-light);
     color: white;
 }
@@ -2093,9 +2136,10 @@ d.talent-coin {
     justify-content: center;
     cursor: pointer;
     transition: var(--transition);
+    -webkit-tap-highlight-color: transparent;
 }
 
-.wallet-action-btn:hover {
+.wallet-action-btn:hover, .wallet-action-btn:active {
     background-color: var(--bg-dark);
     transform: translateY(-2px);
 }
@@ -2110,6 +2154,7 @@ d.talent-coin {
     font-size: 0.9rem;
     font-weight: 500;
     color: var(--text-color);
+    text-align: center;
 }
 
 /* Transaction History Styles */
@@ -2127,6 +2172,7 @@ d.talent-coin {
 .transaction-list {
     max-height: 300px;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .empty-transactions {
@@ -2160,10 +2206,12 @@ d.talent-coin {
     justify-content: center;
     margin-right: 12px;
     color: var(--primary-color);
+    flex-shrink: 0;
 }
 
 .transaction-details {
     flex-grow: 1;
+    min-width: 0;
 }
 
 .transaction-title {
@@ -2171,6 +2219,9 @@ d.talent-coin {
     color: var(--text-color);
     font-size: 0.95rem;
     margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .transaction-date {
@@ -2182,6 +2233,7 @@ d.talent-coin {
     text-align: right;
     display: flex;
     flex-direction: column;
+    flex-shrink: 0;
 }
 
 .amount-value {
@@ -2221,6 +2273,13 @@ d.talent-coin {
     display: flex;
     border-bottom: 1px solid var(--border-color);
     margin-bottom: 20px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Firefox */
+}
+
+.tabs::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Edge */
 }
 
 .tab {
@@ -2230,6 +2289,8 @@ d.talent-coin {
     color: var(--text-light);
     position: relative;
     transition: var(--transition);
+    white-space: nowrap;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .tab.active {
@@ -2277,6 +2338,8 @@ d.talent-coin {
     color: var(--text-color);
     background-color: var(--bg-light);
     transition: var(--transition);
+    -webkit-appearance: none;
+    -moz-appearance: textfield;
 }
 
 .input-group input:focus,
@@ -2334,6 +2397,7 @@ d.talent-coin {
     display: flex;
     align-items: center;
     margin-bottom: 8px;
+    flex-wrap: wrap;
 }
 
 .account-row .label {
@@ -2347,6 +2411,7 @@ d.talent-coin {
     font-weight: 500;
     color: var(--text-color);
     flex-grow: 1;
+    word-break: break-all;
 }
 
 .instructions {
@@ -2382,7 +2447,7 @@ d.talent-coin {
     transition: var(--transition);
 }
 
-.file-upload-btn:hover {
+.file-upload-btn:hover, .file-upload-btn:active {
     background-color: var(--border-color);
 }
 
@@ -2419,6 +2484,7 @@ d.talent-coin {
     border-radius: var(--border-radius);
     cursor: pointer;
     transition: var(--transition);
+    -webkit-tap-highlight-color: transparent;
 }
 
 .option-btn.active {
@@ -2436,6 +2502,7 @@ d.talent-coin {
     font-size: 0.9rem;
     font-weight: 500;
     color: var(--text-color);
+    text-align: center;
 }
 
 .verification-section {
@@ -2478,7 +2545,7 @@ d.talent-coin {
 
 .fee-note {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     font-size: 0.85rem;
     color: var(--text-light);
     margin-bottom: 20px;
@@ -2487,6 +2554,93 @@ d.talent-coin {
 .fee-note i {
     margin-right: 8px;
     color: var(--info-color);
+    margin-top: 3px;
+}
+
+/* History Modal Specific Styles */
+.notification-badge {
+    background-color: var(--danger-color);
+    color: white;
+    font-size: 0.7rem;
+    padding: 2px 6px;
+    border-radius: 10px;
+    margin-left: 5px;
+}
+
+.filter-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.date-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+}
+
+.filter-btn {
+    padding: 8px 12px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.pagination-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    gap: 15px;
+}
+
+.pagination-btn {
+    background: none;
+    border: 1px solid var(--border-color);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.pagination-btn:hover, .pagination-btn:active {
+    background-color: var(--bg-dark);
+}
+
+.pagination-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.loading-spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 0;
+}
+
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 0;
+    color: var(--text-lighter);
+    text-align: center;
+}
+
+.empty-state i {
+    margin-bottom: 15px;
+    opacity: 0.7;
 }
 
 /* Utility Classes */
@@ -2506,21 +2660,79 @@ d.talent-coin {
     }
 }
 
-/* Media Queries */
-@media (max-width: 480px) {
-    .balance-cards {
-        grid-template-columns: 1fr;
+@keyframes modalSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Media Queries for Responsive Design */
+@media (max-width: 768px) {
+    .wallet-modal,
+    .feature-modal {
+        align-items: flex-end;
     }
     
-    .action-row {
-        grid-template-columns: 1fr;
-        gap: 10px;
+    .wallet-container,
+    .feature-modal-content {
+        width: 100%;
+        max-width: 100%;
+        height: 90vh;
+        max-height: 90vh;
+        border-radius: var(--border-radius) var(--border-radius) 0 0;
+        animation: modalSlideUp 0.3s ease;
+    }
+    
+    .wallet-header,
+    .feature-modal-header {
+        padding: 16px;
+    }
+    
+    .wallet-screen,
+    .feature-modal-body {
+        padding: 16px;
+    }
+    
+    .pin-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 24px;
+    }
+    
+    .pin-setup h3,
+    .pin-entry h3 {
+        font-size: 1.1rem;
+    }
+    
+    .pin-setup p,
+    .pin-entry p {
+        font-size: 0.9rem;
+    }
+    
+    .wallet-btn {
+        width: 100%;
+    }
+    
+    .account-row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .account-row .label {
+        margin-bottom: 4px;
     }
     
     .option-buttons {
-        flex-direction: column;
+        flex-direction: row;
     }
-    
+}
+
+@media (max-width: 480px) {
     .pin-digit,
     .pin-confirm-digit,
     .pin-login-digit,
@@ -2531,20 +2743,468 @@ d.talent-coin {
     .transfer-pin-digit {
         width: 40px;
         height: 40px;
+        font-size: 1.1rem;
     }
     
     .otp-digit {
         width: 35px;
         height: 35px;
+        font-size: 1rem;
+    }
+    
+    .balance-cards {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+    
+    .balance-card {
+        padding: 12px;
+    }
+    
+    .balance-amount {
+        font-size: 1.5rem;
+    }
+    
+    .action-row {
+        gap: 10px;
+    }
+    
+    .wallet-action-btn {
+        padding: 12px 10px;
+    }
+    
+    .wallet-action-btn .action-icon {
+        font-size: 1.3rem;
+        margin-bottom: 6px;
+    }
+    
+    .wallet-action-btn span {
+        font-size: 0.8rem;
+    }
+    
+    .tab {
+        padding: 10px 15px;
+        font-size: 0.9rem;
+    }
+    
+    .input-group label {
+        font-size: 0.9rem;
+    }
+    
+    .input-group input,
+    .input-group select {
+        padding: 10px 12px;
+        font-size: 0.9rem;
+    }
+    
+    .option-btn {
+        padding: 12px 10px;
+    }
+    
+    .option-btn i {
+        font-size: 1.3rem;
+        margin-bottom: 6px;
+    }
+    
+    .option-btn span {
+        font-size: 0.8rem;
     }
 }
 
-/* Fix for notched iPhones */
+/* iPhone X, 11, 12, 13 Notch Support */
 @supports (padding: max(0px)) {
     .wallet-container,
     .feature-modal-content {
         padding-bottom: max(20px, env(safe-area-inset-bottom));
     }
+    
+    .wallet-header,
+    .feature-modal-header {
+        padding-top: max(16px, env(safe-area-inset-top));
+        padding-left: max(16px, env(safe-area-inset-left));
+        padding-right: max(16px, env(safe-area-inset-right));
+    }
+    
+    .wallet-screen,
+    .feature-modal-body {
+        padding-left: max(16px, env(safe-area-inset-left));
+        padding-right: max(16px, env(safe-area-inset-right));
+    }
+}
+
+/* Fix for iOS input zoom */
+@media screen and (-webkit-min-device-pixel-ratio: 0) { 
+    select,
+    textarea,
+    input {
+        font-size: 16px !important;
+    }
+}
+
+/* Fix for Android Chrome bottom bar */
+@media screen and (max-height: 600px) {
+    .wallet-container,
+    .feature-modal-content {
+        max-height: 85vh;
+    }
+}
+
+/* iPad specific adjustments */
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+    .wallet-container,
+    .feature-modal-content {
+        width: 80%;
+        max-width: 600px;
+        max-height: 80vh;
+        border-radius: var(--border-radius);
+    }
+    
+    .wallet-modal,
+    .feature-modal {
+        align-items: center;
+    }
+    
+    .balance-cards {
+        grid-template-columns: 1fr 1fr;
+    }
+    .action-row {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .wallet-action-btn {
+        padding: 20px 15px;
+    }
+    
+    .wallet-action-btn .action-icon {
+        font-size: 1.8rem;
+        margin-bottom: 10px;
+    }
+    
+    .wallet-action-btn span {
+        font-size: 1rem;
+    }
+    
+    .pin-digit,
+    .pin-confirm-digit,
+    .pin-login-digit,
+    .withdraw-pin-digit,
+    .current-pin-digit,
+    .new-pin-digit,
+    .confirm-new-pin-digit,
+    .transfer-pin-digit {
+        width: 50px;
+        height: 50px;
+        font-size: 1.3rem;
+    }
+    
+    .otp-digit {
+        width: 45px;
+        height: 45px;
+        font-size: 1.2rem;
+    }
+    
+    .wallet-btn {
+        padding: 14px 28px;
+        font-size: 1rem;
+    }
+}
+
+/* Landscape mode adjustments */
+@media (orientation: landscape) and (max-height: 500px) {
+    .wallet-container,
+    .feature-modal-content {
+        height: 95vh;
+        max-height: 95vh;
+    }
+    
+    .pin-setup,
+    .pin-entry {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .pin-icon {
+        margin-right: 20px;
+        margin-bottom: 0;
+    }
+    
+    .pin-setup h3,
+    .pin-entry h3,
+    .pin-setup p,
+    .pin-entry p {
+        text-align: left;
+        width: calc(100% - 90px);
+    }
+    
+    .pin-input-container,
+    .pin-confirm-container,
+    .wallet-btn {
+        width: 100%;
+    }
+    
+    .balance-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .action-row {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    
+    .transaction-history {
+        margin-top: 15px;
+    }
+    
+    .transaction-list {
+        max-height: 150px;
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --primary-color: #8c7ae6;
+        --primary-light: #9c88ff;
+        --primary-dark: #7159d3;
+        --secondary-color: #00cec9;
+        --secondary-light: #81ecec;
+        --secondary-dark: #00b5b1;
+        --text-color: #f5f6fa;
+        --text-light: #dcdde1;
+        --text-lighter: #7f8fa6;
+        --bg-color: #2f3640;
+        --bg-light: #353b48;
+        --bg-dark: #1e272e;
+        --border-color: #4b5563;
+    }
+    
+    .modal-overlay {
+        background-color: rgba(0, 0, 0, 0.7);
+    }
+    
+    .wallet-action-btn {
+        background-color: var(--bg-light);
+        border-color: var(--border-color);
+    }
+    
+    .wallet-action-btn:hover, .wallet-action-btn:active {
+        background-color: var(--bg-dark);
+    }
+    
+    .option-btn {
+        background-color: var(--bg-light);
+        border-color: var(--border-color);
+    }
+    
+    .option-btn.active {
+        background-color: rgba(140, 122, 230, 0.2);
+    }
+    
+    .transaction-icon {
+        background-color: var(--bg-dark);
+    }
+    
+    .file-upload-btn {
+        background-color: var(--bg-dark);
+        color: var(--text-light);
+    }
+    
+    .file-upload-btn:hover, .file-upload-btn:active {
+        background-color: var(--border-color);
+    }
+    
+    .pagination-btn {
+        color: var(--text-light);
+    }
+    
+    .pagination-btn:hover, .pagination-btn:active {
+        background-color: var(--bg-dark);
+    }
+}
+
+/* Accessibility improvements */
+.wallet-btn:focus,
+.close-wallet:focus,
+.close-feature-modal:focus,
+.option-btn:focus,
+.tab:focus,
+.wallet-action-btn:focus,
+.pagination-btn:focus,
+.copy-btn:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+/* Prevent text selection on buttons */
+button, 
+.option-btn,
+.tab,
+.wallet-action-btn {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Improve touch targets for mobile */
+@media (max-width: 768px) {
+    .close-wallet,
+    .close-feature-modal,
+    .copy-btn {
+        min-width: 44px;
+        min-height: 44px;
+    }
+    
+    .tab {
+        padding: 12px 20px;
+    }
+    
+    .pagination-btn {
+        width: 44px;
+        height: 44px;
+    }
+}
+
+/* Animations for interactive elements */
+.wallet-btn,
+.wallet-action-btn,
+.option-btn,
+.tab,
+.copy-btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.wallet-btn:after,
+.wallet-action-btn:after,
+.option-btn:after,
+.tab:after,
+.copy-btn:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 5px;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.5);
+    opacity: 0;
+    border-radius: 100%;
+    transform: scale(1, 1) translate(-50%);
+    transform-origin: 50% 50%;
+}
+
+@keyframes ripple {
+    0% {
+        transform: scale(0, 0);
+        opacity: 0.5;
+    }
+    100% {
+        transform: scale(100, 100);
+        opacity: 0;
+    }
+}
+
+.wallet-btn:active:after,
+.wallet-action-btn:active:after,
+.option-btn:active:after,
+.tab:active:after,
+.copy-btn:active:after {
+    animation: ripple 0.4s ease-out;
+}
+
+/* Notification styles for success/error messages */
+.notification {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 12px 20px;
+    border-radius: 8px;
+    color: white;
+    font-weight: 500;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    max-width: 90%;
+    animation: notificationFadeIn 0.3s ease, notificationFadeOut 0.3s ease 2.7s forwards;
+}
+
+.notification.success {
+    background-color: var(--success-color);
+}
+
+.notification.error {
+    background-color: var(--danger-color);
+}
+
+.notification.warning {
+    background-color: var(--warning-color);
+}
+
+.notification i {
+    margin-right: 10px;
+    font-size: 1.2rem;
+}
+
+@keyframes notificationFadeIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, 20px);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+}
+
+@keyframes notificationFadeOut {
+    from {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+    to {
+        opacity: 0;
+        transform: translate(-50%, 20px);
+    }
+}
+
+/* Print styles */
+@media print {
+    .wallet-modal,
+    .feature-modal,
+    .modal-overlay {
+        display: none !important;
+    }
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    
+    .wallet-container,
+    .feature-modal-content {
+        animation: none !important;
+    }
+    
+    .notification {
+        animation: none !important;
+        opacity: 1;
+        transform: translateX(-50%);
+    }
+}
+
+
+
+
+
 
     :root {
     --primary-color: #4285f4;
@@ -2552,7 +3212,7 @@ d.talent-coin {
     --accent-color: #fbbc05;
     --danger-color: #ea4335;
     --dark-color: #202124;
-    --text-color: #3c4043;
+    --text-color: #eff3f7;
     --light-color: #f8f9fa;
     --border-color: #dadce0;
     --card-bg: #ffffff;
@@ -8312,6 +8972,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+
 document.addEventListener('DOMContentLoaded', function() {
     // DOM Elements
     const walletBtn = document.querySelector('.wallet-btn');
@@ -9675,304 +10336,12 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-// Global variables
-let uploadedScreenshotURL = null;
-let currentUser = null;
 
-// Initialize Firebase Auth listener
-document.addEventListener('DOMContentLoaded', function() {
-    // Listen for auth state changes
-    firebase.auth().onAuthStateChanged(function(user) {
-        if (user) {
-            currentUser = user;
-            // Initialize wallet functionality once user is authenticated
-            initializeBuyCoinFeature();
-            // Listen for buy request updates
-            listenForBuyRequestUpdates();
-        } else {
-            currentUser = null;
-            console.log('User not logged in');
-        }
-    });
-});
 
-// Initialize Buy Coin Feature
-function initializeBuyCoinFeature() {
-    // Buy Coins Button Click Event
-    const buyCoinsBtn = document.getElementById('buyCoinsBtn');
-    const buyCoinsModal = document.getElementById('buyCoinsModal');
-    
-    if (buyCoinsBtn) {
-        buyCoinsBtn.addEventListener('click', function() {
-            buyCoinsModal.style.display = 'block';
-            resetBuyCoinsForm();
-        });
-    }
-    
-    // Close modal when clicking the X button
-    const closeButtons = document.querySelectorAll('.close-feature-modal');
-    closeButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            buyCoinsModal.style.display = 'none';
-        });
-    });
-    
-    // Close modal when clicking outside
-    window.addEventListener('click', function(event) {
-        if (event.target === buyCoinsModal) {
-            buyCoinsModal.style.display = 'none';
-        }
-    });
-    
-    // Tab switching functionality
-    const tabs = document.querySelectorAll('.tab');
-    tabs.forEach(tab => {
-        tab.addEventListener('click', function() {
-            const tabName = this.getAttribute('data-tab');
-            switchTab(tabName);
-        });
-    });
-    
-    // Next button functionality
-    const nextTabBtn = document.querySelector('.next-tab-btn');
-    if (nextTabBtn) {
-        nextTabBtn.addEventListener('click', function() {
-            // Validate input before proceeding
-            const coinAmount = document.getElementById('coinAmount').value;
-            if (!coinAmount || coinAmount <= 0) {
-                showToast('Please enter a valid coin amount', 'error');
-                return;
-            }
-            
-            // Set the transfer amount in the confirmation tab
-            document.getElementById('transferAmount').value = coinAmount * 10;
-            
-            // Set today's date as default
-            const today = new Date().toISOString().split('T')[0];
-            document.getElementById('transferDate').value = today;
-            
-            // Switch to confirmation tab
-            switchTab('confirmation');
-        });
-    }
-    
-    // Previous button functionality
-    const prevTabBtn = document.querySelector('.prev-tab-btn');
-    if (prevTabBtn) {
-        prevTabBtn.addEventListener('click', function() {
-            switchTab('payment');
-        });
-    }
-    
-    // Calculate Naira equivalent as user types
-    const coinAmountInput = document.getElementById('coinAmount');
-    if (coinAmountInput) {
-        coinAmountInput.addEventListener('input', function() {
-            const amount = parseFloat(this.value) || 0;
-            const nairaAmount = amount * 10; // 1 Talent Coin = ₦10
-            document.getElementById('paymentAmount').textContent = nairaAmount.toFixed(0);
-        });
-    }
-    
-    // Copy account number functionality
-    const copyAccountBtn = document.getElementById('copyAccountBtn');
-    if (copyAccountBtn) {
-        copyAccountBtn.addEventListener('click', function() {
-            const accountNumber = '9078139367';
-            navigator.clipboard.writeText(accountNumber)
-                .then(() => {
-                    showToast('Account number copied to clipboard', 'success');
-                })
-                .catch(err => {
-                    console.error('Could not copy text: ', err);
-                    showToast('Failed to copy account number', 'error');
-                });
-        });
-    }
-    
-    // File upload handling
-    const transferScreenshot = document.getElementById('transferScreenshot');
-    const fileName = document.getElementById('fileName');
-    
-    if (transferScreenshot) {
-        transferScreenshot.addEventListener('change', function(e) {
-            if (e.target.files.length > 0) {
-                const file = e.target.files[0];
-                fileName.textContent = file.name;
-                
-                // Show loading state
-                showToast('Uploading screenshot...', 'info');
-                
-                // Upload the file to Firebase Storage
-                uploadScreenshot(file);
-            }
-        });
-    }
-    
-    // Confirm Transfer Button
-    const confirmTransferBtn = document.getElementById('confirmTransferBtn');
-    if (confirmTransferBtn) {
-        confirmTransferBtn.addEventListener('click', function() {
-            submitBuyRequest();
-        });
-    }
-}
 
-// Switch between tabs
-function switchTab(tabName) {
-    // Hide all tab contents
-    document.querySelectorAll('.tab-content').forEach(content => {
-        content.classList.remove('active');
-    });
-    
-    // Remove active class from all tabs
-    document.querySelectorAll('.tab').forEach(tab => {
-        tab.classList.remove('active');
-    });
-    
-    // Show the selected tab content
-    document.getElementById(tabName + 'Tab').classList.add('active');
-    
-    // Add active class to the selected tab
-    document.querySelector(`.tab[data-tab="${tabName}"]`).classList.add('active');
-}
 
-// Reset the buy coins form
-function resetBuyCoinsForm() {
-    document.getElementById('coinAmount').value = '';
-    document.getElementById('paymentAmount').textContent = '0';
-    document.getElementById('transferReference').value = '';
-    document.getElementById('transferAmount').value = '';
-    document.getElementById('transferScreenshot').value = '';
-    document.getElementById('fileName').textContent = '';
-    uploadedScreenshotURL = null;
-    
-    // Reset to first tab
-    switchTab('payment');
-}
 
-// Upload screenshot to Firebase Storage
-function uploadScreenshot(file) {
-    if (!currentUser) {
-        showToast('You must be logged in to upload files', 'error');
-        return;
-    }
-    
-    const storageRef = firebase.storage().ref();
-    const fileRef = storageRef.child(`screenshots/${currentUser.uid}/${Date.now()}_${file.name}`);
-    
-    fileRef.put(file).then(snapshot => {
-        return snapshot.ref.getDownloadURL();
-    }).then(downloadURL => {
-        uploadedScreenshotURL = downloadURL;
-        showToast('Screenshot uploaded successfully', 'success');
-    }).catch(error => {
-        console.error('Error uploading file:', error);
-        showToast('Failed to upload screenshot', 'error');
-    });
-}
 
-// Submit buy request to Firestore
-function submitBuyRequest() {
-    if (!currentUser) {
-        showToast('You must be logged in to buy coins', 'error');
-        return;
-    }
-    
-    // Get form values
-    const coinAmount = parseFloat(document.getElementById('coinAmount').value);
-    const nairaAmount = coinAmount * 10;
-    const transferReference = document.getElementById('transferReference').value;
-    const transferDate = document.getElementById('transferDate').value;
-    const transferAmount = parseFloat(document.getElementById('transferAmount').value);
-    
-    // Validate inputs
-    if (!coinAmount || coinAmount <= 0) {
-        showToast('Please enter a valid coin amount', 'error');
-        return;
-    }
-    
-    if (!transferReference) {
-        showToast('Please enter the transfer reference', 'error');
-        return;
-    }
-    
-    if (!transferDate) {
-        showToast('Please select the transfer date', 'error');
-        return;
-    }
-    
-    if (!transferAmount || transferAmount <= 0) {
-        showToast('Please enter a valid transfer amount', 'error');
-        return;
-    }
-    
-    // Validate that naira amount matches transfer amount
-    if (Math.abs(nairaAmount - transferAmount) > 0.01) {
-        showToast('Transfer amount must match the calculated amount', 'error');
-        return;
-    }
-    
-    // Show loading state
-    showToast('Submitting your request...', 'info');
-    
-    // Get user data
-    const db = firebase.firestore();
-    db.collection('users').doc(currentUser.uid).get()
-        .then(userDoc => {
-            if (!userDoc.exists) {
-                throw new Error('User profile not found');
-            }
-            
-            const userData = userDoc.data();
-            
-            // Create the buy request document
-            return db.collection('buyRequests').add({
-                userId: currentUser.uid,
-                username: userData.username || userData.displayName || 'Unknown User',
-                walletId: currentUser.uid, // Using userId as walletId for simplicity
-                amount: coinAmount,
-                nairaAmount: nairaAmount,
-                transferReference: transferReference,
-                paymentScreenshot: uploadedScreenshotURL || '',
-                transferDate: transferDate,
-                status: 'pending',
-                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                moderatorNotes: ''
-            });
-        })
-        .then(docRef => {
-            console.log('Buy request created with ID:', docRef.id);
-            
-            // Create activity record
-            return db.collection('activity').add({
-                userId: currentUser.uid,
-                type: 'buy',
-                title: 'Buy Request Submitted',
-                details: `${coinAmount} Talent Coins (₦${nairaAmount})`,
-                status: 'pending',
-                timestamp: firebase.firestore.FieldValue.serverTimestamp()
-            });
-        })
-        .then(() => {
-            showToast('Buy request submitted successfully', 'success');
-            
-            // Close the modal
-            document.getElementById('buyCoinsModal').style.display = 'none';
-            
-            // Reset the form
-            resetBuyCoinsForm();
-            
-            // Refresh wallet transactions
-            if (typeof loadWalletTransactions === 'function') {
-                loadWalletTransactions();
-            }
-        })
-        .catch(error => {
-            console.error('Error submitting buy request:', error);
-            showToast('Failed to submit buy request: ' + error.message, 'error');
-        });
-}
 
 
 
@@ -9986,83 +10355,7 @@ function submitBuyRequest() {
 
 
 
-// Listen for updates to buy requests
-function listenForBuyRequestUpdates() {
-    if (!currentUser) return;
-    
-    const db = firebase.firestore();
-    
-    // Listen for changes to user's buy requests
-    return db.collection('buyRequests')
-        .where('userId', '==', currentUser.uid)
-        .onSnapshot(snapshot => {
-            snapshot.docChanges().forEach(change => {
-                const data = change.doc.data();
-                
-                // If a request was updated
-                if (change.type === 'modified') {
-                    // Check if status changed to completed
-                    if (data.status === 'completed') {
-                        // Show notification to user
-                        showToast(`Your buy request for ${data.amount} Talent Coins has been approved!`, 'success');
-                        
-                        // Refresh wallet balance
-                        if (typeof refreshWalletBalance === 'function') {
-                            refreshWalletBalance();
-                        }
-                        
-                        // Refresh wallet transactions
-                        if (typeof loadWalletTransactions === 'function') {
-                            loadWalletTransactions();
-                        }
-                    } 
-                    // Check if status changed to rejected
-                    else if (data.status === 'rejected') {
-                        showToast(`Your buy request for ${data.amount} Talent Coins was rejected. Reason: ${data.moderatorNotes || 'No reason provided'}`, 'error');
-                        
-                        // Refresh wallet transactions
-                        if (typeof loadWalletTransactions === 'function') {
-                            loadWalletTransactions();
-                        }
-                    }
-                }
-            });
-        }, error => {
-            console.error('Error listening for buy request updates:', error);
-        });
-}
 
-// Show toast notification
-function showToast(message, type = 'info') {
-    // Check if toast container exists, if not create it
-    let toastContainer = document.getElementById('toast-container');
-    if (!toastContainer) {
-        toastContainer = document.createElement('div');
-        toastContainer.id = 'toast-container';
-        document.body.appendChild(toastContainer);
-    }
-    
-    // Create toast element
-    const toast = document.createElement('div');
-    toast.className = `toast ${type}`;
-    toast.textContent = message;
-    
-    // Add toast to container
-    toastContainer.appendChild(toast);
-    
-    // Show toast
-    setTimeout(() => {
-        toast.classList.add('show');
-    }, 10);
-    
-    // Remove toast after 3 seconds
-    setTimeout(() => {
-        toast.classList.remove('show');
-        setTimeout(() => {
-            toastContainer.removeChild(toast);
-        }, 300);
-    }, 3000);
-}
 
 
 
@@ -10072,3316 +10365,6 @@ function showToast(message, type = 'info') {
 
 
 
-
-// Load Buy Coin Requests from Firestore
-function loadBuyCoinRequests(statusFilter = 'all') {
-    const requestsContainer = document.getElementById('buyRequestsContainer');
-    if (!requestsContainer) return;
-    
-    // Show loading state
-    requestsContainer.innerHTML = '<div class="loading-spinner"></div>';
-    
-    const db = firebase.firestore();
-    let query = db.collection('buyRequests').orderBy('timestamp', 'desc');
-    
-    // Apply status filter if not 'all'
-    if (statusFilter !== 'all') {
-        query = query.where('status', '==', statusFilter);
-    }
-    
-    query.get().then(snapshot => {
-        if (snapshot.empty) {
-            requestsContainer.innerHTML = '<div class="no-requests">No buy requests found</div>';
-            return;
-        }
-        
-        let requestsHTML = '';
-        snapshot.forEach(doc => {
-            const request = doc.data();
-            const requestId = doc.id;
-            const timestamp = request.timestamp ? new Date(request.timestamp.toDate()).toLocaleString() : 'Unknown';
-            
-            let statusClass = '';
-            switch(request.status) {
-                case 'pending':
-                    statusClass = 'status-pending';
-                    break;
-                case 'completed':
-                    statusClass = 'status-completed';
-                    break;
-                case 'rejected':
-                    statusClass = 'status-rejected';
-                    break;
-            }
-            
-            requestsHTML += `
-                <div class="request-card" data-id="${requestId}">
-                    <div class="request-header">
-                        <div class="request-user">
-                            <i class="fas fa-user"></i>
-                            <span>${request.username || 'Unknown User'}</span>
-                        </div>
-                        <div class="request-status ${statusClass}">
-                            ${request.status}
-                        </div>
-                    </div>
-                    <div class="request-details">
-                        <div class="detail-row">
-                            <span class="detail-label">Amount:</span>
-                            <span class="detail-value">${request.amount} Talent Coins</span>
-                        </div>
-                                             <div class="detail-row">
-                            <span class="detail-label">Naira:</span>
-                            <span class="detail-value">₦${request.nairaAmount}</span>
-                        </div>
-                        <div class="detail-row">
-                            <span class="detail-label">Date:</span>
-                            <span class="detail-value">${timestamp}</span>
-                        </div>
-                    </div>
-                    <div class="request-actions">
-                        <button class="view-details-btn" onclick="viewRequestDetails('${requestId}')">
-                            <i class="fas fa-eye"></i> View Details
-                        </button>
-                    </div>
-                </div>
-            `;
-        });
-        
-        requestsContainer.innerHTML = requestsHTML;
-    }).catch(error => {
-        console.error('Error loading buy requests:', error);
-        requestsContainer.innerHTML = '<div class="error-message">Error loading requests. Please try again.</div>';
-    });
-}
-
-// View Request Details
-function viewRequestDetails(requestId) {
-    const modal = document.getElementById('requestDetailsModal');
-    const modalContent = document.getElementById('requestDetailsContent');
-    
-    if (!modal || !modalContent) return;
-    
-    // Show loading state
-    modalContent.innerHTML = '<div class="loading-spinner"></div>';
-    modal.style.display = 'block';
-    
-    const db = firebase.firestore();
-    db.collection('buyRequests').doc(requestId).get()
-        .then(doc => {
-            if (!doc.exists) {
-                modalContent.innerHTML = '<div class="error-message">Request not found</div>';
-                return;
-            }
-            
-            const request = doc.data();
-            const timestamp = request.timestamp ? new Date(request.timestamp.toDate()).toLocaleString() : 'Unknown';
-            
-            let statusClass = '';
-            switch(request.status) {
-                case 'pending':
-                    statusClass = 'status-pending';
-                    break;
-                case 'completed':
-                    statusClass = 'status-completed';
-                    break;
-                case 'rejected':
-                    statusClass = 'status-rejected';
-                    break;
-            }
-            
-            // Prepare action buttons based on status
-            let actionButtons = '';
-            if (request.status === 'pending') {
-                actionButtons = `
-                    <button class="action-btn approve-btn" onclick="approveRequest('${requestId}')">
-                        <i class="fas fa-check"></i> Approve
-                    </button>
-                    <button class="action-btn reject-btn" onclick="rejectRequest('${requestId}')">
-                        <i class="fas fa-times"></i> Reject
-                    </button>
-                `;
-            }
-            
-            // Prepare screenshot display
-            let screenshotHTML = '';
-            if (request.paymentScreenshot) {
-                screenshotHTML = `
-                    <div class="screenshot-container">
-                        <h3>Payment Screenshot</h3>
-                        <img src="${request.paymentScreenshot}" alt="Payment Screenshot" class="payment-screenshot">
-                        <a href="${request.paymentScreenshot}" target="_blank" class="view-full-btn">
-                            <i class="fas fa-external-link-alt"></i> View Full Size
-                        </a>
-                    </div>
-                `;
-            } else {
-                screenshotHTML = `
-                    <div class="no-screenshot">
-                        <p>No payment screenshot provided</p>
-                    </div>
-                `;
-            }
-            
-            modalContent.innerHTML = `
-                <div class="request-detail-header">
-                    <h2>Buy Request Details</h2>
-                    <div class="request-id">ID: ${requestId}</div>
-                </div>
-                
-                <div class="request-detail-status ${statusClass}">
-                    Status: ${request.status}
-                </div>
-                
-                <div class="request-detail-section">
-                    <h3>User Information</h3>
-                    <div class="detail-row">
-                        <span class="detail-label">Username:</span>
-                        <span class="detail-value">${request.username || 'Unknown User'}</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">User ID:</span>
-                        <span class="detail-value">${request.userId}</span>
-                    </div>
-                </div>
-                
-                <div class="request-detail-section">
-                    <h3>Payment Information</h3>
-                    <div class="detail-row">
-                        <span class="detail-label">Amount:</span>
-                        <span class="detail-value">${request.amount} Talent Coins</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">Naira Amount:</span>
-                        <span class="detail-value">₦${request.nairaAmount}</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">Transfer Reference:</span>
-                        <span class="detail-value">${request.transferReference}</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">Transfer Date:</span>
-                        <span class="detail-value">${request.transferDate}</span>
-                    </div>
-                </div>
-                
-                ${screenshotHTML}
-                
-                <div class="request-detail-actions">
-                    ${actionButtons}
-                </div>
-                
-                ${request.status === 'pending' ? `
-                <div class="admin-notes-input">
-                    <label for="moderatorNotes">Admin Notes:</label>
-                    <textarea id="moderatorNotes" placeholder="Add notes about this request (optional)"></textarea>
-                </div>
-                ` : ''}
-            `;
-        })
-        .catch(error => {
-            console.error('Error loading request details:', error);
-            modalContent.innerHTML = '<div class="error-message">Error loading request details. Please try again.</div>';
-        });
-}
-
-// Approve Buy Request
-function approveRequest(requestId) {
-    // Get admin notes
-    const notesInput = document.getElementById('moderatorNotes');
-    const notes = notesInput ? notesInput.value : '';
-    
-    // Show loading state
-    showToast('Processing request...', 'info');
-    
-    const db = firebase.firestore();
-    
-    // Get the request data first
-    db.collection('buyRequests').doc(requestId).get()
-        .then(doc => {
-            if (!doc.exists) {
-                throw new Error('Request not found');
-            }
-            
-            const requestData = doc.data();
-            const userId = requestData.userId;
-            const amount = requestData.amount;
-            
-            // Use a transaction to update both the request and the wallet
-            return db.runTransaction(transaction => {
-                // Get the user's wallet
-                const walletRef = db.collection('wallets').doc(userId);
-                
-                return transaction.get(walletRef)
-                    .then(walletDoc => {
-                        // Get current admin user
-                        const adminUser = firebase.auth().currentUser;
-                        const adminName = adminUser ? adminUser.displayName || adminUser.email : 'Admin';
-                        
-                        // Create wallet if it doesn't exist
-                        if (!walletDoc.exists) {
-                            transaction.set(walletRef, {
-                                talentCoins: amount,
-                                commission: 0,
-                                lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
-                            });
-                        } else {
-                            // Update existing wallet
-                            const walletData = walletDoc.data();
-                            const currentBalance = walletData.talentCoins || 0;
-                            
-                            transaction.update(walletRef, {
-                                talentCoins: currentBalance + amount,
-                                lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
-                            });
-                        }
-                        
-                        // Update the request status
-                        const requestRef = db.collection('buyRequests').doc(requestId);
-                        transaction.update(requestRef, {
-                            status: 'completed',
-                            moderatorNotes: notes,
-                            completedAt: firebase.firestore.FieldValue.serverTimestamp(),
-                            moderator: adminName
-                        });
-                        
-                        // Create activity record
-                        const activityRef = db.collection('activity').doc();
-                        transaction.set(activityRef, {
-                            userId: userId,
-                            type: 'buy',
-                            title: 'Buy Request Approved',
-                            details: `${amount} Talent Coins added to wallet`,
-                            status: 'completed',
-                            timestamp: firebase.firestore.FieldValue.serverTimestamp()
-                        });
-                    });
-            });
-        })
-        .then(() => {
-            showToast('Buy request approved successfully', 'success');
-            
-            // Close details modal
-            document.getElementById('requestDetailsModal').style.display = 'none';
-            
-            // Reload buy requests to update the UI
-            loadBuyCoinRequests();
-        })
-        .catch(error => {
-            console.error("Error approving request:", error);
-            showToast('Failed to approve request: ' + error.message, 'error');
-        });
-}
-
-// Reject Buy Request
-function rejectRequest(requestId) {
-    // Get admin notes
-    const notesInput = document.getElementById('moderatorNotes');
-    const notes = notesInput ? notesInput.value : '';
-    
-    if (!notes) {
-        showToast('Please provide a reason for rejection in the Admin Notes field', 'error');
-        return;
-    }
-    
-    // Show loading state
-    showToast('Processing request...', 'info');
-    
-    const db = firebase.firestore();
-    
-    // Get the request data first
-    db.collection('buyRequests').doc(requestId).get()
-        .then(doc => {
-            if (!doc.exists) {
-                throw new Error('Request not found');
-            }
-            
-            const requestData = doc.data();
-            const userId = requestData.userId;
-            
-            // Get current admin user
-            const adminUser = firebase.auth().currentUser;
-            const adminName = adminUser ? adminUser.displayName || adminUser.email : 'Admin';
-            
-            // Update the request status
-            return db.collection('buyRequests').doc(requestId).update({
-                status: 'rejected',
-                moderatorNotes: notes,
-                completedAt: firebase.firestore.FieldValue.serverTimestamp(),
-                moderator: adminName
-            }).then(() => {
-                // Create activity record
-                return db.collection('activity').add({
-                    userId: userId,
-                    type: 'buy',
-                    title: 'Buy Request Rejected',
-                    details: `Reason: ${notes}`,
-                    status: 'rejected',
-                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
-                });
-            });
-        })
-        .then(() => {
-            showToast('Buy request rejected successfully', 'success');
-            
-            // Close details modal
-            document.getElementById('requestDetailsModal').style.display = 'none';
-            
-            // Reload buy requests to update the UI
-            loadBuyCoinRequests();
-        })
-        .catch(error => {
-            console.error("Error rejecting request:", error);
-            showToast('Failed to reject request: ' + error.message, 'error');
-        });
-}
-
-// Show toast notification
-function showToast(message, type = 'info') {
-    // Check if toast container exists, if not create it
-    let toastContainer = document.getElementById('toast-container');
-    if (!toastContainer) {
-        toastContainer = document.createElement('div');
-        toastContainer.id = 'toast-container';
-        document.body.appendChild(toastContainer);
-    }
-    
-    // Create toast element
-    const toast = document.createElement('div');
-    toast.className = `toast ${type}`;
-    toast.textContent = message;
-    
-    // Add toast to container
-    toastContainer.appendChild(toast);
-    
-    // Show toast
-    setTimeout(() => {
-        toast.classList.add('show');
-    }, 10);
-    
-    // Remove toast after 3 seconds
-    setTimeout(() => {
-        toast.classList.remove('show');
-        setTimeout(() => {
-            toastContainer.removeChild(toast);
-        }, 300);
-    }, 3000);
-}
-
-// Initialize when document is ready
-document.addEventListener('DOMContentLoaded', function() {
-    // Load buy requests if we're on the admin page
-    const requestsContainer = document.getElementById('buyRequestsContainer');
-    if (requestsContainer) {
-        loadBuyCoinRequests();
-    }
-    
-    // Set up refresh button
-    const refreshBtn = document.getElementById('refreshRequestsBtn');
-    if (refreshBtn) {
-        refreshBtn.addEventListener('click', function() {
-            loadBuyCoinRequests();
-        });
-    }
-    
-    // Set up filter functionality
-    const statusFilter = document.getElementById('statusFilter');
-    if (statusFilter) {
-        statusFilter.addEventListener('change', function() {
-            loadBuyCoinRequests(this.value);
-        });
-    }
-    
-    // Set up request details modal close button
-    const closeModalBtn = document.querySelector('#requestDetailsModal .close-modal');
-    if (closeModalBtn) {
-        closeModalBtn.addEventListener('click', function() {
-            document.getElementById('requestDetailsModal').style.display = 'none';
-        });
-    }
-    
-    // Close modal when clicking outside
-    window.addEventListener('click', function(event) {
-        const modal = document.getElementById('requestDetailsModal');
-        if (event.target === modal) {
-            modal.style.display = 'none';
-        }
-    });
-});
-
-
-// Initialize history feature
-document.addEventListener('DOMContentLoaded', function() {
-    // History Button Click Event
-    const historyBtn = document.getElementById('historyBtn');
-    const historyModal = document.getElementById('historyModal');
-    
-    if (historyBtn) {
-        historyBtn.addEventListener('click', function() {
-            openHistoryModal();
-        });
-    }
-    
-    // Close modal when clicking the X button
-    const closeHistoryModal = document.getElementById('closeHistoryModal');
-    if (closeHistoryModal) {
-        closeHistoryModal.addEventListener('click', function() {
-            historyModal.style.display = 'none';
-        });
-    }
-    
-    // Close modal when clicking outside
-    window.addEventListener('click', function(event) {
-        if (event.target === historyModal) {
-            historyModal.style.display = 'none';
-        }
-    });
-    
-    // Tab switching functionality
-    const tabs = document.querySelectorAll('#historyModal .tab');
-    tabs.forEach(tab => {
-        tab.addEventListener('click', function() {
-            const tabName = this.getAttribute('data-tab');
-            switchHistoryTab(tabName);
-        });
-    });
-    
-    // Transaction filter change event
-    const transactionTypeFilter = document.getElementById('transactionTypeFilter');
-    if (transactionTypeFilter) {
-        transactionTypeFilter.addEventListener('change', function() {
-            currentFilter = this.value;
-            currentPage = 1;
-            loadTransactionHistory();
-        });
-    }
-    
-    // Date filter apply button
-    const applyDateFilter = document.getElementById('applyDateFilter');
-    if (applyDateFilter) {
-        applyDateFilter.addEventListener('click', function() {
-            const startDateInput = document.getElementById('startDate');
-            const endDateInput = document.getElementById('endDate');
-            
-            startDateFilter = startDateInput.value ? new Date(startDateInput.value) : null;
-            endDateFilter = endDateInput.value ? new Date(endDateInput.value) : null;
-            
-            // Validate date range
-            if (startDateFilter && endDateFilter && startDateFilter > endDateFilter) {
-                showToast('Start date cannot be after end date', 'error');
-                return;
-            }
-            
-            currentPage = 1;
-            loadTransactionHistory();
-        });
-    }
-    
-    // Pagination controls
-    const prevPageBtn = document.getElementById('prevPage');
-    const nextPageBtn = document.getElementById('nextPage');
-    
-    if (prevPageBtn) {
-        prevPageBtn.addEventListener('click', function() {
-            if (currentPage > 1) {
-                currentPage--;
-                loadTransactionHistory();
-            }
-        });
-    }
-    
-    if (nextPageBtn) {
-        nextPageBtn.addEventListener('click', function() {
-            if (currentPage < totalPages) {
-                currentPage++;
-                loadTransactionHistory();
-            }
-        });
-    }
-});
-
-// Open history modal
-function openHistoryModal() {
-    const historyModal = document.getElementById('historyModal');
-    if (!historyModal) return;
-    
-    // Check if user is logged in
-    if (!isUserLoggedIn()) {
-        showToast('Please log in to view your history', 'warning');
-        return;
-    }
-    
-    // Show modal
-    historyModal.style.display = 'block';
-    
-    // Default to inbox tab
-    switchHistoryTab('inbox');
-    
-    // Load inbox messages
-    loadInboxMessages();
-    
-    // Add body class to prevent scrolling
-    document.body.classList.add('modal-open');
-}
-
-// Switch between history tabs
-function switchHistoryTab(tabName) {
-    // Hide all tab contents
-    document.querySelectorAll('#historyModal .tab-content').forEach(content => {
-        content.classList.remove('active');
-    });
-    
-    // Remove active class from all tabs
-    document.querySelectorAll('#historyModal .tab').forEach(tab => {
-        tab.classList.remove('active');
-    });
-    
-    // Show the selected tab content
-    document.getElementById(tabName + 'Tab').classList.add('active');
-    
-    // Add active class to the selected tab
-    document.querySelector(`#historyModal .tab[data-tab="${tabName}"]`).classList.add('active');
-    
-    // Load data for the selected tab
-    if (tabName === 'inbox') {
-        loadInboxMessages();
-    } else if (tabName === 'transactions') {
-        loadTransactionHistory();
-    }
-}
-
-// Load inbox messages from Firebase
-function loadInboxMessages() {
-    const inboxContainer = document.getElementById('inboxContainer');
-    const emptyInbox = document.getElementById('emptyInbox');
-    
-    if (!inboxContainer || !emptyInbox) return;
-    
-    // Show loading state
-    inboxContainer.innerHTML = '<div class="loading-spinner"></div>';
-    inboxContainer.style.display = 'block';
-    emptyInbox.style.display = 'none';
-    
-    // Get user ID
-    const userId = getUserId();
-    
-    if (!userId) {
-        inboxContainer.innerHTML = '<div class="error-message">Authentication error. Please log in again.</div>';
-        return;
-    }
-    
-    // Get messages from Firebase
-    firebase.firestore().collection('messages')
-        .where('userId', '==', userId)
-        .orderBy('timestamp', 'desc')
-        .get()
-        .then(snapshot => {
-            if (snapshot.empty) {
-                inboxContainer.style.display = 'none';
-                emptyInbox.style.display = 'flex';
-                return;
-            }
-            
-            let messagesHTML = '';
-            let unreadCount = 0;
-            
-            snapshot.forEach(doc => {
-                const message = doc.data();
-                const messageId = doc.id;
-                const timestamp = message.timestamp ? new Date(message.timestamp.toDate()).toLocaleString() : 'Unknown';
-                const isUnread = !message.read;
-                
-                if (isUnread) {
-                    unreadCount++;
-                }
-                
-                messagesHTML += `
-                    <div class="message-card ${isUnread ? 'unread' : ''}" data-id="${messageId}">
-                        <div class="message-header">
-                            <div class="message-title">
-                                ${isUnread ? '<span class="unread-dot"></span>' : ''}
-                                ${message.title || 'No Subject'}
-                            </div>
-                            <div class="message-date">${timestamp}</div>
-                        </div>
-                        <div class="message-body">
-                            ${message.content || 'No content'}
-                        </div>
-                        <div class="message-footer">
-                            <button class="mark-read-btn" onclick="markMessageAsRead('${messageId}')">
-                                ${isUnread ? 'Mark as Read' : 'Mark as Unread'}
-                            </button>
-                            <button class="delete-message-btn" onclick="deleteMessage('${messageId}')">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </div>
-                    </div>
-                `;
-            });
-            
-            inboxContainer.innerHTML = messagesHTML;
-            inboxContainer.style.display = 'block';
-            emptyInbox.style.display = 'none';
-            
-            // Update unread count badge
-            const unreadCountBadge = document.getElementById('unreadCount');
-            if (unreadCountBadge) {
-                unreadCountBadge.textContent = unreadCount;
-                unreadCountBadge.style.display = unreadCount > 0 ? 'inline-flex' : 'none';
-            }
-        })
-        .catch(error => {
-            console.error('Error loading inbox messages:', error);
-            inboxContainer.innerHTML = '<div class="error-message">Failed to load messages. Please try again.</div>';
-        });
-}
-
-// Mark message as read
-function markMessageAsRead(messageId) {
-    const userId = getUserId();
-    
-    if (!userId || !messageId) {
-        showToast('Error updating message status', 'error');
-        return;
-    }
-    
-    // Get current read status
-    firebase.firestore().collection('messages').doc(messageId).get()
-        .then(doc => {
-            if (!doc.exists) {
-                throw new Error('Message not found');
-            }
-            
-            const message = doc.data();
-            const currentReadStatus = message.read || false;
-            
-            // Toggle read status
-            return firebase.firestore().collection('messages').doc(messageId).update({
-                read: !currentReadStatus
-            });
-        })
-        .then(() => {
-            // Reload inbox to reflect changes
-            loadInboxMessages();
-            
-            showToast('Message status updated', 'success');
-        })
-        .catch(error => {
-            console.error('Error updating message status:', error);
-            showToast('Failed to update message status', 'error');
-        });
-}
-
-// Delete message
-function deleteMessage(messageId) {
-    if (!confirm('Are you sure you want to delete this message?')) {
-        return;
-    }
-    
-    const userId = getUserId();
-    
-    if (!userId || !messageId) {
-        showToast('Error deleting message', 'error');
-        return;
-    }
-    
-    firebase.firestore().collection('messages').doc(messageId).delete()
-        .then(() => {
-            // Reload inbox to reflect changes
-            loadInboxMessages();
-            
-            showToast('Message deleted', 'success');
-        })
-        .catch(error => {
-            console.error('Error deleting message:', error);
-            showToast('Failed to delete message', 'error');
-        });
-}
-
-// Load transaction history from Firebase
-function loadTransactionHistory() {
-    const transactionsContainer = document.getElementById('transactionsContainer');
-    const emptyTransactions = document.getElementById('emptyTransactions');
-    const pageIndicator = document.getElementById('pageIndicator');
-    
-    if (!transactionsContainer || !emptyTransactions) return;
-    
-    // Show loading state
-    transactionsContainer.innerHTML = '<div class="loading-spinner"></div>';
-    transactionsContainer.style.display = 'block';
-    emptyTransactions.style.display = 'none';
-    
-    // Get user ID
-    const userId = getUserId();
-    
-    if (!userId) {
-        transactionsContainer.innerHTML = '<div class="error-message">Authentication error. Please log in again.</div>';
-        return;
-    }
-    
-    // Create query
-    let query = firebase.firestore().collection('transactions')
-        .where('userId', '==', userId);
-    
-    // Apply type filter
-    if (currentFilter !== 'all') {
-        query = query.where('type', '==', currentFilter);
-    }
-    
-    // Get total count for pagination
-    query.get()
-        .then(snapshot => {
-            let filteredDocs = snapshot.docs;
-            
-            // Apply date filters in memory (Firestore can't filter on multiple fields)
-            if (startDateFilter || endDateFilter) {
-                filteredDocs = filteredDocs.filter(doc => {
-                    const data = doc.data();
-                    const txDate = data.timestamp ? new Date(data.timestamp.toDate()) : new Date();
-                    
-                    if (startDateFilter && endDateFilter) {
-                        return txDate >= startDateFilter && txDate <= endDateFilter;
-                    } else if (startDateFilter) {
-                        return txDate >= startDateFilter;
-                    } else if (endDateFilter) {
-                        return txDate <= endDateFilter;
-                    }
-                    
-                    return true;
-                });
-            }
-            
-            // Calculate pagination
-            totalPages = Math.max(1, Math.ceil(filteredDocs.length / pageSize));
-            
-            // Adjust current page if needed
-            if (currentPage > totalPages) {
-                currentPage = totalPages;
-            }
-            
-            // Update page indicator
-            if (pageIndicator) {
-                pageIndicator.textContent = `Page ${currentPage} of ${totalPages}`;
-            }
-            
-            // Enable/disable pagination buttons
-            const prevPageBtn = document.getElementById('prevPage');
-            const nextPageBtn = document.getElementById('nextPage');
-            
-            if (prevPageBtn) {
-                prevPageBtn.disabled = currentPage <= 1;
-            }
-            if (nextPageBtn) {
-                nextPageBtn.disabled = currentPage >= totalPages;
-            }
-            
-            // Get paginated results
-            const startIndex = (currentPage - 1) * pageSize;
-            const paginatedDocs = filteredDocs.slice(startIndex, startIndex + pageSize);
-            
-            if (paginatedDocs.length === 0) {
-                transactionsContainer.style.display = 'none';
-                emptyTransactions.style.display = 'flex';
-                return;
-            }
-            
-            // Sort by timestamp (most recent first)
-            paginatedDocs.sort((a, b) => {
-                const timestampA = a.data().timestamp ? a.data().timestamp.toDate() : new Date(0);
-                const timestampB = b.data().timestamp ? b.data().timestamp.toDate() : new Date(0);
-                return timestampB - timestampA;
-            });
-            
-            let transactionsHTML = '';
-            
-            paginatedDocs.forEach(doc => {
-                const transaction = doc.data();
-                const transactionId = doc.id;
-                const timestamp = transaction.timestamp 
-                    ? new Date(transaction.timestamp.toDate()).toLocaleString() 
-                    : 'Unknown';
-                
-                // Determine transaction icon and status class
-                let icon, statusClass, statusText;
-                
-                switch (transaction.type) {
-                    case 'buy':
-                        icon = 'fa-shopping-cart';
-                        statusClass = getStatusClass(transaction.status);
-                        statusText = transaction.status || 'Processing';
-                        break;
-                    case 'send':
-                        icon = 'fa-paper-plane';
-                        statusClass = 'completed';
-                        statusText = 'Sent';
-                        break;
-                    case 'receive':
-                        icon = 'fa-download';
-                        statusClass = 'completed';
-                        statusText = 'Received';
-                        break;
-                    case 'reward':
-                        icon = 'fa-gift';
-                        statusClass = 'completed';
-                        statusText = 'Rewarded';
-                        break;
-                    default:
-                        icon = 'fa-exchange-alt';
-                        statusClass = 'pending';
-                        statusText = 'Unknown';
-                }
-                
-                // Format transaction details based on type
-                let transactionDetails = '';
-                
-                if (transaction.type === 'buy') {
-                    transactionDetails = `
-                        <div class="transaction-detail">
-                            <span class="detail-label">Amount:</span>
-                            <span class="detail-value">${transaction.amount} Talent Coins</span>
-                        </div>
-                        <div class="transaction-detail">
-                            <span class="detail-label">Naira Amount:</span>
-                            <span class="detail-value">₦${transaction.nairaAmount || (transaction.amount * 10)}</span>
-                        </div>
-                        <div class="transaction-detail">
-                            <span class="detail-label">Reference:</span>
-                            <span class="detail-value">${transaction.transferReference || 'N/A'}</span>
-                        </div>
-                    `;
-                } else if (transaction.type === 'send') {
-                    transactionDetails = `
-                        <div class="transaction-detail">
-                            <span class="detail-label">Amount:</span>
-                            <span class="detail-value">${transaction.amount} Talent Coins</span>
-                        </div>
-                        <div class="transaction-detail">
-                            <span class="detail-label">Recipient:</span>
-                            <span class="detail-value">${transaction.recipientUsername || 'Unknown User'}</span>
-                        </div>
-                        <div class="transaction-detail">
-                            <span class="detail-label">Note:</span>
-                            <span class="detail-value">${transaction.note || 'No note'}</span>
-                        </div>
-                    `;
-                } else if (transaction.type === 'receive') {
-                    transactionDetails = `
-                        <div class="transaction-detail">
-                            <span class="detail-label">Amount:</span>
-                            <span class="detail-value">${transaction.amount} Talent Coins</span>
-                        </div>
-                        <div class="transaction-detail">
-                            <span class="detail-label">From:</span>
-                            <span class="detail-value">${transaction.senderUsername || 'Unknown User'}</span>
-                        </div>
-                        <div class="transaction-detail">
-                            <span class="detail-label">Note:</span>
-                            <span class="detail-value">${transaction.note || 'No note'}</span>
-                        </div>
-                    `;
-                } else if (transaction.type === 'reward') {
-                    transactionDetails = `
-                        <div class="transaction-detail">
-                            <span class="detail-label">Amount:</span>
-                            <span class="detail-value">${transaction.amount} Talent Coins</span>
-                        </div>
-                        <div class="transaction-detail">
-                            <span class="detail-label">Reason:</span>
-                            <span class="detail-value">${transaction.reason || 'Platform reward'}</span>
-                        </div>
-                    `;
-                }
-                
-                transactionsHTML += `
-                    <div class="transaction-card" data-id="${transactionId}">
-                        <div class="transaction-icon">
-                            <i class="fas ${icon}"></i>
-                        </div>
-                        <div class="transaction-content">
-                            <div class="transaction-header">
-                                <div class="transaction-title">
-                                    ${getTransactionTitle(transaction)}
-                                </div>
-                                <div class="transaction-date">${timestamp}</div>
-                            </div>
-                            <div class="transaction-details">
-                                ${transactionDetails}
-                            </div>
-                            <div class="transaction-status ${statusClass}">
-                                ${statusText}
-                            </div>
-                        </div>
-                    </div>
-                `;
-            });
-            
-            transactionsContainer.innerHTML = transactionsHTML;
-            transactionsContainer.style.display = 'block';
-            emptyTransactions.style.display = 'none';
-        })
-        .catch(error => {
-            console.error('Error loading transaction history:', error);
-            transactionsContainer.innerHTML = '<div class="error-message">Failed to load transactions. Please try again.</div>';
-        });
-}
-
-// Helper function to get transaction title based on type
-function getTransactionTitle(transaction) {
-    switch (transaction.type) {
-        case 'buy':
-            return 'Purchased Talent Coins';
-        case 'send':
-            return `Sent Coins to ${transaction.recipientUsername || 'User'}`;
-        case 'receive':
-            return `Received Coins from ${transaction.senderUsername || 'User'}`;
-        case 'reward':
-            return 'Platform Reward';
-        default:
-            return 'Transaction';
-    }
-}
-
-// Helper function to get status class for styling
-function getStatusClass(status) {
-    switch (status) {
-        case 'completed':
-        case 'approved':
-            return 'completed';
-        case 'pending':
-            return 'pending';
-        case 'rejected':
-        case 'failed':
-            return 'rejected';
-        default:
-            return 'pending';
-    }
-}
-
-// Helper function to get current user ID
-function getUserId() {
-    const user = firebase.auth().currentUser;
-    return user ? user.uid : null;
-}
-
-// Helper function to check if user is logged in
-function isUserLoggedIn() {
-    return !!firebase.auth().currentUser;
-}
-
-// Helper function to show toast notifications
-function showToast(message, type = 'info') {
-    // Check if toast container exists, if not create it
-    let toastContainer = document.querySelector('.toast-container');
-    
-    if (!toastContainer) {
-        toastContainer = document.createElement('div');
-        toastContainer.className = 'toast-container';
-        document.body.appendChild(toastContainer);
-    }
-    
-    // Create toast element
-    const toast = document.createElement('div');
-    toast.className = `toast ${type}`;
-    toast.innerHTML = `
-        <div class="toast-content">
-            <i class="fas ${getToastIcon(type)}"></i>
-            <span>${message}</span>
-        </div>
-        <div class="toast-progress"></div>
-    `;
-    
-    // Add toast to container
-    toastContainer.appendChild(toast);
-    
-    // Trigger animation
-    setTimeout(() => {
-        toast.classList.add('show');
-    }, 10);
-    
-    // Remove toast after 3 seconds
-    setTimeout(() => {
-        toast.classList.remove('show');
-        setTimeout(() => {
-            toast.remove();
-        }, 300);
-    }, 3000);
-}
-
-// Helper function to get toast icon based on type
-function getToastIcon(type) {
-    switch (type) {
-        case 'success':
-            return 'fa-check-circle';
-        case 'error':
-            return 'fa-exclamation-circle';
-        case 'warning':
-            return 'fa-exclamation-triangle';
-        default:
-            return 'fa-info-circle';
-    }
-}
-
-// Add CSS for the history feature
-const historyStyles = `
-/* History Modal Styles */
-.feature-modal#historyModal .feature-modal-content {
-    max-width: 800px;
-    width: 90%;
-    max-height: 80vh;
-}
-
-.feature-modal#historyModal .feature-modal-body {
-    max-height: calc(80vh - 60px);
-    overflow-y: auto;
-}
-
-/* Tabs */
-.tabs {
-    display: flex;
-    border-bottom: 1px solid #ddd;
-    margin-bottom: 20px;
-}
-
-.tab {
-    padding: 12px 20px;
-    cursor: pointer;
-    position: relative;
-    transition: all 0.3s ease;
-}
-
-.tab.active {
-    border-bottom: 3px solid #4a6cf7;
-    color: #4a6cf7;
-    font-weight: 600;
-}
-
-.tab:hover:not(.active) {
-    background-color: #f5f5f5;
-}
-
-.notification-badge {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    background-color: #ff4757;
-    color: white;
-    border-radius: 50%;
-    width: 18px;
-    height: 18px;
-    font-size: 11px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/* Tab Content */
-.tab-content {
-    display: none;
-}
-
-.tab-content.active {
-    display: block;
-}
-
-/* Inbox Styles */
-.inbox-container {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.message-card {
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    padding: 15px;
-    transition: all 0.3s ease;
-}
-
-.message-card.unread {
-    border-left: 4px solid #4a6cf7;
-    background-color: #f0f5ff;
-}
-
-.message-header {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
-}
-
-.message-title {
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.unread-dot {
-    width: 10px;
-    height: 10px;
-    background-color: #4a6cf7;
-    border-radius: 50%;
-    display: inline-block;
-}
-
-.message-date {
-    font-size: 0.85rem;
-    color: #777;
-}
-
-.message-body {
-    margin-bottom: 15px;
-    line-height: 1.5;
-}
-
-.message-footer {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-}
-
-.mark-read-btn, .delete-message-btn {
-    padding: 6px 12px;
-    border-radius: 4px;
-    border: none;
-    cursor: pointer;
-    font-size: 0.85rem;
-    transition: all 0.2s ease;
-}
-
-.mark-read-btn {
-    background-color: #f1f1f1;
-    color: #333;
-}
-
-.mark-read-btn:hover {
-    background-color: #e1e1e1;
-}
-
-.delete-message-btn {
-    background-color: #ffebee;
-    color: #e53935;
-}
-
-.delete-message-btn:hover {
-    background-color: #ffcdd2;
-}
-
-/* Transaction Styles */
-.filter-controls {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-
-.date-filter {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    flex-wrap: wrap;
-}
-
-.filter-btn {
-    padding: 8px 15px;
-    background-color: #4a6cf7;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.filter-btn:hover {
-    background-color: #3a5bd9;
-}
-
-.transactions-container {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.transaction-card {
-    display: flex;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    padding: 15px;
-    transition: all 0.3s ease;
-}
-
-.transaction-icon {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background-color: #f1f5fe;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 15px;
-    flex-shrink: 0;
-}
-
-.transaction-icon i {
-    font-size: 20px;
-    color: #4a6cf7;
-}
-
-.transaction-content {
-    flex: 1;
-}
-
-.transaction-header {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
-}
-
-.transaction-title {
-    font-weight: 600;
-}
-
-.transaction-date {
-    font-size: 0.85rem;
-    color: #777;
-}
-
-.transaction-details {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    margin-bottom: 10px;
-}
-
-.transaction-detail {
-    display: flex;
-    font-size: 0.9rem;
-}
-
-.detail-label {
-    width: 100px;
-    color: #777;
-}
-.transaction-status {
-    display: inline-block;
-    padding: 4px 10px;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    text-align: center;
-}
-
-.transaction-status.completed {
-    background-color: #e6f7ee;
-    color: #2ecc71;
-}
-
-.transaction-status.pending {
-    background-color: #fff8e6;
-    color: #f39c12;
-}
-
-.transaction-status.rejected {
-    background-color: #ffebee;
-    color: #e53935;
-}
-
-/* Pagination Controls */
-.pagination-controls {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
-    gap: 15px;
-}
-
-.pagination-btn {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    border: 1px solid #ddd;
-    background-color: white;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s ease;
-}
-
-.pagination-btn:hover:not(:disabled) {
-    background-color: #f5f5f5;
-    border-color: #aaa;
-}
-
-.pagination-btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
-#pageIndicator {
-    font-size: 0.9rem;
-    color: #555;
-}
-
-/* Empty States */
-.empty-state {
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 40px 20px;
-    color: #777;
-    text-align: center;
-}
-
-.empty-state i {
-    margin-bottom: 15px;
-    color: #ddd;
-}
-
-/* Loading Spinner */
-.loading-spinner {
-    width: 40px;
-    height: 40px;
-    border: 4px solid #f3f3f3;
-    border-top: 4px solid #4a6cf7;
-    border-radius: 50%;
-    margin: 20px auto;
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-/* Toast Notifications */
-.toast-container {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 9999;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.toast {
-    min-width: 250px;
-    max-width: 350px;
-    background-color: white;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    border-radius: 8px;
-    overflow: hidden;
-    transform: translateX(100%);
-    opacity: 0;
-    transition: all 0.3s ease;
-}
-
-.toast.show {
-    transform: translateX(0);
-    opacity: 1;
-}
-
-.toast.success .toast-content i {
-    color: #2ecc71;
-}
-
-.toast.error .toast-content i {
-    color: #e53935;
-}
-
-.toast.warning .toast-content i {
-    color: #f39c12;
-}
-
-.toast.info .toast-content i {
-    color: #4a6cf7;
-}
-
-.toast-content {
-    padding: 12px 15px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.toast-content i {
-    font-size: 20px;
-}
-
-.toast-progress {
-    height: 3px;
-    background-color: #4a6cf7;
-    width: 100%;
-    animation: progress 3s linear forwards;
-}
-
-@keyframes progress {
-    0% { width: 100%; }
-    100% { width: 0%; }
-}
-
-/* Responsive Styles */
-@media (max-width: 768px) {
-    .feature-modal#historyModal .feature-modal-content {
-        width: 95%;
-    }
-    
-    .filter-controls {
-        flex-direction: column;
-        gap: 15px;
-    }
-    
-    .date-filter {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-    
-    .date-filter input {
-        width: 100%;
-    }
-    
-    .transaction-header {
-        flex-direction: column;
-        gap: 5px;
-    }
-    
-    .transaction-detail {
-        flex-direction: column;
-        gap: 2px;
-    }
-    
-    .detail-label {
-        width: auto;
-    }
-}
-`;
-
-           // Initialize the history feature when the document is loaded
-document.addEventListener('DOMContentLoaded', function() {
-    // Add the history modal to the DOM if it doesn't exist
-    if (!document.getElementById('historyModal')) {
-        // Create the history modal element
-        const historyModalHTML = `
-            <!-- History Modal -->
-            <div class="feature-modal" id="historyModal">
-                <div class="feature-modal-content">
-                    <div class="feature-modal-header">
-                        <h2>History</h2>
-                        <button class="close-feature-modal" id="closeHistoryModal">&times;</button>
-                    </div>
-                    
-                    <div class="feature-modal-body">
-                        <div class="tabs">
-                            <div class="tab active" data-tab="inbox">
-                                <i class="fas fa-inbox"></i> Inbox
-                                <span class="notification-badge" id="unreadCount">0</span>
-                            </div>
-                            <div class="tab" data-tab="transactions">
-                                <i class="fas fa-exchange-alt"></i> Transactions
-                            </div>
-                        </div>
-                        
-                        <!-- Inbox Tab -->
-                        <div class="tab-content active" id="inboxTab">
-                            <div class="inbox-container" id="inboxContainer">
-                                <div class="loading-spinner"></div>
-                            </div>
-                            <div class="empty-state" id="emptyInbox">
-                                <i class="fas fa-inbox fa-3x"></i>
-                                <p>Your inbox is empty</p>
-                            </div>
-                        </div>
-                        
-                        <!-- Transactions Tab -->
-                        <div class="tab-content" id="transactionsTab">
-                            <div class="filter-controls">
-                                <select id="transactionTypeFilter">
-                                    <option value="all">All Transactions</option>
-                                    <option value="buy">Buy Coins</option>
-                                    <option value="send">Send Coins</option>
-                                    <option value="receive">Receive Coins</option>
-                                    <option value="reward">Rewards</option>
-                                </select>
-                                <div class="date-filter">
-                                    <input type="date" id="startDate" placeholder="Start Date">
-                                    <input type="date" id="endDate" placeholder="End Date">
-                                    <button id="applyDateFilter" class="filter-btn">Apply</button>
-                                </div>
-                            </div>
-                            
-                            <div class="transactions-container" id="transactionsContainer">
-                                <div class="loading-spinner"></div>
-                            </div>
-                            
-                            <div class="empty-state" id="emptyTransactions">
-                                <i class="fas fa-exchange-alt fa-3x"></i>
-                                <p>No transactions found</p>
-                            </div>
-                            
-                            <div class="pagination-controls" id="transactionPagination">
-                                <button id="prevPage" class="pagination-btn"><i class="fas fa-chevron-left"></i></button>
-                                <span id="pageIndicator">Page 1 of 1</span>
-                                <button id="nextPage" class="pagination-btn"><i class="fas fa-chevron-right"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        `;
-        
-        // Create a container element
-        const modalContainer = document.createElement('div');
-        modalContainer.innerHTML = historyModalHTML;
-        
-        // Append to the body
-        document.body.appendChild(modalContainer.firstElementChild);
-        
-        // Add the CSS styles
-        const styleElement = document.createElement('style');
-        styleElement.textContent = `
-            /* History Modal Styles */
-            .feature-modal#historyModal .feature-modal-content {
-                max-width: 800px;
-                width: 90%;
-                max-height: 80vh;
-            }
-
-            .feature-modal#historyModal .feature-modal-body {
-                max-height: calc(80vh - 60px);
-                overflow-y: auto;
-            }
-
-            /* Tabs */
-            .tabs {
-                display: flex;
-                border-bottom: 1px solid #ddd;
-                margin-bottom: 20px;
-            }
-
-            .tab {
-                padding: 12px 20px;
-                cursor: pointer;
-                position: relative;
-                transition: all 0.3s ease;
-            }
-
-            .tab.active {
-                border-bottom: 3px solid #4a6cf7;
-                color: #4a6cf7;
-                font-weight: 600;
-            }
-
-            .tab:hover:not(.active) {
-                background-color: #f5f5f5;
-            }
-
-            .notification-badge {
-                position: absolute;
-                top: 5px;
-                right: 5px;
-                background-color: #ff4757;
-                color: white;
-                border-radius: 50%;
-                width: 18px;
-                height: 18px;
-                font-size: 11px;
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-            }
-
-            /* Tab Content */
-            .tab-content {
-                display: none;
-            }
-
-            .tab-content.active {
-                display: block;
-            }
-
-            /* Inbox Styles */
-            .inbox-container {
-                display: flex;
-                flex-direction: column;
-                gap: 15px;
-            }
-
-            .message-card {
-                background-color: #fff;
-                border-radius: 8px;
-                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-                padding: 15px;
-                transition: all 0.3s ease;
-            }
-
-            .message-card.unread {
-                border-left: 4px solid #4a6cf7;
-                background-color: #f0f5ff;
-            }
-
-            .message-header {
-                display: flex;
-                justify-content: space-between;
-                margin-bottom: 10px;
-            }
-
-            .message-title {
-                font-weight: 600;
-                display: flex;
-                align-items: center;
-                gap: 8px;
-            }
-
-            .unread-dot {
-                width: 10px;
-                height: 10px;
-                background-color: #4a6cf7;
-                border-radius: 50%;
-                display: inline-block;
-            }
-
-            .message-date {
-                font-size: 0.85rem;
-                color: #777;
-            }
-
-            .message-body {
-                margin-bottom: 15px;
-                line-height: 1.5;
-            }
-
-            .message-footer {
-                display: flex;
-                justify-content: flex-end;
-                gap: 10px;
-            }
-
-            .mark-read-btn, .delete-message-btn {
-                padding: 6px 12px;
-                border-radius: 4px;
-                border: none;
-                cursor: pointer;
-                font-size: 0.85rem;
-                transition: all 0.2s ease;
-            }
-
-            .mark-read-btn {
-                background-color: #f1f1f1;
-                color: #333;
-            }
-
-            .mark-read-btn:hover {
-                background-color: #e1e1e1;
-            }
-
-            .delete-message-btn {
-                background-color: #ffebee;
-                color: #e53935;
-            }
-
-            .delete-message-btn:hover {
-                background-color: #ffcdd2;
-            }
-
-            /* Transaction Styles */
-            .filter-controls {
-                display: flex;
-                justify-content: space-between;
-                margin-bottom: 20px;
-                flex-wrap: wrap;
-                gap: 10px;
-            }
-
-            .date-filter {
-                display: flex;
-                gap: 10px;
-                align-items: center;
-                flex-wrap: wrap;
-            }
-
-            .filter-btn {
-                padding: 8px 15px;
-                background-color: #4a6cf7;
-                color: white;
-                border: none;
-                border-radius: 4px;
-                cursor: pointer;
-                transition: all 0.2s ease;
-            }
-
-            .filter-btn:hover {
-                background-color: #3a5bd9;
-            }
-
-            .transactions-container {
-                display: flex;
-                flex-direction: column;
-                gap: 15px;
-            }
-
-            .transaction-card {
-                display: flex;
-                background-color: #fff;
-                border-radius: 8px;
-                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-                padding: 15px;
-                transition: all 0.3s ease;
-            }
-
-            .transaction-icon {
-                width: 50px;
-                height: 50px;
-                border-radius: 50%;
-                background-color: #f1f5fe;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                margin-right: 15px;
-                flex-shrink: 0;
-            }
-
-            .transaction-icon i {
-                font-size: 20px;
-                color: #4a6cf7;
-            }
-
-            .transaction-content {
-                flex: 1;
-            }
-
-            .transaction-header {
-                display: flex;
-                justify-content: space-between;
-                margin-bottom: 10px;
-            }
-
-            .transaction-title {
-                font-weight: 600;
-            }
-
-            .transaction-date {
-                font-size: 0.85rem;
-                color: #777;
-            }
-
-            .transaction-details {
-                display: flex;
-                flex-direction: column;
-                gap: 5px;
-                margin-bottom: 10px;
-            }
-
-            .transaction-detail {
-                display: flex;
-                font-size: 0.9rem;
-            }
-
-            .detail-label {
-                width: 100px;
-                color: #777;
-            }
-
-            .transaction-status {
-                display: inline-block;
-                padding: 4px 10px;
-                border-radius: 20px;
-                font-size: 0.8rem;
-                font-weight: 600;
-                text-align: center;
-            }
-
-            .transaction-status.completed {
-                background-color: #e6f7ee;
-                color: #2ecc71;
-            }
-
-            .transaction-status.pending {
-                background-color: #fff8e6;
-                color: #f39c12;
-            }
-
-            .transaction-status.rejected {
-                background-color: #ffebee;
-                color: #e53935;
-            }
-
-            /* Pagination Controls */
-            .pagination-controls {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                margin-top: 20px;
-                gap: 15px;
-            }
-
-            .pagination-btn {
-                width: 36px;
-                height: 36px;
-                border-radius: 50%;
-                border: 1px solid #ddd;
-                background-color: white;
-                cursor: pointer;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                transition: all 0.2s ease;
-            }
-
-            .pagination-btn:hover:not(:disabled) {
-                background-color: #f5f5f5;
-                border-color: #aaa;
-            }
-
-            .pagination-btn:disabled {
-                opacity: 0.5;
-                cursor: not-allowed;
-            }
-
-            #pageIndicator {
-                font-size: 0.9rem;
-                color: #555;
-            }
-
-            /* Empty States */
-            .empty-state {
-                display: none;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                padding: 40px 20px;
-                color: #777;
-                text-align: center;
-            }
-
-            .empty-state i {
-                margin-bottom: 15px;
-                color: #ddd;
-            }
-
-            /* Loading Spinner */
-            .loading-spinner {
-                width: 40px;
-                height: 40px;
-                border: 4px solid #f3f3f3;
-                border-top: 4px solid #4a6cf7;
-                border-radius: 50%;
-                margin: 20px auto;
-                animation: spin 1s linear infinite;
-            }
-
-            @keyframes spin {
-                0% { transform: rotate(0deg); }
-                100% { transform: rotate(360deg); }
-            }
-
-            /* Toast Notifications */
-            .toast-container {
-                position: fixed;
-                bottom: 20px;
-                right: 20px;
-                z-index: 9999;
-                display: flex;
-                flex-direction: column;
-                gap: 10px;
-            }
-
-            .toast {
-                min-width: 250px;
-                max-width: 350px;
-                background-color: white;
-                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-                border-radius: 8px;
-                overflow: hidden;
-                transform: translateX(100%);
-                opacity: 0;
-                transition: all 0.3s ease;
-            }
-
-            .toast.show {
-                transform: translateX(0);
-                opacity: 1;
-            }
-
-            .toast.success .toast-content i {
-                color: #2ecc71;
-            }
-
-            .toast.error .toast-content i {
-                color: #e53935;
-            }
-
-            .toast.warning .toast-content i {
-                color: #f39c12;
-            }
-
-            .toast.info .toast-content i {
-                color: #4a6cf7;
-            }
-
-            .toast-content {
-                padding: 12px 15px;
-                display: flex;
-                align-items: center;
-                gap: 10px;
-            }
-
-            .toast-content i {
-                font-size: 20px;
-            }
-
-            .toast-progress {
-                height: 3px;
-                background-color: #4a6cf7;
-                width: 100%;
-                animation: progress 3s linear forwards;
-            }
-
-            @keyframes progress {
-                0% { width: 100%; }
-                100% { width: 0%; }
-            }
-
-            /* Responsive Styles */
-            @media (max-width: 768px) {
-                .feature-modal#historyModal .feature-modal-content {
-                    width: 95%;
-                }
-                
-                .filter-controls {
-                    flex-direction: column;
-                    gap: 15px;
-                }
-                
-                .date-filter {
-                    flex-direction: column;
-                    align-items: flex-start;
-                }
-                
-                .date-filter input {
-                    width: 100%;
-                }
-                
-                .transaction-header {
-                    flex-direction: column;
-                    gap: 5px;
-                }
-                
-                .transaction-detail {
-                    flex-direction: column;
-                    gap: 2px;
-                }
-                
-                .detail-label {
-                    width: auto;
-                }
-            }
-        `;
-        document.head.appendChild(styleElement);
-    }
-        // Add event listener to the history button
-        const historyBtn = document.getElementById('historyBtn');
-    if (historyBtn) {
-        historyBtn.addEventListener('click', function() {
-            openHistoryModal();
-        });
-    }
-    
-    // Add event listeners for tab switching
-    const tabs = document.querySelectorAll('#historyModal .tab');
-    tabs.forEach(tab => {
-        tab.addEventListener('click', function() {
-            const tabName = this.getAttribute('data-tab');
-            switchHistoryTab(tabName);
-        });
-    });
-    
-    // Close modal when clicking the X button
-    const closeHistoryModal = document.getElementById('closeHistoryModal');
-    if (closeHistoryModal) {
-        closeHistoryModal.addEventListener('click', function() {
-            document.getElementById('historyModal').style.display = 'none';
-        });
-    }
-    
-    // Close modal when clicking outside
-    window.addEventListener('click', function(event) {
-        const historyModal = document.getElementById('historyModal');
-        if (event.target === historyModal) {
-            historyModal.style.display = 'none';
-        }
-    });
-    
-    // Transaction filter change event
-    const transactionTypeFilter = document.getElementById('transactionTypeFilter');
-    if (transactionTypeFilter) {
-        transactionTypeFilter.addEventListener('change', function() {
-            currentFilter = this.value;
-            currentPage = 1;
-            loadTransactionHistory();
-        });
-    }
-    
-    // Date filter apply button
-    const applyDateFilter = document.getElementById('applyDateFilter');
-    if (applyDateFilter) {
-        applyDateFilter.addEventListener('click', function() {
-            const startDateInput = document.getElementById('startDate');
-            const endDateInput = document.getElementById('endDate');
-            
-            startDateFilter = startDateInput.value ? new Date(startDateInput.value) : null;
-            endDateFilter = endDateInput.value ? new Date(endDateInput.value) : null;
-            
-            // Validate date range
-            if (startDateFilter && endDateFilter && startDateFilter > endDateFilter) {
-                showToast('Start date cannot be after end date', 'error');
-                return;
-            }
-            
-            currentPage = 1;
-            loadTransactionHistory();
-        });
-    }
-    
-    // Pagination controls
-    const prevPageBtn = document.getElementById('prevPage');
-    const nextPageBtn = document.getElementById('nextPage');
-    
-    if (prevPageBtn) {
-        prevPageBtn.addEventListener('click', function() {
-            if (currentPage > 1) {
-                currentPage--;
-                loadTransactionHistory();
-            }
-        });
-    }
-    
-    if (nextPageBtn) {
-        nextPageBtn.addEventListener('click', function() {
-            if (currentPage < totalPages) {
-                currentPage++;
-                loadTransactionHistory();
-            }
-        });
-    }
-});
-
-// Global variables for pagination
-let currentPage = 1;
-const pageSize = 10;
-let totalPages = 1;
-let currentFilter = 'all';
-let startDateFilter = null;
-let endDateFilter = null;
-
-// Open history modal
-function openHistoryModal() {
-    const historyModal = document.getElementById('historyModal');
-    if (!historyModal) return;
-    
-    // Check if user is logged in
-    if (!isUserLoggedIn()) {
-        showToast('Please log in to view your history', 'warning');
-        return;
-    }
-    
-    // Show modal
-    historyModal.style.display = 'block';
-    
-    // Default to inbox tab
-    switchHistoryTab('inbox');
-    
-    // Load inbox messages
-    loadInboxMessages();
-    
-    // Add body class to prevent scrolling
-    document.body.classList.add('modal-open');
-}
-
-// Switch between history tabs
-function switchHistoryTab(tabName) {
-    // Hide all tab contents
-    document.querySelectorAll('#historyModal .tab-content').forEach(content => {
-        content.classList.remove('active');
-    });
-    
-    // Remove active class from all tabs
-    document.querySelectorAll('#historyModal .tab').forEach(tab => {
-        tab.classList.remove('active');
-    });
-    
-    // Show the selected tab content
-    document.getElementById(tabName + 'Tab').classList.add('active');
-    
-    // Add active class to the selected tab
-    document.querySelector(`#historyModal .tab[data-tab="${tabName}"]`).classList.add('active');
-    
-    // Load data for the selected tab
-    if (tabName === 'inbox') {
-        loadInboxMessages();
-    } else if (tabName === 'transactions') {
-        loadTransactionHistory();
-    }
-}
-
-// Load inbox messages from Firebase
-function loadInboxMessages() {
-    const inboxContainer = document.getElementById('inboxContainer');
-    const emptyInbox = document.getElementById('emptyInbox');
-    
-    if (!inboxContainer || !emptyInbox) return;
-    
-    // Show loading state
-    inboxContainer.innerHTML = '<div class="loading-spinner"></div>';
-    inboxContainer.style.display = 'block';
-    emptyInbox.style.display = 'none';
-    
-    // Get user ID
-    const userId = getUserId();
-    
-    if (!userId) {
-        inboxContainer.innerHTML = '<div class="error-message">Authentication error. Please log in again.</div>';
-        return;
-    }
-    
-    // Get messages from Firebase
-    firebase.firestore().collection('messages')
-        .where('userId', '==', userId)
-        .orderBy('timestamp', 'desc')
-        .get()
-        .then(snapshot => {
-            if (snapshot.empty) {
-                inboxContainer.style.display = 'none';
-                emptyInbox.style.display = 'flex';
-                return;
-            }
-            
-            let messagesHTML = '';
-            let unreadCount = 0;
-            
-            snapshot.forEach(doc => {
-                const message = doc.data();
-                const messageId = doc.id;
-                const timestamp = message.timestamp ? new Date(message.timestamp.toDate()).toLocaleString() : 'Unknown';
-                const isUnread = !message.read;
-                
-                if (isUnread) {
-                    unreadCount++;
-                }
-                
-                messagesHTML += `
-                    <div class="message-card ${isUnread ? 'unread' : ''}" data-id="${messageId}">
-                        <div class="message-header">
-                            <div class="message-title">
-                                ${isUnread ? '<span class="unread-dot"></span>' : ''}
-                                ${message.title || 'No Subject'}
-                            </div>
-                            <div class="message-date">${timestamp}</div>
-                        </div>
-                        <div class="message-body">
-                            ${message.content || 'No content'}
-                        </div>
-                        <div class="message-footer">
-                            <button class="mark-read-btn" onclick="markMessageAsRead('${messageId}')">
-                                ${isUnread ? 'Mark as Read' : 'Mark as Unread'}
-                            </button>
-                            <button class="delete-message-btn" onclick="deleteMessage('${messageId}')">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </div>
-                    </div>
-                `;
-            });
-            
-            inboxContainer.innerHTML = messagesHTML;
-            inboxContainer.style.display = 'block';
-            emptyInbox.style.display = 'none';
-            
-            // Update unread count badge
-            const unreadCountBadge = document.getElementById('unreadCount');
-            if (unreadCountBadge) {
-                unreadCountBadge.textContent = unreadCount;
-                unreadCountBadge.style.display = unreadCount > 0 ? 'inline-flex' : 'none';
-            }
-        })
-        .catch(error => {
-            console.error('Error loading inbox messages:', error);
-            inboxContainer.innerHTML = '<div class="error-message">Failed to load messages. Please try again.</div>';
-        });
-}
-
-// Mark message as read
-function markMessageAsRead(messageId) {
-    const userId = getUserId();
-    
-    if (!userId || !messageId) {
-        showToast('Error updating message status', 'error');
-        return;
-    }
-    
-    // Get current read status
-    firebase.firestore().collection('messages').doc(messageId).get()
-        .then(doc => {
-            if (!doc.exists) {
-                throw new Error('Message not found');
-            }
-            
-            const message = doc.data();
-            const currentReadStatus = message.read || false;
-            
-            // Toggle read status
-            return firebase.firestore().collection('messages').doc(messageId).update({
-                read: !currentReadStatus
-            });
-        })
-        .then(() => {
-            // Reload inbox to reflect changes
-            loadInboxMessages();
-            
-            showToast('Message status updated', 'success');
-        })
-        .catch(error => {
-            console.error('Error updating message status:', error);
-            showToast('Failed to update message status', 'error');
-        });
-}
-
-// Delete message
-function deleteMessage(messageId) {
-    if (!confirm('Are you sure you want to delete this message?')) {
-        return;
-    }
-    
-    const userId = getUserId();
-    
-    if (!userId || !messageId) {
-        showToast('Error deleting message', 'error');
-        return;
-    }
-    
-    firebase.firestore().collection('messages').doc(messageId).delete()
-        .then(() => {
-            // Reload inbox to reflect changes
-            loadInboxMessages();
-            
-            showToast('Message deleted', 'success');
-        })
-        .catch(error => {
-            console.error('Error deleting message:', error);
-            showToast('Failed to delete message', 'error');
-        });
-}
-
-// Load transaction history from Firebase
-function loadTransactionHistory() {
-    const transactionsContainer = document.getElementById('transactionsContainer');
-    const emptyTransactions = document.getElementById('emptyTransactions');
-    const pageIndicator = document.getElementById('pageIndicator');
-    
-    if (!transactionsContainer || !emptyTransactions) return;
-    
-    // Show loading state
-    transactionsContainer.innerHTML = '<div class="loading-spinner"></div>';
-    transactionsContainer.style.display = 'block';
-    emptyTransactions.style.display = 'none';
-    
-    // Get user ID
-    const userId = getUserId();
-    
-    if (!userId) {
-        transactionsContainer.innerHTML = '<div class="error-message">Authentication error. Please log in again.</div>';
-        return;
-    }
-    
-    // Create query
-    let query = firebase.firestore().collection('transactions')
-        .where('userId', '==', userId);
-    
-    // Apply type filter
-    if (currentFilter !== 'all') {
-        query = query.where('type', '==', currentFilter);
-    }
-    
-    // Get total count for pagination
-    query.get()
-        .then(snapshot => {
-            let filteredDocs = snapshot.docs;
-            
-            // Apply date filters in memory (Firestore can't filter on multiple fields)
-            if (startDateFilter || endDateFilter) {
-                filteredDocs = filteredDocs.filter(doc => {
-                    const data = doc.data();
-                    const txDate = data.timestamp ? new Date(data.timestamp.toDate()) : new Date();
-                    
-                    if (startDateFilter && endDateFilter) {
-                        return txDate >= startDateFilter && txDate <= endDateFilter;
-                    } else if (startDateFilter) {
-                        return txDate >= startDateFilter;
-                    } else if (endDateFilter) {
-                        return txDate <= endDateFilter;
-                    }
-                    
-                    return true;
-                });
-            }
-            
-            // Calculate pagination
-            totalPages = Math.max(1, Math.ceil(filteredDocs.length / pageSize));
-            
-            // Adjust current page if needed
-            if (currentPage > totalPages) {
-                currentPage = totalPages;
-            }
-            
-            // Update page indicator
-            if (pageIndicator) {
-                pageIndicator.textContent = `Page ${currentPage} of ${totalPages}`;
-            }
-            
-            // Enable/disable pagination buttons
-            const prevPageBtn = document.getElementById('prevPage');
-            const nextPageBtn = document.getElementById('nextPage');
-            
-            if (prevPageBtn) {
-                prevPageBtn.disabled = currentPage <= 1;
-            }
-            
-            if (nextPageBtn) {
-                nextPageBtn.disabled = currentPage >= totalPages;
-            }
-            
-            // Get paginated results
-            const startIndex = (currentPage - 1) * pageSize;
-            const paginatedDocs = filteredDocs.slice(startIndex, startIndex + pageSize);
-            
-            if (paginatedDocs.length === 0) {
-                transactionsContainer.style.display = 'none';
-                emptyTransactions.style.display = 'flex';
-                return;
-            }
-            
-            // Sort by timestamp (most recent first)
-            paginatedDocs.sort((a, b) => {
-                const timestampA = a.data().timestamp ? a.data().timestamp.toDate() : new Date(0);
-                const timestampB = b.data().timestamp ? b.data().timestamp.toDate() : new Date(0);
-                return timestampB - timestampA;
-            });
-            
-            let transactionsHTML = '';
-            
-            paginatedDocs.forEach(doc => {
-                const transaction = doc.data();
-                const transactionId = doc.id;
-                const timestamp = transaction.timestamp 
-                    ? new Date(transaction.timestamp.toDate()).toLocaleString() 
-                    : 'Unknown';
-                
-                // Determine transaction icon and status class
-                let icon, statusClass, statusText;
-                
-                switch (transaction.type) {
-                    case 'buy':
-                        icon = 'fa-shopping-cart';
-                        statusClass = getStatusClass(transaction.status);
-                        statusText = transaction.status || 'Processing';
-                        break;
-                    case 'send':
-                        icon = 'fa-paper-plane';
-                        statusClass = 'completed';
-                        statusText = 'Sent';
-                        break;
-                    case 'receive':
-                        icon = 'fa-download';
-                        statusClass = 'completed';
-                        statusText = 'Received';
-                        break;
-                    case 'reward':
-                        icon = 'fa-gift';
-                        statusClass = 'completed';
-                        statusText = 'Rewarded';
-                        break;
-                    default:
-                        icon = 'fa-exchange-alt';
-                        statusClass = 'pending';
-                        statusText = 'Unknown';
-                }
-                
-                // Format transaction details based on type
-                let transactionDetails = '';
-                
-                if (transaction.type === 'buy') {
-                    transactionDetails = `
-                        <div class="transaction-detail">
-                            <span class="detail-label">Amount:</span>
-                            <span class="detail-value">${transaction.amount} Talent Coins</span>
-                        </div>
-                        <div class="transaction-detail">
-                            <span class="detail-label">Naira Amount:</span>
-                            <span class="detail-value">₦${transaction.nairaAmount || (transaction.amount * 10)}</span>
-                        </div>
-                        <div class="transaction-detail">
-                            <span class="detail-label">Reference:</span>
-                            <span class="detail-value">${transaction.transferReference || 'N/A'}</span>
-                        </div>
-                    `;
-                } else if (transaction.type === 'send') {
-                    transactionDetails = `
-                        <div class="transaction-detail">
-                            <span class="detail-label">Amount:</span>
-                            <span class="detail-value">${transaction.amount} Talent Coins</span>
-                        </div>
-                        <div class="transaction-detail">
-                            <span class="detail-label">Recipient:</span>
-                            <span class="detail-value">${transaction.recipientUsername || 'Unknown User'}</span>
-                        </div>
-                        <div class="transaction-detail">
-                            <span class="detail-label">Note:</span>
-                            <span class="detail-value">${transaction.note || 'No note'}</span>
-                        </div>
-                    `;
-                } else if (transaction.type === 'receive') {
-                    transactionDetails = `
-                        <div class="transaction-detail">
-                            <span class="detail-label">Amount:</span>
-                            <span class="detail-value">${transaction.amount} Talent Coins</span>
-                        </div>
-                        <div class="transaction-detail">
-                            <span class="detail-label">From:</span>
-                            <span class="detail-value">${transaction.senderUsername || 'Unknown User'}</span>
-                        </div>
-                        <div class="transaction-detail">
-                            <span class="detail-label">Note:</span>
-                            <span class="detail-value">${transaction.note || 'No note'}</span>
-                        </div>
-                    `;
-                } else if (transaction.type === 'reward') {
-                    transactionDetails = `
-                        <div class="transaction-detail">
-                            <span class="detail-label">Amount:</span>
-                            <span class="detail-value">${transaction.amount} Talent Coins</span>
-                        </div>
-                        <div class="transaction-detail">
-                            <span class="detail-label">Reason:</span>
-                            <span class="detail-value">${transaction.reason || 'Platform reward'}</span>
-                        </div>
-                    `;
-                }
-                
-                transactionsHTML += `
-                    <div class="transaction-card" data-id="${transactionId}">
-                        <div class="transaction-icon">
-                            <i class="fas ${icon}"></i>
-                        </div>
-                        <div class="transaction-content">
-                            <div class="transaction-header">
-                                <div class="transaction-title">
-                                    ${getTransactionTitle(transaction)}
-                                </div>
-                                <div class="transaction-date">${timestamp}</div>
-                            </div>
-                            <div class="transaction-details">
-                                ${transactionDetails}
-                            </div>
-                            <div class="transaction-status ${statusClass}">
-                                ${statusText}
-                            </div>
-                        </div>
-                    </div>
-                `;
-            });
-            
-            transactionsContainer.innerHTML = transactionsHTML;
-            transactionsContainer.style.display = 'block';
-            emptyTransactions.style.display = 'none';
-        })
-        .catch(error => {
-            console.error('Error loading transaction history:', error);
-            transactionsContainer.innerHTML = '<div class="error-message">Failed to load transactions. Please try again.</div>';
-        });
-}
-
-// Helper function to get transaction title based on type
-function getTransactionTitle(transaction) {
-    switch (transaction.type) {
-        case 'buy':
-            return 'Purchased Talent Coins';
-        case 'send':
-            return `Sent Coins to ${transaction.recipientUsername || 'User'}`;
-        case 'receive':
-            return `Received Coins from ${transaction.senderUsername || 'User'}`;
-        case 'reward':
-            return 'Platform Reward';
-        default:
-            return 'Transaction';
-    }
-}
-
-// Helper function to get status class for styling
-function getStatusClass(status) {
-    switch (status) {
-        case 'completed':
-        case 'approved':
-            return 'completed';
-        case 'pending':
-            return 'pending';
-        case 'rejected':
-        case 'failed':
-            return 'rejected';
-        default:
-            return 'pending';
-    }
-}
-
-// Helper function to get current user ID
-function getUserId() {
-    const user = firebase.auth().currentUser;
-    return user ? user.uid : null;
-}
-
-// Helper function to check if user is logged in
-function isUserLoggedIn() {
-    return !!firebase.auth().currentUser;
-}
-
-// Helper function to show toast notifications
-function showToast(message, type = 'info') {
-    // Check if toast container exists, if not create it
-    let toastContainer = document.querySelector('.toast-container');
-    
-    if (!toastContainer) {
-        toastContainer = document.createElement('div');
-        toastContainer.className = 'toast-container';
-        document.body.appendChild(toastContainer);
-    }
-    
-    // Create toast element
-    const toast = document.createElement('div');
-    toast.className = `toast ${type}`;
-    toast.innerHTML = `
-        <div class="toast-content">
-            <i class="fas ${getToastIcon(type)}"></i>
-            <span>${message}</span>
-        </div>
-        <div class="toast-progress"></div>
-    `;
-    
-    // Add toast to container
-    toastContainer.appendChild(toast);
-    
-    // Trigger animation
-    setTimeout(() => {
-        toast.classList.add('show');
-    }, 10);
-    
-    // Remove toast after 3 seconds
-    setTimeout(() => {
-        toast.classList.remove('show');
-        setTimeout(() => {
-            toast.remove();
-        }, 300);
-    }, 3000);
-}
-
-// Helper function to get toast icon based on type
-function getToastIcon(type) {
-    switch (type) {
-        case 'success':
-            return 'fa-check-circle';
-        case 'error':
-            return 'fa-exclamation-circle';
-        case 'warning':
-            return 'fa-exclamation-triangle';
-        default:
-            return 'fa-info-circle';
-    }
-}
-
-// Talent Coin Dispenser functionality
-document.addEventListener('DOMContentLoaded', function() {
-    // Get references to elements
-    const talentCoinDispenserBtn = document.getElementById('talentCoinDispenserBtn');
-    const talentCoinDispenserSection = document.getElementById('talentCoinDispenser');
-    const dashboardSection = document.getElementById('dashboard');
-    const backBtn = talentCoinDispenserSection.querySelector('.back-btn');
-    const walletIdInput = document.getElementById('walletId');
-    const refreshUserInfoBtn = document.getElementById('refreshUserInfo');
-    const userInfoContent = document.getElementById('userInfoContent');
-    const userInfoDetails = document.getElementById('userInfoDetails');
-    const transactionReasonSelect = document.getElementById('transactionReason');
-    const otherReasonGroup = document.getElementById('otherReasonGroup');
-    const processTransactionBtn = document.getElementById('processTransactionBtn');
-    const userTransactionList = document.getElementById('userTransactionList');
-    
-    // Add event listener to the Talent Coin Dispenser button
-    if (talentCoinDispenserBtn) {
-        talentCoinDispenserBtn.addEventListener('click', function() {
-            // Hide dashboard and show dispenser section
-            if (dashboardSection) dashboardSection.classList.add('hidden');
-            talentCoinDispenserSection.classList.remove('hidden');
-            
-            // Reset form
-            resetDispenserForm();
-        });
-    }
-    
-    // Add event listener to the back button
-    if (backBtn) {
-        backBtn.addEventListener('click', function() {
-            // Hide dispenser section and show dashboard
-            talentCoinDispenserSection.classList.add('hidden');
-            if (dashboardSection) dashboardSection.classList.remove('hidden');
-        });
-    }
-    
-    // Add event listener to the wallet ID input for lookup
-    if (walletIdInput) {
-        walletIdInput.addEventListener('blur', function() {
-            if (walletIdInput.value.trim() !== '') {
-                fetchUserInfo(walletIdInput.value.trim());
-            }
-        });
-        
-        // Also allow pressing Enter to search
-        walletIdInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter' && walletIdInput.value.trim() !== '') {
-                fetchUserInfo(walletIdInput.value.trim());
-            }
-        });
-    }
-    
-    // Add event listener to the refresh button
-    if (refreshUserInfoBtn) {
-        refreshUserInfoBtn.addEventListener('click', function() {
-            if (walletIdInput.value.trim() !== '') {
-                fetchUserInfo(walletIdInput.value.trim());
-            }
-        });
-    }
-    
-    // Add event listener to the transaction reason select
-    if (transactionReasonSelect) {
-        transactionReasonSelect.addEventListener('change', function() {
-            if (this.value === 'other') {
-                otherReasonGroup.style.display = 'block';
-            } else {
-                otherReasonGroup.style.display = 'none';
-            }
-        });
-    }
-    
-    // Add event listener to the process transaction button
-    if (processTransactionBtn) {
-        processTransactionBtn.addEventListener('click', function() {
-            processTransaction();
-        });
-    }
-    
-    // Function to fetch user information
-    function fetchUserInfo(walletId) {
-        // Show loading state
-        userInfoContent.innerHTML = '<div class="loading-spinner"></div>';
-        userInfoDetails.classList.add('hidden');
-        userTransactionList.innerHTML = '<div class="loading-spinner"></div>';
-        
-        // Check if admin is logged in
-        const currentUser = firebase.auth().currentUser;
-        if (!currentUser) {
-            showToast('You must be logged in as an admin to perform this action', 'error');
-            return;
-        }
-        
-        // First, check if the current user is an admin
-        firebase.firestore().collection('admins').doc(currentUser.uid)
-            .get()
-            .then(adminDoc => {
-                if (!adminDoc.exists) {
-                    throw new Error('Unauthorized access. Admin privileges required.');
-                }
-                
-                // Now fetch the user by wallet ID
-                return firebase.firestore().collection('users')
-                    .where('walletId', '==', walletId)
-                    .limit(1)
-                    .get();
-            })
-            .then(snapshot => {
-                if (snapshot.empty) {
-                    userInfoContent.innerHTML = `
-                        <div class="empty-state error">
-                            <i class="fas fa-exclamation-circle"></i>
-                            <p>No user found with wallet ID: ${walletId}</p>
-                        </div>
-                    `;
-                    userTransactionList.innerHTML = `
-                        <div class="empty-state">
-                            <i class="fas fa-history"></i>
-                            <p>No transactions to display</p>
-                        </div>
-                    `;
-                    return;
-                }
-                
-                // Get user data
-                const userData = snapshot.docs[0].data();
-                const userId = snapshot.docs[0].id;
-                
-                // Update user info display
-                document.getElementById('userUsername').textContent = userData.username || 'N/A';
-                document.getElementById('userWalletId').textContent = userData.walletId || 'N/A';
-                document.getElementById('userBalance').textContent = 
-                    `${userData.balance || 0} Talent Coins`;
-                document.getElementById('userCommission').textContent = 
-                    `${userData.commissionBalance || 0} Talent Coins`;
-                
-                // Set status with appropriate class
-                const userStatusElement = document.getElementById('userStatus');
-                userStatusElement.textContent = userData.status || 'Active';
-                userStatusElement.className = 'info-value status-badge';
-                userStatusElement.classList.add(userData.status === 'Suspended' ? 'status-suspended' : 'status-active');
-                
-                // Hide loading content and show details
-                userInfoContent.style.display = 'none';
-                userInfoDetails.classList.remove('hidden');
-                
-                // Fetch recent transactions
-                return firebase.firestore().collection('transactions')
-                    .where('userId', '==', userId)
-                    .orderBy('timestamp', 'desc')
-                    .limit(5)
-                    .get();
-            })
-            .then(transactionSnapshot => {
-                if (!transactionSnapshot || transactionSnapshot.empty) {
-                    userTransactionList.innerHTML = `
-                        <div class="empty-state">
-                            <i class="fas fa-history"></i>
-                            <p>No transactions to display</p>
-                        </div>
-                    `;
-                    
-                    // Update last transaction field
-                    document.getElementById('userLastTransaction').textContent = 'No transactions';
-                    return;
-                }
-                
-                let transactionsHTML = '';
-                let firstTransaction = true;
-                
-                transactionSnapshot.forEach(doc => {
-                    const transaction = doc.data();
-                    const timestamp = transaction.timestamp 
-                        ? new Date(transaction.timestamp.toDate()).toLocaleString()
-                        : 'Unknown';
-                    
-                    // Update last transaction field with the most recent one
-                    if (firstTransaction) {
-                        document.getElementById('userLastTransaction').textContent = 
-                            `${getTransactionTypeText(transaction.type)} - ${timestamp}`;
-                        firstTransaction = false;
-                    }
-                    
-                    // Add transaction to the list
-                    transactionsHTML += `
-                        <div class="transaction-item">
-                            <div class="transaction-icon ${getTransactionTypeClass(transaction.type)}">
-                                <i class="fas ${getTransactionTypeIcon(transaction.type)}"></i>
-                            </div>
-                            <div class="transaction-details">
-                                <div class="transaction-title">
-                                    ${getTransactionTypeText(transaction.type)}
-                                </div>
-                                <div class="transaction-amount">
-                                    ${transaction.type === 'debit' ? '-' : '+'} ${transaction.amount} Talent Coins
-                                </div>
-                                <div class="transaction-date">${timestamp}</div>
-                            </div>
-                        </div>
-                    `;
-                });
-                
-                userTransactionList.innerHTML = transactionsHTML;
-            })
-            .catch(error => {
-                console.error('Error fetching user info:', error);
-                userInfoContent.innerHTML = `
-                    <div class="empty-state error">
-                        <i class="fas fa-exclamation-circle"></i>
-                        <p>Error: ${error.message}</p>
-                    </div>
-                `;
-                userTransactionList.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-history"></i>
-                        <p>No transactions to display</p>
-                    </div>
-                `;
-            });
-    }
-    
-    // Function to process the transaction
-    function processTransaction() {
-        // Get form values
-        const walletId = document.getElementById('walletId').value.trim();
-        const transactionType = document.querySelector('input[name="transactionType"]:checked').value;
-        const coinAmount = parseFloat(document.getElementById('coinAmount').value);
-        const transactionReason = document.getElementById('transactionReason').value;
-        const otherReason = document.getElementById('otherReason').value.trim();
-        const transactionNotes = document.getElementById('transactionNotes').value.trim();
-        
-        // Validate inputs
-        if (!walletId) {
-            showToast('Please enter a wallet ID', 'error');
-            return;
-        }
-        
-        if (isNaN(coinAmount) || coinAmount <= 0) {
-            showToast('Please enter a valid amount greater than 0', 'error');
-            return;
-        }
-        
-        if (!transactionReason) {
-            showToast('Please select a transaction reason', 'error');
-            return;
-        }
-        
-        if (transactionReason === 'other' && !otherReason) {
-            showToast('Please specify the reason for this transaction', 'error');
-            return;
-        }
-        
-        // Confirm transaction
-        const confirmMessage = `Are you sure you want to ${transactionType === 'credit' ? 'add' : 'remove'} ${coinAmount} Talent Coins ${transactionType === 'credit' ? 'to' : 'from'} this user's wallet?`;
-        if (!confirm(confirmMessage)) {
-            return;
-        }
-        
-        // Show loading state
-        processTransactionBtn.disabled = true;
-        processTransactionBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
-        
-        // Check if admin is logged in
-        const currentUser = firebase.auth().currentUser;
-        if (!currentUser) {
-            showToast('You must be logged in as an admin to perform this action', 'error');
-            processTransactionBtn.disabled = false;
-            processTransactionBtn.textContent = 'Process Transaction';
-            return;
-        }
-        
-        // First, check if the current user is an admin
-        firebase.firestore().collection('admins').doc(currentUser.uid)
-            .get()
-            .then(adminDoc => {
-                if (!adminDoc.exists) {
-                    throw new Error('Unauthorized access. Admin privileges required.');
-                }
-                
-                // Now fetch the user by wallet ID
-                return firebase.firestore().collection('users')
-                    .where('walletId', '==', walletId)
-                    .limit(1)
-                    .get();
-            })
-            .then(snapshot => {
-                if (snapshot.empty) {
-                    throw new Error(`No user found with wallet ID: ${walletId}`);
-                }
-                
-                // Get user data
-                const userData = snapshot.docs[0].data();
-                const userId = snapshot.docs[0].id;
-                const currentBalance = userData.balance || 0;
-                
-                // Check if debit would result in negative balance
-                if (transactionType === 'debit' && coinAmount > currentBalance) {
-                    throw new Error('Insufficient balance for debit transaction');
-                }
-                
-                // Calculate new balance
-                const newBalance = transactionType === 'credit' 
-                    ? currentBalance + coinAmount 
-                    : currentBalance - coinAmount;
-                
-                // Create transaction record
-                const transactionData = {
-                    userId: userId,
-                    type: transactionType,
-                    amount: coinAmount,
-                    reason: transactionReason === 'other' ? otherReason : transactionReason,
-                    notes: transactionNotes,
-                    adminId: currentUser.uid,
-                    adminName: adminDoc.data().name || 'Admin',
-                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                    previousBalance: currentBalance,
-                    newBalance: newBalance
-                };
-                
-                // Start a batch write
-                const batch = firebase.firestore().batch();
-                
-                // Update user balance
-                const userRef = firebase.firestore().collection('users').doc(userId);
-                batch.update(userRef, { balance: newBalance });
-                
-                // Create transaction record
-                const transactionRef = firebase.firestore().collection('transactions').doc();
-                batch.set(transactionRef, transactionData);
-                
-                // Create admin log
-                const adminLogRef = firebase.firestore().collection('adminLogs').doc();
-                batch.set(adminLogRef, {
-                    adminId: currentUser.uid,
-                    adminName: adminDoc.data().name || 'Admin',
-                    action: `${transactionType === 'credit' ? 'Credited' : 'Debited'} ${coinAmount} Talent Coins ${transactionType === 'credit' ? 'to' : 'from'} user ${userData.username || userId}`,
-                    details: {
-                        userId: userId,
-                        username: userData.username,
-                        walletId: walletId,
-                        transactionType: transactionType,
-                        amount: coinAmount,
-                        reason: transactionReason === 'other' ? otherReason : transactionReason,
-                        notes: transactionNotes
-                    },
-                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
-                });
-                
-                // Create notification for user
-                const notificationRef = firebase.firestore().collection('messages').doc();
-                batch.set(notificationRef, {
-                    userId: userId,
-                    title: `Wallet ${transactionType === 'credit' ? 'Credit' : 'Debit'} Notification`,
-                    content: `Your wallet has been ${transactionType === 'credit' ? 'credited with' : 'debited'} ${coinAmount} Talent Coins. Reason: ${transactionReason === 'other' ? otherReason : getReasonText(transactionReason)}. ${transactionNotes ? `Note: ${transactionNotes}` : ''}`,
-                    read: false,
-                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
-                });
-                
-                // Commit the batch
-                return batch.commit();
-            })
-            .then(() => {
-                // Show success message
-                showToast(`Successfully ${transactionType === 'credit' ? 'credited' : 'debited'} ${coinAmount} Talent Coins`, 'success');
-                
-                // Reset form
-                resetDispenserForm();
-                
-                // Refresh user info
-                fetchUserInfo(walletId);
-            })
-            .catch(error => {
-                console.error('Error processing transaction:', error);
-                showToast(`Error: ${error.message}`, 'error');
-            })
-            .finally(() => {
-                // Reset button state
-                processTransactionBtn.disabled = false;
-                processTransactionBtn.textContent = 'Process Transaction';
-            });
-    }
-        // Helper function to reset the dispenser form
-    function resetDispenserForm() {
-        // Don't clear the wallet ID if it's already filled
-        document.querySelector('input[name="transactionType"][value="credit"]').checked = true;
-        document.getElementById('coinAmount').value = '';
-        document.getElementById('transactionReason').value = '';
-        document.getElementById('otherReason').value = '';
-        document.getElementById('transactionNotes').value = '';
-        otherReasonGroup.style.display = 'none';
-    }
-    
-    // Helper function to get transaction type text
-    function getTransactionTypeText(type) {
-        switch (type) {
-            case 'buy':
-                return 'Purchase';
-            case 'send':
-                return 'Sent';
-            case 'receive':
-                return 'Received';
-            case 'credit':
-                return 'Admin Credit';
-            case 'debit':
-                return 'Admin Debit';
-            case 'reward':
-                return 'Reward';
-            default:
-                return 'Transaction';
-        }
-    }
-    
-    // Helper function to get transaction type icon
-    function getTransactionTypeIcon(type) {
-        switch (type) {
-            case 'buy':
-                return 'fa-shopping-cart';
-            case 'send':
-                return 'fa-paper-plane';
-            case 'receive':
-                return 'fa-download';
-            case 'credit':
-                return 'fa-plus-circle';
-            case 'debit':
-                return 'fa-minus-circle';
-            case 'reward':
-                return 'fa-gift';
-            default:
-                return 'fa-exchange-alt';
-        }
-    }
-    
-    // Helper function to get transaction type class for styling
-    function getTransactionTypeClass(type) {
-        switch (type) {
-            case 'buy':
-                return 'transaction-buy';
-            case 'send':
-                return 'transaction-send';
-            case 'receive':
-                return 'transaction-receive';
-            case 'credit':
-                return 'transaction-credit';
-            case 'debit':
-                return 'transaction-debit';
-            case 'reward':
-                return 'transaction-reward';
-            default:
-                return '';
-        }
-    }
-    
-    // Helper function to get reason text
-    function getReasonText(reason) {
-        switch (reason) {
-            case 'buy':
-                return 'Buy Coin Verification';
-            case 'withdraw':
-                return 'Withdrawal Processing';
-            case 'refund':
-                return 'Refund';
-            case 'bonus':
-                return 'Bonus';
-            case 'correction':
-                return 'Balance Correction';
-            default:
-                return reason;
-        }
-    }
-    
-    // Helper function to show toast notifications
-    function showToast(message, type = 'info') {
-        // Check if toast container exists, if not create it
-        let toastContainer = document.querySelector('.toast-container');
-        
-        if (!toastContainer) {
-            toastContainer = document.createElement('div');
-            toastContainer.className = 'toast-container';
-            document.body.appendChild(toastContainer);
-        }
-        
-        // Create toast element
-        const toast = document.createElement('div');
-        toast.className = `toast ${type}`;
-        toast.innerHTML = `
-            <div class="toast-content">
-                <i class="fas ${getToastIcon(type)}"></i>
-                <span>${message}</span>
-            </div>
-            <div class="toast-progress"></div>
-        `;
-        
-        // Add toast to container
-        toastContainer.appendChild(toast);
-        
-        // Trigger animation
-        setTimeout(() => {
-            toast.classList.add('show');
-        }, 10);
-        
-        // Remove toast after 3 seconds
-        setTimeout(() => {
-            toast.classList.remove('show');
-            setTimeout(() => {
-                toast.remove();
-            }, 300);
-        }, 3000);
-    }
-    
-    // Helper function to get toast icon based on type
-    function getToastIcon(type) {
-        switch (type) {
-            case 'success':
-                return 'fa-check-circle';
-            case 'error':
-                return 'fa-exclamation-circle';
-            case 'warning':
-                return 'fa-exclamation-triangle';
-            default:
-                return 'fa-info-circle';
-        }
-    }
-});
-
-// Talent Coin Dispenser - Updated to use email instead of wallet ID
-
-// Add this to your admin dashboard JavaScript
-
-// Function to find user by email
-function findUserByEmail(email) {
-  // Check if admin is authenticated
-  if (localStorage.getItem('adminAuthenticated') !== 'true') {
-    showToast('Admin authentication required', 'error');
-    document.getElementById('adminAuthPanel').style.display = 'block';
-    return Promise.reject('Admin authentication required');
-  }
-  
-  // Validate email format
-  if (!email || !email.includes('@')) {
-    return Promise.reject('Please enter a valid email address');
-  }
-  
-  // Now proceed with the email lookup
-  return firebase.firestore().collection('users')
-    .where('email', '==', email)
-    .get()
-    .then(snapshot => {
-      if (snapshot.empty) {
-        throw new Error('No user found with this email address');
-      }
-      return {
-        userData: snapshot.docs[0].data(),
-        userId: snapshot.docs[0].id
-      };
-    });
-}
-
-// Function to send talent coins to user
-function sendTalentCoins(email, amount, reason) {
-  // Validate inputs
-  if (!email || !amount || amount <= 0) {
-    showToast('Please enter a valid email and amount', 'error');
-    return Promise.reject('Invalid input');
-  }
-  
-  // Find user by email
-  return findUserByEmail(email)
-    .then(result => {
-      const { userId, userData } = result;
-      
-      // Create a batch to ensure atomic operations
-      const batch = firebase.firestore().batch();
-      
-      // Reference to user's wallet
-      const walletRef = firebase.firestore().collection('wallets').doc(userId);
-      
-      // Reference to transaction record
-      const transactionRef = firebase.firestore().collection('transactions').doc();
-      
-      // Transaction data
-      const transactionData = {
-        userId: userId,
-        email: email,
-        amount: parseFloat(amount),
-        type: 'credit',
-        reason: reason || 'Admin transfer',
-        status: 'completed',
-        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-        processedBy: firebase.auth().currentUser.email || 'admin@talentcoin.com'
-      };
-      
-      // Add transaction to batch
-      batch.set(transactionRef, transactionData);
-      
-      // Update wallet in batch (create if doesn't exist)
-      return walletRef.get().then(doc => {
-        if (doc.exists) {
-          // Update existing wallet
-          batch.update(walletRef, {
-            talentCoins: firebase.firestore.FieldValue.increment(parseFloat(amount)),
-            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-          });
-        } else {
-          // Create new wallet
-          batch.set(walletRef, {
-            talentCoins: parseFloat(amount),
-            commission: 0,
-            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-          });
-        }
-        
-        // Commit the batch
-        return batch.commit();
-      });
-    })
-    .then(() => {
-      return { success: true, message: `${amount} Talent Coins sent successfully to ${email}` };
-    });
-}
-
-// Update the dispenser form handler
-document.addEventListener('DOMContentLoaded', function() {
-  const dispenserForm = document.getElementById('talentCoinDispenserForm');
-  
-  if (dispenserForm) {
-    // Update the form to use email instead of wallet ID
-    const formHTML = `
-      <div class="form-group">
-        <label for="userEmail">User Email:</label>
-        <input type="email" id="userEmail" class="form-control" placeholder="Enter user's email address" required>
-      </div>
-      <div class="form-group">
-        <label for="coinAmount">Amount:</label>
-        <input type="number" id="coinAmount" class="form-control" placeholder="Enter amount of Talent Coins" required min="1">
-      </div>
-      <div class="form-group">
-        <label for="transferReason">Reason (optional):</label>
-        <input type="text" id="transferReason" class="form-control" placeholder="Enter reason for transfer">
-      </div>
-      <button type="submit" class="btn btn-primary">Send Coins</button>
-      <div id="dispenserResult" class="mt-3"></div>
-    `;
-    
-    // Replace the form content
-    dispenserForm.innerHTML = formHTML;
-    
-    // Add submit handler
-    dispenserForm.addEventListener('submit', function(e) {
-      e.preventDefault();
-      
-      // Check admin authentication
-      if (localStorage.getItem('adminAuthenticated') !== 'true') {
-        showToast('Admin authentication required', 'error');
-        document.getElementById('adminAuthPanel').style.display = 'block';
-        return;
-      }
-      
-      const email = document.getElementById('userEmail').value;
-      const amount = parseFloat(document.getElementById('coinAmount').value);
-      const reason = document.getElementById('transferReason').value;
-      const resultElement = document.getElementById('dispenserResult');
-      
-      // Show loading state
-      resultElement.innerHTML = '<div class="alert alert-info">Processing transaction...</div>';
-      
-      // Send coins
-      sendTalentCoins(email, amount, reason)
-        .then(result => {
-          resultElement.innerHTML = `<div class="alert alert-success">${result.message}</div>`;
-          
-          // Reset form
-          document.getElementById('userEmail').value = '';
-          document.getElementById('coinAmount').value = '';
-          document.getElementById('transferReason').value = '';
-        })
-        .catch(error => {
-          resultElement.innerHTML = `<div class="alert alert-danger">Error: ${error.message || error}</div>`;
-        });
-    });
-  }
-});
 
 </script>
 </body>
