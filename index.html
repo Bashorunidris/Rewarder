@@ -4424,7 +4424,37 @@ table tbody tr:hover {
                 </div>
             </div>
         </div>
-        
+        <!-- Admin Authentication Panel - Add this to your admin dashboard HTML -->
+<div class="admin-auth-container" style="margin: 20px 0; padding: 20px; background: #f8f9fa; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+  <div id="adminLoginPanel">
+    <h3>Admin Authentication</h3>
+    <p>Please authenticate with Firebase to perform admin operations</p>
+    <div class="form-group" style="margin-bottom: 15px;">
+      <label for="adminEmail">Admin Email</label>
+      <input type="email" id="adminEmail" class="form-control" value="admin@talentcoin.com">
+    </div>
+    <div class="form-group" style="margin-bottom: 15px;">
+      <label for="adminPassword">Admin Password</label>
+      <input type="password" id="adminPassword" class="form-control">
+    </div>
+    <button id="adminLoginBtn" class="btn btn-primary">Authenticate</button>
+    <p id="adminAuthMessage" style="margin-top: 10px; color: #dc3545;"></p>
+  </div>
+  
+  <div id="adminLoggedInPanel" style="display: none;">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      <h3>Admin Status: <span style="color: #28a745;">Authenticated</span></h3>
+      <button id="adminLogoutBtn" class="btn btn-outline-danger">Logout</button>
+    </div>
+    <p>You now have access to admin operations</p>
+  </div>
+</div>
+
+<!-- Add this right before your talent coin dispenser form -->
+<div id="dispenserAuthWarning" class="alert alert-warning" style="display: none;">
+  <strong>Authentication Required!</strong> Please authenticate as admin above before using the dispenser.
+</div>
+
         <!-- Fees Reporter Section -->
         <div class="feature-section" id="feesReporter">
             <header class="section-header">
@@ -13879,6 +13909,166 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log("Talent Coin Dispenser initialized");
 });
 
+// Admin Authentication System - Add this to your JavaScript file
+
+// Initialize admin authentication when the page loads
+document.addEventListener('DOMContentLoaded', function() {
+  initAdminAuth();
+});
+
+function initAdminAuth() {
+  // Check if we're on the admin page
+  if (!document.querySelector('.admin-auth-container')) {
+    return;
+  }
+  
+  // Add event listeners
+  const loginBtn = document.getElementById('adminLoginBtn');
+  const logoutBtn = document.getElementById('adminLogoutBtn');
+  
+  if (loginBtn) {
+    loginBtn.addEventListener('click', adminLogin);
+  }
+  
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', adminLogout);
+  }
+  
+  // Check if admin is already logged in
+  checkAdminAuthStatus();
+  
+  // Disable dispenser if not authenticated
+  updateDispenserState();
+}
+
+function adminLogin() {
+  const email = document.getElementById('adminEmail').value;
+  const password = document.getElementById('adminPassword').value;
+  const messageElement = document.getElementById('adminAuthMessage');
+  
+  if (!email || !password) {
+    messageElement.textContent = "Please enter both email and password";
+    return;
+  }
+  
+  messageElement.textContent = "Authenticating...";
+  
+  firebase.auth().signInWithEmailAndPassword(email, password)
+    .then((userCredential) => {
+      if (userCredential.user.email === 'admin@talentcoin.com') {
+        // Store admin session
+        localStorage.setItem('adminAuthenticated', 'true');
+        localStorage.setItem('adminAuthTime', Date.now());
+        
+        // Update UI
+        document.getElementById('adminLoginPanel').style.display = 'none';
+        document.getElementById('adminLoggedInPanel').style.display = 'block';
+        
+        // Update dispenser state
+        updateDispenserState();
+        
+        console.log("Admin authenticated successfully");
+      } else {
+        messageElement.textContent = "This account doesn't have admin privileges";
+        firebase.auth().signOut();
+      }
+    })
+    .catch((error) => {
+      console.error("Admin auth error:", error);
+      messageElement.textContent = "Authentication failed: " + error.message;
+    });
+}
+
+function adminLogout() {
+  localStorage.removeItem('adminAuthenticated');
+  localStorage.removeItem('adminAuthTime');
+  
+  firebase.auth().signOut()
+    .then(() => {
+      // Update UI
+      document.getElementById('adminLoginPanel').style.display = 'block';
+      document.getElementById('adminLoggedInPanel').style.display = 'none';
+      
+      // Update dispenser state
+      updateDispenserState();
+      
+      console.log("Admin logged out");
+    })
+    .catch((error) => {
+      console.error("Logout error:", error);
+    });
+}
+
+function checkAdminAuthStatus() {
+  const adminAuthenticated = localStorage.getItem('adminAuthenticated') === 'true';
+  const adminAuthTime = parseInt(localStorage.getItem('adminAuthTime') || '0');
+  const currentTime = Date.now();
+  const authExpired = (currentTime - adminAuthTime) > (3600 * 1000); // 1 hour expiration
+  
+  if (adminAuthenticated && !authExpired) {
+    // Admin is authenticated and session hasn't expired
+    document.getElementById('adminLoginPanel').style.display = 'none';
+    document.getElementById('adminLoggedInPanel').style.display = 'block';
+  } else {
+    // Admin needs to authenticate
+    document.getElementById('adminLoginPanel').style.display = 'block';
+    document.getElementById('adminLoggedInPanel').style.display = 'none';
+    
+    // Clear expired auth
+    if (authExpired) {
+      localStorage.removeItem('adminAuthenticated');
+      localStorage.removeItem('adminAuthTime');
+    }
+  }
+}
+
+function updateDispenserState() {
+  const dispenserForm = document.getElementById('talentCoinDispenserForm');
+  const dispenserWarning = document.getElementById('dispenserAuthWarning');
+  
+  if (!dispenserForm || !dispenserWarning) return;
+  
+  const isAuthenticated = localStorage.getItem('adminAuthenticated') === 'true';
+  
+  if (isAuthenticated) {
+    // Enable dispenser
+    dispenserForm.classList.remove('disabled');
+    Array.from(dispenserForm.elements).forEach(el => el.disabled = false);
+    dispenserWarning.style.display = 'none';
+  } else {
+    // Disable dispenser
+    dispenserForm.classList.add('disabled');
+    Array.from(dispenserForm.elements).forEach(el => el.disabled = true);
+    dispenserWarning.style.display = 'block';
+  }
+}
+
+// Modify your findUserByWalletId function to check admin authentication
+function findUserByWalletId(walletId) {
+  // Check if admin is authenticated
+  if (localStorage.getItem('adminAuthenticated') !== 'true') {
+    showToast('Admin authentication required', 'error');
+    
+    // Scroll to auth panel
+    const authPanel = document.querySelector('.admin-auth-container');
+    if (authPanel) {
+      authPanel.scrollIntoView({ behavior: 'smooth' });
+    }
+    
+    return Promise.reject('Admin authentication required');
+  }
+  
+  // Now proceed with the wallet lookup
+  return firebase.firestore().collection('users')
+    .where('walletId', '==', walletId)
+    .get()
+    .then(snapshot => {
+      if (snapshot.empty) {
+        throw new Error('No user found with this wallet ID');
+      }
+      return snapshot.docs[0].data();
+    });
+}
 
 </script>
 </body>
