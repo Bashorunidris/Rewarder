@@ -4334,9 +4334,10 @@ table tbody tr:hover {
             <div class="dispenser-container">
                 <div class="dispenser-form">
                     <div class="input-group">
-                        <label for="walletId">Wallet ID</label>
-                        <input type="text" id="walletId" placeholder="Enter wallet ID">
-                    </div>
+    <label for="userEmail">User Email</label>
+    <input type="email" id="userEmail" placeholder="Enter user's email address">
+</div>
+
                     
                     <div class="input-group">
                         <label for="coinAmount">Amount</label>
@@ -4424,37 +4425,7 @@ table tbody tr:hover {
                 </div>
             </div>
         </div>
-        <!-- Admin Authentication Panel - Add this to your admin dashboard HTML -->
-<div class="admin-auth-container" style="margin: 20px 0; padding: 20px; background: #f8f9fa; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
-  <div id="adminLoginPanel">
-    <h3>Admin Authentication</h3>
-    <p>Please authenticate with Firebase to perform admin operations</p>
-    <div class="form-group" style="margin-bottom: 15px;">
-      <label for="adminEmail">Admin Email</label>
-      <input type="email" id="adminEmail" class="form-control" value="admin@talentcoin.com">
-    </div>
-    <div class="form-group" style="margin-bottom: 15px;">
-      <label for="adminPassword">Admin Password</label>
-      <input type="password" id="adminPassword" class="form-control">
-    </div>
-    <button id="adminLoginBtn" class="btn btn-primary">Authenticate</button>
-    <p id="adminAuthMessage" style="margin-top: 10px; color: #dc3545;"></p>
-  </div>
-  
-  <div id="adminLoggedInPanel" style="display: none;">
-    <div style="display: flex; justify-content: space-between; align-items: center;">
-      <h3>Admin Status: <span style="color: #28a745;">Authenticated</span></h3>
-      <button id="adminLogoutBtn" class="btn btn-outline-danger">Logout</button>
-    </div>
-    <p>You now have access to admin operations</p>
-  </div>
-</div>
-
-<!-- Add this right before your talent coin dispenser form -->
-<div id="dispenserAuthWarning" class="alert alert-warning" style="display: none;">
-  <strong>Authentication Required!</strong> Please authenticate as admin above before using the dispenser.
-</div>
-
+        
         <!-- Fees Reporter Section -->
         <div class="feature-section" id="feesReporter">
             <header class="section-header">
@@ -13253,822 +13224,164 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Initialize Talent Coin Dispenser functionality
-document.addEventListener('DOMContentLoaded', function() {
-    // DOM Elements
-    const walletIdInput = document.getElementById('walletId');
-    const coinAmountInput = document.getElementById('coinAmount');
-    const transactionReasonSelect = document.getElementById('transactionReason');
-    const otherReasonGroup = document.getElementById('otherReasonGroup');
-    const otherReasonInput = document.getElementById('otherReason');
-    const transactionNotesTextarea = document.getElementById('transactionNotes');
-    const dispenseBtn = document.getElementById('dispenseBtn');
-    const refreshUserInfoBtn = document.getElementById('refreshUserInfo');
-    
-    // User info elements
-    const userInfoUsername = document.getElementById('userInfoUsername');
-    const userInfoWalletId = document.getElementById('userInfoWalletId');
-    const userInfoBalance = document.getElementById('userInfoBalance');
-    const userInfoStatus = document.getElementById('userInfoStatus');
-    const userTransactionsList = document.getElementById('userTransactionsList');
-    
-    // Current user data
-    let currentUserData = null;
-    let currentUserId = null;
-    
-    // Initialize Firebase Auth state listener
-    firebase.auth().onAuthStateChanged(function(user) {
-        if (user) {
-            console.log("User is signed in:", user.email);
-            // Check if user is admin
-            checkAdminStatus(user.uid);
-        } else {
-            console.log("No user is signed in");
-            showToast("Please sign in to use this feature", "warning");
-        }
-    });
-    
-    // Function to check if user is admin
-    function checkAdminStatus(uid) {
-        const db = firebase.firestore();
-        db.collection("admins").doc(uid).get()
-            .then(doc => {
-                if (doc.exists && doc.data().role === 'admin') {
-                    console.log("User is an admin");
-                } else {
-                    console.log("User is not an admin");
-                    showToast("You need admin privileges to use this feature", "error");
-                }
-            })
-            .catch(error => {
-                console.error("Error checking admin status:", error);
-            });
-    }
-    
-    // Show/hide other reason input based on reason selection
-    transactionReasonSelect.addEventListener('change', function() {
-        otherReasonGroup.style.display = this.value === 'other' ? 'block' : 'none';
-    });
-    
-    // Wallet ID input event
-    walletIdInput.addEventListener('input', debounce(function() {
-        const walletId = walletIdInput.value.trim();
-        if (walletId.length >= 6) {
-            findUserByWalletId(walletId);
-        } else {
-            resetUserInfo();
-        }
-    }, 500));
-    
-    // Refresh user info button click
-    refreshUserInfoBtn.addEventListener('click', function() {
-        const walletId = walletIdInput.value.trim();
-        if (walletId) {
-            findUserByWalletId(walletId);
-            this.classList.add('rotating');
-            setTimeout(() => {
-                this.classList.remove('rotating');
-            }, 1000);
-        } else {
-            showToast('Please enter a wallet ID first', 'warning');
-        }
-    });
-    
-    // Process transaction button click
-    dispenseBtn.addEventListener('click', function() {
-        processTransaction();
-    });
-    
-    // Function to find user by wallet ID
-    function findUserByWalletId(walletId) {
-        // Show loading state
-        setUserInfoLoading(true);
-        
-        console.log("Looking up wallet ID:", walletId);
-        
-        // First, we need to find which user has this wallet ID
-        // Since we can't query wallets by walletId field directly due to security rules,
-        // we'll use a different approach
-        
-        const db = firebase.firestore();
-        
-        // Try to get all wallets (this should work if you're an admin)
-        db.collection("wallets").get()
-            .then((querySnapshot) => {
-                let found = false;
-                let userId = null;
-                let walletData = null;
-                
-                querySnapshot.forEach((doc) => {
-                    const wallet = doc.data();
-                    if (wallet.walletId === walletId) {
-                        found = true;
-                        userId = doc.id; // This is the user's UID
-                        walletData = wallet;
-                        console.log("Found wallet:", wallet);
-                    }
-                });
-                
-                if (!found) {
-                    throw new Error("No wallet found with this ID");
-                }
-                
-                // Now get the user data using the userId
-                return db.collection("users").doc(userId).get().then(doc => {
-                    if (!doc.exists) {
-                        throw new Error("User not found for this wallet");
-                    }
-                    
-                    const userData = doc.data();
-                    console.log("Found user:", userData);
-                    
-                    // Combine user and wallet data
-                    currentUserData = {
-                        ...userData,
-                        ...walletData,
-                        id: userId
-                    };
-                    currentUserId = userId;
-                    
-                    // Update UI with user info
-                    userInfoUsername.textContent = userData.displayName || userData.username || "Unknown";
-                    userInfoWalletId.textContent = walletData.walletId || "-";
-                    userInfoBalance.textContent = (walletData.balance || 0) + " Talent Coins";
-                    userInfoStatus.textContent = userData.status || "Active";
-                    
-                    // Load transactions
-                    loadTransactions(userId);
-                });
-            })
-            .catch((error) => {
-                console.error("Error finding user:", error);
-                showToast("Error: " + error.message, "error");
-                resetUserInfo();
-            })
-            .finally(() => {
-                setUserInfoLoading(false);
-            });
-    }
-    
-    // Function to load transactions
-    function loadTransactions(userId) {
-        userTransactionsList.innerHTML = '<div class="loading-spinner"></div>';
-        
-        console.log("Loading transactions for user:", userId);
-        
-        // Check if the wallet has transactions array
-        if (currentUserData && currentUserData.transactions && Array.isArray(currentUserData.transactions)) {
-            displayTransactions(currentUserData.transactions);
-            return;
-        }
-        
-        // Otherwise, check for transactions collection
-        const db = firebase.firestore();
-        db.collection("activity")
-            .where("userId", "==", userId)
-            .where("type", "in", ["credit", "debit", "buy"])
-            .get()
-            .then((querySnapshot) => {
-                const transactions = [];
-                querySnapshot.forEach((doc) => {
-                    transactions.push({
-                        id: doc.id,
-                        ...doc.data()
-                    });
-                });
-                
-                displayTransactions(transactions);
-            })
-            .catch((error) => {
-                console.error("Error loading transactions:", error);
-                userTransactionsList.innerHTML = `
-                    <div class="error-message">
-                        <p>Error loading transactions: ${error.message}</p>
-                    </div>
-                `;
-            });
-    }
-    
-    // Function to display transactions
-    function displayTransactions(transactions) {
-        console.log("Displaying transactions:", transactions.length);
-        
-        if (!transactions || transactions.length === 0) {
-            userTransactionsList.innerHTML = `
-                <div class="empty-state">
-                    <i class="fas fa-exchange-alt"></i>
-                    <p>No transactions available</p>
-                </div>
-            `;
-            return;
-        }
-        
-        // Sort transactions by timestamp (newest first)
-        transactions.sort((a, b) => {
-            const timeA = a.timestamp ? 
-                (typeof a.timestamp.toDate === 'function' ? a.timestamp.toDate().getTime() : new Date(a.timestamp).getTime()) : 
-                0;
-            const timeB = b.timestamp ? 
-                (typeof b.timestamp.toDate === 'function' ? b.timestamp.toDate().getTime() : new Date(b.timestamp).getTime()) : 
-                0;
-            return timeB - timeA;
-        });
-        
-        // Take only the 5 most recent
-        const recentTransactions = transactions.slice(0, 5);
-        
-        // Build HTML
-        let transactionsHTML = '';
-        recentTransactions.forEach(transaction => {
-            const date = transaction.timestamp 
-                ? (typeof transaction.timestamp.toDate === 'function' 
-                   ? transaction.timestamp.toDate().toLocaleString() 
-                   : new Date(transaction.timestamp).toLocaleString())
-                : 'Unknown date';
-            
-            const isCredit = transaction.type === 'credit' || transaction.type === 'buy';
-            const icon = isCredit ? 'fa-arrow-down' : 'fa-arrow-up';
-            const cssClass = isCredit ? 'transaction-credit' : 'transaction-debit';
-            const prefix = isCredit ? '+' : '-';
-            
-            transactionsHTML += `
-                <div class="transaction-item ${cssClass}">
-                    <div class="transaction-icon">
-                        <i class="fas ${icon}"></i>
-                    </div>
-                    <div class="transaction-details">
-                        <div class="transaction-title">${transaction.reason || transaction.type}</div>
-                        <div class="transaction-date">${date}</div>
-                    </div>
-                    <div class="transaction-amount">${prefix}${transaction.amount} TC</div>
-                </div>
-            `;
-        });
-        
-        userTransactionsList.innerHTML = transactionsHTML;
-    }
-    
-    // Function to process transaction
-    function processTransaction() {
-        if (!currentUserData || !currentUserId) {
-            showToast("Please find a valid user first", "error");
-            return;
-        }
-        
-        // Get form values
-        const amount = parseFloat(coinAmountInput.value);
-        if (isNaN(amount) || amount <= 0) {
-            showToast("Please enter a valid amount", "error");
-            return;
-        }
-        
-        const transactionType = document.querySelector('input[name="transactionType"]:checked').value;
-        const reason = transactionReasonSelect.value;
-        
-        if (!reason) {
-            showToast("Please select a reason", "error");
-            return;
-        }
-        
-        const finalReason = reason === 'other' ? otherReasonInput.value : reason;
-        
-        if (reason === 'other' && !otherReasonInput.value.trim()) {
-            showToast("Please specify a reason", "error");
-            return;
-        }
-        
-        const notes = transactionNotesTextarea.value.trim();
-        
-        // For debit transactions, check if user has enough balance
-        if (transactionType === 'debit' && amount > (currentUserData.balance || 0)) {
-            showToast("User doesn't have enough balance for this debit", "error");
-            return;
-        }
-        
-        // Confirm the transaction
-        if (!confirm(`Are you sure you want to ${transactionType} ${amount} Talent Coins ${transactionType === 'credit' ? 'to' : 'from'} this user's account?`)) {
-            return;
-        }
-        
-        // Disable button and show loading
-        dispenseBtn.disabled = true;
-        dispenseBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
-        
-        console.log("Processing transaction:", {
-            userId: currentUserId,
-            type: transactionType,
-            amount: amount,
-            reason: finalReason
-        });
-        
-        // Get current user for admin info
-        const currentAdmin = firebase.auth().currentUser;
-        
-        const db = firebase.firestore();
-        
-        // Update wallet balance
-        const newBalance = transactionType === 'credit' 
-            ? (currentUserData.balance || 0) + amount 
-            : (currentUserData.balance || 0) - amount;
-        
-        // First update the wallet
-        db.collection("wallets").doc(currentUserId).update({
-            balance: newBalance,
-            lastTransactionDate: firebase.firestore.FieldValue.serverTimestamp()
-        })
-        .then(() => {
-            console.log("Wallet balance updated");
-            
-            // Create activity log
-            return db.collection("activity").add({
-                userId: currentUserId,
-                type: transactionType,
-                amount: amount,
-                reason: finalReason,
-                notes: notes,
-                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                processedBy: currentAdmin ? currentAdmin.uid : 'unknown',
-                processedByEmail: currentAdmin ? currentAdmin.email : 'unknown',
-                walletId: currentUserData.walletId
-            });
-        })
-        .then((activityRef) => {
-            console.log("Activity log created with ID:", activityRef.id);
-            showToast(`Transaction processed successfully!`, "success");
-            
-            // Update local data
-            currentUserData.balance = newBalance;
-            
-            // Update UI
-            userInfoBalance.textContent = newBalance + " Talent Coins";
-            
-            // Reload transactions
-            loadTransactions(currentUserId);
-            
-            // Reset form
-            coinAmountInput.value = "";
-            transactionNotesTextarea.value = "";
-            if (reason === 'other') {
-                otherReasonInput.value = "";
-            }
-            transactionReasonSelect.selectedIndex = 0;
-            otherReasonGroup.style.display = 'none';
-        })
-        .catch((error) => {
-            console.error("Error processing transaction:", error);
-            showToast("Error: " + error.message, "error");
-        })
-        .finally(() => {
-            // Re-enable button
-            dispenseBtn.disabled = false;
-            dispenseBtn.innerHTML = "Process Transaction";
-        });
-    }
-    
-    // Function to reset user info display
-    function resetUserInfo() {
-        currentUserData = null;
-        currentUserId = null;
-        userInfoUsername.textContent = "-";
-        userInfoWalletId.textContent = "-";
-        userInfoBalance.textContent = "-";
-        userInfoStatus.textContent = "-";
-        
-        userTransactionsList.innerHTML = `
-            <div class="empty-state">
-                <i class="fas fa-exchange-alt"></i>
-                <p>No transactions available</p>
-            </div>
-        `;
-    }
-    
-    // Function to set loading state
-    function setUserInfoLoading(isLoading) {
-        if (isLoading) {
-            userInfoUsername.innerHTML = '<div class="loading-shimmer"></div>';
-            userInfoWalletId.innerHTML = '<div class="loading-shimmer"></div>';
-            userInfoBalance.innerHTML = '<div class="loading-shimmer"></div>';
-            userInfoStatus.innerHTML = '<div class="loading-shimmer"></div>';
-            
-            userTransactionsList.innerHTML = '<div class="loading-spinner"></div>';
-        }
-    }
-    
-    // Utility function to debounce input
-    function debounce(func, wait) {
-        let timeout;
-        return function() {
-            const context = this;
-            const args = arguments;
-            clearTimeout(timeout);
-            timeout = setTimeout(() => {
-                func.apply(context, args);
-            }, wait);
-        };
-    }
-    
-    // Function to show toast notifications
-    function showToast(message, type = 'info') {
-        // Check if toast container exists, if not create it
-        let toastContainer = document.querySelector('.toast-container');
-        
-        if (!toastContainer) {
-            toastContainer = document.createElement('div');
-            toastContainer.className = 'toast-container';
-            document.body.appendChild(toastContainer);
-        }
-        
-        // Create toast element
-        const toast = document.createElement('div');
-        toast.className = `toast ${type}`;
-        
-        // Get appropriate icon based on type
-        let icon;
-        switch (type) {
-            case 'success':
-                icon = 'fa-check-circle';
-                break;
-            case 'error':
-                icon = 'fa-exclamation-circle';
-                break;
-            case 'warning':
-                icon = 'fa-exclamation-triangle';
-                break;
-            default:
-                icon = 'fa-info-circle';
-        }
-        
-        toast.innerHTML = `
-            <div class="toast-content">
-                <i class="fas ${icon}"></i>
-                <span>${message}</span>
-            </div>
-            <div class="toast-progress"></div>
-        `;
-        
-        // Add toast to container
-        toastContainer.appendChild(toast);
-        
-        // Trigger animation
-        setTimeout(() => {
-            toast.classList.add('show');
-        }, 10);
-        
-        // Remove toast after 3 seconds
-        setTimeout(() => {
-            toast.classList.remove('show');
-            setTimeout(() => {
-                toast.remove();
-            }, 300);
-        }, 3000);
-    }
-    
-    // Add CSS for toast notifications if not already in your stylesheet
-    function addToastStyles() {
-        if (!document.getElementById('toast-styles')) {
-            const style = document.createElement('style');
-            style.id = 'toast-styles';
-            style.textContent = `
-                .toast-container {
-                    position: fixed;
-                    top: 20px;
-                    right: 20px;
-                    z-index: 9999;
-                }
-                
-                .toast {
-                    background-color: #333;
-                    color: white;
-                    padding: 12px 20px;
-                    border-radius: 4px;
-                    margin-bottom: 10px;
-                    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-                    display: flex;
-                    flex-direction: column;
-                    min-width: 250px;
-                    max-width: 350px;
-                    transform: translateX(100%);
-                    opacity: 0;
-                    transition: transform 0.3s, opacity 0.3s;
-                    overflow: hidden;
-                }
-                
-                .toast.show {
-                    transform: translateX(0);
-                    opacity: 1;
-                }
-                
-                .toast-content {
-                    display: flex;
-                    align-items: center;
-                }
-                
-                .toast-content i {
-                    margin-right: 10px;
-                }
-                
-                .toast-progress {
-                    height: 3px;
-                    background-color: rgba(255,255,255,0.7);
-                    width: 100%;
-                    margin-top: 8px;
-                    animation: toast-progress 3s linear forwards;
-                }
-                
-                @keyframes toast-progress {
-                    from { width: 100%; }
-                    to { width: 0%; }
-                }
-                
-                .toast.success {
-                    background-color: #4CAF50;
-                }
-                
-                .toast.error {
-                    background-color: #F44336;
-                }
-                
-                .toast.warning {
-                    background-color: #FF9800;
-                }
-                
-                .toast.info {
-                    background-color: #2196F3;
-                }
-                
-                .loading-shimmer {
-                    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-                    background-size: 200% 100%;
-                    animation: shimmer 1.5s infinite;
-                    height: 15px;
-                    border-radius: 4px;
-                    width: 100%;
-                }
-                
-                @keyframes shimmer {
-                    0% { background-position: -200% 0; }
-                    100% { background-position: 200% 0; }
-                }
-                
-                .loading-spinner {
-                    width: 40px;
-                    height: 40px;
-                    margin: 20px auto;
-                    border: 3px solid #f3f3f3;
-                    border-top: 3px solid #3498db;
-                    border-radius: 50%;
-                    animation: spin 1s linear infinite;
-                }
-                
-                @keyframes spin {
-                    0% { transform: rotate(0deg); }
-                    100% { transform: rotate(360deg); }
-                }
-                
-                .rotating {
-                    animation: rotate 1s linear;
-                }
-                
-                @keyframes rotate {
-                    from { transform: rotate(0deg); }
-                    to { transform: rotate(360deg); }
-                }
-                
-                .transaction-item {
-                    display: flex;
-                    align-items: center;
-                    padding: 12px;
-                    border-bottom: 1px solid #eee;
-                }
-                
-                .transaction-icon {
-                    width: 36px;
-                    height: 36px;
-                    border-radius: 50%;
-                    background-color: #f0f0f0;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    margin-right: 12px;
-                }
-                
-                .transaction-credit .transaction-icon {
-                    background-color: rgba(76, 175, 80, 0.1);
-                    color: #4CAF50;
-                }
-                
-                .transaction-debit .transaction-icon {
-                    background-color: rgba(244, 67, 54, 0.1);
-                    color: #F44336;
-                }
-                
-                .transaction-details {
-                    flex: 1;
-                }
-                
-                .transaction-title {
-                    font-weight: 500;
-                }
-                
-                .transaction-date {
-                    font-size: 0.8em;
-                    color: #777;
-                }
-                
-                .transaction-amount {
-                    font-weight: 600;
-                }
-                
-                .transaction-credit .transaction-amount {
-                    color: #4CAF50;
-                }
-                
-                .transaction-debit .transaction-amount {
-                    color: #F44336;
-                }
-                
-                .empty-state {
-                    text-align: center;
-                    padding: 30px 20px;
-                    color: #999;
-                }
-                
-                .empty-state i {
-                    font-size: 2em;
-                    margin-bottom: 10px;
-                }
-            `;
-            document.head.appendChild(style);
-        }
-    }
-    
-    // Add toast styles
-    addToastStyles();
-    
-    // Log initialization
-    console.log("Talent Coin Dispenser initialized");
-});
+// Talent Coin Dispenser - Updated to use email instead of wallet ID
 
-// Admin Authentication System - Add this to your JavaScript file
+// Add this to your admin dashboard JavaScript
 
-// Initialize admin authentication when the page loads
-document.addEventListener('DOMContentLoaded', function() {
-  initAdminAuth();
-});
-
-function initAdminAuth() {
-  // Check if we're on the admin page
-  if (!document.querySelector('.admin-auth-container')) {
-    return;
-  }
-  
-  // Add event listeners
-  const loginBtn = document.getElementById('adminLoginBtn');
-  const logoutBtn = document.getElementById('adminLogoutBtn');
-  
-  if (loginBtn) {
-    loginBtn.addEventListener('click', adminLogin);
-  }
-  
-  if (logoutBtn) {
-    logoutBtn.addEventListener('click', adminLogout);
-  }
-  
-  // Check if admin is already logged in
-  checkAdminAuthStatus();
-  
-  // Disable dispenser if not authenticated
-  updateDispenserState();
-}
-
-function adminLogin() {
-  const email = document.getElementById('adminEmail').value;
-  const password = document.getElementById('adminPassword').value;
-  const messageElement = document.getElementById('adminAuthMessage');
-  
-  if (!email || !password) {
-    messageElement.textContent = "Please enter both email and password";
-    return;
-  }
-  
-  messageElement.textContent = "Authenticating...";
-  
-  firebase.auth().signInWithEmailAndPassword(email, password)
-    .then((userCredential) => {
-      if (userCredential.user.email === 'admin@talentcoin.com') {
-        // Store admin session
-        localStorage.setItem('adminAuthenticated', 'true');
-        localStorage.setItem('adminAuthTime', Date.now());
-        
-        // Update UI
-        document.getElementById('adminLoginPanel').style.display = 'none';
-        document.getElementById('adminLoggedInPanel').style.display = 'block';
-        
-        // Update dispenser state
-        updateDispenserState();
-        
-        console.log("Admin authenticated successfully");
-      } else {
-        messageElement.textContent = "This account doesn't have admin privileges";
-        firebase.auth().signOut();
-      }
-    })
-    .catch((error) => {
-      console.error("Admin auth error:", error);
-      messageElement.textContent = "Authentication failed: " + error.message;
-    });
-}
-
-function adminLogout() {
-  localStorage.removeItem('adminAuthenticated');
-  localStorage.removeItem('adminAuthTime');
-  
-  firebase.auth().signOut()
-    .then(() => {
-      // Update UI
-      document.getElementById('adminLoginPanel').style.display = 'block';
-      document.getElementById('adminLoggedInPanel').style.display = 'none';
-      
-      // Update dispenser state
-      updateDispenserState();
-      
-      console.log("Admin logged out");
-    })
-    .catch((error) => {
-      console.error("Logout error:", error);
-    });
-}
-
-function checkAdminAuthStatus() {
-  const adminAuthenticated = localStorage.getItem('adminAuthenticated') === 'true';
-  const adminAuthTime = parseInt(localStorage.getItem('adminAuthTime') || '0');
-  const currentTime = Date.now();
-  const authExpired = (currentTime - adminAuthTime) > (3600 * 1000); // 1 hour expiration
-  
-  if (adminAuthenticated && !authExpired) {
-    // Admin is authenticated and session hasn't expired
-    document.getElementById('adminLoginPanel').style.display = 'none';
-    document.getElementById('adminLoggedInPanel').style.display = 'block';
-  } else {
-    // Admin needs to authenticate
-    document.getElementById('adminLoginPanel').style.display = 'block';
-    document.getElementById('adminLoggedInPanel').style.display = 'none';
-    
-    // Clear expired auth
-    if (authExpired) {
-      localStorage.removeItem('adminAuthenticated');
-      localStorage.removeItem('adminAuthTime');
-    }
-  }
-}
-
-function updateDispenserState() {
-  const dispenserForm = document.getElementById('talentCoinDispenserForm');
-  const dispenserWarning = document.getElementById('dispenserAuthWarning');
-  
-  if (!dispenserForm || !dispenserWarning) return;
-  
-  const isAuthenticated = localStorage.getItem('adminAuthenticated') === 'true';
-  
-  if (isAuthenticated) {
-    // Enable dispenser
-    dispenserForm.classList.remove('disabled');
-    Array.from(dispenserForm.elements).forEach(el => el.disabled = false);
-    dispenserWarning.style.display = 'none';
-  } else {
-    // Disable dispenser
-    dispenserForm.classList.add('disabled');
-    Array.from(dispenserForm.elements).forEach(el => el.disabled = true);
-    dispenserWarning.style.display = 'block';
-  }
-}
-
-// Modify your findUserByWalletId function to check admin authentication
-function findUserByWalletId(walletId) {
+// Function to find user by email
+function findUserByEmail(email) {
   // Check if admin is authenticated
   if (localStorage.getItem('adminAuthenticated') !== 'true') {
     showToast('Admin authentication required', 'error');
-    
-    // Scroll to auth panel
-    const authPanel = document.querySelector('.admin-auth-container');
-    if (authPanel) {
-      authPanel.scrollIntoView({ behavior: 'smooth' });
-    }
-    
+    document.getElementById('adminAuthPanel').style.display = 'block';
     return Promise.reject('Admin authentication required');
   }
   
-  // Now proceed with the wallet lookup
+  // Validate email format
+  if (!email || !email.includes('@')) {
+    return Promise.reject('Please enter a valid email address');
+  }
+  
+  // Now proceed with the email lookup
   return firebase.firestore().collection('users')
-    .where('walletId', '==', walletId)
+    .where('email', '==', email)
     .get()
     .then(snapshot => {
       if (snapshot.empty) {
-        throw new Error('No user found with this wallet ID');
+        throw new Error('No user found with this email address');
       }
-      return snapshot.docs[0].data();
+      return {
+        userData: snapshot.docs[0].data(),
+        userId: snapshot.docs[0].id
+      };
     });
 }
+
+// Function to send talent coins to user
+function sendTalentCoins(email, amount, reason) {
+  // Validate inputs
+  if (!email || !amount || amount <= 0) {
+    showToast('Please enter a valid email and amount', 'error');
+    return Promise.reject('Invalid input');
+  }
+  
+  // Find user by email
+  return findUserByEmail(email)
+    .then(result => {
+      const { userId, userData } = result;
+      
+      // Create a batch to ensure atomic operations
+      const batch = firebase.firestore().batch();
+      
+      // Reference to user's wallet
+      const walletRef = firebase.firestore().collection('wallets').doc(userId);
+      
+      // Reference to transaction record
+      const transactionRef = firebase.firestore().collection('transactions').doc();
+      
+      // Transaction data
+      const transactionData = {
+        userId: userId,
+        email: email,
+        amount: parseFloat(amount),
+        type: 'credit',
+        reason: reason || 'Admin transfer',
+        status: 'completed',
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        processedBy: firebase.auth().currentUser.email || 'admin@talentcoin.com'
+      };
+      
+      // Add transaction to batch
+      batch.set(transactionRef, transactionData);
+      
+      // Update wallet in batch (create if doesn't exist)
+      return walletRef.get().then(doc => {
+        if (doc.exists) {
+          // Update existing wallet
+          batch.update(walletRef, {
+            talentCoins: firebase.firestore.FieldValue.increment(parseFloat(amount)),
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+          });
+        } else {
+          // Create new wallet
+          batch.set(walletRef, {
+            talentCoins: parseFloat(amount),
+            commission: 0,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+          });
+        }
+        
+        // Commit the batch
+        return batch.commit();
+      });
+    })
+    .then(() => {
+      return { success: true, message: `${amount} Talent Coins sent successfully to ${email}` };
+    });
+}
+
+// Update the dispenser form handler
+document.addEventListener('DOMContentLoaded', function() {
+  const dispenserForm = document.getElementById('talentCoinDispenserForm');
+  
+  if (dispenserForm) {
+    // Update the form to use email instead of wallet ID
+    const formHTML = `
+      <div class="form-group">
+        <label for="userEmail">User Email:</label>
+        <input type="email" id="userEmail" class="form-control" placeholder="Enter user's email address" required>
+      </div>
+      <div class="form-group">
+        <label for="coinAmount">Amount:</label>
+        <input type="number" id="coinAmount" class="form-control" placeholder="Enter amount of Talent Coins" required min="1">
+      </div>
+      <div class="form-group">
+        <label for="transferReason">Reason (optional):</label>
+        <input type="text" id="transferReason" class="form-control" placeholder="Enter reason for transfer">
+      </div>
+      <button type="submit" class="btn btn-primary">Send Coins</button>
+      <div id="dispenserResult" class="mt-3"></div>
+    `;
+    
+    // Replace the form content
+    dispenserForm.innerHTML = formHTML;
+    
+    // Add submit handler
+    dispenserForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Check admin authentication
+      if (localStorage.getItem('adminAuthenticated') !== 'true') {
+        showToast('Admin authentication required', 'error');
+        document.getElementById('adminAuthPanel').style.display = 'block';
+        return;
+      }
+      
+      const email = document.getElementById('userEmail').value;
+      const amount = parseFloat(document.getElementById('coinAmount').value);
+      const reason = document.getElementById('transferReason').value;
+      const resultElement = document.getElementById('dispenserResult');
+      
+      // Show loading state
+      resultElement.innerHTML = '<div class="alert alert-info">Processing transaction...</div>';
+      
+      // Send coins
+      sendTalentCoins(email, amount, reason)
+        .then(result => {
+          resultElement.innerHTML = `<div class="alert alert-success">${result.message}</div>`;
+          
+          // Reset form
+          document.getElementById('userEmail').value = '';
+          document.getElementById('coinAmount').value = '';
+          document.getElementById('transferReason').value = '';
+        })
+        .catch(error => {
+          resultElement.innerHTML = `<div class="alert alert-danger">Error: ${error.message || error}</div>`;
+        });
+    });
+  }
+});
 
 </script>
 </body>
