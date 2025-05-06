@@ -12125,8 +12125,409 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
+// Add this to your existing wallet initialization code
+document.addEventListener('DOMContentLoaded', function() {
+  // Initialize wallet tag system after PIN verification
+  const pinVerifiedEvent = new CustomEvent('pinVerified');
+  
+  // Listen for PIN verification
+  document.addEventListener('pinVerified', function() {
+    // Initialize tag creation for new users
+    initializeTagCreation();
+    
+    // Add tag transfer feature to wallet dashboard
+    addTagTransferFeature();
+  });
+  
+  // When PIN is verified in your existing code, dispatch the event
+  // Example: After successful PIN verification
+  // document.dispatchEvent(pinVerifiedEvent);
+});
 
+const functions = require('firebase-functions');
+const admin = require('firebase-admin');
+admin.initializeApp();
 
+// Cloud Function to handle wallet transfers
+exports.processTagTransfer = functions.https.onCall(async (data, context) => {
+  // Check if user is authenticated
+  if (!context.auth) {
+    throw new functions.https.HttpsError(
+      'unauthenticated',
+      'You must be logged in to transfer funds.'
+    );
+  }
+  
+  // Get user ID
+  const senderId = context.auth.uid;
+  
+  // Validate input data
+  const { tag, amount, note } = data;
+  
+  if (!tag) {
+    throw new functions.https.HttpsError(
+      'invalid-argument',
+      'You must provide a recipient tag.'
+    );
+  }
+  
+  if (!amount || amount < 1) {
+    throw new functions.https.HttpsError(
+      'invalid-argument',
+      'You must provide a valid amount to transfer.'
+    );
+  }
+  
+  try {
+    // Look up recipient by tag
+    const tagSnapshot = await admin.firestore()
+      .collection('walletTags')
+      .where('tag', '==', tag)
+      .get();
+    
+    if (tagSnapshot.empty) {
+      throw new functions.https.HttpsError(
+        'not-found',
+        'Recipient tag not found.'
+      );
+    }
+    
+    // Get recipient ID
+    const recipientId = tagSnapshot.docs[0].data().userId;
+    
+    // Check if user is trying to send to themselves
+    if (recipientId === senderId) {
+      throw new functions.https.HttpsError(
+        'invalid-argument',
+        'You cannot transfer to yourself.'
+      );
+    }
+    
+    // Execute the transfer in a transaction
+    const result = await admin.firestore().runTransaction(async (transaction) => {
+      // Get sender and recipient wallet references
+      const senderWalletRef = admin.firestore().collection('wallets').doc(senderId);
+      const recipientWalletRef = admin.firestore().collection('wallets').doc(recipientId);
+      
+      // Get current wallet data
+      const senderWalletDoc = await transaction.get(senderWalletRef);
+      const recipientWalletDoc = await transaction.get(recipientWalletRef);
+      
+      // Verify sender has enough balance
+      if (!senderWalletDoc.exists) {
+        throw new functions.https.HttpsError(
+          'failed-precondition',
+          'Sender wallet not found.'
+        );
+      }
+      
+      const senderWallet = senderWalletDoc.data();
+      const senderBalance = senderWallet.talentCoins || 0;
+      
+      if (senderBalance < amount) {
+        throw new functions.https.HttpsError(
+          'failed-precondition',
+          'Insufficient balance for this transfer.'
+        );
+      }
+      
+      // Create recipient wallet if it doesn't exist
+      if (!recipientWalletDoc.exists) {
+        transaction.set(recipientWalletRef, {
+          talentCoins: amount,
+          createdAt: admin.firestore.FieldValue.serverTimestamp(),
+          updatedAt: admin.firestore.FieldValue.serverTimestamp()
+        });
+      } else {
+        // Update recipient wallet
+        const recipientWallet = recipientWalletDoc.data();
+        const recipientBalance = recipientWallet.talentCoins || 0;
+        
+        transaction.update(recipientWalletRef, {
+          talentCoins: recipientBalance + amount,
+          updatedAt: admin.firestore.FieldValue.serverTimestamp()
+        });
+      }
+      
+      // Update sender wallet
+      transaction.update(senderWalletRef, {
+        talentCoins: senderBalance - amount,
+        updatedAt: admin.firestore.FieldValue.serverTimestamp()
+      });
+      
+      // Create transaction record
+      const transactionRef = admin.firestore().collection('transactions').doc();
+      transaction.set(transactionRef, {
+        type: 'tag_transfer',
+        senderId: senderId,
+        recipientId: recipientId,
+        amount: amount,
+        note: note || '',
+        tag: tag,
+        status: 'completed',
+        createdAt: admin.firestore.FieldValue.serverTimestamp()
+      });
+      
+      return {
+        success: true,
+        transactionId: transactionRef.id
+      };
+    });
+    
+    return result;
+  } catch (error) {
+    console.error('Error processing transfer:', error);
+    throw new functions.https.HttpsError(
+      'internal',
+      error.message || 'An error occurred while processing the transfer.'
+    );
+  }
+});
+
+// Function to automatically show tag creation popup for users without tags
+function checkAndShowTagCreation() {
+    const userId = getUserId();
+    if (!userId) return;
+
+    firebase.firestore().collection('users').doc(userId).get()
+        .then(doc => {
+            if (doc.exists) {
+                const userData = doc.data();
+                
+                // If user doesn't have a tag, automatically show tag creation modal
+                if (!userData.walletTag) {
+                    // Create and show tag creation modal
+                    createTagCreationModal();
+                    
+                    // Add overlay to prevent interaction with background
+                    const overlay = document.createElement('div');
+                    overlay.className = 'tag-creation-overlay';
+                    document.body.appendChild(overlay);
+                    
+                    // Show popup with animation
+                    const tagCreationModal = document.getElementById('tagCreationModal');
+                    if (tagCreationModal) {
+                        tagCreationModal.classList.add('active');
+                        tagCreationModal.style.display = 'block';
+                    }
+                } else {
+                    // User already has a tag, display it in the wallet dashboard
+                    displayUserTag(userData.walletTag);
+                }
+            }
+        })
+        .catch(error => {
+            console.error('Error checking wallet tag:', error);
+            showToast('Failed to check wallet tag status', 'error');
+        });
+}
+
+// Function to display user's tag in the wallet dashboard
+function displayUserTag(tag) {
+    // Find a good place to insert the tag display
+    const walletDashboard = document.querySelector('.wallet-dashboard');
+    if (!walletDashboard) return;
+    
+    // Check if tag display already exists
+    let tagDisplay = document.getElementById('walletTagDisplay');
+    
+    if (!tagDisplay) {
+        // Create tag display element
+        tagDisplay = document.createElement('div');
+        tagDisplay.id = 'walletTagDisplay';
+        tagDisplay.className = 'wallet-tag-display';
+        
+        // HTML for displaying the tag
+        tagDisplay.innerHTML = `
+            <div class="tag-display-container">
+                <div class="tag-display-header">
+                    <span class="tag-label">Your Wallet Tag</span>
+                    <button class="copy-tag-btn" title="Copy tag">
+                        <i class="fas fa-copy"></i>
+                    </button>
+                </div>
+                <div class="tag-value-container">
+                    <span class="tag-value">@${tag}</span>
+                </div>
+                <div class="tag-info">
+                    <i class="fas fa-info-circle"></i>
+                    <span>Share this tag with others to receive payments</span>
+                </div>
+            </div>
+        `;
+        
+        // Find the wallet header or another suitable location
+        const walletHeader = walletDashboard.querySelector('.wallet-dashboard-header');
+        const walletBalance = walletDashboard.querySelector('.wallet-balance-container');
+        
+        // Insert after wallet balance if it exists, otherwise after header
+        if (walletBalance) {
+            walletBalance.insertAdjacentElement('afterend', tagDisplay);
+        } else if (walletHeader) {
+            walletHeader.insertAdjacentElement('afterend', tagDisplay);
+        } else {
+            // If neither exists, just prepend to the dashboard
+            walletDashboard.prepend(tagDisplay);
+        }
+        
+        // Add copy functionality
+        const copyTagBtn = tagDisplay.querySelector('.copy-tag-btn');
+        if (copyTagBtn) {
+            copyTagBtn.addEventListener('click', function() {
+                copyToClipboard('@' + tag);
+                showToast('Tag copied to clipboard!', 'success');
+            });
+        }
+    } else {
+        // Update existing tag display
+        const tagValue = tagDisplay.querySelector('.tag-value');
+        if (tagValue) {
+            tagValue.textContent = '@' + tag;
+        }
+    }
+}
+
+// Add CSS for the tag display and popup
+const tagDisplayStyles = document.createElement('style');
+tagDisplayStyles.textContent = `
+    /* Tag Display Styles */
+    .wallet-tag-display {
+        margin: 15px 0;
+        background: linear-gradient(to right, #f9f9f9, #f0f0f0);
+        border-radius: 8px;
+        padding: 2px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+    
+    .tag-display-container {
+        background: white;
+        border-radius: 6px;
+        padding: 15px;
+    }
+    
+    .tag-display-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+    
+    .tag-label {
+        font-size: 12px;
+        color: #666;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    
+    .copy-tag-btn {
+        background: none;
+        border: none;
+        color: #666;
+        cursor: pointer;
+        padding: 5px;
+        transition: color 0.2s;
+    }
+    
+    .copy-tag-btn:hover {
+        color: var(--primary-color);
+    }
+    
+    .tag-value-container {
+        background-color: #f5f5f5;
+        padding: 12px;
+        border-radius: 6px;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+    
+    .tag-value {
+        font-weight: bold;
+        font-size: 18px;
+        color: var(--primary-color);
+        letter-spacing: 1px;
+    }
+    
+    .tag-info {
+        display: flex;
+        align-items: center;
+        font-size: 12px;
+        color: #888;
+    }
+    
+    .tag-info i {
+        margin-right: 5px;
+        color: var(--primary-color);
+    }
+    
+    /* Tag Creation Overlay */
+    .tag-creation-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+    }
+    
+    #tagCreationModal {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1000;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        width: 90%;
+        max-width: 400px;
+        display: none;
+        opacity: 0;
+        transition: opacity 0.3s, transform 0.3s;
+    }
+    
+    #tagCreationModal.active {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    
+    /* Animation for tag creation popup */
+    @keyframes popIn {
+        0% {
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0.9);
+        }
+        100% {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+    }
+    
+    #tagCreationModal.active {
+        animation: popIn 0.3s forwards;
+    }
+`;
+
+document.head.appendChild(tagDisplayStyles);
+
+// Call this function after PIN verification
+function initializeAfterPinVerification() {
+    // Check if user has a tag and show creation popup if needed
+    checkAndShowTagCreation();
+}
+
+// Add this to your existing wallet initialization code
+document.addEventListener('DOMContentLoaded', function() {
+    // Listen for PIN verification
+    document.addEventListener('pinVerified', function() {
+        // Initialize tag creation and display
+        initializeAfterPinVerification();
+    });
+    
+    // For testing, you can manually trigger this event
+    // Uncomment the line below to test without PIN verification
+    // document.dispatchEvent(new CustomEvent('pinVerified'));
+});
 
 
 
