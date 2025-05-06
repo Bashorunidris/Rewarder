@@ -5044,8 +5044,21 @@ table tbody tr:hover {
                                 <div class="info-value" id="userInfoUsername">-</div>
                             </div>
                             <div class="info-group">
-                                <div class="info-label">Wallet ID</div>
-                                <div class="info-value" id="userInfoWalletId">-</div>
+                                <div class="tag-display-container">
+                                    <div class="tag-display-header">
+                                        <span class="tag-label">Your Wallet Tag</span>
+                                        <button class="copy-tag-btn" title="Copy tag">
+                                            <i class="fas fa-copy"></i>
+                                        </button>
+                                    </div>
+                                    <div class="tag-value-container">
+                                        <span class="tag-value">@${tag}</span>
+                                    </div>
+                                    <div class="tag-info">
+                                        <i class="fas fa-info-circle"></i>
+                                        <span>Share this tag with others to receive payments</span>
+                                    </div>
+                                </div>
                             </div>
                             <div class="info-group">
                                 <div class="info-label">Current Balance</div>
@@ -5548,15 +5561,21 @@ table tbody tr:hover {
                 <button class="close-wallet" id="closeWalletDashboardBtn">&times;</button>
             </div>
             
-            <div class="wallet-info">
-                <div class="wallet-id-container">
-                    <span class="wallet-id-label">Wallet ID:</span>
-                    <span class="wallet-id" id="walletIdDisplay">WL123456789</span>
-                    <button class="copy-btn" id="copyWalletIdBtn">
+             <div class="tag-display-container">
+                <div class="tag-display-header">
+                    <span class="tag-label">Your Wallet Tag</span>
+                    <button class="copy-tag-btn" title="Copy tag">
                         <i class="fas fa-copy"></i>
                     </button>
                 </div>
-                
+                <div class="tag-value-container">
+                    <span class="tag-value">@${tag}</span>
+                </div>
+                <div class="tag-info">
+                    <i class="fas fa-info-circle"></i>
+                    <span>Share this tag with others to receive payments</span>
+                </div>
+               
                 <div class="balance-cards">
                     <div class="balance-card talent-coin">
                         <div class="balance-icon">
