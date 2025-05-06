@@ -6265,11 +6265,12 @@ document.head.appendChild(dashboardStyles);
 console.log('Firebase Auth initialized');
 
 document.addEventListener('DOMContentLoaded', function() {
+    // Get DOM elements
     const loginForm = document.getElementById('loginFormElement');
     const loginEmail = document.getElementById('loginEmail');
     const loginPassword = document.getElementById('loginPassword');
     const togglePassword = document.querySelector('.toggle-password');
-    const dashboard = document.getElementById('dashboard');
+    const adminDashboard = document.getElementById('dashboard'); // Admin dashboard
     const authContainer = document.querySelector('.auth-container');
     
     // Admin credentials
@@ -6277,49 +6278,194 @@ document.addEventListener('DOMContentLoaded', function() {
     const ADMIN_PASSWORD = 'BISA19';
     
     // Toggle password visibility
-    togglePassword.addEventListener('click', function() {
-        const type = loginPassword.getAttribute('type') === 'password' ? 'text' : 'password';
-        loginPassword.setAttribute('type', type);
-        this.classList.toggle('fa-eye');
-        this.classList.toggle('fa-eye-slash');
-    });
+    if (togglePassword) {
+        togglePassword.addEventListener('click', function() {
+            const type = loginPassword.getAttribute('type') === 'password' ? 'text' : 'password';
+            loginPassword.setAttribute('type', type);
+            this.classList.toggle('fa-eye');
+            this.classList.toggle('fa-eye-slash');
+        });
+    }
     
     // Handle form submission
-    loginForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        const email = loginEmail.value.trim();
-        const password = loginPassword.value;
-        
-        // Simple validation
-        if (!email || !password) {
-            showError('Please enter both email and password');
-            return;
-        }
-        
-        // Check admin credentials
-        if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
-            // Login successful
-            loginSuccess();
-        } else {
-            // Login failed
-            showError('Invalid email or password');
-        }
-    });
+    if (loginForm) {
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = loginEmail.value.trim();
+            const password = loginPassword.value;
+            const rememberMe = document.getElementById('remember') ? document.getElementById('remember').checked : false;
+            
+            // Simple validation
+            if (!email || !password) {
+                showError('Please enter both email and password');
+                return;
+            }
+            
+            // Show loading state
+            const submitBtn = this.querySelector('.auth-btn');
+            setButtonLoading(submitBtn, true);
+            
+            // Check if admin credentials
+            if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
+                // Admin login successful
+                setTimeout(() => {
+                    // Store admin session
+                    sessionStorage.setItem('adminLoggedIn', 'true');
+                    sessionStorage.setItem('adminEmail', ADMIN_EMAIL);
+                    
+                    // Hide login form and show admin dashboard
+                    authContainer.classList.add('hidden');
+                    adminDashboard.classList.remove('hidden');
+                    
+                    // Update moderator name in dashboard
+                    const moderatorName = document.querySelector('.moderator-name');
+                    if (moderatorName) {
+                        moderatorName.textContent = 'Admin';
+                    }
+                    
+                    // Reset form
+                    loginForm.reset();
+                    setButtonLoading(submitBtn, false);
+                    
+                    // Remove any error messages
+                    const existingError = document.querySelector('.error-message');
+                    if (existingError) {
+                        existingError.remove();
+                    }
+                    
+                    showToast('Admin login successful');
+                }, 1000);
+            } else {
+                // Not admin, try Firebase auth
+                const persistence = rememberMe
+                    ? firebase.auth.Auth.Persistence.LOCAL
+                    : firebase.auth.Auth.Persistence.SESSION;
+                
+                auth.setPersistence(persistence)
+                    .then(() => {
+                        return auth.signInWithEmailAndPassword(email, password);
+                    })
+                    .then((userCredential) => {
+                        const user = userCredential.user;
+                        
+                        // Update last login timestamp
+                        db.collection('users').doc(user.uid).update({
+                            lastLogin: firebase.firestore.FieldValue.serverTimestamp()
+                        }).catch(err => console.log('Error updating last login:', err));
+                        
+                        showToast('Successfully signed in!');
+                        navigateToDashboard(user);
+                        
+                        // Reset form
+                        loginForm.reset();
+                    })
+                    .catch((error) => {
+                        console.error('Login error:', error);
+                        showToast(error.message, 'error');
+                    })
+                    .finally(() => {
+                        setButtonLoading(submitBtn, false);
+                    });
+            }
+        });
+    }
     
     // Google sign-in button
     const googleBtn = document.querySelector('.google-btn');
-    googleBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        showError('Please use admin credentials to access the dashboard');
-    });
+    if (googleBtn) {
+        googleBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // For admin dashboard, prevent Google login
+            if (window.location.hash === '#admin') {
+                showToast('Please use admin credentials to access the dashboard', 'error');
+                return;
+            }
+            
+            const provider = new firebase.auth.GoogleAuthProvider();
+            provider.addScope('profile');
+            provider.addScope('email');
+            
+            auth.signInWithPopup(provider)
+                .then((result) => {
+                    // Save user data to Firestore
+                    const user = result.user;
+                    saveUserData(user);
+                    
+                    // Show success message
+                    showToast('Successfully signed in with Google!');
+                    
+                    // Navigate to dashboard
+                    navigateToDashboard(user);
+                })
+                .catch((error) => {
+                    console.error('Google sign in error:', error);
+                    showToast(error.message, 'error');
+                });
+        });
+    }
     
     // Forgot password link
     const forgotPasswordLink = document.querySelector('.forgot-password');
-    forgotPasswordLink.addEventListener('click', function(e) {
-        e.preventDefault();
-        alert('Please contact system administrator to reset admin password');
-    });
+    if (forgotPasswordLink) {
+        forgotPasswordLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // For admin dashboard
+            if (window.location.hash === '#admin') {
+                showToast('Please contact system administrator to reset admin password', 'error');
+                return;
+            }
+            
+            const email = document.getElementById('loginEmail').value;
+            if (!email) {
+                showToast('Please enter your email address first', 'error');
+                return;
+            }
+            
+            auth.sendPasswordResetEmail(email)
+                .then(() => {
+                    showToast('Password reset email sent. Check your inbox.');
+                })
+                .catch((error) => {
+                    console.error('Password reset error:', error);
+                    showToast(error.message, 'error');
+                });
+        });
+    }
+    
+    // Handle logout for admin dashboard
+    const logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', function() {
+            // Clear admin session
+            sessionStorage.removeItem('adminLoggedIn');
+            sessionStorage.removeItem('adminEmail');
+            
+            // Show login form and hide admin dashboard
+            adminDashboard.classList.add('hidden');
+            authContainer.classList.remove('hidden');
+            
+            showToast('Admin logged out successfully');
+        });
+    }
+    
+    // Check if admin is already logged in (on page refresh)
+    function checkAdminSession() {
+        const adminLoggedIn = sessionStorage.getItem('adminLoggedIn');
+        if (adminLoggedIn === 'true') {
+            // Hide login form and show admin dashboard
+            if (authContainer) authContainer.classList.add('hidden');
+            if (adminDashboard) adminDashboard.classList.remove('hidden');
+            
+            // Update moderator name
+            const moderatorName = document.querySelector('.moderator-name');
+            if (moderatorName) {
+                moderatorName.textContent = 'Admin';
+            }
+        }
+    }
     
     // Show error message
     function showError(message) {
@@ -6344,75 +6490,25 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 500);
     }
     
-    // Handle successful login
-    function loginSuccess() {
-        // Add loading state
-        const submitButton = loginForm.querySelector('.auth-btn');
-        submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing in...';
-        submitButton.disabled = true;
+    // Set button loading state
+    function setButtonLoading(button, isLoading) {
+        if (!button) return;
         
-        // Simulate loading (would be an actual API call in production)
-        setTimeout(() => {
-            // Store admin session
-            sessionStorage.setItem('adminLoggedIn', 'true');
-            sessionStorage.setItem('adminEmail', ADMIN_EMAIL);
-            
-            // Hide login form and show dashboard
-            authContainer.classList.add('hidden');
-            dashboard.classList.remove('hidden');
-            
-            // Update moderator name in dashboard
-            const moderatorName = document.querySelector('.moderator-name');
-            if (moderatorName) {
-                moderatorName.textContent = 'Admin';
-            }
-            
-            // Reset form
-            loginForm.reset();
-            submitButton.innerHTML = 'Sign In';
-            submitButton.disabled = false;
-            
-            // Remove any error messages
-            const existingError = document.querySelector('.error-message');
-            if (existingError) {
-                existingError.remove();
-            }
-        }, 1500);
-    }
-    
-    // Check if admin is already logged in (on page refresh)
-    function checkAdminSession() {
-        const adminLoggedIn = sessionStorage.getItem('adminLoggedIn');
-        if (adminLoggedIn === 'true') {
-            authContainer.classList.add('hidden');
-            dashboard.classList.remove('hidden');
-            
-            // Update moderator name
-            const moderatorName = document.querySelector('.moderator-name');
-            if (moderatorName) {
-                moderatorName.textContent = 'Admin';
-            }
+        if (isLoading) {
+            button.classList.add('loading');
+            const originalText = button.textContent;
+            button.setAttribute('data-original-text', originalText);
+            button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing in...';
+            button.disabled = true;
+        } else {
+            button.classList.remove('loading');
+            const originalText = button.getAttribute('data-original-text') || 'Sign In';
+            button.textContent = originalText;
+            button.disabled = false;
         }
     }
     
-    // Handle logout
-    const logoutBtn = document.getElementById('logoutBtn');
-    if (logoutBtn) {
-        logoutBtn.addEventListener('click', function() {
-            // Clear session
-            sessionStorage.removeItem('adminLoggedIn');
-            sessionStorage.removeItem('adminEmail');
-            
-            // Show login form and hide dashboard
-            dashboard.classList.add('hidden');
-            authContainer.classList.remove('hidden');
-        });
-    }
-    
-    // Check admin session on page load
-    checkAdminSession();
-    
-    // Add some basic CSS for the error message and animation
+    // Add CSS for error message and animations
     const style = document.createElement('style');
     style.textContent = `
         .error-message {
@@ -6438,690 +6534,27 @@ document.addEventListener('DOMContentLoaded', function() {
         .hidden {
             display: none;
         }
+        
+        .auth-btn.loading {
+            position: relative;
+            color: transparent !important;
+            pointer-events: none;
+        }
+        
+        .auth-btn.loading i {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+        }
     `;
     document.head.appendChild(style);
+    
+    // Check admin session on page load
+    checkAdminSession();
 });
 
-document.addEventListener('DOMContentLoaded', function() {
-    // Initialize dashboard functionality
-    initializeDashboard();
-    
-    // Set up section navigation
-    setupSectionNavigation();
-    
-    // Initialize empty states and placeholders
-    setupEmptyStates();
-    
-    // Set up talent coin dispenser form
-    setupCoinDispenserForm();
-    
-    // Set up filters and search functionality
-    setupFiltersAndSearch();
-    
-    // Set up tabs in transfer support section
-    setupTransferTabs();
-    
-    // Initialize charts in fees reporter section
-    initializeCharts();
-    
-    // Set up pagination for fee transactions
-    setupPagination();
-    
-    // Set up export functionality
-    setupExport();
-});
-
-// Initialize dashboard with mock data
-function initializeDashboard() {
-    // Set current date in header
-    const today = new Date();
-    const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-    
-    // Update summary cards with mock data
-    document.getElementById('todayBuyRequests').textContent = '12';
-    document.getElementById('todayWithdrawals').textContent = '8';
-    document.getElementById('todayTransfers').textContent = '24';
-    document.getElementById('todayIssues').textContent = '3';
-    
-    // Add some recent activity items
-    const recentActivityList = document.getElementById('recentActivityList');
-    if (recentActivityList) {
-        // Clear empty state if it exists
-        recentActivityList.innerHTML = '';
-        
-        // Add mock activity items
-        const activities = [
-            { type: 'buy', user: 'john.doe', amount: '500', time: '10 minutes ago' },
-            { type: 'withdraw', user: 'sarah.smith', amount: '250', time: '25 minutes ago' },
-            { type: 'transfer', user: 'mike.jones', amount: '100', time: '1 hour ago' },
-            { type: 'issue', user: 'lisa.wong', description: 'Payment not received', time: '2 hours ago' }
-        ];
-        
-        activities.forEach(activity => {
-            const activityItem = document.createElement('div');
-            activityItem.className = 'activity-item';
-            
-            let icon, title, description;
-            
-            switch(activity.type) {
-                case 'buy':
-                    icon = 'fa-coins';
-                    title = 'Coin Purchase';
-                    description = `${activity.user} purchased ${activity.amount} coins`;
-                    break;
-                case 'withdraw':
-                    icon = 'fa-money-bill-wave';
-                    title = 'Withdrawal';
-                    description = `${activity.user} withdrew ${activity.amount} coins`;
-                    break;
-                case 'transfer':
-                    icon = 'fa-exchange-alt';
-                    title = 'Transfer';
-                    description = `${activity.user} transferred ${activity.amount} coins`;
-                    break;
-                case 'issue':
-                    icon = 'fa-exclamation-circle';
-                    title = 'Issue Reported';
-                    description = `${activity.user}: ${activity.description}`;
-                    break;
-            }
-            
-            activityItem.innerHTML = `
-                <div class="activity-icon">
-                    <i class="fas ${icon}"></i>
-                </div>
-                <div class="activity-details">
-                    <div class="activity-title">${title}</div>
-                    <div class="activity-description">${description}</div>
-                    <div class="activity-time">${activity.time}</div>
-                </div>
-            `;
-            
-            recentActivityList.appendChild(activityItem);
-        });
-    }
-    
-    // Update fee summary values
-    document.getElementById('totalFees').textContent = '$1,245.50';
-    document.getElementById('todayFees').textContent = '$78.25';
-    document.getElementById('weekFees').textContent = '$342.75';
-    document.getElementById('monthFees').textContent = '$987.30';
-    
-    // Populate fee transactions table with mock data
-    const feeTransactionsTable = document.getElementById('feeTransactionsTable');
-    if (feeTransactionsTable) {
-        const transactions = [
-            { id: 'TX-12345', date: '2023-05-15', user: 'john.doe', type: 'Transfer', amount: '$2.50' },
-            { id: 'TX-12346', date: '2023-05-15', user: 'sarah.smith', type: 'Withdrawal', amount: '$5.00' },
-            { id: 'TX-12347', date: '2023-05-14', user: 'mike.jones', type: 'Transfer', amount: '$1.00' },
-            { id: 'TX-12348', date: '2023-05-14', user: 'lisa.wong', type: 'Withdrawal', amount: '$5.00' },
-            { id: 'TX-12349', date: '2023-05-13', user: 'alex.brown', type: 'Transfer', amount: '$2.50' }
-        ];
-        
-        transactions.forEach(tx => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${tx.id}</td>
-                <td>${tx.date}</td>
-                <td>${tx.user}</td>
-                <td>${tx.type}</td>
-                <td>${tx.amount}</td>
-            `;
-            feeTransactionsTable.appendChild(row);
-        });
-    }
-}
-
-// Set up section navigation
-function setupSectionNavigation() {
-    const navLinks = document.querySelectorAll('.section-navigation a');
-    const sections = document.querySelectorAll('.feature-section');
-    
-    navLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            // Remove active class from all links
-            navLinks.forEach(l => l.classList.remove('active'));
-            
-            // Add active class to clicked link
-            this.classList.add('active');
-            
-            // Get the target section id
-            const targetId = this.getAttribute('href').substring(1);
-            
-            // Hide all sections
-            sections.forEach(section => {
-                section.style.display = 'none';
-            });
-            
-            // Show target section
-            const targetSection = document.getElementById(targetId);
-            if (targetSection) {
-                targetSection.style.display = 'block';
-            }
-        });
-    });
-    
-    // Show first section by default
-    if (sections.length > 0) {
-        sections.forEach((section, index) => {
-            if (index === 0) {
-                section.style.display = 'block';
-            } else {
-                section.style.display = 'none';
-            }
-        });
-    }
-}
-
-// Set up empty states and placeholders
-function setupEmptyStates() {
-    // This function would handle showing/hiding empty states based on data
-    // For now, we'll leave the empty states visible in sections without mock data
-}
-
-// Set up talent coin dispenser form
-function setupCoinDispenserForm() {
-    const transactionReasonSelect = document.getElementById('transactionReason');
-    const otherReasonGroup = document.getElementById('otherReasonGroup');
-    const userEmailInput = document.getElementById('userEmail');
-    const refreshUserInfoBtn = document.getElementById('refreshUserInfo');
-    const dispenseBtn = document.getElementById('dispenseBtn');
-    
-    if (transactionReasonSelect) {
-        transactionReasonSelect.addEventListener('change', function() {
-            if (this.value === 'other') {
-                otherReasonGroup.style.display = 'block';
-            } else {
-                otherReasonGroup.style.display = 'none';
-            }
-        });
-    }
-    
-    if (refreshUserInfoBtn) {
-        refreshUserInfoBtn.addEventListener('click', function() {
-            const email = userEmailInput.value.trim();
-            if (email) {
-                // Simulate loading user info
-                this.querySelector('i').classList.add('fa-spin');
-                
-                setTimeout(() => {
-                    this.querySelector('i').classList.remove('fa-spin');
-                    
-                    // Update user info with mock data
-                    document.getElementById('userInfoUsername').textContent = 'John Doe';
-                    document.getElementById('userInfoWalletId').textContent = 'WALLET-12345';
-                    document.getElementById('userInfoBalance').textContent = '500 coins';
-                    document.getElementById('userInfoStatus').textContent = 'Active';
-                    
-                    // Update transaction list
-                    const transactionsList = document.getElementById('userTransactionsList');
-                    if (transactionsList) {
-                        transactionsList.innerHTML = `
-                            <div class="transaction-item">
-                                <div class="transaction-icon credit">
-                                    <i class="fas fa-plus-circle"></i>
-                                </div>
-                                <div class="transaction-details">
-                                    <div class="transaction-title">Purchase</div>
-                                    <div class="transaction-amount">+100 coins</div>
-                                    <div class="transaction-time">2023-05-15 10:30 AM</div>
-                                </div>
-                            </div>
-                            <div class="transaction-item">
-                                <div class="transaction-icon debit">
-                                    <i class="fas fa-minus-circle"></i>
-                                </div>
-                                <div class="transaction-details">
-                                    <div class="transaction-title">Transfer</div>
-                                    <div class="transaction-amount">-50 coins</div>
-                                    <div class="transaction-time">2023-05-14 3:45 PM</div>
-                                </div>
-                            </div>
-                        `;
-                    }
-                }, 1000);
-            } else {
-                alert('Please enter a user email');
-            }
-        });
-    }
-    
-    if (dispenseBtn) {
-        dispenseBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            const email = userEmailInput.value.trim();
-            const amount = document.getElementById('coinAmount').value;
-            const transactionType = document.querySelector('input[name="transactionType"]:checked').value;
-            const reason = transactionReasonSelect.value;
-            
-            if (!email || !amount || !reason) {
-                alert('Please fill in all required fields');
-                return;
-            }
-            
-            // Show loading state
-            this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
-            this.disabled = true;
-            
-            // Simulate processing
-            setTimeout(() => {
-                // Show success message
-                alert(`Successfully ${transactionType === 'credit' ? 'credited' : 'debited'} ${amount} coins to user ${email}`);
-                
-                // Reset form
-                document.getElementById('coinAmount').value = '';
-                document.getElementById('transactionNotes').value = '';
-                transactionReasonSelect.value = '';
-                otherReasonGroup.style.display = 'none';
-                document.getElementById('otherReason').value = '';
-                
-                // Reset button
-                this.innerHTML = 'Process Transaction';
-                this.disabled = false;
-                
-                // Update user balance (mock)
-                const currentBalance = document.getElementById('userInfoBalance');
-                if (currentBalance) {
-                    const balanceText = currentBalance.textContent;
-                    const currentAmount = parseInt(balanceText);
-                    const newAmount = transactionType === 'credit' ? 
-                        currentAmount + parseInt(amount) : 
-                        currentAmount - parseInt(amount);
-                    currentBalance.textContent = `${newAmount} coins`;
-                }
-            }, 1500);
-        });
-    }
-}
-
-// Set up filters and search functionality
-function setupFiltersAndSearch() {
-    // Set up filter dropdowns
-    const filterBtns = document.querySelectorAll('.filter-btn');
-    
-    filterBtns.forEach(btn => {
-        btn.addEventListener('click', function() {
-            const dropdown = this.nextElementSibling;
-            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
-        });
-    });
-    
-    // Close dropdowns when clicking outside
-    document.addEventListener('click', function(e) {
-        if (!e.target.matches('.filter-btn') && !e.target.closest('.dropdown-menu')) {
-            const dropdowns = document.querySelectorAll('.dropdown-menu');
-            dropdowns.forEach(dropdown => {
-                dropdown.style.display = 'none';
-            });
-        }
-    });
-    
-    // Set up date range filter
-    const dateRangeFilter = document.getElementById('dateRangeFilter');
-    const customDateRange = document.getElementById('customDateRange');
-    
-    if (dateRangeFilter) {
-        dateRangeFilter.addEventListener('change', function() {
-            if (this.value === 'custom') {
-                customDateRange.style.display = 'flex';
-            } else {
-                customDateRange.style.display = 'none';
-            }
-        });
-    }
-}
-
-// Set up tabs in transfer support section
-function setupTransferTabs() {
-    const tabs = document.querySelectorAll('.transfer-tabs .tab');
-    const tabContents = document.querySelectorAll('.tab-content');
-    
-    tabs.forEach(tab => {
-        tab.addEventListener('click', function() {
-            // Remove active class from all tabs
-            tabs.forEach(t => t.classList.remove('active'));
-            
-            // Add active class to clicked tab
-            this.classList.add('active');
-            
-            // Get the target tab content id
-            const targetId = this.getAttribute('data-tab');
-            
-            // Hide all tab contents
-            tabContents.forEach(content => {
-                content.classList.remove('active');
-            });
-            
-            // Show target tab content
-            const targetContent = document.getElementById(targetId);
-            if (targetContent) {
-                targetContent.classList.add('active');
-            }
-        });
-    });
-}
-
-// Initialize charts in fees reporter section
-function initializeCharts() {
-    // Check if Chart.js is loaded
-    if (typeof Chart === 'undefined') {
-        console.warn('Chart.js is not loaded. Charts will not be displayed.');
-        return;
-    }
-    
-    // Fee trends chart
-    const feeTrendsChart = document.getElementById('feeTrendsChart');
-    if (feeTrendsChart) {
-        new Chart(feeTrendsChart, {
-            type: 'line',
-            data: {
-                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-                datasets: [{
-                    label: 'Fee Revenue',
-                    data: [65, 59, 80, 81, 56, 55],
-                    fill: false,
-                    borderColor: '#4e73df',
-                    tension: 0.1
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false
-            }
-        });
-    }
-    
-    // Fee distribution chart
-    const feeDistributionChart = document.getElementById('feeDistributionChart');
-    if (feeDistributionChart) {
-        new Chart(feeDistributionChart, {
-            type: 'doughnut',
-            data: {
-                labels: ['Transfer Fees', 'Withdrawal Fees', 'Other Fees'],
-                datasets: [{
-                    data: [60, 30, 10],
-                    backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc']
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false
-            }
-        });
-    }
-}
-
-// Set up pagination for fee transactions
-function setupPagination() {
-    const prevPageBtn = document.getElementById('prevPage');
-    const nextPageBtn = document.getElementById('nextPage');
-    const pageNumbers = document.getElementById('pageNumbers');
-    
-    if (!prevPageBtn || !nextPageBtn || !pageNumbers) {
-        return;
-    }
-    
-    // Mock pagination data
-    const totalPages = 5;
-    let currentPage = 1;
-    
-    // Generate page numbers
-    updatePagination();
-    
-    // Previous page button
-    prevPageBtn.addEventListener('click', function() {
-        if (currentPage > 1) {
-            currentPage--;
-            updatePagination();
-        }
-    });
-    
-    // Next page button
-    nextPageBtn.addEventListener('click', function() {
-        if (currentPage < totalPages) {
-            currentPage++;
-            updatePagination();
-        }
-    });
-    
-    // Update pagination UI
-    function updatePagination() {
-        // Clear page numbers
-        pageNumbers.innerHTML = '';
-        
-        // Generate page numbers
-        for (let i = 1; i <= totalPages; i++) {
-            const pageBtn = document.createElement('button');
-            pageBtn.textContent = i;
-            pageBtn.className = i === currentPage ? 'active' : '';
-            
-            pageBtn.addEventListener('click', function() {
-                currentPage = i;
-                updatePagination();
-            });
-            
-            pageNumbers.appendChild(pageBtn);
-        }
-        
-        // Update button states
-        prevPageBtn.disabled = currentPage === 1;
-        nextPageBtn.disabled = currentPage === totalPages;
-        
-        // In a real application, you would fetch data for the current page here
-        // For now, we'll just simulate it by showing a loading indicator
-        const tableBody = document.getElementById('feeTransactionsTable');
-        if (tableBody) {
-            tableBody.innerHTML = '<tr><td colspan="5" class="loading-data">Loading data for page ' + currentPage + '...</td></tr>';
-            
-            // Simulate loading data
-            setTimeout(() => {
-                // Generate mock data for the current page
-                tableBody.innerHTML = '';
-                
-                const startIndex = (currentPage - 1) * 5;
-                for (let i = 1; i <= 5; i++) {
-                    const index = startIndex + i;
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td>TX-${10000 + index}</td>
-                        <td>${new Date(2023, 4, 15 - index).toISOString().split('T')[0]}</td>
-                        <td>user${index}@example.com</td>
-                        <td>${index % 2 === 0 ? 'Transfer' : 'Withdrawal'}</td>
-                        <td>$${(Math.random() * 10).toFixed(2)}</td>
-                    `;
-                    tableBody.appendChild(row);
-                }
-            }, 500);
-        }
-    }
-}
-
-// Set up export functionality
-function setupExport() {
-    const exportBtn = document.getElementById('exportFeesBtn');
-    
-    if (exportBtn) {
-        exportBtn.addEventListener('click', function() {
-            // Show loading state
-            this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Exporting...';
-            this.disabled = true;
-            
-            // Simulate export process
-            setTimeout(() => {
-                // Reset button
-                this.innerHTML = '<i class="fas fa-download"></i> Export';
-                this.disabled = false;
-                
-                // Create a mock CSV content
-                const csvContent = 'Transaction ID,Date,User,Type,Amount\nTX-10001,2023-05-15,user1@example.com,Transfer,$2.50\nTX-10002,2023-05-14,user2@example.com,Withdrawal,$5.00';
-                
-                // Create a download link
-                const blob = new Blob([csvContent], { type: 'text/csv' });
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = 'fee_transactions_export.csv';
-                
-                // Trigger download
-                document.body.appendChild(a);
-                a.click();
-                
-                // Clean up
-                setTimeout(() => {
-                    document.body.removeChild(a);
-                    URL.revokeObjectURL(url);
-                }, 100);
-            }, 1500);
-        });
-    }
-}
-
-// Add event listeners for document clicks to close dropdowns
-document.addEventListener('click', function(e) {
-    // Close filter dropdowns when clicking outside
-    if (!e.target.closest('.filter-dropdown')) {
-        const dropdowns = document.querySelectorAll('.dropdown-menu');
-        dropdowns.forEach(dropdown => {
-            dropdown.style.display = 'none';
-        });
-    }
-});
-
-// Add global error handling for the dashboard
-window.addEventListener('error', function(e) {
-    console.error('Dashboard error:', e.error);
-    // In a production environment, you might want to log this to a service
-});
-
-// Add session timeout functionality
-function setupSessionTimeout() {
-    let inactivityTime = 0;
-    const timeoutDuration = 30 * 60; // 30 minutes in seconds
-    
-    // Reset timer on user activity
-    const resetTimer = () => {
-        inactivityTime = 0;
-    };
-    
-    // Check for inactivity
-    const checkInactivity = () => {
-        inactivityTime++;
-        
-        // Show warning at 25 minutes
-        if (inactivityTime === 25 * 60) {
-            if (confirm('Your session will expire in 5 minutes due to inactivity. Do you want to stay logged in?')) {
-                resetTimer();
-            }
-        }
-        
-        // Log out at 30 minutes
-        if (inactivityTime >= timeoutDuration) {
-            alert('Your session has expired due to inactivity. Please log in again.');
-            // Log out user
-            sessionStorage.removeItem('adminLoggedIn');
-            sessionStorage.removeItem('adminEmail');
-            
-            // Redirect to login
-            window.location.reload();
-        }
-    };
-    
-    // Set up activity listeners
-    ['mousedown', 'keypress', 'scroll', 'touchstart'].forEach(event => {
-        document.addEventListener(event, resetTimer, true);
-    });
-    
-    // Check inactivity every second
-    setInterval(checkInactivity, 1000);
-}
-
-// Initialize session timeout
-setupSessionTimeout();
-
-// Add responsive design helper
-function setupResponsiveDesign() {
-    const checkScreenSize = () => {
-        const dashboard = document.getElementById('dashboard');
-        if (!dashboard) return;
-        
-        if (window.innerWidth < 768) {
-            dashboard.classList.add('mobile-view');
-        } else {
-            dashboard.classList.remove('mobile-view');
-        }
-    };
-    
-    // Check on load and resize
-    window.addEventListener('resize', checkScreenSize);
-    checkScreenSize();
-}
-
-// Initialize responsive design
-setupResponsiveDesign();
-
-// Add some CSS for loading and mobile view
-const style = document.createElement('style');
-style.textContent = `
-    .loading-data {
-        text-align: center;
-        padding: 20px;
-        color: #6c757d;
-    }
-    
-    .mobile-view .section-navigation {
-        overflow-x: auto;
-        white-space: nowrap;
-        padding-bottom: 10px;
-    }
-    
-    .mobile-view .summary-cards,
-    .mobile-view .charts-container,
-    .mobile-view .dispenser-container {
-        flex-direction: column;
-    }
-    
-    .mobile-view .summary-card,
-    .mobile-view .chart-card {
-        width: 100%;
-        margin-bottom: 15px;
-    }
-    
-    .mobile-view .table-container {
-        overflow-x: auto;
-    }
-    
-    @media (max-width: 768px) {
-        .app-header {
-            flex-direction: column;
-            align-items: flex-start;
-        }
-        
-        .header-right {
-            margin-top: 10px;
-            width: 100%;
-            justify-content: space-between;
-        }
-        
-        .section-navigation a {
-            padding: 8px 12px;
-            font-size: 14px;
-        }
-        
-        .actions {
-            flex-direction: column;
-        }
-        
-        .search-container,
-        .filter-container {
-            width: 100%;
-            margin-bottom: 10px;
-        }
-    }
-`;
-document.head.appendChild(style);
 
 </script>
 </body>
