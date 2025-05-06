@@ -1763,13 +1763,13 @@ input:checked + .slider:before {
     --warning-color: #f39c12;
     --success-color: #2ecc71;
     --info-color: #3498db;
-    --text-color: #0f0e0e;
-    --text-light: #0a0909;
-    --text-lighter: #131111;
-    --bg-color: #0c0b0b;
-    --bg-light: #f8f9fa;
-    --bg-dark: #eee;
-    --border-color: #ddd;
+    --text-color: #f0ecec;
+    --text-light: #fcf9f9;
+    --text-lighter: #f7eeee;
+    --bg-color: #111010;
+    --bg-light: #0f0f0f;
+    --bg-dark: #0e0d0d;
+    --border-color: #f8f7f7;
     --border-radius: 10px;
     --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     --transition: all 0.3s ease;
@@ -4840,7 +4840,7 @@ table tbody tr:hover {
                         </div>
                     </div>
                     <div class="search-box">
-                        <input type="text" placeholder="Search by username or wallet ID">
+                        <input type="text" placeholder="Search by username or tag">
                         <i class="fas fa-search"></i>
                     </div>
                 </div>
@@ -6590,15 +6590,7 @@ function saveUserData(user) {
     isAdmin: isAdmin(user.email)
   };
   
-  // Create wallet data
-  const walletData = {
-    uid: user.uid,
-    balance: 0,
-    commissionBalance: 0,
-    walletId: generateWalletId(),
-    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-    transactions: []
-  };
+  
   
   // Save user data
   db.collection('users').doc(user.uid).set(userData, { merge: true })
@@ -6616,12 +6608,6 @@ function saveUserData(user) {
     });
 }
 
-// Generate wallet ID
-function generateWalletId() {
-  const prefix = 'WL';
-  const randomDigits = Math.floor(100000 + Math.random() * 900000); // 6 digits
-  return `${prefix}${randomDigits}`;
-}
 
 // Logout function
 function logout() {
@@ -8958,7 +8944,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-
 document.addEventListener('DOMContentLoaded', function() {
     // DOM Elements
     const walletBtn = document.querySelector('.wallet-btn');
@@ -8977,9 +8962,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Wallet Dashboard Elements
     const walletDashboard = document.getElementById('walletDashboard');
-    const walletIdDisplay = document.getElementById('walletIdDisplay');
-    const copyWalletIdBtn = document.getElementById('copyWalletIdBtn');
-    const talentCoinBalance = document.getElementById('talentCoinBalance');
+   const talentCoinBalance = document.getElementById('talentCoinBalance');
     const nairaEquivalent = document.getElementById('nairaEquivalent');
     const commissionBalance = document.getElementById('commissionBalance');
     
@@ -9026,9 +9009,6 @@ document.addEventListener('DOMContentLoaded', function() {
         forgotPinBtn.addEventListener('click', handleForgotPin);
     }
     
-    if (copyWalletIdBtn) {
-        copyWalletIdBtn.addEventListener('click', copyWalletId);
-    }
     
     if (saveBackupBtn) {
         saveBackupBtn.addEventListener('click', saveBackupEmail);
@@ -9787,10 +9767,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (doc.exists) {
                     const userData = doc.data();
                     
-                    // Set wallet ID
-                    if (walletIdDisplay) {
-                        walletIdDisplay.textContent = userData.walletId || 'WL' + userId.substring(0, 8);
-                    }
+                    
                     
                     // Get wallet balance
                     return firebase.firestore().collection('wallets').doc(userId).get();
@@ -9840,39 +9817,8 @@ document.addEventListener('DOMContentLoaded', function() {
         setupRealTimeUpdates();
     }
     
-    // Copy wallet ID
-    function copyWalletId() {
-        if (!walletIdDisplay) return;
-        
-        const walletId = walletIdDisplay.textContent;
-        
-        // Copy to clipboard
-        navigator.clipboard.writeText(walletId)
-            .then(() => {
-                showToast('Wallet ID copied to clipboard', 'success');
-            })
-            .catch(err => {
-                console.error('Could not copy text: ', err);
-                
-                // Fallback for older browsers
-                const textArea = document.createElement('textarea');
-                textArea.value = walletId;
-                textArea.style.position = 'fixed';
-                document.body.appendChild(textArea);
-                textArea.focus();
-                textArea.select();
-                
-                try {
-                    const successful = document.execCommand('copy');
-                    showToast(successful ? 'Wallet ID copied to clipboard' : 'Failed to copy wallet ID', successful ? 'success' : 'error');
-                } catch (err) {
-                    showToast('Failed to copy wallet ID', 'error');
-                }
-                
-                document.body.removeChild(textArea);
-            });
-    }
-    
+               
+             
     // Helper function to check if user is logged in
     function isUserLoggedIn() {
         return firebase.auth().currentUser !== null;
@@ -10322,6 +10268,1861 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
+// Add tag creation functionality to the wallet system
+function initializeTagCreation() {
+    // Check if user already has a tag
+    const userId = getUserId();
+    if (!userId) return;
+
+    firebase.firestore().collection('users').doc(userId).get()
+        .then(doc => {
+            if (doc.exists) {
+                const userData = doc.data();
+                
+                // If user doesn't have a tag, show tag creation screen
+                if (!userData.walletTag) {
+                    if (walletDashboard) {
+                        // Create and show tag creation modal
+                        createTagCreationModal();
+                    }
+                } else {
+                    // User already has a tag, store it in session for easy access
+                    sessionStorage.setItem('userWalletTag', userData.walletTag);
+                }
+            }
+        })
+        .catch(error => {
+            console.error('Error checking wallet tag:', error);
+            showToast('Failed to check wallet tag status', 'error');
+        });
+}
+
+// Create tag creation modal
+function createTagCreationModal() {
+    // Create modal if it doesn't exist
+    let tagCreationModal = document.getElementById('tagCreationModal');
+    
+    if (!tagCreationModal) {
+        tagCreationModal = document.createElement('div');
+        tagCreationModal.id = 'tagCreationModal';
+        tagCreationModal.className = 'wallet-screen';
+        tagCreationModal.innerHTML = `
+            <div class="wallet-header">
+                <h2>Create Wallet Tag</h2>
+            </div>
+            
+            <div class="tag-creation-content">
+                <div class="pin-icon">
+                    <i class="fas fa-tag"></i>
+                </div>
+                <h3>Create Your Wallet Tag</h3>
+                <p>Your wallet tag is a unique identifier that others can use to send you money.</p>
+                
+                <div class="input-group">
+                    <label for="walletTag">Wallet Tag (10 characters)</label>
+                    <div class="tag-input-container">
+                        <span class="tag-prefix">@</span>
+                        <input type="text" id="walletTag" placeholder="Enter your tag" maxlength="10">
+                    </div>
+                    <small id="tagAvailability"></small>
+                </div>
+                
+                <div class="tag-requirements">
+                    <p>Your tag must:</p>
+                    <ul>
+                        <li id="lengthReq">Be between 4-10 characters</li>
+                        <li id="alphanumReq">Contain only letters and numbers</li>
+                        <li id="uniqueReq">Be unique</li>
+                    </ul>
+                </div>
+                
+                <button class="wallet-btn primary-btn" id="createTagBtn" disabled>Create Tag</button>
+                <button class="wallet-btn secondary-btn" id="generateRandomTagBtn">Generate Random Tag</button>
+            </div>
+        `;
+        
+        // Append to wallet dashboard
+        if (walletDashboard) {
+            walletDashboard.appendChild(tagCreationModal);
+        }
+        
+        // Add event listeners
+        const walletTagInput = document.getElementById('walletTag');
+        const createTagBtn = document.getElementById('createTagBtn');
+        const generateRandomTagBtn = document.getElementById('generateRandomTagBtn');
+        const tagAvailability = document.getElementById('tagAvailability');
+        
+        // Tag validation
+        let tagCheckTimeout;
+        
+        if (walletTagInput) {
+            walletTagInput.addEventListener('input', function() {
+                // Convert to lowercase and remove spaces
+                this.value = this.value.toLowerCase().replace(/\s/g, '');
+                
+                // Allow only alphanumeric characters
+                this.value = this.value.replace(/[^a-z0-9]/g, '');
+                
+                // Update requirements
+                updateTagRequirements(this.value);
+                
+                // Clear previous timeout
+                if (tagCheckTimeout) clearTimeout(tagCheckTimeout);
+                
+                // Set new timeout to check availability
+                tagCheckTimeout = setTimeout(() => {
+                    if (this.value.length >= 4) {
+                        checkTagAvailability(this.value);
+                    } else {
+                        if (tagAvailability) {
+                            tagAvailability.textContent = '';
+                            tagAvailability.className = '';
+                        }
+                        if (createTagBtn) createTagBtn.disabled = true;
+                    }
+                }, 500);
+            });
+        }
+        
+        if (generateRandomTagBtn) {
+            generateRandomTagBtn.addEventListener('click', generateRandomTag);
+        }
+        
+        if (createTagBtn) {
+            createTagBtn.addEventListener('click', createWalletTag);
+        }
+    } else {
+        tagCreationModal.classList.remove('hidden');
+    }
+    
+    // Hide wallet dashboard content temporarily
+    const walletContent = document.querySelector('.wallet-content');
+    if (walletContent) {
+        walletContent.classList.add('hidden');
+    }
+}
+
+// Update tag requirements UI
+function updateTagRequirements(tag) {
+    const lengthReq = document.getElementById('lengthReq');
+    const alphanumReq = document.getElementById('alphanumReq');
+    const uniqueReq = document.getElementById('uniqueReq');
+    
+    // Check length requirement
+    if (tag.length >= 4 && tag.length <= 10) {
+        lengthReq.classList.add('met');
+        lengthReq.innerHTML = '✓ Be between 4-10 characters';
+    } else {
+        lengthReq.classList.remove('met');
+        lengthReq.innerHTML = 'Be between 4-10 characters';
+    }
+    
+    // Check alphanumeric requirement
+    if (/^[a-z0-9]+$/.test(tag)) {
+        alphanumReq.classList.add('met');
+        alphanumReq.innerHTML = '✓ Contain only letters and numbers';
+    } else {
+        alphanumReq.classList.remove('met');
+        alphanumReq.innerHTML = 'Contain only letters and numbers';
+    }
+}
+
+// Check tag availability
+function checkTagAvailability(tag) {
+    const tagAvailability = document.getElementById('tagAvailability');
+    const createTagBtn = document.getElementById('createTagBtn');
+    const uniqueReq = document.getElementById('uniqueReq');
+    
+    if (!tagAvailability || !createTagBtn || !uniqueReq) return;
+    
+    // Show checking status
+    tagAvailability.textContent = 'Checking availability...';
+    tagAvailability.className = 'checking';
+    createTagBtn.disabled = true;
+    
+    // Query Firebase for existing tags
+    firebase.firestore().collection('walletTags')
+        .where('tag', '==', tag)
+        .get()
+        .then(snapshot => {
+            if (snapshot.empty) {
+                // Tag is available
+                tagAvailability.textContent = 'Available!';
+                tagAvailability.className = 'available';
+                createTagBtn.disabled = false;
+                uniqueReq.classList.add('met');
+                uniqueReq.innerHTML = '✓ Be unique';
+            } else {
+                // Tag is taken
+                tagAvailability.textContent = 'Already taken';
+                tagAvailability.className = 'unavailable';
+                createTagBtn.disabled = true;
+                uniqueReq.classList.remove('met');
+                uniqueReq.innerHTML = 'Be unique';
+            }
+        })
+        .catch(error => {
+            console.error('Error checking tag availability:', error);
+            tagAvailability.textContent = 'Error checking availability';
+            tagAvailability.className = 'error';
+            createTagBtn.disabled = true;
+        });
+}
+
+// Generate random tag
+function generateRandomTag() {
+    const walletTagInput = document.getElementById('walletTag');
+    if (!walletTagInput) return;
+    
+    // Generate random alphanumeric string
+    const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+    const length = Math.floor(Math.random() * 3) + 8; // Random length between 8-10
+    let result = '';
+    
+    for (let i = 0; i < length; i++) {
+        result += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    
+    // Set value and trigger input event
+    walletTagInput.value = result;
+    walletTagInput.dispatchEvent(new Event('input'));
+}
+
+// Create wallet tag
+function createWalletTag() {
+    const walletTagInput = document.getElementById('walletTag');
+    const createTagBtn = document.getElementById('createTagBtn');
+    
+    if (!walletTagInput || !createTagBtn) return;
+    
+    const tag = walletTagInput.value.trim().toLowerCase();
+    
+    // Validate tag
+    if (tag.length < 4 || tag.length > 10) {
+        showToast('Tag must be between 4-10 characters', 'error');
+        return;
+    }
+    
+    if (!/^[a-z0-9]+$/.test(tag)) {
+        showToast('Tag must contain only letters and numbers', 'error');
+        return;
+    }
+    
+    // Get user ID
+    const userId = getUserId();
+    if (!userId) {
+        showToast('User authentication failed', 'error');
+        return;
+    }
+    
+    // Show loading state
+    createTagBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating...';
+    createTagBtn.disabled = true;
+    
+    // Check availability one more time before creating
+    firebase.firestore().collection('walletTags')
+        .where('tag', '==', tag)
+        .get()
+        .then(snapshot => {
+            if (!snapshot.empty) {
+                throw new Error('Tag already taken');
+            }
+            
+            // Create tag in walletTags collection
+            return firebase.firestore().collection('walletTags').doc(tag).set({
+                tag: tag,
+                userId: userId,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            });
+        })
+        .then(() => {
+            // Update user document with tag
+            return firebase.firestore().collection('users').doc(userId).update({
+                walletTag: tag,
+                tagCreatedAt: firebase.firestore.FieldValue.serverTimestamp()
+            });
+        })
+        .then(() => {
+            // Store tag in session
+            sessionStorage.setItem('userWalletTag', tag);
+            
+            // Show success message
+            showToast('Wallet tag created successfully!', 'success');
+            
+            // Hide tag creation modal
+            const tagCreationModal = document.getElementById('tagCreationModal');
+            if (tagCreationModal) {
+                tagCreationModal.classList.add('hidden');
+            }
+            
+            // Show wallet dashboard content
+            const walletContent = document.querySelector('.wallet-content');
+            if (walletContent) {
+                walletContent.classList.remove('hidden');
+            }
+            
+            // Add tag to wallet dashboard
+            updateWalletWithTag(tag);
+        })
+        .catch(error => {
+            console.error('Error creating wallet tag:', error);
+            
+            if (error.message === 'Tag already taken') {
+                showToast('This tag is already taken. Please choose another.', 'error');
+            } else {
+                showToast('Failed to create wallet tag. Please try again.', 'error');
+            }
+            
+            // Reset button state
+            createTagBtn.innerHTML = 'Create Tag';
+            createTagBtn.disabled = false;
+        });
+}
+
+// Update wallet dashboard with tag
+function updateWalletWithTag(tag) {
+    // Create tag display in wallet dashboard if it doesn't exist
+    let tagDisplay = document.getElementById('walletTagDisplay');
+    
+    if (!tagDisplay) {
+        // Find a good place to insert the tag display
+        const walletHeader = document.querySelector('.wallet-dashboard-header');
+        
+        if (walletHeader) {
+            tagDisplay = document.createElement('div');
+            tagDisplay.id = 'walletTagDisplay';
+            tagDisplay.className = 'wallet-tag-display';
+            tagDisplay.innerHTML = `
+                <span class="tag-label">Your Tag:</span>
+                <span class="tag-value">@${tag}</span>
+                <button class="copy-tag-btn" title="Copy tag">
+                    <i class="fas fa-copy"></i>
+                </button>
+            `;
+            
+            walletHeader.appendChild(tagDisplay);
+            
+            // Add copy functionality
+            const copyTagBtn = tagDisplay.querySelector('.copy-tag-btn');
+            if (copyTagBtn) {
+                copyTagBtn.addEventListener('click', function() {
+                    copyToClipboard('@' + tag);
+                    showToast('Tag copied to clipboard!', 'success');
+                });
+            }
+        }
+    } else {
+        // Update existing tag display
+        const tagValue = tagDisplay.querySelector('.tag-value');
+        if (tagValue) {
+            tagValue.textContent = '@' + tag;
+        }
+    }
+}
+
+// Helper function to copy text to clipboard
+function copyToClipboard(text) {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.style.position = 'fixed'; // Avoid scrolling to bottom
+    document.body.appendChild(textarea);
+    textarea.select();
+    
+    try {
+        document.execCommand('copy');
+    } catch (err) {
+        console.error('Failed to copy text: ', err);
+    }
+    
+    document.body.removeChild(textarea);
+}
+
+// Add "The Box" feature to display all created tags
+function createTheBoxFeature() {
+    // Create "The Box" section in admin dashboard
+    const adminDashboard = document.getElementById('adminDashboard');
+    if (!adminDashboard) return;
+    
+    // Check if The Box already exists
+    let theBox = document.getElementById('theBoxSection');
+    
+    if (!theBox) {
+        theBox = document.createElement('div');
+        theBox.id = 'theBoxSection';
+        theBox.className = 'dashboard-section';
+        theBox.innerHTML = `
+            <div class="section-header">
+                <h2><i class="fas fa-box"></i> The Box</h2>
+                <p>All created wallet tags in the system</p>
+            </div>
+            
+            <div class="search-container">
+                <input type="text" id="tagSearchInput" placeholder="Search tags...">
+                <button id="tagSearchBtn"><i class="fas fa-search"></i></button>
+            </div>
+            
+            <div class="tags-container">
+                <div class="tags-header">
+                    <span class="tag-col">Tag</span>
+                    <span class="user-col">User</span>
+                    <span class="date-col">Created</span>
+                    <span class="actions-col">Actions</span>
+                </div>
+                <div id="tagsList" class="tags-list">
+                    <div class="loading-tags">
+                        <i class="fas fa-spinner fa-spin"></i> Loading tags...
+                    </div>
+                </div>
+            </div>
+            
+            <div class="pagination-controls">
+                <button id="prevTagsPage" disabled><i class="fas fa-chevron-left"></i> Previous</button>
+                <span id="tagsPageInfo">Page 1</span>
+                <button id="nextTagsPage">Next <i class="fas fa-chevron-right"></i></button>
+            </div>
+        `;
+                // Find a good place to insert The Box
+                const adminContent = adminDashboard.querySelector('.dashboard-content');
+        if (adminContent) {
+            adminContent.appendChild(theBox);
+            
+            // Add event listeners
+            const tagSearchInput = document.getElementById('tagSearchInput');
+            const tagSearchBtn = document.getElementById('tagSearchBtn');
+            const prevTagsPage = document.getElementById('prevTagsPage');
+            const nextTagsPage = document.getElementById('nextTagsPage');
+            
+            if (tagSearchBtn) {
+                tagSearchBtn.addEventListener('click', function() {
+                    if (tagSearchInput) {
+                        searchTags(tagSearchInput.value.trim());
+                    }
+                });
+            }
+            
+            if (tagSearchInput) {
+                tagSearchInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        searchTags(this.value.trim());
+                    }
+                });
+            }
+            
+            if (prevTagsPage) {
+                prevTagsPage.addEventListener('click', function() {
+                    navigateTagsPage('prev');
+                });
+            }
+            
+            if (nextTagsPage) {
+                nextTagsPage.addEventListener('click', function() {
+                    navigateTagsPage('next');
+                });
+            }
+            
+            // Load initial tags
+            loadTags();
+        }
+    } else {
+        // The Box already exists, just make sure it's visible
+        theBox.classList.remove('hidden');
+    }
+}
+
+// Global variables for pagination
+let lastVisibleTag = null;
+let firstVisibleTag = null;
+let currentTagsPage = 1;
+let tagsPerPage = 10;
+let currentTagsQuery = null;
+
+// Load tags for The Box
+function loadTags(searchTerm = '') {
+    const tagsList = document.getElementById('tagsList');
+    const tagsPageInfo = document.getElementById('tagsPageInfo');
+    const prevTagsPage = document.getElementById('prevTagsPage');
+    const nextTagsPage = document.getElementById('nextTagsPage');
+    
+    if (!tagsList) return;
+    
+    // Show loading
+    tagsList.innerHTML = '<div class="loading-tags"><i class="fas fa-spinner fa-spin"></i> Loading tags...</div>';
+    
+    // Disable pagination buttons during loading
+    if (prevTagsPage) prevTagsPage.disabled = true;
+    if (nextTagsPage) nextTagsPage.disabled = true;
+    
+    // Create query
+    let query = firebase.firestore().collection('walletTags')
+        .orderBy('createdAt', 'desc')
+        .limit(tagsPerPage);
+    
+    // Apply search filter if provided
+    if (searchTerm) {
+        // Firebase doesn't support LIKE queries, so we need to use range queries
+        // This will search for tags that start with the search term
+        query = firebase.firestore().collection('walletTags')
+            .where('tag', '>=', searchTerm)
+            .where('tag', '<=', searchTerm + '\uf8ff')
+            .orderBy('tag')
+            .limit(tagsPerPage);
+    }
+    
+    // Store current query for pagination
+    currentTagsQuery = query;
+    
+    // Execute query
+    query.get()
+        .then(snapshot => {
+            if (snapshot.empty) {
+                tagsList.innerHTML = '<div class="no-tags">No tags found</div>';
+                if (tagsPageInfo) tagsPageInfo.textContent = 'No results';
+                return;
+            }
+            
+            // Clear previous content
+            tagsList.innerHTML = '';
+            
+            // Store first and last visible documents for pagination
+            firstVisibleTag = snapshot.docs[0];
+            lastVisibleTag = snapshot.docs[snapshot.docs.length - 1];
+            
+            // Enable/disable pagination buttons
+            if (prevTagsPage) prevTagsPage.disabled = currentTagsPage === 1;
+            if (nextTagsPage) nextTagsPage.disabled = snapshot.docs.length < tagsPerPage;
+            
+            // Update page info
+            if (tagsPageInfo) tagsPageInfo.textContent = `Page ${currentTagsPage}`;
+            
+            // Process each tag
+            snapshot.forEach(doc => {
+                const tagData = doc.data();
+                const tagElement = createTagElement(tagData, doc.id);
+                tagsList.appendChild(tagElement);
+            });
+            
+            // Fetch user data for each tag
+            fetchUserDataForTags();
+        })
+        .catch(error => {
+            console.error('Error loading tags:', error);
+            tagsList.innerHTML = '<div class="error-loading">Error loading tags</div>';
+        });
+}
+
+// Create tag element for The Box
+function createTagElement(tagData, tagId) {
+    const tagElement = document.createElement('div');
+    tagElement.className = 'tag-item';
+    tagElement.dataset.tagId = tagId;
+    tagElement.dataset.userId = tagData.userId;
+    
+    // Format date
+    const createdDate = tagData.createdAt ? new Date(tagData.createdAt.toDate()) : new Date();
+    const formattedDate = createdDate.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+    });
+    
+    tagElement.innerHTML = `
+        <span class="tag-col">@${tagData.tag}</span>
+        <span class="user-col" data-user-id="${tagData.userId}">
+            <i class="fas fa-spinner fa-spin"></i> Loading...
+        </span>
+        <span class="date-col">${formattedDate}</span>
+        <span class="actions-col">
+            <button class="view-tag-btn" title="View details">
+                <i class="fas fa-eye"></i>
+            </button>
+            <button class="copy-tag-btn" title="Copy tag">
+                <i class="fas fa-copy"></i>
+            </button>
+        </span>
+    `;
+    
+    // Add event listeners
+    const viewTagBtn = tagElement.querySelector('.view-tag-btn');
+    const copyTagBtn = tagElement.querySelector('.copy-tag-btn');
+    
+    if (viewTagBtn) {
+        viewTagBtn.addEventListener('click', function() {
+            viewTagDetails(tagId, tagData);
+        });
+    }
+    
+    if (copyTagBtn) {
+        copyTagBtn.addEventListener('click', function() {
+            copyToClipboard('@' + tagData.tag);
+            showToast('Tag copied to clipboard!', 'success');
+        });
+    }
+    
+    return tagElement;
+}
+
+// Fetch user data for tags in The Box
+function fetchUserDataForTags() {
+    const userCells = document.querySelectorAll('.tag-item .user-col[data-user-id]');
+    
+    userCells.forEach(cell => {
+        const userId = cell.dataset.userId;
+        
+        if (!userId) {
+            cell.innerHTML = '<span class="unknown-user">Unknown user</span>';
+            return;
+        }
+        
+        // Check if we already have this user's data cached
+        const cachedUser = sessionStorage.getItem(`user_${userId}`);
+        if (cachedUser) {
+            const userData = JSON.parse(cachedUser);
+            cell.innerHTML = `
+                <span class="user-name">${userData.displayName || 'User'}</span>
+                <span class="user-email">${userData.email || ''}</span>
+            `;
+            return;
+        }
+        
+        // Fetch user data from Firebase
+        firebase.firestore().collection('users').doc(userId).get()
+            .then(doc => {
+                if (doc.exists) {
+                    const userData = doc.data();
+                    
+                    // Cache user data
+                    sessionStorage.setItem(`user_${userId}`, JSON.stringify({
+                        displayName: userData.displayName || 'User',
+                        email: userData.email || ''
+                    }));
+                    
+                    // Update cell
+                    cell.innerHTML = `
+                        <span class="user-name">${userData.displayName || 'User'}</span>
+                        <span class="user-email">${userData.email || ''}</span>
+                    `;
+                } else {
+                    cell.innerHTML = '<span class="unknown-user">Unknown user</span>';
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching user data:', error);
+                cell.innerHTML = '<span class="error-user">Error loading user</span>';
+            });
+    });
+}
+
+// View tag details
+function viewTagDetails(tagId, tagData) {
+    // Create modal for tag details
+    let tagDetailsModal = document.getElementById('tagDetailsModal');
+    
+    if (!tagDetailsModal) {
+        tagDetailsModal = document.createElement('div');
+        tagDetailsModal.id = 'tagDetailsModal';
+        tagDetailsModal.className = 'modal';
+        tagDetailsModal.innerHTML = `
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Tag Details</h2>
+                    <button class="close-modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="tag-details-content">
+                        <div class="tag-icon">
+                            <i class="fas fa-tag"></i>
+                        </div>
+                        <h3>@<span id="detailTagName"></span></h3>
+                        
+                        <div class="details-grid">
+                            <div class="detail-item">
+                                <span class="detail-label">Created</span>
+                                <span class="detail-value" id="detailCreatedDate"></span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">User</span>
+                                <span class="detail-value" id="detailUserName"></span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Email</span>
+                                <span class="detail-value" id="detailUserEmail"></span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Wallet Balance</span>
+                                <span class="detail-value" id="detailWalletBalance"></span>
+                            </div>
+                        </div>
+                        
+                        <div class="tag-actions">
+                            <button class="wallet-btn secondary-btn" id="copyDetailTagBtn">
+                                <i class="fas fa-copy"></i> Copy Tag
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        document.body.appendChild(tagDetailsModal);
+        
+        // Add event listeners
+        const closeModalBtn = tagDetailsModal.querySelector('.close-modal');
+        const copyDetailTagBtn = document.getElementById('copyDetailTagBtn');
+        
+        if (closeModalBtn) {
+            closeModalBtn.addEventListener('click', function() {
+                tagDetailsModal.style.display = 'none';
+            });
+        }
+        
+        // Close when clicking outside
+        window.addEventListener('click', function(event) {
+            if (event.target === tagDetailsModal) {
+                tagDetailsModal.style.display = 'none';
+            }
+        });
+        
+        if (copyDetailTagBtn) {
+            copyDetailTagBtn.addEventListener('click', function() {
+                const tagName = document.getElementById('detailTagName');
+                if (tagName) {
+                    copyToClipboard('@' + tagName.textContent);
+                    showToast('Tag copied to clipboard!', 'success');
+                }
+            });
+        }
+    }
+    
+    // Show modal
+    tagDetailsModal.style.display = 'block';
+    
+    // Populate tag details
+    const detailTagName = document.getElementById('detailTagName');
+    const detailCreatedDate = document.getElementById('detailCreatedDate');
+    const detailUserName = document.getElementById('detailUserName');
+    const detailUserEmail = document.getElementById('detailUserEmail');
+    const detailWalletBalance = document.getElementById('detailWalletBalance');
+    
+    if (detailTagName) detailTagName.textContent = tagData.tag;
+    
+    if (detailCreatedDate) {
+        const createdDate = tagData.createdAt ? new Date(tagData.createdAt.toDate()) : new Date();
+        detailCreatedDate.textContent = createdDate.toLocaleString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+    }
+    
+    // Show loading indicators
+    if (detailUserName) detailUserName.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+    if (detailUserEmail) detailUserEmail.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+    if (detailWalletBalance) detailWalletBalance.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+    
+    // Fetch user data
+    firebase.firestore().collection('users').doc(tagData.userId).get()
+        .then(doc => {
+            if (doc.exists) {
+                const userData = doc.data();
+                
+                if (detailUserName) detailUserName.textContent = userData.displayName || 'User';
+                if (detailUserEmail) detailUserEmail.textContent = userData.email || 'No email';
+                
+                // Fetch wallet balance
+                return firebase.firestore().collection('wallets').doc(tagData.userId).get();
+            } else {
+                if (detailUserName) detailUserName.textContent = 'Unknown user';
+                if (detailUserEmail) detailUserEmail.textContent = 'No email';
+                throw new Error('User not found');
+            }
+        })
+        .then(doc => {
+            if (doc.exists) {
+                const walletData = doc.data();
+                const talentCoins = walletData.talentCoins || 0;
+                
+                if (detailWalletBalance) {
+                    detailWalletBalance.textContent = `${formatNumber(talentCoins)} TC`;
+                }
+            } else {
+                if (detailWalletBalance) detailWalletBalance.textContent = '0 TC';
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching tag details:', error);
+            if (detailUserName && detailUserName.innerHTML.includes('spinner')) {
+                detailUserName.textContent = 'Error loading user';
+            }
+            if (detailUserEmail && detailUserEmail.innerHTML.includes('spinner')) {
+                detailUserEmail.textContent = 'Error loading email';
+            }
+            if (detailWalletBalance && detailWalletBalance.innerHTML.includes('spinner')) {
+                detailWalletBalance.textContent = 'Error loading balance';
+            }
+        });
+}
+
+// Search tags
+function searchTags(searchTerm) {
+    // Reset pagination
+    currentTagsPage = 1;
+    lastVisibleTag = null;
+    firstVisibleTag = null;
+    
+    // Load tags with search term
+    loadTags(searchTerm);
+}
+
+// Navigate tags page
+function navigateTagsPage(direction) {
+    if (!currentTagsQuery) return;
+    
+    const tagsList = document.getElementById('tagsList');
+    const tagsPageInfo = document.getElementById('tagsPageInfo');
+    const prevTagsPage = document.getElementById('prevTagsPage');
+    const nextTagsPage = document.getElementById('nextTagsPage');
+    
+    if (!tagsList) return;
+    
+        // Show loading
+        tagsList.innerHTML = '<div class="loading-tags"><i class="fas fa-spinner fa-spin"></i> Loading tags...</div>';
+    
+    // Disable pagination buttons during loading
+    if (prevTagsPage) prevTagsPage.disabled = true;
+    if (nextTagsPage) nextTagsPage.disabled = true;
+    
+    // Create query based on direction
+    let query;
+    
+    if (direction === 'next' && lastVisibleTag) {
+        query = currentTagsQuery.startAfter(lastVisibleTag).limit(tagsPerPage);
+        currentTagsPage++;
+    } else if (direction === 'prev' && firstVisibleTag) {
+        query = currentTagsQuery.endBefore(firstVisibleTag).limitToLast(tagsPerPage);
+        currentTagsPage--;
+    } else {
+        // Reset to first page if no valid pagination reference
+        query = currentTagsQuery.limit(tagsPerPage);
+        currentTagsPage = 1;
+    }
+    
+    // Execute query
+    query.get()
+        .then(snapshot => {
+            if (snapshot.empty) {
+                tagsList.innerHTML = '<div class="no-tags">No tags found</div>';
+                if (tagsPageInfo) tagsPageInfo.textContent = 'No results';
+                return;
+            }
+            
+            // Clear previous content
+            tagsList.innerHTML = '';
+            
+            // Store first and last visible documents for pagination
+            firstVisibleTag = snapshot.docs[0];
+            lastVisibleTag = snapshot.docs[snapshot.docs.length - 1];
+            
+            // Enable/disable pagination buttons
+            if (prevTagsPage) prevTagsPage.disabled = currentTagsPage === 1;
+            if (nextTagsPage) nextTagsPage.disabled = snapshot.docs.length < tagsPerPage;
+            
+            // Update page info
+            if (tagsPageInfo) tagsPageInfo.textContent = `Page ${currentTagsPage}`;
+            
+            // Process each tag
+            snapshot.forEach(doc => {
+                const tagData = doc.data();
+                const tagElement = createTagElement(tagData, doc.id);
+                tagsList.appendChild(tagElement);
+            });
+            
+            // Fetch user data for each tag
+            fetchUserDataForTags();
+        })
+        .catch(error => {
+            console.error('Error navigating tags:', error);
+            tagsList.innerHTML = '<div class="error-loading">Error loading tags</div>';
+        });
+}
+
+// Format number with commas
+function formatNumber(number) {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+// Add tag transfer functionality to wallet dashboard
+function addTagTransferFeature() {
+    // Find wallet dashboard
+    const walletDashboard = document.querySelector('.wallet-dashboard');
+    if (!walletDashboard) return;
+    
+    // Check if transfer section already exists
+    let transferSection = document.getElementById('tagTransferSection');
+    
+    if (!transferSection) {
+        transferSection = document.createElement('div');
+        transferSection.id = 'tagTransferSection';
+        transferSection.className = 'wallet-section';
+        transferSection.innerHTML = `
+            <div class="section-header">
+                <h3><i class="fas fa-exchange-alt"></i> Transfer with Tag</h3>
+            </div>
+            
+            <div class="transfer-form">
+                <div class="input-group">
+                    <label for="transferTag">Recipient's Tag</label>
+                    <div class="tag-input-container">
+                        <span class="tag-prefix">@</span>
+                        <input type="text" id="transferTag" placeholder="Enter recipient's tag">
+                    </div>
+                    <small id="tagValidation"></small>
+                </div>
+                
+                <div class="input-group">
+                    <label for="transferAmount">Amount (TC)</label>
+                    <input type="number" id="transferAmount" placeholder="0.00" min="1" step="1">
+                </div>
+                
+                <div class="input-group">
+                    <label for="transferNote">Note (optional)</label>
+                    <textarea id="transferNote" placeholder="Add a note for this transfer"></textarea>
+                </div>
+                
+                <button class="wallet-btn primary-btn" id="sendTransferBtn">Send Transfer</button>
+            </div>
+            
+            <div class="recent-transfers">
+                <h4>Recent Transfers</h4>
+                <div id="recentTransfersList">
+                    <div class="loading-transfers">
+                        <i class="fas fa-spinner fa-spin"></i> Loading recent transfers...
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        // Find a good place to insert the transfer section
+        const walletContent = walletDashboard.querySelector('.wallet-content');
+        if (walletContent) {
+            walletContent.appendChild(transferSection);
+            
+            // Add event listeners
+            const transferTagInput = document.getElementById('transferTag');
+            const transferAmountInput = document.getElementById('transferAmount');
+            const sendTransferBtn = document.getElementById('sendTransferBtn');
+            const tagValidation = document.getElementById('tagValidation');
+            
+            if (transferTagInput) {
+                let tagCheckTimeout;
+                
+                transferTagInput.addEventListener('input', function() {
+                    // Convert to lowercase and remove spaces
+                    this.value = this.value.toLowerCase().replace(/\s/g, '');
+                    
+                    // Clear previous timeout
+                    if (tagCheckTimeout) clearTimeout(tagCheckTimeout);
+                    
+                    // Clear validation message
+                    if (tagValidation) {
+                        tagValidation.textContent = '';
+                        tagValidation.className = '';
+                    }
+                    
+                    // Set new timeout to validate tag
+                    tagCheckTimeout = setTimeout(() => {
+                        if (this.value.length > 0) {
+                            validateTransferTag(this.value);
+                        }
+                    }, 500);
+                });
+            }
+            
+            if (sendTransferBtn) {
+                sendTransferBtn.addEventListener('click', initiateTagTransfer);
+            }
+            
+            // Load recent transfers
+            loadRecentTransfers();
+        }
+    } else {
+        // Transfer section already exists, just make sure it's visible
+        transferSection.classList.remove('hidden');
+    }
+}
+
+// Validate transfer tag
+function validateTransferTag(tag) {
+    const tagValidation = document.getElementById('tagValidation');
+    const sendTransferBtn = document.getElementById('sendTransferBtn');
+    
+    if (!tagValidation || !sendTransferBtn) return;
+    
+    // Show checking status
+    tagValidation.textContent = 'Checking tag...';
+    tagValidation.className = 'checking';
+    sendTransferBtn.disabled = true;
+    
+    // Query Firebase for the tag
+    firebase.firestore().collection('walletTags')
+        .where('tag', '==', tag)
+        .get()
+        .then(snapshot => {
+            if (snapshot.empty) {
+                // Tag doesn't exist
+                tagValidation.textContent = 'Tag not found';
+                tagValidation.className = 'invalid';
+                sendTransferBtn.disabled = true;
+            } else {
+                // Tag exists, get user ID
+                const tagData = snapshot.docs[0].data();
+                const recipientId = tagData.userId;
+                
+                // Check if user is trying to send to themselves
+                const currentUserId = getUserId();
+                if (recipientId === currentUserId) {
+                    tagValidation.textContent = 'You cannot transfer to yourself';
+                    tagValidation.className = 'invalid';
+                    sendTransferBtn.disabled = true;
+                    return;
+                }
+                
+                // Store recipient ID for transfer
+                document.getElementById('transferTag').dataset.recipientId = recipientId;
+                
+                // Get recipient's name
+                firebase.firestore().collection('users').doc(recipientId).get()
+                    .then(doc => {
+                        if (doc.exists) {
+                            const userData = doc.data();
+                            const displayName = userData.displayName || 'User';
+                            
+                            tagValidation.textContent = `Sending to ${displayName}`;
+                            tagValidation.className = 'valid';
+                            sendTransferBtn.disabled = false;
+                        } else {
+                            tagValidation.textContent = 'Valid tag, but user not found';
+                            tagValidation.className = 'warning';
+                            sendTransferBtn.disabled = true;
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error fetching recipient data:', error);
+                        tagValidation.textContent = 'Error validating tag';
+                        tagValidation.className = 'error';
+                        sendTransferBtn.disabled = true;
+                    });
+            }
+        })
+        .catch(error => {
+            console.error('Error validating tag:', error);
+            tagValidation.textContent = 'Error checking tag';
+            tagValidation.className = 'error';
+            sendTransferBtn.disabled = true;
+        });
+}
+
+// Initiate tag transfer
+function initiateTagTransfer() {
+    const transferTagInput = document.getElementById('transferTag');
+    const transferAmountInput = document.getElementById('transferAmount');
+    const transferNoteInput = document.getElementById('transferNote');
+    const sendTransferBtn = document.getElementById('sendTransferBtn');
+    
+    if (!transferTagInput || !transferAmountInput || !sendTransferBtn) return;
+    
+    // Get values
+    const tag = transferTagInput.value.trim().toLowerCase();
+    const recipientId = transferTagInput.dataset.recipientId;
+    const amount = parseInt(transferAmountInput.value);
+    const note = transferNoteInput ? transferNoteInput.value.trim() : '';
+    
+    // Validate inputs
+    if (!tag || !recipientId) {
+        showToast('Please enter a valid recipient tag', 'error');
+        return;
+    }
+    
+    if (!amount || amount < 1) {
+        showToast('Please enter a valid amount', 'error');
+        return;
+    }
+    
+    // Get current user ID
+    const senderId = getUserId();
+    if (!senderId) {
+        showToast('User authentication failed', 'error');
+        return;
+    }
+    
+    // Show loading state
+    sendTransferBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+    sendTransferBtn.disabled = true;
+    
+    // Check sender's balance
+    firebase.firestore().collection('wallets').doc(senderId).get()
+        .then(doc => {
+            if (!doc.exists) {
+                throw new Error('Wallet not found');
+            }
+            
+            const walletData = doc.data();
+            const currentBalance = walletData.talentCoins || 0;
+            
+            if (currentBalance < amount) {
+                throw new Error('Insufficient balance');
+            }
+            
+            // Start a transaction to ensure data consistency
+            return firebase.firestore().runTransaction(transaction => {
+                // Get sender and recipient wallet references
+                const senderWalletRef = firebase.firestore().collection('wallets').doc(senderId);
+                const recipientWalletRef = firebase.firestore().collection('wallets').doc(recipientId);
+                
+                // Get current wallet data
+                return transaction.getAll(senderWalletRef, recipientWalletRef)
+                    .then(docs => {
+                        const senderWalletDoc = docs[0];
+                        const recipientWalletDoc = docs[1];
+                        
+                        // Verify sender has enough balance
+                        if (!senderWalletDoc.exists) {
+                            throw new Error('Sender wallet not found');
+                        }
+                        
+                        const senderWallet = senderWalletDoc.data();
+                        const senderBalance = senderWallet.talentCoins || 0;
+                        
+                        if (senderBalance < amount) {
+                            throw new Error('Insufficient balance');
+                        }
+                        
+                        // Create recipient wallet if it doesn't exist
+                        if (!recipientWalletDoc.exists) {
+                            transaction.set(recipientWalletRef, {
+                                talentCoins: amount,
+                                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                            });
+                        } else {
+                            // Update recipient wallet
+                            const recipientWallet = recipientWalletDoc.data();
+                            const recipientBalance = recipientWallet.talentCoins || 0;
+                            
+                            transaction.update(recipientWalletRef, {
+                                talentCoins: recipientBalance + amount,
+                                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                            });
+                        }
+                        
+                        // Update sender wallet
+                        transaction.update(senderWalletRef, {
+                            talentCoins: senderBalance - amount,
+                            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                        });
+                        
+                        // Create transaction record
+                        const transactionRef = firebase.firestore().collection('transactions').doc();
+                        transaction.set(transactionRef, {
+                            type: 'tag_transfer',
+                            senderId: senderId,
+                            recipientId: recipientId,
+                            amount: amount,
+                            note: note,
+                            tag: tag,
+                            status: 'completed',
+                            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                        });
+                        
+                        return {
+                            success: true,
+                            transactionId: transactionRef.id
+                        };
+                    });
+            });
+        })
+        .then(result => {
+            // Show success message
+            showToast('Transfer completed successfully!', 'success');
+            
+            // Reset form
+            transferTagInput.value = '';
+            transferAmountInput.value = '';
+            if (transferNoteInput) transferNoteInput.value = '';
+            
+            // Reset button state
+            sendTransferBtn.innerHTML = 'Send Transfer';
+            sendTransferBtn.disabled = false;
+            
+            // Reload recent transfers
+            loadRecentTransfers();
+            
+            // Update wallet balance display
+            updateWalletBalance();
+        })
+        .catch(error => {
+            console.error('Error processing transfer:', error);
+            
+            let errorMessage = 'Failed to process transfer';
+            
+            if (error.message === 'Insufficient balance') {
+                errorMessage = 'You don\'t have enough balance for this transfer';
+            } else if (error.message === 'Wallet not found') {
+                errorMessage = 'Your wallet was not found';
+            }
+            
+            showToast(errorMessage, 'error');
+            
+            // Reset button state
+            sendTransferBtn.innerHTML = 'Send Transfer';
+            sendTransferBtn.disabled = false;
+        });
+}
+
+// Load recent transfers
+function loadRecentTransfers() {
+    const recentTransfersList = document.getElementById('recentTransfersList');
+    if (!recentTransfersList) return;
+    
+    // Get current user ID
+    const userId = getUserId();
+    if (!userId) return;
+    
+    // Show loading
+    recentTransfersList.innerHTML = '<div class="loading-transfers"><i class="fas fa-spinner fa-spin"></i> Loading recent transfers...</div>';
+    
+    // Query Firebase for recent transfers
+    firebase.firestore().collection('transactions')
+        .where('type', '==', 'tag_transfer')
+        .where(firebase.firestore.FieldPath.documentId(), 'in', [userId, userId])
+        .orderBy('createdAt', 'desc')
+        .limit(5)
+        .get()
+        .then(snapshot => {
+            if (snapshot.empty) {
+                recentTransfersList.innerHTML = '<div class="no-transfers">No recent transfers</div>';
+                return;
+            }
+            
+            // Clear previous content
+            recentTransfersList.innerHTML = '';
+            
+            // Process each transaction
+            snapshot.forEach(doc => {
+                const transactionData = doc.data();
+                const transactionElement = createTransactionElement(transactionData, doc.id);
+                recentTransfersList.appendChild(transactionElement);
+            });
+        })
+        .catch(error => {
+            console.error('Error loading recent transfers:', error);
+            recentTransfersList.innerHTML = '<div class="error-loading">Error loading transfers</div>';
+        });
+}
+
+// Create transaction element
+function createTransactionElement(transactionData, transactionId) {
+    const transactionElement = document.createElement('div');
+    transactionElement.className = 'transfer-item';
+    transactionElement.dataset.transactionId = transactionId;
+    
+    // Get current user ID
+    const currentUserId = getUserId();
+    
+    // Determine if this is an incoming or outgoing transfer
+    const isIncoming = transactionData.recipientId === currentUserId;
+    const otherPartyId = isIncoming ? transactionData.senderId : transactionData.recipientId;
+    
+    // Format date
+    const createdDate = transactionData.createdAt ? new Date(transactionData.createdAt.toDate()) : new Date();
+    const formattedDate = createdDate.toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+    });
+    
+    transactionElement.innerHTML = `
+        <div class="transfer-icon ${isIncoming ? 'incoming' : 'outgoing'}">
+            <i class="fas fa-${isIncoming ? 'arrow-down' : 'arrow-up'}"></i>
+        </div>
+        <div class="transfer-details">
+            <div class="transfer-header">
+                <span class="transfer-type">${isIncoming ? 'Received from' : 'Sent to'} @${transactionData.tag}</span>
+                <span class="transfer-amount ${isIncoming ? 'incoming' : 'outgoing'}">
+                    ${isIncoming ? '+' : '-'}${transactionData.amount} TC
+                </span>
+            </div>
+            <div class="transfer-meta">
+                <span class="transfer-date">${formattedDate}</span>
+                ${transactionData.note ? `<span class="transfer-note">"${transactionData.note}"</span>` : ''}
+            </div>
+        </div>
+    `;
+    
+    return transactionElement;
+}
+
+// Update wallet balance display
+function updateWalletBalance() {
+    const balanceDisplay = document.getElementById('walletBalance');
+    if (!balanceDisplay) return;
+    
+    // Get current user ID
+    const userId = getUserId();
+    if (!userId) return;
+    
+    // Show loading
+    balanceDisplay.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+    
+    // Fetch wallet balance
+    firebase.firestore().collection('wallets').doc(userId).get()
+        .then(doc => {
+            if (doc.exists) {
+                const walletData = doc.data();
+                const talentCoins = walletData.talentCoins || 0;
+                
+                balanceDisplay.textContent = formatNumber(talentCoins);
+            } else {
+                balanceDisplay.textContent = '0';
+            }
+        })
+        .catch(error => {
+            console.error('Error updating wallet balance:', error);
+            balanceDisplay.textContent = 'Error';
+        });
+}
+
+// Initialize wallet tag system
+function initializeWalletTagSystem() {
+    // Check if user is authenticated
+    firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+            // Initialize tag creation for new users
+            initializeTagCreation();
+            
+            // Add tag transfer feature to wallet dashboard
+            addTagTransferFeature();
+            
+            // Check if user is admin to show The Box
+            checkAdminStatus(user.uid).then(isAdmin => {
+                if (isAdmin) {
+                    createTheBoxFeature();
+                }
+            });
+        }
+    });
+}
+
+// Check if user is admin
+function checkAdminStatus(userId) {
+    return firebase.firestore().collection('admins').doc(userId).get()
+        .then(doc => {
+            return doc.exists;
+        })
+        .catch(error => {
+            console.error('Error checking admin status:', error);
+            return false;
+        });
+}
+
+// Helper function to get current user ID
+function getUserId() {
+    const user = firebase.auth().currentUser;
+    return user ? user.uid : null;
+}
+
+// Add CSS styles for the tag feature
+function addTagStyles() {
+    const styleElement = document.createElement('style');
+    styleElement.textContent = `
+        /* Tag Creation Modal */
+        .tag-creation-content {
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .pin-icon {
+            font-size: 48px;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+        
+        .tag-input-container {
+            display: flex;
+            align-items: center;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .tag-prefix {
+            background-color: #f5f5f5;
+            padding: 10px;
+            color: #666;
+            border-right: 1px solid #ddd;
+        }
+        
+        .tag-input-container input {
+            flex: 1;
+            border: none;
+            padding: 10px;
+            outline: none;
+        }
+        
+        #tagAvailability {
+            display: block;
+            margin-top: 5px;
+            font-size: 12px;
+        }
+        
+        #tagAvailability.checking {
+            color: #666;
+        }
+        
+        #tagAvailability.available {
+            color: green;
+        }
+        
+        #tagAvailability.unavailable {
+            color: red;
+        }
+        
+        #tagAvailability.error {
+            color: orange;
+        }
+        
+        .tag-requirements {
+            margin: 20px 0;
+            text-align: left;
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 4px;
+        }
+        
+        .tag-requirements ul {
+            padding-left: 20px;
+            margin: 10px 0 0;
+        }
+        
+        .tag-requirements li {
+            margin-bottom: 5px;
+            color: #666;
+        }
+        
+        .tag-requirements li.met {
+            color: green;
+        }
+        
+        /* Wallet Tag Display */
+        .wallet-tag-display {
+            background-color: #f5f5f5;
+            padding: 10px 15px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+        
+        .tag-label {
+            font-size: 12px;
+            color: #666;
+            margin-right: 10px;
+        }
+        
+        .tag-value {
+            font-weight: bold;
+            font-size: 16px;
+            color: var(--primary-color);
+        }
+        
+        .copy-tag-btn {
+            background: none;
+            border: none;
+            color: #666;
+            cursor: pointer;
+            margin-left: auto;
+            padding: 5px;
+        }
+        
+        .copy-tag-btn:hover {
+            color: var(--primary-color);
+        }
+        
+        /* The Box Feature */
+        #theBoxSection {
+            margin-top: 30px;
+        }
+        
+        .search-container {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        
+        .search-container input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px 0 0 4px;
+        }
+        
+        .search-container button {
+            padding: 10px 15px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+        }
+        
+        .tags-container {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .tags-header {
+            display: flex;
+            background-color: #f5f5f5;
+            padding: 10px 15px;
+            font-weight: bold;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .tag-col {
+            flex: 1;
+        }
+        
+        .user-col {
+            flex: 2;
+        }
+        
+        .date-col {
+            flex: 1;
+        }
+        
+        .actions-col {
+            flex: 1;
+            text-align: right;
+        }
+        
+        .tag-item {
+            display: flex;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            align-items: center;
+        }
+        
+        .tag-item:last-child {
+            border-bottom: none;
+        }
+        
+        .tag-item:hover {
+            background-color: #f9f9f9;
+        }
+        
+        .tag-item .user-name {
+            display: block;
+            font-weight: bold;
+        }
+        
+        .tag-item .user-email {
+            display: block;
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .tag-item .view-tag-btn,
+        .tag-item .copy-tag-btn {
+            background: none;
+            border: none;
+            color: #666;
+            cursor: pointer;
+            padding: 5px;
+            margin-left: 5px;
+        }
+        
+        .tag-item .view-tag-btn:hover,
+        .tag-item .copy-tag-btn:hover {
+            color: var(--primary-color);
+        }
+        
+        .loading-tags,
+        .no-tags,
+        .error-loading {
+            padding: 20px;
+            text-align: center;
+            color: #666;
+        }
+        
+        .pagination-controls {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            align-items: center;
+        }
+        
+        .pagination-controls button {
+            padding: 8px 15px;
+            background-color: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 0 10px;
+        }
+        
+        .pagination-controls button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        #tagsPageInfo {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        /* Tag Details Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        
+        .modal-content {
+            background-color: white;
+            margin: 10% auto;
+            padding: 0;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            animation: modalFadeIn 0.3s;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .modal-header h2 {
+            margin: 0;
+            font-size: 20px;
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+        }
+        
+        .modal-body {
+            padding: 20px;
+        }
+        
+        .tag-details-content {
+            text-align: center;
+        }
+        
+        .tag-icon {
+            font-size: 48px;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
+        .details-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+            text-align: left;
+        }
+        
+        .detail-item {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 4px;
+        }
+        
+        .detail-label {
+            display: block;
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .detail-value {
+            display: block;
+            font-weight: bold;
+        }
+        
+        .tag-actions {
+            margin-top: 20px;
+        }
+        
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Transfer Feature */
+        #tagTransferSection {
+            margin-top: 30px;
+        }
+        
+        .transfer-form {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        #tagValidation {
+            display: block;
+            margin-top: 5px;
+            font-size: 12px;
+        }
+        
+        #tagValidation.checking {
+            color: #666;
+        }
+        
+        #tagValidation.valid {
+            color: green;
+        }
+        
+        #tagValidation.invalid,
+        #tagValidation.error {
+            color: red;
+        }
+        
+        #tagValidation.warning {
+            color: orange;
+        }
+        
+        .recent-transfers {
+            margin-top: 30px;
+        }
+        
+        .recent-transfers h4 {
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .transfer-item {
+            display: flex;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            align-items: center;
+        }
+        
+        .transfer-item:last-child {
+            border-bottom: none;
+        }
+        
+        .transfer-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+                        margin-right: 15px;
+            flex-shrink: 0;
+        }
+        
+        .transfer-icon.incoming {
+            background-color: rgba(0, 128, 0, 0.1);
+            color: green;
+        }
+        
+        .transfer-icon.outgoing {
+            background-color: rgba(255, 0, 0, 0.1);
+            color: red;
+        }
+        
+        .transfer-details {
+            flex: 1;
+        }
+        
+        .transfer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+        
+        .transfer-type {
+            font-weight: bold;
+        }
+        
+        .transfer-amount {
+            font-weight: bold;
+        }
+        
+        .transfer-amount.incoming {
+            color: green;
+        }
+        
+        .transfer-amount.outgoing {
+            color: red;
+        }
+        
+        .transfer-meta {
+            display: flex;
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .transfer-date {
+            margin-right: 10px;
+        }
+        
+        .transfer-note {
+            font-style: italic;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            max-width: 200px;
+        }
+        
+        .loading-transfers,
+        .no-transfers,
+        .error-loading {
+            padding: 20px;
+            text-align: center;
+            color: #666;
+        }
+    `;
+    
+    document.head.appendChild(styleElement);
+}
+
+// Initialize the wallet tag system when the page loads
+document.addEventListener('DOMContentLoaded', function() {
+    // Add styles
+    addTagStyles();
+    
+    // Initialize wallet tag system
+    initializeWalletTagSystem();
+});
 
 
 
@@ -10349,9 +12150,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-
-
-
-</script>
-</body>
-</html>
+      </script>
+      </body>
+      </html>
