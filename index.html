@@ -4607,7 +4607,9 @@ table tbody tr:hover {
 
 
 
-/* Admin TalentCoin Dispenser Styles */
+</style>
+<style>
+    /* Admin TalentCoin Dispenser Styles */
 .admin-modal {
   display: none;
   position: fixed;
@@ -4863,7 +4865,6 @@ table tbody tr:hover {
     max-height: 80vh;
   }
 }
-
 
 </style>
 
@@ -5228,121 +5229,14 @@ table tbody tr:hover {
                 </div>
             </div>
         </div>
-        
-        <!-- Talent Coin Dispenser Section -->
-        <div class="feature-section" id="talentCoinDispenser">
-            <header class="section-header">
-                <h2>Talent Coin Dispenser</h2>
-            </header>
             
-            <div class="dispenser-container">
-                <div class="dispenser-form">
-                    <div class="input-group">
-    <label for="userEmail">User Email</label>
-    <input type="email" id="userEmail" placeholder="Enter user's email address">
-</div>
-
-                    
-                    <div class="input-group">
-                        <label for="coinAmount">Amount</label>
-                        <input type="number" id="coinAmount" placeholder="Enter amount">
-                    </div>
-                    
-                    <div class="input-group">
-                        <label>Transaction Type</label>
-                        <div class="radio-group">
-                            <label class="radio-label">
-                                <input type="radio" name="transactionType" value="credit" checked>
-                                <span>Credit</span>
-                            </label>
-                            <label class="radio-label">
-                                <input type="radio" name="transactionType" value="debit">
-                                <span>Debit</span>
-                            </label>
-                        </div>
-                    </div>
-                    
-                    <div class="input-group">
-                        <label for="transactionReason">Reason</label>
-                        <select id="transactionReason">
-                            <option value="">Select reason</option>
-                            <option value="bonus">Bonus</option>
-                            <option value="refund">Refund</option>
-                            <option value="correction">Correction</option>
-                            <option value="promotion">Promotion</option>
-                            <option value="other">Other</option>
-                        </select>
-                    </div>
-                    
-                    <div class="input-group" id="otherReasonGroup" style="display: none;">
-                        <label for="otherReason">Specify Reason</label>
-                        <input type="text" id="otherReason" placeholder="Enter reason">
-                    </div>
-                    
-                    <div class="input-group">
-                        <label for="transactionNotes">Notes</label>
-                        <textarea id="transactionNotes" placeholder="Enter additional notes"></textarea>
-                    </div>
-                    
-                    <button class="primary-btn" id="dispenseBtn">Process Transaction</button>
-                </div>
-                
-                <div class="user-info">
-                    <div class="user-info-header">
-                        <h3>User Information</h3>
-                        <div class="refresh-btn" id="refreshUserInfo">
-                            <i class="fas fa-sync-alt"></i>
-                        </div>
-                    </div>
-                    
-                    <div class="user-info-content" id="userInfoContent">
-                        <div class="user-info-details">
-                            <div class="info-group">
-                                <div class="info-label">Username</div>
-                                <div class="info-value" id="userInfoUsername">-</div>
-                            </div>
-                            <div class="info-group">
-                                <div class="tag-display-container">
-                                    <div class="tag-display-header">
-                                        <span class="tag-label">Your Wallet Tag</span>
-                                        <button class="copy-tag-btn" title="Copy tag">
-                                            <i class="fas fa-copy"></i>
-                                        </button>
-                                    </div>
-                                    <div class="tag-value-container">
-                                        <span class="tag-value">@${tag}</span>
-                                    </div>
-                                    <div class="tag-info">
-                                        <i class="fas fa-info-circle"></i>
-                                        <span>Share this tag with others to receive payments</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="info-group">
-                                <div class="info-label">Current Balance</div>
-                                <div class="info-value" id="userInfoBalance">-</div>
-                            </div>
-                            <div class="info-group">
-                                <div class="info-label">Account Status</div>
-                                <div class="info-value" id="userInfoStatus">-</div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="recent-transactions">
-                        <h3>Recent Transactions</h3>
-                        <div class="transaction-list" id="userTransactionsList">
-                            <!-- User transactions will be loaded here -->
-                            <div class="empty-state">
-                                <i class="fas fa-exchange-alt"></i>
-                                <p>No transactions available</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Admin TalentCoin Dispenser -->
+            
+  <!-- Admin Menu Button (add this to your admin dashboard) -->
+  <button id="openCoinDispenserBtn" class="admin-menu-btn">
+    <i class="fas fa-coins"></i>
+    <span>TalentCoin Dispenser</span>
+  </button>
+<!-- Admin TalentCoin Dispenser -->
 <div id="coinDispenserModal" class="admin-modal">
     <div class="admin-modal-content">
       <div class="admin-modal-header">
@@ -5398,12 +5292,9 @@ table tbody tr:hover {
     </div>
   </div>
   
-  <!-- Admin Menu Button (add this to your admin dashboard) -->
-  <button id="openCoinDispenserBtn" class="admin-menu-btn">
-    <i class="fas fa-coins"></i>
-    <span>TalentCoin Dispenser</span>
-  </button>
   
+
+        
         <!-- Fees Reporter Section -->
         <div class="feature-section" id="feesReporter">
             <header class="section-header">
@@ -6438,24 +6329,28 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Setup form switching
 function setupFormSwitching() {
-  const loginLink = document.querySelector('.login-link');
-  const signupLink = document.querySelector('.signup-link');
   const loginPanel = document.querySelector('.login');
   const signupPanel = document.querySelector('.signup');
-  
-  if (loginLink && signupLink && loginPanel && signupPanel) {
-    loginLink.addEventListener('click', function(e) {
-      e.preventDefault();
-      loginPanel.classList.add('active');
-      signupPanel.classList.remove('active');
-    });
-    
-    signupLink.addEventListener('click', function(e) {
-      e.preventDefault();
-      signupPanel.classList.add('active');
-      loginPanel.classList.remove('active');
-    });
-  }
+   // Get the switch links
+        const showSignupLink = document.getElementById('showSignup');
+        const showLoginLink = document.getElementById('showLogin');
+        
+        // Add event listeners to the links
+        if (showSignupLink) {
+            showSignupLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                loginForm.classList.add('hidden');
+                signupForm.classList.remove('hidden');
+            });
+        }
+        
+        if (showLoginLink) {
+            showLoginLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                signupForm.classList.add('hidden');
+                loginForm.classList.remove('hidden');
+            });
+        }
 }
 
 // Show toast notification
@@ -6812,33 +6707,143 @@ function loadDashboardData() {
 }
 
 // Google Sign In
+// Add event listeners to Google sign-in buttons
 googleBtns.forEach(btn => {
   btn.addEventListener('click', function() {
+    // Show loading animation
+    showAuthLoading('Connecting to Google...');
+    
     const provider = new firebase.auth.GoogleAuthProvider();
     provider.addScope('profile');
     provider.addScope('email');
     
     auth.signInWithPopup(provider)
       .then((result) => {
-        // Save user data to Firestore
         const user = result.user;
-        saveUserData(user);
         
-        // Show success message
-        showToast('Successfully signed in with Google!');
+        // Update loading message
+        document.querySelector('.loading-text').textContent = 'Setting up your account...';
         
-        // Check if admin
-        const isAdminUser = isAdmin(user.email);
-        
-        // Navigate to dashboard
-        navigateToDashboard(user, isAdminUser);
+        // Save user data to Firestore
+        return saveUserData(user).then(() => {
+          // Update loading message
+          document.querySelector('.loading-text').textContent = 'Checking wallet status...';
+          
+          // Check if wallet exists for this user
+          return db.collection('wallets').doc(user.uid).get();
+        }).then((walletDoc) => {
+          if (!walletDoc.exists) {
+            // Update loading message
+            document.querySelector('.loading-text').textContent = 'Creating your wallet...';
+            
+            // Create wallet for the user if it doesn't exist
+            return createUserWallet(user.uid).catch(error => {
+              console.warn('Could not create wallet, but continuing sign in:', error);
+              // Continue despite wallet creation error
+              return null;
+            });
+          }
+          return null;
+        });
+      })
+      .then(() => {
+        // Hide loading after a minimum time for better UX
+        setTimeout(() => {
+          hideAuthLoading();
+          
+          // Get current user (should be signed in by now)
+          const user = auth.currentUser;
+          if (user) {
+            showToast('Successfully signed in with Google!');
+            
+            // Check if admin
+            const isAdminUser = isAdmin(user.email);
+            
+            // Navigate to dashboard
+            navigateToDashboard(user, isAdminUser);
+          } else {
+            showToast('Sign in failed. Please try again.', 'error');
+          }
+        }, 1500); // Minimum 1.5 seconds to show loading
       })
       .catch((error) => {
         console.error('Google sign in error:', error);
+        hideAuthLoading();
         showToast(error.message, 'error');
       });
   });
 });
+
+// Create wallet for user - updated to handle permissions better
+function createUserWallet(userId) {
+  // First check if wallet already exists to avoid duplicate creation
+  return db.collection('wallets').doc(userId).get()
+    .then(doc => {
+      if (doc.exists) {
+        console.log('Wallet already exists for user:', userId);
+        return doc.data();
+      }
+      
+      // Create new wallet if it doesn't exist
+      const walletData = {
+        userId: userId,
+        talentCoinBalance: 0,
+        commissionBalance: 0,
+        nairaBalance: 0,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+        transactions: []
+      };
+      
+      return db.collection('wallets').doc(userId).set(walletData)
+        .then(() => {
+          console.log('Wallet created for user:', userId);
+          return walletData;
+        });
+    })
+    .catch((error) => {
+      console.error('Error with wallet operation:', error);
+      // Don't throw the error, just return null to continue the flow
+      return null;
+    });
+}
+
+// Save user data to Firestore - updated to handle Google sign-in better
+function saveUserData(user, userType = 'voter') {
+  // For Google sign-in, extract a userType if not provided
+  if (!userType && user.providerData && user.providerData[0].providerId === 'google.com') {
+    userType = 'voter'; // Default for Google users
+  }
+  
+  const userData = {
+    uid: user.uid,
+    email: user.email,
+    displayName: user.displayName || user.email.split('@')[0],
+    photoURL: user.photoURL || null,
+    userType: userType,
+    lastLogin: firebase.firestore.FieldValue.serverTimestamp(),
+    isAdmin: isAdmin(user.email)
+  };
+  
+  // Add createdAt only if this is a new user
+  return db.collection('users').doc(user.uid).get()
+    .then(doc => {
+      if (!doc.exists) {
+        userData.createdAt = firebase.firestore.FieldValue.serverTimestamp();
+      }
+      
+      return db.collection('users').doc(user.uid).set(userData, { merge: true });
+    })
+    .then(() => {
+      console.log('User data saved:', userData);
+      return userData;
+    })
+    .catch((error) => {
+      console.error('Error saving user data:', error);
+      // Don't throw the error, just return the userData to continue the flow
+      return userData;
+    });
+}
 
 // Email/Password Sign In
 if (loginForm) {
@@ -6885,26 +6890,30 @@ if (loginForm) {
         setButtonLoading(submitBtn, false);
       });
   });
-}
 
-// Email/Password Sign Up
-if (signupForm) {
-  signupForm.addEventListener('submit', function(e) {
+  
+  // Email/Password Sign Up
+const signupFormElement = document.getElementById('signupFormElement');
+const signupForm = document.getElementById('signupForm');
+
+if (signupFormElement) {
+  signupFormElement.addEventListener('submit', function(e) {
     e.preventDefault();
     
+    const fullName = document.getElementById('fullName').value;
     const email = document.getElementById('signupEmail').value;
     const password = document.getElementById('signupPassword').value;
-    const confirmPassword = document.getElementById('confirmPassword').value;
-    const termsAccepted = document.getElementById('termsCheckbox').checked;
+    const userType = document.getElementById('userType').value;
+    const termsAccepted = document.getElementById('terms').checked;
     
     // Validate form
-    if (password !== confirmPassword) {
-      showToast('Passwords do not match', 'error');
+    if (!termsAccepted) {
+      showToast('Please accept the terms and conditions', 'error');
       return;
     }
     
-    if (!termsAccepted) {
-      showToast('Please accept the terms and conditions', 'error');
+    if (!userType) {
+      showToast('Please select your role', 'error');
       return;
     }
     
@@ -6916,16 +6925,27 @@ if (signupForm) {
       .then((userCredential) => {
         const user = userCredential.user;
         
-        // Save user data to Firestore
-        saveUserData(user);
-        
-        // Send email verification
-        return user.sendEmailVerification()
-          .then(() => {
-            showToast('Account created! Please verify your email.');
-            navigateToDashboard(user);
-            return user;
+        // Update profile with display name
+        return user.updateProfile({
+          displayName: fullName
+        }).then(() => {
+          // Save user data to Firestore with additional fields
+          return saveUserData(user, userType);
+        }).then(() => {
+          // Create wallet for the user
+          return createUserWallet(user.uid).catch(error => {
+            console.warn('Could not create wallet, but continuing signup:', error);
+            // Continue despite wallet creation error
+            return null;
           });
+        }).then(() => {
+          // Send email verification
+          return user.sendEmailVerification();
+        }).then(() => {
+          showToast('Account created! Please verify your email.');
+          navigateToDashboard(user);
+          return user;
+        });
       })
       .catch((error) => {
         console.error('Sign up error:', error);
@@ -6937,36 +6957,387 @@ if (signupForm) {
   });
 }
 
-// Save user data to Firestore
-function saveUserData(user) {
+// Save user data to Firestore with additional fields
+function saveUserData(user, userType = 'voter') {
   const userData = {
     uid: user.uid,
     email: user.email,
     displayName: user.displayName || user.email.split('@')[0],
     photoURL: user.photoURL || null,
+    userType: userType,
     createdAt: firebase.firestore.FieldValue.serverTimestamp(),
     lastLogin: firebase.firestore.FieldValue.serverTimestamp(),
     isAdmin: isAdmin(user.email)
   };
   
-  
-  
-  // Save user data
-  db.collection('users').doc(user.uid).set(userData, { merge: true })
+  return db.collection('users').doc(user.uid).set(userData, { merge: true })
     .then(() => {
-      console.log('User data saved successfully');
-      
-      // Save wallet data
-      return db.collection('wallets').doc(user.uid).set(walletData, { merge: true });
+      console.log('User data saved:', userData);
+      return userData;
     })
-    .then(() => {
-      console.log('Wallet data saved successfully');
-    })
-    .catch(error => {
+    .catch((error) => {
       console.error('Error saving user data:', error);
+      throw error;
     });
 }
 
+// Create wallet for user
+function createUserWallet(userId) {
+  const walletData = {
+    userId: userId,
+    talentCoinBalance: 0,
+    commissionBalance: 0,
+    nairaBalance: 0,
+    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+    updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+    transactions: []
+  };
+  
+  return db.collection('wallets').doc(userId).set(walletData)
+    .then(() => {
+      console.log('Wallet created for user:', userId);
+      return walletData;
+    })
+    .catch((error) => {
+      console.error('Error creating wallet:', error);
+      throw error;
+    });
+}
+    
+    }
+  
+// Add loading animation for authentication
+function setupAuthLoadingAnimation() {
+  // Create the loading overlay HTML
+  const loadingOverlayHTML = `
+    <div id="auth-loading-overlay" class="auth-loading-overlay">
+      <div class="loading-animation">
+        <div class="loading-item coin">₮</div>
+        <div class="loading-item star">★</div>
+        <div class="loading-item naira">₦</div>
+        <div class="loading-item coin">₮</div>
+        <div class="loading-item star">★</div>
+      </div>
+      <div class="loading-text">Verifying credentials...</div>
+    </div>
+  `;
+  
+  // Add the loading overlay to the body
+  document.body.insertAdjacentHTML('beforeend', loadingOverlayHTML);
+  
+  // Add the CSS for the loading animation
+  const loadingStyles = document.createElement('style');
+  loadingStyles.textContent = `
+    .auth-loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+    
+    .auth-loading-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .loading-animation {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    
+    .loading-item {
+      font-size: 2.5rem;
+      margin: 0 10px;
+      animation-duration: 2s;
+      animation-iteration-count: infinite;
+      animation-timing-function: ease-in-out;
+      color: white;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+    }
+    
+    .loading-item.coin {
+      color: #FFD700;
+      animation-name: floatCoin;
+    }
+    
+    .loading-item.star {
+      color: #6c5ce7;
+      animation-name: rotateStar;
+    }
+    
+    .loading-item.naira {
+      color: #2ecc71;
+      animation-name: floatNaira;
+    }
+    
+    @keyframes floatCoin {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(10deg); }
+    }
+    
+    @keyframes rotateStar {
+      0% { transform: rotate(0deg) scale(1); }
+      50% { transform: rotate(180deg) scale(1.2); }
+      100% { transform: rotate(360deg) scale(1); }
+    }
+    
+    @keyframes floatNaira {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-15px) scale(1.1); }
+    }
+    
+    .loading-text {
+      color: white;
+      font-size: 1.2rem;
+      font-weight: 500;
+      text-align: center;
+      margin-top: 10px;
+      animation: pulse 1.5s infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+  `;
+  document.head.appendChild(loadingStyles);
+}
+
+// Show loading animation
+function showAuthLoading(message = 'Verifying credentials...') {
+  const loadingOverlay = document.getElementById('auth-loading-overlay');
+  if (loadingOverlay) {
+    const loadingText = loadingOverlay.querySelector('.loading-text');
+    if (loadingText) {
+      loadingText.textContent = message;
+    }
+    loadingOverlay.classList.add('active');
+  }
+}
+
+// Hide loading animation
+function hideAuthLoading() {
+  const loadingOverlay = document.getElementById('auth-loading-overlay');
+  if (loadingOverlay) {
+    loadingOverlay.classList.remove('active');
+  }
+}
+
+// Initialize the loading animation
+document.addEventListener('DOMContentLoaded', function() {
+  setupAuthLoadingAnimation();
+  
+  // Update login form to show loading
+  const loginForm = document.getElementById('loginForm');
+  if (loginForm) {
+    loginForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const email = document.getElementById('loginEmail').value;
+      const password = document.getElementById('loginPassword').value;
+      
+      if (!email || !password) {
+        showToast('Please enter your email and password', 'error');
+        return;
+      }
+      
+      // Show loading animation
+      showAuthLoading('Verifying your credentials...');
+      
+      // Get the submit button
+      const submitBtn = this.querySelector('button[type="submit"]');
+      setButtonLoading(submitBtn, true);
+      
+      // Continue with the existing login logic
+      const rememberMe = document.getElementById('remember') ? document.getElementById('remember').checked : false;
+      
+      // Check for admin login
+      const isAdminLogin = email === ADMIN_EMAIL && password === ADMIN_PASSWORD;
+      
+      auth.signInWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          
+          // Update last login timestamp
+          db.collection('users').doc(user.uid).update({
+            lastLogin: firebase.firestore.FieldValue.serverTimestamp()
+          }).catch(err => console.log('Error updating user data:', err));
+          
+          // Set persistence based on remember me
+          const persistence = rememberMe ? 
+            firebase.auth.Auth.Persistence.LOCAL : 
+            firebase.auth.Auth.Persistence.SESSION;
+          
+          return auth.setPersistence(persistence)
+            .then(() => {
+              // Hide loading after a minimum time for better UX
+              setTimeout(() => {
+                hideAuthLoading();
+                showToast('Successfully signed in!');
+                navigateToDashboard(user, isAdminLogin);
+              }, 1500); // Minimum 1.5 seconds to show loading
+              return user;
+            });
+        })
+        .catch((error) => {
+          console.error('Sign in error:', error);
+          hideAuthLoading();
+          showToast(error.message, 'error');
+        })
+        .finally(() => {
+          setButtonLoading(submitBtn, false);
+        });
+    });
+  }
+  
+  // Update signup form to show loading
+  const signupFormElement = document.getElementById('signupFormElement');
+  if (signupFormElement) {
+    signupFormElement.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const fullName = document.getElementById('fullName').value;
+      const email = document.getElementById('signupEmail').value;
+      const password = document.getElementById('signupPassword').value;
+      const userType = document.getElementById('userType').value;
+      const termsAccepted = document.getElementById('terms').checked;
+      
+      // Validate form
+      if (!termsAccepted) {
+        showToast('Please accept the terms and conditions', 'error');
+        return;
+      }
+      
+      if (!userType) {
+        showToast('Please select your role', 'error');
+        return;
+      }
+      
+      // Show loading animation
+      showAuthLoading('Creating your account...');
+      
+      // Show loading state
+      const submitBtn = this.querySelector('button[type="submit"]');
+      setButtonLoading(submitBtn, true);
+      
+      auth.createUserWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          
+          // Update loading message
+          document.querySelector('.loading-text').textContent = 'Setting up your profile...';
+          
+          // Update profile with display name
+          return user.updateProfile({
+            displayName: fullName
+          }).then(() => {
+            // Update loading message
+            document.querySelector('.loading-text').textContent = 'Saving your information...';
+            
+            // Save user data to Firestore with additional fields
+            return saveUserData(user, userType);
+          }).then(() => {
+            // Update loading message
+            document.querySelector('.loading-text').textContent = 'Creating your wallet...';
+            
+            // Create wallet for the user
+            return createUserWallet(user.uid).catch(error => {
+              console.warn('Could not create wallet, but continuing signup:', error);
+              // Continue despite wallet creation error
+              return null;
+            });
+          }).then(() => {
+            // Update loading message
+            document.querySelector('.loading-text').textContent = 'Sending verification email...';
+            
+            // Send email verification
+            return user.sendEmailVerification();
+          }).then(() => {
+            // Hide loading after a minimum time for better UX
+            setTimeout(() => {
+              hideAuthLoading();
+              showToast('Account created! Please verify your email.');
+              navigateToDashboard(user);
+            }, 1500); // Minimum 1.5 seconds to show loading
+            return user;
+          });
+        })
+        .catch((error) => {
+          console.error('Sign up error:', error);
+          hideAuthLoading();
+          showToast(error.message, 'error');
+        })
+        .finally(() => {
+          setButtonLoading(submitBtn, false);
+        });
+    });
+  }
+  
+  // Update Google sign-in buttons to show loading
+  const googleBtns = document.querySelectorAll('.google-btn');
+  googleBtns.forEach(btn => {
+    btn.addEventListener('click', function() {
+      // Show loading animation
+      showAuthLoading('Connecting to Google...');
+      
+      const provider = new firebase.auth.GoogleAuthProvider();
+      provider.addScope('profile');
+      provider.addScope('email');
+      
+      auth.signInWithPopup(provider)
+        .then((result) => {
+          // Update loading message
+          document.querySelector('.loading-text').textContent = 'Setting up your account...';
+          
+          // Save user data to Firestore
+          const user = result.user;
+          saveUserData(user);
+          
+          // Check if wallet exists, if not create one
+          return db.collection('wallets').doc(user.uid).get()
+            .then(doc => {
+              if (!doc.exists) {
+                // Update loading message
+                document.querySelector('.loading-text').textContent = 'Creating your wallet...';
+                return createUserWallet(user.uid);
+              }
+              return null;
+            });
+        })
+        .then(() => {
+          // Hide loading after a minimum time for better UX
+          setTimeout(() => {
+            hideAuthLoading();
+            showToast('Successfully signed in with Google!');
+            
+            // Check if admin
+            const user = auth.currentUser;
+            const isAdminUser = isAdmin(user.email);
+            
+            // Navigate to dashboard
+            navigateToDashboard(user, isAdminUser);
+          }, 1500); // Minimum 1.5 seconds to show loading
+        })
+        .catch((error) => {
+          console.error('Google sign in error:', error);
+          hideAuthLoading();
+          showToast(error.message, 'error');
+        });
+    });
+  });
+});
 
 // Logout function
 function logout() {
@@ -8633,16 +9004,6 @@ if (!document.querySelector('style[data-toast-styles]')) {
     document.head.appendChild(toastStyles);
 }
 
-// Logout function
-function logout() {
-    firebase.auth().signOut().then(() => {
-        // Redirect to login page or show login form
-        window.location.href = 'index.html'; // Adjust as needed
-    }).catch((error) => {
-        console.error('Error signing out:', error);
-        showToast('Error signing out: ' + error.message, 'error');
-    });
-}
 
 // Check if we need to load Font Awesome
 if (!document.querySelector('link[href*="font-awesome"]')) {
@@ -8900,6 +9261,211 @@ function loadUserProfileData() {
         });
 }
    
+// Function to initialize the emoji avatar selector
+function initEmojiAvatarSelector() {
+  const currentEmojiAvatar = document.getElementById('currentEmojiAvatar');
+  const emojiSelector = document.getElementById('emojiSelector');
+  const emojiOptions = document.querySelectorAll('.emoji-option');
+  
+  if (!currentEmojiAvatar || !emojiSelector) {
+    console.error('Emoji selector elements not found');
+    return;
+  }
+  
+  // Add click handler to show/hide emoji selector
+  currentEmojiAvatar.addEventListener('click', (e) => {
+    e.stopPropagation();
+    emojiSelector.classList.toggle('active');
+  });
+  
+  // Close emoji selector when clicking outside
+  document.addEventListener('click', () => {
+    emojiSelector.classList.remove('active');
+  });
+  
+  // Prevent closing when clicking inside the selector
+  emojiSelector.addEventListener('click', (e) => {
+    e.stopPropagation();
+  });
+  
+  // Add click handlers for each emoji option
+  emojiOptions.forEach(option => {
+    option.addEventListener('click', () => {
+      const emoji = option.getAttribute('data-emoji');
+      selectEmojiAvatar(emoji);
+    });
+  });
+}
+
+// Function to select and save an emoji avatar
+function selectEmojiAvatar(emoji) {
+  const user = firebase.auth().currentUser;
+  if (!user) {
+    showToast('You must be logged in to change your avatar', 'error');
+    return;
+  }
+  
+  // Update the current avatar display
+  const currentEmojiAvatar = document.getElementById('currentEmojiAvatar');
+  if (currentEmojiAvatar) {
+    currentEmojiAvatar.textContent = emoji;
+  }
+  
+  // Update the small profile image in the header
+  const userProfileImage = document.querySelector('.user-profile-image');
+  if (userProfileImage) {
+    userProfileImage.textContent = emoji;
+  }
+  
+  // Close the emoji selector
+  const emojiSelector = document.getElementById('emojiSelector');
+  if (emojiSelector) {
+    emojiSelector.classList.remove('active');
+  }
+  
+  // Save the selected emoji to Firebase
+  firebase.firestore().collection('users').doc(user.uid).update({
+    emojiAvatar: emoji,
+    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+  })
+  .then(() => {
+    console.log('Emoji avatar updated successfully');
+    showToast('Avatar updated successfully');
+  })
+  .catch(error => {
+    console.error('Error updating emoji avatar:', error);
+    showToast('Error updating avatar: ' + error.message, 'error');
+  });
+}
+
+// Function to load the user's emoji avatar
+function loadUserEmojiAvatar() {
+  const user = firebase.auth().currentUser;
+  if (!user) return;
+  
+  firebase.firestore().collection('users').doc(user.uid).get()
+    .then(doc => {
+      if (doc.exists) {
+        const userData = doc.data();
+        
+        // Get the emoji avatar or use default
+        const emojiAvatar = userData.emojiAvatar || '🤖';
+        
+        // Update the current avatar display
+        const currentEmojiAvatar = document.getElementById('currentEmojiAvatar');
+        if (currentEmojiAvatar) {
+          currentEmojiAvatar.textContent = emojiAvatar;
+        }
+        
+        // Update the small profile image in the header
+        const userProfileImage = document.querySelector('.user-profile-image');
+        if (userProfileImage) {
+          userProfileImage.textContent = emojiAvatar;
+        }
+      }
+    })
+    .catch(error => {
+      console.error('Error loading user emoji avatar:', error);
+    });
+}
+
+// Function to add more emoji options dynamically
+function addMoreEmojiOptions() {
+  const emojiSelector = document.getElementById('emojiSelector');
+  if (!emojiSelector) return;
+  
+  // Additional emojis to add
+  const additionalEmojis = ['🚀', '🌈', '🔥', '💡', '🎭', '🎮', '📱', '💻', '🎧', '📸', '🎬', '🎯'];
+  
+  additionalEmojis.forEach(emoji => {
+    const emojiOption = document.createElement('div');
+    emojiOption.className = 'emoji-option';
+    emojiOption.setAttribute('data-emoji', emoji);
+    emojiOption.textContent = emoji;
+    
+    // Add click handler
+    emojiOption.addEventListener('click', () => {
+      selectEmojiAvatar(emoji);
+    });
+    
+    emojiSelector.appendChild(emojiOption);
+  });
+}
+
+// Function to handle search for emojis
+function initEmojiSearch() {
+  const emojiSearchInput = document.getElementById('emojiSearch');
+  if (!emojiSearchInput) return;
+  
+  emojiSearchInput.addEventListener('input', (e) => {
+    const searchTerm = e.target.value.toLowerCase();
+    const emojiOptions = document.querySelectorAll('.emoji-option');
+    
+    emojiOptions.forEach(option => {
+      const emoji = option.getAttribute('data-emoji');
+      const emojiDescription = option.getAttribute('data-description') || '';
+      
+      if (emoji.includes(searchTerm) || emojiDescription.includes(searchTerm)) {
+        option.style.display = 'flex';
+      } else {
+        option.style.display = 'none';
+      }
+    });
+  });
+}
+
+// Initialize the emoji selector when the document is ready
+document.addEventListener('DOMContentLoaded', () => {
+  initEmojiAvatarSelector();
+  
+  // Optional: Add more emoji options
+  // addMoreEmojiOptions();
+  
+  // Optional: Initialize emoji search if you have a search input
+  // initEmojiSearch();
+  
+  // Load the current user's emoji avatar
+  firebase.auth().onAuthStateChanged(user => {
+    if (user) {
+      loadUserEmojiAvatar();
+    }
+  });
+});
+
+// Helper function to show toast notifications
+function showToast(message, type = 'success') {
+  // Create toast container if it doesn't exist
+  let toastContainer = document.querySelector('.toast-container');
+  if (!toastContainer) {
+    toastContainer = document.createElement('div');
+    toastContainer.className = 'toast-container';
+    document.body.appendChild(toastContainer);
+  }
+  
+  // Create toast element
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  toast.innerHTML = `
+    <div class="toast-content">
+      <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
+      <span>${message}</span>
+    </div>
+    <div class="toast-progress"></div>
+  `;
+  
+  toastContainer.appendChild(toast);
+  
+  // Show and hide toast with animation
+  setTimeout(() => toast.classList.add('visible'), 10);
+  
+  // Remove toast after animation
+  setTimeout(() => {
+    toast.classList.remove('visible');
+    setTimeout(() => toastContainer.removeChild(toast), 300);
+  }, 3000);
+}
+
+
 // Hamburger Menu & Sidebar Functionality
 document.addEventListener('DOMContentLoaded', function() {
     // DOM Elements - Main Navigation
@@ -8983,29 +9549,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Function to handle logout
-    function handleLogout() {
-        // If Firebase is available, log the event and sign out
-        if (typeof firebase !== 'undefined' && firebase.auth) {
-            if (firebase.analytics) {
-                firebase.analytics().logEvent('user_logout');
-            }
-            
-            firebase.auth().signOut()
-                .then(() => {
-                    window.location.href = 'login.html';
-                })
-                .catch((error) => {
-                    console.error('Error signing out:', error);
-                    showToast('Error signing out. Please try again.', 'error');
-                });
-        } else {
-            // Fallback for when Firebase is not available
-            console.log('Logout clicked - Firebase not available');
-            // Redirect to login page
-            window.location.href = 'login.html';
-        }
-    }
     
     // Function to show toast notification
     function showToast(message, type = 'success') {
@@ -11034,7 +11577,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 
-       // TalentCoin Dispenser Admin Feature
+                  // TalentCoin Dispenser Admin Feature
 document.addEventListener('DOMContentLoaded', function() {
   // Constants
   const ADMIN_PASSWORD = 'BISA19';
@@ -11407,34 +11950,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const style = document.createElement('style');
     style.id = 'toast-styles';
     style.textContent = `
-      .toast {
-        position: fixed;
-        bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%) translateY(100px);
-        padding: 12px 20px;
-        border-radius: 8px;
-        color: white;
-        font-size: 14px;
-        font-weight: 500;
-        box-shadow: 0 3px 10px rgba(0,0,0,0.2);
-        z-index: 9999;
-        opacity: 0;
-        transition: transform 0.3s, opacity 0.3s;
-      }
-      .toast.show {
-        transform: translateX(-50%) translateY(0);
-        opacity: 1;
-      }
-      .toast-success {
-        background-color: #4caf50;
-      }
-      .toast-error {
-        background-color: #f44336;
-      }
-      .toast-info {
-        background-color: #2196f3;
-      }
+     
     `;
     document.head.appendChild(style);
   }
