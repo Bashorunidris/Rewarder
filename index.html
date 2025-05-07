@@ -1752,7 +1752,6 @@ input:checked + .slider:before {
 }
 
 
-/* Wallet Feature Styles */
 :root {
     --primary-color: #6c5ce7;
     --primary-light: #a29bfe;
@@ -1764,16 +1763,31 @@ input:checked + .slider:before {
     --warning-color: #f39c12;
     --success-color: #2ecc71;
     --info-color: #3498db;
-    --text-color: #333;
-    --text-light: #666;
-    --text-lighter: #999;
-    --bg-color: #fff;
-    --bg-light: #f8f9fa;
-    --bg-dark: #eee;
-    --border-color: #ddd;
+    --text-color: #f0ecec;
+    --text-light: #fcf9f9;
+    --text-lighter: #f7eeee;
+    --bg-color: #111010;
+    --bg-light: #0f0f0f;
+    --bg-dark: #0e0d0d;
+    --border-color: #f8f7f7;
     --border-radius: 10px;
     --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     --transition: all 0.3s ease;
+}
+
+/* Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    color: var(--text-color);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 /* Modal Base Styles */
@@ -1788,6 +1802,7 @@ input:checked + .slider:before {
     justify-content: center;
     align-items: center;
     z-index: 1000;
+    overflow: hidden;
 }
 
 .wallet-modal.active,
@@ -1807,6 +1822,8 @@ input:checked + .slider:before {
     position: relative;
     z-index: 1001;
     animation: modalFadeIn 0.3s ease;
+    display: flex;
+    flex-direction: column;
 }
 
 .wallet-header,
@@ -1816,6 +1833,10 @@ input:checked + .slider:before {
     align-items: center;
     padding: 16px 20px;
     border-bottom: 1px solid var(--border-color);
+    position: flex;
+    top: 0;
+    background-color: var(--bg-color);
+    z-index: 10;
 }
 
 .wallet-header h2,
@@ -1835,11 +1856,19 @@ input:checked + .slider:before {
     color: var(--text-light);
     padding: 0;
     line-height: 1;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .wallet-screen,
 .feature-modal-body {
     padding: 20px;
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
 }
 
 .modal-overlay {
@@ -1851,6 +1880,8 @@ input:checked + .slider:before {
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 999;
     display: none;
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
 }
 
 .modal-overlay.active {
@@ -1864,6 +1895,7 @@ input:checked + .slider:before {
     flex-direction: column;
     align-items: center;
     text-align: center;
+    padding: 10px 0;
 }
 
 .pin-icon {
@@ -1891,6 +1923,7 @@ input:checked + .slider:before {
     margin: 0 0 20px;
     color: var(--text-light);
     font-size: 0.95rem;
+    max-width: 280px;
 }
 
 .pin-input-container,
@@ -1899,6 +1932,8 @@ input:checked + .slider:before {
     justify-content: center;
     gap: 10px;
     margin: 20px 0;
+    width: 100%;
+    max-width: 280px;
 }
 
 .pin-digit,
@@ -1920,6 +1955,8 @@ input:checked + .slider:before {
     color: var(--text-color);
     background-color: var(--bg-light);
     transition: var(--transition);
+    -webkit-appearance: none;
+    -moz-appearance: textfield;
 }
 
 .pin-digit:focus,
@@ -1957,6 +1994,7 @@ input:checked + .slider:before {
     display: inline-block;
     text-align: center;
     margin-top: 10px;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .primary-btn {
@@ -1964,7 +2002,7 @@ input:checked + .slider:before {
     color: white;
 }
 
-.primary-btn:hover {
+.primary-btn:hover, .primary-btn:active {
     background-color: var(--primary-dark);
 }
 
@@ -1973,7 +2011,7 @@ input:checked + .slider:before {
     color: var(--text-color);
 }
 
-.secondary-btn:hover {
+.secondary-btn:hover, .secondary-btn:active {
     background-color: var(--border-color);
 }
 
@@ -1983,7 +2021,7 @@ input:checked + .slider:before {
     padding: 8px 16px;
 }
 
-.text-btn:hover {
+.text-btn:hover, .text-btn:active {
     text-decoration: underline;
 }
 
@@ -2012,6 +2050,7 @@ input:checked + .slider:before {
     color: var(--text-color);
     font-size: 0.95rem;
     flex-grow: 1;
+    word-break: break-all;
 }
 
 .copy-btn {
@@ -2021,6 +2060,9 @@ input:checked + .slider:before {
     cursor: pointer;
     padding: 5px;
     font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .balance-cards {
@@ -2038,7 +2080,8 @@ input:checked + .slider:before {
     flex-direction: column;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
-d.talent-coin {
+
+.balance-card.talent-coin {
     background-color: var(--primary-light);
     color: white;
 }
@@ -2093,9 +2136,10 @@ d.talent-coin {
     justify-content: center;
     cursor: pointer;
     transition: var(--transition);
+    -webkit-tap-highlight-color: transparent;
 }
 
-.wallet-action-btn:hover {
+.wallet-action-btn:hover, .wallet-action-btn:active {
     background-color: var(--bg-dark);
     transform: translateY(-2px);
 }
@@ -2110,6 +2154,7 @@ d.talent-coin {
     font-size: 0.9rem;
     font-weight: 500;
     color: var(--text-color);
+    text-align: center;
 }
 
 /* Transaction History Styles */
@@ -2127,6 +2172,7 @@ d.talent-coin {
 .transaction-list {
     max-height: 300px;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .empty-transactions {
@@ -2160,10 +2206,12 @@ d.talent-coin {
     justify-content: center;
     margin-right: 12px;
     color: var(--primary-color);
+    flex-shrink: 0;
 }
 
 .transaction-details {
     flex-grow: 1;
+    min-width: 0;
 }
 
 .transaction-title {
@@ -2171,6 +2219,9 @@ d.talent-coin {
     color: var(--text-color);
     font-size: 0.95rem;
     margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .transaction-date {
@@ -2182,6 +2233,7 @@ d.talent-coin {
     text-align: right;
     display: flex;
     flex-direction: column;
+    flex-shrink: 0;
 }
 
 .amount-value {
@@ -2221,6 +2273,13 @@ d.talent-coin {
     display: flex;
     border-bottom: 1px solid var(--border-color);
     margin-bottom: 20px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Firefox */
+}
+
+.tabs::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Edge */
 }
 
 .tab {
@@ -2230,6 +2289,8 @@ d.talent-coin {
     color: var(--text-light);
     position: relative;
     transition: var(--transition);
+    white-space: nowrap;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .tab.active {
@@ -2277,6 +2338,8 @@ d.talent-coin {
     color: var(--text-color);
     background-color: var(--bg-light);
     transition: var(--transition);
+    -webkit-appearance: none;
+    -moz-appearance: textfield;
 }
 
 .input-group input:focus,
@@ -2334,6 +2397,7 @@ d.talent-coin {
     display: flex;
     align-items: center;
     margin-bottom: 8px;
+    flex-wrap: wrap;
 }
 
 .account-row .label {
@@ -2347,6 +2411,7 @@ d.talent-coin {
     font-weight: 500;
     color: var(--text-color);
     flex-grow: 1;
+    word-break: break-all;
 }
 
 .instructions {
@@ -2382,7 +2447,7 @@ d.talent-coin {
     transition: var(--transition);
 }
 
-.file-upload-btn:hover {
+.file-upload-btn:hover, .file-upload-btn:active {
     background-color: var(--border-color);
 }
 
@@ -2419,6 +2484,7 @@ d.talent-coin {
     border-radius: var(--border-radius);
     cursor: pointer;
     transition: var(--transition);
+    -webkit-tap-highlight-color: transparent;
 }
 
 .option-btn.active {
@@ -2436,6 +2502,7 @@ d.talent-coin {
     font-size: 0.9rem;
     font-weight: 500;
     color: var(--text-color);
+    text-align: center;
 }
 
 .verification-section {
@@ -2478,7 +2545,7 @@ d.talent-coin {
 
 .fee-note {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     font-size: 0.85rem;
     color: var(--text-light);
     margin-bottom: 20px;
@@ -2487,6 +2554,93 @@ d.talent-coin {
 .fee-note i {
     margin-right: 8px;
     color: var(--info-color);
+    margin-top: 3px;
+}
+
+/* History Modal Specific Styles */
+.notification-badge {
+    background-color: var(--danger-color);
+    color: white;
+    font-size: 0.7rem;
+    padding: 2px 6px;
+    border-radius: 10px;
+    margin-left: 5px;
+}
+
+.filter-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.date-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+}
+
+.filter-btn {
+    padding: 8px 12px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.pagination-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    gap: 15px;
+}
+
+.pagination-btn {
+    background: none;
+    border: 1px solid var(--border-color);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.pagination-btn:hover, .pagination-btn:active {
+    background-color: var(--bg-dark);
+}
+
+.pagination-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.loading-spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 0;
+}
+
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 0;
+    color: var(--text-lighter);
+    text-align: center;
+}
+
+.empty-state i {
+    margin-bottom: 15px;
+    opacity: 0.7;
 }
 
 /* Utility Classes */
@@ -2506,21 +2660,79 @@ d.talent-coin {
     }
 }
 
-/* Media Queries */
-@media (max-width: 480px) {
-    .balance-cards {
-        grid-template-columns: 1fr;
+@keyframes modalSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Media Queries for Responsive Design */
+@media (max-width: 768px) {
+    .wallet-modal,
+    .feature-modal {
+        align-items: flex-end;
     }
     
-    .action-row {
-        grid-template-columns: 1fr;
-        gap: 10px;
+    .wallet-container,
+    .feature-modal-content {
+        width: 100%;
+        max-width: 100%;
+        height: 90vh;
+        max-height: 90vh;
+        border-radius: var(--border-radius) var(--border-radius) 0 0;
+        animation: modalSlideUp 0.3s ease;
+    }
+    
+    .wallet-header,
+    .feature-modal-header {
+        padding: 16px;
+    }
+    
+    .wallet-screen,
+    .feature-modal-body {
+        padding: 16px;
+    }
+    
+    .pin-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 24px;
+    }
+    
+    .pin-setup h3,
+    .pin-entry h3 {
+        font-size: 1.1rem;
+    }
+    
+    .pin-setup p,
+    .pin-entry p {
+        font-size: 0.9rem;
+    }
+    
+    .wallet-btn {
+        width: 100%;
+    }
+    
+    .account-row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .account-row .label {
+        margin-bottom: 4px;
     }
     
     .option-buttons {
-        flex-direction: column;
+        flex-direction: row;
     }
-    
+}
+
+@media (max-width: 480px) {
     .pin-digit,
     .pin-confirm-digit,
     .pin-login-digit,
@@ -2531,20 +2743,454 @@ d.talent-coin {
     .transfer-pin-digit {
         width: 40px;
         height: 40px;
+        font-size: 1.1rem;
     }
     
     .otp-digit {
         width: 35px;
         height: 35px;
+        font-size: 1rem;
+    }
+    
+    .balance-cards {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+    
+    .balance-card {
+        padding: 12px;
+    }
+    
+    .balance-amount {
+        font-size: 1.5rem;
+    }
+    
+    .action-row {
+        gap: 10px;
+    }
+    
+    .wallet-action-btn {
+        padding: 12px 10px;
+    }
+    
+    .wallet-action-btn .action-icon {
+        font-size: 1.3rem;
+        margin-bottom: 6px;
+    }
+    
+    .wallet-action-btn span {
+        font-size: 0.8rem;
+    }
+    
+    .tab {
+        padding: 10px 15px;
+        font-size: 0.9rem;
+    }
+    
+    .input-group label {
+        font-size: 0.9rem;
+    }
+    
+    .input-group input,
+    .input-group select {
+        padding: 10px 12px;
+        font-size: 0.9rem;
+    }
+    
+    .option-btn {
+        padding: 12px 10px;
+    }
+    
+    .option-btn i {
+        font-size: 1.3rem;
+        margin-bottom: 6px;
+    }
+    
+    .option-btn span {
+        font-size: 0.8rem;
     }
 }
 
-/* Fix for notched iPhones */
+/* iPhone X, 11, 12, 13 Notch Support */
 @supports (padding: max(0px)) {
     .wallet-container,
     .feature-modal-content {
         padding-bottom: max(20px, env(safe-area-inset-bottom));
     }
+    
+    .wallet-header,
+    .feature-modal-header {
+        padding-top: max(16px, env(safe-area-inset-top));
+        padding-left: max(16px, env(safe-area-inset-left));
+        padding-right: max(16px, env(safe-area-inset-right));
+    }
+    
+    .wallet-screen,
+    .feature-modal-body {
+        padding-left: max(16px, env(safe-area-inset-left));
+        padding-right: max(16px, env(safe-area-inset-right));
+    }
+}
+
+/* Fix for iOS input zoom */
+@media screen and (-webkit-min-device-pixel-ratio: 0) { 
+    select,
+    textarea,
+    input {
+        font-size: 16px !important;
+    }
+}
+
+/* Fix for Android Chrome bottom bar */
+@media screen and (max-height: 600px) {
+    .wallet-container,
+    .feature-modal-content {
+        max-height: 85vh;
+    }
+}
+
+/* iPad specific adjustments */
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+    .wallet-container,
+    .feature-modal-content {
+        width: 80%;
+        max-width: 600px;
+        max-height: 80vh;
+        border-radius: var(--border-radius);
+    }
+    
+    .wallet-modal,
+    .feature-modal {
+        align-items: center;
+    }
+    
+    .balance-cards {
+        grid-template-columns: 1fr 1fr;
+    }
+    .action-row {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .wallet-action-btn {
+        padding: 20px 15px;
+    }
+    
+    .wallet-action-btn .action-icon {
+        font-size: 1.8rem;
+        margin-bottom: 10px;
+    }
+    
+    .wallet-action-btn span {
+        font-size: 1rem;
+    }
+    
+    .pin-digit,
+    .pin-confirm-digit,
+    .pin-login-digit,
+    .withdraw-pin-digit,
+    .current-pin-digit,
+    .new-pin-digit,
+    .confirm-new-pin-digit,
+    .transfer-pin-digit {
+        width: 50px;
+        height: 50px;
+        font-size: 1.3rem;
+    }
+    
+    .otp-digit {
+        width: 45px;
+        height: 45px;
+        font-size: 1.2rem;
+    }
+    
+    .wallet-btn {
+        padding: 14px 28px;
+        font-size: 1rem;
+    }
+}
+
+/* Landscape mode adjustments */
+@media (orientation: landscape) and (max-height: 500px) {
+    .wallet-container,
+    .feature-modal-content {
+        height: 95vh;
+        max-height: 95vh;
+    }
+    
+    .pin-setup,
+    .pin-entry {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .pin-icon {
+        margin-right: 20px;
+        margin-bottom: 0;
+    }
+    
+    .pin-setup h3,
+    .pin-entry h3,
+    .pin-setup p,
+    .pin-entry p {
+        text-align: left;
+        width: calc(100% - 90px);
+    }
+    
+    .pin-input-container,
+    .pin-confirm-container,
+    .wallet-btn {
+        width: 100%;
+    }
+    
+    .balance-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .action-row {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    
+    .transaction-history {
+        margin-top: 15px;
+    }
+    
+    .transaction-list {
+        max-height: 150px;
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+   
+    
+    .modal-overlay {
+        background-color: rgba(0, 0, 0, 0.7);
+    }
+    
+    .wallet-action-btn {
+        background-color: var(--bg-light);
+        border-color: var(--border-color);
+    }
+    
+    .wallet-action-btn:hover, .wallet-action-btn:active {
+        background-color: var(--bg-dark);
+    }
+    
+    .option-btn {
+        background-color: var(--bg-light);
+        border-color: var(--border-color);
+    }
+    
+    .option-btn.active {
+        background-color: rgba(140, 122, 230, 0.2);
+    }
+    
+    .transaction-icon {
+        background-color: var(--bg-dark);
+    }
+    
+    .file-upload-btn {
+        background-color: var(--bg-dark);
+        color: var(--text-light);
+    }
+    
+    .file-upload-btn:hover, .file-upload-btn:active {
+        background-color: var(--border-color);
+    }
+    
+    .pagination-btn {
+        color: var(--text-light);
+    }
+    
+    .pagination-btn:hover, .pagination-btn:active {
+        background-color: var(--bg-dark);
+    }
+}
+
+/* Accessibility improvements */
+.wallet-btn:focus,
+.close-wallet:focus,
+.close-feature-modal:focus,
+.option-btn:focus,
+.tab:focus,
+.wallet-action-btn:focus,
+.pagination-btn:focus,
+.copy-btn:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+/* Prevent text selection on buttons */
+button, 
+.option-btn,
+.tab,
+.wallet-action-btn {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Improve touch targets for mobile */
+@media (max-width: 768px) {
+    .close-wallet,
+    .close-feature-modal,
+    .copy-btn {
+        min-width: 44px;
+        min-height: 44px;
+    }
+    
+    .tab {
+        padding: 12px 20px;
+    }
+    
+    .pagination-btn {
+        width: 44px;
+        height: 44px;
+    }
+}
+
+/* Animations for interactive elements */
+.wallet-btn,
+.wallet-action-btn,
+.option-btn,
+.tab,
+.copy-btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.wallet-btn:after,
+.wallet-action-btn:after,
+.option-btn:after,
+.tab:after,
+.copy-btn:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 5px;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.5);
+    opacity: 0;
+    border-radius: 100%;
+    transform: scale(1, 1) translate(-50%);
+    transform-origin: 50% 50%;
+}
+
+@keyframes ripple {
+    0% {
+        transform: scale(0, 0);
+        opacity: 0.5;
+    }
+    100% {
+        transform: scale(100, 100);
+        opacity: 0;
+    }
+}
+
+.wallet-btn:active:after,
+.wallet-action-btn:active:after,
+.option-btn:active:after,
+.tab:active:after,
+.copy-btn:active:after {
+    animation: ripple 0.4s ease-out;
+}
+
+/* Notification styles for success/error messages */
+.notification {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 12px 20px;
+    border-radius: 8px;
+    color: white;
+    font-weight: 500;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    max-width: 90%;
+    animation: notificationFadeIn 0.3s ease, notificationFadeOut 0.3s ease 2.7s forwards;
+}
+
+.notification.success {
+    background-color: var(--success-color);
+}
+
+.notification.error {
+    background-color: var(--danger-color);
+}
+
+.notification.warning {
+    background-color: var(--warning-color);
+}
+
+.notification i {
+    margin-right: 10px;
+    font-size: 1.2rem;
+}
+
+@keyframes notificationFadeIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, 20px);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+}
+
+@keyframes notificationFadeOut {
+    from {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+    to {
+        opacity: 0;
+        transform: translate(-50%, 20px);
+    }
+}
+
+/* Print styles */
+@media print {
+    .wallet-modal,
+    .feature-modal,
+    .modal-overlay {
+        display: none !important;
+    }
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    
+    .wallet-container,
+    .feature-modal-content {
+        animation: none !important;
+    }
+    
+    .notification {
+        animation: none !important;
+        opacity: 1;
+        transform: translateX(-50%);
+    }
+}
+
+
+
+
+
 
     :root {
     --primary-color: #4285f4;
@@ -2552,7 +3198,7 @@ d.talent-coin {
     --accent-color: #fbbc05;
     --danger-color: #ea4335;
     --dark-color: #202124;
-    --text-color: #3c4043;
+    --text-color: #eff3f7;
     --light-color: #f8f9fa;
     --border-color: #dadce0;
     --card-bg: #ffffff;
@@ -3961,6 +4607,264 @@ table tbody tr:hover {
 
 
 
+/* Admin TalentCoin Dispenser Styles */
+.admin-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.7);
+  z-index: 1100;
+}
+
+.admin-modal-content {
+  background-color: #fff;
+  margin: 5% auto;
+  padding: 0;
+  width: 90%;
+  max-width: 600px;
+  border-radius: 12px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+  overflow: hidden;
+}
+
+.admin-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background-color: #3f51b5;
+  color: white;
+}
+
+.admin-modal-header h2 {
+  margin: 0;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.admin-modal-header h2 i {
+  margin-right: 10px;
+}
+
+.close-admin-modal {
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  color: white;
+}
+
+.admin-modal-body {
+  padding: 20px;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.dispenser-section {
+  margin-bottom: 20px;
+}
+
+.section-desc {
+  margin-bottom: 20px;
+  color: #666;
+}
+
+.admin-input-group {
+  margin-bottom: 20px;
+}
+
+.admin-input-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #333;
+}
+
+.admin-input-group input,
+.admin-input-group textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  background-color: #f9f9f9;
+}
+
+.admin-input-group textarea {
+  resize: vertical;
+}
+
+.tag-input-container {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 0 12px;
+  background-color: #f9f9f9;
+}
+
+.tag-prefix {
+  font-size: 18px;
+  color: #555;
+}
+
+.tag-input-container input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  padding: 12px 8px;
+  font-size: 16px;
+  outline: none;
+}
+
+.validation-result {
+  margin-top: 8px;
+  font-size: 14px;
+  min-height: 20px;
+}
+
+.validation-result.loading {
+  color: #888;
+}
+
+.validation-result.success {
+  color: #4caf50;
+}
+
+.validation-result.error {
+  color: #f44336;
+}
+
+.admin-btn {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  background-color: #f0f0f0;
+  color: #333;
+  transition: all 0.2s;
+}
+
+.admin-btn:hover {
+  background-color: #e0e0e0;
+}
+
+.admin-btn.primary-btn {
+  background-color: #3f51b5;
+  color: white;
+}
+
+.admin-btn.primary-btn:hover {
+  background-color: #303f9f;
+}
+
+.admin-btn:disabled {
+  background-color: #cccccc;
+  color: #888;
+  cursor: not-allowed;
+}
+
+.recent-transactions {
+  margin-top: 30px;
+  border-top: 1px solid #eee;
+  padding-top: 20px;
+}
+
+.recent-transactions h3 {
+  margin-bottom: 15px;
+  font-size: 18px;
+  color: #333;
+}
+
+.transactions-list {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.transaction-item {
+  padding: 12px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  margin-bottom: 10px;
+  border-left: 4px solid #3f51b5;
+}
+
+.transaction-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.transaction-recipient {
+  font-weight: 500;
+}
+
+.transaction-amount {
+  font-weight: 700;
+  color: #3f51b5;
+}
+
+.transaction-time {
+  font-size: 12px;
+  color: #888;
+  margin-bottom: 5px;
+}
+
+.transaction-note {
+  font-size: 14px;
+  color: #666;
+}
+
+.empty-state {
+  color: #888;
+  text-align: center;
+  padding: 20px;
+  font-style: italic;
+}
+
+/* Admin Menu Button */
+.admin-menu-btn {
+  display: flex;
+  align-items: center;
+  padding: 12px 15px;
+  background-color: #f0f4ff;
+  border: none;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+  width: 100%;
+  text-align: left;
+}
+
+.admin-menu-btn:hover {
+  background-color: #e0e8ff;
+}
+
+.admin-menu-btn i {
+  margin-right: 10px;
+  color: #3f51b5;
+  font-size: 18px;
+}
+
+/* For mobile responsiveness */
+@media (max-width: 480px) {
+  .admin-modal-content {
+    margin: 10% auto;
+    width: 95%;
+  }
+  
+  .admin-modal-body {
+    max-height: 80vh;
+  }
+}
+
+
 </style>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -4194,7 +5098,7 @@ table tbody tr:hover {
                         </div>
                     </div>
                     <div class="search-box">
-                        <input type="text" placeholder="Search by username or wallet ID">
+                        <input type="text" placeholder="Search by username or tag">
                         <i class="fas fa-search"></i>
                     </div>
                 </div>
@@ -4398,8 +5302,21 @@ table tbody tr:hover {
                                 <div class="info-value" id="userInfoUsername">-</div>
                             </div>
                             <div class="info-group">
-                                <div class="info-label">Wallet ID</div>
-                                <div class="info-value" id="userInfoWalletId">-</div>
+                                <div class="tag-display-container">
+                                    <div class="tag-display-header">
+                                        <span class="tag-label">Your Wallet Tag</span>
+                                        <button class="copy-tag-btn" title="Copy tag">
+                                            <i class="fas fa-copy"></i>
+                                        </button>
+                                    </div>
+                                    <div class="tag-value-container">
+                                        <span class="tag-value">@${tag}</span>
+                                    </div>
+                                    <div class="tag-info">
+                                        <i class="fas fa-info-circle"></i>
+                                        <span>Share this tag with others to receive payments</span>
+                                    </div>
+                                </div>
                             </div>
                             <div class="info-group">
                                 <div class="info-label">Current Balance</div>
@@ -4425,7 +5342,68 @@ table tbody tr:hover {
                 </div>
             </div>
         </div>
+        <!-- Admin TalentCoin Dispenser -->
+<div id="coinDispenserModal" class="admin-modal">
+    <div class="admin-modal-content">
+      <div class="admin-modal-header">
+        <h2><i class="fas fa-coins"></i> TalentCoin Dispenser</h2>
+        <span class="close-admin-modal">&times;</span>
+      </div>
+      
+      <div class="admin-modal-body">
+        <!-- Admin Authentication -->
+        <div id="dispenserAuth" class="dispenser-section">
+          <p class="section-desc">Enter admin password to access the TalentCoin dispenser.</p>
+          <div class="admin-input-group">
+            <label for="adminPassword">Admin Password</label>
+            <input type="password" id="adminPassword" placeholder="Enter password">
+          </div>
+          <button id="verifyAdminBtn" class="admin-btn">Verify</button>
+        </div>
         
+        <!-- Dispenser Interface (hidden until authenticated) -->
+        <div id="dispenserInterface" class="dispenser-section" style="display:none;">
+          <p class="section-desc">Send free TalentCoins to users by their wallet tag.</p>
+          
+          <div class="admin-input-group">
+            <label for="recipientTag">Recipient Wallet Tag</label>
+            <div class="tag-input-container">
+              <span class="tag-prefix">@</span>
+              <input type="text" id="recipientTag" placeholder="username">
+            </div>
+            <div id="tagValidationResult" class="validation-result"></div>
+          </div>
+          
+          <div class="admin-input-group">
+            <label for="coinAmount">Amount (TalentCoins)</label>
+            <input type="number" id="coinAmount" min="1" step="1" placeholder="Enter amount">
+          </div>
+          
+          <div class="admin-input-group">
+            <label for="dispenserNote">Note (Optional)</label>
+            <textarea id="dispenserNote" placeholder="Reason for sending coins" rows="2"></textarea>
+          </div>
+          
+          <button id="dispenseCoinBtn" class="admin-btn primary-btn" disabled>Send TalentCoins</button>
+          
+          <!-- Recent Transactions -->
+          <div class="recent-transactions">
+            <h3>Recent Transactions</h3>
+            <div id="recentDispenses" class="transactions-list">
+              <p class="empty-state">No recent transactions</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Admin Menu Button (add this to your admin dashboard) -->
+  <button id="openCoinDispenserBtn" class="admin-menu-btn">
+    <i class="fas fa-coins"></i>
+    <span>TalentCoin Dispenser</span>
+  </button>
+  
         <!-- Fees Reporter Section -->
         <div class="feature-section" id="feesReporter">
             <header class="section-header">
@@ -4903,14 +5881,18 @@ table tbody tr:hover {
             </div>
             
             <div class="wallet-info">
-                <div class="wallet-id-container">
-                    <span class="wallet-id-label">Wallet ID:</span>
-                    <span class="wallet-id" id="walletIdDisplay">WL123456789</span>
-                    <button class="copy-btn" id="copyWalletIdBtn">
-                        <i class="fas fa-copy"></i>
-                    </button>
-                </div>
-                
+                               
+<!-- Wallet Tag Display (will be shown after creation) -->
+<div id="walletTagDisplay" class="wallet-tag-display" style="display:none;">
+  <span id="tagText">@yourtag</span>
+  <button id="copyTagBtn"><i class="fas fa-copy"></i></button>
+</div>
+   
+  <!-- Add this to your send money form -->
+  <div class="recipient-validation" id="recipientValidation" style="display:none;">
+    <div class="recipient-info" id="recipientInfo"></div>
+  </div>
+              
                 <div class="balance-cards">
                     <div class="balance-card talent-coin">
                         <div class="balance-icon">
@@ -4934,7 +5916,30 @@ table tbody tr:hover {
                     </div>
                 </div>
             </div>
-            
+         <!-- Wallet Tag Setup Modal -->
+<div id="walletTagModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Create Wallet Tag</h2>
+        <span class="close-modal">&times;</span>
+      </div>
+      <div class="modal-body">
+        <div class="tag-icon">
+          <i class="fas fa-at"></i>
+        </div>
+        <p>Create a unique tag for your wallet to receive payments easily.</p>
+        <div class="tag-input-wrapper">
+          <span>@</span>
+          <input type="text" id="walletTagInput" placeholder="yourname" maxlength="15">
+        </div>
+        <div id="tagStatus" class="tag-status"></div>
+        <button id="createTagBtn" class="primary-btn" disabled>Create Tag</button>
+      </div>
+    </div>
+  </div>
+  
+  
+  
             <div class="wallet-actions">
                 <div class="action-row">
                     <button class="wallet-action-btn" id="buyCoinsBtn">
@@ -5404,317 +6409,151 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
 const analytics = firebase.analytics();
- 
+
+
+// Constants
+const ADMIN_EMAIL = 'admin@talentcoin.com';
+const ADMIN_PASSWORD = 'BISA19';
+
 
 // DOM Elements
-const loginForm = document.getElementById('loginFormElement');
-const signupForm = document.getElementById('signupFormElement');
-const googleBtns = document.querySelectorAll('.google-btn');
-const togglePasswordBtns = document.querySelectorAll('.toggle-password');
-const showSignupBtn = document.getElementById('showSignup');
-const showLoginBtn = document.getElementById('showLogin');
-const loginContainer = document.getElementById('loginForm');
-const signupContainer = document.getElementById('signupForm');
 const splitScreen = document.querySelector('.split-screen');
+const loginForm = document.getElementById('loginForm');
+const signupForm = document.getElementById('signupForm');
+const googleBtns = document.querySelectorAll('.google-btn');
+const dashboardPage = document.getElementById('dashboardPage');
+const passwordFields = document.querySelectorAll('.password-field');
 
-// Create dashboard page if it doesn't exist
-let dashboardPage = document.getElementById('dashboardPage');
-if (!dashboardPage) {
-  dashboardPage = document.createElement('div');
-  dashboardPage.id = 'dashboardPage';
-  dashboardPage.className = 'dashboard-page';
-  document.querySelector('.container').appendChild(dashboardPage);
+// Initialize UI
+document.addEventListener('DOMContentLoaded', function() {
+  // Setup password visibility toggle
+  setupPasswordToggle();
   
-  // Add dashboard HTML
-  dashboardPage.innerHTML = `
-    <!-- Top Navigation Bar -->
-    <div class="dashboard-nav">
-        <div class="user-info">
-            <div class="profile-circle">
-                <img src="https://via.placeholder.com/40" alt="Profile" id="userProfileImage">
-            </div>
-            <span class="username" id="usernameDisplay">Username</span>
-        </div>
-        
-        <div class="trophy-btn">
-            <i class="fas fa-trophy"></i>
-            <span>Trophy</span>
-        </div>
-        
-        <div class="hamburger-menu" id="hamburgerMenu">
-            <i class="fas fa-bars"></i>
-        </div>
-        
-        <!-- Dropdown menu (hidden by default) -->
-        <div class="dropdown-menu" id="dropdownMenu">
-            <div class="dropdown-item logout-btn" onclick="logout()">
-                <i class="fas fa-sign-out-alt"></i>
-                <span>Logout</span>
-            </div>
-        </div>
-    </div>
+  // Setup password strength meter
+  setupPasswordStrength();
+  
+  // Setup form switching
+  setupFormSwitching();
+});
+
+// Setup form switching
+function setupFormSwitching() {
+  const loginLink = document.querySelector('.login-link');
+  const signupLink = document.querySelector('.signup-link');
+  const loginPanel = document.querySelector('.login');
+  const signupPanel = document.querySelector('.signup');
+  
+  if (loginLink && signupLink && loginPanel && signupPanel) {
+    loginLink.addEventListener('click', function(e) {
+      e.preventDefault();
+      loginPanel.classList.add('active');
+      signupPanel.classList.remove('active');
+    });
     
-    <!-- Main Dashboard Container -->
-    <div class="dashboard-container">
-        <!-- Action Buttons Container - Single Row -->
-        <div class="action-buttons-row">
-            <div class="action-btn wallet-btn">
-                <div class="action-icon">
-                    <i class="fas fa-wallet"></i>
-                </div>
-                <span>Wallet</span>
-            </div>
-            
-            <div class="action-btn creator-btn">
-                <div class="action-icon">
-                    <i class="fas fa-video"></i>
-                </div>
-                <span>Creator</span>
-            </div>
-            
-            <div class="action-btn spin-btn">
-                <div class="action-icon spin-icon">
-                    <i class="fas fa-sync-alt"></i>
-                </div>
-                <span>Spin</span>
-            </div>
-            
-            <div class="action-btn notification-btn">
-                <div class="action-icon">
-                    <i class="fas fa-bell"></i>
-                </div>
-                <span>Alerts</span>
-            </div>
-        </div>
-    </div>
-  `;
+    signupLink.addEventListener('click', function(e) {
+      e.preventDefault();
+      signupPanel.classList.add('active');
+      loginPanel.classList.remove('active');
+    });
+  }
 }
 
-// Toast notification function
+// Show toast notification
 function showToast(message, type = 'success') {
-  // Create toast container if it doesn't exist
-  let toastContainer = document.querySelector('.toast-container');
-  if (!toastContainer) {
-    toastContainer = document.createElement('div');
-    toastContainer.className = 'toast-container';
-    document.body.appendChild(toastContainer);
+  const toast = document.getElementById('toast') || createToastElement();
+  
+  // Set toast type
+  toast.className = 'toast';
+  toast.classList.add(type);
+  
+  // Set message
+  toast.querySelector('.toast-message').textContent = message;
+  
+  // Set icon
+  const iconElement = toast.querySelector('.toast-icon i');
+  if (iconElement) {
+    iconElement.className = type === 'success' 
+      ? 'fas fa-check-circle' 
+      : 'fas fa-exclamation-circle';
   }
   
-  // Create toast element
-  const toast = document.createElement('div');
-  toast.className = `toast ${type}`;
-  toast.innerHTML = `
-    <div class="toast-content">
-      <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
-      <span>${message}</span>
-    </div>
-    <div class="toast-progress"></div>
-  `;
+  // Show toast
+  toast.classList.add('show');
   
-  toastContainer.appendChild(toast);
-  
-  // Show and hide toast with animation
-  setTimeout(() => toast.classList.add('visible'), 10);
-  
-  // Remove toast after animation
+  // Hide after 3 seconds
   setTimeout(() => {
-    toast.classList.remove('visible');
-    setTimeout(() => toastContainer.removeChild(toast), 300);
+    toast.classList.remove('show');
   }, 3000);
 }
 
-// Add CSS for toast if not already in your stylesheet
-const toastStyles = document.createElement('style');
-toastStyles.textContent = `
-  .toast-container {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 9999;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  .toast {
-    background-color: white;
-    color: #333;
-    padding: 12px 15px;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    display: flex;
-    flex-direction: column;
-    min-width: 250px;
-    max-width: 350px;
-    transform: translateX(100%);
-    opacity: 0;
-    transition: all 0.3s ease;
-    overflow: hidden;
-  }
-  
-  .toast.visible {
-    transform: translateX(0);
-    opacity: 1;
-  }
-  
-  .toast-content {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  
-  .toast.success i {
-    color: #2ecc71;
-  }
-  
-  .toast.error i {
-    color: #e74c3c;
-  }
-  
-  .toast-progress {
-    height: 3px;
-    background-color: #ddd;
-    width: 100%;
-    margin-top: 8px;
-    position: relative;
-  }
-  
-  .toast-progress::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    background-color: #2ecc71;
-    animation: progress 3s linear forwards;
-  }
-  
-  .toast.error .toast-progress::after {
-    background-color: #e74c3c;
-  }
-  
-  @keyframes progress {
-    0% { width: 100%; }
-    100% { width: 0%; }
-  }
-  
-  /* Dropdown menu styles */
-  .dropdown-menu {
-    position: absolute;
-    top: 55px;
-    right: 15px;
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    padding: 8px 0;
-    min-width: 150px;
-    display: none;
-    z-index: 200;
-  }
-  
-  .dropdown-menu.active {
-    display: block;
-    animation: fadeIn 0.2s ease forwards;
-  }
-  
-  .dropdown-item {
-    padding: 10px 15px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-  }
-  
-  .dropdown-item:hover {
-    background-color: #f5f5f5;
-  }
-  
-  .logout-btn i {
-    color: #e74c3c;
-  }
-  
-  /* Loading spinner for buttons */
-  .auth-btn.loading {
-    position: relative;
-    color: transparent !important;
-    pointer-events: none;
-  }
-  
-  .loading-spinner {
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    border-radius: 50%;
-    border-top-color: white;
-    animation: spin 0.8s linear infinite;
-    top: calc(50% - 10px);
-    left: calc(50% - 10px);
-  }
-  
-  @keyframes spin {
-    to { transform: rotate(360deg); }
-  }
-  
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-`;
-document.head.appendChild(toastStyles);
+// Create toast element if it doesn't exist
+function createToastElement() {
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+  toast.innerHTML = `
+    <div class="toast-icon">
+      <i class="fas fa-check-circle"></i>
+    </div>
+    <div class="toast-message"></div>
+  `;
+  document.body.appendChild(toast);
+  return toast;
+}
 
-// Toggle between login and signup forms
-if (showSignupBtn) {
-  showSignupBtn.addEventListener('click', function(e) {
-    e.preventDefault();
-    loginContainer.classList.add('hidden');
-    signupContainer.classList.remove('hidden');
+// Setup password visibility toggle
+function setupPasswordToggle() {
+  passwordFields.forEach(field => {
+    const toggleBtn = field.querySelector('.password-toggle');
+    const input = field.querySelector('input');
+    
+    if (toggleBtn && input) {
+      toggleBtn.addEventListener('click', function() {
+        const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
+        input.setAttribute('type', type);
+        
+        // Toggle icon
+        const icon = toggleBtn.querySelector('i');
+        if (icon) {
+          icon.className = type === 'password' ? 'fas fa-eye' : 'fas fa-eye-slash';
+        }
+      });
+    }
   });
 }
 
-if (showLoginBtn) {
-  showLoginBtn.addEventListener('click', function(e) {
-    e.preventDefault();
-    signupContainer.classList.add('hidden');
-    loginContainer.classList.remove('hidden');
-  });
-}
-
-// Toggle password visibility
-togglePasswordBtns.forEach(btn => {
-  btn.addEventListener('click', function() {
-    const passwordInput = this.parentElement.querySelector('input');
-    const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-    passwordInput.setAttribute('type', type);
-    this.classList.toggle('fa-eye');
-    this.classList.toggle('fa-eye-slash');
-  });
-});
-
-// Password strength checker
-const passwordInput = document.getElementById('signupPassword');
-if (passwordInput) {
-  const strengthSegments = document.querySelectorAll('.strength-segment');
-  const strengthText = document.querySelector('.strength-text');
-
-  passwordInput.addEventListener('input', function() {
-    updatePasswordStrength(this.value);
-  });
-
-  function updatePasswordStrength(password) {
-    // Reset all segments
-    strengthSegments.forEach(segment => {
-      segment.className = 'strength-segment';
+// Setup password strength meter
+function setupPasswordStrength() {
+  const passwordInput = document.getElementById('signupPassword');
+  const strengthMeter = document.querySelector('.password-strength-meter');
+  
+  if (passwordInput && strengthMeter) {
+    const strengthSegments = strengthMeter.querySelectorAll('.strength-segment');
+    const strengthText = strengthMeter.querySelector('.strength-text');
+    
+    passwordInput.addEventListener('input', function() {
+      updatePasswordStrength(this.value, strengthSegments, strengthText);
     });
     
-    if (!password) {
-      strengthText.textContent = 'Password strength';
-      return;
-    }
-    
-    // Check password strength
+    // Clear strength meter when input is empty
+    passwordInput.addEventListener('blur', function() {
+      if (!this.value) {
+        strengthSegments.forEach(segment => {
+          segment.className = 'strength-segment';
+        });
+        strengthText.textContent = '';
+      }
+    });
+  }
+}
+
+// Update password strength meter
+function updatePasswordStrength(password, strengthSegments, strengthText) {
+  // Reset strength segments
+  strengthSegments.forEach(segment => {
+    segment.className = 'strength-segment';
+  });
+  
+  if (password) {
     const hasLower = /[a-z]/.test(password);
     const hasUpper = /[A-Z]/.test(password);
     const hasNumber = /[0-9]/.test(password);
@@ -5765,51 +6604,210 @@ function setButtonLoading(button, isLoading) {
   }
 }
 
+// Check if user is admin
+function isAdmin(email) {
+  return email === ADMIN_EMAIL;
+}
+
 // Navigate to dashboard
-function navigateToDashboard(user) {
+function navigateToDashboard(user, isAdminUser = false) {
+  // Store admin status in localStorage for persistence
+  if (isAdminUser) {
+    localStorage.setItem('isAdmin', 'true');
+  } else {
+    localStorage.removeItem('isAdmin');
+  }
+
   // Hide authentication container
-  splitScreen.style.display = 'none';
+  if (splitScreen) {
+    splitScreen.style.display = 'none';
+  }
   
-  // Show dashboard
-  dashboardPage.classList.add('active');
-  
-  // Set username
-  const displayName = user.displayName || user.email.split('@')[0];
-  document.getElementById('usernameDisplay').textContent = displayName;
-  
-  // Set profile image if available
-  if (user.photoURL) {
-    document.getElementById('userProfileImage').src = user.photoURL;
+  // If admin, show admin dashboard instead of regular dashboard
+  if (isAdminUser) {
+    console.log('Showing admin dashboard for:', user.email);
+    
+    // Hide regular dashboard if it exists
+    if (dashboardPage) {
+      dashboardPage.classList.remove('active');
+    }
+    
+    // Show admin dashboard
+    const adminDashboard = document.getElementById('dashboard');
+    if (adminDashboard) {
+      adminDashboard.classList.remove('hidden');
+      
+      // Set moderator name if available
+      const moderatorName = document.querySelector('.moderator-name');
+      if (moderatorName) {
+        moderatorName.textContent = user.displayName || 'Administrator';
+      }
+      
+      // Initialize admin dashboard functionality
+      initializeAdminDashboard();
+      
+      showToast('Admin mode activated', 'success');
+    } else {
+      console.error('Admin dashboard element not found');
+      showToast('Error loading admin dashboard', 'error');
+    }
+  } else {
+    // Show regular dashboard
+    if (dashboardPage) {
+      dashboardPage.classList.add('active');
+      
+      // Set username
+      const displayName = user.displayName || user.email.split('@')[0];
+      const usernameDisplay = document.getElementById('usernameDisplay');
+      if (usernameDisplay) {
+        usernameDisplay.textContent = displayName;
+      }
+      
+      // Set profile image if available
+      const userProfileImage = document.getElementById('userProfileImage');
+      if (userProfileImage && user.photoURL) {
+        userProfileImage.src = user.photoURL;
+      }
+    }
   }
   
   // Prevent body scrolling
   document.body.style.overflow = 'hidden';
   
   // Log analytics event
-  analytics.logEvent('login', {
-    method: user.providerData[0].providerId
-  });
-  
-  // Setup hamburger menu
-  setupHamburgerMenu();
+  if (typeof analytics !== 'undefined') {
+    analytics.logEvent('login', {
+      method: user.providerData[0].providerId,
+      isAdmin: isAdminUser
+    });
+  }
 }
 
-// Setup hamburger menu
-function setupHamburgerMenu() {
-  const hamburgerMenu = document.getElementById('hamburgerMenu');
-  const dropdownMenu = document.getElementById('dropdownMenu');
+// Initialize admin dashboard
+function initializeAdminDashboard() {
+  console.log('Initializing admin dashboard');
   
-  if (hamburgerMenu && dropdownMenu) {
-    hamburgerMenu.addEventListener('click', function() {
-      dropdownMenu.classList.toggle('active');
+  // Set up logout button
+  const logoutBtn = document.getElementById('logoutBtn');
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', logout);
+  }
+  
+  // Set up action card buttons
+  const buyCoinSupportBtn = document.getElementById('buyCoinSupportBtn');
+  const withdrawSupportBtn = document.getElementById('withdrawSupportBtn');
+  const transferSupportBtn = document.getElementById('transferSupportBtn');
+  const talentCoinDispenserBtn = document.getElementById('talentCoinDispenserBtn');
+  
+  // Dashboard sections
+  const dashboard = document.getElementById('dashboard');
+  const buyCoinSupport = document.getElementById('buyCoinSupport');
+  const withdrawSupport = document.getElementById('withdrawSupport');
+  const transferSupport = document.getElementById('transferSupport');
+  const talentCoinDispenser = document.getElementById('talentCoinDispenser');
+  
+  // Function to show a specific section and hide others
+  function showSection(sectionToShow) {
+    // Hide all sections
+    [buyCoinSupport, withdrawSupport, transferSupport, talentCoinDispenser].forEach(section => {
+      if (section) section.classList.add('hidden');
     });
     
-    // Close dropdown when clicking outside
-    document.addEventListener('click', function(event) {
-      if (!hamburgerMenu.contains(event.target) && !dropdownMenu.contains(event.target)) {
-        dropdownMenu.classList.remove('active');
+    // Show the selected section
+    if (sectionToShow) {
+      sectionToShow.classList.remove('hidden');
+    }
+  }
+  
+  // Set up action card click handlers
+  if (buyCoinSupportBtn) {
+    buyCoinSupportBtn.addEventListener('click', () => showSection(buyCoinSupport));
+  }
+  
+  if (withdrawSupportBtn) {
+    withdrawSupportBtn.addEventListener('click', () => showSection(withdrawSupport));
+  }
+  
+  if (transferSupportBtn) {
+    transferSupportBtn.addEventListener('click', () => showSection(transferSupport));
+  }
+  
+  if (talentCoinDispenserBtn) {
+    talentCoinDispenserBtn.addEventListener('click', () => showSection(talentCoinDispenser));
+  }
+  
+  // Set up back buttons
+  const backButtons = document.querySelectorAll('.back-btn');
+  backButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.getAttribute('data-target');
+      if (target === 'dashboard') {
+        showSection(null); // Hide all feature sections
       }
     });
+  });
+  
+  // Load initial data for the dashboard
+  loadDashboardData();
+}
+
+// Load dashboard data
+function loadDashboardData() {
+  // This would normally fetch data from Firestore
+  // For now, we'll just set some placeholder values
+  
+  // Set badge counts
+  const buyRequestsBadge = document.getElementById('buyRequestsBadge');
+  const withdrawRequestsBadge = document.getElementById('withdrawRequestsBadge');
+  const transferIssuesBadge = document.getElementById('transferIssuesBadge');
+  
+  if (buyRequestsBadge) buyRequestsBadge.textContent = '5';
+  if (withdrawRequestsBadge) withdrawRequestsBadge.textContent = '3';
+  if (transferIssuesBadge) transferIssuesBadge.textContent = '2';
+  
+  // Set today's activity summary
+  const todayBuyRequests = document.getElementById('todayBuyRequests');
+  const todayWithdrawals = document.getElementById('todayWithdrawals');
+  const todayTransfers = document.getElementById('todayTransfers');
+  const todayIssues = document.getElementById('todayIssues');
+  
+  if (todayBuyRequests) todayBuyRequests.textContent = '8';
+  if (todayWithdrawals) todayWithdrawals.textContent = '6';
+  if (todayTransfers) todayTransfers.textContent = '15';
+  if (todayIssues) todayIssues.textContent = '2';
+  
+  // Load recent activity (placeholder)
+  const recentActivityList = document.getElementById('recentActivityList');
+  if (recentActivityList) {
+    // Clear empty state if it exists
+    const emptyState = recentActivityList.querySelector('.empty-state');
+    if (emptyState) {
+      emptyState.remove();
+    }
+    
+    // Add some sample activity items
+    const activityTemplate = document.getElementById('activityItemTemplate');
+    if (activityTemplate) {
+      const activities = [
+        { title: 'New buy request from user123', time: '5 minutes ago', icon: 'fa-coins' },
+        { title: 'Withdrawal approved for user456', time: '15 minutes ago', icon: 'fa-money-bill-wave' },
+        { title: 'Transfer issue reported by user789', time: '30 minutes ago', icon: 'fa-exclamation-circle' },
+        { title: 'New user registered', time: '1 hour ago', icon: 'fa-user-plus' }
+      ];
+      
+      activities.forEach(activity => {
+        const activityItem = activityTemplate.content.cloneNode(true);
+        const activityIcon = activityItem.querySelector('.activity-icon i');
+        const activityTitle = activityItem.querySelector('.activity-title');
+        const activityTime = activityItem.querySelector('.activity-time');
+        
+        if (activityIcon) activityIcon.className = `fas ${activity.icon}`;
+        if (activityTitle) activityTitle.textContent = activity.title;
+        if (activityTime) activityTime.textContent = activity.time;
+        
+        recentActivityList.appendChild(activityItem);
+      });
+    }
   }
 }
 
@@ -5826,11 +6824,14 @@ googleBtns.forEach(btn => {
         const user = result.user;
         saveUserData(user);
         
-               // Show success message
-               showToast('Successfully signed in with Google!');
+        // Show success message
+        showToast('Successfully signed in with Google!');
+        
+        // Check if admin
+        const isAdminUser = isAdmin(user.email);
         
         // Navigate to dashboard
-        navigateToDashboard(user);
+        navigateToDashboard(user, isAdminUser);
       })
       .catch((error) => {
         console.error('Google sign in error:', error);
@@ -5838,57 +6839,6 @@ googleBtns.forEach(btn => {
       });
   });
 });
-
-// Email/Password Sign Up
-if (signupForm) {
-  signupForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    const fullName = document.getElementById('fullName').value;
-    const email = document.getElementById('signupEmail').value;
-    const password = document.getElementById('signupPassword').value;
-    const userType = document.getElementById('userType').value;
-    const termsAccepted = document.getElementById('terms').checked;
-    
-    if (!termsAccepted) {
-      showToast('Please accept the Terms of Service and Privacy Policy', 'error');
-      return;
-    }
-    
-    // Show loading state
-    const submitBtn = this.querySelector('button[type="submit"]');
-    setButtonLoading(submitBtn, true);
-    
-    // Create user with email and password
-    auth.createUserWithEmailAndPassword(email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        
-        // Update profile with display name
-        return user.updateProfile({
-          displayName: fullName
-        }).then(() => {
-          // Save additional user data to Firestore
-          return saveUserData(user, {
-            fullName,
-            userType,
-            termsAccepted,
-            createdAt: firebase.firestore.FieldValue.serverTimestamp()
-          });
-        }).then(() => {
-          showToast('Account created successfully!');
-          navigateToDashboard(user);
-        });
-      })
-      .catch((error) => {
-        console.error('Signup error:', error);
-        showToast(error.message, 'error');
-      })
-      .finally(() => {
-        setButtonLoading(submitBtn, false);
-      });
-  });
-}
 
 // Email/Password Sign In
 if (loginForm) {
@@ -5903,28 +6853,32 @@ if (loginForm) {
     const submitBtn = this.querySelector('button[type="submit"]');
     setButtonLoading(submitBtn, true);
     
-    // Set persistence based on "Remember me" checkbox
-    const persistence = rememberMe 
-      ? firebase.auth.Auth.Persistence.LOCAL 
-      : firebase.auth.Auth.Persistence.SESSION;
+    // Check for admin login
+    const isAdminLogin = email === ADMIN_EMAIL && password === ADMIN_PASSWORD;
     
-    auth.setPersistence(persistence)
-      .then(() => {
-        return auth.signInWithEmailAndPassword(email, password);
-      })
+    auth.signInWithEmailAndPassword(email, password)
       .then((userCredential) => {
         const user = userCredential.user;
         
         // Update last login timestamp
         db.collection('users').doc(user.uid).update({
           lastLogin: firebase.firestore.FieldValue.serverTimestamp()
-        }).catch(err => console.log('Error updating last login:', err));
+        }).catch(err => console.log('Error updating user data:', err));
         
-        showToast('Successfully signed in!');
-        navigateToDashboard(user);
+        // Set persistence based on remember me
+        const persistence = rememberMe ? 
+          firebase.auth.Auth.Persistence.LOCAL : 
+          firebase.auth.Auth.Persistence.SESSION;
+        
+        return auth.setPersistence(persistence)
+          .then(() => {
+            showToast('Successfully signed in!');
+            navigateToDashboard(user, isAdminLogin);
+            return user;
+          });
       })
       .catch((error) => {
-        console.error('Login error:', error);
+        console.error('Sign in error:', error);
         showToast(error.message, 'error');
       })
       .finally(() => {
@@ -5933,50 +6887,164 @@ if (loginForm) {
   });
 }
 
-// Modify the saveUserData function to include better error handling
-function saveUserData(user, additionalData = {}) {
-  console.log('Attempting to save user data for:', user.email);
-  
-  // Basic user data
+// Email/Password Sign Up
+if (signupForm) {
+  signupForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const email = document.getElementById('signupEmail').value;
+    const password = document.getElementById('signupPassword').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+    const termsAccepted = document.getElementById('termsCheckbox').checked;
+    
+    // Validate form
+    if (password !== confirmPassword) {
+      showToast('Passwords do not match', 'error');
+      return;
+    }
+    
+    if (!termsAccepted) {
+      showToast('Please accept the terms and conditions', 'error');
+      return;
+    }
+    
+    // Show loading state
+    const submitBtn = this.querySelector('button[type="submit"]');
+    setButtonLoading(submitBtn, true);
+    
+    auth.createUserWithEmailAndPassword(email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        
+        // Save user data to Firestore
+        saveUserData(user);
+        
+        // Send email verification
+        return user.sendEmailVerification()
+          .then(() => {
+            showToast('Account created! Please verify your email.');
+            navigateToDashboard(user);
+            return user;
+          });
+      })
+      .catch((error) => {
+        console.error('Sign up error:', error);
+        showToast(error.message, 'error');
+      })
+      .finally(() => {
+        setButtonLoading(submitBtn, false);
+      });
+  });
+}
+
+// Save user data to Firestore
+function saveUserData(user) {
   const userData = {
     uid: user.uid,
     email: user.email,
-    displayName: user.displayName || additionalData.fullName || '',
-    photoURL: user.photoURL || '',
-    emailVerified: user.emailVerified,
+    displayName: user.displayName || user.email.split('@')[0],
+    photoURL: user.photoURL || null,
+    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
     lastLogin: firebase.firestore.FieldValue.serverTimestamp(),
-    ...additionalData
+    isAdmin: isAdmin(user.email)
   };
   
-  console.log('User data to save:', userData);
   
-  // Save to Firestore (merge to update existing data)
-  return db.collection('users').doc(user.uid).set(userData, { merge: true })
+  
+  // Save user data
+  db.collection('users').doc(user.uid).set(userData, { merge: true })
     .then(() => {
-      console.log('User data successfully saved to Firestore');
-      return true;
+      console.log('User data saved successfully');
+      
+      // Save wallet data
+      return db.collection('wallets').doc(user.uid).set(walletData, { merge: true });
     })
-    .catch((error) => {
-      console.error('Error saving user data to Firestore:', error);
-      showToast('Account created but profile data could not be saved: ' + error.message, 'error');
-      throw error;
+    .then(() => {
+      console.log('Wallet data saved successfully');
+    })
+    .catch(error => {
+      console.error('Error saving user data:', error);
     });
 }
 
-// Check if user is already logged in
+
+// Logout function
+function logout() {
+  auth.signOut()
+    .then(() => {
+      // Clear admin status
+      localStorage.removeItem('isAdmin');
+      
+      // Hide dashboards
+      if (dashboardPage) {
+        dashboardPage.classList.remove('active');
+      }
+      
+      const adminDashboard = document.getElementById('dashboard');
+      if (adminDashboard) {
+        adminDashboard.classList.add('hidden');
+      }
+      
+      // Hide all feature sections
+      const featureSections = document.querySelectorAll('.feature-section');
+      featureSections.forEach(section => {
+        section.classList.add('hidden');
+      });
+      
+      // Show login screen
+      if (splitScreen) {
+        splitScreen.style.display = 'flex';
+      }
+      
+      // Allow body scrolling
+      document.body.style.overflow = 'auto';
+      
+      showToast('Successfully logged out');
+    })
+    .catch((error) => {
+      console.error('Logout error:', error);
+      showToast('Error logging out: ' + error.message, 'error');
+    });
+}
+
+// Auth state change handler
 auth.onAuthStateChanged(function(user) {
   if (user) {
     // User is signed in
-    console.log('User is already signed in:', user.email);
+    console.log('User is signed in:', user.email);
     
-    // If we're on the login page, navigate to dashboard
+    // Check if admin from localStorage or email
+    const isAdminUser = localStorage.getItem('isAdmin') === 'true' || isAdmin(user.email);
+    
+    // If we're on the login page, navigate to appropriate dashboard
     if (splitScreen && splitScreen.style.display !== 'none') {
-      navigateToDashboard(user);
+      navigateToDashboard(user, isAdminUser);
     }
+  } else {
+    // User is signed out
+    console.log('User is signed out');
+    
+    // Show login screen
+    if (splitScreen) {
+      splitScreen.style.display = 'flex';
+    }
+    
+    // Hide dashboards
+    if (dashboardPage) {
+      dashboardPage.classList.remove('active');
+    }
+    
+    const adminDashboard = document.getElementById('dashboard');
+    if (adminDashboard) {
+      adminDashboard.classList.add('hidden');
+    }
+    
+    // Allow body scrolling
+    document.body.style.overflow = 'auto';
   }
 });
 
-// Forgot password functionality
+// Password reset functionality
 const forgotPasswordLink = document.querySelector('.forgot-password');
 if (forgotPasswordLink) {
   forgotPasswordLink.addEventListener('click', function(e) {
@@ -5999,28 +7067,18 @@ if (forgotPasswordLink) {
   });
 }
 
-// Logout functionality
-function logout() {
-  auth.signOut()
-    .then(() => {
-      // Show login screen again
-      splitScreen.style.display = 'flex';
-      dashboardPage.classList.remove('active');
-      
-      // Reset body overflow
-      document.body.style.overflow = 'auto';
-      
-      // Show success message
-      showToast('Successfully logged out!');
-    })
-    .catch((error) => {
-      console.error('Logout error:', error);
-      showToast(error.message, 'error');
-    });
-}
+// Initialize logout buttons
+const logoutBtns = document.querySelectorAll('.logout-btn');
+logoutBtns.forEach(btn => {
+  btn.addEventListener('click', logout);
+});
 
-// Add logout function to window object so it can be called from HTML
-window.logout = logout;
+
+
+
+
+
+
 
 // Add additional CSS for dashboard
 const dashboardStyles = document.createElement('style');
@@ -6263,297 +7321,6 @@ document.head.appendChild(dashboardStyles);
 
 // Initialize the app
 console.log('Firebase Auth initialized');
-
-document.addEventListener('DOMContentLoaded', function() {
-    // Get DOM elements
-    const loginForm = document.getElementById('loginFormElement');
-    const loginEmail = document.getElementById('loginEmail');
-    const loginPassword = document.getElementById('loginPassword');
-    const togglePassword = document.querySelector('.toggle-password');
-    const adminDashboard = document.getElementById('dashboard'); // Admin dashboard
-    const authContainer = document.querySelector('.auth-container');
-    
-    // Admin credentials
-    const ADMIN_EMAIL = 'admin@talentcoin.com';
-    const ADMIN_PASSWORD = 'BISA19';
-    
-    // Toggle password visibility
-    if (togglePassword) {
-        togglePassword.addEventListener('click', function() {
-            const type = loginPassword.getAttribute('type') === 'password' ? 'text' : 'password';
-            loginPassword.setAttribute('type', type);
-            this.classList.toggle('fa-eye');
-            this.classList.toggle('fa-eye-slash');
-        });
-    }
-    
-    // Handle form submission
-    if (loginForm) {
-        loginForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const email = loginEmail.value.trim();
-            const password = loginPassword.value;
-            const rememberMe = document.getElementById('remember') ? document.getElementById('remember').checked : false;
-            
-            // Simple validation
-            if (!email || !password) {
-                showError('Please enter both email and password');
-                return;
-            }
-            
-            // Show loading state
-            const submitBtn = this.querySelector('.auth-btn');
-            setButtonLoading(submitBtn, true);
-            
-            // Check if admin credentials
-            if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
-                // Admin login successful
-                setTimeout(() => {
-                    // Store admin session
-                    sessionStorage.setItem('adminLoggedIn', 'true');
-                    sessionStorage.setItem('adminEmail', ADMIN_EMAIL);
-                    
-                    // Hide login form and show admin dashboard
-                    authContainer.classList.add('hidden');
-                    adminDashboard.classList.remove('hidden');
-                    
-                    // Update moderator name in dashboard
-                    const moderatorName = document.querySelector('.moderator-name');
-                    if (moderatorName) {
-                        moderatorName.textContent = 'Admin';
-                    }
-                    
-                    // Reset form
-                    loginForm.reset();
-                    setButtonLoading(submitBtn, false);
-                    
-                    // Remove any error messages
-                    const existingError = document.querySelector('.error-message');
-                    if (existingError) {
-                        existingError.remove();
-                    }
-                    
-                    showToast('Admin login successful');
-                }, 1000);
-            } else {
-                // Not admin, try Firebase auth
-                const persistence = rememberMe
-                    ? firebase.auth.Auth.Persistence.LOCAL
-                    : firebase.auth.Auth.Persistence.SESSION;
-                
-                auth.setPersistence(persistence)
-                    .then(() => {
-                        return auth.signInWithEmailAndPassword(email, password);
-                    })
-                    .then((userCredential) => {
-                        const user = userCredential.user;
-                        
-                        // Update last login timestamp
-                        db.collection('users').doc(user.uid).update({
-                            lastLogin: firebase.firestore.FieldValue.serverTimestamp()
-                        }).catch(err => console.log('Error updating last login:', err));
-                        
-                        showToast('Successfully signed in!');
-                        navigateToDashboard(user);
-                        
-                        // Reset form
-                        loginForm.reset();
-                    })
-                    .catch((error) => {
-                        console.error('Login error:', error);
-                        showToast(error.message, 'error');
-                    })
-                    .finally(() => {
-                        setButtonLoading(submitBtn, false);
-                    });
-            }
-        });
-    }
-    
-    // Google sign-in button
-    const googleBtn = document.querySelector('.google-btn');
-    if (googleBtn) {
-        googleBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            // For admin dashboard, prevent Google login
-            if (window.location.hash === '#admin') {
-                showToast('Please use admin credentials to access the dashboard', 'error');
-                return;
-            }
-            
-            const provider = new firebase.auth.GoogleAuthProvider();
-            provider.addScope('profile');
-            provider.addScope('email');
-            
-            auth.signInWithPopup(provider)
-                .then((result) => {
-                    // Save user data to Firestore
-                    const user = result.user;
-                    saveUserData(user);
-                    
-                    // Show success message
-                    showToast('Successfully signed in with Google!');
-                    
-                    // Navigate to dashboard
-                    navigateToDashboard(user);
-                })
-                .catch((error) => {
-                    console.error('Google sign in error:', error);
-                    showToast(error.message, 'error');
-                });
-        });
-    }
-    
-    // Forgot password link
-    const forgotPasswordLink = document.querySelector('.forgot-password');
-    if (forgotPasswordLink) {
-        forgotPasswordLink.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            // For admin dashboard
-            if (window.location.hash === '#admin') {
-                showToast('Please contact system administrator to reset admin password', 'error');
-                return;
-            }
-            
-            const email = document.getElementById('loginEmail').value;
-            if (!email) {
-                showToast('Please enter your email address first', 'error');
-                return;
-            }
-            
-            auth.sendPasswordResetEmail(email)
-                .then(() => {
-                    showToast('Password reset email sent. Check your inbox.');
-                })
-                .catch((error) => {
-                    console.error('Password reset error:', error);
-                    showToast(error.message, 'error');
-                });
-        });
-    }
-    
-    // Handle logout for admin dashboard
-    const logoutBtn = document.getElementById('logoutBtn');
-    if (logoutBtn) {
-        logoutBtn.addEventListener('click', function() {
-            // Clear admin session
-            sessionStorage.removeItem('adminLoggedIn');
-            sessionStorage.removeItem('adminEmail');
-            
-            // Show login form and hide admin dashboard
-            adminDashboard.classList.add('hidden');
-            authContainer.classList.remove('hidden');
-            
-            showToast('Admin logged out successfully');
-        });
-    }
-    
-    // Check if admin is already logged in (on page refresh)
-    function checkAdminSession() {
-        const adminLoggedIn = sessionStorage.getItem('adminLoggedIn');
-        if (adminLoggedIn === 'true') {
-            // Hide login form and show admin dashboard
-            if (authContainer) authContainer.classList.add('hidden');
-            if (adminDashboard) adminDashboard.classList.remove('hidden');
-            
-            // Update moderator name
-            const moderatorName = document.querySelector('.moderator-name');
-            if (moderatorName) {
-                moderatorName.textContent = 'Admin';
-            }
-        }
-    }
-    
-    // Show error message
-    function showError(message) {
-        // Remove any existing error message
-        const existingError = document.querySelector('.error-message');
-        if (existingError) {
-            existingError.remove();
-        }
-        
-        // Create and append error message
-        const errorDiv = document.createElement('div');
-        errorDiv.className = 'error-message';
-        errorDiv.textContent = message;
-        
-        // Insert after form
-        loginForm.insertAdjacentElement('afterend', errorDiv);
-        
-        // Shake the form to indicate error
-        authContainer.classList.add('shake');
-        setTimeout(() => {
-            authContainer.classList.remove('shake');
-        }, 500);
-    }
-    
-    // Set button loading state
-    function setButtonLoading(button, isLoading) {
-        if (!button) return;
-        
-        if (isLoading) {
-            button.classList.add('loading');
-            const originalText = button.textContent;
-            button.setAttribute('data-original-text', originalText);
-            button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing in...';
-            button.disabled = true;
-        } else {
-            button.classList.remove('loading');
-            const originalText = button.getAttribute('data-original-text') || 'Sign In';
-            button.textContent = originalText;
-            button.disabled = false;
-        }
-    }
-    
-    // Add CSS for error message and animations
-    const style = document.createElement('style');
-    style.textContent = `
-        .error-message {
-            color: #e74c3c;
-            background-color: rgba(231, 76, 60, 0.1);
-            border-left: 3px solid #e74c3c;
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 0 4px 4px 0;
-        }
-        
-        .shake {
-            animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
-        }
-        
-        @keyframes shake {
-            10%, 90% { transform: translate3d(-1px, 0, 0); }
-            20%, 80% { transform: translate3d(2px, 0, 0); }
-            30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
-            40%, 60% { transform: translate3d(4px, 0, 0); }
-        }
-        
-        .hidden {
-            display: none;
-        }
-        
-        .auth-btn.loading {
-            position: relative;
-            color: transparent !important;
-            pointer-events: none;
-        }
-        
-        .auth-btn.loading i {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            color: white;
-        }
-    `;
-    document.head.appendChild(style);
-    
-    // Check admin session on page load
-    checkAdminSession();
-});
 
 
 // Profile functionality
@@ -8518,8 +9285,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Wallet Dashboard Elements
     const walletDashboard = document.getElementById('walletDashboard');
-    const walletIdDisplay = document.getElementById('walletIdDisplay');
-    const copyWalletIdBtn = document.getElementById('copyWalletIdBtn');
     const talentCoinBalance = document.getElementById('talentCoinBalance');
     const nairaEquivalent = document.getElementById('nairaEquivalent');
     const commissionBalance = document.getElementById('commissionBalance');
@@ -8567,8 +9332,10 @@ document.addEventListener('DOMContentLoaded', function() {
         forgotPinBtn.addEventListener('click', handleForgotPin);
     }
     
-    if (copyWalletIdBtn) {
-        copyWalletIdBtn.addEventListener('click', copyWalletId);
+    if (pinConfirmContainer) {
+        pinConfirmContainer.addEventListener('click', function() {
+            pinConfirmContainer.classList.toggle('active');
+        });
     }
     
     if (saveBackupBtn) {
@@ -8702,17 +9469,18 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     }
     
-    // Open wallet modal
-    function openWallet() {
-        // Check if user is logged in
-        if (!isUserLoggedIn()) {
+        // Modify the openWallet function to check for wallet tag after PIN verification
+function openWallet() {
+    
+ // Check if user is logged in
+ if (!isUserLoggedIn()) {
             showToast('Please log in to access your wallet', 'warning');
             return;
         }
         
         // Reset PIN inputs
         resetPinInputs();
-        
+
         // Show wallet modal with overlay
         if (walletModal) {
             walletModal.style.display = 'flex';
@@ -9328,11 +10096,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (doc.exists) {
                     const userData = doc.data();
                     
-                    // Set wallet ID
-                    if (walletIdDisplay) {
-                        walletIdDisplay.textContent = userData.walletId || 'WL' + userId.substring(0, 8);
-                    }
-                    
+                   
                     // Get wallet balance
                     return firebase.firestore().collection('wallets').doc(userId).get();
                 } else {
@@ -9381,39 +10145,8 @@ document.addEventListener('DOMContentLoaded', function() {
         setupRealTimeUpdates();
     }
     
-    // Copy wallet ID
-    function copyWalletId() {
-        if (!walletIdDisplay) return;
-        
-        const walletId = walletIdDisplay.textContent;
-        
-        // Copy to clipboard
-        navigator.clipboard.writeText(walletId)
-            .then(() => {
-                showToast('Wallet ID copied to clipboard', 'success');
-            })
-            .catch(err => {
-                console.error('Could not copy text: ', err);
-                
-                // Fallback for older browsers
-                const textArea = document.createElement('textarea');
-                textArea.value = walletId;
-                textArea.style.position = 'fixed';
-                document.body.appendChild(textArea);
-                textArea.focus();
-                textArea.select();
-                
-                try {
-                    const successful = document.execCommand('copy');
-                    showToast(successful ? 'Wallet ID copied to clipboard' : 'Failed to copy wallet ID', successful ? 'success' : 'error');
-                } catch (err) {
-                    showToast('Failed to copy wallet ID', 'error');
-                }
-                
-                document.body.removeChild(textArea);
-            });
-    }
-    
+            
+            
     // Helper function to check if user is logged in
     function isUserLoggedIn() {
         return firebase.auth().currentUser !== null;
@@ -9862,844 +10595,851 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-
-// Global variables
-let uploadedScreenshotURL = null;
-let currentUser = null;
-
-// Initialize Firebase Auth listener
+// Wallet Tag Functionality
 document.addEventListener('DOMContentLoaded', function() {
-    // Listen for auth state changes
-    firebase.auth().onAuthStateChanged(function(user) {
-        if (user) {
-            currentUser = user;
-            // Initialize wallet functionality once user is authenticated
-            initializeBuyCoinFeature();
-            // Listen for buy request updates
-            listenForBuyRequestUpdates();
-        } else {
-            currentUser = null;
-            console.log('User not logged in');
+  // Variables to track state
+  let walletTagChecked = false;
+  
+  // Function to check if user has wallet tag after PIN verification
+  function checkWalletTagAfterPinVerification() {
+    const userId = firebase.auth().currentUser?.uid;
+    if (!userId) return;
+    
+    // Only check once per session
+    if (walletTagChecked) return;
+    walletTagChecked = true;
+    
+    firebase.firestore().collection('users').doc(userId).get()
+      .then(doc => {
+        if (doc.exists) {
+          const userData = doc.data();
+          if (!userData.walletTag) {
+            // User doesn't have a wallet tag, show the modal
+            document.getElementById('walletTagModal').style.display = 'block';
+          } else {
+            // User has a wallet tag, display it
+            const tagDisplay = document.getElementById('walletTagDisplay');
+            document.getElementById('tagText').textContent = '@' + userData.walletTag;
+            tagDisplay.style.display = 'flex';
+          }
         }
+      })
+      .catch(error => {
+        console.error('Error checking wallet tag:', error);
+      });
+  }
+  
+  // Set up event listeners for wallet tag modal
+  const modal = document.getElementById('walletTagModal');
+  const closeBtn = document.querySelector('.close-modal');
+  const walletTagInput = document.getElementById('walletTagInput');
+  const createTagBtn = document.getElementById('createTagBtn');
+  const tagStatus = document.getElementById('tagStatus');
+  const copyTagBtn = document.getElementById('copyTagBtn');
+  
+  // Close modal when clicking X
+  if (closeBtn) {
+    closeBtn.addEventListener('click', function() {
+      modal.style.display = 'none';
     });
-});
-
-// Initialize Buy Coin Feature
-function initializeBuyCoinFeature() {
-    // Buy Coins Button Click Event
-    const buyCoinsBtn = document.getElementById('buyCoinsBtn');
-    const buyCoinsModal = document.getElementById('buyCoinsModal');
-    
-    if (buyCoinsBtn) {
-        buyCoinsBtn.addEventListener('click', function() {
-            buyCoinsModal.style.display = 'block';
-            resetBuyCoinsForm();
-        });
-    }
-    
-    // Close modal when clicking the X button
-    const closeButtons = document.querySelectorAll('.close-feature-modal');
-    closeButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            buyCoinsModal.style.display = 'none';
-        });
-    });
-    
-    // Close modal when clicking outside
-    window.addEventListener('click', function(event) {
-        if (event.target === buyCoinsModal) {
-            buyCoinsModal.style.display = 'none';
-        }
-    });
-    
-    // Tab switching functionality
-    const tabs = document.querySelectorAll('.tab');
-    tabs.forEach(tab => {
-        tab.addEventListener('click', function() {
-            const tabName = this.getAttribute('data-tab');
-            switchTab(tabName);
-        });
-    });
-    
-    // Next button functionality
-    const nextTabBtn = document.querySelector('.next-tab-btn');
-    if (nextTabBtn) {
-        nextTabBtn.addEventListener('click', function() {
-            // Validate input before proceeding
-            const coinAmount = document.getElementById('coinAmount').value;
-            if (!coinAmount || coinAmount <= 0) {
-                showToast('Please enter a valid coin amount', 'error');
-                return;
-            }
-            
-            // Set the transfer amount in the confirmation tab
-            document.getElementById('transferAmount').value = coinAmount * 10;
-            
-            // Set today's date as default
-            const today = new Date().toISOString().split('T')[0];
-            document.getElementById('transferDate').value = today;
-            
-            // Switch to confirmation tab
-            switchTab('confirmation');
-        });
-    }
-    
-    // Previous button functionality
-    const prevTabBtn = document.querySelector('.prev-tab-btn');
-    if (prevTabBtn) {
-        prevTabBtn.addEventListener('click', function() {
-            switchTab('payment');
-        });
-    }
-    
-    // Calculate Naira equivalent as user types
-    const coinAmountInput = document.getElementById('coinAmount');
-    if (coinAmountInput) {
-        coinAmountInput.addEventListener('input', function() {
-            const amount = parseFloat(this.value) || 0;
-            const nairaAmount = amount * 10; // 1 Talent Coin = ₦10
-            document.getElementById('paymentAmount').textContent = nairaAmount.toFixed(0);
-        });
-    }
-    
-    // Copy account number functionality
-    const copyAccountBtn = document.getElementById('copyAccountBtn');
-    if (copyAccountBtn) {
-        copyAccountBtn.addEventListener('click', function() {
-            const accountNumber = '9078139367';
-            navigator.clipboard.writeText(accountNumber)
-                .then(() => {
-                    showToast('Account number copied to clipboard', 'success');
-                })
-                .catch(err => {
-                    console.error('Could not copy text: ', err);
-                    showToast('Failed to copy account number', 'error');
-                });
-        });
-    }
-    
-    // File upload handling
-    const transferScreenshot = document.getElementById('transferScreenshot');
-    const fileName = document.getElementById('fileName');
-    
-    if (transferScreenshot) {
-        transferScreenshot.addEventListener('change', function(e) {
-            if (e.target.files.length > 0) {
-                const file = e.target.files[0];
-                fileName.textContent = file.name;
-                
-                // Show loading state
-                showToast('Uploading screenshot...', 'info');
-                
-                // Upload the file to Firebase Storage
-                uploadScreenshot(file);
-            }
-        });
-    }
-    
-    // Confirm Transfer Button
-    const confirmTransferBtn = document.getElementById('confirmTransferBtn');
-    if (confirmTransferBtn) {
-        confirmTransferBtn.addEventListener('click', function() {
-            submitBuyRequest();
-        });
-    }
-}
-
-// Switch between tabs
-function switchTab(tabName) {
-    // Hide all tab contents
-    document.querySelectorAll('.tab-content').forEach(content => {
-        content.classList.remove('active');
-    });
-    
-    // Remove active class from all tabs
-    document.querySelectorAll('.tab').forEach(tab => {
-        tab.classList.remove('active');
-    });
-    
-    // Show the selected tab content
-    document.getElementById(tabName + 'Tab').classList.add('active');
-    
-    // Add active class to the selected tab
-    document.querySelector(`.tab[data-tab="${tabName}"]`).classList.add('active');
-}
-
-// Reset the buy coins form
-function resetBuyCoinsForm() {
-    document.getElementById('coinAmount').value = '';
-    document.getElementById('paymentAmount').textContent = '0';
-    document.getElementById('transferReference').value = '';
-    document.getElementById('transferAmount').value = '';
-    document.getElementById('transferScreenshot').value = '';
-    document.getElementById('fileName').textContent = '';
-    uploadedScreenshotURL = null;
-    
-    // Reset to first tab
-    switchTab('payment');
-}
-
-// Upload screenshot to Firebase Storage
-function uploadScreenshot(file) {
-    if (!currentUser) {
-        showToast('You must be logged in to upload files', 'error');
+  }
+  
+  // Check tag availability when typing
+  if (walletTagInput) {
+    walletTagInput.addEventListener('input', function() {
+      // Convert to lowercase and remove invalid characters
+      this.value = this.value.toLowerCase().replace(/[^a-z0-9_]/g, '');
+      
+      const tag = this.value.trim();
+      
+      // Validate tag format
+      if (tag.length < 3) {
+        tagStatus.textContent = 'Tag must be at least 3 characters';
+        tagStatus.className = 'tag-status error';
+        createTagBtn.disabled = true;
         return;
-    }
-    
-    const storageRef = firebase.storage().ref();
-    const fileRef = storageRef.child(`screenshots/${currentUser.uid}/${Date.now()}_${file.name}`);
-    
-    fileRef.put(file).then(snapshot => {
-        return snapshot.ref.getDownloadURL();
-    }).then(downloadURL => {
-        uploadedScreenshotURL = downloadURL;
-        showToast('Screenshot uploaded successfully', 'success');
-    }).catch(error => {
-        console.error('Error uploading file:', error);
-        showToast('Failed to upload screenshot', 'error');
-    });
-}
-
-// Submit buy request to Firestore
-function submitBuyRequest() {
-    if (!currentUser) {
-        showToast('You must be logged in to buy coins', 'error');
-        return;
-    }
-    
-    // Get form values
-    const coinAmount = parseFloat(document.getElementById('coinAmount').value);
-    const nairaAmount = coinAmount * 10;
-    const transferReference = document.getElementById('transferReference').value;
-    const transferDate = document.getElementById('transferDate').value;
-    const transferAmount = parseFloat(document.getElementById('transferAmount').value);
-    
-    // Validate inputs
-    if (!coinAmount || coinAmount <= 0) {
-        showToast('Please enter a valid coin amount', 'error');
-        return;
-    }
-    
-    if (!transferReference) {
-        showToast('Please enter the transfer reference', 'error');
-        return;
-    }
-    
-    if (!transferDate) {
-        showToast('Please select the transfer date', 'error');
-        return;
-    }
-    
-    if (!transferAmount || transferAmount <= 0) {
-        showToast('Please enter a valid transfer amount', 'error');
-        return;
-    }
-    
-    // Validate that naira amount matches transfer amount
-    if (Math.abs(nairaAmount - transferAmount) > 0.01) {
-        showToast('Transfer amount must match the calculated amount', 'error');
-        return;
-    }
-    
-    // Show loading state
-    showToast('Submitting your request...', 'info');
-    
-    // Get user data
-    const db = firebase.firestore();
-    db.collection('users').doc(currentUser.uid).get()
-        .then(userDoc => {
-            if (!userDoc.exists) {
-                throw new Error('User profile not found');
-            }
-            
-            const userData = userDoc.data();
-            
-            // Create the buy request document
-            return db.collection('buyRequests').add({
-                userId: currentUser.uid,
-                username: userData.username || userData.displayName || 'Unknown User',
-                walletId: currentUser.uid, // Using userId as walletId for simplicity
-                amount: coinAmount,
-                nairaAmount: nairaAmount,
-                transferReference: transferReference,
-                paymentScreenshot: uploadedScreenshotURL || '',
-                transferDate: transferDate,
-                status: 'pending',
-                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                moderatorNotes: ''
-            });
-        })
-        .then(docRef => {
-            console.log('Buy request created with ID:', docRef.id);
-            
-            // Create activity record
-            return db.collection('activity').add({
-                userId: currentUser.uid,
-                type: 'buy',
-                title: 'Buy Request Submitted',
-                details: `${coinAmount} Talent Coins (₦${nairaAmount})`,
-                status: 'pending',
-                timestamp: firebase.firestore.FieldValue.serverTimestamp()
-            });
-        })
-        .then(() => {
-            showToast('Buy request submitted successfully', 'success');
-            
-            // Close the modal
-            document.getElementById('buyCoinsModal').style.display = 'none';
-            
-            // Reset the form
-            resetBuyCoinsForm();
-            
-            // Refresh wallet transactions
-            if (typeof loadWalletTransactions === 'function') {
-                loadWalletTransactions();
-            }
-        })
-        .catch(error => {
-            console.error('Error submitting buy request:', error);
-            showToast('Failed to submit buy request: ' + error.message, 'error');
-        });
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-// Listen for updates to buy requests
-function listenForBuyRequestUpdates() {
-    if (!currentUser) return;
-    
-    const db = firebase.firestore();
-    
-    // Listen for changes to user's buy requests
-    return db.collection('buyRequests')
-        .where('userId', '==', currentUser.uid)
-        .onSnapshot(snapshot => {
-            snapshot.docChanges().forEach(change => {
-                const data = change.doc.data();
-                
-                // If a request was updated
-                if (change.type === 'modified') {
-                    // Check if status changed to completed
-                    if (data.status === 'completed') {
-                        // Show notification to user
-                        showToast(`Your buy request for ${data.amount} Talent Coins has been approved!`, 'success');
-                        
-                        // Refresh wallet balance
-                        if (typeof refreshWalletBalance === 'function') {
-                            refreshWalletBalance();
-                        }
-                        
-                        // Refresh wallet transactions
-                        if (typeof loadWalletTransactions === 'function') {
-                            loadWalletTransactions();
-                        }
-                    } 
-                    // Check if status changed to rejected
-                    else if (data.status === 'rejected') {
-                        showToast(`Your buy request for ${data.amount} Talent Coins was rejected. Reason: ${data.moderatorNotes || 'No reason provided'}`, 'error');
-                        
-                        // Refresh wallet transactions
-                        if (typeof loadWalletTransactions === 'function') {
-                            loadWalletTransactions();
-                        }
-                    }
-                }
-            });
-        }, error => {
-            console.error('Error listening for buy request updates:', error);
-        });
-}
-
-// Show toast notification
-function showToast(message, type = 'info') {
-    // Check if toast container exists, if not create it
-    let toastContainer = document.getElementById('toast-container');
-    if (!toastContainer) {
-        toastContainer = document.createElement('div');
-        toastContainer.id = 'toast-container';
-        document.body.appendChild(toastContainer);
-    }
-    
-    // Create toast element
-    const toast = document.createElement('div');
-    toast.className = `toast ${type}`;
-    toast.textContent = message;
-    
-    // Add toast to container
-    toastContainer.appendChild(toast);
-    
-    // Show toast
-    setTimeout(() => {
-        toast.classList.add('show');
-    }, 10);
-    
-    // Remove toast after 3 seconds
-    setTimeout(() => {
-        toast.classList.remove('show');
-        setTimeout(() => {
-            toastContainer.removeChild(toast);
-        }, 300);
-    }, 3000);
-}
-
-
-
-
-
-
-
-
-
-
-// Load Buy Coin Requests from Firestore
-function loadBuyCoinRequests(statusFilter = 'all') {
-    const requestsContainer = document.getElementById('buyRequestsContainer');
-    if (!requestsContainer) return;
-    
-    // Show loading state
-    requestsContainer.innerHTML = '<div class="loading-spinner"></div>';
-    
-    const db = firebase.firestore();
-    let query = db.collection('buyRequests').orderBy('timestamp', 'desc');
-    
-    // Apply status filter if not 'all'
-    if (statusFilter !== 'all') {
-        query = query.where('status', '==', statusFilter);
-    }
-    
-    query.get().then(snapshot => {
-        if (snapshot.empty) {
-            requestsContainer.innerHTML = '<div class="no-requests">No buy requests found</div>';
-            return;
-        }
-        
-        let requestsHTML = '';
-        snapshot.forEach(doc => {
-            const request = doc.data();
-            const requestId = doc.id;
-            const timestamp = request.timestamp ? new Date(request.timestamp.toDate()).toLocaleString() : 'Unknown';
-            
-            let statusClass = '';
-            switch(request.status) {
-                case 'pending':
-                    statusClass = 'status-pending';
-                    break;
-                case 'completed':
-                    statusClass = 'status-completed';
-                    break;
-                case 'rejected':
-                    statusClass = 'status-rejected';
-                    break;
-            }
-            
-            requestsHTML += `
-                <div class="request-card" data-id="${requestId}">
-                    <div class="request-header">
-                        <div class="request-user">
-                            <i class="fas fa-user"></i>
-                            <span>${request.username || 'Unknown User'}</span>
-                        </div>
-                        <div class="request-status ${statusClass}">
-                            ${request.status}
-                        </div>
-                    </div>
-                    <div class="request-details">
-                        <div class="detail-row">
-                            <span class="detail-label">Amount:</span>
-                            <span class="detail-value">${request.amount} Talent Coins</span>
-                        </div>
-                                             <div class="detail-row">
-                            <span class="detail-label">Naira:</span>
-                            <span class="detail-value">₦${request.nairaAmount}</span>
-                        </div>
-                        <div class="detail-row">
-                            <span class="detail-label">Date:</span>
-                            <span class="detail-value">${timestamp}</span>
-                        </div>
-                    </div>
-                    <div class="request-actions">
-                        <button class="view-details-btn" onclick="viewRequestDetails('${requestId}')">
-                            <i class="fas fa-eye"></i> View Details
-                        </button>
-                    </div>
-                </div>
-            `;
-        });
-        
-        requestsContainer.innerHTML = requestsHTML;
-    }).catch(error => {
-        console.error('Error loading buy requests:', error);
-        requestsContainer.innerHTML = '<div class="error-message">Error loading requests. Please try again.</div>';
-    });
-}
-
-// View Request Details
-function viewRequestDetails(requestId) {
-    const modal = document.getElementById('requestDetailsModal');
-    const modalContent = document.getElementById('requestDetailsContent');
-    
-    if (!modal || !modalContent) return;
-    
-    // Show loading state
-    modalContent.innerHTML = '<div class="loading-spinner"></div>';
-    modal.style.display = 'block';
-    
-    const db = firebase.firestore();
-    db.collection('buyRequests').doc(requestId).get()
-        .then(doc => {
-            if (!doc.exists) {
-                modalContent.innerHTML = '<div class="error-message">Request not found</div>';
-                return;
-            }
-            
-            const request = doc.data();
-            const timestamp = request.timestamp ? new Date(request.timestamp.toDate()).toLocaleString() : 'Unknown';
-            
-            let statusClass = '';
-            switch(request.status) {
-                case 'pending':
-                    statusClass = 'status-pending';
-                    break;
-                case 'completed':
-                    statusClass = 'status-completed';
-                    break;
-                case 'rejected':
-                    statusClass = 'status-rejected';
-                    break;
-            }
-            
-            // Prepare action buttons based on status
-            let actionButtons = '';
-            if (request.status === 'pending') {
-                actionButtons = `
-                    <button class="action-btn approve-btn" onclick="approveRequest('${requestId}')">
-                        <i class="fas fa-check"></i> Approve
-                    </button>
-                    <button class="action-btn reject-btn" onclick="rejectRequest('${requestId}')">
-                        <i class="fas fa-times"></i> Reject
-                    </button>
-                `;
-            }
-            
-            // Prepare screenshot display
-            let screenshotHTML = '';
-            if (request.paymentScreenshot) {
-                screenshotHTML = `
-                    <div class="screenshot-container">
-                        <h3>Payment Screenshot</h3>
-                        <img src="${request.paymentScreenshot}" alt="Payment Screenshot" class="payment-screenshot">
-                        <a href="${request.paymentScreenshot}" target="_blank" class="view-full-btn">
-                            <i class="fas fa-external-link-alt"></i> View Full Size
-                        </a>
-                    </div>
-                `;
+      }
+      
+      // Check availability after typing stops
+      clearTimeout(this.timer);
+      tagStatus.textContent = 'Checking availability...';
+      tagStatus.className = 'tag-status checking';
+      
+      this.timer = setTimeout(() => {
+        firebase.firestore().collection('walletTags')
+          .where('tag', '==', tag)
+          .get()
+          .then(snapshot => {
+            if (snapshot.empty) {
+              tagStatus.textContent = 'Tag is available!';
+              tagStatus.className = 'tag-status available';
+              createTagBtn.disabled = false;
             } else {
-                screenshotHTML = `
-                    <div class="no-screenshot">
-                        <p>No payment screenshot provided</p>
-                    </div>
-                `;
+              tagStatus.textContent = 'Tag is already taken';
+              tagStatus.className = 'tag-status error';
+              createTagBtn.disabled = true;
             }
-            
-            modalContent.innerHTML = `
-                <div class="request-detail-header">
-                    <h2>Buy Request Details</h2>
-                    <div class="request-id">ID: ${requestId}</div>
-                </div>
-                
-                <div class="request-detail-status ${statusClass}">
-                    Status: ${request.status}
-                </div>
-                
-                <div class="request-detail-section">
-                    <h3>User Information</h3>
-                    <div class="detail-row">
-                        <span class="detail-label">Username:</span>
-                        <span class="detail-value">${request.username || 'Unknown User'}</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">User ID:</span>
-                        <span class="detail-value">${request.userId}</span>
-                    </div>
-                </div>
-                
-                <div class="request-detail-section">
-                    <h3>Payment Information</h3>
-                    <div class="detail-row">
-                        <span class="detail-label">Amount:</span>
-                        <span class="detail-value">${request.amount} Talent Coins</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">Naira Amount:</span>
-                        <span class="detail-value">₦${request.nairaAmount}</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">Transfer Reference:</span>
-                        <span class="detail-value">${request.transferReference}</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">Transfer Date:</span>
-                        <span class="detail-value">${request.transferDate}</span>
-                    </div>
-                </div>
-                
-                ${screenshotHTML}
-                
-                <div class="request-detail-actions">
-                    ${actionButtons}
-                </div>
-                
-                ${request.status === 'pending' ? `
-                <div class="admin-notes-input">
-                    <label for="moderatorNotes">Admin Notes:</label>
-                    <textarea id="moderatorNotes" placeholder="Add notes about this request (optional)"></textarea>
-                </div>
-                ` : ''}
-            `;
-        })
-        .catch(error => {
-            console.error('Error loading request details:', error);
-            modalContent.innerHTML = '<div class="error-message">Error loading request details. Please try again.</div>';
-        });
-}
-
-// Approve Buy Request
-function approveRequest(requestId) {
-    // Get admin notes
-    const notesInput = document.getElementById('moderatorNotes');
-    const notes = notesInput ? notesInput.value : '';
-    
-    // Show loading state
-    showToast('Processing request...', 'info');
-    
-    const db = firebase.firestore();
-    
-    // Get the request data first
-    db.collection('buyRequests').doc(requestId).get()
-        .then(doc => {
-            if (!doc.exists) {
-                throw new Error('Request not found');
-            }
-            
-            const requestData = doc.data();
-            const userId = requestData.userId;
-            const amount = requestData.amount;
-            
-            // Use a transaction to update both the request and the wallet
-            return db.runTransaction(transaction => {
-                // Get the user's wallet
-                const walletRef = db.collection('wallets').doc(userId);
-                
-                return transaction.get(walletRef)
-                    .then(walletDoc => {
-                        // Get current admin user
-                        const adminUser = firebase.auth().currentUser;
-                        const adminName = adminUser ? adminUser.displayName || adminUser.email : 'Admin';
-                        
-                        // Create wallet if it doesn't exist
-                        if (!walletDoc.exists) {
-                            transaction.set(walletRef, {
-                                talentCoins: amount,
-                                commission: 0,
-                                lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
-                            });
-                        } else {
-                            // Update existing wallet
-                            const walletData = walletDoc.data();
-                            const currentBalance = walletData.talentCoins || 0;
-                            
-                            transaction.update(walletRef, {
-                                talentCoins: currentBalance + amount,
-                                lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
-                            });
-                        }
-                        
-                        // Update the request status
-                        const requestRef = db.collection('buyRequests').doc(requestId);
-                        transaction.update(requestRef, {
-                            status: 'completed',
-                            moderatorNotes: notes,
-                            completedAt: firebase.firestore.FieldValue.serverTimestamp(),
-                            moderator: adminName
-                        });
-                        
-                        // Create activity record
-                        const activityRef = db.collection('activity').doc();
-                        transaction.set(activityRef, {
-                            userId: userId,
-                            type: 'buy',
-                            title: 'Buy Request Approved',
-                            details: `${amount} Talent Coins added to wallet`,
-                            status: 'completed',
-                            timestamp: firebase.firestore.FieldValue.serverTimestamp()
-                        });
-                    });
-            });
-        })
-        .then(() => {
-            showToast('Buy request approved successfully', 'success');
-            
-            // Close details modal
-            document.getElementById('requestDetailsModal').style.display = 'none';
-            
-            // Reload buy requests to update the UI
-            loadBuyCoinRequests();
-        })
-        .catch(error => {
-            console.error("Error approving request:", error);
-            showToast('Failed to approve request: ' + error.message, 'error');
-        });
-}
-
-// Reject Buy Request
-function rejectRequest(requestId) {
-    // Get admin notes
-    const notesInput = document.getElementById('moderatorNotes');
-    const notes = notesInput ? notesInput.value : '';
-    
-    if (!notes) {
-        showToast('Please provide a reason for rejection in the Admin Notes field', 'error');
-        return;
-    }
-    
-    // Show loading state
-    showToast('Processing request...', 'info');
-    
-    const db = firebase.firestore();
-    
-    // Get the request data first
-    db.collection('buyRequests').doc(requestId).get()
-        .then(doc => {
-            if (!doc.exists) {
-                throw new Error('Request not found');
-            }
-            
-            const requestData = doc.data();
-            const userId = requestData.userId;
-            
-            // Get current admin user
-            const adminUser = firebase.auth().currentUser;
-            const adminName = adminUser ? adminUser.displayName || adminUser.email : 'Admin';
-            
-            // Update the request status
-            return db.collection('buyRequests').doc(requestId).update({
-                status: 'rejected',
-                moderatorNotes: notes,
-                completedAt: firebase.firestore.FieldValue.serverTimestamp(),
-                moderator: adminName
-            }).then(() => {
-                // Create activity record
-                return db.collection('activity').add({
-                    userId: userId,
-                    type: 'buy',
-                    title: 'Buy Request Rejected',
-                    details: `Reason: ${notes}`,
-                    status: 'rejected',
-                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
-                });
-            });
-        })
-        .then(() => {
-            showToast('Buy request rejected successfully', 'success');
-            
-            // Close details modal
-            document.getElementById('requestDetailsModal').style.display = 'none';
-            
-            // Reload buy requests to update the UI
-            loadBuyCoinRequests();
-        })
-        .catch(error => {
-            console.error("Error rejecting request:", error);
-            showToast('Failed to reject request: ' + error.message, 'error');
-        });
-}
-
-// Show toast notification
-function showToast(message, type = 'info') {
-    // Check if toast container exists, if not create it
-    let toastContainer = document.getElementById('toast-container');
-    if (!toastContainer) {
-        toastContainer = document.createElement('div');
-        toastContainer.id = 'toast-container';
-        document.body.appendChild(toastContainer);
-    }
-    
-    // Create toast element
-    const toast = document.createElement('div');
-    toast.className = `toast ${type}`;
-    toast.textContent = message;
-    
-    // Add toast to container
-    toastContainer.appendChild(toast);
-    
-    // Show toast
-    setTimeout(() => {
-        toast.classList.add('show');
-    }, 10);
-    
-    // Remove toast after 3 seconds
-    setTimeout(() => {
-        toast.classList.remove('show');
-        setTimeout(() => {
-            toastContainer.removeChild(toast);
-        }, 300);
-    }, 3000);
-}
-
-// Initialize when document is ready
-document.addEventListener('DOMContentLoaded', function() {
-    // Load buy requests if we're on the admin page
-    const requestsContainer = document.getElementById('buyRequestsContainer');
-    if (requestsContainer) {
-        loadBuyCoinRequests();
-    }
-    
-    // Set up refresh button
-    const refreshBtn = document.getElementById('refreshRequestsBtn');
-    if (refreshBtn) {
-        refreshBtn.addEventListener('click', function() {
-            loadBuyCoinRequests();
-        });
-    }
-    
-    // Set up filter functionality
-    const statusFilter = document.getElementById('statusFilter');
-    if (statusFilter) {
-        statusFilter.addEventListener('change', function() {
-            loadBuyCoinRequests(this.value);
-        });
-    }
-    
-    // Set up request details modal close button
-    const closeModalBtn = document.querySelector('#requestDetailsModal .close-modal');
-    if (closeModalBtn) {
-        closeModalBtn.addEventListener('click', function() {
-            document.getElementById('requestDetailsModal').style.display = 'none';
-        });
-    }
-    
-    // Close modal when clicking outside
-    window.addEventListener('click', function(event) {
-        const modal = document.getElementById('requestDetailsModal');
-        if (event.target === modal) {
-            modal.style.display = 'none';
-        }
+          })
+          .catch(error => {
+            console.error('Error checking tag:', error);
+            tagStatus.textContent = 'Error checking availability';
+            tagStatus.className = 'tag-status error';
+          });
+      }, 500);
     });
+  }
+  
+  // Create wallet tag
+  if (createTagBtn) {
+    createTagBtn.addEventListener('click', function() {
+      const tag = walletTagInput.value.trim();
+      if (!tag) return;
+      
+      // Disable button and show loading
+      this.disabled = true;
+      this.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+      
+      const userId = firebase.auth().currentUser?.uid;
+      if (!userId) {
+        tagStatus.textContent = 'Authentication error';
+        tagStatus.className = 'tag-status error';
+        this.disabled = false;
+        this.textContent = 'Create Tag';
+        return;
+      }
+      
+      // Create tag in database
+      firebase.firestore().collection('walletTags').doc(tag).set({
+        tag: tag,
+        userId: userId,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      })
+      .then(() => {
+        // Update user document
+        return firebase.firestore().collection('users').doc(userId).update({
+          walletTag: tag
+        });
+      })
+      .then(() => {
+        // Hide modal and show tag display
+        modal.style.display = 'none';
+        const tagDisplay = document.getElementById('walletTagDisplay');
+        document.getElementById('tagText').textContent = '@' + tag;
+        tagDisplay.style.display = 'flex';
+        
+        // Show success message
+        showToast('Wallet tag created successfully!', 'success');
+      })
+      .catch(error => {
+        console.error('Error creating tag:', error);
+        tagStatus.textContent = 'Error creating tag';
+        tagStatus.className = 'tag-status error';
+        this.disabled = false;
+        this.textContent = 'Create Tag';
+      });
+    });
+  }
+  
+  // Copy tag functionality
+  if (copyTagBtn) {
+    copyTagBtn.addEventListener('click', function() {
+      const tagText = document.getElementById('tagText').textContent;
+      navigator.clipboard.writeText(tagText)
+        .then(() => {
+          // Show copied notification
+          const originalText = this.innerHTML;
+          this.innerHTML = '<i class="fas fa-check"></i>';
+          setTimeout(() => {
+            this.innerHTML = originalText;
+          }, 2000);
+          
+          showToast('Wallet tag copied to clipboard', 'success');
+        })
+        .catch(err => {
+          console.error('Failed to copy:', err);
+          showToast('Failed to copy wallet tag', 'error');
+        });
+    });
+  }
+  
+  // Function to find user by wallet tag
+  window.findUserByWalletTag = function(tag) {
+    return new Promise((resolve, reject) => {
+      if (!tag || typeof tag !== 'string') {
+        reject(new Error('Invalid wallet tag format'));
+        return;
+      }
+      
+      // Remove @ symbol if present
+      const cleanTag = tag.startsWith('@') ? tag.substring(1) : tag;
+      
+      firebase.firestore().collection('walletTags')
+        .where('tag', '==', cleanTag)
+        .get()
+        .then(snapshot => {
+          if (snapshot.empty) {
+            reject(new Error('Wallet tag not found'));
+            return;
+          }
+          
+          // Get the user ID associated with this tag
+          const userId = snapshot.docs[0].data().userId;
+          
+          // Get user details
+          return firebase.firestore().collection('users').doc(userId).get();
+        })
+        .then(userDoc => {
+          if (!userDoc.exists) {
+            reject(new Error('User not found'));
+            return;
+          }
+          
+          const userData = userDoc.data();
+          resolve({
+            userId: userDoc.id,
+            name: userData.name || userData.displayName || 'User',
+            walletTag: userData.walletTag,
+            // Don't include sensitive information
+          });
+        })
+        .catch(error => {
+          console.error('Error finding user by wallet tag:', error);
+          reject(error);
+        });
+    });
+  };
+  
+  // Modify your send money function to accept wallet tags
+  window.sendMoney = function(recipient, amount, note = '') {
+    return new Promise((resolve, reject) => {
+      // Check if recipient is a wallet tag (starts with @)
+      const isWalletTag = recipient.startsWith('@');
+      let recipientPromise;
+      
+      if (isWalletTag) {
+        // Find user by wallet tag
+        recipientPromise = findUserByWalletTag(recipient);
+      } else {
+        // Assume recipient is a user ID
+        recipientPromise = firebase.firestore().collection('users').doc(recipient).get()
+          .then(doc => {
+            if (!doc.exists) throw new Error('Recipient not found');
+            const userData = doc.data();
+            return {
+              userId: doc.id,
+              name: userData.name || userData.displayName || 'User',
+              walletTag: userData.walletTag
+            };
+          });
+      }
+      
+      // Get current user
+      const currentUser = firebase.auth().currentUser;
+      if (!currentUser) {
+        reject(new Error('You must be logged in to send money'));
+        return;
+      }
+      
+      let senderData, recipientData;
+      
+      // Get sender's wallet data
+      firebase.firestore().collection('users').doc(currentUser.uid).get()
+        .then(doc => {
+          if (!doc.exists) throw new Error('Sender profile not found');
+          
+          senderData = doc.data();
+          
+          // Check if sender has enough balance
+          const senderBalance = senderData.walletBalance || 0;
+          if (senderBalance < amount) {
+            throw new Error('Insufficient balance');
+          }
+          
+          // Find recipient
+          return recipientPromise;
+        })
+        .then(recipient => {
+          recipientData = recipient;
+          
+          // Start a transaction
+          return firebase.firestore().runTransaction(transaction => {
+            // Get latest sender and recipient data
+            const senderRef = firebase.firestore().collection('users').doc(currentUser.uid);
+            const recipientRef = firebase.firestore().collection('users').doc(recipientData.userId);
+            
+            return transaction.getAll(senderRef, recipientRef)
+              .then(docs => {
+                const latestSenderData = docs[0].data();
+                const latestRecipientData = docs[1].data();
+                
+                // Verify sender still has enough balance
+                const currentBalance = latestSenderData.walletBalance || 0;
+                if (currentBalance < amount) {
+                  throw new Error('Insufficient balance');
+                }
+                
+                // Update sender's balance
+                transaction.update(senderRef, {
+                  walletBalance: firebase.firestore.FieldValue.increment(-amount)
+                });
+                
+                // Update recipient's balance
+                transaction.update(recipientRef, {
+                  walletBalance: firebase.firestore.FieldValue.increment(amount)
+                });
+                
+                // Create transaction record
+                const transactionRef = firebase.firestore().collection('transactions').doc();
+                transaction.set(transactionRef, {
+                  senderId: currentUser.uid,
+                  senderName: senderData.name || senderData.displayName || 'User',
+                  senderWalletTag: senderData.walletTag || null,
+                  recipientId: recipientData.userId,
+                  recipientName: recipientData.name,
+                  recipientWalletTag: recipientData.walletTag || null,
+                  amount: amount,
+                  note: note,
+                  timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                  type: 'transfer'
+                });
+              });
+          });
+        })
+        .then(() => {
+          resolve({
+            success: true,
+            message: `Successfully sent ${amount} TalentCoins to ${recipientData.walletTag ? '@'+recipientData.walletTag : recipientData.name}`
+          });
+        })
+        .catch(error => {
+          console.error('Error sending money:', error);
+          reject(error);
+        });
+    });
+  };
+  
+  // Add recipient validation to your send money form
+  const recipientInput = document.querySelector('input[name="recipient"]') || document.getElementById('recipientInput');
+  const recipientValidation = document.getElementById('recipientValidation');
+  const recipientInfo = document.getElementById('recipientInfo');
+  
+  if (recipientInput && recipientValidation && recipientInfo) {
+    recipientInput.addEventListener('input', function() {
+      const value = this.value.trim();
+      
+      // Only validate if it looks like a wallet tag
+      if (value.startsWith('@')) {
+        clearTimeout(this.timer);
+        
+        // Show loading state
+        recipientValidation.style.display = 'block';
+        recipientInfo.className = 'recipient-info loading';
+        recipientInfo.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Checking...';
+        
+        this.timer = setTimeout(() => {
+          findUserByWalletTag(value)
+            .then(user => {
+              // Tag found, show user info
+              recipientInfo.className = 'recipient-info success';
+              recipientInfo.innerHTML = `
+                <i class="fas fa-check-circle"></i> 
+                Sending to: <strong>${user.name}</strong>
+              `;
+              recipientInfo.dataset.userId = user.userId;
+            })
+            .catch(error => {
+              // Tag not found or error
+              recipientInfo.className = 'recipient-info error';
+              recipientInfo.innerHTML = `
+                <i class="fas fa-times-circle"></i> 
+                ${error.message || 'Wallet tag not found'}
+              `;
+              delete recipientInfo.dataset.userId;
+            });
+        }, 500);
+      } else if (value === '') {
+        // Hide validation if input is empty
+        recipientValidation.style.display = 'none';
+      }
+    });
+  }
+  
+  // Hook into your existing PIN verification to check for wallet tag
+  // This assumes you have a function that runs after successful PIN verification
+  
+  // Option 1: If you have a custom event for PIN verification
+  document.addEventListener('pinVerified', function() {
+    checkWalletTagAfterPinVerification();
+  });
+  
+  // Option 2: Override your existing PIN verification function
+  // This assumes you have a global function called handlePinLogin
+  if (typeof window.handlePinLogin === 'function') {
+    const originalHandlePinLogin = window.handlePinLogin;
+    
+    window.handlePinLogin = function() {
+      // Call the original function with all arguments
+      const result = originalHandlePinLogin.apply(this, arguments);
+      
+      // After PIN verification, check for wallet tag
+      // We use setTimeout to ensure this runs after the original function completes
+      setTimeout(checkWalletTagAfterPinVerification, 500);
+      
+      // Return the original result
+      return result;
+    };
+  }
+  
+  // Option 3: If you're using a PIN input with event listeners
+  const pinLoginBtn = document.getElementById('loginPinBtn');
+  if (pinLoginBtn) {
+    const originalClickHandler = pinLoginBtn.onclick;
+    
+    pinLoginBtn.onclick = function(event) {
+      // If there's an original handler, call it
+      if (originalClickHandler) {
+        originalClickHandler.call(this, event);
+      }
+      
+      // After a delay to allow PIN verification to complete
+      setTimeout(function() {
+        // Check if wallet dashboard is visible (indicating successful login)
+        const walletDashboard = document.getElementById('walletDashboard');
+        if (walletDashboard && 
+            (walletDashboard.style.display === 'block' || 
+             !walletDashboard.classList.contains('hidden'))) {
+          checkWalletTagAfterPinVerification();
+        }
+      }, 1000);
+    };
+  }
+  
+  // Also check when wallet dashboard becomes visible through other means
+  const walletDashboardObserver = new MutationObserver(function(mutations) {
+    mutations.forEach(function(mutation) {
+      if (mutation.attributeName === 'style' || mutation.attributeName === 'class') {
+        const walletDashboard = document.getElementById('walletDashboard');
+        if (walletDashboard && 
+            (walletDashboard.style.display === 'block' || 
+             !walletDashboard.classList.contains('hidden'))) {
+          checkWalletTagAfterPinVerification();
+        }
+      }
+    });
+  });
+  
+  const walletDashboard = document.getElementById('walletDashboard');
+  if (walletDashboard) {
+    walletDashboardObserver.observe(walletDashboard, { attributes: true });
+  }
 });
 
+       // TalentCoin Dispenser Admin Feature
+document.addEventListener('DOMContentLoaded', function() {
+  // Constants
+  const ADMIN_PASSWORD = 'BISA19';
+  
+  // DOM Elements
+  const openCoinDispenserBtn = document.getElementById('openCoinDispenserBtn');
+  const coinDispenserModal = document.getElementById('coinDispenserModal');
+  const closeAdminModalBtn = document.querySelector('.close-admin-modal');
+  
+  const dispenserAuth = document.getElementById('dispenserAuth');
+  const dispenserInterface = document.getElementById('dispenserInterface');
+  const adminPassword = document.getElementById('adminPassword');
+  const verifyAdminBtn = document.getElementById('verifyAdminBtn');
+  
+  const recipientTag = document.getElementById('recipientTag');
+  const tagValidationResult = document.getElementById('tagValidationResult');
+  const coinAmount = document.getElementById('coinAmount');
+  const dispenserNote = document.getElementById('dispenserNote');
+  const dispenseCoinBtn = document.getElementById('dispenseCoinBtn');
+  const recentDispenses = document.getElementById('recentDispenses');
+  
+  // State variables
+  let validatedRecipient = null;
+  let isAuthenticated = false;
+  
+  // Open modal when clicking the admin menu button
+  if (openCoinDispenserBtn) {
+    openCoinDispenserBtn.addEventListener('click', function() {
+      coinDispenserModal.style.display = 'block';
+      
+      // Reset authentication if modal is reopened
+      if (!isAuthenticated) {
+        dispenserAuth.style.display = 'block';
+        dispenserInterface.style.display = 'none';
+        adminPassword.value = '';
+      }
+    });
+  }
+  
+  // Close modal when clicking the X
+  if (closeAdminModalBtn) {
+    closeAdminModalBtn.addEventListener('click', function() {
+      coinDispenserModal.style.display = 'none';
+    });
+  }
+  
+  // Close modal when clicking outside the content
+  window.addEventListener('click', function(event) {
+    if (event.target === coinDispenserModal) {
+      coinDispenserModal.style.display = 'none';
+    }
+  });
+  
+  // Verify admin password
+  if (verifyAdminBtn) {
+    verifyAdminBtn.addEventListener('click', function() {
+      const password = adminPassword.value;
+      
+      if (password === ADMIN_PASSWORD) {
+        // Password correct, show dispenser interface
+        dispenserAuth.style.display = 'none';
+        dispenserInterface.style.display = 'block';
+        isAuthenticated = true;
+        
+        // Load recent transactions
+        loadRecentTransactions();
+      } else {
+        // Password incorrect, show error
+        showToast('Incorrect admin password', 'error');
+        adminPassword.value = '';
+        adminPassword.focus();
+      }
+    });
+    
+    // Also allow Enter key to submit
+    adminPassword.addEventListener('keyup', function(event) {
+      if (event.key === 'Enter') {
+        verifyAdminBtn.click();
+      }
+    });
+  }
+  
+  // Validate wallet tag as user types
+  if (recipientTag) {
+    recipientTag.addEventListener('input', function() {
+      // Convert to lowercase and remove invalid characters
+      this.value = this.value.toLowerCase().replace(/[^a-z0-9_]/g, '');
+      
+      const tag = this.value.trim();
+      
+      // Reset validation state
+      validatedRecipient = null;
+      dispenseCoinBtn.disabled = true;
+      
+      if (!tag) {
+        tagValidationResult.textContent = '';
+        tagValidationResult.className = 'validation-result';
+        return;
+      }
+      
+      // Show loading state
+      tagValidationResult.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Checking...';
+      tagValidationResult.className = 'validation-result loading';
+      
+      // Clear previous timeout
+      clearTimeout(this.timer);
+      
+      // Set new timeout to avoid too many requests
+      this.timer = setTimeout(() => {
+        // Use the findUserByWalletTag function we created earlier
+        findUserByWalletTag(tag)
+          .then(user => {
+            // Tag found, show user info
+            tagValidationResult.innerHTML = `
+              <i class="fas fa-check-circle"></i> 
+              User found: <strong>${user.name}</strong>
+            `;
+            tagValidationResult.className = 'validation-result success';
+            
+            // Store validated recipient
+            validatedRecipient = user;
+            
+            // Enable send button if amount is also valid
+            if (coinAmount.value && parseInt(coinAmount.value) > 0) {
+              dispenseCoinBtn.disabled = false;
+            }
+          })
+          .catch(error => {
+            // Tag not found or error
+            tagValidationResult.innerHTML = `
+              <i class="fas fa-times-circle"></i> 
+              ${error.message || 'Wallet tag not found'}
+            `;
+            tagValidationResult.className = 'validation-result error';
+            dispenseCoinBtn.disabled = true;
+          });
+      }, 500);
+    });
+  }
+  
+  // Validate amount as user types
+  if (coinAmount) {
+    coinAmount.addEventListener('input', function() {
+      // Only allow positive integers
+      const amount = parseInt(this.value);
+      
+      if (isNaN(amount) || amount <= 0) {
+        dispenseCoinBtn.disabled = true;
+        return;
+      }
+      
+      // Enable send button if recipient is also valid
+      if (validatedRecipient) {
+        dispenseCoinBtn.disabled = false;
+      }
+    });
+  }
+  
+  // Send TalentCoins to user
+  if (dispenseCoinBtn) {
+    dispenseCoinBtn.addEventListener('click', function() {
+      if (!validatedRecipient) {
+        showToast('Please enter a valid wallet tag', 'error');
+        return;
+      }
+      
+      const amount = parseInt(coinAmount.value);
+      if (isNaN(amount) || amount <= 0) {
+        showToast('Please enter a valid amount', 'error');
+        return;
+      }
+      
+      // Disable button and show loading
+      this.disabled = true;
+      this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+      
+      // Get note
+      const note = dispenserNote.value.trim() || 'Admin dispenser';
+      
+      // Get current admin user
+      const adminUser = firebase.auth().currentUser;
+      if (!adminUser) {
+        showToast('Admin authentication error', 'error');
+        this.disabled = false;
+        this.textContent = 'Send TalentCoins';
+        return;
+      }
+      
+      // Start a transaction to update recipient's balance
+      firebase.firestore().runTransaction(transaction => {
+        // Get recipient document
+        const recipientRef = firebase.firestore().collection('users').doc(validatedRecipient.userId);
+        
+        return transaction.get(recipientRef)
+          .then(recipientDoc => {
+            if (!recipientDoc.exists) {
+              throw new Error('Recipient not found');
+            }
+            
+            const recipientData = recipientDoc.data();
+            
+            // Update recipient's balance
+            transaction.update(recipientRef, {
+              walletBalance: firebase.firestore.FieldValue.increment(amount)
+            });
+            
+            // Create transaction record
+            const transactionRef = firebase.firestore().collection('transactions').doc();
+            transaction.set(transactionRef, {
+              senderId: adminUser.uid,
+              senderName: 'Admin Dispenser',
+              senderWalletTag: null,
+              recipientId: validatedRecipient.userId,
+              recipientName: validatedRecipient.name,
+              recipientWalletTag: validatedRecipient.walletTag,
+              amount: amount,
+              note: note,
+              timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+              type: 'admin_dispense'
+            });
+            
+            // Also create admin dispense record for tracking
+            const dispenseRef = firebase.firestore().collection('adminDispenses').doc();
+            transaction.set(dispenseRef, {
+              adminId: adminUser.uid,
+              adminEmail: adminUser.email,
+              recipientId: validatedRecipient.userId,
+              recipientName: validatedRecipient.name,
+              recipientWalletTag: validatedRecipient.walletTag,
+              amount: amount,
+              note: note,
+              timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            });
+          });
+      })
+      .then(() => {
+        // Success
+        showToast(`Successfully sent ${amount} TalentCoins to @${validatedRecipient.walletTag}`, 'success');
+        
+        // Reset form
+        recipientTag.value = '';
+        coinAmount.value = '';
+        dispenserNote.value = '';
+        tagValidationResult.textContent = '';
+        tagValidationResult.className = 'validation-result';
+        validatedRecipient = null;
+        
+        // Reset button
+        this.disabled = true;
+        this.textContent = 'Send TalentCoins';
+        
+        // Reload recent transactions
+        loadRecentTransactions();
+      })
+      .catch(error => {
+        console.error('Error dispensing coins:', error);
+        showToast(error.message || 'Failed to send TalentCoins', 'error');
+        
+        // Reset button
+        this.disabled = false;
+        this.textContent = 'Send TalentCoins';
+      });
+    });
+  }
+  
+  // Function to load recent transactions
+  function loadRecentTransactions() {
+    const adminUser = firebase.auth().currentUser;
+    if (!adminUser) return;
+    
+    recentDispenses.innerHTML = '<p class="loading-state"><i class="fas fa-spinner fa-spin"></i> Loading...</p>';
+    
+    firebase.firestore().collection('adminDispenses')
+      .where('adminId', '==', adminUser.uid)
+      .orderBy('timestamp', 'desc')
+      .limit(10)
+      .get()
+      .then(snapshot => {
+        if (snapshot.empty) {
+          recentDispenses.innerHTML = '<p class="empty-state">No recent transactions</p>';
+          return;
+        }
+        
+        let html = '';
+        snapshot.forEach(doc => {
+          const data = doc.data();
+          const timestamp = data.timestamp ? data.timestamp.toDate() : new Date();
+          const formattedDate = formatDate(timestamp);
+          
+          html += `
+            <div class="transaction-item">
+              <div class="transaction-header">
+                <span class="transaction-recipient">@${data.recipientWalletTag}</span>
+                <span class="transaction-amount">+${data.amount} TC</span>
+              </div>
+              <div class="transaction-time">${formattedDate}</div>
+              ${data.note ? `<div class="transaction-note">${data.note}</div>` : ''}
+            </div>
+          `;
+        });
+        
+        recentDispenses.innerHTML = html;
+      })
+      .catch(error => {
+        console.error('Error loading transactions:', error);
+        recentDispenses.innerHTML = '<p class="empty-state">Error loading transactions</p>';
+      });
+  }
+  
+  // Helper function to format date
+  function formatDate(date) {
+    const now = new Date();
+    const diff = now - date;
+    
+    // If less than 24 hours, show relative time
+    if (diff < 24 * 60 * 60 * 1000) {
+      const hours = Math.floor(diff / (60 * 60 * 1000));
+      
+      if (hours < 1) {
+        const minutes = Math.floor(diff / (60 * 1000));
+        if (minutes < 1) return 'Just now';
+        return `${minutes} minute${minutes !== 1 ? 's' : ''} ago`;
+      }
+      
+      return `${hours} hour${hours !== 1 ? 's' : ''} ago`;
+    }
+    
+    // Otherwise show date
+    return date.toLocaleString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true
+    });
+  }
+  
+  // Helper function to show toast notifications
+  // This assumes you have a showToast function, if not, implement this
+  function showToast(message, type = 'info') {
+    // If you already have a toast function, use that instead
+    if (window.showToast) {
+      window.showToast(message, type);
+      return;
+    }
+    
+    // Simple implementation if you don't have one
+    const toast = document.createElement('div');
+    toast.className = `toast toast-${type}`;
+    toast.textContent = message;
+    
+    document.body.appendChild(toast);
+    
+    // Show the toast
+    setTimeout(() => {
+      toast.classList.add('show');
+    }, 10);
+    
+    // Hide after 3 seconds
+    setTimeout(() => {
+      toast.classList.remove('show');
+      setTimeout(() => {
+        document.body.removeChild(toast);
+      }, 300);
+    }, 3000);
+  }
+  
+  // Add toast styles if you don't have them
+  if (!document.querySelector('style#toast-styles')) {
+    const style = document.createElement('style');
+    style.id = 'toast-styles';
+    style.textContent = `
+      .toast {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%) translateY(100px);
+        padding: 12px 20px;
+        border-radius: 8px;
+        color: white;
+        font-size: 14px;
+        font-weight: 500;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        z-index: 9999;
+        opacity: 0;
+        transition: transform 0.3s, opacity 0.3s;
+      }
+      .toast.show {
+        transform: translateX(-50%) translateY(0);
+        opacity: 1;
+      }
+      .toast-success {
+        background-color: #4caf50;
+      }
+      .toast-error {
+        background-color: #f44336;
+      }
+      .toast-info {
+        background-color: #2196f3;
+      }
+    `;
+    document.head.appendChild(style);
+  }
+});
 
 </script>
 </body>
-</html>
-
-
+</html> 
