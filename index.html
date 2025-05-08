@@ -6345,13 +6345,79 @@ function setupFormSwitching() {
       signupPanel.classList.remove('active');
     });
     
-    signupLink.addEventListener('click', function(e) {
-      e.preventDefault();
-      signupPanel.classList.add('active');
-      loginPanel.classList.remove('active');
-    });
-  }
+    if (signupFormElement) {
+        signupFormElement.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const fullName = document.getElementById('fullName').value;
+            const email = document.getElementById('signupEmail').value;
+            const password = document.getElementById('signupPassword').value;
+            const userType = document.getElementById('userType').value;
+            const termsAccepted = document.getElementById('terms').checked;
+            
+            // Validate form
+            if (!termsAccepted) {
+                showToast('Please accept the terms and conditions', 'error');
+                return;
+            }
+            
+            if (!userType) {
+                showToast('Please select your role', 'error');
+                return;
+            }
+            
+            // Show loading state
+            const submitBtn = this.querySelector('button[type="submit"]');
+            setButtonLoading(submitBtn, true);
+            
+            // Create user with Firebase
+            auth.createUserWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+                    
+                    // Update profile with display name
+                    return user.updateProfile({
+                        displayName: fullName
+                    }).then(() => {
+                        // Save additional user data to Firestore
+                        const userData = {
+                            uid: user.uid,
+                            email: user.email,
+                            displayName: fullName,
+                            photoURL: user.photoURL || null,
+                            userType: userType,
+                            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                            lastLogin: firebase.firestore.FieldValue.serverTimestamp()
+                        };
+                        
+                        // Save user data
+                        return db.collection('users').doc(user.uid).set(userData, { merge: true });
+                    });
+                })
+                .then(() => {
+                    showToast('Account created successfully!');
+                    
+                    // You might want to automatically switch to the login form or log them in
+                    const loginForm = document.getElementById('loginForm');
+                    const signupForm = document.getElementById('signupForm');
+                    
+                    signupForm.classList.add('hidden');
+                    loginForm.classList.remove('hidden');
+                })
+                .catch((error) => {
+                    console.error('Sign up error:', error);
+                    showToast(error.message, 'error');
+                })
+                .finally(() => {
+                    setButtonLoading(submitBtn, false);
+                });
+        });
+    
+    }
 }
+}
+
 
 
 // Show toast notification
