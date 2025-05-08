@@ -6323,35 +6323,10 @@ document.addEventListener('DOMContentLoaded', function() {
   // Setup password strength meter
   setupPasswordStrength();
   
-  // Setup form switching
-  setupFormSwitching();
+  
 });
 
-// Setup form switching
-function setupFormSwitching() {
-  const loginPanel = document.querySelector('.login');
-  const signupPanel = document.querySelector('.signup');
-   // Get the switch links
-        const showSignupLink = document.getElementById('showSignup');
-        const showLoginLink = document.getElementById('showLogin');
         
-        // Add event listeners to the links
-        if (showSignupLink) {
-            showSignupLink.addEventListener('click', function(e) {
-                e.preventDefault();
-                loginForm.classList.add('hidden');
-                signupForm.classList.remove('hidden');
-            });
-        }
-        
-        if (showLoginLink) {
-            showLoginLink.addEventListener('click', function(e) {
-                e.preventDefault();
-                signupForm.classList.add('hidden');
-                loginForm.classList.remove('hidden');
-            });
-        }
-}
 
 // Show toast notification
 function showToast(message, type = 'success') {
@@ -6395,93 +6370,340 @@ function createToastElement() {
   return toast;
 }
 
-// Setup password visibility toggle
-function setupPasswordToggle() {
-  passwordFields.forEach(field => {
-    const toggleBtn = field.querySelector('.password-toggle');
-    const input = field.querySelector('input');
+
+
+// Simple form switching function
+function setupFormSwitching() {
+  // Get the auth containers
+  const loginForm = document.getElementById('loginForm');
+  const signupForm = document.getElementById('signupForm');
+  
+  // Get the switch links
+  const showSignupLink = document.getElementById('showSignup');
+  const showLoginLink = document.getElementById('showLogin');
+  
+  // Add event listener for switching to signup
+  if (showSignupLink) {
+    showSignupLink.addEventListener('click', function(e) {
+      e.preventDefault();
+      loginForm.classList.add('hidden');
+      signupForm.classList.remove('hidden');
+    });
+  }
+  
+  // Add event listener for switching to login
+  if (showLoginLink) {
+    showLoginLink.addEventListener('click', function(e) {
+      e.preventDefault();
+      signupForm.classList.add('hidden');
+      loginForm.classList.remove('hidden');
+    });
+  }
+}
+
+// Initialize when the DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+  setupFormSwitching();
+});
+
+/**
+ * Translates Firebase error codes into user-friendly messages with emojis
+ * @param {Error} error - The Firebase error object
+ * @returns {string} User-friendly error message with emoji
+ */
+function translateFirebaseError(error) {
+  const errorCode = error.code || '';
+  
+  // Authentication errors
+  const authErrors = {
+    'auth/email-already-in-use': '📧 This email is already registered. Try logging in instead.',
+    'auth/invalid-email': '📧 Please enter a valid email address.',
+    'auth/user-disabled': '🚫 This account has been disabled. Please contact support.',
+    'auth/user-not-found': '❓ No account found with this email. Please sign up first.',
+    'auth/wrong-password': '🔑 Incorrect password. Please try again or reset your password.',
+    'auth/weak-password': '💪 Password is too weak. Use at least 6 characters with letters and numbers.',
+    'auth/invalid-credential': '🔑 Invalid login credentials. Please check and try again.',
+    'auth/operation-not-allowed': '⚠️ This login method is not enabled. Please contact support.',
+    'auth/account-exists-with-different-credential': '📧 An account already exists with this email using a different sign-in method.',
+    'auth/requires-recent-login': '🔄 Please log out and log back in to perform this action.',
+    'auth/too-many-requests': '⏱️ Too many attempts. Please try again later.',
+    'auth/network-request-failed': '📶 Network error. Please check your internet connection.',
+    'auth/popup-closed-by-user': '🪟 Sign-in popup was closed before completing the process.',
+    'auth/unauthorized-domain': '🔒 This domain is not authorized for authentication.',
+    'auth/expired-action-code': '⏰ This link has expired. Please request a new one.',
+    'auth/invalid-action-code': '🔗 This link is invalid or has already been used.',
     
-    if (toggleBtn && input) {
-      toggleBtn.addEventListener('click', function() {
-        const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
-        input.setAttribute('type', type);
+    // Firestore errors
+    'permission-denied': '🚫 You don\'t have permission to perform this action.',
+    'unavailable': '🌐 Service temporarily unavailable. Please try again later.',
+    'not-found': '🔍 The requested document was not found.',
+    'already-exists': '⚠️ This document already exists.',
+    
+    // Default fallback
+    'default': '❌ An error occurred. Please try again.'
+  };
+  
+  // Return the translated message or fallback to the original error message
+  return authErrors[errorCode] || authErrors['default'] || error.message;
+}
+
+// Update login form to use translated errors
+if (loginForm) {
+  loginForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const email = document.getElementById('loginEmail').value;
+    const password = document.getElementById('loginPassword').value;
+    
+    // Client-side validation
+    if (!email) {
+      showToast('📧 Please enter your email address', 'error');
+      return;
+    }
+    
+    if (!password) {
+      showToast('🔑 Please enter your password', 'error');
+      return;
+    }
+    
+    // Show loading
+    showAuthLoading('Verifying your credentials...');
+    
+    // Get the submit button
+    const submitBtn = this.querySelector('button[type="submit"]');
+    setButtonLoading(submitBtn, true);
+    
+    // Continue with existing login logic
+    const rememberMe = document.getElementById('remember') ? document.getElementById('remember').checked : false;
+    
+    auth.signInWithEmailAndPassword(email, password)
+      .then((userCredential) => {
+        // Existing success logic
+      })
+      .catch((error) => {
+        console.error('Sign in error:', error);
         
-        // Toggle icon
-        const icon = toggleBtn.querySelector('i');
-        if (icon) {
-          icon.className = type === 'password' ? 'fas fa-eye' : 'fas fa-eye-slash';
-        }
+        // Translate and show user-friendly error
+        const friendlyError = translateFirebaseError(error);
+        showToast(friendlyError, 'error');
+        
+        // Hide loading animation
+        hideAuthLoading();
+      })
+      .finally(() => {
+        setButtonLoading(submitBtn, false);
       });
-    }
   });
 }
 
-// Setup password strength meter
-function setupPasswordStrength() {
-  const passwordInput = document.getElementById('signupPassword');
-  const strengthMeter = document.querySelector('.password-strength-meter');
-  
-  if (passwordInput && strengthMeter) {
-    const strengthSegments = strengthMeter.querySelectorAll('.strength-segment');
-    const strengthText = strengthMeter.querySelector('.strength-text');
+// Update signup form to use translated errors
+const signupFormElement = document.getElementById('signupFormElement');
+if (signupFormElement) {
+  signupFormElement.addEventListener('submit', function(e) {
+    e.preventDefault();
     
-    passwordInput.addEventListener('input', function() {
-      updatePasswordStrength(this.value, strengthSegments, strengthText);
-    });
+    const fullName = document.getElementById('fullName').value;
+    const email = document.getElementById('signupEmail').value;
+    const password = document.getElementById('signupPassword').value;
+    const userType = document.getElementById('userType').value;
+    const termsAccepted = document.getElementById('terms').checked;
     
-    // Clear strength meter when input is empty
-    passwordInput.addEventListener('blur', function() {
-      if (!this.value) {
-        strengthSegments.forEach(segment => {
-          segment.className = 'strength-segment';
-        });
-        strengthText.textContent = '';
-      }
-    });
-  }
-}
-
-// Update password strength meter
-function updatePasswordStrength(password, strengthSegments, strengthText) {
-  // Reset strength segments
-  strengthSegments.forEach(segment => {
-    segment.className = 'strength-segment';
-  });
-  
-  if (password) {
-    const hasLower = /[a-z]/.test(password);
-    const hasUpper = /[A-Z]/.test(password);
-    const hasNumber = /[0-9]/.test(password);
-    const hasSpecial = /[^A-Za-z0-9]/.test(password);
-    const length = password.length;
-    
-    let strength = 0;
-    if (length >= 8) strength++;
-    if (hasLower && hasUpper) strength++;
-    if (hasNumber) strength++;
-    if (hasSpecial) strength++;
-    
-    // Update UI based on strength
-    for (let i = 0; i < strength; i++) {
-      if (strengthSegments[i]) {
-        if (strength === 1) {
-          strengthSegments[i].classList.add('weak');
-        } else if (strength === 2) {
-          strengthSegments[i].classList.add('medium');
-        } else {
-          strengthSegments[i].classList.add('strong');
-        }
-      }
+    // Client-side validation with emojis
+    if (!fullName) {
+      showToast('👤 Please enter your full name', 'error');
+      return;
     }
     
-    // Update text
-    if (strength === 0) strengthText.textContent = 'Very weak';
-    else if (strength === 1) strengthText.textContent = 'Weak';
-    else if (strength === 2) strengthText.textContent = 'Medium';
-    else if (strength === 3) strengthText.textContent = 'Strong';
-    else strengthText.textContent = 'Very strong';
-  }
+    if (!email) {
+      showToast('📧 Please enter your email address', 'error');
+      return;
+    }
+    
+    if (!password) {
+      showToast('🔑 Please enter a password', 'error');
+      return;
+    }
+    
+    if (!termsAccepted) {
+      showToast('📝 Please accept the terms and conditions', 'error');
+      return;
+    }
+    
+    if (!userType) {
+      showToast('👥 Please select your role', 'error');
+      return;
+    }
+    
+    // Show loading animation
+    showAuthLoading('Creating your account...');
+    
+    // Show loading state
+    const submitBtn = this.querySelector('button[type="submit"]');
+    setButtonLoading(submitBtn, true);
+    
+    auth.createUserWithEmailAndPassword(email, password)
+      .then((userCredential) => {
+        // Existing success logic
+      })
+      .catch((error) => {
+        console.error('Sign up error:', error);
+        
+        // Translate and show user-friendly error
+        const friendlyError = translateFirebaseError(error);
+        showToast(friendlyError, 'error');
+        
+        // Hide loading animation
+        hideAuthLoading();
+      })
+      .finally(() => {
+        setButtonLoading(submitBtn, false);
+      });
+  });
 }
+
+// Update Google sign-in to use translated errors
+auth.getRedirectResult()
+  .then((result) => {
+    // Existing success logic
+  })
+  .catch((error) => {
+    // Clear the flag on error
+    sessionStorage.removeItem('googleAuthInProgress');
+    
+    if (error.code !== 'auth/null-user') {
+      console.error('Google redirect result error:', error);
+      
+      // Translate and show user-friendly error
+      const friendlyError = translateFirebaseError(error);
+      showToast(friendlyError, 'error');
+    }
+    
+    // Hide loading animation
+    hideAuthLoading();
+  });
+
+document.addEventListener('DOMContentLoaded', function() {
+        // Direct approach for password toggle
+        const passwordInput = document.getElementById('signupPassword');
+        const toggleIcon = document.querySelector('.toggle-password');
+        
+        if (passwordInput && toggleIcon) {
+            // Add click event directly to the toggle icon
+            toggleIcon.onclick = function() {
+                // Toggle between password and text
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    toggleIcon.classList.remove('fa-eye-slash');
+                    toggleIcon.classList.add('fa-eye');
+                } else {
+                    passwordInput.type = 'password';
+                    toggleIcon.classList.remove('fa-eye');
+                    toggleIcon.classList.add('fa-eye-slash');
+                }
+            };
+        }
+        
+        // Password validation and strength meter
+        if (passwordInput) {
+            const strengthMeter = document.querySelector('.strength-meter');
+            const strengthText = document.querySelector('.strength-text');
+            const strengthSegments = document.querySelectorAll('.strength-segment');
+            
+            // Add minlength attribute
+            passwordInput.setAttribute('minlength', '6');
+            
+            // Create error message element
+            const errorMessage = document.createElement('div');
+            errorMessage.style.color = '#ff4d4d';
+            errorMessage.style.fontSize = '12px';
+            errorMessage.style.marginTop = '4px';
+            errorMessage.style.display = 'none';
+            
+            // Insert error message after strength text
+            if (strengthText && strengthText.parentNode) {
+                strengthText.parentNode.insertBefore(errorMessage, strengthText.nextSibling);
+            }
+            
+            // Password input event
+            passwordInput.addEventListener('input', function() {
+                const password = this.value;
+                
+                // Check minimum length
+                if (password.length > 0 && password.length < 6) {
+                    errorMessage.textContent = 'Password must be at least 6 characters';
+                    errorMessage.style.display = 'block';
+                } else {
+                    errorMessage.style.display = 'none';
+                }
+                
+                // Update strength meter
+                if (strengthSegments && strengthText) {
+                    updatePasswordStrength(password, strengthSegments, strengthText);
+                }
+            });
+        }
+        
+        // Function to update password strength
+        function updatePasswordStrength(password, segments, textElement) {
+            // Reset segments
+            segments.forEach(segment => {
+                segment.style.backgroundColor = '#e0e0e0';
+            });
+            
+            if (!password) {
+                textElement.textContent = 'Password strength';
+                return;
+            }
+            
+            // Calculate strength
+            const hasLower = /[a-z]/.test(password);
+            const hasUpper = /[A-Z]/.test(password);
+            const hasNumber = /[0-9]/.test(password);
+            const hasSpecial = /[^A-Za-z0-9]/.test(password);
+            const length = password.length;
+            
+            let strength = 0;
+            // Only count if minimum length is met
+            if (length >= 6) {
+                strength++;
+                if (length >= 8) strength++;
+                if (hasLower && hasUpper) strength++;
+                if (hasNumber) strength++;
+                if (hasSpecial) strength++;
+            }
+            
+            // Colors for different strength levels
+            const colors = {
+                1: '#ff4d4d', // weak
+                2: '#ffaa00', // medium
+                3: '#2ecc71', // strong
+                4: '#27ae60'  // very strong
+            };
+            
+            // Update segments
+            for (let i = 0; i < Math.min(strength, segments.length); i++) {
+                segments[i].style.backgroundColor = colors[strength] || colors[1];
+            }
+            
+            // Update text
+            if (length < 6) {
+                textElement.textContent = 'Too short';
+                textElement.style.color = '#ff4d4d';
+            } else {
+                textElement.style.color = '';
+                if (strength <= 1) textElement.textContent = 'Weak';
+                else if (strength === 2) textElement.textContent = 'Medium';
+                else if (strength === 3) textElement.textContent = 'Strong';
+                else textElement.textContent = 'Very strong';
+            }
+        }
+    });
+    
+    
+    
+
+
+    
 
 // Show loading state on button
 function setButtonLoading(button, isLoading) {
@@ -6706,23 +6928,52 @@ function loadDashboardData() {
   }
 }
 
-// Google Sign In
-// Add event listeners to Google sign-in buttons
+      // Google Sign In with redirect and proper loading
+
 googleBtns.forEach(btn => {
   btn.addEventListener('click', function() {
     // Show loading animation
     showAuthLoading('Connecting to Google...');
     
+    // Store a flag in sessionStorage to indicate we're in the middle of Google auth
+    sessionStorage.setItem('googleAuthInProgress', 'true');
+    
     const provider = new firebase.auth.GoogleAuthProvider();
     provider.addScope('profile');
     provider.addScope('email');
     
-    auth.signInWithPopup(provider)
-      .then((result) => {
-        const user = result.user;
-        
+    // Use signInWithRedirect
+    auth.signInWithRedirect(provider)
+      .catch((error) => {
+        console.error('Google sign in redirect error:', error);
+        hideAuthLoading();
+        sessionStorage.removeItem('googleAuthInProgress');
+        showToast(error.message, 'error');
+      });
+  });
+});
+
+// Handle the redirect result when the page loads
+document.addEventListener('DOMContentLoaded', function() {
+  // Check if we're coming back from Google auth
+  const googleAuthInProgress = sessionStorage.getItem('googleAuthInProgress');
+  
+  if (googleAuthInProgress === 'true') {
+    // Show loading animation immediately
+    showAuthLoading('Completing authentication...');
+  }
+  
+  // Check if coming back from a redirect
+  auth.getRedirectResult()
+    .then((result) => {
+      // Clear the flag regardless of result
+      sessionStorage.removeItem('googleAuthInProgress');
+      
+      if (result.user) {
         // Update loading message
-        document.querySelector('.loading-text').textContent = 'Setting up your account...';
+        showAuthLoading('Setting up your account...');
+        
+        const user = result.user;
         
         // Save user data to Firestore
         return saveUserData(user).then(() => {
@@ -6744,16 +6995,10 @@ googleBtns.forEach(btn => {
             });
           }
           return null;
-        });
-      })
-      .then(() => {
-        // Hide loading after a minimum time for better UX
-        setTimeout(() => {
-          hideAuthLoading();
-          
-          // Get current user (should be signed in by now)
-          const user = auth.currentUser;
-          if (user) {
+        }).then(() => {
+          // Hide loading after a minimum time for better UX
+          setTimeout(() => {
+            hideAuthLoading();
             showToast('Successfully signed in with Google!');
             
             // Check if admin
@@ -6761,100 +7006,56 @@ googleBtns.forEach(btn => {
             
             // Navigate to dashboard
             navigateToDashboard(user, isAdminUser);
-          } else {
-            showToast('Sign in failed. Please try again.', 'error');
-          }
-        }, 1500); // Minimum 1.5 seconds to show loading
-      })
-      .catch((error) => {
-        console.error('Google sign in error:', error);
+          }, 1500); // Minimum 1.5 seconds to show loading
+        });
+      } else if (googleAuthInProgress === 'true') {
+        // If we were in the middle of auth but got no user, hide loading
         hideAuthLoading();
+      }
+      return null;
+    })
+    .catch((error) => {
+      // Clear the flag on error
+      sessionStorage.removeItem('googleAuthInProgress');
+      
+      // Hide loading animation
+      hideAuthLoading();
+      
+      if (error.code !== 'auth/null-user') {
+        console.error('Google redirect result error:', error);
         showToast(error.message, 'error');
-      });
-  });
+      }
+    });
 });
 
-// Create wallet for user - updated to handle permissions better
-function createUserWallet(userId) {
-  // First check if wallet already exists to avoid duplicate creation
-  return db.collection('wallets').doc(userId).get()
-    .then(doc => {
-      if (doc.exists) {
-        console.log('Wallet already exists for user:', userId);
-        return doc.data();
-      }
-      
-      // Create new wallet if it doesn't exist
-      const walletData = {
-        userId: userId,
-        talentCoinBalance: 0,
-        commissionBalance: 0,
-        nairaBalance: 0,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-        updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-        transactions: []
-      };
-      
-      return db.collection('wallets').doc(userId).set(walletData)
-        .then(() => {
-          console.log('Wallet created for user:', userId);
-          return walletData;
-        });
-    })
-    .catch((error) => {
-      console.error('Error with wallet operation:', error);
-      // Don't throw the error, just return null to continue the flow
-      return null;
-    });
+// Add this to ensure the loading animation is properly initialized
+if (typeof setupAuthLoadingAnimation === 'function' && 
+    !document.getElementById('auth-loading-overlay')) {
+  setupAuthLoadingAnimation();
 }
 
-// Save user data to Firestore - updated to handle Google sign-in better
-function saveUserData(user, userType = 'voter') {
-  // For Google sign-in, extract a userType if not provided
-  if (!userType && user.providerData && user.providerData[0].providerId === 'google.com') {
-    userType = 'voter'; // Default for Google users
-  }
-  
-  const userData = {
-    uid: user.uid,
-    email: user.email,
-    displayName: user.displayName || user.email.split('@')[0],
-    photoURL: user.photoURL || null,
-    userType: userType,
-    lastLogin: firebase.firestore.FieldValue.serverTimestamp(),
-    isAdmin: isAdmin(user.email)
-  };
-  
-  // Add createdAt only if this is a new user
-  return db.collection('users').doc(user.uid).get()
-    .then(doc => {
-      if (!doc.exists) {
-        userData.createdAt = firebase.firestore.FieldValue.serverTimestamp();
-      }
-      
-      return db.collection('users').doc(user.uid).set(userData, { merge: true });
-    })
-    .then(() => {
-      console.log('User data saved:', userData);
-      return userData;
-    })
-    .catch((error) => {
-      console.error('Error saving user data:', error);
-      // Don't throw the error, just return the userData to continue the flow
-      return userData;
-    });
-}
-
+    
 // Email/Password Sign In
+// Add event listener to login form
 if (loginForm) {
   loginForm.addEventListener('submit', function(e) {
     e.preventDefault();
     
     const email = document.getElementById('loginEmail').value;
     const password = document.getElementById('loginPassword').value;
+    
+    // Basic validation
+    if (!email || !password) {
+      showToast('Please enter your email and password', 'error');
+      return;
+    }
+    
     const rememberMe = document.getElementById('remember') ? document.getElementById('remember').checked : false;
     
-    // Show loading state
+    // Show loading animation
+    showAuthLoading('Verifying your credentials...');
+    
+    // Show loading state on button
     const submitBtn = this.querySelector('button[type="submit"]');
     setButtonLoading(submitBtn, true);
     
@@ -6865,36 +7066,128 @@ if (loginForm) {
       .then((userCredential) => {
         const user = userCredential.user;
         
+        // Update loading message
+        document.querySelector('.loading-text').textContent = 'Updating your profile...';
+        
         // Update last login timestamp
-        db.collection('users').doc(user.uid).update({
+        return db.collection('users').doc(user.uid).update({
           lastLogin: firebase.firestore.FieldValue.serverTimestamp()
-        }).catch(err => console.log('Error updating user data:', err));
-        
-        // Set persistence based on remember me
-        const persistence = rememberMe ? 
-          firebase.auth.Auth.Persistence.LOCAL : 
-          firebase.auth.Auth.Persistence.SESSION;
-        
-        return auth.setPersistence(persistence)
-          .then(() => {
+        }).catch(err => {
+          console.log('Error updating user data:', err);
+          // Continue despite error
+          return user;
+        }).then(() => {
+          // Update loading message
+          document.querySelector('.loading-text').textContent = 'Setting up your session...';
+          
+          // Set persistence based on remember me
+          const persistence = rememberMe ? 
+            firebase.auth.Auth.Persistence.LOCAL : 
+            firebase.auth.Auth.Persistence.SESSION;
+          
+          return auth.setPersistence(persistence);
+        }).then(() => {
+          // Update loading message
+          document.querySelector('.loading-text').textContent = 'Loading your dashboard...';
+          
+          // Check if wallet exists for this user
+          return db.collection('wallets').doc(user.uid).get()
+            .then(walletDoc => {
+              if (!walletDoc.exists) {
+                // Create wallet if it doesn't exist
+                return createUserWallet(user.uid).catch(error => {
+                  console.warn('Could not create wallet, but continuing sign in:', error);
+                  // Continue despite wallet creation error
+                  return null;
+                });
+              }
+              return null;
+            });
+        }).then(() => {
+          // Hide loading after a minimum time for better UX
+          setTimeout(() => {
+            hideAuthLoading();
             showToast('Successfully signed in!');
             navigateToDashboard(user, isAdminLogin);
-            return user;
-          });
+          }, 1500); // Minimum 1.5 seconds to show loading
+          
+          return user;
+        });
       })
       .catch((error) => {
         console.error('Sign in error:', error);
+        hideAuthLoading();
         showToast(error.message, 'error');
       })
       .finally(() => {
         setButtonLoading(submitBtn, false);
       });
   });
+}
 
-  
+// Make sure these helper functions are defined
+if (typeof showAuthLoading !== 'function') {
+  // Show loading animation
+  function showAuthLoading(message = 'Verifying credentials...') {
+    const loadingOverlay = document.getElementById('auth-loading-overlay');
+    if (loadingOverlay) {
+      const loadingText = loadingOverlay.querySelector('.loading-text');
+      if (loadingText) {
+        loadingText.textContent = message;
+      }
+      loadingOverlay.classList.add('active');
+    }
+  }
+}
+
+if (typeof hideAuthLoading !== 'function') {
+  // Hide loading animation
+  function hideAuthLoading() {
+    const loadingOverlay = document.getElementById('auth-loading-overlay');
+    if (loadingOverlay) {
+      loadingOverlay.classList.remove('active');
+    }
+  }
+}
+
+if (typeof createUserWallet !== 'function') {
+  // Create wallet for user
+  function createUserWallet(userId) {
+    // First check if wallet already exists to avoid duplicate creation
+    return db.collection('wallets').doc(userId).get()
+      .then(doc => {
+        if (doc.exists) {
+          console.log('Wallet already exists for user:', userId);
+          return doc.data();
+        }
+        
+        // Create new wallet if it doesn't exist
+        const walletData = {
+          userId: userId,
+          talentCoinBalance: 0,
+          commissionBalance: 0,
+          nairaBalance: 0,
+          createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+          updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+          transactions: []
+        };
+        
+        return db.collection('wallets').doc(userId).set(walletData)
+          .then(() => {
+            console.log('Wallet created for user:', userId);
+            return walletData;
+          });
+      })
+      .catch((error) => {
+        console.error('Error with wallet operation:', error);
+        // Don't throw the error, just return null to continue the flow
+        return null;
+      });
+  }
+
+// Check if user is admin
   // Email/Password Sign Up
 const signupFormElement = document.getElementById('signupFormElement');
-const signupForm = document.getElementById('signupForm');
 
 if (signupFormElement) {
   signupFormElement.addEventListener('submit', function(e) {
@@ -7338,6 +7631,714 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 });
+
+
+// Enhanced error handling for authentication loading
+function showAuthError(errorMessage) {
+  const loadingOverlay = document.getElementById('auth-loading-overlay');
+  
+  if (loadingOverlay) {
+    // Change the loading animation to indicate error
+    const loadingAnimation = loadingOverlay.querySelector('.loading-animation');
+    if (loadingAnimation) {
+      // Add error class to change animation appearance
+      loadingAnimation.classList.add('error');
+    }
+    
+    // Update the loading text to show the error
+    const loadingText = loadingOverlay.querySelector('.loading-text');
+    if (loadingText) {
+      loadingText.textContent = errorMessage || 'Authentication failed';
+      loadingText.classList.add('error-text');
+    }
+    
+    // Add a close button to dismiss the error
+    if (!loadingOverlay.querySelector('.error-close-btn')) {
+      const closeButton = document.createElement('button');
+      closeButton.className = 'error-close-btn';
+      closeButton.textContent = 'Dismiss';
+      closeButton.addEventListener('click', function() {
+        hideAuthLoading();
+      });
+      loadingOverlay.appendChild(closeButton);
+    }
+  } else {
+    // Fallback to toast if loading overlay doesn't exist
+    showToast(errorMessage || 'Authentication failed', 'error');
+  }
+}
+
+// Update the hideAuthLoading function to reset error state
+function hideAuthLoading() {
+  const loadingOverlay = document.getElementById('auth-loading-overlay');
+  if (loadingOverlay) {
+    // Remove error classes
+    const loadingAnimation = loadingOverlay.querySelector('.loading-animation');
+    if (loadingAnimation) {
+      loadingAnimation.classList.remove('error');
+    }
+    
+    const loadingText = loadingOverlay.querySelector('.loading-text');
+    if (loadingText) {
+      loadingText.classList.remove('error-text');
+    }
+    
+    // Remove close button if it exists
+    const closeButton = loadingOverlay.querySelector('.error-close-btn');
+    if (closeButton) {
+      closeButton.remove();
+    }
+    
+    // Hide the overlay
+    loadingOverlay.classList.remove('active');
+  }
+}
+
+// Add CSS for error states
+document.addEventListener('DOMContentLoaded', function() {
+  const errorStyles = document.createElement('style');
+  errorStyles.textContent = `
+    .loading-animation.error .loading-item {
+      animation-play-state: paused;
+    }
+    
+    .loading-animation.error .loading-item.coin {
+      color: #ff6b6b;
+    }
+    
+    .loading-animation.error .loading-item.star {
+      color: #ff6b6b;
+    }
+    
+    .loading-animation.error .loading-item.naira {
+      color: #ff6b6b;
+    }
+    
+    .loading-text.error-text {
+      color: #ff6b6b;
+      font-weight: bold;
+    }
+    
+    .error-close-btn {
+      margin-top: 20px;
+      padding: 8px 16px;
+      background-color: #ff6b6b;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: background-color 0.3s;
+    }
+    
+    .error-close-btn:hover {
+      background-color: #e74c3c;
+    }
+  `;
+  document.head.appendChild(errorStyles);
+});
+
+// Update catch blocks in authentication functions
+// Example for login form:
+if (loginForm) {
+  loginForm.addEventListener('submit', function(e) {
+    // ... existing code ...
+    
+    auth.signInWithEmailAndPassword(email, password)
+      .then((userCredential) => {
+        // ... existing code ...
+      })
+      .catch((error) => {
+        console.error('Sign in error:', error);
+        // Show error in loading animation instead of hiding it
+        showAuthError(error.message);
+        // Don't hide loading animation, let user dismiss it
+        setButtonLoading(submitBtn, false);
+      });
+  });
+}
+
+// Example for signup form:
+if (signupFormElement) {
+  signupFormElement.addEventListener('submit', function(e) {
+    // ... existing code ...
+    
+    auth.createUserWithEmailAndPassword(email, password)
+      .then((userCredential) => {
+        // ... existing code ...
+      })
+      .catch((error) => {
+        console.error('Sign up error:', error);
+        // Show error in loading animation instead of hiding it
+        showAuthError(error.message);
+        // Don't hide loading animation, let user dismiss it
+        setButtonLoading(submitBtn, false);
+      });
+  });
+}
+
+// Example for Google sign-in:
+auth.getRedirectResult()
+  .then((result) => {
+    // ... existing code ...
+  })
+  .catch((error) => {
+    // Clear the flag on error
+    sessionStorage.removeItem('googleAuthInProgress');
+    
+    // Show error in loading animation instead of hiding it
+    if (error.code !== 'auth/null-user') {
+      console.error('Google redirect result error:', error);
+      showAuthError(error.message);
+    } else {
+      // Only hide for null user (not a real error)
+      hideAuthLoading();
+    }
+  });
+// Translate Firebase error codes to user-friendly messages with emojis
+function translateFirebaseError(error) {
+  const errorCode = error.code || '';
+  const errorMessage = error.message || 'An unknown error occurred';
+  
+  // Common Firebase Auth error codes mapped to user-friendly messages with emojis
+  const errorMap = {
+    // Authentication errors
+    'auth/email-already-in-use': '📧 This email is already registered. Try logging in instead.',
+    'auth/invalid-email': '❌ Please enter a valid email address.',
+    'auth/user-disabled': '🚫 This account has been disabled. Please contact support.',
+    'auth/user-not-found': '❓ No account found with this email. Please check your email or sign up.',
+    'auth/wrong-password': '🔑 Incorrect password. Please try again or reset your password.',
+    'auth/weak-password': '💪 Password is too weak. Please use at least 6 characters.',
+    'auth/invalid-credential': '❌ Invalid login credentials. Please check your email and password.',
+    'auth/operation-not-allowed': '⚠️ This login method is not enabled. Please contact support.',
+    'auth/account-exists-with-different-credential': '🔄 An account already exists with the same email but different sign-in credentials.',
+    'auth/requires-recent-login': '🔒 For security reasons, please log in again before performing this action.',
+    'auth/too-many-requests': '⏱️ Too many unsuccessful login attempts. Please try again later.',
+    'auth/network-request-failed': '📶 Network error. Please check your internet connection.',
+    
+    // Firestore errors
+    'permission-denied': '🚫 You don\'t have permission to perform this action.',
+    'unavailable': '🌐 The service is currently unavailable. Please try again later.',
+    
+    // Generic errors
+    'timeout': '⏱️ Request timed out. Please try again.',
+    'cancelled': '❌ Operation was cancelled.',
+    'unknown': '❓ An unknown error occurred. Please try again.'
+  };
+  
+  // Check if we have a mapped user-friendly message
+  if (errorMap[errorCode]) {
+    return errorMap[errorCode];
+  }
+  
+  // Handle other Firebase errors that might contain "auth/" prefix
+  for (const key in errorMap) {
+    if (errorCode.includes(key)) {
+      return errorMap[key];
+    }
+  }
+  
+  // If no specific mapping, extract message from Firebase error
+  // Remove Firebase prefix for cleaner messages
+  let cleanMessage = errorMessage
+    .replace('Firebase: ', '')
+    .replace('FirebaseError: ', '')
+    .replace(/\(auth.*\)\.?/, '');
+  
+  // Add emoji based on error type
+  if (errorCode.includes('auth')) {
+    return '🔐 ' + cleanMessage;
+  } else if (errorCode.includes('firestore')) {
+    return '📄 ' + cleanMessage;
+  } else {
+    return '⚠️ ' + cleanMessage;
+  }
+}
+
+// Update login form to use translated errors
+if (loginForm) {
+  loginForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const email = document.getElementById('loginEmail').value;
+    const password = document.getElementById('loginPassword').value;
+    
+    // Client-side validation
+    if (!email) {
+      showToast('📧 Please enter your email address', 'error');
+      return;
+    }
+    
+    if (!password) {
+      showToast('🔑 Please enter your password', 'error');
+      return;
+    }
+    
+    // Show loading animation
+    showAuthLoading('Verifying your credentials...');
+    
+    // Get the submit button
+    const submitBtn = this.querySelector('button[type="submit"]');
+    setButtonLoading(submitBtn, true);
+    
+    // Continue with the existing login logic
+    const rememberMe = document.getElementById('remember') ? document.getElementById('remember').checked : false;
+    
+    auth.signInWithEmailAndPassword(email, password)
+      .then((userCredential) => {
+        // Existing success code...
+      })
+      .catch((error) => {
+        console.error('Sign in error:', error);
+        
+        // Translate the error to a user-friendly message
+        const friendlyMessage = translateFirebaseError(error);
+        
+        // Show the error in the loading animation
+        showAuthError(friendlyMessage);
+        
+        // Also show as toast for better visibility
+        showToast(friendlyMessage, 'error');
+      })
+      .finally(() => {
+        setButtonLoading(submitBtn, false);
+      });
+  });
+}
+
+// Update signup form to use translated errors
+if (signupFormElement) {
+  signupFormElement.addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const fullName = document.getElementById('fullName').value;
+    const email = document.getElementById('signupEmail').value;
+    const password = document.getElementById('signupPassword').value;
+    const userType = document.getElementById('userType').value;
+    const termsAccepted = document.getElementById('terms').checked;
+    
+    // Client-side validation with emojis
+    if (!fullName) {
+      showToast('👤 Please enter your full name', 'error');
+      return;
+    }
+    
+    if (!email) {
+      showToast('📧 Please enter your email address', 'error');
+      return;
+    }
+    
+    if (!password) {
+      showToast('🔑 Please enter a password', 'error');
+      return;
+    }
+    
+    if (!termsAccepted) {
+      showToast('📝 Please accept the terms and conditions', 'error');
+      return;
+    }
+    
+    if (!userType) {
+      showToast('👥 Please select your role', 'error');
+      return;
+    }
+    
+    // Show loading animation
+    showAuthLoading('Creating your account...');
+    
+    // Show loading state
+    const submitBtn = this.querySelector('button[type="submit"]');
+    setButtonLoading(submitBtn, true);
+    
+    auth.createUserWithEmailAndPassword(email, password)
+      .then((userCredential) => {
+        // Existing success code...
+      })
+      .catch((error) => {
+        console.error('Sign up error:', error);
+        
+        // Translate the error to a user-friendly message
+        const friendlyMessage = translateFirebaseError(error);
+        
+        // Show the error in the loading animation
+        showAuthError(friendlyMessage);
+        
+        // Also show as toast for better visibility
+        showToast(friendlyMessage, 'error');
+      })
+      .finally(() => {
+        setButtonLoading(submitBtn, false);
+      });
+  });
+}
+
+// Update Google sign-in to use translated errors
+auth.getRedirectResult()
+  .then((result) => {
+    // Existing success code...
+  })
+  .catch((error) => {
+    // Clear the flag on error
+    sessionStorage.removeItem('googleAuthInProgress');
+    
+    if (error.code !== 'auth/null-user') {
+      console.error('Google redirect result error:', error);
+      
+      // Translate the error to a user-friendly message
+      const friendlyMessage = translateFirebaseError(error);
+      
+      // Show the error in the loading animation
+      showAuthError(friendlyMessage);
+      
+      // Also show as toast for better visibility
+      showToast(friendlyMessage, 'error');
+    } else {
+      // Only hide for null user (not a real error)
+      hideAuthLoading();
+    }
+  });
+
+
+// Enhanced toast function with larger, more visible error messages
+function showToast(message, type = 'success', duration = 4000) {
+  // Check if toast container exists, create if not
+  let toastContainer = document.querySelector('.toast-container');
+  if (!toastContainer) {
+    toastContainer = document.createElement('div');
+    toastContainer.className = 'toast-container';
+    document.body.appendChild(toastContainer);
+    
+    // Add toast container styles if not already in CSS
+    const toastStyles = document.createElement('style');
+    toastStyles.textContent = `
+      .toast-container {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        max-width: 90%;
+        width: 400px;
+      }
+      
+      .toast {
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        overflow: hidden;
+        margin-bottom: 10px;
+        transition: all 0.3s ease;
+        border-left: 5px solid #2ecc71;
+      }
+      
+      .toast-error {
+        border-left-color: #e74c3c;
+      }
+      
+      .toast-warning {
+        border-left-color: #f39c12;
+      }
+      
+      .toast-info {
+        border-left-color: #3498db;
+      }
+      
+      .toast-content {
+        display: flex;
+        align-items: flex-start;
+        padding: 16px;
+      }
+      
+      .toast-icon {
+        font-size: 24px;
+        margin-right: 12px;
+        flex-shrink: 0;
+      }
+      
+      .toast-message-container {
+        flex-grow: 1;
+      }
+      
+      .toast-title {
+        font-weight: bold;
+        font-size: 16px;
+        margin-bottom: 5px;
+        color: #333;
+      }
+      
+      .toast-message {
+        font-size: 15px;
+        line-height: 1.4;
+        color: #555;
+        word-break: break-word;
+      }
+      
+      .toast-close {
+        background: none;
+        border: none;
+        color: #999;
+        cursor: pointer;
+        font-size: 20px;
+        padding: 0;
+        margin-left: 12px;
+        line-height: 1;
+        align-self: flex-start;
+      }
+      
+      .toast-close:hover {
+        color: #333;
+      }
+      
+      .toast-slide-in {
+        animation: toast-slide-in 0.3s ease forwards;
+      }
+      
+      .toast-slide-out {
+        animation: toast-slide-out 0.3s ease forwards;
+      }
+      
+      @keyframes toast-slide-in {
+        from {
+          transform: translateX(100%);
+          opacity: 0;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+      
+      @keyframes toast-slide-out {
+        from {
+          transform: translateX(0);
+          opacity: 1;
+        }
+        to {
+          transform: translateX(100%);
+          opacity: 0;
+        }
+      }
+      
+      /* Make error toasts more prominent */
+      .toast-error .toast-title {
+        color: #e74c3c;
+        font-size: 18px;
+      }
+      
+      .toast-error .toast-message {
+        font-size: 16px;
+        color: #333;
+      }
+      
+      .toast-error {
+        background-color: #fff8f8;
+      }
+    `;
+    document.head.appendChild(toastStyles);
+  }
+  
+  // Get appropriate title and icon based on type
+  let title, icon;
+  switch (type) {
+    case 'error':
+      title = 'Error';
+      icon = '❌';
+      break;
+    case 'warning':
+      title = 'Warning';
+      icon = '⚠️';
+      break;
+    case 'info':
+      title = 'Information';
+      icon = 'ℹ️';
+      break;
+    case 'success':
+      title = 'Success';
+      icon = '✅';
+      break;
+    default:
+      title = 'Notification';
+      icon = '📢';
+  }
+  
+  // For error messages, extract the emoji if present
+  if (type === 'error' && message.match(/^[\u{1F300}-\u{1F6FF}\u{2600}-\u{26FF}]/u)) {
+    const matches = message.match(/^([\u{1F300}-\u{1F6FF}\u{2600}-\u{26FF}])\s*(.*)/u);
+    if (matches) {
+      icon = matches[1];
+      message = matches[2];
+    }
+  }
+  
+  // Create toast element
+  const toast = document.createElement('div');
+  toast.className = `toast toast-${type}`;
+  
+  // Add animation class
+  toast.classList.add('toast-slide-in');
+  
+  // Create toast content with title and larger text for errors
+  toast.innerHTML = `
+    <div class="toast-content">
+      <div class="toast-icon">${icon}</div>
+      <div class="toast-message-container">
+        <div class="toast-title">${title}</div>
+        <div class="toast-message">${message}</div>
+      </div>
+      <button class="toast-close">×</button>
+    </div>
+  `;
+  
+  // Add toast to container
+  toastContainer.appendChild(toast);
+  
+  // Add close functionality
+  const closeBtn = toast.querySelector('.toast-close');
+  closeBtn.addEventListener('click', () => {
+    toast.classList.add('toast-slide-out');
+    setTimeout(() => {
+      toast.remove();
+    }, 300);
+  });
+  
+  // For errors, make duration longer
+  if (type === 'error') {
+    duration = 6000; // 6 seconds for errors
+  }
+  
+  // Auto remove after duration
+  setTimeout(() => {
+    if (toast.parentNode) {
+      toast.classList.add('toast-slide-out');
+      setTimeout(() => {
+        if (toast.parentNode) {
+          toast.remove();
+        }
+      }, 300);
+    }
+  }, duration);
+  
+  // Return the toast element in case we want to manipulate it later
+  return toast;
+}
+
+// Function to get a user-friendly title from Firebase error code
+function getErrorTitle(errorCode) {
+  const titleMap = {
+    'auth/email-already-in-use': 'Email Already Registered',
+    'auth/invalid-email': 'Invalid Email',
+    'auth/user-disabled': 'Account Disabled',
+    'auth/user-not-found': 'Account Not Found',
+    'auth/wrong-password': 'Incorrect Password',
+    'auth/weak-password': 'Weak Password',
+    'auth/invalid-credential': 'Invalid Credentials',
+    'auth/requires-recent-login': 'Re-authentication Required',
+    'auth/too-many-requests': 'Too Many Attempts',
+    'auth/network-request-failed': 'Network Error',
+    'permission-denied': 'Permission Denied',
+    'unavailable': 'Service Unavailable'
+  };
+  
+  return titleMap[errorCode] || 'Authentication Error';
+}
+
+// Enhanced error translator with better formatting for toasts
+function translateFirebaseError(error) {
+  const errorCode = error.code || '';
+  const errorMessage = error.message || 'An unknown error occurred';
+  
+  // Common Firebase Auth error codes mapped to user-friendly messages with emojis
+  const errorMap = {
+    // Authentication errors
+    'auth/email-already-in-use': '📧 This email is already registered. Try logging in instead.',
+    'auth/invalid-email': '❌ Please enter a valid email address.',
+    'auth/user-disabled': '🚫 This account has been disabled. Please contact support.',
+    'auth/user-not-found': '❓ No account found with this email. Please check your email or sign up.',
+    'auth/wrong-password': '🔑 Incorrect password. Please try again or reset your password.',
+    'auth/weak-password': '💪 Password is too weak. Please use at least 6 characters.',
+    'auth/invalid-credential': '❌ Invalid login credentials. Please check your email and password.',
+    'auth/operation-not-allowed': '⚠️ This login method is not enabled. Please contact support.',
+    'auth/account-exists-with-different-credential': '🔄 An account already exists with the same email but different sign-in credentials.',
+    'auth/requires-recent-login': '🔒 For security reasons, please log in again before performing this action.',
+    'auth/too-many-requests': '⏱️ Too many unsuccessful login attempts. Please try again later.',
+    'auth/network-request-failed': '📶 Network error. Please check your internet connection.',
+    
+    // Firestore errors
+    'permission-denied': '🚫 You don\'t have permission to perform this action.',
+    'unavailable': '🌐 The service is currently unavailable. Please try again later.',
+    
+    // Generic errors
+    'timeout': '⏱️ Request timed out. Please try again.',
+    'cancelled': '❌ Operation was cancelled.',
+    'unknown': '❓ An unknown error occurred. Please try again.'
+  };
+  
+  // Check if we have a mapped user-friendly message
+  if (errorMap[errorCode]) {
+    return errorMap[errorCode];
+  }
+  
+  // Handle other Firebase errors that might contain "auth/" prefix
+  for (const key in errorMap) {
+    if (errorCode.includes(key)) {
+      return errorMap[key];
+    }
+  }
+  
+  // If no specific mapping, extract message from Firebase error
+  // Remove Firebase prefix for cleaner messages
+  let cleanMessage = errorMessage
+    .replace('Firebase: ', '')
+    .replace('FirebaseError: ', '')
+    .replace(/\(auth.*\)\.?/, '');
+  
+  // Add emoji based on error type
+  if (errorCode.includes('auth')) {
+    return '🔐 ' + cleanMessage;
+  } else if (errorCode.includes('firestore')) {
+    return '📄 ' + cleanMessage;
+  } else {
+    return '⚠️ ' + cleanMessage;
+  }
+}
+
+// Example of how to use the enhanced toast for Firebase errors
+function handleFirebaseError(error) {
+  console.error('Firebase error:', error);
+  
+  // Get the translated error message
+  const friendlyMessage = translateFirebaseError(error);
+  
+  // Show as an enhanced toast
+  showToast(friendlyMessage, 'error');
+  
+  // Also update loading animation if it's visible
+  const loadingOverlay = document.getElementById('auth-loading-overlay');
+  if (loadingOverlay && loadingOverlay.classList.contains('active')) {
+    showAuthError(friendlyMessage);
+  }
+}
+
+// Update error handling in authentication functions
+// Example for login form:
+if (loginForm) {
+  loginForm.addEventListener('submit', function(e) {
+    // ... existing code ...
+    
+    auth.signInWithEmailAndPassword(email, password)
+      .then((userCredential) => {
+        // ... existing success code ...
+      })
+      .catch((error) => {
+        // Use the enhanced error handling
+        handleFirebaseError(error);
+        setButtonLoading(submitBtn, false);
+      });
+  });
+}
+
 
 // Logout function
 function logout() {
