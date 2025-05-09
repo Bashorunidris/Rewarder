@@ -6283,17 +6283,16 @@ table tbody tr:hover {
 
 
 <script>
-   // Firebase configuration
+  // Client-side Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyAGJ6EoBub9uL-R7q8N-_r85-VhuSiSlFo",
-  authDomain: "billsandmal.firebaseapp.com",
-  projectId: "billsandmal",
-  storageBucket: "billsandmal.firebasestorage.app",
-  messagingSenderId: "663259820123",
-  appId: "1:663259820123:web:078be226314c5a74444f7e",
-  measurementId: "G-DSJ2FS4VRV"
+  apiKey: "AIzaSyDW8V2SjNITrA4LcdmeILh944mTbOKnM0c",
+  authDomain: "rewarderhub.firebaseapp.com",
+  projectId: "rewarderhub",
+  storageBucket: "rewarderhub.appspot.com", // Fixed this from .firebasestorage.app
+  messagingSenderId: "85965945106",
+  appId: "1:85965945106:web:fa0a57d8968926e1041bcb",
+  measurementId: "G-F2ERB5NGN0"
 };
-
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
@@ -6304,8 +6303,8 @@ const analytics = firebase.analytics();
 
 
 // Constants
-const ADMIN_EMAIL = 'admin@talentcoin.com';
-const ADMIN_PASSWORD = 'BISA19';
+const ADMIN_EMAIL = 'rewarderprivate@gmail.com';
+const ADMIN_PASSWORD = 'BISA1999';
 
 
 
@@ -6320,11 +6319,7 @@ const passwordFields = document.querySelectorAll('.password-field');
 
 // Initialize UI
 document.addEventListener('DOMContentLoaded', function() {
-  // Setup password visibility toggle
-  setupPasswordToggle();
   
-  // Setup password strength meter
-  setupPasswordStrength();
   
   // Setup form switching
   setupFormSwitching();
@@ -6405,96 +6400,126 @@ function createToastElement() {
 }
 
 
-// Setup password visibility toggle
-function setupPasswordToggle() {
-  passwordFields.forEach(field => {
-    const toggleBtn = field.querySelector('.password-toggle');
-    const input = field.querySelector('input');
-    
-    if (toggleBtn && input) {
-      toggleBtn.addEventListener('click', function() {
-        const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
-        input.setAttribute('type', type);
-        
-        // Toggle icon
-        const icon = toggleBtn.querySelector('i');
-        if (icon) {
-          icon.className = type === 'password' ? 'fas fa-eye' : 'fas fa-eye-slash';
-        }
-      });
-    }
-  });
-}
 
 
-// Setup password strength meter
-function setupPasswordStrength() {
-  const passwordInput = document.getElementById('signupPassword');
-  const strengthMeter = document.querySelector('.password-strength-meter');
-  
-  if (passwordInput && strengthMeter) {
-    const strengthSegments = strengthMeter.querySelectorAll('.strength-segment');
-    const strengthText = strengthMeter.querySelector('.strength-text');
-    
-    passwordInput.addEventListener('input', function() {
-      updatePasswordStrength(this.value, strengthSegments, strengthText);
-    });
-    
-    // Clear strength meter when input is empty
-    passwordInput.addEventListener('blur', function() {
-      if (!this.value) {
-        strengthSegments.forEach(segment => {
-          segment.className = 'strength-segment';
-        });
-        strengthText.textContent = '';
-      }
-    });
-  }
-}
 
 
-// Update password strength meter
-function updatePasswordStrength(password, strengthSegments, strengthText) {
-  // Reset strength segments
-  strengthSegments.forEach(segment => {
-    segment.className = 'strength-segment';
-  });
-  
-  if (password) {
-    const hasLower = /[a-z]/.test(password);
-    const hasUpper = /[A-Z]/.test(password);
-    const hasNumber = /[0-9]/.test(password);
-    const hasSpecial = /[^A-Za-z0-9]/.test(password);
-    const length = password.length;
-    
-    let strength = 0;
-    if (length >= 8) strength++;
-    if (hasLower && hasUpper) strength++;
-    if (hasNumber) strength++;
-    if (hasSpecial) strength++;
-    
-    // Update UI based on strength
-    for (let i = 0; i < strength; i++) {
-      if (strengthSegments[i]) {
-        if (strength === 1) {
-          strengthSegments[i].classList.add('weak');
-        } else if (strength === 2) {
-          strengthSegments[i].classList.add('medium');
-        } else {
-          strengthSegments[i].classList.add('strong');
-        }
-      }
-    }
-    
-    // Update text
-    if (strength === 0) strengthText.textContent = 'Very weak';
-    else if (strength === 1) strengthText.textContent = 'Weak';
-    else if (strength === 2) strengthText.textContent = 'Medium';
-    else if (strength === 3) strengthText.textContent = 'Strong';
-    else strengthText.textContent = 'Very strong';
-  }
-}
-
+document.addEventListener('DOMContentLoaded', function() {
+        // Direct approach for password toggle
+        const passwordInput = document.getElementById('signupPassword');
+        const toggleIcon = document.querySelector('.toggle-password');
+        
+        if (passwordInput && toggleIcon) {
+            // Add click event directly to the toggle icon
+            toggleIcon.onclick = function() {
+                // Toggle between password and text
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    toggleIcon.classList.remove('fa-eye-slash');
+                    toggleIcon.classList.add('fa-eye');
+                } else {
+                    passwordInput.type = 'password';
+                    toggleIcon.classList.remove('fa-eye');
+                    toggleIcon.classList.add('fa-eye-slash');
+                }
+            };
+        }
+        
+        // Password validation and strength meter
+        if (passwordInput) {
+            const strengthMeter = document.querySelector('.strength-meter');
+            const strengthText = document.querySelector('.strength-text');
+            const strengthSegments = document.querySelectorAll('.strength-segment');
+            
+            // Add minlength attribute
+            passwordInput.setAttribute('minlength', '6');
+            
+            // Create error message element
+            const errorMessage = document.createElement('div');
+            errorMessage.style.color = '#ff4d4d';
+            errorMessage.style.fontSize = '12px';
+            errorMessage.style.marginTop = '4px';
+            errorMessage.style.display = 'none';
+            
+            // Insert error message after strength text
+            if (strengthText && strengthText.parentNode) {
+                strengthText.parentNode.insertBefore(errorMessage, strengthText.nextSibling);
+            }
+            
+            // Password input event
+            passwordInput.addEventListener('input', function() {
+                const password = this.value;
+                
+                // Check minimum length
+                if (password.length > 0 && password.length < 6) {
+                    errorMessage.textContent = 'Password must be at least 6 characters';
+                    errorMessage.style.display = 'block';
+                } else {
+                    errorMessage.style.display = 'none';
+                }
+                
+                // Update strength meter
+                if (strengthSegments && strengthText) {
+                    updatePasswordStrength(password, strengthSegments, strengthText);
+                }
+            });
+        }
+        
+        // Function to update password strength
+        function updatePasswordStrength(password, segments, textElement) {
+            // Reset segments
+            segments.forEach(segment => {
+                segment.style.backgroundColor = '#e0e0e0';
+            });
+            
+            if (!password) {
+                textElement.textContent = 'Password strength';
+                return;
+            }
+            
+            // Calculate strength
+            const hasLower = /[a-z]/.test(password);
+            const hasUpper = /[A-Z]/.test(password);
+            const hasNumber = /[0-9]/.test(password);
+            const hasSpecial = /[^A-Za-z0-9]/.test(password);
+            const length = password.length;
+            
+            let strength = 0;
+            // Only count if minimum length is met
+            if (length >= 6) {
+                strength++;
+                if (length >= 8) strength++;
+                if (hasLower && hasUpper) strength++;
+                if (hasNumber) strength++;
+                if (hasSpecial) strength++;
+            }
+            
+            // Colors for different strength levels
+            const colors = {
+                1: '#ff4d4d', // weak
+                2: '#ffaa00', // medium
+                3: '#2ecc71', // strong
+                4: '#27ae60'  // very strong
+            };
+            
+            // Update segments
+            for (let i = 0; i < Math.min(strength, segments.length); i++) {
+                segments[i].style.backgroundColor = colors[strength] || colors[1];
+            }
+            
+            // Update text
+            if (length < 6) {
+                textElement.textContent = 'Too short';
+                textElement.style.color = '#ff4d4d';
+            } else {
+                textElement.style.color = '';
+                if (strength <= 1) textElement.textContent = 'Weak';
+                else if (strength === 2) textElement.textContent = 'Medium';
+                else if (strength === 3) textElement.textContent = 'Strong';
+                else textElement.textContent = 'Very strong';
+            }
+        }
+    });
 
 // Show loading state on button
 function setButtonLoading(button, isLoading) {
@@ -6754,135 +6779,382 @@ googleBtns.forEach(btn => {
   });
 });
 
-
 // Email/Password Sign In
+
 if (loginForm) {
-  loginForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    const email = document.getElementById('loginEmail').value;
-    const password = document.getElementById('loginPassword').value;
-    const rememberMe = document.getElementById('remember') ? document.getElementById('remember').checked : false;
-    
-    // Show loading state
-    const submitBtn = this.querySelector('button[type="submit"]');
-    setButtonLoading(submitBtn, true);
-    
-    // Check for admin login
-    const isAdminLogin = email === ADMIN_EMAIL && password === ADMIN_PASSWORD;
-    
-    auth.signInWithEmailAndPassword(email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        
-        // Update last login timestamp
-        db.collection('users').doc(user.uid).update({
-          lastLogin: firebase.firestore.FieldValue.serverTimestamp()
-        }).catch(err => console.log('Error updating user data:', err));
-        
-        // Set persistence based on remember me
-        const persistence = rememberMe ? 
-          firebase.auth.Auth.Persistence.LOCAL : 
-          firebase.auth.Auth.Persistence.SESSION;
-        
-        return auth.setPersistence(persistence)
-          .then(() => {
-            showToast('Successfully signed in!');
-            navigateToDashboard(user, isAdminLogin);
-            return user;
-          });
-      })
-      .catch((error) => {
-        console.error('Sign in error:', error);
-        showToast(error.message, 'error');
-      })
-      .finally(() => {
-        setButtonLoading(submitBtn, false);
-      });
-  });
+  loginForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const email = document.getElementById('loginEmail').value;
+    const password = document.getElementById('loginPassword').value;
+    
+    // Basic validation
+    if (!email || !password) {
+      showToast('Please enter your email and password', 'error');
+      return;
+    }
+    
+    const rememberMe = document.getElementById('remember') ? document.getElementById('remember').checked : false;
+    
+    // Show loading animation
+    showAuthLoading('Verifying your credentials...');
+    
+    // Show loading state on button
+    const submitBtn = this.querySelector('button[type="submit"]');
+    setButtonLoading(submitBtn, true);
+    
+    // Check for admin login
+    const isAdminLogin = email === ADMIN_EMAIL && password === ADMIN_PASSWORD;
+    
+    auth.signInWithEmailAndPassword(email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        
+        // Update loading message
+        document.querySelector('.loading-text').textContent = 'Updating your profile...';
+        
+        // Update last login timestamp
+        return db.collection('users').doc(user.uid).update({
+          lastLogin: firebase.firestore.FieldValue.serverTimestamp()
+        }).catch(err => {
+          console.log('Error updating user data:', err);
+          // Continue despite error
+          return user;
+        }).then(() => {
+          // Update loading message
+          document.querySelector('.loading-text').textContent = 'Setting up your session...';
+          
+          // Set persistence based on remember me
+          const persistence = rememberMe ? 
+            firebase.auth.Auth.Persistence.LOCAL : 
+            firebase.auth.Auth.Persistence.SESSION;
+          
+          return auth.setPersistence(persistence);
+        }).then(() => {
+          // Update loading message
+          document.querySelector('.loading-text').textContent = 'Loading your dashboard...';
+          
+          // Check if wallet exists for this user
+          return db.collection('wallets').doc(user.uid).get()
+            .then(walletDoc => {
+              if (!walletDoc.exists) {
+                // Create wallet if it doesn't exist
+                return createUserWallet(user.uid).catch(error => {
+                  console.warn('Could not create wallet, but continuing sign in:', error);
+                  // Continue despite wallet creation error
+                  return null;
+                });
+              }
+              return null;
+            });
+        }).then(() => {
+          // Hide loading after a minimum time for better UX
+          setTimeout(() => {
+            hideAuthLoading();
+            showToast('Successfully signed in!');
+            navigateToDashboard(user, isAdminLogin);
+          }, 1500); // Minimum 1.5 seconds to show loading
+          
+          return user;
+        });
+      })
+      .catch((error) => {
+        console.error('Sign in error:', error);
+        hideAuthLoading();
+        showToast(error.message, 'error');
+      })
+      .finally(() => {
+        setButtonLoading(submitBtn, false);
+      });
+  });
+}
+
+// Make sure these helper functions are defined
+if (typeof showAuthLoading !== 'function') {
+  // Show loading animation
+  function showAuthLoading(message = 'Verifying credentials...') {
+    const loadingOverlay = document.getElementById('auth-loading-overlay');
+    if (loadingOverlay) {
+      const loadingText = loadingOverlay.querySelector('.loading-text');
+      if (loadingText) {
+        loadingText.textContent = message;
+      }
+      loadingOverlay.classList.add('active');
+    }
+  }
+}
+
+if (typeof hideAuthLoading !== 'function') {
+  // Hide loading animation
+  function hideAuthLoading() {
+    const loadingOverlay = document.getElementById('auth-loading-overlay');
+    if (loadingOverlay) {
+      loadingOverlay.classList.remove('active');
+    }
+  }
+}
+
+if (typeof createUserWallet !== 'function') {
+  // Create wallet for user
+  function createUserWallet(userId) {
+    // First check if wallet already exists to avoid duplicate creation
+    return db.collection('wallets').doc(userId).get()
+      .then(doc => {
+        if (doc.exists) {
+          console.log('Wallet already exists for user:', userId);
+          return doc.data();
+        }
+        
+        // Create new wallet if it doesn't exist
+        const walletData = {
+          userId: userId,
+          talentCoinBalance: 0,
+          commissionBalance: 0,
+          nairaBalance: 0,
+          createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+          updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+          transactions: []
+        };
+        
+        return db.collection('wallets').doc(userId).set(walletData)
+          .then(() => {
+            console.log('Wallet created for user:', userId);
+            return walletData;
+          });
+      })
+      .catch((error) => {
+        console.error('Error with wallet operation:', error);
+        // Don't throw the error, just return null to continue the flow
+        return null;
+      });
+  }
+}
+
+  // Email/Password Sign Up
+const signupFormElement = document.getElementById('signupFormElement');
+
+if (signupFormElement) {
+  signupFormElement.addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const fullName = document.getElementById('fullName').value;
+    const email = document.getElementById('signupEmail').value;
+    const password = document.getElementById('signupPassword').value;
+    const userType = document.getElementById('userType').value;
+    const termsAccepted = document.getElementById('terms').checked;
+    
+    // Validate form
+    if (!termsAccepted) {
+      showToast('Please accept the terms and conditions', 'error');
+      return;
+    }
+    
+    if (!userType) {
+      showToast('Please select your role', 'error');
+      return;
+    }
+    
+    // Show loading state
+    const submitBtn = this.querySelector('button[type="submit"]');
+    setButtonLoading(submitBtn, true);
+    
+    auth.createUserWithEmailAndPassword(email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        
+        // Update profile with display name
+        return user.updateProfile({
+          displayName: fullName
+        }).then(() => {
+          // Save user data to Firestore with additional fields
+          return saveUserData(user, userType);
+        }).then(() => {
+          // Create wallet for the user
+          return createUserWallet(user.uid).catch(error => {
+            console.warn('Could not create wallet, but continuing signup:', error);
+            // Continue despite wallet creation error
+            return null;
+          });
+        }).then(() => {
+          // Send email verification
+          return user.sendEmailVerification();
+        }).then(() => {
+          showToast('Account created! Please verify your email.');
+          navigateToDashboard(user);
+          return user;
+        });
+      })
+      .catch((error) => {
+        console.error('Sign up error:', error);
+        showToast(error.message, 'error');
+      })
+      .finally(() => {
+        setButtonLoading(submitBtn, false);
+      });
+  });
+}
+
+// Save user data to Firestore with additional fields
+function saveUserData(user, userType = 'voter') {
+  const userData = {
+    uid: user.uid,
+    email: user.email,
+    displayName: user.displayName || user.email.split('@')[0],
+    photoURL: user.photoURL || null,
+    userType: userType,
+    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+    lastLogin: firebase.firestore.FieldValue.serverTimestamp(),
+    isAdmin: isAdmin(user.email)
+  };
+  
+  return db.collection('users').doc(user.uid).set(userData, { merge: true })
+    .then(() => {
+      console.log('User data saved:', userData);
+      return userData;
+    })
+    .catch((error) => {
+      console.error('Error saving user data:', error);
+      throw error;
+    });
+}
+
+// Create wallet for user
+function createUserWallet(userId) {
+  const walletData = {
+    userId: userId,
+    talentCoinBalance: 0,
+    commissionBalance: 0,
+    nairaBalance: 0,
+    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+    updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+    transactions: []
+  };
+  
+  return db.collection('wallets').doc(userId).set(walletData)
+    .then(() => {
+      console.log('Wallet created for user:', userId);
+      return walletData;
+    })
+    .catch((error) => {
+      console.error('Error creating wallet:', error);
+      throw error;
+    });
 }
 
 
-// Email/Password Sign Up
-if (signupForm) {
-  signupForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    const email = document.getElementById('signupEmail').value;
-    const password = document.getElementById('signupPassword').value;
-    const confirmPassword = document.getElementById('confirmPassword').value;
-    const termsAccepted = document.getElementById('termsCheckbox').checked;
-    
-    // Validate form
-    if (password !== confirmPassword) {
-      showToast('Passwords do not match', 'error');
-      return;
-    }
-    
-    if (!termsAccepted) {
-      showToast('Please accept the terms and conditions', 'error');
-      return;
-    }
-    
-    // Show loading state
-    const submitBtn = this.querySelector('button[type="submit"]');
-    setButtonLoading(submitBtn, true);
-    
-    auth.createUserWithEmailAndPassword(email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        
-        // Save user data to Firestore
-        saveUserData(user);
-        
-        // Send email verification
-        return user.sendEmailVerification()
-          .then(() => {
-            showToast('Account created! Please verify your email.');
-            navigateToDashboard(user);
-            return user;
-          });
-      })
-      .catch((error) => {
-        console.error('Sign up error:', error);
-        showToast(error.message, 'error');
-      })
-      .finally(() => {
-        setButtonLoading(submitBtn, false);
-      });
-  });
-}
 
-
-// Save user data to Firestore
-function saveUserData(user) {
-  const userData = {
-    uid: user.uid,
-    email: user.email,
-    displayName: user.displayName || user.email.split('@')[0],
-    photoURL: user.photoURL || null,
-    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-    lastLogin: firebase.firestore.FieldValue.serverTimestamp(),
-    isAdmin: isAdmin(user.email)
-  };
-  
-  
-  
-  // Save user data
-  db.collection('users').doc(user.uid).set(userData, { merge: true })
-    .then(() => {
-      console.log('User data saved successfully');
-      
-      // Save wallet data
-      return db.collection('wallets').doc(user.uid).set(walletData, { merge: true });
-    })
-    .then(() => {
-      console.log('Wallet data saved successfully');
-    })
-    .catch(error => {
-      console.error('Error saving user data:', error);
-    });
+// Add loading animation for authentication
+function setupAuthLoadingAnimation() {
+  // Create the loading overlay HTML
+  const loadingOverlayHTML = `
+    <div id="auth-loading-overlay" class="auth-loading-overlay">
+      <div class="loading-animation">
+        <div class="loading-item coin">₮</div>
+        <div class="loading-item star">★</div>
+        <div class="loading-item naira">₦</div>
+        <div class="loading-item coin">₮</div>
+        <div class="loading-item star">★</div>
+      </div>
+      <div class="loading-text">Verifying credentials...</div>
+    </div>
+  `;
+  
+  // Add the loading overlay to the body
+  document.body.insertAdjacentHTML('beforeend', loadingOverlayHTML);
+  
+  // Add the CSS for the loading animation
+  const loadingStyles = document.createElement('style');
+  loadingStyles.textContent = `
+    .auth-loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+    
+    .auth-loading-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .loading-animation {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    
+    .loading-item {
+      font-size: 2.5rem;
+      margin: 0 10px;
+      animation-duration: 2s;
+      animation-iteration-count: infinite;
+      animation-timing-function: ease-in-out;
+      color: white;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+    }
+    
+    .loading-item.coin {
+      color: #FFD700;
+      animation-name: floatCoin;
+    }
+    
+    .loading-item.star {
+      color: #6c5ce7;
+      animation-name: rotateStar;
+    }
+    
+    .loading-item.naira {
+      color: #2ecc71;
+      animation-name: floatNaira;
+    }
+    
+    @keyframes floatCoin {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(10deg); }
+    }
+    
+    @keyframes rotateStar {
+      0% { transform: rotate(0deg) scale(1); }
+      50% { transform: rotate(180deg) scale(1.2); }
+      100% { transform: rotate(360deg) scale(1); }
+    }
+    
+    @keyframes floatNaira {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-15px) scale(1.1); }
+    }
+    
+    .loading-text {
+      color: white;
+      font-size: 1.2rem;
+      font-weight: 500;
+      text-align: center;
+      margin-top: 10px;
+      animation: pulse 1.5s infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+  `;
+  document.head.appendChild(loadingStyles);
 }
+setupAuthLoadingAnimation();
+setupAuthLoadingAnimation();
+ 
+
 
 
 
@@ -10282,19 +10554,15 @@ function openWallet() {
         return user ? user.uid : null;
     }
     
-    // Helper function to hash PIN (simple hash for demo)
-    function hashPin(pin) {
-        // In a real app, use a proper hashing algorithm
-        // This is just a simple hash for demonstration
-        let hash = 0;
-        for (let i = 0; i < pin.length; i++) {
-            const char = pin.charCodeAt(i);
-            hash = ((hash << 5) - hash) + char;
-            hash = hash & hash; // Convert to 32bit integer
-        }
-        return hash.toString();
-    }
-    
+   // Better hashing approach (still client-side, but more secure)
+async function hashPin(pin, userId) {
+    // Use user ID as salt
+    const data = new TextEncoder().encode(pin + userId);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
     // Helper function to hash password
     function hashPassword(password) {
         // In a real app, use a proper hashing algorithm with salt
@@ -10933,161 +11201,295 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   };
   
-  // Modify your send money function to accept wallet tags
-  window.sendMoney = function(recipient, amount, note = '') {
-    return new Promise((resolve, reject) => {
-      // Check if recipient is a wallet tag (starts with @)
-      const isWalletTag = recipient.startsWith('@');
-      let recipientPromise;
       
-      if (isWalletTag) {
-        // Find user by wallet tag
-        recipientPromise = findUserByWalletTag(recipient);
-      } else {
-        // Assume recipient is a user ID
-        recipientPromise = firebase.firestore().collection('users').doc(recipient).get()
-          .then(doc => {
-            if (!doc.exists) throw new Error('Recipient not found');
-            const userData = doc.data();
-            return {
-              userId: doc.id,
-              name: userData.name || userData.displayName || 'User',
-              walletTag: userData.walletTag
-            };
-          });
-      }
-      
-      // Get current user
-      const currentUser = firebase.auth().currentUser;
-      if (!currentUser) {
-        reject(new Error('You must be logged in to send money'));
-        return;
-      }
-      
-      let senderData, recipientData;
-      
-      // Get sender's wallet data
-      firebase.firestore().collection('users').doc(currentUser.uid).get()
+
+// Updated sendMoney function to work with talentCoinBalance
+window.sendMoney = function(recipient, amount, note = '') {
+  return new Promise((resolve, reject) => {
+    // Check if recipient is a wallet tag (starts with @)
+    const isWalletTag = recipient.startsWith('@');
+    let recipientPromise;
+    
+    if (isWalletTag) {
+      // Find user by wallet tag
+      recipientPromise = findUserByWalletTag(recipient);
+    } else {
+      // Assume recipient is a user ID
+      recipientPromise = firebase.firestore().collection('users').doc(recipient).get()
         .then(doc => {
-          if (!doc.exists) throw new Error('Sender profile not found');
-          
-          senderData = doc.data();
-          
-          // Check if sender has enough balance
-          const senderBalance = senderData.walletBalance || 0;
-          if (senderBalance < amount) {
-            throw new Error('Insufficient balance');
-          }
-          
-          // Find recipient
-          return recipientPromise;
-        })
-        .then(recipient => {
-          recipientData = recipient;
-          
-          // Start a transaction
-          return firebase.firestore().runTransaction(transaction => {
-            // Get latest sender and recipient data
-            const senderRef = firebase.firestore().collection('users').doc(currentUser.uid);
-            const recipientRef = firebase.firestore().collection('users').doc(recipientData.userId);
-            
-            return transaction.getAll(senderRef, recipientRef)
-              .then(docs => {
-                const latestSenderData = docs[0].data();
-                const latestRecipientData = docs[1].data();
-                
-                // Verify sender still has enough balance
-                const currentBalance = latestSenderData.walletBalance || 0;
-                if (currentBalance < amount) {
-                  throw new Error('Insufficient balance');
-                }
-                
-                // Update sender's balance
-                transaction.update(senderRef, {
-                  walletBalance: firebase.firestore.FieldValue.increment(-amount)
-                });
-                
-                // Update recipient's balance
-                transaction.update(recipientRef, {
-                  walletBalance: firebase.firestore.FieldValue.increment(amount)
-                });
-                
-                // Create transaction record
-                const transactionRef = firebase.firestore().collection('transactions').doc();
-                transaction.set(transactionRef, {
-                  senderId: currentUser.uid,
-                  senderName: senderData.name || senderData.displayName || 'User',
-                  senderWalletTag: senderData.walletTag || null,
-                  recipientId: recipientData.userId,
-                  recipientName: recipientData.name,
-                  recipientWalletTag: recipientData.walletTag || null,
-                  amount: amount,
-                  note: note,
-                  timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                  type: 'transfer'
-                });
-              });
-          });
-        })
-        .then(() => {
-          resolve({
-            success: true,
-            message: `Successfully sent ${amount} TalentCoins to ${recipientData.walletTag ? '@'+recipientData.walletTag : recipientData.name}`
-          });
-        })
-        .catch(error => {
-          console.error('Error sending money:', error);
-          reject(error);
+          if (!doc.exists) throw new Error('Recipient not found');
+          const userData = doc.data();
+          return {
+            userId: doc.id,
+            name: userData.name || userData.displayName || 'User',
+            walletTag: userData.walletTag
+          };
         });
-    });
-  };
+    }
+    
+    // Get current user
+    const currentUser = firebase.auth().currentUser;
+    if (!currentUser) {
+      reject(new Error('You must be logged in to send money'));
+      return;
+    }
+    
+    let senderData, recipientData;
+    
+    // Get sender's data
+    firebase.firestore().collection('users').doc(currentUser.uid).get()
+      .then(doc => {
+        if (!doc.exists) throw new Error('Sender profile not found');
+        
+        senderData = doc.data();
+        
+        // Check if sender has enough talentCoinBalance
+        const senderBalance = senderData.talentCoinBalance || 0;
+        if (senderBalance < amount) {
+          throw new Error('Insufficient TalentCoin balance');
+        }
+        
+        // Find recipient
+        return recipientPromise;
+      })
+      .then(recipient => {
+        recipientData = recipient;
+        
+        // Start a transaction
+        return firebase.firestore().runTransaction(transaction => {
+          // Get latest sender and recipient data
+          const senderRef = firebase.firestore().collection('users').doc(currentUser.uid);
+          const recipientRef = firebase.firestore().collection('users').doc(recipientData.userId);
+          
+          return transaction.getAll(senderRef, recipientRef)
+            .then(docs => {
+              const latestSenderData = docs[0].data();
+              const latestRecipientData = docs[1].data();
+              
+              // Verify sender still has enough talentCoinBalance
+              const currentBalance = latestSenderData.talentCoinBalance || 0;
+              if (currentBalance < amount) {
+                throw new Error('Insufficient TalentCoin balance');
+              }
+              
+              // Update sender's talentCoinBalance
+              transaction.update(senderRef, {
+                talentCoinBalance: firebase.firestore.FieldValue.increment(-amount)
+              });
+              
+              // Update recipient's talentCoinBalance
+              transaction.update(recipientRef, {
+                talentCoinBalance: firebase.firestore.FieldValue.increment(amount)
+              });
+              
+              // Create transaction record
+              const transactionRef = firebase.firestore().collection('transactions').doc();
+              transaction.set(transactionRef, {
+                senderId: currentUser.uid,
+                senderName: senderData.name || senderData.displayName || 'User',
+                senderWalletTag: senderData.walletTag || null,
+                recipientId: recipientData.userId,
+                recipientName: recipientData.name,
+                recipientWalletTag: recipientData.walletTag || null,
+                amount: amount,
+                note: note,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                type: 'transfer'
+              });
+            });
+        });
+      })
+      .then(() => {
+        resolve({
+          success: true,
+          message: `Successfully sent ${amount} TalentCoins to ${recipientData.walletTag ? '@'+recipientData.walletTag : recipientData.name}`
+        });
+        
+        // Show success toast if the function exists
+        if (typeof showToast === 'function') {
+          showToast(`Successfully sent ${amount} TalentCoins to ${recipientData.walletTag ? '@'+recipientData.walletTag : recipientData.name}`, 'success');
+        }
+      })
+      .catch(error => {
+        console.error('Error sending money:', error);
+        
+        // Show error toast if the function exists
+        if (typeof showToast === 'function') {
+          showToast(error.message, 'error');
+        }
+        
+        reject(error);
+      });
+  });
+};
+
+
+
+
+
+
   
   // Add recipient validation to your send money form
   const recipientInput = document.querySelector('input[name="recipient"]') || document.getElementById('recipientInput');
   const recipientValidation = document.getElementById('recipientValidation');
   const recipientInfo = document.getElementById('recipientInfo');
-  
-  if (recipientInput && recipientValidation && recipientInfo) {
-    recipientInput.addEventListener('input', function() {
-      const value = this.value.trim();
+  // Enhanced recipient validation with better feedback
+if (recipientInput && recipientValidation && recipientInfo) {
+  recipientInput.addEventListener('input', function() {
+    const value = this.value.trim();
+    
+    // Only validate if it looks like a wallet tag
+    if (value.startsWith('@')) {
+      clearTimeout(this.timer);
       
-      // Only validate if it looks like a wallet tag
-      if (value.startsWith('@')) {
-        clearTimeout(this.timer);
-        
-        // Show loading state
-        recipientValidation.style.display = 'block';
-        recipientInfo.className = 'recipient-info loading';
-        recipientInfo.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Checking...';
-        
-        this.timer = setTimeout(() => {
-          findUserByWalletTag(value)
-            .then(user => {
-              // Tag found, show user info
-              recipientInfo.className = 'recipient-info success';
-              recipientInfo.innerHTML = `
-                <i class="fas fa-check-circle"></i> 
-                Sending to: <strong>${user.name}</strong>
-              `;
-              recipientInfo.dataset.userId = user.userId;
-            })
-            .catch(error => {
-              // Tag not found or error
-              recipientInfo.className = 'recipient-info error';
-              recipientInfo.innerHTML = `
-                <i class="fas fa-times-circle"></i> 
-                ${error.message || 'Wallet tag not found'}
-              `;
-              delete recipientInfo.dataset.userId;
-            });
-        }, 500);
-      } else if (value === '') {
-        // Hide validation if input is empty
-        recipientValidation.style.display = 'none';
+      // Show loading state
+      recipientValidation.style.display = 'block';
+      recipientInfo.className = 'recipient-info loading';
+      recipientInfo.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Checking...';
+      
+      this.timer = setTimeout(() => {
+        findUserByWalletTag(value)
+          .then(user => {
+            // Tag found, show user info
+            recipientInfo.className = 'recipient-info success';
+            recipientInfo.innerHTML = `
+              <i class="fas fa-check-circle"></i>
+              Sending to: <strong>${user.name}</strong>
+              <span class="tag-label">@${user.walletTag}</span>
+            `;
+            recipientInfo.dataset.userId = user.userId;
+            
+            // Enable the send button if it exists
+            const sendButton = document.getElementById('sendMoneyBtn');
+            if (sendButton) {
+              sendButton.disabled = false;
+            }
+          })
+          .catch(error => {
+            // Tag not found or error
+            recipientInfo.className = 'recipient-info error';
+            recipientInfo.innerHTML = `
+              <i class="fas fa-times-circle"></i>
+              ${error.message || 'Wallet tag not found'}
+            `;
+            delete recipientInfo.dataset.userId;
+            
+            // Disable the send button if it exists
+            const sendButton = document.getElementById('sendMoneyBtn');
+            if (sendButton) {
+              sendButton.disabled = true;
+            }
+          });
+      }, 500);
+    } else if (value === '') {
+      // Hide validation if input is empty
+      recipientValidation.style.display = 'none';
+      
+      // Disable the send button if it exists
+      const sendButton = document.getElementById('sendMoneyBtn');
+      if (sendButton) {
+        sendButton.disabled = true;
       }
-    });
-  }
-  
+    }
+  });
+}
+
+// Send money form handler
+const sendMoneyForm = document.getElementById('sendMoneyForm');
+if (sendMoneyForm) {
+  sendMoneyForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const recipientInput = document.getElementById('recipientInput');
+    const amountInput = document.getElementById('amountInput');
+    const noteInput = document.getElementById('noteInput');
+    const submitBtn = this.querySelector('button[type="submit"]');
+    
+    const recipient = recipientInput.value.trim();
+    const amount = parseFloat(amountInput.value);
+    const note = noteInput ? noteInput.value.trim() : '';
+    
+    // Basic validation
+    if (!recipient) {
+      showToast('Please enter a recipient', 'error');
+      return;
+    }
+    
+    if (isNaN(amount) || amount <= 0) {
+      showToast('Please enter a valid amount', 'error');
+      return;
+    }
+    
+    // Show loading state
+    if (typeof setButtonLoading === 'function') {
+      setButtonLoading(submitBtn, true);
+    } else {
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+    }
+    
+    // Show loading overlay if available
+    if (typeof showAuthLoading === 'function') {
+      showAuthLoading('Processing your transfer...');
+    }
+    
+    // Send money
+    sendMoney(recipient, amount, note)
+      .then(result => {
+        // Reset form
+        sendMoneyForm.reset();
+        
+        // Show success message
+        showToast(result.message, 'success');
+        
+        // Hide loading overlay if available
+        if (typeof hideAuthLoading === 'function') {
+          hideAuthLoading();
+        }
+        
+        // Refresh wallet balance if needed
+        if (typeof refreshWalletBalance === 'function') {
+          refreshWalletBalance();
+        }
+      })
+      .catch(error => {
+        // Show error message
+        showToast(error.message, 'error');
+        
+        // Show error in loading overlay if available
+        if (typeof showAuthError === 'function') {
+          showAuthError(error.message);
+        } else if (typeof hideAuthLoading === 'function') {
+          hideAuthLoading();
+        }
+      })
+      .finally(() => {
+        // Reset button state
+        if (typeof setButtonLoading === 'function') {
+          setButtonLoading(submitBtn, false);
+        } else {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = 'Send Money';
+        }
+      });
+  });
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   // Hook into your existing PIN verification to check for wallet tag
   // This assumes you have a function that runs after successful PIN verification
   
@@ -11158,7 +11560,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 
-                  // TalentCoin Dispenser Admin Feature
+// TalentCoin Dispenser Admin Feature (Simple Version)
 document.addEventListener('DOMContentLoaded', function() {
   // Constants
   const ADMIN_PASSWORD = 'BISA19';
@@ -11184,6 +11586,48 @@ document.addEventListener('DOMContentLoaded', function() {
   let validatedRecipient = null;
   let isAuthenticated = false;
   
+  // Check if current user is an admin
+function checkAdminStatus() {
+  const user = firebase.auth().currentUser;
+  
+  if (!user) {
+    showToast('You must be logged in to access admin features', 'error');
+    return Promise.reject(new Error('Not authenticated'));
+  }
+  
+  return firebase.firestore().collection('users').doc(user.uid).get()
+    .then(doc => {
+      if (doc.exists && doc.data().isAdmin === true) {
+        return true;
+      } else {
+        showToast('You do not have admin privileges', 'error');
+        return Promise.reject(new Error('Not authorized'));
+      }
+    });
+}
+
+// Use this before any admin operation
+function performAdminAction(action) {
+  return checkAdminStatus()
+    .then(() => {
+      // User is an admin, proceed with action
+      return action();
+    })
+    .catch(error => {
+      console.error('Admin action failed:', error);
+      // Handle the error appropriately
+      return Promise.reject(error);
+    });
+}
+
+// Example usage:
+dispenseCoinBtn.addEventListener('click', function() {
+  performAdminAction(() => {
+    // Your dispenser code here
+    return dispenseTalentCoins(recipientId, amount, note);
+  });
+});
+
   // Open modal when clicking the admin menu button
   if (openCoinDispenserBtn) {
     openCoinDispenserBtn.addEventListener('click', function() {
@@ -11218,13 +11662,23 @@ document.addEventListener('DOMContentLoaded', function() {
       const password = adminPassword.value;
       
       if (password === ADMIN_PASSWORD) {
-        // Password correct, show dispenser interface
-        dispenserAuth.style.display = 'none';
-        dispenserInterface.style.display = 'block';
-        isAuthenticated = true;
-        
-        // Load recent transactions
-        loadRecentTransactions();
+        // Check if user is actually an admin in Firestore
+        checkAdminStatus().then(isAdmin => {
+          if (isAdmin) {
+            // Password correct and user is admin, show dispenser interface
+            dispenserAuth.style.display = 'none';
+            dispenserInterface.style.display = 'block';
+            isAuthenticated = true;
+            
+            // Load recent transactions
+            loadRecentTransactions();
+          } else {
+            // User is not an admin
+            showToast('You do not have admin privileges', 'error');
+            adminPassword.value = '';
+            adminPassword.focus();
+          }
+        });
       } else {
         // Password incorrect, show error
         showToast('Incorrect admin password', 'error');
@@ -11317,7 +11771,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
   
-  // Send TalentCoins to user
+  // Send TalentCoins to user (Simple Version - No Transaction)
   if (dispenseCoinBtn) {
     dispenseCoinBtn.addEventListener('click', function() {
       if (!validatedRecipient) {
@@ -11347,27 +11801,35 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
       }
       
-      // Start a transaction to update recipient's balance
-      firebase.firestore().runTransaction(transaction => {
+      // Verify admin status again
+      checkAdminStatus().then(isAdmin => {
+        if (!isAdmin) {
+          showToast('You do not have admin privileges', 'error');
+          this.disabled = false;
+          this.textContent = 'Send TalentCoins';
+          return;
+        }
+        
         // Get recipient document
         const recipientRef = firebase.firestore().collection('users').doc(validatedRecipient.userId);
         
-        return transaction.get(recipientRef)
-          .then(recipientDoc => {
-            if (!recipientDoc.exists) {
-              throw new Error('Recipient not found');
-            }
-            
-            const recipientData = recipientDoc.data();
-            
-            // Update recipient's balance
-            transaction.update(recipientRef, {
-              walletBalance: firebase.firestore.FieldValue.increment(amount)
-            });
-            
-            // Create transaction record
-            const transactionRef = firebase.firestore().collection('transactions').doc();
-            transaction.set(transactionRef, {
+        // Get current balance
+        recipientRef.get().then(recipientDoc => {
+          if (!recipientDoc.exists) {
+            throw new Error('Recipient not found');
+          }
+          
+          const recipientData = recipientDoc.data();
+          const currentBalance = recipientData.talentCoinBalance || 0;
+          const newBalance = currentBalance + amount;
+          
+          // Step 1: Update recipient's talentCoinBalance
+          return recipientRef.update({
+            talentCoinBalance: newBalance
+          })
+          .then(() => {
+            // Step 2: Create transaction record
+            return firebase.firestore().collection('transactions').add({
               senderId: adminUser.uid,
               senderName: 'Admin Dispenser',
               senderWalletTag: null,
@@ -11379,10 +11841,10 @@ document.addEventListener('DOMContentLoaded', function() {
               timestamp: firebase.firestore.FieldValue.serverTimestamp(),
               type: 'admin_dispense'
             });
-            
-            // Also create admin dispense record for tracking
-            const dispenseRef = firebase.firestore().collection('adminDispenses').doc();
-            transaction.set(dispenseRef, {
+          })
+          .then(() => {
+            // Step 3: Create admin dispense record for tracking
+            return firebase.firestore().collection('adminDispenses').add({
               adminId: adminUser.uid,
               adminEmail: adminUser.email,
               recipientId: validatedRecipient.userId,
@@ -11393,33 +11855,34 @@ document.addEventListener('DOMContentLoaded', function() {
               timestamp: firebase.firestore.FieldValue.serverTimestamp()
             });
           });
-      })
-      .then(() => {
-        // Success
-        showToast(`Successfully sent ${amount} TalentCoins to @${validatedRecipient.walletTag}`, 'success');
-        
-        // Reset form
-        recipientTag.value = '';
-        coinAmount.value = '';
-        dispenserNote.value = '';
-        tagValidationResult.textContent = '';
-        tagValidationResult.className = 'validation-result';
-        validatedRecipient = null;
-        
-        // Reset button
-        this.disabled = true;
-        this.textContent = 'Send TalentCoins';
-        
-        // Reload recent transactions
-        loadRecentTransactions();
-      })
-      .catch(error => {
-        console.error('Error dispensing coins:', error);
-        showToast(error.message || 'Failed to send TalentCoins', 'error');
-        
-        // Reset button
-        this.disabled = false;
-        this.textContent = 'Send TalentCoins';
+        })
+        .then(() => {
+          // Success
+          showToast(`Successfully sent ${amount} TalentCoins to @${validatedRecipient.walletTag}`, 'success');
+          
+          // Reset form
+          recipientTag.value = '';
+          coinAmount.value = '';
+          dispenserNote.value = '';
+          tagValidationResult.textContent = '';
+          tagValidationResult.className = 'validation-result';
+          validatedRecipient = null;
+          
+          // Reset button
+          this.disabled = true;
+          this.textContent = 'Send TalentCoins';
+          
+          // Reload recent transactions
+          loadRecentTransactions();
+        })
+        .catch(error => {
+          console.error('Error dispensing coins:', error);
+          showToast(error.message || 'Failed to send TalentCoins', 'error');
+          
+          // Reset button
+          this.disabled = false;
+          this.textContent = 'Send TalentCoins';
+        });
       });
     });
   }
@@ -11497,10 +11960,10 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   
   // Helper function to show toast notifications
-  // This assumes you have a showToast function, if not, implement this
   function showToast(message, type = 'info') {
     // If you already have a toast function, use that instead
-    if (window.showToast) {
+        // If you already have a toast function, use that instead
+        if (window.showToast) {
       window.showToast(message, type);
       return;
     }
@@ -11525,17 +11988,48 @@ document.addEventListener('DOMContentLoaded', function() {
       }, 300);
     }, 3000);
   }
-  
-  // Add toast styles if you don't have them
-  if (!document.querySelector('style#toast-styles')) {
-    const style = document.createElement('style');
-    style.id = 'toast-styles';
-    style.textContent = `
-     
-    `;
-    document.head.appendChild(style);
-  }
 });
+
+// Admin login function
+function adminLogin(email, password) {
+  return firebase.auth().signInWithEmailAndPassword(email, password)
+    .then(userCredential => {
+      // Check if user is an admin
+      return firebase.firestore().collection('users').doc(userCredential.user.uid).get();
+    })
+    .then(doc => {
+      if (doc.exists && doc.data().isAdmin === true) {
+        showToast('Admin login successful', 'success');
+        // Redirect to admin dashboard or enable admin features
+        return true;
+      } else {
+        // User is not an admin
+        firebase.auth().signOut(); // Sign them out
+        showToast('You do not have admin privileges', 'error');
+        return Promise.reject(new Error('Not authorized'));
+      }
+    })
+    .catch(error => {
+      console.error('Admin login failed:', error);
+      showToast(error.message || 'Login failed', 'error');
+      return Promise.reject(error);
+    });
+}
+
+// Example usage:
+adminLoginBtn.addEventListener('click', function() {
+  const email = document.getElementById('adminEmail').value;
+  const password = document.getElementById('adminPassword').value;
+  
+  adminLogin(email, password)
+    .then(success => {
+      if (success) {
+        // Show admin interface
+        showAdminDashboard();
+      }
+    });
+});
+
 
 </script>
 </body>
