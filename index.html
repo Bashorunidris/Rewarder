@@ -700,100 +700,503 @@ body {
     display: flex;
 }
 
-/* Top Navigation Bar */
+
+/* Dashboard Navigation Container */
 .dashboard-nav {
-    background-color: var(--white);
-    padding: 10px 15px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-    position: relative; /* Changed from sticky to relative */
-    width: 100%;
+    padding: 12px 20px;
+    background-color: var(--bg-light);
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+    position: sticky;
+    top: 0;
     z-index: 100;
-    flex-shrink: 0; /* Prevent shrinking */
-    height: 56px; /* Fixed height */
+    width: 100%;
+    transition: all 0.3s ease;
 }
 
+/* User info section */
 .user-info {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
 }
 
 .profile-circle {
-    width: 36px;
-    height: 36px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     overflow: hidden;
-    background-color: #ddd;
+    background-color: var(--primary-light);
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 2px solid var(--primary-color);
-    flex-shrink: 0;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
 }
 
-.profile-circle img {
+.user-profile-image {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
 }
 
 .username {
     font-weight: 600;
+    color: var(--text-dark);
     font-size: 0.95rem;
-    color: var(--text-color);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 100px;
 }
 
+/* Navigation buttons container */
+.dashboard-nav > div:not(.user-info):not(.hamburger-menu) {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* Trophy button with improved shining animation */
 .trophy-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: var(--secondary-color);
+    color: var(--white);
+    padding: 8px 16px;
+    border-radius: var(--border-radius);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px var(--shadow-color-secondary);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Trophy icon container */
+.trophy-btn i {
+    font-size: 1rem;
+    position: relative;
+    display: inline-block;
+    z-index: 2;
+    color: var(--white);
+}
+
+/* Shining effect - outer glow */
+.trophy-btn i::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 215, 0, 0.8) 0%, transparent 70%);
+    animation: trophy-glow 3s infinite;
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* Shining effect - sparkle */
+.trophy-btn::before {
+    content: '✨';
+    position: absolute;
+    font-size: 0.8rem;
+    top: 0;
+    right: 30%;
+    opacity: 0;
+    z-index: 3;
+    animation: trophy-sparkle 4s infinite;
+    pointer-events: none;
+}
+
+.trophy-btn::after {
+    content: '✨';
+    position: absolute;
+    font-size: 0.6rem;
+    bottom: 5%;
+    left: 30%;
+    opacity: 0;
+    z-index: 3;
+    animation: trophy-sparkle 4s infinite 1s;
+    pointer-events: none;
+}
+
+/* Shine sweep effect */
+.trophy-btn .shine-sweep {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.4) 50%,
+        transparent 100%
+    );
+    z-index: 1;
+    transform: translateX(-100%);
+    animation: shine-sweep 3s infinite;
+    pointer-events: none;
+}
+
+/* Add this div to your HTML right after the icon */
+/* <div class="shine-sweep"></div> */
+
+@keyframes trophy-glow {
+    0%, 100% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    50% {
+        opacity: 0.8;
+        transform: scale(1.2);
+    }
+}
+
+@keyframes trophy-sparkle {
+    0%, 100% {
+        opacity: 0;
+        transform: translateY(0) scale(0.8);
+    }
+    50% {
+        opacity: 1;
+        transform: translateY(-5px) scale(1);
+    }
+}
+
+@keyframes shine-sweep {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+
+/* Wallet button */
+.wallet1-btn {
     display: flex;
     align-items: center;
     gap: 8px;
     background-color: var(--primary-color);
     color: var(--white);
-    padding: 6px 15px;
-    border-radius: 50px;
+    padding: 8px 16px;
+    border-radius: var(--border-radius);
     font-weight: 500;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 10px rgba(108, 92, 231, 0.2);
+    box-shadow: 0 4px 10px var(--shadow-color);
+    position: relative;
+    overflow: hidden;
+}
+
+.wallet1-btn i {
+    font-size: 1rem;
+    position: relative;
+}
+
+/* Coin entering wallet animation */
+.walleticon-btn::before {
+    content: '🪙';
+    position: absolute;
+    font-size: 0.8rem;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    animation: coin-drop 3s infinite;
+}
+
+.walleticon::after {
+    content: '💰';
+    position: absolute;
+    font-size: 0.8rem;
+    top: -20px;
+    left: 30%;
+    transform: translateX(-50%);
+    opacity: 0;
+    animation: coin-drop 3s infinite 1s;
+}
+
+@keyframes coin-drop {
+    0% {
+        top: -20px;
+        opacity: 0;
+        transform: translateX(-50%) scale(0.5);
+    }
+    20% {
+        opacity: 1;
+        transform: translateX(-50%) scale(1);
+    }
+    80% {
+        opacity: 1;
+        transform: translateX(-50%) scale(1);
+    }
+    100% {
+        top: 50%;
+        opacity: 0;
+        transform: translateX(-50%) scale(0.5);
+    }
+}
+
+.wallet1-btn span {
     font-size: 0.9rem;
-    white-space: nowrap;
+    font-weight: 500;
 }
 
-.trophy-btn:hover {
-    background-color: var(--primary-dark);
-}
-
-.trophy-btn i {
-    font-size: 0.9rem;
-}
-
+/* Hamburger menu */
 .hamburger-menu {
-    width: 36px;
-    height: 36px;
-    display: flex;
+    display: none;
+    width: 40px;
+    height: 40px;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     border-radius: 50%;
     transition: all 0.3s ease;
-    flex-shrink: 0;
+}
+
+.hamburger-menu i {
+    font-size: 1.2rem;
+    color: var(--text-dark);
 }
 
 .hamburger-menu:hover {
     background-color: rgba(0, 0, 0, 0.05);
 }
 
-.hamburger-menu i {
-    font-size: 1.2rem;
-    color: var(--text-color);
+/* Hover effects */
+.trophy-btn:hover, .wallet1-btn:hover {
+    transform: translateY(-3px);
 }
+
+.trophy-btn:hover {
+    box-shadow: 0 6px 15px var(--shadow-color-secondary);
+    background-color: var(--secondary-light);
+}
+
+.wallet1-btn:hover {
+    box-shadow: 0 6px 15px var(--shadow-color);
+    background-color: var(--primary-light);
+}
+
+/* Active state */
+.trophy-btn:active, .wallet1-btn:active {
+    transform: translateY(1px);
+}
+
+.trophy-btn:active {
+    box-shadow: 0 2px 5px var(--shadow-color-secondary);
+    background-color: var(--secondary-dark);
+}
+
+.wallet1-btn:active {
+    box-shadow: 0 2px 5px var(--shadow-color);
+    background-color: var(--primary-dark);
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .dashboard-nav {
+        padding: 10px 15px;
+    }
+    
+    .username {
+        max-width: 100px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    
+    .trophy-btn, .wallet1-btn {
+        padding: 6px 12px;
+    }
+    
+    .trophy-btn span, .wallet1-btn span {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .hamburger-menu {
+        display: flex;
+    }
+    
+    .trophy-btn, .wallet1-btn {
+        display: none;
+    }
+    
+    .dashboard-nav.expanded .trophy-btn,
+    .dashboard-nav.expanded .wallet1-btn {
+        display: flex;
+    }
+    
+    .dashboard-nav.expanded {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .dashboard-nav.expanded .user-info {
+        margin-bottom: 15px;
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .dashboard-nav.expanded > div:not(.user-info):not(.hamburger-menu) {
+        flex-direction: column;
+        width: 100%;
+        gap: 10px;
+    }
+    
+    .dashboard-nav.expanded .trophy-btn,
+    .dashboard-nav.expanded .wallet1-btn {
+        width: 100%;
+        justify-content: flex-start;
+    }
+}
+
+@media (max-width: 400px) {
+    .profile-circle {
+        width: 35px;
+        height: 35px;
+    }
+    
+    .username {
+        max-width: 80px;
+        font-size: 0.85rem;
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    .dashboard-nav {
+        background-color: var(--text-dark);
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
+    }
+    
+    .username {
+        color: var(--text-light);
+    }
+    
+    .hamburger-menu i {
+        color: var(--text-light);
+    }
+    
+    .hamburger-menu:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+    .trophy-btn i::before,
+    .trophy-btn i::after,
+    .wallet1-btn::before,
+    .wallet1-btn::after {
+        animation: none !important;
+    }
+    
+    .trophy-btn:hover,
+    .wallet1-btn:hover {
+        transform: none;
+    }
+}
+
+/* JavaScript helper for mobile menu toggle */
+.dashboard-nav.expanded {
+    height: auto;
+    padding-bottom: 15px;
+}
+
+/* Accessibility focus styles */
+.trophy-btn:focus-visible,
+.wallet1-btn:focus-visible,
+.hamburger-menu:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+/* RTL language support */
+[dir="rtl"] .user-info,
+[dir="rtl"] .dashboard-nav > div:not(.user-info):not(.hamburger-menu) {
+    flex-direction: row-reverse;
+}
+
+/* Animation for new notifications */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.trophy-btn.has-notification,
+.wallet1-btn.has-notification {
+    position: relative;
+}
+
+.trophy-btn.has-notification::before,
+.wallet1-btn.has-notification::before {
+    content: '';
+    position: absolute;
+    top: -3px;
+    right: -3px;
+    width: 10px;
+    height: 10px;
+    background-color: #ff3838;
+    border-radius: 50%;
+    animation: pulse 1.5s infinite;
+}
+
+/* Tablet optimization */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .dashboard-nav {
+        padding: 12px 25px;
+    }
+}
+
+/* Support for ultra-wide screens */
+@media (min-width: 1400px) {
+    .dashboard-nav {
+        max-width: 1400px;
+        margin: 0 auto;
+        border-radius: 0 0 10px 10px;
+    }
+}
+
+/* Fix for iOS Safari */
+@supports (-webkit-touch-callout: none) {
+    .dashboard-nav {
+        -webkit-transform: translateZ(0);
+    }
+}
+
+/* Fix for sticky hover on mobile */
+@media (hover: none) {
+    .trophy-btn:hover,
+    .wallet1-btn:hover,
+    .hamburger-menu:hover {
+        transform: none;
+        box-shadow: 0 4px 10px var(--shadow-color);
+    }
+    
+    .trophy-btn:hover {
+        background-color: var(--secondary-color);
+    }
+    
+    .wallet1-btn:hover {
+        background-color: var(--primary-color);
+    }
+}
+
 
 /* Main Dashboard Container */
 .dashboard-container {
@@ -896,10 +1299,6 @@ body {
     }
 }
 
-.wallet-btn .action-icon {
-    background-color: rgba(108, 92, 231, 0.1);
-    color: var(--primary-color);
-}
 
 .creator-btn .action-icon {
     background-color: rgba(253, 121, 168, 0.1);
@@ -1230,44 +1629,6 @@ body {
 }
 
 
-/* Wallet Button Styles */
-.action-btn.wallet-btn {
-    width: 50px;
-    height: 100px;
-    background-color: var(--white);
-    border-radius: 12px;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
-    min-width: 70px;
-    flex: 1;
-    position: relative;
-    overflow: hidden;
-}
-
-.action-btn.wallet-btn:active {
-    transform: scale(0.95);
-}
-
-.action-btn.wallet-btn .action-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.1rem;
-    background-color: rgba(108, 92, 231, 0.1);
-    color: var(--primary-color);
-    position: relative;
-}
-
 /* Wallet icon with subtle bounce animation */
 .action-btn.wallet-btn .action-icon i {
     position: relative;
@@ -1485,14 +1846,6 @@ body {
         max-width: 80px;
     }
     
-    .trophy-btn {
-        padding: 5px 10px;
-        font-size: 0.8rem;
-    }
-    
-    .trophy-btn i {
-        font-size: 0.8rem;
-    }
     
     .hamburger-menu {
         width: 32px;
@@ -1558,22 +1911,6 @@ body {
         font-size: 0.7rem;
     }
     
-    .trophy-btn span {
-        display: none;
-    }
-    
-    .trophy-btn {
-        width: 32px;
-        height: 32px;
-        padding: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    
-    .trophy-btn i {
-        margin: 0;
-    }
 }
 
 
@@ -3402,9 +3739,6 @@ body {
         font-size: 0.9rem;
     }
     
-    .wallet-btn {
-        width: 100%;
-    }
     
     .account-row {
         flex-direction: column;
@@ -4550,9 +4884,25 @@ button,
         width: 95%;
     }
 }
+   /* Withdraw Modal Styles - Mobile Optimized for iOS and Android */
+:root {
+    --modal-bg: #1a1a2e;
+    --modal-text: #ffffff;
+    --modal-text-secondary: #ece7e7;
+    --primary-color: #4a6cf7;
+    --primary-light: rgba(74, 108, 247, 0.2);
+    --success-color: #28a745;
+    --error-color: #dc3545;
+    --border-color: #eaeaea;
+    --input-bg: #f9f9f9;
+    --input-border: #ddd;
+    --card-bg: #f8f9fa;
+    --border-radius: 12px;
+    --input-radius: 8px;
+    --transition-speed: 0.2s;
+}
 
-
-/* Withdraw Modal Styles - Compact Version */
+/* Base Modal Structure */
 .withdraw-modal {
     display: none;
     position: fixed;
@@ -4560,16 +4910,19 @@ button,
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: #1a1a2e;
+    background-color: var(--modal-bg);
     z-index: 1000;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling for iOS */
     justify-content: center;
     align-items: center;
+    overscroll-behavior: contain; /* Prevent pull-to-refresh */
+    touch-action: manipulation; /* Improve touch behavior */
 }
 
 .modal-content {
-    background-color:#1a1a2e ;
-    border-radius: 12px;
+    background-color: var(--modal-bg);
+    border-radius: var(--border-radius);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
     width: 90%;
     max-width: 450px;
@@ -4577,46 +4930,71 @@ button,
     overflow-y: auto;
     position: relative;
     animation: modalFadeIn 0.25s ease-out;
+    margin: auto;
+    will-change: transform, opacity; /* Performance optimization */
+    -webkit-transform: translateZ(0); /* iOS performance */
+    transform: translateZ(0);
 }
 
 @keyframes modalFadeIn {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
+    from { 
+        opacity: 0; 
+        transform: translateY(-10px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
+    }
 }
 
+/* Modal Header */
 .modal-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 16px;
-    border-bottom: 1px solid #eaeaea;
-    background-color: #1a1a2e;
-    color: white;
-    border-radius: 12px 12px 0 0;
+    padding: 16px;
+    border-bottom: 1px solid rgba(234, 234, 234, 0.1);
+    background-color: var(--modal-bg);
+    color: var(--modal-text);
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
     position: sticky;
     top: 0;
     z-index: 10;
+    -webkit-backdrop-filter: blur(10px); /* iOS blur effect */
+    backdrop-filter: blur(10px);
 }
 
 .modal-header h2 {
     font-size: 1.2rem;
     font-weight: 600;
     margin: 0;
-    color: white;
-    
+    color: var(--modal-text);
 }
 
 .close-modal {
     font-size: 1.5rem;
     font-weight: 700;
-    color: white;
+    color: var(--modal-text);
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all var(--transition-speed) ease;
     line-height: 1;
+    width: 44px; /* Larger touch target */
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: -10px; /* Offset the padding to maintain visual size */
+    border-radius: 50%;
+    -webkit-tap-highlight-color: transparent; /* Remove tap highlight on iOS */
 }
 
 .close-modal:hover {
     opacity: 0.8;
+}
+
+.close-modal:active {
+    opacity: 0.6;
+    transform: scale(0.95);
 }
 
 /* Screen Styles */
@@ -4630,55 +5008,68 @@ button,
 
 /* PIN Verification Screen */
 .pin-verification-content {
-    padding: 20px 16px;
+    padding: 24px 16px;
     text-align: center;
-    background-color: #1a1a2e;
+    background-color: var(--modal-bg);
 }
 
 .pin-icon {
     font-size: 2.5rem;
-    color: #4a6cf7;
+    color: var(--primary-color);
     margin-bottom: 15px;
 }
 
 .pin-verification-content h3 {
     font-size: 1.2rem;
-    margin-bottom: 8px;
-    color: #ffffff;
+    margin-bottom: 12px;
+    color: var(--modal-text);
 }
 
 .pin-verification-content p {
-    color: #ece7e7;
-    margin-bottom: 20px;
-    font-size: 0.9rem;
+    color: var(--modal-text-secondary);
+    margin-bottom: 24px;
+    font-size: 0.95rem;
+    line-height: 1.5;
 }
 
 .pin-input-container {
     display: flex;
     justify-content: center;
     gap: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 24px;
 }
 
 .pin-digit {
     width: 45px;
-    height: 50px;
+    height: 55px;
     font-size: 1.3rem;
     text-align: center;
-    border: 1.5px solid #ddd;
-    border-radius: 8px;
-    background-color: #1a1a2e;
-    transition: all 0.2s ease;
+    border: 1.5px solid rgba(221, 221, 221, 0.3);
+    border-radius: var(--input-radius);
+    background-color: rgba(255, 255, 255, 0.05);
+    color: var(--modal-text);
+    transition: all var(--transition-speed) ease;
+    -webkit-appearance: none; /* Remove iOS default styling */
+    appearance: none;
+    caret-color: var(--primary-color); /* Cursor color */
 }
 
 .pin-digit:focus {
-    border-color: #4a6cf7;
-    box-shadow: 0 0 0 2px rgba(74, 108, 247, 0.2);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px var(--primary-light);
     outline: none;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Fix for iOS zoom on input focus */
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+    .pin-digit {
+        font-size: 16px; /* Minimum font size to prevent zoom */
+    }
 }
 
 .error-message {
-    color: #dc3545;
+    color: var(--error-color);
     font-size: 0.85rem;
     margin-bottom: 15px;
     min-height: 18px;
@@ -4686,22 +5077,23 @@ button,
 
 /* Withdraw Form Screen */
 .withdraw-form-content {
-    padding: 16px;
+    padding: 20px 16px;
+    color: var(--modal-text);
 }
 
 .balance-info {
-    background-color: #f8f9fa;
-    border-radius: 8px;
-    padding: 12px;
-    margin-bottom: 16px;
-    border: 1px solid #eaeaea;
+    background-color: rgba(248, 249, 250, 0.05);
+    border-radius: var(--input-radius);
+    padding: 16px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(234, 234, 234, 0.1);
 }
 
 .balance-item {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 6px;
-    font-size: 0.9rem;
+    margin-bottom: 8px;
+    font-size: 0.95rem;
 }
 
 .balance-item:last-child {
@@ -4710,66 +5102,78 @@ button,
 
 .balance-label {
     font-weight: 500;
-    color: #666;
+    color: rgba(255, 255, 255, 0.7);
 }
 
 .balance-value {
     font-weight: 600;
-    color: #333;
+    color: var(--modal-text);
 }
 
 .form-group {
-    margin-bottom: 16px;
+    margin-bottom: 20px;
 }
 
 label {
     display: block;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
     font-weight: 500;
-    color: #444;
-    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.95rem;
 }
 
 input, select {
     width: 100%;
-    padding: 10px 12px;
-    border: 1.5px solid #ddd;
-    border-radius: 8px;
-    font-size: 0.95rem;
-    transition: all 0.2s ease;
-    background-color: #f9f9f9;
+    padding: 12px 16px;
+    border: 1.5px solid rgba(221, 221, 221, 0.3);
+    border-radius: var(--input-radius);
+    font-size: 1rem;
+    transition: all var(--transition-speed) ease;
+    background-color: rgba(249, 249, 249, 0.05);
+    color: var(--modal-text);
+    -webkit-appearance: none; /* Remove iOS default styling */
+    appearance: none;
+}
+
+/* Custom select arrow for better cross-platform appearance */
+select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23ffffff' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 30px;
 }
 
 input:focus, select:focus {
-    border-color: #4a6cf7;
-    box-shadow: 0 0 0 2px rgba(74, 108, 247, 0.2);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px var(--primary-light);
     outline: none;
-    background-color: #fff;
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
 .input-note {
     display: block;
-    font-size: 0.75rem;
-    color: #777;
-    margin-top: 4px;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin-top: 6px;
+    line-height: 1.4;
 }
 
 .amount-preview {
-    background-color: #e9f0ff;
-    border-radius: 8px;
-    padding: 10px 12px;
-    margin-bottom: 16px;
+    background-color: rgba(233, 240, 255, 0.1);
+    border-radius: var(--input-radius);
+    padding: 14px 16px;
+    margin-bottom: 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border: 1px solid #d1e0ff;
-    font-size: 0.9rem;
+    border: 1px solid rgba(209, 224, 255, 0.2);
+    font-size: 0.95rem;
 }
 
 #nairaAmount {
     font-weight: 700;
-    font-size: 1rem;
-    color: #4a6cf7;
+    font-size: 1.1rem;
+    color: var(--primary-color);
 }
 
 .btn {
@@ -4780,51 +5184,95 @@ input:focus, select:focus {
     vertical-align: middle;
     user-select: none;
     border: 1px solid transparent;
-    padding: 10px 16px;
-    font-size: 0.95rem;
+    padding: 14px 16px;
+    font-size: 1rem;
     line-height: 1.5;
-    border-radius: 8px;
-    transition: all 0.2s ease;
+    border-radius: var(--input-radius);
+    transition: all var(--transition-speed) ease;
     cursor: pointer;
     width: 100%;
+    -webkit-tap-highlight-color: transparent; /* Remove tap highlight on iOS */
+    position: relative;
+    overflow: hidden;
+}
+
+/* Ripple effect for Android */
+.btn::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 5px;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.5);
+    opacity: 0;
+    border-radius: 100%;
+    transform: scale(1, 1) translate(-50%, -50%);
+    transform-origin: 50% 50%;
+}
+
+@media (pointer: coarse) {
+    .btn:active::after {
+        animation: ripple 0.6s ease-out;
+    }
+}
+
+@keyframes ripple {
+    0% {
+        transform: scale(0, 0) translate(-50%, -50%);
+        opacity: 0.5;
+    }
+    100% {
+        transform: scale(20, 20) translate(-50%, -50%);
+        opacity: 0;
+    }
 }
 
 .btn-primary {
     color: #fff;
-    background-color: #1a1a2e;
-    
+    background-color: var(--primary-color);
 }
 
 .btn-primary:hover {
-    background-color:#1a1a2e;
-    
+    background-color: #3a5cd7;
+}
+
+.btn-primary:active {
+    transform: translateY(1px);
+    background-color: #3452c7;
 }
 
 .btn-secondary {
     color: #fff;
     background-color: #6c757d;
-    border-color: #6c757d;
 }
 
 .btn-secondary:hover {
-    background-color: #333;
-    border-color: #333;
+    background-color: #5a6268;
+}
+
+.btn-secondary:active {
+    transform: translateY(1px);
+    background-color: #545b62;
 }
 
 .btn-success {
     color: #fff;
-    background-color: #28a745;
-    border-color: #28a745;
+    background-color: var(--success-color);
 }
 
 .btn-success:hover {
     background-color: #218838;
-    border-color: #1e7e34;
+}
+
+.btn-success:active {
+    transform: translateY(1px);
+    background-color: #1e7e34;
 }
 
 .btn-sm {
-    padding: 5px 10px;
-    font-size: 0.8rem;
+    padding: 8px 12px;
+    font-size: 0.9rem;
     width: auto;
 }
 
@@ -4834,47 +5282,49 @@ input:focus, select:focus {
 }
 
 #verifyAccountBtn {
-    margin-top: 6px;
+    margin-top: 8px;
 }
 
 .fee-summary {
-    background-color: #f8f9fa;
-    border-radius: 8px;
-    padding: 12px;
-    margin-bottom: 16px;
-    border: 1px solid #eaeaea;
-    font-size: 0.9rem;
-    color: #333;
+    background-color: rgba(248, 249, 250, 0.05);
+    border-radius: var(--input-radius);
+    padding: 16px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(234, 234, 234, 0.1);
+    font-size: 0.95rem;
+    color: var(--modal-text);
 }
 
 .summary-row {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
 }
 
 .summary-row.total {
-    margin-top: 8px;
-    padding-top: 8px;
-    border-top: 1px dashed #ddd;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed rgba(221, 221, 221, 0.3);
     font-weight: 700;
-    font-size: 0.95rem;
+    font-size: 1rem;
 }
 
 /* Processing Screen */
 .processing-content {
-    padding: 30px 16px;
+    padding: 40px 16px;
     text-align: center;
+    color: var(--modal-text);
 }
 
 .loader {
-    border: 4px solid #f3f3f3;
+    border: 4px solid rgba(243, 243, 243, 0.1);
     border-radius: 50%;
-    border-top: 4px solid #4a6cf7;
-    width: 50px;
-    height: 50px;
-    margin: 0 auto 20px;
+    border-top: 4px solid var(--primary-color);
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 24px;
     animation: spin 1.2s linear infinite;
+    will-change: transform;
 }
 
 @keyframes spin {
@@ -4883,53 +5333,63 @@ input:focus, select:focus {
 }
 
 .processing-content h3 {
-    font-size: 1.2rem;
-    margin-bottom: 10px;
-    color: #333;
+    font-size: 1.3rem;
+    margin-bottom: 12px;
+    color: var(--modal-text);
 }
 
 .processing-content p {
-    color: #666;
-    font-size: 0.9rem;
+    color: var(--modal-text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.5;
 }
 
 /* Success Screen */
 .success-content {
-    padding: 25px 16px;
+    padding: 32px 16px;
     text-align: center;
+    color: var(--modal-text);
 }
 
 .success-icon {
-    font-size: 3rem;
-    color: #28a745;
-    margin-bottom: 15px;
+    font-size: 3.5rem;
+    color: var(--success-color);
+    margin-bottom: 20px;
+    animation: successPop 0.5s ease-out;
+}
+
+@keyframes successPop {
+    0% { transform: scale(0.5); opacity: 0; }
+    70% { transform: scale(1.1); }
+    100% { transform: scale(1); opacity: 1; }
 }
 
 .success-content h3 {
-    font-size: 1.2rem;
-    margin-bottom: 8px;
-    color: #333;
+    font-size: 1.3rem;
+    margin-bottom: 12px;
+    color: var(--modal-text);
 }
 
 .success-content p {
-    color: #666;
-    margin-bottom: 20px;
-    font-size: 0.9rem;
+    color: var(--modal-text-secondary);
+    margin-bottom: 24px;
+    font-size: 0.95rem;
+    line-height: 1.5;
 }
 
 .transaction-details {
-    background-color: #f8f9fa;
-    border-radius: 8px;
-    padding: 12px;
-    margin-bottom: 16px;
-    border: 1px solid #eaeaea;
+    background-color: rgba(248, 249, 250, 0.05);
+    border-radius: var(--input-radius);
+    padding: 16px;
+    margin-bottom: 24px;
+    border: 1px solid rgba(234, 234, 234, 0.1);
     text-align: left;
-    font-size: 0.85rem;
+    font-size: 0.9rem;
 }
 
 .detail-row {
     display: flex;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
 }
 
 .detail-row:last-child {
@@ -4938,44 +5398,54 @@ input:focus, select:focus {
 
 .detail-label {
     font-weight: 500;
-    color: #666;
+    color: rgba(255, 255, 255, 0.7);
     width: 40%;
 }
 
 .detail-value {
     font-weight: 500;
-    color: #333;
+    color: var(--modal-text);
 }
 
 .success-note {
-    font-size: 0.85rem;
-    color: #666;
-    margin-bottom: 20px;
+    font-size: 0.9rem;
+    color: var(--modal-text-secondary);
+    margin-bottom: 24px;
     font-style: italic;
+    line-height: 1.5;
 }
 
 /* Error Screen */
 .error-content {
-    padding: 25px 16px;
+    padding: 32px 16px;
     text-align: center;
+    color: var(--modal-text);
 }
 
 .error-icon {
-    font-size: 3rem;
-    color: #dc3545;
-    margin-bottom: 15px;
+    font-size: 3.5rem;
+    color: var(--error-color);
+    margin-bottom: 20px;
+    animation: errorShake 0.6s ease-in-out;
+}
+
+@keyframes errorShake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-10px); }
+    40%, 80% { transform: translateX(10px); }
 }
 
 .error-content h3 {
-    font-size: 1.2rem;
-    margin-bottom: 8px;
-    color: #333;
+    font-size: 1.3rem;
+    margin-bottom: 12px;
+    color: var(--modal-text);
 }
 
 .error-content p {
-    color: #666;
-    margin-bottom: 20px;
-    font-size: 0.9rem;
+    color: var(--modal-text-secondary);
+    margin-bottom: 24px;
+    font-size: 0.95rem;
+    line-height: 1.5;
 }
 
 .error-actions {
@@ -4992,18 +5462,319 @@ input:focus, select:focus {
     .modal-content {
         width: 95%;
         max-height: 90vh;
+        margin: 5vh auto;
     }
     
     .pin-digit {
         width: 40px;
-        height: 45px;
+        height: 50px;
+        font-size: 1.2rem;
     }
     
     .error-actions {
         flex-direction: column;
-        gap: 8px;
+        gap: 10px;
+    }
+    
+    .modal-header {
+        padding: 14px;
+    }
+    
+    .modal-header h2 {
+        font-size: 1.1rem;
+    }
+    
+    .pin-verification-content,
+    .withdraw-form-content,
+    .processing-content,
+    .success-content,
+    .error-content {
+        padding: 20px 14px;
+    }
+    
+    .btn {
+        padding: 12px 16px;
     }
 }
+
+/* iOS-specific adjustments */
+@supports (-webkit-touch-callout: none) {
+    /* Fix for iOS bottom safe area */
+    .modal-content {
+        margin-bottom: env(safe-area-inset-bottom, 20px);
+        padding-bottom: env(safe-area-inset-bottom, 0);
+    }
+    
+    /* Fix for iOS button styling */
+    .btn {
+        -webkit-appearance: none;
+        appearance: none;
+    }
+    
+    /* Fix for iOS input styling */
+    input, select, .pin-digit {
+        border-radius: var(--input-radius);
+        -webkit-appearance: none;
+        appearance: none;
+    }
+    
+    /* Fix for iOS scrolling */
+    .modal-content {
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    /* Fix for iOS notch */
+    .withdraw-modal {
+        padding-top: env(safe-area-inset-top, 0);
+        padding-bottom: env(safe-area-inset-bottom, 0);
+    }
+}
+
+/* Android-specific adjustments */
+@supports not (-webkit-touch-callout: none) {
+    /* Material Design-inspired elevation for Android */
+    .modal-content {
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    }
+    
+    /* Android-style ripple effect is already implemented above */
+    
+    /* Android-style focus ring */
+    input:focus, select:focus, .pin-digit:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 2px var(--primary-light);
+    }
+}
+
+/* Fix for landscape mode on mobile */
+@media (max-height: 500px) and (orientation: landscape) {
+    .modal-content {
+        max-height: 95vh;
+        margin: 2.5vh auto;
+    }
+    
+    .pin-verification-content,
+    .withdraw-form-content,
+    .processing-content,
+    .success-content,
+    .error-content {
+        padding: 15px 14px;
+    }
+    
+    .pin-icon, .success-icon, .error-icon {
+        font-size: 2rem;
+        margin-bottom: 10px;
+    }
+    
+    .loader {
+        width: 40px;
+        height: 40px;
+        margin-bottom: 15px;
+    }
+    
+    .pin-verification-content h3,
+    .processing-content h3,
+    .success-content h3,
+    .error-content h3 {
+        font-size: 1.1rem;
+        margin-bottom: 8px;
+    }
+    
+    .pin-verification-content p,
+    .processing-content p,
+    .success-content p,
+    .error-content p {
+        margin-bottom: 15px;
+    }
+    
+    .pin-input-container {
+        margin-bottom: 15px;
+    }
+    
+    .pin-digit {
+        width: 35px;
+        height: 40px;
+        font-size: 1.1rem;
+    }
+    
+    .form-group {
+        margin-bottom: 12px;
+    }
+    
+    .balance-info, .fee-summary, .amount-preview, .transaction-details {
+        padding: 10px;
+        margin-bottom: 12px;
+    }
+}
+
+/* Fix for high pixel density screens */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .modal-content {
+        border-width: 0.5px;
+    }
+}
+
+/* Fix for reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+    .modal-content,
+    .success-icon,
+    .error-icon,
+    .btn:active,
+    .btn::after {
+        animation: none !important;
+        transition: none !important;
+    }
+    
+    .loader {
+        animation-duration: 2s !important;
+    }
+}
+
+/* Fix for dark mode */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --modal-bg: #1a1a2e;
+        --modal-text: #ffffff;
+        --modal-text-secondary: #ece7e7;
+        --card-bg: rgba(248, 249, 250, 0.05);
+        --input-bg: rgba(249, 249, 249, 0.05);
+    }
+}
+
+/* Fix for sticky hover on mobile */
+@media (hover: none) {
+    .btn:hover {
+        background-color: var(--primary-color);
+    }
+    
+    .btn-primary:hover {
+        background-color: var(--primary-color);
+    }
+    
+    .btn-secondary:hover {
+        background-color: #6c757d;
+    }
+    
+    .btn-success:hover {
+        background-color: var(--success-color);
+    }
+    
+    .close-modal:hover {
+        opacity: 1;
+    }
+}
+
+/* Fix for keyboard appearing on mobile */
+@media screen and (max-height: 450px) {
+    .modal-content {
+        max-height: 100vh;
+        border-radius: 0;
+    }
+}
+
+/* Optimizations for foldable devices */
+@media (max-width: 320px) {
+    .pin-digit {
+        width: 35px;
+        height: 45px;
+    }
+    
+    .modal-header h2 {
+        font-size: 1rem;
+    }
+    
+    .btn, input, select {
+        padding: 10px 14px;
+        font-size: 0.9rem;
+    }
+}
+
+/* Optimizations for larger tablets */
+@media (min-width: 768px) {
+    .modal-content {
+        max-width: 500px;
+    }
+    
+    .modal-header {
+        padding: 18px 20px;
+    }
+    
+    .pin-verification-content,
+    .withdraw-form-content,
+    .processing-content,
+    .success-content,
+    .error-content {
+        padding: 30px 24px;
+    }
+}
+
+/* Fix for notched devices */
+@supports (padding-top: env(safe-area-inset-top)) {
+    .withdraw-modal {
+        padding-top: env(safe-area-inset-top);
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+}
+
+/* Fix for iOS Safari bottom bar */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+    .modal-content {
+        margin-bottom: env(safe-area-inset-bottom, 0);
+    }
+    
+    .btn {
+        margin-bottom: env(safe-area-inset-bottom, 0);
+    }
+}
+
+/* Fix for iOS input zoom */
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+    input, select, .pin-digit {
+        font-size: 16px;
+    }
+    
+    select {
+        text-indent: 1px;
+        text-overflow: '';
+    }
+}
+
+/* Fix for Firefox */
+@-moz-document url-prefix() {
+    .pin-digit {
+        padding: 0;
+    }
+    
+    select {
+        text-indent: 0;
+        text-overflow: '';
+        padding-right: 25px;
+    }
+}
+
+/* Accessibility improvements */
+.btn:focus-visible,
+input:focus-visible,
+select:focus-visible,
+.pin-digit:focus-visible,
+.close-modal:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+/* Fix for print mode */
+@media print {
+    .withdraw-modal {
+        position: absolute;
+        background-color: white;
+    }
+    
+    .modal-content {
+        box-shadow: none;
+    }
+}
+
+
 /* Game Portal Styles */
 .game-portal-container {
   position: fixed;
@@ -8545,10 +9316,19 @@ input:checked + .toggle-slider:before {
         </div>
         
         <div class="trophy-btn">
-            <i class="fas fa-trophy"></i>
-            <span>Trophy</span>
-        </div>
-        
+    <i class="fas fa-trophy"></i>
+    <div class="shine-sweep"></div>
+    <span>Trophy</span>
+</div>
+
+        <div class="wallet1-btn">
+          
+         <div class="walleticon-btn">
+                    <i class="fas fa-wallet"></i>
+                 </div>
+               
+            </div>
+            
         <div class="hamburger-menu">
             <i class="fas fa-bars"></i>
         </div>
@@ -8558,12 +9338,6 @@ input:checked + .toggle-slider:before {
     <div class="dashboard-container">
         <!-- Action Buttons Container - Single Row -->
         <div class="action-buttons-row">
-            <div class="action-btn wallet-btn">
-                <div class="action-icon wallet-icon">
-                    <i class="fas fa-wallet"></i>
-                </div>
-                <span>Wallet</span>
-            </div>
             
             <div class="action-btn creator-btn">
                 <div class="action-icon">
@@ -11511,274 +12285,6 @@ logoutBtns.forEach(btn => {
 
 
 
-// Add additional CSS for dashboard
-const dashboardStyles = document.createElement('style');
-dashboardStyles.textContent = `
-  /* Dashboard Styles */
-  .dashboard-page {
-    display: none;
-    flex-direction: column;
-    height: 100vh;
-    width: 100%;
-    max-width: 100%;
-    overflow-x: hidden;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #f8f9fa;
-    z-index: 1000;
-  }
-
-
-  .dashboard-page.active {
-    display: flex;
-  }
-
-
-  /* Top Navigation Bar */
-  .dashboard-nav {
-    background-color: white;
-    padding: 10px 15px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-    position: relative;
-    width: 100%;
-    z-index: 100;
-    flex-shrink: 0;
-    height: 56px;
-  }
-
-
-  .user-info {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-
-  .profile-circle {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    overflow: hidden;
-    background-color: #ddd;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 2px solid #6c5ce7;
-    flex-shrink: 0;
-  }
-
-
-  .profile-circle img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-
-  .username {
-    font-weight: 600;
-    font-size: 0.95rem;
-    color: #333;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 100px;
-  }
-
-
-  .trophy-btn {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background-color: #6c5ce7;
-    color: white;
-    padding: 6px 15px;
-    border-radius: 50px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 10px rgba(108, 92, 231, 0.2);
-    font-size: 0.9rem;
-    white-space: nowrap;
-  }
-
-
-  .trophy-btn:hover {
-    background-color: #5b4bc4;
-  }
-
-
-  .trophy-btn i {
-    font-size: 0.9rem;
-  }
-
-
-  .hamburger-menu {
-    width: 36px;
-    height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    border-radius: 50%;
-    transition: all 0.3s ease;
-    flex-shrink: 0;
-  }
-
-
-  .hamburger-menu:hover {
-    background-color: rgba(0, 0, 0, 0.05);
-  }
-
-
-  .hamburger-menu i {
-    font-size: 1.2rem;
-    color: #333;
-  }
-
-
-  /* Main Dashboard Container */
-  .dashboard-container {
-    flex: 1;
-    padding: 15px;
-    width: 100%;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-
-
-  /* Action Buttons - Single Row */
-  .action-buttons-row {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-    margin-top: 15px;
-    width: 100%;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    padding-bottom: 5px;
-    flex-shrink: 0;
-  }
-
-
-  .action-buttons-row::-webkit-scrollbar {
-    display: none;
-  }
-
-
-  .action-btn {
-    background-color: white;
-    border-radius: 12px;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
-    min-width: 70px;
-    flex: 1;
-  }
-
-
-  .action-btn:active {
-    transform: scale(0.95);
-  }
-
-
-  .action-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.1rem;
-  }
-
-
-  /* Spinning animation for spin icon */
-  .spin-icon {
-    position: relative;
-    overflow: hidden;
-  }
-
-
-  .spin-icon i {
-    animation: spin 5s linear infinite;
-  }
-
-
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-
-
-  .spin-icon::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    border-radius: 50%;
-    border: 2px dashed #2ecc71;
-    animation: spin-reverse 10s linear infinite;
-  }
-
-
-  @keyframes spin-reverse {
-    0% { transform: rotate(360deg); }
-    100% { transform: rotate(0deg); }
-  }
-
-
-  .wallet-btn .action-icon {
-    background-color: rgba(108, 92, 231, 0.1);
-    color: #6c5ce7;
-  }
-
-
-  .creator-btn .action-icon {
-    background-color: rgba(253, 121, 168, 0.1);
-    color: #fd79a8;
-  }
-
-
-  .spin-btn .action-icon {
-    background-color: rgba(46, 204, 113, 0.1);
-    color: #2ecc71;
-  }
-
-
-  .notification-btn .action-icon {
-    background-color: rgba(241, 196, 15, 0.1);
-    color: #f1c40f;
-  }
-
-
-  .action-btn span {
-    font-weight: 500;
-    font-size: 0.8rem;
-    color: #333;
-    text-align: center;
-    white-space: nowrap;
-  }
-`;
-document.head.appendChild(dashboardStyles);
-
-
 // Initialize the app
 console.log('Firebase Auth initialized');
 
@@ -13902,7 +14408,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 document.addEventListener('DOMContentLoaded', function() {
     // DOM Elements
-    const walletBtn = document.querySelector('.wallet-btn');
+    const wallet1Btn = document.querySelector('.wallet1-btn');
     const walletModal = document.getElementById('walletModal');
     const closeWalletBtn = document.getElementById('closeWalletBtn');
     const closeWalletDashboardBtn = document.getElementById('closeWalletDashboardBtn');
@@ -13929,7 +14435,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const pinLoginDigits = document.querySelectorAll('.pin-login-digit');
     
     // Constants
-    const TALENT_COIN_RATE = 10; // 1 Talent Coin = ₦100 (example rate)
+    const TALENT_COIN_RATE = 15; // 1 Talent Coin = ₦150 (example rate)
     
     // Create backup email elements dynamically
     createBackupEmailSection();
@@ -13942,8 +14448,8 @@ document.addEventListener('DOMContentLoaded', function() {
     initWallet();
     
     // Event Listeners
-    if (walletBtn) {
-        walletBtn.addEventListener('click', openWallet);
+    if (wallet1Btn) {
+        wallet1Btn.addEventListener('click', openWallet);
     }
     
     if (closeWalletBtn) {
