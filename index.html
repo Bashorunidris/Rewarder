@@ -2627,8 +2627,6 @@ input:checked + .slider:before {
 }
 
 
-
-
 :root {
     --primary-color: #6c5ce7;
     --primary-light: #a29bfe;
@@ -3054,6 +3052,545 @@ body {
 }
 
 
+/* Buy Coins Button */
+.buy-coin-btn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: background-color 0.3s;
+}
+
+.buy-coin-btn:hover {
+  background-color: #45a049;
+}
+
+/* Modal Styles */
+.buy-coins-modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto;
+  padding: 0;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  max-width: 600px;
+  position: relative;
+  animation: modalFadeIn 0.3s;
+}
+
+@keyframes modalFadeIn {
+  from {opacity: 0; transform: translateY(-20px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #e9ecef;
+  border-radius: 8px 8px 0 0;
+}
+
+.modal-header h2 {
+  margin: 0;
+  color: #333;
+  font-size: 1.5rem;
+}
+
+.close-modal {
+  color: #aaa;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.close-modal:hover {
+  color: #333;
+}
+
+/* Tab Navigation */
+.modal-tabs {
+  display: flex;
+  border-bottom: 1px solid #e9ecef;
+  background-color: #f8f9fa;
+}
+
+.tab-btn {
+  flex: 1;
+  background-color: transparent;
+  border: none;
+  padding: 15px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #6c757d;
+  cursor: pointer;
+  transition: all 0.3s;
+  position: relative;
+}
+
+.tab-btn:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 3px;
+  background-color: #4CAF50;
+  transition: width 0.3s;
+}
+
+.tab-btn.active {
+  color: #4CAF50;
+}
+
+.tab-btn.active:after {
+  width: 100%;
+}
+
+.tab-btn:hover {
+  background-color: #f1f3f5;
+}
+
+/* Tab Content */
+.tab-content {
+  display: none;
+  padding: 20px;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+/* Buy Coins Tab */
+.coin-purchase-form {
+  padding: 10px 0;
+}
+
+.coin-rate-info {
+  background-color: #f8f9fa;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  font-weight: 600;
+  color: #495057;
+  text-align: center;
+}
+
+.coin-packages {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.package-option {
+  display: flex;
+  align-items: center;
+  padding: 12px 15px;
+  border: 1px solid #e9ecef;
+  border-radius: 6px;
+  transition: all 0.3s;
+  position: relative;
+}
+
+.package-option:hover {
+  border-color: #4CAF50;
+  background-color: #f1f8e9;
+}
+
+.package-option input[type="radio"] {
+  margin-right: 15px;
+  accent-color: #4CAF50;
+}
+
+.package-option label {
+  flex: 1;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.price {
+  font-weight: 600;
+  color: #495057;
+  margin-right: 10px;
+}
+
+.bonus-tag {
+  background-color: #4CAF50;
+  color: white;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.summary-section {
+  background-color: #f8f9fa;
+  padding: 15px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.summary-row:last-child {
+  border-bottom: none;
+  font-weight: 600;
+}
+
+.btn {
+  display: inline-block;
+  font-weight: 600;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  user-select: none;
+  border: 1px solid transparent;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 0.25rem;
+  transition: all 0.15s ease-in-out;
+  cursor: pointer;
+  width: 100%;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.btn-primary:hover {
+  background-color: #0069d9;
+  border-color: #0062cc;
+}
+
+.btn-success {
+  color: #fff;
+  background-color: #4CAF50;
+  border-color: #4CAF50;
+}
+.btn-success:hover {
+  background-color: #45a049;
+  border-color: #39843c;
+}
+
+.btn-secondary {
+  color: #fff;
+  background-color: #6c757d;
+  border-color: #6c757d;
+}
+
+.btn-secondary:hover {
+  background-color: #5a6268;
+  border-color: #545b62;
+}
+
+/* Payment Instructions */
+.payment-instructions {
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 6px;
+  margin-top: 20px;
+}
+
+.payment-instructions.hidden {
+  display: none;
+}
+
+.account-details {
+  background-color: white;
+  border: 1px solid #e9ecef;
+  border-radius: 6px;
+  padding: 15px;
+  margin: 15px 0;
+}
+
+.detail-row {
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #f1f3f5;
+}
+
+.detail-row:last-child {
+  border-bottom: none;
+}
+
+.detail-label {
+  font-weight: 600;
+  width: 40%;
+  color: #495057;
+}
+
+.detail-value {
+  flex: 1;
+}
+
+.copy-btn {
+  background-color: #e9ecef;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  margin-left: 10px;
+  transition: background-color 0.3s;
+}
+
+.copy-btn:hover {
+  background-color: #dee2e6;
+}
+
+.instruction-note {
+  background-color: #fff3cd;
+  border-left: 4px solid #ffc107;
+  padding: 10px 15px;
+  margin: 15px 0;
+  color: #856404;
+}
+
+.tab-nav-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  width: 100%;
+  margin-top: 15px;
+  transition: background-color 0.3s;
+}
+
+.tab-nav-btn:hover {
+  background-color: #0069d9;
+}
+
+/* Confirm Payment Tab */
+.payment-confirmation-form {
+  padding: 10px 0;
+}
+
+.confirmation-info {
+  margin-bottom: 20px;
+  color: #495057;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+  color: #495057;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 16px;
+  transition: border-color 0.3s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: #4CAF50;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+}
+
+.verification-notice {
+  background-color: #e8f5e9;
+  border-left: 4px solid #4CAF50;
+  padding: 10px 15px;
+  margin: 20px 0;
+  color: #2e7d32;
+}
+
+/* Confirmation Success Popup Styles */
+.confirmation-success {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  padding: 30px;
+  text-align: center;
+  max-width: 500px;
+  width: 90%;
+  z-index: 1000;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.hidden {
+  display: none;
+  opacity: 0;
+  transform: translate(-50%, -60%);
+}
+
+.success-icon {
+  margin-bottom: 20px;
+}
+
+.success-icon i {
+  font-size: 60px;
+  color: #28a745;
+}
+
+.confirmation-success h3 {
+  color: #333;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.confirmation-success p {
+  color: #666;
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+
+.pending-info {
+  background-color: #f8f9fa;
+  border-radius: 6px;
+  padding: 15px;
+  margin: 20px 0;
+  border-left: 4px solid #17a2b8;
+}
+
+.pending-info p {
+  margin: 5px 0;
+  font-size: 0.95em;
+}
+
+#closeModalBtn {
+  margin-top: 15px;
+  padding: 10px 25px;
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+#closeModalBtn:hover {
+  background-color: #5a6268;
+}
+
+/* Overlay background */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  display: none;
+}
+
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .modal-content {
+    width: 95%;
+    margin: 10% auto;
+  }
+  
+  .detail-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .detail-label {
+    width: 100%;
+    margin-bottom: 5px;
+  }
+  
+  .copy-btn {
+    margin-left: 0;
+    margin-top: 5px;
+  }
+}
+
+/* Animation for tab switching */
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+.tab-content.active {
+  animation: fadeIn 0.5s;
+}
+
+/* Highlight selected package */
+.package-option.selected {
+  border-color: #4CAF50;
+  background-color: #e8f5e9;
+  box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+}
+
+/* Loading state for buttons */
+.btn.loading {
+  position: relative;
+  color: transparent;
+  pointer-events: none;
+}
+
+.btn.loading:after {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  top: 50%;
+  left: 50%;
+  margin: -10px 0 0 -10px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: #fff;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.hidden {
+  display: none !important;
+} 
 
 .wallet-action-card:hover:after {
   transform: scaleX(1);
@@ -3674,6 +4211,11 @@ button,
 
 
 
+
+
+
+
+
 /* Buy Coins Modal Styles */
 .buy-coins-modal {
   position: fixed;
@@ -3681,49 +4223,37 @@ button,
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #f8f9fa;
-  z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 2000;
   overflow-y: auto;
   display: none;
   animation: fadeIn 0.3s ease-in-out;
 }
 
-.buyCoins-content {
-  background: #ffffff;
-  border-radius: 12px;
-  width: 100%;
-  max-width: 600px;
-  max-height: 95vh;
-  overflow-y: auto;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+.buyCoins-modal-content {
   position: relative;
-  animation: modalSlideIn 0.3s ease-out;
+  width: 90%;
+  max-width: 800px;
+  max-height: 90%;
+  margin: 2% auto;
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
-@keyframes modalSlideIn {
-  from {
-    opacity: 0;
-    transform: translateY(-50px) scale(0.9);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-/* Header */
-.buyCoins-header {
+.buyCoins-modal-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 25px;
-  border-bottom: 2px solid #f0f0f0;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 1.5rem 2rem;
+  background-color: #1a1a2e;
   color: white;
-  border-radius: 12px 12px 0 0;
 }
 
-.buyCoins-header h2 {
+.buyCoins-modal-header h2 {
   margin: 0;
   font-size: 1.5rem;
   font-weight: 600;
@@ -3732,369 +4262,410 @@ button,
 .close-buycoins {
   background: none;
   border: none;
-  font-size: 2rem;
   color: white;
+  font-size: 2rem;
   cursor: pointer;
+  transition: color 0.2s;
   padding: 0;
   width: 40px;
   height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 50%;
-  transition: background-color 0.3s ease;
 }
 
 .close-buycoins:hover {
-  background-color: rgba(255, 255, 255, 0.2);
+  color: #e74c3c;
 }
 
-/* Tabs */
-.buyCoins-tabs {
+.close-buycoins:focus {
+  outline: 2px solid #473ce7;
+  outline-offset: 2px;
+}
+
+/* Modal Tabs */
+.buyCoins-modal-tabs {
   display: flex;
-  background-color: #f8f9fa;
-  border-bottom: 1px solid #e9ecef;
+  background-color: #2c3e50;
+  border-bottom: 1px solid #34495e;
 }
 
-.tab-btn {
+.buyCoins-tab-btn {
   flex: 1;
-  padding: 15px 20px;
-  background: none;
+  padding: 1rem 1.5rem;
+  background-color: transparent;
+  color: #bdc3c7;
   border: none;
   cursor: pointer;
   font-size: 1rem;
   font-weight: 500;
-  color: #6c757d;
-  transition: all 0.3s ease;
-  border-bottom: 3px solid transparent;
+  transition: all 0.3s;
+  position: relative;
 }
 
-.tab-btn.active {
-  color: #667eea;
-  border-bottom-color: #667eea;
-  background-color: white;
+.buyCoins-tab-btn.active {
+  background-color: #3f3ce7;
+  color: white;
 }
 
-.tab-btn:hover {
-  background-color: #e9ecef;
+.buyCoins-tab-btn:hover {
+  background-color: #34495e;
+  color: white;
+}
+
+.buyCoins-tab-btn:focus {
+  outline: 2px solid #473ce7;
+  outline-offset: -2px;
 }
 
 /* Tab Content */
-.tab-content {
+.buyCoins-tab-content {
   display: none;
-  padding: 25px;
+  padding: 2rem;
+  flex: 1;
+  overflow-y: auto;
 }
 
-.tab-content.active {
+.buyCoins-tab-content.active {
   display: block;
 }
 
 /* Coin Purchase Form */
-.buyCoins-coin-purchase-form h3 {
-  margin: 0 0 10px 0;
-  color: #333;
+.coin-purchase-form h3 {
+  margin: 0 0 1rem 0;
+  color: #2c3e50;
   font-size: 1.3rem;
 }
 
-.buyCoins-coin-rate-info {
-  color: #666;
-  margin-bottom: 25px;
-  font-size: 1rem;
-  background: #f8f9fa;
-  padding: 10px 15px;
-  border-radius: 8px;
-  border-left: 4px solid #667eea;
+.coin-rate-info {
+  background-color: #e8f4fd;
+  color: #2980b9;
+  padding: 0.8rem 1rem;
+  border-radius: 6px;
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+  border-left: 4px solid #3498db;
 }
 
-/* Package Options */
-.buyCoins-packages {
-  margin-bottom: 25px;
+/* Coin Packages */
+.coin-packages {
+  display: grid;
+  gap: 1rem;
+  margin-bottom: 2rem;
 }
 
 .buyCoins-package-option {
   display: flex;
   align-items: center;
-  padding: 15px;
-  border: 2px solid #e9ecef;
-  border-radius: 10px;
-  margin-bottom: 12px;
+  padding: 1rem 1.2rem;
+  border: 2px solid #ecf0f1;
+  border-radius: 8px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.3s;
   position: relative;
-  background: white;
+  background-color: #fff;
 }
 
 .buyCoins-package-option:hover {
-  border-color: #667eea;
-  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.1);
+  border-color: #3498db;
+  box-shadow: 0 2px 8px rgba(52, 152, 219, 0.1);
 }
 
 .buyCoins-package-option input[type="radio"] {
-  margin-right: 12px;
+  margin-right: 1rem;
   transform: scale(1.2);
-  accent-color: #667eea;
+  accent-color: #3498db;
+}
+
+.buyCoins-package-option input[type="radio"]:checked + label {
+  color: #2980b9;
+  font-weight: 600;
+}
+
+.buyCoins-package-option input[type="radio"]:checked {
+  outline: 2px solid #3498db;
+}
+
+.buyCoins-package-option:has(input:checked) {
+  border-color: #3498db;
+  background-color: #f8fcff;
+  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.15);
 }
 
 .buyCoins-package-option label {
   flex: 1;
   cursor: pointer;
-  font-weight: 500;
-  color: #333;
+  font-size: 1rem;
+  color: #2c3e50;
+  margin: 0;
 }
 
 .buyCoins-price {
-  font-weight: 600;
-  color: #28a745;
+  font-weight: bold;
+  color: #27ae60;
   font-size: 1.1rem;
-  margin-right: 10px;
+  margin-right: 0.5rem;
 }
 
 .buyCoins-bonus-tag {
-  background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+  background-color: #e74c3c;
   color: white;
-  padding: 4px 8px;
+  padding: 0.3rem 0.6rem;
   border-radius: 12px;
   font-size: 0.8rem;
-  font-weight: 600;
-}
-
-.buyCoins-package-option input[type="radio"]:checked + label {
-  color: #667eea;
-}
-
-.buyCoins-package-option:has(input[type="radio"]:checked) {
-  border-color: #667eea;
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.05), rgba(118, 75, 162, 0.05));
+  font-weight: bold;
+  position: absolute;
+  right: 1rem;
+  top: -8px;
 }
 
 /* Summary Section */
 .buyCoins-summary-section {
-  background: #f8f9fa;
-  padding: 20px;
-  border-radius: 10px;
-  margin-bottom: 25px;
+  background-color: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
   border: 1px solid #e9ecef;
 }
 
 .buyCoins-summary-row {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 10px;
+  margin-bottom: 0.8rem;
   font-size: 1rem;
 }
 
 .buyCoins-summary-row:last-child {
   margin-bottom: 0;
-  font-weight: 600;
+  font-weight: bold;
   font-size: 1.1rem;
-  color: #333;
+  color: #2c3e50;
   border-top: 1px solid #dee2e6;
-  padding-top: 10px;
-}
-
-/* Buttons */
-.buyCoins-btn {
-  width: 100%;
-  padding: 15px;
-  border: none;
-  border-radius: 8px;
-  font-size: 1.1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.btn-success {
-  background: linear-gradient(135deg, #28a745, #20c997);
-  color: white;
-}
-
-.btn-success:hover {
-  background: linear-gradient(135deg, #218838, #1ea080);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
-}
-
-.btn-primary {
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  color: white;
-}
-
-.btn-primary:hover {
-  background: linear-gradient(135deg, #5a6fd8, #6a4190);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
-}
-
-.btn-secondary {
-  background: #6c757d;
-  color: white;
-}
-
-.btn-secondary:hover {
-  background: #5a6268;
-  transform: translateY(-2px);
+  padding-top: 0.8rem;
 }
 
 /* Payment Instructions */
-.buyCoins-payment-instructions {
-  margin-top: 25px;
-  padding: 20px;
-  background: #f8f9fa;
-  border-radius: 10px;
-  border: 1px solid #e9ecef;
-}
-
-.buyCoins-payment-instructions h3 {
-  color: #333;
-  margin-bottom: 15px;
-}
-
-.buyCoins-account-details {
-  background: white;
-  padding: 20px;
+.payment-instructions {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background-color: #fff3cd;
+  border: 1px solid #ffeaa7;
   border-radius: 8px;
-  margin: 15px 0;
-  border: 1px solid #dee2e6;
+}
+
+.payment-instructions h3 {
+  color: #856404;
+  margin: 0 0 1rem 0;
+}
+
+.payment-instructions p {
+  color: #856404;
+  margin-bottom: 1.5rem;
+}
+
+.account-details {
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 6px;
+  margin-bottom: 1.5rem;
+  border: 1px solid #f1c40f;
 }
 
 .buyCoins-detail-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 12px;
-  flex-wrap: wrap;
-  gap: 10px;
+  margin-bottom: 1rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px solid #ecf0f1;
 }
 
 .buyCoins-detail-row:last-child {
   margin-bottom: 0;
+  border-bottom: none;
+  padding-bottom: 0;
 }
 
 .buyCoins-detail-label {
   font-weight: 600;
-  color: #495057;
+  color: #2c3e50;
 }
 
 .buyCoins-detail-value {
-  font-weight: 500;
-  color: #333;
+  font-weight: bold;
+  color: #27ae60;
+  font-size: 1.1rem;
 }
 
 .buyCoins-copy-btn {
-  background: #667eea;
+  background-color: #3498db;
   color: white;
   border: none;
-  padding: 5px 10px;
-  border-radius: 5px;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
   cursor: pointer;
   font-size: 0.9rem;
-  transition: background-color 0.3s ease;
+  margin-left: 0.5rem;
+  transition: background-color 0.2s;
 }
 
 .buyCoins-copy-btn:hover {
-  background: #5a6fd8;
+  background-color: #2980b9;
 }
 
-.buyCoins-instruction-note {
-  background: #e7f3ff;
-  padding: 15px;
-  border-radius: 8px;
-  border-left: 4px solid #007bff;
-  margin: 15px 0;
+.instruction-note {
+  background-color: #d1ecf1;
+  color: #0c5460;
+  padding: 1rem;
+  border-radius: 6px;
+  margin-bottom: 1.5rem;
+  border-left: 4px solid #17a2b8;
 }
 
-.tab-nav-btn {
-  width: 100%;
-  padding: 12px;
-  background: #667eea;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 600;
-  transition: background-color 0.3s ease;
+/* Payment Confirmation Form */
+.payment-confirmation-form h3 {
+  margin: 0 0 1rem 0;
+  color: #2c3e50;
+  font-size: 1.3rem;
 }
 
-.tab-nav-btn:hover {
-  background: #5a6fd8;
-}
-
-/* Form Styles */
-.buyCoins-payment-confirmation-form h3 {
-  color: #333;
-  margin-bottom: 10px;
-}
-
-.confirmation-info {
-  color: #666;
-  margin-bottom: 25px;
+.buyCoins-confirmation-info {
+  color: #7f8c8d;
+  margin-bottom: 2rem;
+  line-height: 1.5;
 }
 
 .buyCoins-form-group {
-  margin-bottom: 20px;
+  margin-bottom: 1.5rem;
 }
 
 .buyCoins-form-group label {
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: 0.5rem;
   font-weight: 600;
-  color: #333;
+  color: #2c3e50;
 }
 
 .buyCoins-form-group input {
   width: 100%;
-  padding: 12px 15px;
-  border: 2px solid #e9ecef;
-  border-radius: 8px;
+  padding: 0.8rem 1rem;
+  border: 2px solid #ecf0f1;
+  border-radius: 6px;
   font-size: 1rem;
-  transition: border-color 0.3s ease;
+  transition: border-color 0.3s;
   box-sizing: border-box;
 }
 
 .buyCoins-form-group input:focus {
   outline: none;
-  border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  border-color: #3498db;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
 }
 
 .buyCoins-verification-notice {
-  background: #fff3cd;
-  padding: 15px;
-  border-radius: 8px;
-  border-left: 4px solid #ffc107;
-  margin-bottom: 20px;
+  background-color: #e8f5e8;
+  color: #155724;
+  padding: 1rem;
+  border-radius: 6px;
+  margin-bottom: 1.5rem;
+  border-left: 4px solid #28a745;
 }
 
-.buyCoins-verification-notice p {
-  margin: 0;
-  color: #856404;
-}
-
-/* Success Message */
+/* Confirmation Success */
 .confirmation-success {
   text-align: center;
-  padding: 30px 20px;
+  padding: 2rem;
 }
 
-.sbuyCoins-uccess-icon {
+.success-icon {
   font-size: 4rem;
   color: #28a745;
-  margin-bottom: 20px;
+  margin-bottom: 1rem;
 }
 
 .confirmation-success h3 {
   color: #28a745;
-  margin-bottom: 15px;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.confirmation-success p {
+  color: #6c757d;
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
 }
 
 .pending-info {
-  background: #e7f3ff;
-  padding: 15px;
+  background-color: #fff3cd;
+  color: #856404;
+  padding: 1.5rem;
   border-radius: 8px;
-  margin: 20px 0;
+  margin-bottom: 2rem;
+  border: 1px solid #ffeaa7;
+}
+
+.pending-info span {
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+/* Buttons */
+.btn {
+  padding: 0.8rem 2rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.3s;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+}
+
+.btn-success {
+  background-color: #28a745;
+  color: white;
+}
+
+.btn-success:hover {
+  background-color: #218838;
+  transform: translateY(-1px);
+}
+
+.btn-primary {
+  background-color: #3498db;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #2980b9;
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background-color: #5a6268;
+  transform: translateY(-1px);
+}
+
+.tab-nav-btn {
+  background-color: #f39c12;
+  color: white;
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s;
+}
+
+.tab-nav-btn:hover {
+  background-color: #e67e22;
 }
 
 /* Utility Classes */
@@ -4102,119 +4673,380 @@ button,
   display: none !important;
 }
 
-/* Responsive Design */
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
 
-/* Large tablets and small desktops */
-@media (max-width: 1024px) {
-  .buyCoins-content {
-    max-width: 90%;
-    margin: 20px;
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
   }
-  
-  .buyCoins-header {
-    padding: 18px 20px;
-  }
-  
-  .buyCoins-header h2 {
-    font-size: 1.4rem;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-/* Tablets (iPad) */
+.buyCoins-modal-content {
+  animation: slideInUp 0.3s ease-out;
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
-  .buy-coins-modal {
-    padding: 15px;
+  .buyCoins-modal-content {
+    width: 95%;
+    margin: 1% auto;
+    max-height: 98%;
   }
   
-  .buyCoins-content {
-    max-width: 100%;
-    max-height: 90vh;
+  .buyCoins-modal-header {
+    padding: 1rem 1.5rem;
   }
   
-  .buyCoins-header {
-    padding: 15px 18px;
-  }
-  
-  .buyCoins-header h2 {
+  .buyCoins-modal-header h2 {
     font-size: 1.3rem;
   }
   
-  .tab-content {
-    padding: 20px;
-  }
-  
-  .tab-btn {
-    padding: 12px 15px;
-    font-size: 0.95rem;
+  .buyCoins-tab-content {
+    padding: 1.5rem;
   }
   
   .buyCoins-package-option {
-    padding: 12px;
+    padding: 0.8rem 1rem;
     flex-wrap: wrap;
-    gap: 8px;
+  }
+  
+  .buyCoins-bonus-tag {
+    position: static;
+    margin-top: 0.5rem;
+    align-self: flex-start;
   }
   
   .buyCoins-detail-row {
     flex-direction: column;
     align-items: flex-start;
-    gap: 5px;
+    gap: 0.5rem;
   }
   
   .buyCoins-copy-btn {
-    align-self: flex-end;
+    margin-left: 0;
+    margin-top: 0.5rem;
   }
 }
 
-/* Large phones */
 @media (max-width: 480px) {
-  .buy-coins-modal {
-    padding: 10px;
+  .buyCoins-modal-tabs {
+    flex-direction: column;
   }
   
-  .buyCoins-content {
-    border-radius: 8px;
-    max-height: 95vh;
-  }
-  
-  .buyCoins-header {
-    padding: 12px 15px;
-    border-radius: 8px 8px 0 0;
-  }
-  
-  .buyCoins-header h2 {
-    font-size: 1.2rem;
-  }
-  
-  .close-buycoins {
-    width: 35px;
-    height: 35px;
-    font-size: 1.5rem;
-  }
-  
-  .tab-content {
-    padding: 15px;
-  }
-  
-  .tab-btn {
-    padding: 10px 8px;
+  .buyCoins-tab-btn {
+    padding: 0.8rem 1rem;
     font-size: 0.9rem;
   }
   
-  .buyCoins-coin-purchase-form h3 {
-    font-size: 1.2rem;
+  .coin-packages {
+    gap: 0.8rem;
   }
   
   .buyCoins-package-option {
-    padding: 10px;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
+    padding: 0.6rem 0.8rem;
+    font-size: 0.9rem;
   }
   
- 
+  .buyCoins-package-option label {
+    font-size: 0.9rem;
+  }
+  
+  .buyCoins-price {
+    font-size: 1rem;
+  }
+  
+  .buyCoins-bonus-tag {
+    font-size: 0.7rem;
+    padding: 0.2rem 0.4rem;
+  }
+  
+  .buyCoins-summary-section {
+    padding: 1rem;
+  }
+  
+  .buyCoins-summary-row {
+    font-size: 0.9rem;
+  }
+  
+  .account-details {
+    padding: 1rem;
+  }
+  
+  .buyCoins-detail-label,
+  .buyCoins-detail-value {
+    font-size: 0.9rem;
+  }
+  
+  .btn {
+    padding: 0.7rem 1.5rem;
+    font-size: 0.9rem;
+  }
+  
+  .success-icon {
+    font-size: 3rem;
+  }
+  
+  .confirmation-success h3 {
+    font-size: 1.3rem;
+  }
+}
 
+/* Focus and Accessibility Improvements */
+.buyCoins-package-option:focus-within {
+  border-color: #3498db;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
 
+.btn:focus {
+  outline: 2px solid #2c3e50;
+  outline-offset: 2px;
+}
 
+.tab-nav-btn:focus {
+  outline: 2px solid #2c3e50;
+  outline-offset: 2px;
+}
+
+/* Loading States */
+.btn.loading {
+  opacity: 0.7;
+  cursor: not-allowed;
+  position: relative;
+}
+
+.btn.loading::after {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  margin: auto;
+  border: 2px solid transparent;
+  border-top-color: currentColor;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@keyframes spin {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Error States */
+.buyCoins-form-group.error input {
+  border-color: #e74c3c;
+  box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
+}
+
+.buyCoins-form-group .error-message {
+  color: #e74c3c;
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+  display: block;
+}
+
+/* Success States */
+.buyCoins-form-group.success input {
+  border-color: #28a745;
+  box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.1);
+}
+
+/* Copy Button Animation */
+.buyCoins-copy-btn.copied {
+  background-color: #28a745;
+  animation: pulse 0.3s ease-in-out;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+/* Tooltip for Copy Button */
+.buyCoins-copy-btn {
+  position: relative;
+}
+
+.buyCoins-copy-btn::after {
+  content: 'Copied!';
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #2c3e50;
+  color: white;
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+  margin-bottom: 5px;
+}
+
+.buyCoins-copy-btn.copied::after {
+  opacity: 1;
+}
+
+/* Enhanced Package Selection Animation */
+.buyCoins-package-option {
+  transform: translateY(0);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.buyCoins-package-option:hover {
+  transform: translateY(-2px);
+}
+
+.buyCoins-package-option:has(input:checked) {
+  transform: translateY(-2px);
+  animation: selectPackage 0.4s ease-out;
+}
+
+@keyframes selectPackage {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-4px) scale(1.02);
+  }
+  100% {
+    transform: translateY(-2px) scale(1);
+  }
+}
+
+/* Modal Backdrop Blur Effect */
+.buy-coins-modal {
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+/* Scrollbar Styling for Modal Content */
+.buyCoins-tab-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.buyCoins-tab-content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.buyCoins-tab-content::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+.buyCoins-tab-content::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Print Styles */
+@media print {
+  .buy-coins-modal {
+    position: static;
+    background: white;
+  }
+  
+  .buyCoins-modal-content {
+    box-shadow: none;
+    border: 1px solid #000;
+  }
+  
+  .close-buycoins,
+  .btn {
+    display: none;
+  }
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+  .buyCoins-package-option {
+    border-width: 3px;
+  }
+  
+  .buyCoins-package-option:has(input:checked) {
+    border-color: #000;
+    background-color: #fff;
+  }
+  
+  .btn {
+    border: 2px solid currentColor;
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .buy-coins-modal,
+  .buyCoins-modal-content,
+  .buyCoins-package-option,
+  .btn {
+    animation: none;
+    transition: none;
+  }
+  
+  .buyCoins-package-option:hover,
+  .buyCoins-package-option:has(input:checked) {
+    transform: none;
+  }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .buyCoins-modal-content {
+    background-color: #2c3e50;
+    color: #ecf0f1;
+  }
+  
+  .buyCoins-tab-content {
+    background-color: #2c3e50;
+  }
+  
+  .coin-purchase-form h3,
+  .payment-confirmation-form h3,
+  .buyCoins-summary-row,
+  .buyCoins-detail-label {
+    color: #ecf0f1;
+  }
+  
+  .buyCoins-package-option {
+    background-color: #34495e;
+    border-color: #4a5f7a;
+    color: #ecf0f1;
+  }
+  
+  .buyCoins-package-option label {
+    color: #ecf0f1;
+  }
+  
+  .buyCoins-summary-section {
+    background-color: #34495e;
+    border-color: #4a5f7a;
+  }
+  
+  .buyCoins-form-group input {
+    background-color: #34495e;
+    border-color: #4a5f7a;
+    color: #ecf0f1;
+  }
+  
+  .account-details {
+    background-color: #34495e;
+    border-color: #f39c12;
+  }
+}
 
 
 /* Game Portal Styles */
@@ -8268,179 +9100,180 @@ input:checked + .toggle-slider:before {
     </div>
 </div> 
 
-
 <!-- Buy Coins Modal -->
 <div id="buyCoinsModal" class="buy-coins-modal">
-  <div class="buyCoins-content">
-    <div class="buyCoins-header">
-      <h2>Buy Talent Coins</h2>
-         <button class="close-buycoins" id="closebuycoinsmodal">&times;</button>
-           
-    </div>
-    
-    <div class="buyCoins-tabs">
-      <button class="tab-btn active" data-tab="buyCoins-buyTab">Buy Coins</button>
-      <button class="tab-btn" data-tab="buyCoins-confirmTab">Confirm Payment</button>
-    </div>
-    
-    <!-- Tab 1: Buy Coins -->
-    <div id="buyCoins-buyTab" class="tab-content active">
-      <div class="buyCoins-coin-purchase-form">
-        <h3>Select Coin Package</h3>
-        <p class="buyCoins-coin-rate-info">1 Talent Coin = 15 Naira</p>
-        
-        <div class="buyCoins-packages">
-          <div class="buyCoins-package-option">
-            <input type="radio" id="buyCoins-package1" name="buyCoinsPackage" value="1">
-            <label for="package1">1 Talent Coin</label>
-            <span class="buyCoins-price">₦15</span>
-          </div>
-          
-          <div class="buyCoins-package-option">
-            <input type="radio" id="package10" name="buyCoinsPackage" value="11">
-            <label for="package10">10 + 1 Bonus Talent Coins</label>
-            <span class="buyCoins-price">₦150</span>
-            <span class="buyCoins-bonus-tag">+1 Bonus</span>
-          </div>
-          
-          <div class="buyCoins-package-option">
-            <input type="radio" id="package50" name="buyCoinsPackage" value="55">
-            <label for="package50">50 + 5 Bonus Talent Coins</label>
-            <span class="buyCoins-price">₦750</span>
-            <span class="buyCoins-bonus-tag">+5 Bonus</span>
-          </div>
-          
-          <div class="buyCoins-package-option">
-            <input type="radio" id="package100" name="buyCoinsPackage" value="110">
-            <label for="package100">100 + 10 Bonus Talent Coins</label>
-            <span class="buyCoins-price">₦1,500</span>
-            <span class="buyCoins-bonus-tag">+10 Bonus</span>
-          </div>
-          
-          <div class="buyCoins-package-option">
-            <input type="radio" id="package200" name="buyCoinsPackage" value="220">
-            <label for="package200">200 + 20 Bonus Talent Coins</label>
-            <span class="buyCoins-price">₦3,000</span>
-            <span class="buyCoins-bonus-tag">+20 Bonus</span>
-          </div>
-          
-          <div class="buyCoins-package-option">
-            <input type="radio" id="package1000" name="buyCoinsPackage" value="1300">
-            <label for="package1000">1000 + 300 Bonus Talent Coins</label>
-            <span class="buyCoins-price">₦15,000</span>
-            <span class="buyCoins-bonus-tag">+300 Bonus</span>
-          </div>
-          
-          <div class="buyCoins-package-option">
-            <input type="radio" id="package2000" name="buyCoinsPackage" value="2600">
-            <label for="package2000">2000 + 600 Bonus Talent Coins</label>
-            <span class="buyCoins-price">₦30,000</span>
-            <span class="buyCoins-bonus-tag">+600 Bonus</span>
-          </div>
-        </div>
-        
-        <div class="buyCoins-summary-section">
-          <div class="buyCoins-summary-row">
-            <span>Selected Package:</span>
-            <span id="selectedPackage">None</span>
-          </div>
-          <div class="buyCoins-summary-row">
-            <span>Total Coins:</span>
-            <span id="totalCoins">0</span>
-          </div>
-          <div class="buyCoins-summary-row">
-            <span>Amount to Pay:</span>
-            <span id="amountToPay">₦0</span>
-          </div>
-        </div>
-        
-        <button id="buyCoins-payBtn" class="buyCoins-btn btn-success">Pay</button>
-      </div>
-      
-      <!-- Payment Instructions (initially hidden) -->
-      <div id="paymentInstructions" class="buyCoins-payment-instructions hidden">
-        <h3>Payment Instructions</h3>
-        <p>Please transfer the exact amount to the following account:</p>
-        
-        <div class="buyCoins-account-details">
-          <div class="buyCoins-detail-row">
-            <span class="buyCoins-detail-label">Account Name:</span>
-            <span class="buyCoins-detail-value">Rewarder Quest</span>
-          </div>
-          <div class="buyCoins-detail-row">
-            <span class="buyCoins-detail-label">Account Number (Opay):</span>
-            <span class="buyCoins-detail-value">9078139367</span>
-            <button class="buyCoins-copy-btn" data-copy="9078139367">Copy</button>
-          </div>
-          <div class="buyCoins-detail-row">
-            <span class="buyCoins-detail-label">Amount:</span>
-            <span class="buyCoins-detail-value" id="transferAmount">₦0</span>
-          </div>
-        </div>
-        
-        <div class="buyCoins-instruction-note">
-          <p>After making the transfer, please proceed to the "Confirm Payment" tab to complete your purchase.</p>
-        </div>
-        
-        <button class="tab-nav-btn" data-tab="buyCoins-confirmTab">Proceed to Confirm Payment</button>
-      </div>
-    </div>
-    
-    <!-- Tab 2: Confirm Payment -->
-    <div id="buyCoins-confirmTab" class="tab-content">
-      <div class="buyCoins-payment-confirmation-form">
-        <h3>Confirm Your Payment</h3>
-        <p class="confirmation-info">Please fill in the details of your payment to verify your transaction.</p>
-        
-        <form id="buyCoins-paymentConfirmationForm">
-          <div class="buyCoins-form-group">
-            <label for="fullName">Full Name</label>
-            <input type="text" id="fullName" name="fullName" required>
-          </div>
-          
-        
-        </div>
-          
-          <div class="buyCoins-form-group">
-            <label for="email">email</label>
-            <input type="tel" id="email" name="email" required>
-          </div>
-          
-               
-          
-          
-          <div class="buyCoins-verification-notice">
-            <p>Talent Coins will be credited to your wallet within 1 to 30 minutes after successful verification.</p>
-          </div>
-          
-          <button type="submit" id="buyCoins-submitConfirmation" class="buyCoins-btn btn-primary">Submit Confirmation</button>
-        </form>
-      </div>
-      
-      <!-- Confirmation Success (initially hidden) -->
-      <div id="buyCoins-confirmationSuccess" class="confirmation-success hidden">
-        <div class="sbuyCoins-uccess-icon">
-          <i class="fas fa-check-circle"></i>
-        </div>
-        <h3>Payment Confirmation Submitted!</h3>
-        <p>Your payment confirmation has been submitted successfully.</p>
-        <div class="pending-info">
-          
-          <p>The coins will be credited to your wallet within 1 to 30 minutes after verification.</p>
-        </div>
-        <button id="buyCoins-closeModalBtn" class="btn btn-secondary">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
+  <div class="buyCoins-modal-content">
+    <div class="buyCoins-modal-header">
+      <h2>Buy Talent Coins</h2>
+         <button class="close-buycoins" id="closebuycoinsmodal">&times;</button>
+           
+    </div>
+    
+    <div class="buyCoins-modal-tabs">
+      <button class="buyCoins-tab-btn active" data-tab="buyTab">Buy Coins</button>
+      <button class="buyCoins-tab-btn" data-tab="confirmTab">Confirm Payment</button>
+    </div>
+    
+    <!-- Tab 1: Buy Coins -->
+    <div id="buyTab" class="buyCoins-tab-content active">
+      <div class="coin-purchase-form">
+        <h3>Select Coin Package</h3>
+        <p class="coin-rate-info">1 Talent Coin = 15 Naira</p>
+        
+        <div class="coin-packages">
+          <div class="package-option">
+            <input type="radio" id="package1" name="coinPackage" value="1">
+            <label for="package1">1 Talent Coin</label>
+            <span class="buyCoins-price">₦15</span>
+          </div>
+          
+          <div class="buyCoins-package-option">
+            <input type="radio" id="package10" name="coinPackage" value="11">
+            <label for="package10">10 + 1 Bonus Talent Coins</label>
+            <span class="buyCoins-price">₦150</span>
+            <span class="buyCoins-bonus-tag">+1 Bonus</span>
+          </div>
+          
+          <div class="buyCoins-package-option">
+            <input type="radio" id="package50" name="coinPackage" value="55">
+            <label for="package50">50 + 5 Bonus Talent Coins</label>
+            <span class="buyCoins-price">₦750</span>
+            <span class="buyCoins-bonus-tag">+5 Bonus</span>
+          </div>
+          
+          <div class="buyCoins-package-option">
+            <input type="radio" id="package100" name="coinPackage" value="110">
+            <label for="package100">100 + 10 Bonus Talent Coins</label>
+            <span class="buyCoins-price">₦1,500</span>
+            <span class="buyCoins-bonus-tag">+10 Bonus</span>
+          </div>
+          
+          <div class="buyCoins-package-option">
+            <input type="radio" id="package200" name="coinPackage" value="220">
+            <label for="package200">200 + 20 Bonus Talent Coins</label>
+            <span class="buyCoins-price">₦3,000</span>
+            <span class="buyCoins-bonus-tag">+20 Bonus</span>
+          </div>
+          
+          <div class="buyCoins-package-option">
+            <input type="radio" id="package1000" name="coinPackage" value="1300">
+            <label for="package1000">1000 + 300 Bonus Talent Coins</label>
+            <span class="buyCoins-price">₦15,000</span>
+            <span class="buyCoins-bonus-tag">+300 Bonus</span>
+          </div>
+          
+          <div class="buyCoins-package-option">
+            <input type="radio" id="package2000" name="coinPackage" value="2600">
+            <label for="package2000">2000 + 600 Bonus Talent Coins</label>
+            <span class="buyCoins-price">₦30,000</span>
+            <span class="buyCoins-bonus-tag">+600 Bonus</span>
+          </div>
+        </div>
+        
+        <div class="buyCoins-summary-section">
+          <div class="buyCoins-summary-row">
+            <span>Selected Package:</span>
+            <span id="selectedPackage">None</span>
+          </div>
+          <div class="buyCoins-summary-row">
+            <span>Total Coins:</span>
+            <span id="totalCoins">0</span>
+          </div>
+          <div class="buyCoins-summary-row">
+            <span>Amount to Pay:</span>
+            <span id="amountToPay">₦0</span>
+          </div>
+        </div>
+        
+        <button id="payBtn" class="btn btn-success">Pay</button>
+      </div>
+      
+      <!-- Payment Instructions (initially hidden) -->
+      <div id="paymentInstructions" class="payment-instructions hidden">
+        <h3>Payment Instructions</h3>
+        <p>Please transfer the exact amount to the following account:</p>
+        
+        <div class="account-details">
+          <div class="buyCoins-detail-row">
+            <span class="buyCoins-detail-label">Account Name:</span>
+            <span class="buyCoins-detail-value">Rewarder Quest</span>
+          </div>
+          <div class="buyCoins-detail-row">
+            <span class="buyCoins-detail-label">Account Number (Opay):</span>
+            <span class="buyCoins-detail-value">9078139367</span>
+            <button class="buyCoins-copy-btn" data-copy="9078139367">Copy</button>
+          </div>
+          <div class="buyCoins-detail-row">
+            <span class="buyCoins-detail-label">Amount:</span>
+            <span class="buyCoins-detail-value" id="transferAmount">₦0</span>
+          </div>
+        </div>
+        
+        <div class="instruction-note">
+          <p>After making the transfer, please proceed to the "Confirm Payment" tab to complete your purchase.</p>
+        </div>
+        
+        <button class="tab-nav-btn" data-tab="confirmTab">Proceed to Confirm Payment</button>
+      </div>
+    </div>
+    
+    <!-- Tab 2: Confirm Payment -->
+    <div id="confirmTab" class="buyCoins-tab-content">
+      <div class="payment-confirmation-form">
+        <h3>Confirm Your Payment</h3>
+        <p class="buyCoins-confirmation-info">Please fill in the details of your payment to verify your transaction.</p>
+        </div>
+        <form id="paymentConfirmationForm">
+          <div class="buyCoins-form-group">
+            <label for="fullName">Full Name</label>
+            <input type="text" id="fullName" name="fullName" required>
+          </div>
+          
+          
+        
+
+          
+          <div class="buyCoins-form-group">
+            <label for="email">Email</label>
+            <input type="tel" id="email" name="email" required>
+          </div>
+          
+          
+          <div class="buyCoins-verification-notice">
+            <p>Talent Coins will be credited to your wallet within 1 to 30 minutes after successful verification.</p>
+          </div>
+         
+    
+  
+          <button type="submit" id="submitConfirmation" class="btn btn-primary">Submit Confirmation</button>
+        </form>
+      </div>
+      
+      <!-- Confirmation Success (initially hidden) -->
+      <div id="confirmationSuccess" class="confirmation-success hidden">
+        <div class="success-icon">
+          <i class="fas fa-check-circle"></i>
+        </div>
+        <h3>Payment Confirmation Submitted!</h3>
+        <p>Your payment confirmation has been submitted successfully.</p>
+        <div class="pending-info">
+          <p>Your purchase of <span id="pendingCoins">0</span> Talent Coins has been added to your pending balance.</p>
+          <p>The coins will be credited to your wallet within 1 to 30 minutes after verification.</p>
+        </div>
+        <button id="closeModalBtn" class="btn btn-secondary">Close</button>
+      </div>
+    </div>
+  </div>
+
+
 <!-- Withdraw Modal (Add this to your existing HTML) -->
 <div id="withdrawModal" class="withdraw-modal">
-    <div class="withdraw-content">
+    <div class="withdraw-modal-content">
         <!-- PIN Verification Screen -->
         <div id="pinVerificationScreen" class="modal-screen active">
-            <div class="withdraw-header">
+            <div class="withdraw-modal-header">
                 <h2>Verify PIN</h2>    
-                 <button class="close-withdraw-" id="closewithdrawmodal">&times;</button>
+                 <button class="close-withdraw-modal" id="closewithdrawmodal">&times;</button>
            
            </div>
             <div class="pin-verification-content">
@@ -8450,43 +9283,43 @@ input:checked + .toggle-slider:before {
                 <h3>Enter Your Wallet PIN</h3>
                 <p>Please enter your 4-digit wallet PIN to continue</p>
                 
-                <div class="withdraw-pin-input-container">
+                <div class="pin-input-container">
                     <input type="password" class="pin-digit" maxlength="1" inputmode="numeric" pattern="[0-9]*">
                     <input type="password" class="pin-digit" maxlength="1" inputmode="numeric" pattern="[0-9]*">
                     <input type="password" class="pin-digit" maxlength="1" inputmode="numeric" pattern="[0-9]*">
                     <input type="password" class="pin-digit" maxlength="1" inputmode="numeric" pattern="[0-9]*">
                 </div>
                 
-                <div class="withdraw-error-message" id="withdraw-pinError"></div>
+                <div class="error-message" id="pinError"></div>
                 
-                <button id="withdraw-verifyPinBtn" class="withdraw-btn btn-primary">Verify PIN</button>
+                <button id="verifyPinBtn" class="btn btn-primary">Verify PIN</button>
             </div>
         </div>
         
         <!-- Withdrawal Form Screen -->
-        <div id="withdrawFormScreen" class="withdraw-screen">
-            <div class="withdraw--header">
+        <div id="withdrawFormScreen" class="modal-screen">
+            <div class="withdraw-modal-header">
                 <h2>Withdraw Funds</h2>
-                     <button class="close-withdraw-" id="closewithdrawformscreen">&times;</button>
+                     <button class="close-modal" id="closewithdrawformscreen">&times;</button>
            
             </div>
             <div class="withdraw-form-content">
                 <div class="withdraw-balance-info">
-                    <div class="withdraw-balance-item">
-                        <span class="withdraw-balance-label">Talent coin Balance:</span>
-                        <span class="withdraw-balance-value" id="talentcoinBalance">0 TC</span>
+                    <div class="balance-item">
+                        <span class="balance-label">Talent Coin Balance:</span>
+                        <span class="balance-value" id="talentcoinBalance">0 TC</span>
                     </div>
                     <div class="withdraw-balance-item">
-                        <span class="withdraw-balance-label">Naira Equivalent:</span>
-                        <span class="withdraw-balance-value" id="nairaEquivalent">₦0</span>
+                        <span class="balance-label">Naira Equivalent:</span>
+                        <span class="balance-value" id="nairaEquivalent">₦0</span>
                     </div>
                 </div>
                 
                 <form id="withdrawForm">
                     <div class="withdraw-form-group">
-                        <label for="withdraw-withdrawAmount">Amount (Talent Coins)</label>
-                        <input type="withdraw-number" id="withdrawAmount" name="withdrawAmount" min="10" step="1" required>
-                        <span class="withdraw-input-note">Minimum withdrawal: 10 Talent Coins</span>
+                        <label for="withdrawAmount">Amount (Talent Coins)</label>
+                        <input type="number" id="withdrawAmount" name="withdrawAmount" min="10" step="1" required>
+                        <span class="input-note">Minimum withdrawal: 10 Talent Coins</span>
                     </div>
                     
                     <div class="withdraw-amount-preview">
@@ -8495,8 +9328,8 @@ input:checked + .toggle-slider:before {
                     </div>
                     
                     <div class="withdraw-form-group">
-                        <label for="withdraw-bankSelect">Select Bank</label>
-                        <select id="withdraw-bankSelect" name="bankSelect" required>
+                        <label for="bankSelect">Select Bank</label>
+                        <select id="bankSelect" name="bankSelect" required>
                             <option value="">-- Select Bank --</option>
                             <option value="access">Access Bank</option>
                             <option value="firstbank">First Bank</option>
@@ -8537,21 +9370,21 @@ input:checked + .toggle-slider:before {
                         </div>
                         <div class="withdraw-summary-row">
                             <span>Processing Fee:</span>
-                            <span id="withdraw-processingFee">0 TC</span>
+                            <span id="processingFee">0 TC</span>
                         </div>
                         <div class="withdraw-summary-row total">
                             <span>Total Deduction:</span>
-                            <span id="withdraw-totalDeduction">0 TC</span>
+                            <span id="totalDeduction">0 TC</span>
                         </div>
                     </div>
                     
-                    <button type="withdraw-submit" id="submitWithdrawBtn" class="btn btn-success" disabled>Withdraw Funds</button>
+                    <button type="submit" id="submitWithdrawBtn" class="btn btn-success" disabled>Withdraw Funds</button>
                 </form>
             </div>
         </div>
         
         <!-- Processing Screen -->
-        <div id="withdraw-processingScreen" class="withdraw--screen">
+        <div id="processingScreen" class="modal-screen">
             <div class="processing-content">
                 <div class="loader"></div>
                 <h3>Processing Your Withdrawal</h3>
@@ -8560,51 +9393,51 @@ input:checked + .toggle-slider:before {
         </div>
         
         <!-- Success Screen -->
-        <div id="withdraw-successScreen" class="withdraw--screen">
-            <div class="withdraw-success-content">
-                <div class="withdraw-success-icon">
+        <div id="successScreen" class="modal-screen">
+            <div class="success-content">
+                <div class="success-icon">
                     <i class="fas fa-check-circle"></i>
                 </div>
                 <h3>Withdrawal Successful!</h3>
                 <p>Your withdrawal request has been processed successfully.</p>
                 
-                <div class="withdraw-transaction-details">
-                    <div class="withdraw-detail-row">
-                        <span class="withdraw-detail-label">Amount:</span>
-                        <span class="withdraw-detail-value" id="successAmount">0 TC (₦0)</span>
+                <div class="transaction-details">
+                    <div class="detail-row">
+                        <span class="detail-label">Amount:</span>
+                        <span class="detail-value" id="successAmount">0 TC (₦0)</span>
                     </div>
-                    <div class="withdraw-detail-row">
-                        <span class="withdraw-detail-label">Account:</span>
-                        <span class="withdraw-detail-value" id="successAccount"></span>
+                    <div class="detail-row">
+                        <span class="detail-label">Account:</span>
+                        <span class="detail-value" id="successAccount"></span>
                     </div>
-                    <div class="withdraw-detail-row">
-                        <span class="withdraw-detail-label">Transaction ID:</span>
-                        <span class="withdraw-detail-value" id="transactionId"></span>
+                    <div class="detail-row">
+                        <span class="detail-label">Transaction ID:</span>
+                        <span class="detail-value" id="transactionId"></span>
                     </div>
-                    <div class="withdraw-detail-row">
-                        <span class="withdraw-detail-label">Date & Time:</span>
-                        <span class="withdraw-detail-value" id="transactionDate"></span>
+                    <div class="detail-row">
+                        <span class="detail-label">Date & Time:</span>
+                        <span class="detail-value" id="transactionDate"></span>
                     </div>
                 </div>
                 
-                <p class="withdraw-success-note">The funds will be credited to your account within 1min to 5 mins.</p>
+                <p class="success-note">The funds will be credited to your account within 1min to 5 mins.</p>
                 
-                <button id="closeSuccessBtn" class="withdraw-btn btn-primary">Done</button>
+                <button id="closeSuccessBtn" class="btn btn-primary">Done</button>
             </div>
         </div>
         
         <!-- Error Screen -->
-        <div id="withdraw-errorScreen" class="withdraw-screen">
-            <div class="withdraw-error-content">
-                <div class="withdraw-error-icon">
+        <div id="errorScreen" class="modal-screen">
+            <div class="error-content">
+                <div class="error-icon">
                     <i class="fas fa-exclamation-circle"></i>
                 </div>
                 <h3>Withdrawal Failed</h3>
-                <p id="withdraw-errorMessage">There was an error processing your withdrawal request.</p>
+                <p id="errorMessage">There was an error processing your withdrawal request.</p>
                 
-                <div class="withdraw-error-actions">
-                    <button id="tryAgainBtn" class="withdraw-btn btn-primary">Try Again</button>
-                    <button id="contactSupportBtn" class="withdraw-btn btn-secondary">Contact Support</button>
+                <div class="error-actions">
+                    <button id="tryAgainBtn" class="btn btn-primary">Try Again</button>
+                    <button id="contactSupportBtn" class="btn btn-secondary">Contact Support</button>
                 </div>
             </div>
         </div>
@@ -8614,15 +9447,15 @@ input:checked + .toggle-slider:before {
 
 <!-- Transaction History Modal -->
 <div id="transactionHistoryModal" class="transaction-modal">
-    <div class="transaction-content">
-        <div class="transaction-header">
+    <div class="modal-content">
+        <div class="modal-header">
             <h2>Transaction History</h2>
-                 <button class="close-transaction" id="closetransactionhistorymodal">&times;</button>
+                 <button class="close-modal" id="closetransactionhistorymodal">&times;</button>
            
         </div>
         
         <div class="transaction-filters">
-            <div class="transaction-filter-group">
+            <div class="filter-group">
                 <label for="transactionType">Type:</label>
                 <select id="transactionType">
                     <option value="all">All Transactions</option>
@@ -8633,9 +9466,9 @@ input:checked + .toggle-slider:before {
                 </select>
             </div>
             
-            <div class="transaction-filter-group">
-                <label for="transaction-dateRange">Period:</label>
-                <select id="transaction-dateRange">
+            <div class="filter-group">
+                <label for="dateRange">Period:</label>
+                <select id="dateRange">
                     <option value="all">All Time</option>
                     <option value="today">Today</option>
                     <option value="week">This Week</option>
@@ -8644,7 +9477,7 @@ input:checked + .toggle-slider:before {
                 </select>
             </div>
             
-            <div class="transaction-filter-group">
+            <div class="filter-group">
                 <label for="transactionStatus">Status:</label>
                 <select id="transactionStatus">
                     <option value="all">All Status</option>
@@ -8654,25 +9487,25 @@ input:checked + .toggle-slider:before {
                 </select>
             </div>
             
-            <button id="applyFilters" class="transaction-filter-btn">Apply Filters</button>
+            <button id="applyFilters" class="filter-btn">Apply Filters</button>
         </div>
         
         <div class="transaction-summary">
-            <div class="transaction-summary-card">
+            <div class="summary-card">
                 <h4>Total Purchases</h4>
-                <p id="transaction-totalPurchases">0 TC</p>
+                <p id="totalPurchases">0 TC</p>
             </div>
-            <div class="transaction-summary-card">
+            <div class="summary-card">
                 <h4>Total Withdrawals</h4>
-                <p id="transaction-totalWithdrawals">0 TC</p>
+                <p id="totalWithdrawals">0 TC</p>
             </div>
-            <div class="transaction-summary-card">
+            <div class="summary-card">
                 <h4>Total Earnings</h4>
-                <p id="transaction-totalEarnings">0 TC</p>
+                <p id="totalEarnings">0 TC</p>
             </div>
-            <div class="transaction-summary-card">
+            <div class="summary-card">
                 <h4>Total Commissions</h4>
-                <p id="transaction-totalCommissions">0 TC</p>
+                <p id="totalCommissions">0 TC</p>
             </div>
         </div>
         
@@ -8692,7 +9525,7 @@ input:checked + .toggle-slider:before {
                 </tbody>
             </table>
             
-            <div class="transaction-empty-state" id="emptyTransactions">
+            <div class="empty-state" id="emptyTransactions">
                 <i class="fas fa-search"></i>
                 <p>No transactions found</p>
                 <span>Try changing your filters</span>
@@ -8704,18 +9537,18 @@ input:checked + .toggle-slider:before {
             </div>
         </div>
         
-        <div class="transaction-pagination">
-            <button id="prevPage" class="transaction-pagination-btn" disabled>
+        <div class="pagination">
+            <button id="prevPage" class="pagination-btn" disabled>
                 <i class="fas fa-chevron-left"></i> Previous
             </button>
-            <span id="transaction-pageIndicator">Page 1 of 1</span>
-            <button id="nextPage" class="transaction-pagination-btn" disabled>
+            <span id="pageIndicator">Page 1 of 1</span>
+            <button id="nextPage" class="pagination-btn" disabled>
                 Next <i class="fas fa-chevron-right"></i>
             </button>
         </div>
         
-        <div class="transaction-export-section">
-            <button id="transaction-exportCSV" class="transaction-export-btn">
+        <div class="export-section">
+            <button id="exportCSV" class="export-btn">
                 <i class="fas fa-file-csv"></i> Export CSV
             </button>
             <button id="printTransactions" class="export-btn">
@@ -8727,10 +9560,10 @@ input:checked + .toggle-slider:before {
 
 <!-- Transaction Details Modal -->
 <div id="transactionDetailsModal" class="transaction-details-modal">
-    <div class="transaction-content">
-        <div class="transaction-header">
+    <div class="modal-content">
+        <div class="modal-header">
             <h2>Transaction Details</h2>
-                 <button class="close-transaction-" id="closetransactiondetailsmodal">&times;</button>
+                 <button class="close-modal" id="closetransactiondetailsmodal">&times;</button>
            
         </div>
         
@@ -8738,8 +9571,8 @@ input:checked + .toggle-slider:before {
             <!-- Transaction details will be loaded here -->
         </div>
         
-        <div class="transaction-footer">
-            <button id="closetransactionDetailsBtn" class="transaction-btn btn-secondary">Close</button>
+        <div class="modal-footer">
+            <button id="closeDetailsBtn" class="btn btn-secondary">Close</button>
         </div>
     </div>
 </div>
