@@ -4225,7 +4225,7 @@ button,
   height: 100%;
   background-color: rgba(0, 0, 0, 0.8);
   z-index: 2000;
-  overflow-y: auto;
+  
   display: none;
   animation: fadeIn 0.3s ease-in-out;
 }
@@ -4234,8 +4234,8 @@ button,
   position: relative;
   width: 90%;
   max-width: 800px;
-  max-height: 90%;
-  margin: 2% auto;
+  height: 90vh;
+  margin: 5vh auto;
   background-color: #fff;
   border-radius: 8px;
   overflow: hidden;
@@ -4324,10 +4324,15 @@ button,
   padding: 2rem;
   flex: 1;
   overflow-y: auto;
+ /* Add webkit scrolling for iOS */
+  -webkit-overflow-scrolling: touch;
+  /* Ensure proper scrolling behavior */
+  overscroll-behavior: contain; 
 }
 
 .buyCoins-tab-content.active {
-  display: block;
+  display: flex;
+  flex-direction: column
 }
 
 /* Coin Purchase Form */
@@ -5048,6 +5053,108 @@ button,
   }
 }
 
+/* Mobile-specific fixes */
+@media (max-width: 768px) {
+  .buy-coins-modal {
+    /* Enable body scroll lock when modal is open */
+    overflow: hidden;
+  }
+  
+  .buyCoins-modal-content {
+    width: 100%;
+    height: 100vh;
+    margin: 0;
+    border-radius: 0;
+    /* Make it full screen on mobile */
+  }
+  
+  .buyCoins-tab-content {
+    padding: 1rem;
+    /* Ensure content can scroll */
+    min-height: 0;
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Fix for iOS Safari bottom bar */
+  .buyCoins-modal-content {
+    height: 100dvh; /* Use dynamic viewport height if supported */
+  }
+  
+  /* Fallback for older browsers */
+  @supports not (height: 100dvh) {
+    .buyCoins-modal-content {
+      height: 100vh;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .buyCoins-modal-content {
+    width: 100%;
+    height: 100vh;
+    margin: 0;
+    border-radius: 0;
+  }
+  
+  .buyCoins-tab-content {
+    padding: 1rem;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    /* Add momentum scrolling for iOS */
+  }
+  
+  /* Ensure buttons are accessible */
+  .btn {
+    margin-bottom: 2rem; /* Add space at bottom */
+  }
+  
+  /* Fix for package options on small screens */
+  .coin-packages {
+    margin-bottom: 3rem; /* Extra space before summary */
+  }
+  
+  .buyCoins-summary-section {
+    margin-bottom: 3rem; /* Extra space before button */
+  }
+}
+
+/* Additional mobile touch improvements */
+.buyCoins-package-option {
+  /* Improve touch targets */
+  min-height: 60px;
+  touch-action: manipulation;
+}
+
+.btn {
+  /* Improve button touch targets */
+  min-height: 48px;
+  touch-action: manipulation;
+}
+
+.close-buycoins {
+  /* Improve close button touch target */
+  min-width: 48px;
+  min-height: 48px;
+  touch-action: manipulation;
+}
+
+/* Prevent zoom on input focus (iOS) */
+.buyCoins-form-group input {
+  font-size: 16px; /* Prevents zoom on iOS */
+}
+
+/* Fix for keyboard appearing on mobile */
+@media (max-height: 600px) {
+  .buyCoins-modal-content {
+    height: 100vh;
+  }
+  
+  .buyCoins-tab-content {
+    padding: 1rem 1rem 4rem 1rem; /* Extra bottom padding */
+  }
+}
 
 /* Game Portal Styles */
 .game-portal-container {
