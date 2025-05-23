@@ -15768,120 +15768,306 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-
-
-
-
 document.addEventListener('DOMContentLoaded', function() {
-    // DOM Elements
-    const withdrawBtn = document.getElementById('withdrawBtn');
+    // Modal elements
     const withdrawModal = document.getElementById('withdrawModal');
-    const closeModalBtns = document.querySelectorAll('.close-modal');
-    const pinDigits = document.querySelectorAll('.pin-digit');
-    const verifyPinBtn = document.getElementById('verifyPinBtn');
-    const pinError = document.getElementById('pinError');
+    const closeModalButtons = document.querySelectorAll('.close-modal');
     const pinVerificationScreen = document.getElementById('pinVerificationScreen');
     const withdrawFormScreen = document.getElementById('withdrawFormScreen');
+    const processingScreen = document.getElementById('processingScreen');
+    const successScreen = document.getElementById('successScreen');
+    const errorScreen = document.getElementById('errorScreen');
     
-    // Check if elements exist to prevent errors
-    if (!withdrawBtn || !withdrawModal) {
-        console.error('Withdraw button or modal not found in the DOM');
-        return;
-    }
-
-    // Open modal when withdraw button is clicked
-    withdrawBtn.addEventListener('click', function() {
+    // Buttons
+    const verifyPinBtn = document.getElementById('verifyPinBtn');
+    const verifyAccountBtn = document.getElementById('verifyAccountBtn');
+    const submitWithdrawBtn = document.getElementById('submitWithdrawBtn');
+    const closeSuccessBtn = document.getElementById('closeSuccessBtn');
+    const tryAgainBtn = document.getElementById('tryAgainBtn');
+    const contactSupportBtn = document.getElementById('contactSupportBtn');
+    
+    // PIN input handling
+    const pinDigits = document.querySelectorAll('.pin-digit');
+    const pinError = document.getElementById('pinError');
+    
+    // Form elements
+    const withdrawForm = document.getElementById('withdrawForm');
+    const withdrawAmount = document.getElementById('withdrawAmount');
+    const bankSelect = document.getElementById('bankSelect');
+    const accountNumber = document.getElementById('accountNumber');
+    const accountName = document.getElementById('accountName');
+    
+    // Display elements
+    const nairaAmount = document.getElementById('nairaAmount');
+    const summaryAmount = document.getElementById('summaryAmount');
+    const processingFee = document.getElementById('processingFee');
+    const totalDeduction = document.getElementById('totalDeduction');
+    
+    // Make modal scrollable
+    function enableModalScrolling() {
         withdrawModal.style.display = 'flex';
-        // Reset PIN inputs
-        pinDigits.forEach(digit => digit.value = '');
-        // Focus on first PIN input
-        if (pinDigits.length > 0) {
-            pinDigits[0].focus();
-        }
-    });
-    
-    // Close modal when close button is clicked
-    closeModalBtns.forEach(btn => {
-        btn.addEventListener('click', function() {
-            withdrawModal.style.display = 'flex';
+        document.body.style.overflow = 'hidden'; // Prevent body scrolling when modal is open
+        
+        // For iOS momentum scrolling
+        document.querySelectorAll('.modal-content').forEach(content => {
+            content.style.webkitOverflowScrolling = 'touch';
         });
-    });
+    }
     
-    // Close modal when clicking outside the modal content
-    window.addEventListener('click', function(event) {
-        if (event.target === withdrawModal) {
-            withdrawModal.style.display = 'none';
+    // Function to open the modal
+    function openModal() {
+        withdrawModal.style.display = 'flex';
+        enableModalScrolling();
+        // Reset to first screen
+        showScreen(pinVerificationScreen);
+    }
+    
+    // Function to close the modal
+    function closeModal() {
+        withdrawModal.style.display = 'none';
+        document.body.style.overflow = ''; // Restore body scrolling
+        resetForm();
+    }
+    
+    // Function to show a specific screen
+    function showScreen(screen) {
+        // Hide all screens
+        const screens = document.querySelectorAll('.modal-screen');
+        screens.forEach(s => s.classList.remove('active'));
+        
+        // Show the requested screen
+        screen.classList.add('active');
+        
+        // Scroll to top of modal content when changing screens
+        const modalContent = document.querySelector('.modal-content');
+        if (modalContent) {
+            modalContent.scrollTop = 0;
         }
-    });
+    }
     
-    // PIN input handling - auto-focus next input
+    // Reset form and inputs
+    function resetForm() {
+        // Clear PIN inputs
+        pinDigits.forEach(input => input.value = '');
+        pinError.textContent = '';
+        
+        // Reset withdrawal form
+        if (withdrawForm) withdrawForm.reset();
+        nairaAmount.textContent = '₦0';
+        summaryAmount.textContent = '0 TC';
+        processingFee.textContent = '0 TC';
+        totalDeduction.textContent = '0 TC';
+        accountName.value = '';
+        submitWithdrawBtn.disabled = true;
+    }
+    
+    // Handle PIN input auto-focus
     pinDigits.forEach((digit, index) => {
+        // Handle input
         digit.addEventListener('input', function() {
-            if (this.value.length === 1) {
-                if (index < pinDigits.length - 1) {
-                    pinDigits[index + 1].focus();
-                }
+            // Move to next input if value is entered
+            if (this.value.length === 1 && index < pinDigits.length - 1) {
+                pinDigits[index + 1].focus();
             }
+            
+            // Check if all digits are filled
+            checkPinCompletion();
         });
         
-        // Allow backspace to go to previous input
+        // Handle backspace
         digit.addEventListener('keydown', function(e) {
             if (e.key === 'Backspace' && this.value.length === 0 && index > 0) {
                 pinDigits[index - 1].focus();
             }
         });
-    });
-    
-    // Verify PIN
-    verifyPinBtn.addEventListener('click', function() {
-        const enteredPin = Array.from(pinDigits).map(input => input.value).join('');
         
-        // Get the user's wallet PIN from Firebase
-        const userId = firebase.auth().currentUser.uid;
-        
-        firebase.firestore().collection('users').doc(userId).get()
-            .then(doc => {
-                if (doc.exists) {
-                    const userData = doc.data();
-                    const storedPinHash = userData.walletPinHash;
-                    
-                    // Hash the entered PIN using the same method as in wallet dashboard
-                    const enteredPinHash = hashPin(enteredPin);
-                    
-                    // Compare the hashed PINs
-                    if (enteredPinHash === storedPinHash) {
-                        // PIN is correct, show withdrawal form
-                        pinVerificationScreen.style.display = 'none';
-                        withdrawFormScreen.style.display = 'block';
-                        pinError.textContent = '';
-                    } else {
-                        // PIN is incorrect
-                        pinError.textContent = 'Invalid PIN. Please try again.';
-                        pinDigits.forEach(digit => digit.value = '');
-                        pinDigits[0].focus();
-                    }
-                } else {
-                    pinError.textContent = 'User data not found. Please try again.';
+        // Handle paste event
+        digit.addEventListener('paste', function(e) {
+            e.preventDefault();
+            const pastedData = e.clipboardData.getData('text');
+            if (/^\d+$/.test(pastedData)) {
+                // Fill digits with pasted numbers
+                for (let i = 0; i < Math.min(pastedData.length, pinDigits.length - index); i++) {
+                    pinDigits[index + i].value = pastedData[i];
                 }
-            })
-            .catch(error => {
-                console.error('Error verifying PIN:', error);
-                pinError.textContent = 'Error verifying PIN. Please try again.';
-            });
+                
+                // Focus on appropriate digit
+                const focusIndex = Math.min(index + pastedData.length, pinDigits.length - 1);
+                pinDigits[focusIndex].focus();
+                
+                checkPinCompletion();
+            }
+        });
     });
     
-    // Helper function to hash PIN (same as in wallet dashboard)
-    function hashPin(pin) {
-        // Simple hash for demonstration
-        let hash = 0;
-        for (let i = 0; i < pin.length; i++) {
-            const char = pin.charCodeAt(i);
-            hash = ((hash << 5) - hash) + char;
-            hash = hash & hash; // Convert to 32bit integer
-        }
-        return hash.toString();
+    // Check if PIN is complete
+    function checkPinCompletion() {
+        const isComplete = Array.from(pinDigits).every(digit => digit.value.length === 1);
+        verifyPinBtn.disabled = !isComplete;
     }
+    
+    // Handle amount input to calculate Naira equivalent
+    if (withdrawAmount) {
+        withdrawAmount.addEventListener('input', function() {
+            const amount = parseFloat(this.value) || 0;
+            const nairaEquivalent = amount * 100; // Assuming 1 TC = ₦100
+            const fee = Math.max(1, amount * 0.01); // 1% fee with minimum of 1 TC
+            
+            nairaAmount.textContent = `₦${nairaEquivalent.toLocaleString()}`;
+            summaryAmount.textContent = `${amount} TC`;
+            processingFee.textContent = `${fee.toFixed(2)} TC`;
+            totalDeduction.textContent = `${(amount + fee).toFixed(2)} TC`;
+        });
+    }
+    
+    // Verify account button
+    if (verifyAccountBtn) {
+        verifyAccountBtn.addEventListener('click', function() {
+            const bank = bankSelect.value;
+            const accNum = accountNumber.value;
+            
+            if (!bank) {
+                alert('Please select a bank');
+                return;
+            }
+            
+            if (!accNum || accNum.length !== 10 || !/^\d+$/.test(accNum)) {
+                alert('Please enter a valid 10-digit account number');
+                return;
+            }
+            
+            // Simulate account verification (replace with actual API call)
+            verifyAccountBtn.textContent = 'Verifying...';
+            verifyAccountBtn.disabled = true;
+            
+            setTimeout(() => {
+                // Mock response
+                accountName.value = 'JOHN DOE';
+                verifyAccountBtn.textContent = 'Verified';
+                submitWithdrawBtn.disabled = false;
+                
+                // Reset after 3 seconds
+                setTimeout(() => {
+                    verifyAccountBtn.textContent = 'Verify Account';
+                    verifyAccountBtn.disabled = false;
+                }, 3000);
+            }, 1500);
+        });
+    }
+    
+    // Verify PIN button
+    if (verifyPinBtn) {
+        verifyPinBtn.addEventListener('click', function() {
+            const pin = Array.from(pinDigits).map(digit => digit.value).join('');
+            
+            // Simulate PIN verification (replace with actual verification)
+            verifyPinBtn.textContent = 'Verifying...';
+            verifyPinBtn.disabled = true;
+            
+            setTimeout(() => {
+                // Mock successful verification
+                showScreen(withdrawFormScreen);
+                verifyPinBtn.textContent = 'Verify PIN';
+                verifyPinBtn.disabled = false;
+                
+                // For demo purposes, you might want to show error instead:
+                // pinError.textContent = 'Invalid PIN. Please try again.';
+                // pinDigits.forEach(digit => digit.value = '');
+                // pinDigits[0].focus();
+            }, 1500);
+        });
+    }
+    
+    // Submit withdrawal form
+    if (withdrawForm) {
+        withdrawForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Show processing screen
+            showScreen(processingScreen);
+            
+            // Simulate processing (replace with actual API call)
+            setTimeout(() => {
+                // For demo: show success (80% chance) or error (20% chance)
+                if (Math.random() > 0.2) {
+                    // Success
+                    document.getElementById('successAmount').textContent = 
+                        `${withdrawAmount.value} TC (₦${(parseFloat(withdrawAmount.value) * 100).toLocaleString()})`;
+                    document.getElementById('successAccount').textContent = 
+                        `${accountName.value} - ${accountNumber.value} (${bankSelect.options[bankSelect.selectedIndex].text})`;
+                    document.getElementById('transactionId').textContent = 
+                        'TXN' + Math.floor(Math.random() * 1000000000).toString().padStart(9, '0');
+                    document.getElementById('transactionDate').textContent = 
+                        new Date().toLocaleString();
+                    
+                    showScreen(successScreen);
+                } else {
+                    // Error
+                    document.getElementById('errorMessage').textContent = 
+                        'Unable to process your withdrawal at this time. Please try again later.';
+                    showScreen(errorScreen);
+                }
+            }, 3000);
+        });
+    }
+    
+    // Close success button
+    if (closeSuccessBtn) {
+        closeSuccessBtn.addEventListener('click', closeModal);
+    }
+    
+    // Try again button
+    if (tryAgainBtn) {
+        tryAgainBtn.addEventListener('click', function() {
+            showScreen(withdrawFormScreen);
+        });
+    }
+    
+    // Contact support button
+    if (contactSupportBtn) {
+        contactSupportBtn.addEventListener('click', function() {
+            // Implement contact support functionality
+            alert('Support contact: support@example.com');
+        });
+    }
+    
+    // Close modal buttons
+    closeModalButtons.forEach(button => {
+        button.addEventListener('click', closeModal);
+    });
+    
+    // Open modal button (if exists)
+    const openModalBtn = document.getElementById('openWithdrawModal');
+    if (openModalBtn) {
+        openModalBtn.addEventListener('click', openModal);
+    }
+    
+    // Close modal when clicking outside the content
+    withdrawModal.addEventListener('click', function(e) {
+        if (e.target === withdrawModal) {
+            closeModal();
+        }
+    });
+    
+    // Prevent touchmove events from propagating on iOS to avoid body scrolling
+    document.querySelector('.modal-content').addEventListener('touchmove', function(e) {
+        e.stopPropagation();
+    }, { passive: false });
+    
+    // Fix for iOS keyboard issues
+    const inputs = document.querySelectorAll('input, select');
+    inputs.forEach(input => {
+        input.addEventListener('blur', function() {
+            // Small timeout to let iOS keyboard disappear
+            setTimeout(() => {
+                window.scrollTo(0, 0);
+            }, 100);
+        });
+    });
 });
+
+
+
 
 
 // JavaScript to fix the Font Awesome icon and handle the game portal
@@ -16612,303 +16798,6 @@ document.addEventListener('DOMContentLoaded', function() {
         userData.talentCoins += amount;
         updateSpinButtonStates();
     };
-});
-document.addEventListener('DOMContentLoaded', function() {
-    // Modal elements
-    const withdrawModal = document.getElementById('withdrawModal');
-    const closeModalButtons = document.querySelectorAll('.close-modal');
-    const pinVerificationScreen = document.getElementById('pinVerificationScreen');
-    const withdrawFormScreen = document.getElementById('withdrawFormScreen');
-    const processingScreen = document.getElementById('processingScreen');
-    const successScreen = document.getElementById('successScreen');
-    const errorScreen = document.getElementById('errorScreen');
-    
-    // Buttons
-    const verifyPinBtn = document.getElementById('verifyPinBtn');
-    const verifyAccountBtn = document.getElementById('verifyAccountBtn');
-    const submitWithdrawBtn = document.getElementById('submitWithdrawBtn');
-    const closeSuccessBtn = document.getElementById('closeSuccessBtn');
-    const tryAgainBtn = document.getElementById('tryAgainBtn');
-    const contactSupportBtn = document.getElementById('contactSupportBtn');
-    
-    // PIN input handling
-    const pinDigits = document.querySelectorAll('.pin-digit');
-    const pinError = document.getElementById('pinError');
-    
-    // Form elements
-    const withdrawForm = document.getElementById('withdrawForm');
-    const withdrawAmount = document.getElementById('withdrawAmount');
-    const bankSelect = document.getElementById('bankSelect');
-    const accountNumber = document.getElementById('accountNumber');
-    const accountName = document.getElementById('accountName');
-    
-    // Display elements
-    const nairaAmount = document.getElementById('nairaAmount');
-    const summaryAmount = document.getElementById('summaryAmount');
-    const processingFee = document.getElementById('processingFee');
-    const totalDeduction = document.getElementById('totalDeduction');
-    
-    // Make modal scrollable
-    function enableModalScrolling() {
-        withdrawModal.style.display = 'flex';
-        document.body.style.overflow = 'hidden'; // Prevent body scrolling when modal is open
-        
-        // For iOS momentum scrolling
-        document.querySelectorAll('.modal-content').forEach(content => {
-            content.style.webkitOverflowScrolling = 'touch';
-        });
-    }
-    
-    // Function to open the modal
-    function openModal() {
-        withdrawModal.style.display = 'flex';
-        enableModalScrolling();
-        // Reset to first screen
-        showScreen(pinVerificationScreen);
-    }
-    
-    // Function to close the modal
-    function closeModal() {
-        withdrawModal.style.display = 'none';
-        document.body.style.overflow = ''; // Restore body scrolling
-        resetForm();
-    }
-    
-    // Function to show a specific screen
-    function showScreen(screen) {
-        // Hide all screens
-        const screens = document.querySelectorAll('.modal-screen');
-        screens.forEach(s => s.classList.remove('active'));
-        
-        // Show the requested screen
-        screen.classList.add('active');
-        
-        // Scroll to top of modal content when changing screens
-        const modalContent = document.querySelector('.modal-content');
-        if (modalContent) {
-            modalContent.scrollTop = 0;
-        }
-    }
-    
-    // Reset form and inputs
-    function resetForm() {
-        // Clear PIN inputs
-        pinDigits.forEach(input => input.value = '');
-        pinError.textContent = '';
-        
-        // Reset withdrawal form
-        if (withdrawForm) withdrawForm.reset();
-        nairaAmount.textContent = '₦0';
-        summaryAmount.textContent = '0 TC';
-        processingFee.textContent = '0 TC';
-        totalDeduction.textContent = '0 TC';
-        accountName.value = '';
-        submitWithdrawBtn.disabled = true;
-    }
-    
-    // Handle PIN input auto-focus
-    pinDigits.forEach((digit, index) => {
-        // Handle input
-        digit.addEventListener('input', function() {
-            // Move to next input if value is entered
-            if (this.value.length === 1 && index < pinDigits.length - 1) {
-                pinDigits[index + 1].focus();
-            }
-            
-            // Check if all digits are filled
-            checkPinCompletion();
-        });
-        
-        // Handle backspace
-        digit.addEventListener('keydown', function(e) {
-            if (e.key === 'Backspace' && this.value.length === 0 && index > 0) {
-                pinDigits[index - 1].focus();
-            }
-        });
-        
-        // Handle paste event
-        digit.addEventListener('paste', function(e) {
-            e.preventDefault();
-            const pastedData = e.clipboardData.getData('text');
-            if (/^\d+$/.test(pastedData)) {
-                // Fill digits with pasted numbers
-                for (let i = 0; i < Math.min(pastedData.length, pinDigits.length - index); i++) {
-                    pinDigits[index + i].value = pastedData[i];
-                }
-                
-                // Focus on appropriate digit
-                const focusIndex = Math.min(index + pastedData.length, pinDigits.length - 1);
-                pinDigits[focusIndex].focus();
-                
-                checkPinCompletion();
-            }
-        });
-    });
-    
-    // Check if PIN is complete
-    function checkPinCompletion() {
-        const isComplete = Array.from(pinDigits).every(digit => digit.value.length === 1);
-        verifyPinBtn.disabled = !isComplete;
-    }
-    
-    // Handle amount input to calculate Naira equivalent
-    if (withdrawAmount) {
-        withdrawAmount.addEventListener('input', function() {
-            const amount = parseFloat(this.value) || 0;
-            const nairaEquivalent = amount * 100; // Assuming 1 TC = ₦100
-            const fee = Math.max(1, amount * 0.01); // 1% fee with minimum of 1 TC
-            
-            nairaAmount.textContent = `₦${nairaEquivalent.toLocaleString()}`;
-            summaryAmount.textContent = `${amount} TC`;
-            processingFee.textContent = `${fee.toFixed(2)} TC`;
-            totalDeduction.textContent = `${(amount + fee).toFixed(2)} TC`;
-        });
-    }
-    
-    // Verify account button
-    if (verifyAccountBtn) {
-        verifyAccountBtn.addEventListener('click', function() {
-            const bank = bankSelect.value;
-            const accNum = accountNumber.value;
-            
-            if (!bank) {
-                alert('Please select a bank');
-                return;
-            }
-            
-            if (!accNum || accNum.length !== 10 || !/^\d+$/.test(accNum)) {
-                alert('Please enter a valid 10-digit account number');
-                return;
-            }
-            
-            // Simulate account verification (replace with actual API call)
-            verifyAccountBtn.textContent = 'Verifying...';
-            verifyAccountBtn.disabled = true;
-            
-            setTimeout(() => {
-                // Mock response
-                accountName.value = 'JOHN DOE';
-                verifyAccountBtn.textContent = 'Verified';
-                submitWithdrawBtn.disabled = false;
-                
-                // Reset after 3 seconds
-                setTimeout(() => {
-                    verifyAccountBtn.textContent = 'Verify Account';
-                    verifyAccountBtn.disabled = false;
-                }, 3000);
-            }, 1500);
-        });
-    }
-    
-    // Verify PIN button
-    if (verifyPinBtn) {
-        verifyPinBtn.addEventListener('click', function() {
-            const pin = Array.from(pinDigits).map(digit => digit.value).join('');
-            
-            // Simulate PIN verification (replace with actual verification)
-            verifyPinBtn.textContent = 'Verifying...';
-            verifyPinBtn.disabled = true;
-            
-            setTimeout(() => {
-                // Mock successful verification
-                showScreen(withdrawFormScreen);
-                verifyPinBtn.textContent = 'Verify PIN';
-                verifyPinBtn.disabled = false;
-                
-                // For demo purposes, you might want to show error instead:
-                // pinError.textContent = 'Invalid PIN. Please try again.';
-                // pinDigits.forEach(digit => digit.value = '');
-                // pinDigits[0].focus();
-            }, 1500);
-        });
-    }
-    
-    // Submit withdrawal form
-    if (withdrawForm) {
-        withdrawForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Show processing screen
-            showScreen(processingScreen);
-            
-            // Simulate processing (replace with actual API call)
-            setTimeout(() => {
-                // For demo: show success (80% chance) or error (20% chance)
-                if (Math.random() > 0.2) {
-                    // Success
-                    document.getElementById('successAmount').textContent = 
-                        `${withdrawAmount.value} TC (₦${(parseFloat(withdrawAmount.value) * 100).toLocaleString()})`;
-                    document.getElementById('successAccount').textContent = 
-                        `${accountName.value} - ${accountNumber.value} (${bankSelect.options[bankSelect.selectedIndex].text})`;
-                    document.getElementById('transactionId').textContent = 
-                        'TXN' + Math.floor(Math.random() * 1000000000).toString().padStart(9, '0');
-                    document.getElementById('transactionDate').textContent = 
-                        new Date().toLocaleString();
-                    
-                    showScreen(successScreen);
-                } else {
-                    // Error
-                    document.getElementById('errorMessage').textContent = 
-                        'Unable to process your withdrawal at this time. Please try again later.';
-                    showScreen(errorScreen);
-                }
-            }, 3000);
-        });
-    }
-    
-    // Close success button
-    if (closeSuccessBtn) {
-        closeSuccessBtn.addEventListener('click', closeModal);
-    }
-    
-    // Try again button
-    if (tryAgainBtn) {
-        tryAgainBtn.addEventListener('click', function() {
-            showScreen(withdrawFormScreen);
-        });
-    }
-    
-    // Contact support button
-    if (contactSupportBtn) {
-        contactSupportBtn.addEventListener('click', function() {
-            // Implement contact support functionality
-            alert('Support contact: support@example.com');
-        });
-    }
-    
-    // Close modal buttons
-    closeModalButtons.forEach(button => {
-        button.addEventListener('click', closeModal);
-    });
-    
-    // Open modal button (if exists)
-    const openModalBtn = document.getElementById('openWithdrawModal');
-    if (openModalBtn) {
-        openModalBtn.addEventListener('click', openModal);
-    }
-    
-    // Close modal when clicking outside the content
-    withdrawModal.addEventListener('click', function(e) {
-        if (e.target === withdrawModal) {
-            closeModal();
-        }
-    });
-    
-    // Prevent touchmove events from propagating on iOS to avoid body scrolling
-    document.querySelector('.modal-content').addEventListener('touchmove', function(e) {
-        e.stopPropagation();
-    }, { passive: false });
-    
-    // Fix for iOS keyboard issues
-    const inputs = document.querySelectorAll('input, select');
-    inputs.forEach(input => {
-        input.addEventListener('blur', function() {
-            // Small timeout to let iOS keyboard disappear
-            setTimeout(() => {
-                window.scrollTo(0, 0);
-            }, 100);
-        });
-    });
 });
 
       </script>
