@@ -4897,7 +4897,7 @@ button,
     z-index: 1000;
     overflow-y: auto;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     padding: 15px;
     box-sizing: border-box;
 }
@@ -4908,8 +4908,9 @@ button,
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
     width: 100%;
     max-width: 450px;
-    max-height: 85vh;
-    overflow-y: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    overflow-y: visible;
     position: relative;
     animation: modalFadeIn 0.25s ease-out;
     margin: auto;
@@ -5345,6 +5346,32 @@ input:focus, select:focus {
     gap: 12px;
 }
 
+
+/* For taller screens, center the content vertically */
+@media (min-height: 700px) {
+    .withdraw-modal {
+        align-items: center;
+    }
+}
+
+
+/* Fix iOS momentum scrolling */
+.modal-content {
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Ensure inputs are properly sized for touch */
+input, select, button {
+    font-size: 16px; /* Prevent iOS zoom */
+    touch-action: manipulation; /* Prevent double-tap zoom */
+}
+
+/* Fix for iOS keyboard issues */
+@supports (-webkit-touch-callout: none) {
+    input, select, textarea {
+        font-size: 16px !important;
+    }
+}
 /* Responsive Adjustments */
 @media (max-width: 480px) {
     .modal-content {
