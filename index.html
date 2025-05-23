@@ -42,7 +42,7 @@
     
     .split-screen {
         display: flex;
-        background-color: var(--white);
+        background-color:  #1a1a2e;
         border-radius: 20px;
         overflow: hidden;
         box-shadow: var(--box-shadow);
@@ -3052,125 +3052,85 @@ body {
 }
 
 
-/* Buy Coins Button */
-.buy-coin-btn {
-  background-color: #4CAF50;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 16px;
-  font-weight: 600;
-  transition: background-color 0.3s;
-}
-
-.buy-coin-btn:hover {
-  background-color: #45a049;
-}
-
-/* Modal Styles */
+/* Buy Coins Modal Responsive Styles */
 .buy-coins-modal {
   display: none;
   position: fixed;
-  z-index: 1000;
-  left: 0;
   top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1000;
+  overflow-y: auto;
+  padding: 20px;
 }
 
-.modal-content {
-  background-color: #fefefe;
-  margin: 5% auto;
-  padding: 0;
-  border-radius: 8px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-  width: 90%;
+.buycoin-modal-content {
+  background-color: var(--white);
+  border-radius: 12px;
   max-width: 600px;
+  width: 100%;
+  margin: 30px auto;
+  box-shadow: var(--box-shadow);
   position: relative;
-  animation: modalFadeIn 0.3s;
+  overflow: hidden;
+  animation: tcoin-modal-fade 0.3s ease;
 }
 
-@keyframes modalFadeIn {
-  from {opacity: 0; transform: translateY(-20px);}
-  to {opacity: 1; transform: translateY(0);}
+@keyframes tcoin-modal-fade {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-.modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 20px;
-  background-color: #f8f9fa;
-  border-bottom: 1px solid #e9ecef;
-  border-radius: 8px 8px 0 0;
+.buy-modal-header {
+  background-color: var(--primary-color);
+  color: var(--white);
+  padding: 16px 20px;
+  text-align: center;
+  position: relative;
 }
 
-.modal-header h2 {
-  margin: 0;
-  color: #333;
+.buy-modal-header h2 {
   font-size: 1.5rem;
+  margin: 0;
+  font-weight: 600;
 }
 
-.close-modal {
-  color: #aaa;
-  font-size: 28px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: color 0.3s;
-}
-
-.close-modal:hover {
-  color: #333;
-}
-
-/* Tab Navigation */
-.modal-tabs {
+.buy-modal-tabs {
   display: flex;
-  border-bottom: 1px solid #e9ecef;
+  border-bottom: 1px solid var(--border-color);
   background-color: #f8f9fa;
 }
 
 .tab-btn {
   flex: 1;
-  background-color: transparent;
+  padding: 14px 10px;
+  background: none;
   border: none;
-  padding: 15px;
-  font-size: 16px;
-  font-weight: 600;
-  color: #6c757d;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--light-text);
   cursor: pointer;
-  transition: all 0.3s;
+  transition: all 0.3s ease;
   position: relative;
 }
 
-.tab-btn:after {
+.tab-btn.active {
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+.tab-btn.active::after {
   content: '';
   position: absolute;
   bottom: 0;
   left: 0;
-  width: 0;
-  height: 3px;
-  background-color: #4CAF50;
-  transition: width 0.3s;
-}
-
-.tab-btn.active {
-  color: #4CAF50;
-}
-
-.tab-btn.active:after {
   width: 100%;
+  height: 3px;
+  background-color: var(--primary-color);
 }
 
-.tab-btn:hover {
-  background-color: #f1f3f5;
-}
-
-/* Tab Content */
 .tab-content {
   display: none;
   padding: 20px;
@@ -3178,155 +3138,144 @@ body {
 
 .tab-content.active {
   display: block;
+  animation: tcoin-fade-in 0.3s ease;
 }
 
-/* Buy Coins Tab */
-.coin-purchase-form {
-  padding: 10px 0;
+@keyframes tcoin-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.coin-purchase-form h3,
+.payment-confirmation-form h3 {
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+  color: var(--text-color);
 }
 
 .coin-rate-info {
-  background-color: #f8f9fa;
-  padding: 10px;
-  border-radius: 4px;
+  font-size: 0.9rem;
+  color: var(--light-text);
   margin-bottom: 20px;
-  font-weight: 600;
-  color: #495057;
-  text-align: center;
+  padding: 8px 12px;
+  background-color: #f8f9fa;
+  border-radius: 6px;
+  display: inline-block;
 }
 
-.coin-packages {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-bottom: 20px;
+.buycoin-packages {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 15px;
+  margin-bottom: 25px;
 }
 
 .package-option {
+  position: relative;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 15px;
   display: flex;
   align-items: center;
-  padding: 12px 15px;
-  border: 1px solid #e9ecef;
-  border-radius: 6px;
-  transition: all 0.3s;
-  position: relative;
+  transition: all 0.3s ease;
+  cursor: pointer;
 }
 
 .package-option:hover {
-  border-color: #4CAF50;
-  background-color: #f1f8e9;
+  border-color: var(--primary-color);
+  background-color: rgba(108, 92, 231, 0.05);
 }
 
 .package-option input[type="radio"] {
-  margin-right: 15px;
-  accent-color: #4CAF50;
+  margin-right: 10px;
+  accent-color: var(--primary-color);
+  cursor: pointer;
 }
 
 .package-option label {
   flex: 1;
-  font-weight: 500;
   cursor: pointer;
+  font-weight: 500;
 }
 
 .price {
   font-weight: 600;
-  color: #495057;
-  margin-right: 10px;
+  color: var(--primary-color);
 }
 
 .bonus-tag {
-  background-color: #4CAF50;
-  color: white;
+  position: absolute;
+  top: -10px;
+  right: 10px;
+  background-color: var(--secondary-color);
+  color: var(--white);
+  font-size: 0.7rem;
   padding: 3px 8px;
   border-radius: 12px;
-  font-size: 12px;
   font-weight: 600;
 }
 
-.summary-section {
+.buycoin-summary-section {
   background-color: #f8f9fa;
+  border-radius: 8px;
   padding: 15px;
-  border-radius: 6px;
   margin-bottom: 20px;
 }
 
+.buycoin-summary-row,
 .summary-row {
   display: flex;
   justify-content: space-between;
-  padding: 8px 0;
-  border-bottom: 1px solid #e9ecef;
+  margin-bottom: 10px;
+  font-size: 0.95rem;
 }
 
+.buycoin-summary-row:last-child,
 .summary-row:last-child {
-  border-bottom: none;
+  margin-bottom: 0;
   font-weight: 600;
 }
 
 .btn {
-  display: inline-block;
-  font-weight: 600;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: middle;
-  user-select: none;
-  border: 1px solid transparent;
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
-  line-height: 1.5;
-  border-radius: 0.25rem;
-  transition: all 0.15s ease-in-out;
-  cursor: pointer;
+  display: block;
   width: 100%;
-}
-
-.btn-primary {
-  color: #fff;
-  background-color: #007bff;
-  border-color: #007bff;
-}
-
-.btn-primary:hover {
-  background-color: #0069d9;
-  border-color: #0062cc;
+  padding: 14px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
 }
 
 .btn-success {
-  color: #fff;
-  background-color: #4CAF50;
-  border-color: #4CAF50;
+  background-color: var(--success-color);
+  color: var(--white);
 }
+
 .btn-success:hover {
-  background-color: #45a049;
-  border-color: #39843c;
+  background-color: #27ae60;
 }
 
-.btn-secondary {
-  color: #fff;
-  background-color: #6c757d;
-  border-color: #6c757d;
+.btn-primary {
+  background-color: var(--primary-color);
+  color: var(--white);
 }
 
-.btn-secondary:hover {
-  background-color: #5a6268;
-  border-color: #545b62;
+.btn-primary:hover {
+  background-color: var(--primary-dark);
 }
 
-/* Payment Instructions */
 .payment-instructions {
-  padding: 20px;
-  background-color: #f8f9fa;
-  border-radius: 6px;
-  margin-top: 20px;
-}
-
-.payment-instructions.hidden {
-  display: none;
+  margin-top: 25px;
+  padding-top: 25px;
+  border-top: 1px dashed var(--border-color);
 }
 
 .account-details {
-  background-color: white;
-  border: 1px solid #e9ecef;
-  border-radius: 6px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
   padding: 15px;
   margin: 15px 0;
 }
@@ -3334,200 +3283,147 @@ body {
 .detail-row {
   display: flex;
   align-items: center;
-  padding: 10px 0;
-  border-bottom: 1px solid #f1f3f5;
-}
-
-.detail-row:last-child {
-  border-bottom: none;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
 }
 
 .detail-label {
-  font-weight: 600;
-  width: 40%;
-  color: #495057;
+  font-weight: 500;
+  min-width: 140px;
+  margin-right: 10px;
 }
 
 .detail-value {
+  font-weight: 600;
+  color: var(--text-color);
   flex: 1;
 }
 
 .copy-btn {
-  background-color: #e9ecef;
+  background-color: var(--primary-color);
+  color: var(--white);
   border: none;
-  padding: 5px 10px;
   border-radius: 4px;
+  padding: 4px 10px;
+  font-size: 0.8rem;
   cursor: pointer;
-  font-size: 12px;
   margin-left: 10px;
-  transition: background-color 0.3s;
 }
 
 .copy-btn:hover {
-  background-color: #dee2e6;
+  background-color: var(--primary-dark);
 }
 
 .instruction-note {
-  background-color: #fff3cd;
-  border-left: 4px solid #ffc107;
+  background-color: rgba(46, 204, 113, 0.1);
+  border-left: 3px solid var(--success-color);
   padding: 10px 15px;
   margin: 15px 0;
-  color: #856404;
+  border-radius: 0 4px 4px 0;
 }
 
 .tab-nav-btn {
-  background-color: #007bff;
-  color: white;
+  background-color: var(--primary-color);
+  color: var(--white);
   border: none;
-  padding: 10px 15px;
-  border-radius: 4px;
+  border-radius: 8px;
+  padding: 12px 20px;
+  font-size: 0.95rem;
+  font-weight: 500;
   cursor: pointer;
-  font-weight: 600;
+  display: block;
   width: 100%;
-  margin-top: 15px;
-  transition: background-color 0.3s;
+  margin-top: 20px;
+  transition: all 0.3s ease;
 }
 
 .tab-nav-btn:hover {
-  background-color: #0069d9;
-}
-
-/* Confirm Payment Tab */
-.payment-confirmation-form {
-  padding: 10px 0;
-}
-
-.confirmation-info {
-  margin-bottom: 20px;
-  color: #495057;
+  background-color: var(--primary-dark);
 }
 
 .form-group {
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 
 .form-group label {
   display: block;
-  margin-bottom: 5px;
+  margin-bottom: 8px;
   font-weight: 500;
-  color: #495057;
 }
 
 .form-group input,
-.form-group textarea {
+.form-group textarea,
+.form-group select {
   width: 100%;
-  padding: 10px;
-  border: 1px solid #ced4da;
-  border-radius: 4px;
-  font-size: 16px;
-  transition: border-color 0.3s;
+  padding: 12px 15px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  transition: border 0.3s ease;
 }
 
 .form-group input:focus,
-.form-group textarea:focus {
-  border-color: #4CAF50;
+.form-group textarea:focus,
+.form-group select:focus {
+  border-color: var(--primary-color);
   outline: none;
-  box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
 }
 
 .verification-notice {
-  background-color: #e8f5e9;
-  border-left: 4px solid #4CAF50;
+  background-color: rgba(108, 92, 231, 0.1);
+  border-left: 3px solid var(--primary-color);
   padding: 10px 15px;
   margin: 20px 0;
-  color: #2e7d32;
+  border-radius: 0 4px 4px 0;
+  font-size: 0.9rem;
 }
 
-/* Confirmation Success Popup Styles */
 .confirmation-success {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-  padding: 30px;
   text-align: center;
-  max-width: 500px;
-  width: 90%;
-  z-index: 1000;
-  transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-.hidden {
-  display: none;
-  opacity: 0;
-  transform: translate(-50%, -60%);
+  padding: 30px 20px;
 }
 
 .success-icon {
-  margin-bottom: 20px;
-}
-
-.success-icon i {
-  font-size: 60px;
-  color: #28a745;
-}
-
-.confirmation-success h3 {
-  color: #333;
+  font-size: 3rem;
+  color: var(--success-color);
   margin-bottom: 15px;
-  font-weight: 600;
-}
-
-.confirmation-success p {
-  color: #666;
-  margin-bottom: 10px;
-  line-height: 1.5;
 }
 
 .pending-info {
   background-color: #f8f9fa;
-  border-radius: 6px;
+  border-radius: 8px;
   padding: 15px;
-  margin: 20px 0;
-  border-left: 4px solid #17a2b8;
+  margin-top: 20px;
+  text-align: left;
 }
 
-.pending-info p {
-  margin: 5px 0;
-  font-size: 0.95em;
-}
-
-#closeModalBtn {
-  margin-top: 15px;
-  padding: 10px 25px;
-  background-color: #6c757d;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-#closeModalBtn:hover {
-  background-color: #5a6268;
-}
-
-/* Overlay background */
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 999;
+.hidden {
   display: none;
 }
 
 
-/* Responsive Adjustments */
+/* Responsive styles for mobile devices */
 @media (max-width: 768px) {
-  .modal-content {
-    width: 95%;
-    margin: 10% auto;
+  .buycoin-modal-content {
+    margin: 15px auto;
+    max-width: 100%;
+  }
+  
+  .buy-modal-header h2 {
+    font-size: 1.3rem;
+  }
+  
+  .tab-btn {
+    font-size: 0.85rem;
+    padding: 12px 5px;
+  }
+  
+  .buycoin-packages {
+    grid-template-columns: 1fr;
+  }
+  
+  .package-option {
+    padding: 12px 10px;
   }
   
   .detail-row {
@@ -3536,7 +3432,6 @@ body {
   }
   
   .detail-label {
-    width: 100%;
     margin-bottom: 5px;
   }
   
@@ -3546,51 +3441,621 @@ body {
   }
 }
 
-/* Animation for tab switching */
-@keyframes fadeIn {
-  from {opacity: 0;}
-  to {opacity: 1;}
+/* iPhone-specific adjustments */
+@media screen and (max-width: 414px) {
+  .buycoin-modal-content {
+    border-radius: 10px;
+  }
+  
+  .buy-modal-header {
+    padding: 14px 15px;
+  }
+  
+  .tab-content {
+    padding: 15px;
+  }
+  
+  .package-option {
+    padding: 10px;
+  }
+  
+  .bonus-tag {
+    font-size: 0.65rem;
+    padding: 2px 6px;
+  }
+  
+  .btn {
+    padding: 12px;
+  }
+  
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    padding: 10px 12px;
+  }
 }
 
-.tab-content.active {
-  animation: fadeIn 0.5s;
+/* Small Android devices */
+@media screen and (max-width: 360px) {
+  .buy-modal-header h2 {
+    font-size: 1.2rem;
+  }
+  
+  .tab-btn {
+    font-size: 0.8rem;
+    padding: 10px 5px;
+  }
+  
+  .coin-purchase-form h3,
+  .payment-confirmation-form h3 {
+    font-size: 1.1rem;
+  }
+  
+  .coin-rate-info {
+    font-size: 0.8rem;
+  }
+  
+  .package-option label {
+    font-size: 0.9rem;
+  }
+  
+  .price {
+    font-size: 0.9rem;
+  }
 }
 
-/* Highlight selected package */
-.package-option.selected {
-  border-color: #4CAF50;
-  background-color: #e8f5e9;
-  box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+/* Fix for iPhone X and newer with notch */
+@supports (padding: max(0px)) {
+  .buy-coins-modal {
+    padding-left: max(20px, env(safe-area-inset-left));
+    padding-right: max(20px, env(safe-area-inset-right));
+    padding-top: max(20px, env(safe-area-inset-top));
+    padding-bottom: max(20px, env(safe-area-inset-bottom));
+  }
 }
 
-/* Loading state for buttons */
-.btn.loading {
+
+/* Withdraw Modal Responsive Styles */
+.withdraw-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1000;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+.withdraw-modal-content {
+  background-color: var(--white);
+  border-radius: 12px;
+  max-width: 500px;
+  width: 100%;
+  margin: 30px auto;
+  box-shadow: var(--box-shadow);
   position: relative;
-  color: transparent;
-  pointer-events: none;
+  overflow: hidden;
+  animation: withdraw-modal-fade 0.3s ease;
 }
 
-.btn.loading:after {
-  content: "";
+@keyframes withdraw-modal-fade {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.modal-screen {
+  display: none;
+}
+
+.modal-screen.active {
+  display: block;
+  animation: withdraw-fade-in 0.3s ease;
+}
+
+@keyframes withdraw-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.pin2-modal-header,
+.withdraw-modal-header {
+  background-color: var(--primary-color);
+  color: var(--white);
+  padding: 16px 20px;
+  text-align: center;
+  position: relative;
+}
+
+.pin2-modal-header h2,
+.withdraw-modal-header h2 {
+  font-size: 1.5rem;
+  margin: 0;
+  font-weight: 600;
+}
+
+.close-modal {
   position: absolute;
-  width: 20px;
-  height: 20px;
+  right: 15px;
   top: 50%;
-  left: 50%;
-  margin: -10px 0 0 -10px;
-  border: 3px solid rgba(255, 255, 255, 0.3);
-  border-radius: 50%;
-  border-top-color: #fff;
-  animation: spin 1s ease-in-out infinite;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--white);
+  font-size: 1.8rem;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
 }
 
-@keyframes spin {
+.close-modal:hover {
+  opacity: 1;
+}
+
+/* PIN Verification Screen */
+.pin-verification-content {
+  padding: 25px 20px;
+  text-align: center;
+}
+
+.pin-icon {
+  font-size: 3rem;
+  color: var(--primary-color);
+  margin-bottom: 15px;
+}
+
+.pin-verification-content h3 {
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+  color: var(--text-color);
+}
+
+.pin-verification-content p {
+  color: var(--light-text);
+  margin-bottom: 25px;
+  font-size: 0.95rem;
+}
+
+.pin-input-container {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.pin-digit {
+  width: 50px;
+  height: 50px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-color);
+  background-color: var(--white);
+  transition: all 0.3s ease;
+}
+
+.pin-digit:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(108, 92, 231, 0.2);
+  outline: none;
+}
+
+.error-message {
+  color: var(--error-color);
+  font-size: 0.9rem;
+  margin-bottom: 15px;
+  min-height: 20px;
+}
+
+/* Withdrawal Form Screen */
+.withdraw-form-content {
+  padding: 20px;
+}
+
+.balance-info {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 20px;
+}
+
+.balance-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.balance-item:last-child {
+  margin-bottom: 0;
+}
+
+.balance-label {
+  color: var(--light-text);
+  font-size: 0.9rem;
+}
+
+.balance-value {
+  font-weight: 600;
+  color: var(--text-color);
+  font-size: 0.95rem;
+}
+
+.form-group {
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: var(--text-color);
+  font-size: 0.95rem;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  color: var(--text-color);
+  background-color: var(--white);
+  transition: all 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(108, 92, 231, 0.1);
+  outline: none;
+}
+
+.input-note {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--light-text);
+  margin-top: 5px;
+}
+
+.amount-preview {
+  background-color: rgba(108, 92, 231, 0.1);
+  border-radius: 8px;
+  padding: 12px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  font-size: 0.95rem;
+}
+
+#nairaAmount {
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+.btn {
+  display: inline-block;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  color: var(--white);
+  width: 100%;
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-dark);
+}
+
+.btn-secondary {
+  background-color: #f8f9fa;
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+
+.btn-secondary:hover {
+  background-color: #e9ecef;
+}
+
+.btn-success {
+  background-color: var(--success-color);
+  color: var(--white);
+  width: 100%;
+}
+
+.btn-success:hover {
+  background-color: #27ae60;
+}
+
+.btn-sm {
+  padding: 8px 12px;
+  font-size: 0.85rem;
+  position: absolute;
+  right: 0;
+  top: 37px;
+}
+
+.btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.fee-summary {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 15px;
+  margin: 20px 0;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+}
+
+.summary-row.total {
+  margin-top: 15px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border-color);
+  font-weight: 600;
+}
+
+/* Processing Screen */
+.processing-content {
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.loader {
+  display: inline-block;
+  width: 60px;
+  height: 60px;
+  border: 4px solid rgba(108, 92, 231, 0.2);
+  border-radius: 50%;
+  border-top-color: var(--primary-color);
+  animation: withdraw-spin 1s linear infinite;
+  margin-bottom: 20px;
+}
+
+@keyframes withdraw-spin {
   to { transform: rotate(360deg); }
 }
 
-.hidden {
-  display: none !important;
-} 
+.processing-content h3 {
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+  color: var(--text-color);
+}
+
+.processing-content p {
+  color: var(--light-text);
+}
+
+/* Success Screen */
+.success-content {
+  padding: 30px 20px;
+  text-align: center;
+}
+
+.success-icon {
+  font-size: 3.5rem;
+  color: var(--success-color);
+  margin-bottom: 15px;
+}
+
+.success-content h3 {
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+  color: var(--text-color);
+}
+
+.success-content p {
+  color: var(--light-text);
+  margin-bottom: 20px;
+}
+
+.transaction-details {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 15px;
+  margin: 20px 0;
+  text-align: left;
+}
+
+.detail-row {
+  display: flex;
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+}
+
+.detail-label {
+  min-width: 120px;
+  color: var(--light-text);
+}
+
+.detail-value {
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+.success-note {
+  background-color: rgba(46, 204, 113, 0.1);
+  border-left: 3px solid var(--success-color);
+  padding: 10px 15px;
+  margin: 20px 0;
+  border-radius: 0 4px 4px 0;
+  text-align: left;
+  font-size: 0.9rem;
+}
+
+/* Error Screen */
+.error-content {
+  padding: 30px 20px;
+  text-align: center;
+}
+
+.error-icon {
+  font-size: 3.5rem;
+  color: var(--error-color);
+  margin-bottom: 15px;
+}
+
+.error-content h3 {
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+  color: var(--text-color);
+}
+
+.error-content p {
+  color: var(--light-text);
+  margin-bottom: 25px;
+}
+
+.error-actions {
+  display: flex;
+  gap: 15px;
+}
+
+.error-actions .btn {
+  flex: 1;
+}
+
+/* Responsive styles for mobile devices */
+@media (max-width: 768px) {
+  .withdraw-modal-content {
+    margin: 15px auto;
+    max-width: 100%;
+  }
+  
+  .pin2-modal-header h2,
+  .withdraw-modal-header h2 {
+    font-size: 1.3rem;
+  }
+  
+  .pin-digit {
+    width: 45px;
+    height: 45px;
+    font-size: 1.3rem;
+  }
+  
+  .form-group label {
+    font-size: 0.9rem;
+  }
+  
+  .btn-sm {
+    position: relative;
+    top: 0;
+    right: 0;
+    margin-top: 10px;
+    width: 100%;
+  }
+  
+  .error-actions {
+    flex-direction: column;
+  }
+}
+
+/* iPhone-specific adjustments */
+@media screen and (max-width: 414px) {
+  .withdraw-modal-content {
+    border-radius: 10px;
+  }
+  
+  .pin2-modal-header,
+  .withdraw-modal-header {
+    padding: 14px 15px;
+  }
+  
+  .pin-verification-content,
+  .withdraw-form-content,
+  .processing-content,
+  .success-content,
+  .error-content {
+    padding: 20px 15px;
+  }
+  
+  .pin-digit {
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+  }
+  
+  .form-group input,
+  .form-group select {
+    padding: 10px 12px;
+  }
+  
+  .detail-row {
+    flex-direction: column;
+    margin-bottom: 15px;
+  }
+  
+  .detail-label {
+    margin-bottom: 3px;
+  }
+}
+
+/* Small Android devices */
+@media screen and (max-width: 360px) {
+  .pin2-modal-header h2,
+  .withdraw-modal-header h2 {
+    font-size: 1.2rem;
+  }
+  
+  .pin-verification-content h3,
+  .processing-content h3,
+  .success-content h3,
+  .error-content h3 {
+    font-size: 1.1rem;
+  }
+  
+  .pin-input-container {
+    gap: 8px;
+  }
+  
+  .pin-digit {
+    width: 35px;
+    height: 35px;
+    font-size: 1.1rem;
+  }
+  
+  .balance-label,
+  .balance-value {
+    font-size: 0.85rem;
+  }
+  
+  .btn {
+    font-size: 0.9rem;
+    padding: 10px 15px;
+  }
+}
+
+/* Fix for iPhone X and newer with notch */
+@supports (padding: max(0px)) {
+  .withdraw-modal {
+    padding-left: max(20px, env(safe-area-inset-left));
+    padding-right: max(20px, env(safe-area-inset-right));
+    padding-top: max(20px, env(safe-area-inset-top));
+    padding-bottom: max(20px, env(safe-area-inset-bottom));
+  }
+}
 
 .wallet-action-card:hover:after {
   transform: scaleX(1);
@@ -4215,1462 +4680,7 @@ button,
 
 
 
-/* Transaction History Styles */
-.transaction-history {
-    margin-top: 20px;
-    background-color: #1a1a2e;
-    border-radius: 10px;
-    padding: 15px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-}
 
-.transaction-history h3 {
-    font-size: 16px;
-    margin-bottom: 15px;
-    color:  #333;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.transaction-list {
-    max-height: 300px;
-    overflow-y: auto;
-}
-
-.transaction-item {
-    display: flex;
-    align-items: center;
-    padding: 12px 0;
-    border-bottom: 1px solid var(--border-color, #eee);
-    transition: background-color 0.2s;
-    cursor: pointer;
-}
-
-.transaction-item:hover {
-    background-color: #1a1a2e;
-}
-
-.transaction-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 12px;
-    flex-shrink: 0;
-}
-
-.transaction-icon.purchase {
-    background-color: rgba(52, 152, 219, 0.1);
-    color: #3498db;
-}
-
-.transaction-icon.withdrawal {
-    background-color: rgba(231, 76, 60, 0.1);
-    color: #e74c3c;
-}
-
-.transaction-icon.commission {
-    background-color: rgba(46, 204, 113, 0.1);
-    color: #2ecc71;
-}
-
-.transaction-icon.earning {
-    background-color: rgba(155, 89, 182, 0.1);
-    color: #9b59b6;
-}
-
-.transaction-details {
-    flex: 1;
-}
-
-.transaction-title {
-    font-weight: 600;
-    font-size: 14px;
-    color: var(--text-color, #333);
-    margin-bottom: 4px;
-}
-
-.transaction-date {
-    font-size: 12px;
-    color: var(--text-light, #888);
-}
-
-.transaction-amount {
-    font-weight: 600;
-    font-size: 14px;
-    text-align: right;
-}
-
-.transaction-amount.positive {
-    color: var(--success-color, #2ecc71);
-}
-
-.transaction-amount.negative {
-    color: var(--danger-color, #e74c3c);
-}
-
-.transaction-status {
-    font-size: 12px;
-    padding: 3px 8px;
-    border-radius: 12px;
-    margin-left: 8px;
-}
-
-.transaction-status.completed {
-    background-color: rgba(46, 204, 113, 0.1);
-    color: #2ecc71;
-}
-
-.transaction-status.pending {
-    background-color: rgba(241, 196, 15, 0.1);
-    color: #f1c40f;
-}
-
-.transaction-status.failed {
-    background-color: rgba(231, 76, 60, 0.1);
-    color: #e74c3c;
-}
-
-.empty-transactions {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 30px 0;
-    color: var(--text-light, #888);
-}
-
-.empty-transactions i {
-    font-size: 32px;
-    margin-bottom: 10px;
-    opacity: 0.5;
-}
-
-.view-all-btn {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    margin-top: 15px;
-    background-color: transparent;
-    border: 1px solid var(--primary-color, #3498db);
-    color: var(--primary-color, #3498db);
-    border-radius: 5px;
-    font-size: 14px;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-
-.view-all-btn:hover {
-    background-color: #1a1a2e;
-    color: white;
-}
-
-/* Transaction Modal Styles */
-.transaction-modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #1a1a2e;
-    z-index: 1000;
-    overflow-y: auto;
-}
-
-.transaction-modal .modal-content {
-    background-color: #1a1a2e;
-    margin: 50px auto;
-    width: 90%;
-    max-width: 900px;
-    border-radius: 10px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
-    position: relative;
-    animation: modalFadeIn 0.3s;
-}
-
-@keyframes modalFadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
-    border-bottom: #1a1a2e;
-}
-
-.modal-header h2 {
-    font-size: 20px;
-    color: var(--text-color, #333);
-    margin: 0;
-}
-
-.close-modal {
-    font-size: 24px;
-    color: var(--text-light, #888);
-    cursor: pointer;
-    transition: color 0.2s;
-}
-
-.close-modal:hover {
-    color: var(--danger-color, #e74c3c);
-}
-
-/* Transaction Filters */
-.transaction-filters {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    padding: 20px;
-    background-color: #1a1a2e;
-    border-bottom: 1px solid var(--border-color, #eee);
-}
-
-.filter-group {
-    display: flex;
-    flex-direction: column;
-    min-width: 150px;
-    flex: 1;
-}
-
-.filter-group label {
-    font-size: 12px;
-    margin-bottom: 5px;
-    color: #ffffff;
-}
-
-.filter-group select {
-    padding: 8px 12px;
-    border: #1a1a2e;
-    border-radius: 5px;
-    background-color: ;
-    font-size: 14px;
-    color:  #333;
-}
-
-.filter-btn {
-    align-self: flex-end;
-    padding: 8px 15px;
-    background-color: #1a1a2e;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-    margin-top: 22px;
-}
-
-.filter-btn:hover {
-    background-color: #1a1a2e;
-}
-
-/* Transaction Summary */
-.transaction-summary {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 15px;
-    padding: 20px;
-}
-
-.summary-card {
-    background-color: #1a1a2e;
-    border-radius: 8px;
-    padding: 15px;
-    text-align: center;
-}
-
-.summary-card h4 {
-    font-size: 14px;
-    color: var(--text-light, #888);
-    margin: 0 0 10px 0;
-}
-
-.summary-card p {
-    font-size: 18px;
-    font-weight: 600;
-    color: var(--text-color, #333);
-    margin: 0;
-}
-
-/* Transaction Table */
-.transaction-table-container {
-    padding: 0 20px 20px;
-    position: relative;
-    min-height: 300px;
-}
-
-.transaction-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 15px;
-}
-
-.transaction-table th {
-    text-align: left;
-    padding: 12px 15px;
-    background-color: #1a1a2e;
-    color: var(--text-color, #333);
-    font-weight: 600;
-    font-size: 14px;
-    border-bottom: 2px solid var(--border-color, #eee);
-}
-
-.transaction-table td {
-    padding: 12px 15px;
-    border-bottom: 1px solid var(--border-color, #eee);
-    font-size: 14px;
-    color: var(--text-color, #333);
-}
-
-.transaction-table tr:hover {
-    background-color: var(--hover-bg-color, #f9f9f9);
-}
-/* Continuing Transaction Table Styles */
-.transaction-type {
-    display: flex;
-    align-items: center;
-}
-
-.transaction-type-icon {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 10px;
-    flex-shrink: 0;
-    font-size: 12px;
-}
-
-.transaction-table .amount {
-    font-weight: 600;
-}
-
-.transaction-table .amount.positive {
-    color: var(--success-color, #2ecc71);
-}
-
-.transaction-table .amount.negative {
-    color: var(--danger-color, #e74c3c);
-}
-
-.transaction-table .status-badge {
-    display: inline-block;
-    padding: 4px 8px;
-    border-radius: 12px;
-    font-size: 12px;
-    font-weight: 500;
-}
-
-.transaction-table .status-badge.completed {
-    background-color: rgba(46, 204, 113, 0.1);
-    color: #2ecc71;
-}
-
-.transaction-table .status-badge.pending {
-    background-color: rgba(241, 196, 15, 0.1);
-    color: #f1c40f;
-}
-
-.transaction-table .status-badge.failed {
-    background-color: rgba(231, 76, 60, 0.1);
-    color: #e74c3c;
-}
-
-.transaction-table .details-btn {
-    background-color: transparent;
-    border: 1px solid var(--border-color, #ddd);
-    border-radius: 4px;
-    padding: 4px 8px;
-    font-size: 12px;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-
-.transaction-table .details-btn:hover {
-    background-color: var(--light-bg-color, #f5f5f5);
-    border-color: var(--text-light, #aaa);
-}
-
-/* Empty and Loading States */
-.empty-state, .loading-transactions {
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 50px 0;
-    color: var(--text-light, #888);
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(255, 255, 255, 0.9);
-}
-
-.empty-state i, .loading-transactions i {
-    font-size: 40px;
-    margin-bottom: 15px;
-    opacity: 0.5;
-}
-
-.empty-state span {
-    font-size: 12px;
-    margin-top: 5px;
-    opacity: 0.7;
-}
-
-.loading-transactions i {
-    color: var(--primary-color, #3498db);
-    opacity: 1;
-}
-
-/* Pagination */
-.pagination {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    border-top: 1px solid var(--border-color, #eee);
-}
-
-.pagination-btn {
-    background-color: transparent;
-    border: 1px solid var(--border-color, #ddd);
-    border-radius: 5px;
-    padding: 8px 15px;
-    font-size: 14px;
-    cursor: pointer;
-    transition: all 0.2s;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-
-.pagination-btn:hover:not(:disabled) {
-    background-color: var(--light-bg-color, #f5f5f5);
-    border-color: var(--text-light, #aaa);
-}
-
-.pagination-btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
-#pageIndicator {
-    margin: 0 15px;
-    font-size: 14px;
-    color: var(--text-light, #888);
-}
-
-/* Export Section */
-.export-section {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-    padding: 0 20px 20px;
-}
-
-.export-btn {
-    background-color: transparent;
-    border: 1px solid var(--border-color, #ddd);
-    border-radius: 5px;
-    padding: 8px 15px;
-    font-size: 14px;
-    cursor: pointer;
-    transition: all 0.2s;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-
-.export-btn:hover {
-    background-color: var(--light-bg-color, #f5f5f5);
-    border-color: var(--text-light, #aaa);
-}
-
-/* Transaction Details Modal */
-.transaction-details-modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1100;
-    overflow-y: auto;
-}
-
-.transaction-details-modal .modal-content {
-    background-color: var(--card-bg-color, #fff);
-    margin: 80px auto;
-    width: 90%;
-    max-width: 600px;
-    border-radius: 10px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
-    position: relative;
-    animation: modalFadeIn 0.3s;
-}
-
-.transaction-details-content {
-    padding: 20px;
-}
-
-.transaction-detail-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.transaction-detail-icon {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 15px;
-    flex-shrink: 0;
-}
-
-.transaction-detail-title {
-    flex: 1;
-}
-
-.transaction-detail-title h3 {
-    font-size: 18px;
-    margin: 0 0 5px 0;
-    color: var(--text-color, #333);
-}
-
-.transaction-detail-title p {
-    font-size: 14px;
-    margin: 0;
-    color: var(--text-light, #888);
-}
-
-.transaction-detail-amount {
-    font-size: 24px;
-    font-weight: 600;
-}
-
-.transaction-detail-amount.positive {
-    color: var(--success-color, #2ecc71);
-}
-
-.transaction-detail-amount.negative {
-    color: var(--danger-color, #e74c3c);
-}
-
-.transaction-info-list {
-    margin-top: 20px;
-    border-top: 1px solid var(--border-color, #eee);
-    padding-top: 20px;
-}
-
-.transaction-info-item {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px 0;
-    border-bottom: 1px solid var(--border-color, #eee);
-}
-
-.transaction-info-label {
-    font-size: 14px;
-    color: var(--text-light, #888);
-}
-
-.transaction-info-value {
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--text-color, #333);
-    text-align: right;
-}
-
-.transaction-note {
-    margin-top: 20px;
-    padding: 15px;
-    background-color: var(--light-bg-color, #f9f9f9);
-    border-radius: 5px;
-    font-size: 14px;
-    color: var(--text-color, #333);
-}
-
-.modal-footer {
-    padding: 15px 20px;
-    border-top: 1px solid var(--border-color, #eee);
-    display: flex;
-    justify-content: flex-end;
-}
-
-.btn {
-    padding: 8px 15px;
-    border-radius: 5px;
-    font-size: 14px;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-
-.btn-secondary {
-    background-color: var(--light-bg-color, #f5f5f5);
-    border: 1px solid var(--border-color, #ddd);
-    color: var(--text-color, #333);
-}
-
-.btn-secondary:hover {
-    background-color: var(--border-color, #ddd);
-}
-
-/* Responsive Styles */
-@media (max-width: 768px) {
-    .transaction-filters {
-        flex-direction: column;
-        gap: 10px;
-    }
-    
-    .filter-group {
-        width: 100%;
-    }
-    
-    .filter-btn {
-        width: 100%;
-        margin-top: 10px;
-    }
-    
-    .transaction-summary {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    
-    .transaction-table th:nth-child(4),
-    .transaction-table td:nth-child(4) {
-        display: none;
-    }
-    
-    .export-section {
-        flex-direction: column;
-    }
-    
-    .export-btn {
-        width: 100%;
-    }
-}
-
-@media (max-width: 480px) {
-    .transaction-summary {
-        grid-template-columns: 1fr;
-    }
-    
-    .transaction-table th:nth-child(3),
-    .transaction-table td:nth-child(3) {
-        display: none;
-    }
-    
-    .modal-content {
-        margin: 20px auto;
-        width: 95%;
-    }
-}
-
-
-/* Withdraw Modal Styles - Compact Version */
-.withdraw-modal {
-   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: #1a1a2e;
-  z-index: 1000;
-  overflow-y: auto;
-  display: none;
-  animation: fadeIn 0.3s ease-in-out;
-   
-}
-
-
-.withdraw-modal-content {
-    background-color:#1a1a2e ;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-    width: 90%;
-    max-width: 450px;
-    max-height: 85vh;
-    overflow-y: auto;
-    position: relative;
-    animation: modalFadeIn 0.25s ease-out;
-}
-
-.history-modal-content {
-    background-color:#1a1a2e ;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-    width: 90%;
-    max-width: 450px;
-    max-height: 85vh;
-    overflow-y: auto;
-    position: relative;
-    animation: modalFadeIn 0.25s ease-out;
-}
-
-
-.buycoin-modal-content {
-    background-color:#1a1a2e ;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-    width: 90%;
-    max-width: 450px;
-    max-height: 85vh;
-    overflow-y: auto;
-    position: relative;
-    animation: modalFadeIn 0.25s ease-out;
-}
-
-
-
-.pin2coin-modal-content {
-    background-color:#1a1a2e ;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-    width: 90%;
-    max-width: 450px;
-    max-height: 85vh;
-    overflow-y: auto;
-    position: relative;
-    animation: modalFadeIn 0.25s ease-out;
-}
-
-.detail-coin-modal-content {
-    background-color:#1a1a2e ;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-    width: 90%;
-    max-width: 450px;
-    max-height: 85vh;
-    overflow-y: auto;
-    position: relative;
-    animation: modalFadeIn 0.25s ease-out;
-}
-
-@keyframes modalFadeIn {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px 16px;
-    border-bottom: 1px solid #eaeaea;
-    background-color: #1a1a2e;
-    color: white;
-    border-radius: 12px 12px 0 0;
-    position: sticky;
-    top: 0;
-    z-index: 10;
-}
-
-.modal-header h2 {
-    font-size: 1.2rem;
-    font-weight: 600;
-    margin: 0;
-    color: white;
-    
-}
-
-
-/* Common styles for all close buttons with unique class names */
-.buycoin-close-btn,
-.withdraw-close-btn,
-.history-close-btn,
-.details-close-btn {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    width: 32px;
-    height: 32px;
-    background-color: rgba(0, 0, 0, 0.1);
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-    transition: all 0.3s ease;
-    z-index: 10;
-    -webkit-tap-highlight-color: transparent;
-}
-
-/* Unique hover effects for each button */
-.buycoin-close-btn:hover {
-    background-color: rgba(255, 87, 51, 0.2);
-    transform: rotate(90deg);
-}
-
-.withdraw-close-btn:hover {
-    background-color: rgba(76, 175, 80, 0.2);
-    transform: scale(1.1);
-}
-
-.history-close-btn:hover {
-    background-color: rgba(33, 150, 243, 0.2);
-    transform: translateY(-2px);
-}
-
-.details-close-btn:hover {
-    background-color: rgba(156, 39, 176, 0.2);
-    transform: rotate(-90deg);
-}
-
-/* Active states */
-.buycoin-close-btn:active,
-.-close-btn:active,
-.history-close-btn:active,
-.details-close-btn:active {
-    transform: scale(0.95);
-}
-
-/* Close icons with unique class names */
-.buycoin-close-icon,
-.withdraw-close-icon,
-.history-close-icon,
-.details-close-icon {
-    position: relative;
-    width: 16px;
-    height: 16px;
-}
-
-.buycoin-close-icon::before,
-.buycoin-close-icon::after,
-.withdraw-close-icon::before,
-.withdraw-close-icon::after,
-.history-close-icon::before,
-.history-close-icon::after,
-.details-close-icon::before,
-.details-close-icon::after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 2px;
-    background-color: #333;
-    border-radius: 2px;
-    top: 50%;
-    left: 0;
-    transition: all 0.3s ease;
-}
-
-/* Unique colors for each close icon */
-.buycoin-close-icon::before,
-.buycoin-close-icon::after {
-    background-color: #ff5733;
-}
-
-.withdraw-close-icon::before,
-.withdraw-close-icon::after {
-    background-color: #4caf50;
-}
-
-.history-close-icon::before,
-.history-close-icon::after {
-    background-color: #2196f3;
-}
-
-.details-close-icon::before,
-.details-close-icon::after {
-    background-color: #9c27b0;
-}
-
-/* X shape for all icons */
-.buycoin-close-icon::before,
-.withdraw-close-icon::before,
-.history-close-icon::before,
-.details-close-icon::before {
-    transform: translateY(-50%) rotate(45deg);
-}
-
-.buycoin-close-icon::after,
-.withdraw-close-icon::after,
-.history-close-icon::after,
-.details-close-icon::after {
-    transform: translateY(-50%) rotate(-45deg);
-}
-
-/* Accessibility focus styles */
-.buycoin-close-btn:focus,
-.withdraw-close-btn:focus,
-.history-close-btn:focus,
-.details-close-btn:focus {
-    outline: none;
-}
-
-.buycoin-close-btn:focus-visible {
-    box-shadow: 0 0 0 3px rgba(255, 87, 51, 0.5);
-}
-
-.withdraw-close-btn:focus-visible {
-    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.5);
-}
-
-.history-close-btn:focus-visible {
-    box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.5);
-}
-
-.details-close-btn:focus-visible {
-    box-shadow: 0 0 0 3px rgba(156, 39, 176, 0.5);
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .buycoin-close-btn,
-    .withdraw-close-btn,
-    .history-close-btn,
-    .details-close-btn {
-        top: 10px;
-        right: 10px;
-        width: 28px;
-        height: 28px;
-    }
-    
-    .buycoin-close-icon,
-    .withdraw-close-icon,
-    .history-close-icon,
-    .details-close-icon {
-        width: 14px;
-        height: 14px;
-    }
-}
-
-/* Dark mode support */
-@media (prefers-color-scheme: dark) {
-    .buycoin-close-btn,
-    .withdraw-close-btn,
-    .history-close-btn,
-    .details-close-btn {
-        background-color: rgba(255, 255, 255, 0.1);
-    }
-    
-    .buycoin-close-icon::before,
-    .buycoin-close-icon::after {
-        background-color: #ff8a65;
-    }
-    
-    .withdraw-close-icon::before,
-    .withdraw-close-icon::after {
-        background-color: #81c784;
-    }
-    
-    .history-close-icon::before,
-    .history-close-icon::after {
-        background-color: #64b5f6;
-    }
-    
-    .details-close-icon::before,
-    .details-close-icon::after {
-        background-color: #ce93d8;
-    }
-}
-
-/* Reduced motion preference */
-@media (prefers-reduced-motion: reduce) {
-    .buycoin-close-btn,
-    .withdraw-close-btn,
-    .history-close-btn,
-    .details-close-btn,
-    .buycoin-close-icon::before,
-    .buycoin-close-icon::after,
-    .withdraw-close-icon::before,
-    .withdraw-close-icon::after,
-    .history-close-icon::before,
-    .history-close-icon::after,
-    .details-close-icon::before,
-    .details-close-icon::after {
-        transition: none !important;
-    }
-    
-    .buycoin-close-btn:hover,
-    .withdraw-close-btn:hover,
-    .history-close-btn:hover,
-    .details-close-btn:hover {
-        transform: none;
-    }
-}
-
-/* RTL language support */
-[dir="rtl"] .buycoin-close-btn,
-[dir="rtl"] .withdraw-close-btn,
-[dir="rtl"] .history-close-btn,
-[dir="rtl"] .details-close-btn {
-    right: auto;
-    left: 15px;
-}
-
-@media (max-width: 768px) and [dir="rtl"] {
-    .buycoin-close-btn,
-    .withdraw-close-btn,
-    .history-close-btn,
-    .details-close-btn {
-        right: auto;
-        left: 10px;
-    }
-}
-
-/* Fix for iOS Safari */
-@supports (-webkit-touch-callout: none) {
-    .buycoin-close-btn,
-    .withdraw-close-btn,
-    .history-close-btn,
-    .details-close-btn {
-        -webkit-transform: translateZ(0);
-    }
-}
-
-/* Animation for closing */
-@keyframes modalFadeOut {
-    from {
-        opacity: 1;
-    }
-    to {
-        opacity: 0;
-    }
-}
-/* Modal header positioning for close buttons */
-.buycoin-modal-content .modal-header,
-.pin2-modal-content .modal-header,
-.withdraw-modal-header,
-.history-modal-content .modal-header,
-.detail-modal-content .modal-header {
-    position: relative;
-    padding-right: 50px; /* Make room for the close button */
-}
-
-/* Ensure the modal content has proper positioning */
-.buycoin-modal-content,
-.pin2-modal-content,
-.history-modal-content,
-.detail-modal-content {
-    position: relative;
-}
-
-/* Ensure modals have smooth transitions */
-.buy-coins-modal,
-.withdraw-modal,
-.transaction-modal,
-.transaction-details-modal {
-    transition: opacity 0.3s ease;
-}
-
-/* Fix for modals that might have absolute positioning inside */
-.modal-screen {
-    position: relative;
-}
-
-/* Ensure modal headers have consistent styling */
-.modal-header h2 {
-    margin: 0;
-    padding: 15px 0;
-}
-
-
-/* Screen Styles */
-.modal-screen {
-    display: none;
-}
-
-.modal-screen.active {
-    display: block;
-}
-
-/* PIN Verification Screen */
-.pin-verification-content {
-    padding: 20px 16px;
-    text-align: center;
-    background-color: #1a1a2e;
-}
-
-.pin-icon {
-    font-size: 2.5rem;
-    color: #4a6cf7;
-    margin-bottom: 15px;
-}
-
-.pin-verification-content h3 {
-    font-size: 1.2rem;
-    margin-bottom: 8px;
-    color: #ffffff;
-}
-
-.pin-verification-content p {
-    color: #ece7e7;
-    margin-bottom: 20px;
-    font-size: 0.9rem;
-}
-
-.pin-input-container {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 20px;
-}
-
-.pin-digit {
-    width: 45px;
-    height: 50px;
-    font-size: 1.3rem;
-    text-align: center;
-    border: 1.5px solid #ddd;
-    border-radius: 8px;
-    background-color: #1a1a2e;
-    transition: all 0.2s ease;
-}
-
-.pin-digit:focus {
-    border-color: #4a6cf7;
-    box-shadow: 0 0 0 2px rgba(74, 108, 247, 0.2);
-    outline: none;
-}
-
-.error-message {
-    color: #dc3545;
-    font-size: 0.85rem;
-    margin-bottom: 15px;
-    min-height: 18px;
-}
-
-/* Withdraw Form Screen */
-.withdraw-form-content {
-    padding: 16px;
-}
-
-.balance-info {
-    background-color: #f8f9fa;
-    border-radius: 8px;
-    padding: 12px;
-    margin-bottom: 16px;
-    border: 1px solid #eaeaea;
-}
-
-.balance-item {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 6px;
-    font-size: 0.9rem;
-}
-
-.balance-item:last-child {
-    margin-bottom: 0;
-}
-
-.balance-label {
-    font-weight: 500;
-    color: #666;
-}
-
-.balance-value {
-    font-weight: 600;
-    color: #333;
-}
-
-.form-group {
-    margin-bottom: 16px;
-}
-
-label {
-    display: block;
-    margin-bottom: 6px;
-    font-weight: 500;
-    color: #444;
-    font-size: 0.9rem;
-}
-
-input, select {
-    width: 100%;
-    padding: 10px 12px;
-    border: 1.5px solid #ddd;
-    border-radius: 8px;
-    font-size: 0.95rem;
-    transition: all 0.2s ease;
-    background-color: #f9f9f9;
-}
-
-input:focus, select:focus {
-    border-color: #4a6cf7;
-    box-shadow: 0 0 0 2px rgba(74, 108, 247, 0.2);
-    outline: none;
-    background-color: #fff;
-}
-
-.input-note {
-    display: block;
-    font-size: 0.75rem;
-    color: #777;
-    margin-top: 4px;
-}
-
-.amount-preview {
-    background-color: #e9f0ff;
-    border-radius: 8px;
-    padding: 10px 12px;
-    margin-bottom: 16px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border: 1px solid #d1e0ff;
-    font-size: 0.9rem;
-}
-
-#nairaAmount {
-    font-weight: 700;
-    font-size: 1rem;
-    color: #4a6cf7;
-}
-
-.btn {
-    display: inline-block;
-    font-weight: 500;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: middle;
-    user-select: none;
-    border: 1px solid transparent;
-    padding: 10px 16px;
-    font-size: 0.95rem;
-    line-height: 1.5;
-    border-radius: 8px;
-    transition: all 0.2s ease;
-    cursor: pointer;
-    width: 100%;
-}
-
-.btn-primary {
-    color: #fff;
-    background-color: #1a1a2e;
-    
-}
-
-.btn-primary:hover {
-    background-color:#1a1a2e;
-    
-}
-
-.btn-secondary {
-    color: #fff;
-    background-color: #6c757d;
-    border-color: #6c757d;
-}
-
-.btn-secondary:hover {
-    background-color: #333;
-    border-color: #333;
-}
-
-.btn-success {
-    color: #fff;
-    background-color: #28a745;
-    border-color: #28a745;
-}
-
-.btn-success:hover {
-    background-color: #218838;
-    border-color: #1e7e34;
-}
-
-.btn-sm {
-    padding: 5px 10px;
-    font-size: 0.8rem;
-    width: auto;
-}
-
-.btn:disabled {
-    opacity: 0.65;
-    cursor: not-allowed;
-}
-
-#verifyAccountBtn {
-    margin-top: 6px;
-}
-
-.fee-summary {
-    background-color: #f8f9fa;
-    border-radius: 8px;
-    padding: 12px;
-    margin-bottom: 16px;
-    border: 1px solid #eaeaea;
-    font-size: 0.9rem;
-    color: #333;
-}
-
-.summary-row {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 6px;
-}
-
-.summary-row.total {
-    margin-top: 8px;
-    padding-top: 8px;
-    border-top: 1px dashed #ddd;
-    font-weight: 700;
-    font-size: 0.95rem;
-}
-
-/* Processing Screen */
-.processing-content {
-    padding: 30px 16px;
-    text-align: center;
-}
-
-.loader {
-    border: 4px solid #f3f3f3;
-    border-radius: 50%;
-    border-top: 4px solid #4a6cf7;
-    width: 50px;
-    height: 50px;
-    margin: 0 auto 20px;
-    animation: spin 1.2s linear infinite;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-.processing-content h3 {
-    font-size: 1.2rem;
-    margin-bottom: 10px;
-    color: #333;
-}
-
-.processing-content p {
-    color: #666;
-    font-size: 0.9rem;
-}
-
-/* Success Screen */
-.success-content {
-    padding: 25px 16px;
-    text-align: center;
-}
-
-.success-icon {
-    font-size: 3rem;
-    color: #28a745;
-    margin-bottom: 15px;
-}
-
-.success-content h3 {
-    font-size: 1.2rem;
-    margin-bottom: 8px;
-    color: #333;
-}
-
-.success-content p {
-    color: #666;
-    margin-bottom: 20px;
-    font-size: 0.9rem;
-}
-
-.transaction-details {
-    background-color: #f8f9fa;
-    border-radius: 8px;
-    padding: 12px;
-    margin-bottom: 16px;
-    border: 1px solid #eaeaea;
-    text-align: left;
-    font-size: 0.85rem;
-}
-
-.detail-row {
-    display: flex;
-    margin-bottom: 8px;
-}
-
-.detail-row:last-child {
-    margin-bottom: 0;
-}
-
-.detail-label {
-    font-weight: 500;
-    color: #666;
-    width: 40%;
-}
-
-.detail-value {
-    font-weight: 500;
-    color: #333;
-}
-
-.success-note {
-    font-size: 0.85rem;
-    color: #666;
-    margin-bottom: 20px;
-    font-style: italic;
-}
-
-/* Error Screen */
-.error-content {
-    padding: 25px 16px;
-    text-align: center;
-}
-
-.error-icon {
-    font-size: 3rem;
-    color: #dc3545;
-    margin-bottom: 15px;
-}
-
-.error-content h3 {
-    font-size: 1.2rem;
-    margin-bottom: 8px;
-    color: #333;
-}
-
-.error-content p {
-    color: #666;
-    margin-bottom: 20px;
-    font-size: 0.9rem;
-}
-
-.error-actions {
-    display: flex;
-    gap: 12px;
-}
-
-.error-actions .btn {
-    flex: 1;
-}
-
-/* Responsive Adjustments */
-@media (max-width: 480px) {
-    .modal-content {
-        width: 95%;
-        max-height: 90vh;
-    }
-    
-    .pin-digit {
-        width: 40px;
-        height: 45px;
-    }
-    
-    .error-actions {
-        flex-direction: column;
-        gap: 8px;
-    }
-}
 /* Game Portal Styles */
 .game-portal-container {
   position: fixed;
@@ -9722,8 +8732,319 @@ input:checked + .toggle-slider:before {
     </div>
 </div> 
 
-       
+     
+     
 
+<!-- Withdraw Modal (Add this to your existing HTML) -->
+<div id="withdrawModal" class="withdraw-modal">
+    <div class="withdraw-modal-content">
+        <!-- PIN Verification Screen -->
+        <div id="pinVerificationScreen" class="modal-screen active">
+            <div class="pin2-modal-header">
+                <h2>Verify PIN</h2>    
+                 <button class="close-modal" id="closewithdrawmodal">&times;</button>
+           
+           </div>
+            <div class="pin-verification-content">
+                <div class="pin-icon">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <h3>Enter Your Wallet PIN</h3>
+                <p>Please enter your 4-digit wallet PIN to continue</p>
+                
+                <div class="pin-input-container">
+                    <input type="password" class="pin-digit" maxlength="1" inputmode="numeric" pattern="[0-9]*">
+                    <input type="password" class="pin-digit" maxlength="1" inputmode="numeric" pattern="[0-9]*">
+                    <input type="password" class="pin-digit" maxlength="1" inputmode="numeric" pattern="[0-9]*">
+                    <input type="password" class="pin-digit" maxlength="1" inputmode="numeric" pattern="[0-9]*">
+                </div>
+                
+                <div class="error-message" id="pinError"></div>
+                
+                <button id="verifyPinBtn" class="btn btn-primary">Verify PIN</button>
+            </div>
+        </div>
+        
+        <!-- Withdrawal Form Screen -->
+        <div id="withdrawFormScreen" class="modal-screen">
+            <div class="withdraw-modal-header">
+                <h2>Withdraw Funds</h2>
+                     <button class="close-modal" id="closewithdrawformscreen">&times;</button>
+           
+            </div>
+            <div class="withdraw-form-content">
+                <div class="balance-info">
+                    <div class="balance-item">
+                        <span class="balance-label">Available Balance:</span>
+                        <span class="balance-value" id="availableBalance">0 TC</span>
+                    </div>
+                    <div class="balance-item">
+                        <span class="balance-label">Naira Equivalent:</span>
+                        <span class="balance-value" id="nairaEquivalent">₦0</span>
+                    </div>
+                </div>
+                
+                <form id="withdrawForm">
+                    <div class="form-group">
+                        <label for="withdrawAmount">Amount (Talent Coins)</label>
+                        <input type="number" id="withdrawAmount" name="withdrawAmount" min="10" step="1" required>
+                        <span class="input-note">Minimum withdrawal: 10 Talent Coins</span>
+                    </div>
+                    
+                    <div class="amount-preview">
+                        <span>You will receive:</span>
+                        <span id="nairaAmount">₦0</span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="bankSelect">Select Bank</label>
+                        <select id="bankSelect" name="bankSelect" required>
+                            <option value="">-- Select Bank --</option>
+                            <option value="access">Access Bank</option>
+                            <option value="firstbank">First Bank</option>
+                            <option value="gtb">Guaranty Trust Bank</option>
+                            <option value="zenith">Zenith Bank</option>
+                            <option value="uba">United Bank for Africa</option>
+                            <option value="stanbic">Stanbic IBTC Bank</option>
+                            <option value="fcmb">First City Monument Bank</option>
+                            <option value="fidelity">Fidelity Bank</option>
+                            <option value="ecobank">Ecobank</option>
+                            <option value="union">Union Bank</option>
+                            <option value="sterling">Sterling Bank</option>
+                            <option value="polaris">Polaris Bank</option>
+                            <option value="wema">Wema Bank</option>
+                            <option value="opay">OPay</option>
+                            <option value="palmpay">PalmPay</option>
+                            <option value="kuda">Kuda Bank</option>
+                            <option value="moniepoint">Moniepoint</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="accountNumber">Account Number</label>
+                        <input type="text" id="accountNumber" name="accountNumber" pattern="[0-9]{10}" maxlength="10" inputmode="numeric" required>
+                        <span class="input-note">Enter a valid 10-digit account number</span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="accountName">Account Name</label>
+                        <input type="text" id="accountName" name="accountName" readonly>
+                        <button type="button" id="verifyAccountBtn" class="btn btn-secondary btn-sm">Verify Account</button>
+                    </div>
+                    
+                    <div class="fee-summary">
+                        <div class="summary-row">
+                            <span>Withdrawal Amount:</span>
+                            <span id="summaryAmount">0 TC</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Processing Fee:</span>
+                            <span id="processingFee">0 TC</span>
+                        </div>
+                        <div class="summary-row total">
+                            <span>Total Deduction:</span>
+                            <span id="totalDeduction">0 TC</span>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" id="submitWithdrawBtn" class="btn btn-success" disabled>Withdraw Funds</button>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Processing Screen -->
+        <div id="processingScreen" class="modal-screen">
+            <div class="processing-content">
+                <div class="loader"></div>
+                <h3>Processing Your Withdrawal</h3>
+                <p>Please wait while we process your request...</p>
+            </div>
+        </div>
+        
+        <!-- Success Screen -->
+        <div id="successScreen" class="modal-screen">
+            <div class="success-content">
+                <div class="success-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h3>Withdrawal Successful!</h3>
+                <p>Your withdrawal request has been processed successfully.</p>
+                
+                <div class="transaction-details">
+                    <div class="detail-row">
+                        <span class="detail-label">Amount:</span>
+                        <span class="detail-value" id="successAmount">0 TC (₦0)</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Account:</span>
+                        <span class="detail-value" id="successAccount"></span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Transaction ID:</span>
+                        <span class="detail-value" id="transactionId"></span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Date & Time:</span>
+                        <span class="detail-value" id="transactionDate"></span>
+                    </div>
+                </div>
+                
+                <p class="success-note">The funds will be credited to your account within 1min to 5 mins.</p>
+                
+                <button id="closeSuccessBtn" class="btn btn-primary">Done</button>
+            </div>
+        </div>
+        
+        <!-- Error Screen -->
+        <div id="errorScreen" class="modal-screen">
+            <div class="error-content">
+                <div class="error-icon">
+                    <i class="fas fa-exclamation-circle"></i>
+                </div>
+                <h3>Withdrawal Failed</h3>
+                <p id="errorMessage">There was an error processing your withdrawal request.</p>
+                
+                <div class="error-actions">
+                    <button id="tryAgainBtn" class="btn btn-primary">Try Again</button>
+                    <button id="contactSupportBtn" class="btn btn-secondary">Contact Support</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Transaction History Modal -->
+<div id="transactionHistoryModal" class="transaction-modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Transaction History</h2>
+                 <button class="close-modal" id="closetransactionhistorymodal">&times;</button>
+           
+        </div>
+        
+        <div class="transaction-filters">
+            <div class="filter-group">
+                <label for="transactionType">Type:</label>
+                <select id="transactionType">
+                    <option value="all">All Transactions</option>
+                    <option value="purchase">Purchases</option>
+                    <option value="withdrawal">Withdrawals</option>
+                    <option value="commission">Commissions</option>
+                    <option value="earning">Earnings</option>
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <label for="dateRange">Period:</label>
+                <select id="dateRange">
+                    <option value="all">All Time</option>
+                    <option value="today">Today</option>
+                    <option value="week">This Week</option>
+                    <option value="month">This Month</option>
+                    <option value="year">This Year</option>
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <label for="transactionStatus">Status:</label>
+                <select id="transactionStatus">
+                    <option value="all">All Status</option>
+                    <option value="completed">Completed</option>
+                    <option value="pending">Pending</option>
+                    <option value="failed">Failed</option>
+                </select>
+            </div>
+            
+            <button id="applyFilters" class="filter-btn">Apply Filters</button>
+        </div>
+        
+        <div class="transaction-summary">
+            <div class="summary-card">
+                <h4>Total Purchases</h4>
+                <p id="totalPurchases">0 TC</p>
+            </div>
+            <div class="summary-card">
+                <h4>Total Withdrawals</h4>
+                <p id="totalWithdrawals">0 TC</p>
+            </div>
+            <div class="summary-card">
+                <h4>Total Earnings</h4>
+                <p id="totalEarnings">0 TC</p>
+            </div>
+            <div class="summary-card">
+                <h4>Total Commissions</h4>
+                <p id="totalCommissions">0 TC</p>
+            </div>
+        </div>
+        
+        <div class="transaction-table-container">
+            <table class="transaction-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Type</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody id="transactionTableBody">
+                    <!-- Transactions will be loaded here -->
+                </tbody>
+            </table>
+            
+            <div class="empty-state" id="emptyTransactions">
+                <i class="fas fa-search"></i>
+                <p>No transactions found</p>
+                <span>Try changing your filters</span>
+            </div>
+            
+            <div class="loading-transactions" id="loadingTransactions">
+                <i class="fas fa-spinner fa-spin"></i>
+                <p>Loading transactions...</p>
+            </div>
+        </div>
+        
+        <div class="pagination">
+            <button id="prevPage" class="pagination-btn" disabled>
+                <i class="fas fa-chevron-left"></i> Previous
+            </button>
+            <span id="pageIndicator">Page 1 of 1</span>
+            <button id="nextPage" class="pagination-btn" disabled>
+                Next <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+        
+        <div class="export-section">
+            <button id="exportCSV" class="export-btn">
+                <i class="fas fa-file-csv"></i> Export CSV
+            </button>
+            <button id="printTransactions" class="export-btn">
+                <i class="fas fa-print"></i> Print
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Transaction Details Modal -->
+<div id="transactionDetailsModal" class="transaction-details-modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Transaction Details</h2>
+                 <button class="close-modal" id="closetransactiondetailsmodal">&times;</button>
+           
+        </div>
+        
+        <div class="transaction-details-content" id="transactionDetailsContent">
+            <!-- Transaction details will be loaded here -->
+        </div>
+        
+        <div class="modal-footer">
+            <button id="closeDetailsBtn" class="btn btn-secondary">Close</button>
+        </div>
+    </div>
+</div>
 
 
 
@@ -10642,552 +9963,7 @@ input:checked + .toggle-slider:before {
 </div>
 
    
-     
-<!-- Buy Coins Modal -->
-<div id="buyCoinsModal" class="buy-coins-modal">
-  <div class="buycoin-modal-content">
-    <div class="modal-header">
-      <h2>Buy Talent Coins</h2>
-<button class="buycoin-close-btn" id="buyCoinsCloseBtn" aria-label="Close buy coins modal">
-    <span class="buycoin-close-icon"></span>
-</button>
-    </div>
-    
-    <div class="modal-tabs">
-      <button class="tab-btn active" data-tab="buyTab">Buy Coins</button>
-      <button class="tab-btn" data-tab="confirmTab">Confirm Payment</button>
-    </div>
-    
-    <!-- Tab 1: Buy Coins -->
-    <div id="buyTab" class="tab-content active">
-      <div class="coin-purchase-form">
-        <h3>Select Coin Package</h3>
-        <p class="coin-rate-info">1 Talent Coin = 15 Naira</p>
-        
-        <div class="coin-packages">
-          <div class="package-option">
-            <input type="radio" id="package1" name="coinPackage" value="1">
-            <label for="package1">1 Talent Coin</label>
-            <span class="price">₦15</span>
-          </div>
-          
-          <div class="package-option">
-            <input type="radio" id="package10" name="coinPackage" value="11">
-            <label for="package10">10 + 1 Bonus Talent Coins</label>
-            <span class="price">₦150</span>
-            <span class="bonus-tag">+1 Bonus</span>
-          </div>
-          
-          <div class="package-option">
-            <input type="radio" id="package50" name="coinPackage" value="55">
-            <label for="package50">50 + 5 Bonus Talent Coins</label>
-            <span class="price">₦750</span>
-            <span class="bonus-tag">+5 Bonus</span>
-          </div>
-          
-          <div class="package-option">
-            <input type="radio" id="package100" name="coinPackage" value="110">
-            <label for="package100">100 + 10 Bonus Talent Coins</label>
-            <span class="price">₦1,500</span>
-            <span class="bonus-tag">+10 Bonus</span>
-          </div>
-          
-          <div class="package-option">
-            <input type="radio" id="package200" name="coinPackage" value="220">
-            <label for="package200">200 + 20 Bonus Talent Coins</label>
-            <span class="price">₦3,000</span>
-            <span class="bonus-tag">+20 Bonus</span>
-          </div>
-          
-          <div class="package-option">
-            <input type="radio" id="package1000" name="coinPackage" value="1300">
-            <label for="package1000">1000 + 300 Bonus Talent Coins</label>
-            <span class="price">₦15,000</span>
-            <span class="bonus-tag">+300 Bonus</span>
-          </div>
-          
-          <div class="package-option">
-            <input type="radio" id="package2000" name="coinPackage" value="2600">
-            <label for="package2000">2000 + 600 Bonus Talent Coins</label>
-            <span class="price">₦30,000</span>
-            <span class="bonus-tag">+600 Bonus</span>
-          </div>
-        </div>
-        
-        <div class="summary-section">
-          <div class="summary-row">
-            <span>Selected Package:</span>
-            <span id="selectedPackage">None</span>
-          </div>
-          <div class="summary-row">
-            <span>Total Coins:</span>
-            <span id="totalCoins">0</span>
-          </div>
-          <div class="summary-row">
-            <span>Amount to Pay:</span>
-            <span id="amountToPay">₦0</span>
-          </div>
-        </div>
-        
-        <button id="payBtn" class="btn btn-success">Pay</button>
-      </div>
       
-      <!-- Payment Instructions (initially hidden) -->
-      <div id="paymentInstructions" class="payment-instructions hidden">
-        <h3>Payment Instructions</h3>
-        <p>Please transfer the exact amount to the following account:</p>
-        
-        <div class="account-details">
-          <div class="detail-row">
-            <span class="detail-label">Account Name:</span>
-            <span class="detail-value">Rewarder Quest</span>
-          </div>
-          <div class="detail-row">
-            <span class="detail-label">Account Number (Opay):</span>
-            <span class="detail-value">9078139367</span>
-            <button class="copy-btn" data-copy="9078139367">Copy</button>
-          </div>
-          <div class="detail-row">
-            <span class="detail-label">Amount:</span>
-            <span class="detail-value" id="transferAmount">₦0</span>
-          </div>
-        </div>
-        
-        <div class="instruction-note">
-          <p>After making the transfer, please proceed to the "Confirm Payment" tab to complete your purchase.</p>
-        </div>
-        
-        <button class="tab-nav-btn" data-tab="confirmTab">Proceed to Confirm Payment</button>
-      </div>
-    </div>
-    
-    <!-- Tab 2: Confirm Payment -->
-    <div id="confirmTab" class="tab-content">
-      <div class="payment-confirmation-form">
-        <h3>Confirm Your Payment</h3>
-        <p class="confirmation-info">Please fill in the details of your payment to verify your transaction.</p>
-        
-        <form id="paymentConfirmationForm">
-          <div class="form-group">
-            <label for="fullName">Full Name</label>
-            <input type="text" id="fullName" name="fullName" required>
-          </div>
-          
-          <div class="form-group">
-            <label for="wallettag">@wallet tag</label>
-            <input type="text" id="walletTagInput" placeholder="yourname" maxlength="15">
-       <div id="tagStatus" class="tag-status"></div>
-        
-        </div>
-        
-        </div>
-          
-          <div class="form-group">
-            <label for="phoneNumber">Phone Number</label>
-            <input type="tel" id="phoneNumber" name="phoneNumber" required>
-          </div>
-          
-          <div class="form-group">
-            <label for="bankName">Bank Used for Transfer</label>
-            <input type="text" id="bankName" name="bankName" required>
-          </div>
-          
-          <div class="form-group">
-            <label for="accountName">Account Name Used</label>
-            <input type="text" id="accountName" name="accountName" required>
-          </div>
-          
-          <div class="form-group">
-            <label for="amountPaid">Amount Paid (₦)</label>
-            <input type="number" id="amountPaid" name="amountPaid" required>
-          </div>
-          
-          <div class="form-group">
-            <label for="transactionReference">Transaction Reference/ID (if available)</label>
-            <input type="text" id="transactionReference" name="transactionReference">
-          </div>
-          
-          <div class="form-group">
-            <label for="additionalInfo">Additional Information</label>
-            <textarea id="additionalInfo" name="additionalInfo" rows="3"></textarea>
-          </div>
-          
-          <div class="verification-notice">
-            <p>Talent Coins will be credited to your wallet within 1 to 30 minutes after successful verification.</p>
-          </div>
-          <div class="payment-proof-section">
-  <h3>Upload Payment Proof</h3>
-  <p class="section-description">
-    Please upload screenshots of your payment confirmation to verify your purchase.
-  </p>
-  
-  <div class="upload-container">
-    <div class="upload-item">
-      <label for="paymentProof1" class="upload-label">
-        <div class="upload-icon">
-          <i class="fas fa-upload"></i>
-        </div>
-        <span class="upload-text">Upload Screenshot 1</span>
-        <span class="upload-subtext">(Required)</span>
-      </label>
-      <input type="file" id="paymentProof1" class="file-input" accept="image/*" required>
-      <div class="preview-container" id="preview1Container">
-        <img id="preview1" class="image-preview hidden">
-        <button type="button" class="remove-btn" id="removeProof1">
-          <i class="fas fa-times"></i>
-        </button>
-      </div>
-    </div>
-    
-  
-  <div class="upload-instructions">
-    <h4>Instructions:</h4>
-    <ul>
-      <li>Upload clear screenshots of your payment confirmation</li>
-      <li>Make sure the transaction details are clearly visible</li>
-      <li>Include transaction reference number if available</li>
-      <li>Supported formats: JPG, PNG, JPEG (Max size: 5MB)</li>
-    </ul>
-  </div>
-</div>
-          <button type="submit" id="submitConfirmation" class="btn btn-primary">Submit Confirmation</button>
-        </form>
-      </div>
-      
-      <!-- Confirmation Success (initially hidden) -->
-      <div id="confirmationSuccess" class="confirmation-success hidden">
-        <div class="success-icon">
-          <i class="fas fa-check-circle"></i>
-        </div>
-        <h3>Payment Confirmation Submitted!</h3>
-        <p>Your payment confirmation has been submitted successfully.</p>
-        <div class="pending-info">
-          <p>Your purchase of <span id="pendingCoins">0</span> Talent Coins has been added to your pending balance.</p>
-          <p>The coins will be credited to your wallet within 1 to 30 minutes after verification.</p>
-        </div>
-        <button id="closeModalBtn" class="btn btn-secondary">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Withdraw Modal (Add this to your existing HTML) -->
-<div id="withdrawModal" class="withdraw-modal">
-    <div class="pin2-modal-content">
-        <!-- PIN Verification Screen -->
-        <div id="pinVerificationScreen" class="modal-screen active">
-            <div class="modal-header">
-                <h2>Verify PIN</h2>
-<button class="withdraw-close-btn" id="withdrawCloseBtn" aria-label="Close withdraw modal">
-    <span class="withdraw-close-icon"></span>
-</button>
-           </div>
-            <div class="pin-verification-content">
-                <div class="pin-icon">
-                    <i class="fas fa-lock"></i>
-                </div>
-                <h3>Enter Your Wallet PIN</h3>
-                <p>Please enter your 4-digit wallet PIN to continue</p>
-                
-                <div class="pin-input-container">
-                    <input type="password" class="pin-digit" maxlength="1" inputmode="numeric" pattern="[0-9]*">
-                    <input type="password" class="pin-digit" maxlength="1" inputmode="numeric" pattern="[0-9]*">
-                    <input type="password" class="pin-digit" maxlength="1" inputmode="numeric" pattern="[0-9]*">
-                    <input type="password" class="pin-digit" maxlength="1" inputmode="numeric" pattern="[0-9]*">
-                </div>
-                
-                <div class="error-message" id="pinError"></div>
-                
-                <button id="verifyPinBtn" class="btn btn-primary">Verify PIN</button>
-            </div>
-        </div>
-        
-        <!-- Withdrawal Form Screen -->
-        <div id="withdrawFormScreen" class="modal-screen">
-            <div class="withdraw-modal-header">
-                <h2>Withdraw Funds</h2>
-<button class="withdraw-close-btn" id="withdrawCloseBtn" aria-label="Close withdraw modal">
-    <span class="withdraw-close-icon"></span>
-</button>
-                            </div>
-            <div class="withdraw-form-content">
-                <div class="balance-info">
-                    <div class="balance-item">
-                        <span class="balance-label">Available Balance:</span>
-                        <span class="balance-value" id="availableBalance">0 TC</span>
-                    </div>
-                    <div class="balance-item">
-                        <span class="balance-label">Naira Equivalent:</span>
-                        <span class="balance-value" id="nairaEquivalent">₦0</span>
-                    </div>
-                </div>
-                
-                <form id="withdrawForm">
-                    <div class="form-group">
-                        <label for="withdrawAmount">Amount (Talent Coins)</label>
-                        <input type="number" id="withdrawAmount" name="withdrawAmount" min="10" step="1" required>
-                        <span class="input-note">Minimum withdrawal: 10 Talent Coins</span>
-                    </div>
-                    
-                    <div class="amount-preview">
-                        <span>You will receive:</span>
-                        <span id="nairaAmount">₦0</span>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="bankSelect">Select Bank</label>
-                        <select id="bankSelect" name="bankSelect" required>
-                            <option value="">-- Select Bank --</option>
-                            <option value="access">Access Bank</option>
-                            <option value="firstbank">First Bank</option>
-                            <option value="gtb">Guaranty Trust Bank</option>
-                            <option value="zenith">Zenith Bank</option>
-                            <option value="uba">United Bank for Africa</option>
-                            <option value="stanbic">Stanbic IBTC Bank</option>
-                            <option value="fcmb">First City Monument Bank</option>
-                            <option value="fidelity">Fidelity Bank</option>
-                            <option value="ecobank">Ecobank</option>
-                            <option value="union">Union Bank</option>
-                            <option value="sterling">Sterling Bank</option>
-                            <option value="polaris">Polaris Bank</option>
-                            <option value="wema">Wema Bank</option>
-                            <option value="opay">OPay</option>
-                            <option value="palmpay">PalmPay</option>
-                            <option value="kuda">Kuda Bank</option>
-                            <option value="moniepoint">Moniepoint</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="accountNumber">Account Number</label>
-                        <input type="text" id="accountNumber" name="accountNumber" pattern="[0-9]{10}" maxlength="10" inputmode="numeric" required>
-                        <span class="input-note">Enter a valid 10-digit account number</span>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="accountName">Account Name</label>
-                        <input type="text" id="accountName" name="accountName" readonly>
-                        <button type="button" id="verifyAccountBtn" class="btn btn-secondary btn-sm">Verify Account</button>
-                    </div>
-                    
-                    <div class="fee-summary">
-                        <div class="summary-row">
-                            <span>Withdrawal Amount:</span>
-                            <span id="summaryAmount">0 TC</span>
-                        </div>
-                        <div class="summary-row">
-                            <span>Processing Fee:</span>
-                            <span id="processingFee">0 TC</span>
-                        </div>
-                        <div class="summary-row total">
-                            <span>Total Deduction:</span>
-                            <span id="totalDeduction">0 TC</span>
-                        </div>
-                    </div>
-                    
-                    <button type="submit" id="submitWithdrawBtn" class="btn btn-success" disabled>Withdraw Funds</button>
-                </form>
-            </div>
-        </div>
-        
-        <!-- Processing Screen -->
-        <div id="processingScreen" class="modal-screen">
-            <div class="processing-content">
-                <div class="loader"></div>
-                <h3>Processing Your Withdrawal</h3>
-                <p>Please wait while we process your request...</p>
-            </div>
-        </div>
-        
-        <!-- Success Screen -->
-        <div id="successScreen" class="modal-screen">
-            <div class="success-content">
-                <div class="success-icon">
-                    <i class="fas fa-check-circle"></i>
-                </div>
-                <h3>Withdrawal Successful!</h3>
-                <p>Your withdrawal request has been processed successfully.</p>
-                
-                <div class="transaction-details">
-                    <div class="detail-row">
-                        <span class="detail-label">Amount:</span>
-                        <span class="detail-value" id="successAmount">0 TC (₦0)</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">Account:</span>
-                        <span class="detail-value" id="successAccount"></span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">Transaction ID:</span>
-                        <span class="detail-value" id="transactionId"></span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">Date & Time:</span>
-                        <span class="detail-value" id="transactionDate"></span>
-                    </div>
-                </div>
-                
-                <p class="success-note">The funds will be credited to your account within 1min to 5 mins.</p>
-                
-                <button id="closeSuccessBtn" class="btn btn-primary">Done</button>
-            </div>
-        </div>
-        
-        <!-- Error Screen -->
-        <div id="errorScreen" class="modal-screen">
-            <div class="error-content">
-                <div class="error-icon">
-                    <i class="fas fa-exclamation-circle"></i>
-                </div>
-                <h3>Withdrawal Failed</h3>
-                <p id="errorMessage">There was an error processing your withdrawal request.</p>
-                
-                <div class="error-actions">
-                    <button id="tryAgainBtn" class="btn btn-primary">Try Again</button>
-                    <button id="contactSupportBtn" class="btn btn-secondary">Contact Support</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<!-- Transaction History Modal -->
-<div id="transactionHistoryModal" class="transaction-modal">
-    <div class="history-modal-content">
-        <div class="modal-header">
-            <h2>Transaction History</h2>
-       <button class="history-close-btn" id="historyCloseBtn" aria-label="Close transaction history modal">
-    <span class="history-close-icon"></span>
-</button>
-        </div>
-        
-        <div class="transaction-filters">
-            <div class="filter-group">
-                <label for="transactionType">Type:</label>
-                <select id="transactionType">
-                    <option value="all">All Transactions</option>
-                    <option value="purchase">Purchases</option>
-                    <option value="withdrawal">Withdrawals</option>
-                    <option value="commission">Commissions</option>
-                    <option value="earning">Earnings</option>
-                </select>
-            </div>
-            
-            <div class="filter-group">
-                <label for="dateRange">Period:</label>
-                <select id="dateRange">
-                    <option value="all">All Time</option>
-                    <option value="today">Today</option>
-                    <option value="week">This Week</option>
-                    <option value="month">This Month</option>
-                    <option value="year">This Year</option>
-                </select>
-            </div>
-            
-            <div class="filter-group">
-                <label for="transactionStatus">Status:</label>
-                <select id="transactionStatus">
-                    <option value="all">All Status</option>
-                    <option value="completed">Completed</option>
-                    <option value="pending">Pending</option>
-                    <option value="failed">Failed</option>
-                </select>
-            </div>
-            
-            <button id="applyFilters" class="filter-btn">Apply Filters</button>
-        </div>
-        
-        <div class="transaction-summary">
-            <div class="summary-card">
-                <h4>Total Purchases</h4>
-                <p id="totalPurchases">0 TC</p>
-            </div>
-            <div class="summary-card">
-                <h4>Total Withdrawals</h4>
-                <p id="totalWithdrawals">0 TC</p>
-            </div>
-            <div class="summary-card">
-                <h4>Total Earnings</h4>
-                <p id="totalEarnings">0 TC</p>
-            </div>
-            <div class="summary-card">
-                <h4>Total Commissions</h4>
-                <p id="totalCommissions">0 TC</p>
-            </div>
-        </div>
-        
-        <div class="transaction-table-container">
-            <table class="transaction-table">
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Type</th>
-                        <th>Amount</th>
-                        <th>Status</th>
-                        <th>Details</th>
-                    </tr>
-                </thead>
-                <tbody id="transactionTableBody">
-                    <!-- Transactions will be loaded here -->
-                </tbody>
-            </table>
-            
-            <div class="empty-state" id="emptyTransactions">
-                <i class="fas fa-search"></i>
-                <p>No transactions found</p>
-                <span>Try changing your filters</span>
-            </div>
-            
-            <div class="loading-transactions" id="loadingTransactions">
-                <i class="fas fa-spinner fa-spin"></i>
-                <p>Loading transactions...</p>
-            </div>
-        </div>
-        
-        <div class="pagination">
-            <button id="prevPage" class="pagination-btn" disabled>
-                <i class="fas fa-chevron-left"></i> Previous
-            </button>
-            <span id="pageIndicator">Page 1 of 1</span>
-            <button id="nextPage" class="pagination-btn" disabled>
-                Next <i class="fas fa-chevron-right"></i>
-            </button>
-        </div>
-        
-        <div class="export-section">
-            <button id="exportCSV" class="export-btn">
-                <i class="fas fa-file-csv"></i> Export CSV
-            </button>
-            <button id="printTransactions" class="export-btn">
-                <i class="fas fa-print"></i> Print
-            </button>
-        </div>
-    </div>
-</div>
-
-<!-- Transaction Details Modal -->
-<div id="transactionDetailsModal" class="transaction-details-modal">
-    <div class="detail-modal-content">
-        <div class="modal-header">
-            <h2>Transaction Details</h2>
-<button class="details-close-btn" id="detailsCloseBtn" aria-label="Close transaction details modal">
-    <span class="details-close-icon"></span>
-</button>
-        </div>
-        
-        <div class="transaction-details-content" id="transactionDetailsContent">
-            <!-- Transaction details will be loaded here -->
-        </div>
-        
-        <div class="modal-footer">
-            <button id="closeDetailsBtn" class="btn btn-secondary">Close</button>
-        </div>
-    </div>
-</div>
-
-
-   
 
   <!-- Overlay for modals -->
 <div class="modal-overlay" id="modalOverlay"></div>
@@ -15963,204 +14739,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-  document.addEventListener('DOMContentLoaded', function() {
-    // Buy Coins Modal Close Button
-    const buyCoinsModal = document.getElementById('buyCoinsModal');
-    const buyCoinsCloseBtn = document.getElementById('buyCoinsCloseBtn');
-    
-    if (buyCoinsCloseBtn && buyCoinsModal) {
-        buyCoinsCloseBtn.addEventListener('click', function() {
-            closeBuyCoinsModal();
-        });
-    }
-    
-    function closeBuyCoinsModal() {
-        buyCoinsModal.classList.add('modal-closing');
-        setTimeout(function() {
-            buyCoinsModal.style.display = 'none';
-            buyCoinsModal.classList.remove('modal-closing');
-            document.body.classList.remove('modal-open');
-        }, 300);
-    }
-    
-    // Withdraw Modal Close Button
-    const withdrawModal = document.getElementById('withdrawModal');
-    const withdrawCloseBtn = document.getElementById('withdrawCloseBtn');
-    
-    if (withdrawCloseBtn && withdrawModal) {
-        withdrawCloseBtn.addEventListener('click', function() {
-            closeWithdrawModal();
-        });
-    }
-    
-    function closeWithdrawModal() {
-        withdrawModal.classList.add('modal-closing');
-        setTimeout(function() {
-            withdrawModal.style.display = 'none';
-            withdrawModal.classList.remove('modal-closing');
-            document.body.classList.remove('modal-open');
-            
-            // Reset to the first screen if needed
-            const screens = withdrawModal.querySelectorAll('.modal-screen');
-            screens.forEach(screen => screen.classList.remove('active'));
-            const pinScreen = document.getElementById('pinVerificationScreen');
-            if (pinScreen) pinScreen.classList.add('active');
-        }, 300);
-    }
-    
-    // Transaction History Modal Close Button
-    const historyModal = document.getElementById('transactionHistoryModal');
-    const historyCloseBtn = document.getElementById('historyCloseBtn');
-    
-    if (historyCloseBtn && historyModal) {
-        historyCloseBtn.addEventListener('click', function() {
-            closeHistoryModal();
-        });
-    }
-    
-    function closeHistoryModal() {
-        historyModal.classList.add('modal-closing');
-        setTimeout(function() {
-            historyModal.style.display = 'none';
-            historyModal.classList.remove('modal-closing');
-            document.body.classList.remove('modal-open');
-        }, 300);
-    }
-    
-    // Transaction Details Modal Close Button
-    const detailsModal = document.getElementById('transactionDetailsModal');
-    const detailsCloseBtn = document.getElementById('detailsCloseBtn');
-    
-    if (detailsCloseBtn && detailsModal) {
-        detailsCloseBtn.addEventListener('click', function() {
-            closeDetailsModal();
-        });
-    }
-    
-    function closeDetailsModal() {
-        detailsModal.classList.add('modal-closing');
-        setTimeout(function() {
-            detailsModal.style.display = 'none';
-            detailsModal.classList.remove('modal-closing');
-        }, 300);
-    }
-    
-    // Close modals when clicking outside the modal content
-    window.addEventListener('click', function(event) {
-        if (event.target === buyCoinsModal) {
-            closeBuyCoinsModal();
-        } else if (event.target === withdrawModal) {
-            closeWithdrawModal();
-        } else if (event.target === historyModal) {
-            closeHistoryModal();
-        } else if (event.target === detailsModal) {
-            closeDetailsModal();
-        }
-    });
-    
-    // Close modals when pressing Escape key
-    document.addEventListener('keydown', function(event) {
-        if (event.key === 'Escape') {
-            if (buyCoinsModal && buyCoinsModal.style.display !== 'none') {
-                closeBuyCoinsModal();
-            } else if (withdrawModal && withdrawModal.style.display !== 'none') {
-                closeWithdrawModal();
-            } else if (historyModal && historyModal.style.display !== 'none') {
-                closeHistoryModal();
-            } else if (detailsModal && detailsModal.style.display !== 'none') {
-                closeDetailsModal();
-            }
-        }
-    });
-    
-        // Connect existing close buttons to our functions
-    const closeModalBtn = document.getElementById('closeModalBtn');
-    if (closeModalBtn) {
-        closeModalBtn.addEventListener('click', function() {
-            closeBuyCoinsModal();
-        });
-    }
-    
-    const closeDetailsBtn = document.getElementById('closeDetailsBtn');
-    if (closeDetailsBtn) {
-        closeDetailsBtn.addEventListener('click', function() {
-            closeDetailsModal();
-        });
-    }
-    
-    // Functions to open modals (for reference and integration)
-    window.openBuyCoinsModal = function() {
-        buyCoinsModal.style.display = 'block';
-        document.body.classList.add('modal-open');
-    };
-    
-    window.openWithdrawModal = function() {
-        withdrawModal.style.display = 'block';
-        document.body.classList.add('modal-open');
-        
-        // Ensure the first screen is active
-        const screens = withdrawModal.querySelectorAll('.modal-screen');
-        screens.forEach(screen => screen.classList.remove('active'));
-        const pinScreen = document.getElementById('pinVerificationScreen');
-        if (pinScreen) pinScreen.classList.add('active');
-    };
-    
-    window.openTransactionHistoryModal = function() {
-        historyModal.style.display = 'block';
-        document.body.classList.add('modal-open');
-    };
-    
-    window.openTransactionDetailsModal = function(transactionId) {
-        // You can use the transactionId parameter to load specific transaction details
-        detailsModal.style.display = 'block';
-        
-        // Example of how you might load transaction details
-        // loadTransactionDetails(transactionId);
-    };
-    
-    // Helper function to reset form fields when closing modals
-    function resetFormFields(formId) {
-        const form = document.getElementById(formId);
-        if (form) {
-            form.reset();
-        }
-    }
-    
-    // Additional functionality for the "Done" button in success screen
-    const closeSuccessBtn = document.getElementById('closeSuccessBtn');
-    if (closeSuccessBtn) {
-        closeSuccessBtn.addEventListener('click', function() {
-            closeWithdrawModal();
-        });
-    }
-    
-    // Additional functionality for the "Try Again" button in error screen
-    const tryAgainBtn = document.getElementById('tryAgainBtn');
-    if (tryAgainBtn) {
-        tryAgainBtn.addEventListener('click', function() {
-            // Reset to the first screen
-            const screens = withdrawModal.querySelectorAll('.modal-screen');
-            screens.forEach(screen => screen.classList.remove('active'));
-            const pinScreen = document.getElementById('pinVerificationScreen');
-            if (pinScreen) pinScreen.classList.add('active');
-        });
-    }
-    
-    // Additional functionality for the "Contact Support" button in error screen
-    const contactSupportBtn = document.getElementById('contactSupportBtn');
-    if (contactSupportBtn) {
-        contactSupportBtn.addEventListener('click', function() {
-            // Redirect to support page or open support chat
-            // window.location.href = '/support';
-            
-            // Or open a support modal/chat
-            // openSupportChat();
-            
-            // For now, just close the modal
-            closeWithdrawModal();
-        });
-    }
-});
+  
 
     
    document.addEventListener('DOMContentLoaded', function() {
