@@ -4885,7 +4885,8 @@ button,
     }
 }
 
-/* Withdraw Modal Styles - Mobile-First Approach */
+
+/* Withdraw Modal Styles - Compact Version */
 .withdraw-modal {
     display: none;
     position: fixed;
@@ -4897,23 +4898,19 @@ button,
     z-index: 1000;
     overflow-y: auto;
     justify-content: center;
-    align-items: flex-start;
-    padding: 15px;
-    box-sizing: border-box;
+    align-items: center;
 }
 
 .modal-content {
     background-color: #1a1a2e;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-    width: 100%;
-    max-width: 450px;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    overflow-y: visible;
-    position: relative;
-    animation: modalFadeIn 0.25s ease-out;
-    margin: auto;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 800px;
+    margin: 30px auto;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    animation: modalFadeIn 0.3s ease;
+    max-height: 90vh;
+    overflow-y: auto;
 }
 
 @keyframes modalFadeIn {
@@ -4925,8 +4922,8 @@ button,
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 16px;
-    border-bottom: 1px solid rgba(234, 234, 234, 0.1);
+    padding: 12px 16px;
+    border-bottom: 1px solid #eaeaea;
     background-color: #1a1a2e;
     color: white;
     border-radius: 12px 12px 0 0;
@@ -4940,6 +4937,7 @@ button,
     font-weight: 600;
     margin: 0;
     color: white;
+    
 }
 
 .close-modal {
@@ -4949,13 +4947,6 @@ button,
     cursor: pointer;
     transition: all 0.2s ease;
     line-height: 1;
-    padding: 5px;
-    /* Increase touch target size for mobile */
-    height: 44px;
-    width: 44px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 .close-modal:hover {
@@ -5011,7 +5002,6 @@ button,
     border: 1.5px solid #ddd;
     border-radius: 8px;
     background-color: #1a1a2e;
-    color: white;
     transition: all 0.2s ease;
 }
 
@@ -5031,15 +5021,14 @@ button,
 /* Withdraw Form Screen */
 .withdraw-form-content {
     padding: 16px;
-    color: white;
 }
 
 .balance-info {
-    background-color: rgba(248, 249, 250, 0.1);
+    background-color: #f8f9fa;
     border-radius: 8px;
     padding: 12px;
     margin-bottom: 16px;
-    border: 1px solid rgba(234, 234, 234, 0.1);
+    border: 1px solid #eaeaea;
 }
 
 .balance-item {
@@ -5055,12 +5044,12 @@ button,
 
 .balance-label {
     font-weight: 500;
-    color: #ccc;
+    color: #666;
 }
 
 .balance-value {
     font-weight: 600;
-    color: white;
+    color: #333;
 }
 
 .form-group {
@@ -5071,57 +5060,44 @@ label {
     display: block;
     margin-bottom: 6px;
     font-weight: 500;
-    color: #ccc;
+    color: #444;
     font-size: 0.9rem;
 }
 
 input, select {
     width: 100%;
-    padding: 12px;
-    border: 1.5px solid #444;
+    padding: 10px 12px;
+    border: 1.5px solid #ddd;
     border-radius: 8px;
     font-size: 0.95rem;
     transition: all 0.2s ease;
-    background-color: rgba(249, 249, 249, 0.1);
-    color: white;
-    -webkit-appearance: none; /* Remove default styling on iOS */
-    appearance: none;
-    box-sizing: border-box;
+    background-color: #f9f9f9;
 }
 
 input:focus, select:focus {
     border-color: #4a6cf7;
     box-shadow: 0 0 0 2px rgba(74, 108, 247, 0.2);
     outline: none;
-    background-color: rgba(255, 255, 255, 0.05);
-}
-
-/* Fix for iOS zoom on input focus */
-@media screen and (-webkit-min-device-pixel-ratio: 0) { 
-    select,
-    input {
-        font-size: 16px;
-    }
+    background-color: #fff;
 }
 
 .input-note {
     display: block;
     font-size: 0.75rem;
-    color: #aaa;
+    color: #777;
     margin-top: 4px;
 }
 
 .amount-preview {
-    background-color: rgba(233, 240, 255, 0.1);
+    background-color: #e9f0ff;
     border-radius: 8px;
     padding: 10px 12px;
     margin-bottom: 16px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border: 1px solid rgba(209, 224, 255, 0.2);
+    border: 1px solid #d1e0ff;
     font-size: 0.9rem;
-    color: white;
 }
 
 #nairaAmount {
@@ -5138,25 +5114,24 @@ input:focus, select:focus {
     vertical-align: middle;
     user-select: none;
     border: 1px solid transparent;
-    padding: 12px 16px; /* Increased for better touch targets */
+    padding: 10px 16px;
     font-size: 0.95rem;
     line-height: 1.5;
     border-radius: 8px;
     transition: all 0.2s ease;
     cursor: pointer;
     width: 100%;
-    min-height: 44px; /* Minimum touch target size */
 }
 
 .btn-primary {
     color: #fff;
-    background-color: #4a6cf7;
-    border-color: #4a6cf7;
+    background-color: #1a1a2e;
+    
 }
 
-.btn-primary:hover, .btn-primary:active {
-    background-color: #3a5ce5;
-    border-color: #3a5ce5;
+.btn-primary:hover {
+    background-color:#1a1a2e;
+    
 }
 
 .btn-secondary {
@@ -5165,9 +5140,9 @@ input:focus, select:focus {
     border-color: #6c757d;
 }
 
-.btn-secondary:hover, .btn-secondary:active {
-    background-color: #5a6268;
-    border-color: #545b62;
+.btn-secondary:hover {
+    background-color: #333;
+    border-color: #333;
 }
 
 .btn-success {
@@ -5176,16 +5151,15 @@ input:focus, select:focus {
     border-color: #28a745;
 }
 
-.btn-success:hover, .btn-success:active {
+.btn-success:hover {
     background-color: #218838;
     border-color: #1e7e34;
 }
 
 .btn-sm {
-    padding: 8px 12px;
+    padding: 5px 10px;
     font-size: 0.8rem;
     width: auto;
-    min-height: 36px;
 }
 
 .btn:disabled {
@@ -5198,13 +5172,13 @@ input:focus, select:focus {
 }
 
 .fee-summary {
-    background-color: rgba(248, 249, 250, 0.1);
+    background-color: #f8f9fa;
     border-radius: 8px;
     padding: 12px;
     margin-bottom: 16px;
-    border: 1px solid rgba(234, 234, 234, 0.1);
+    border: 1px solid #eaeaea;
     font-size: 0.9rem;
-    color: white;
+    color: #333;
 }
 
 .summary-row {
@@ -5216,7 +5190,7 @@ input:focus, select:focus {
 .summary-row.total {
     margin-top: 8px;
     padding-top: 8px;
-    border-top: 1px dashed rgba(221, 221, 221, 0.3);
+    border-top: 1px dashed #ddd;
     font-weight: 700;
     font-size: 0.95rem;
 }
@@ -5225,11 +5199,10 @@ input:focus, select:focus {
 .processing-content {
     padding: 30px 16px;
     text-align: center;
-    color: white;
 }
 
 .loader {
-    border: 4px solid rgba(243, 243, 243, 0.3);
+    border: 4px solid #f3f3f3;
     border-radius: 50%;
     border-top: 4px solid #4a6cf7;
     width: 50px;
@@ -5246,11 +5219,11 @@ input:focus, select:focus {
 .processing-content h3 {
     font-size: 1.2rem;
     margin-bottom: 10px;
-    color: white;
+    color: #333;
 }
 
 .processing-content p {
-    color: #ccc;
+    color: #666;
     font-size: 0.9rem;
 }
 
@@ -5258,7 +5231,6 @@ input:focus, select:focus {
 .success-content {
     padding: 25px 16px;
     text-align: center;
-    color: white;
 }
 
 .success-icon {
@@ -5270,21 +5242,21 @@ input:focus, select:focus {
 .success-content h3 {
     font-size: 1.2rem;
     margin-bottom: 8px;
-    color: white;
+    color: #333;
 }
 
 .success-content p {
-    color: #ccc;
+    color: #666;
     margin-bottom: 20px;
     font-size: 0.9rem;
 }
 
 .transaction-details {
-    background-color: rgba(248, 249, 250, 0.1);
+    background-color: #f8f9fa;
     border-radius: 8px;
     padding: 12px;
     margin-bottom: 16px;
-    border: 1px solid rgba(234, 234, 234, 0.1);
+    border: 1px solid #eaeaea;
     text-align: left;
     font-size: 0.85rem;
 }
@@ -5300,18 +5272,18 @@ input:focus, select:focus {
 
 .detail-label {
     font-weight: 500;
-    color: #ccc;
+    color: #666;
     width: 40%;
 }
 
 .detail-value {
     font-weight: 500;
-    color: white;
+    color: #333;
 }
 
 .success-note {
     font-size: 0.85rem;
-    color: #ccc;
+    color: #666;
     margin-bottom: 20px;
     font-style: italic;
 }
@@ -5320,7 +5292,6 @@ input:focus, select:focus {
 .error-content {
     padding: 25px 16px;
     text-align: center;
-    color: white;
 }
 
 .error-icon {
@@ -5332,11 +5303,11 @@ input:focus, select:focus {
 .error-content h3 {
     font-size: 1.2rem;
     margin-bottom: 8px;
-    color: white;
+    color: #333;
 }
 
 .error-content p {
-    color: #ccc;
+    color: #666;
     margin-bottom: 20px;
     font-size: 0.9rem;
 }
@@ -5346,38 +5317,15 @@ input:focus, select:focus {
     gap: 12px;
 }
 
-
-/* For taller screens, center the content vertically */
-@media (min-height: 700px) {
-    .withdraw-modal {
-        align-items: center;
-    }
+.error-actions .btn {
+    flex: 1;
 }
 
-
-/* Fix iOS momentum scrolling */
-.modal-content {
-    -webkit-overflow-scrolling: touch;
-}
-
-/* Ensure inputs are properly sized for touch */
-input, select, button {
-    font-size: 16px; /* Prevent iOS zoom */
-    touch-action: manipulation; /* Prevent double-tap zoom */
-}
-
-/* Fix for iOS keyboard issues */
-@supports (-webkit-touch-callout: none) {
-    input, select, textarea {
-        font-size: 16px !important;
-    }
-}
 /* Responsive Adjustments */
 @media (max-width: 480px) {
     .modal-content {
-        width: 100%;
+        width: 95%;
         max-height: 90vh;
-        border-radius: 12px;
     }
     
     .pin-digit {
@@ -5389,29 +5337,7 @@ input, select, button {
         flex-direction: column;
         gap: 8px;
     }
-    
-    .pin-input-container {
-        gap: 8px;
-    }
 }
-
-/* Safe area insets for notched devices */
-@supports (padding: max(0px)) {
-    .withdraw-modal {
-        padding-left: max(15px, env(safe-area-inset-left));
-        padding-right: max(15px, env(safe-area-inset-right));
-        padding-top: max(15px, env(safe-area-inset-top));
-        padding-bottom: max(15px, env(safe-area-inset-bottom));
-    }
-}
-
-/* Fix for iOS momentum scrolling */
-.modal-content {
-    -webkit-overflow-scrolling: touch;
-}
-
-
-
 /* Game Portal Styles */
 .game-portal-container {
   position: fixed;
@@ -15769,305 +15695,119 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
+
+
+
 document.addEventListener('DOMContentLoaded', function() {
-    // Modal elements
+    // DOM Elements
+    const withdrawBtn = document.getElementById('withdrawBtn');
     const withdrawModal = document.getElementById('withdrawModal');
-    const closeModalButtons = document.querySelectorAll('.close-modal');
+    const closeModalBtns = document.querySelectorAll('.close-modal');
+    const pinDigits = document.querySelectorAll('.pin-digit');
+    const verifyPinBtn = document.getElementById('verifyPinBtn');
+    const pinError = document.getElementById('pinError');
     const pinVerificationScreen = document.getElementById('pinVerificationScreen');
     const withdrawFormScreen = document.getElementById('withdrawFormScreen');
-    const processingScreen = document.getElementById('processingScreen');
-    const successScreen = document.getElementById('successScreen');
-    const errorScreen = document.getElementById('errorScreen');
     
-    // Buttons
-    const verifyPinBtn = document.getElementById('verifyPinBtn');
-    const verifyAccountBtn = document.getElementById('verifyAccountBtn');
-    const submitWithdrawBtn = document.getElementById('submitWithdrawBtn');
-    const closeSuccessBtn = document.getElementById('closeSuccessBtn');
-    const tryAgainBtn = document.getElementById('tryAgainBtn');
-    const contactSupportBtn = document.getElementById('contactSupportBtn');
-    
-    // PIN input handling
-    const pinDigits = document.querySelectorAll('.pin-digit');
-    const pinError = document.getElementById('pinError');
-    
-    // Form elements
-    const withdrawForm = document.getElementById('withdrawForm');
-    const withdrawAmount = document.getElementById('withdrawAmount');
-    const bankSelect = document.getElementById('bankSelect');
-    const accountNumber = document.getElementById('accountNumber');
-    const accountName = document.getElementById('accountName');
-    
-    // Display elements
-    const nairaAmount = document.getElementById('nairaAmount');
-    const summaryAmount = document.getElementById('summaryAmount');
-    const processingFee = document.getElementById('processingFee');
-    const totalDeduction = document.getElementById('totalDeduction');
-    
-    // Make modal scrollable
-    function enableModalScrolling() {
+    // Check if elements exist to prevent errors
+    if (!withdrawBtn || !withdrawModal) {
+        console.error('Withdraw button or modal not found in the DOM');
+        return;
+    }
+
+    // Open modal when withdraw button is clicked
+    withdrawBtn.addEventListener('click', function() {
         withdrawModal.style.display = 'flex';
-        document.body.style.overflow = 'hidden'; // Prevent body scrolling when modal is open
-        
-        // For iOS momentum scrolling
-        document.querySelectorAll('.modal-content').forEach(content => {
-            content.style.webkitOverflowScrolling = 'touch';
-        });
-    }
-    
-    // Function to open the modal
-    function openModal() {
-        withdrawModal.style.display = 'flex';
-        enableModalScrolling();
-        // Reset to first screen
-        showScreen(pinVerificationScreen);
-    }
-    
-    // Function to close the modal
-    function closeModal() {
-        withdrawModal.style.display = 'none';
-        document.body.style.overflow = ''; // Restore body scrolling
-        resetForm();
-    }
-    
-    // Function to show a specific screen
-    function showScreen(screen) {
-        // Hide all screens
-        const screens = document.querySelectorAll('.modal-screen');
-        screens.forEach(s => s.classList.remove('active'));
-        
-        // Show the requested screen
-        screen.classList.add('active');
-        
-        // Scroll to top of modal content when changing screens
-        const modalContent = document.querySelector('.modal-content');
-        if (modalContent) {
-            modalContent.scrollTop = 0;
+        // Reset PIN inputs
+        pinDigits.forEach(digit => digit.value = '');
+        // Focus on first PIN input
+        if (pinDigits.length > 0) {
+            pinDigits[0].focus();
         }
-    }
+    });
     
-    // Reset form and inputs
-    function resetForm() {
-        // Clear PIN inputs
-        pinDigits.forEach(input => input.value = '');
-        pinError.textContent = '';
-        
-        // Reset withdrawal form
-        if (withdrawForm) withdrawForm.reset();
-        nairaAmount.textContent = '₦0';
-        summaryAmount.textContent = '0 TC';
-        processingFee.textContent = '0 TC';
-        totalDeduction.textContent = '0 TC';
-        accountName.value = '';
-        submitWithdrawBtn.disabled = true;
-    }
+    // Close modal when close button is clicked
+    closeModalBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            withdrawModal.style.display = 'flex';
+        });
+    });
     
-    // Handle PIN input auto-focus
+    // Close modal when clicking outside the modal content
+    window.addEventListener('click', function(event) {
+        if (event.target === withdrawModal) {
+            withdrawModal.style.display = 'none';
+        }
+    });
+    
+    // PIN input handling - auto-focus next input
     pinDigits.forEach((digit, index) => {
-        // Handle input
         digit.addEventListener('input', function() {
-            // Move to next input if value is entered
-            if (this.value.length === 1 && index < pinDigits.length - 1) {
-                pinDigits[index + 1].focus();
+            if (this.value.length === 1) {
+                if (index < pinDigits.length - 1) {
+                    pinDigits[index + 1].focus();
+                }
             }
-            
-            // Check if all digits are filled
-            checkPinCompletion();
         });
         
-        // Handle backspace
+        // Allow backspace to go to previous input
         digit.addEventListener('keydown', function(e) {
             if (e.key === 'Backspace' && this.value.length === 0 && index > 0) {
                 pinDigits[index - 1].focus();
             }
         });
+    });
+    
+    // Verify PIN
+    verifyPinBtn.addEventListener('click', function() {
+        const enteredPin = Array.from(pinDigits).map(input => input.value).join('');
         
-        // Handle paste event
-        digit.addEventListener('paste', function(e) {
-            e.preventDefault();
-            const pastedData = e.clipboardData.getData('text');
-            if (/^\d+$/.test(pastedData)) {
-                // Fill digits with pasted numbers
-                for (let i = 0; i < Math.min(pastedData.length, pinDigits.length - index); i++) {
-                    pinDigits[index + i].value = pastedData[i];
-                }
-                
-                // Focus on appropriate digit
-                const focusIndex = Math.min(index + pastedData.length, pinDigits.length - 1);
-                pinDigits[focusIndex].focus();
-                
-                checkPinCompletion();
-            }
-        });
-    });
-    
-    // Check if PIN is complete
-    function checkPinCompletion() {
-        const isComplete = Array.from(pinDigits).every(digit => digit.value.length === 1);
-        verifyPinBtn.disabled = !isComplete;
-    }
-    
-    // Handle amount input to calculate Naira equivalent
-    if (withdrawAmount) {
-        withdrawAmount.addEventListener('input', function() {
-            const amount = parseFloat(this.value) || 0;
-            const nairaEquivalent = amount * 100; // Assuming 1 TC = ₦100
-            const fee = Math.max(1, amount * 0.01); // 1% fee with minimum of 1 TC
-            
-            nairaAmount.textContent = `₦${nairaEquivalent.toLocaleString()}`;
-            summaryAmount.textContent = `${amount} TC`;
-            processingFee.textContent = `${fee.toFixed(2)} TC`;
-            totalDeduction.textContent = `${(amount + fee).toFixed(2)} TC`;
-        });
-    }
-    
-    // Verify account button
-    if (verifyAccountBtn) {
-        verifyAccountBtn.addEventListener('click', function() {
-            const bank = bankSelect.value;
-            const accNum = accountNumber.value;
-            
-            if (!bank) {
-                alert('Please select a bank');
-                return;
-            }
-            
-            if (!accNum || accNum.length !== 10 || !/^\d+$/.test(accNum)) {
-                alert('Please enter a valid 10-digit account number');
-                return;
-            }
-            
-            // Simulate account verification (replace with actual API call)
-            verifyAccountBtn.textContent = 'Verifying...';
-            verifyAccountBtn.disabled = true;
-            
-            setTimeout(() => {
-                // Mock response
-                accountName.value = 'JOHN DOE';
-                verifyAccountBtn.textContent = 'Verified';
-                submitWithdrawBtn.disabled = false;
-                
-                // Reset after 3 seconds
-                setTimeout(() => {
-                    verifyAccountBtn.textContent = 'Verify Account';
-                    verifyAccountBtn.disabled = false;
-                }, 3000);
-            }, 1500);
-        });
-    }
-    
-    // Verify PIN button
-    if (verifyPinBtn) {
-        verifyPinBtn.addEventListener('click', function() {
-            const pin = Array.from(pinDigits).map(digit => digit.value).join('');
-            
-            // Simulate PIN verification (replace with actual verification)
-            verifyPinBtn.textContent = 'Verifying...';
-            verifyPinBtn.disabled = true;
-            
-            setTimeout(() => {
-                // Mock successful verification
-                showScreen(withdrawFormScreen);
-                verifyPinBtn.textContent = 'Verify PIN';
-                verifyPinBtn.disabled = false;
-                
-                // For demo purposes, you might want to show error instead:
-                // pinError.textContent = 'Invalid PIN. Please try again.';
-                // pinDigits.forEach(digit => digit.value = '');
-                // pinDigits[0].focus();
-            }, 1500);
-        });
-    }
-    
-    // Submit withdrawal form
-    if (withdrawForm) {
-        withdrawForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Show processing screen
-            showScreen(processingScreen);
-            
-            // Simulate processing (replace with actual API call)
-            setTimeout(() => {
-                // For demo: show success (80% chance) or error (20% chance)
-                if (Math.random() > 0.2) {
-                    // Success
-                    document.getElementById('successAmount').textContent = 
-                        `${withdrawAmount.value} TC (₦${(parseFloat(withdrawAmount.value) * 100).toLocaleString()})`;
-                    document.getElementById('successAccount').textContent = 
-                        `${accountName.value} - ${accountNumber.value} (${bankSelect.options[bankSelect.selectedIndex].text})`;
-                    document.getElementById('transactionId').textContent = 
-                        'TXN' + Math.floor(Math.random() * 1000000000).toString().padStart(9, '0');
-                    document.getElementById('transactionDate').textContent = 
-                        new Date().toLocaleString();
+        // Get the user's wallet PIN from Firebase
+        const userId = firebase.auth().currentUser.uid;
+        
+        firebase.firestore().collection('users').doc(userId).get()
+            .then(doc => {
+                if (doc.exists) {
+                    const userData = doc.data();
+                    const storedPinHash = userData.walletPinHash;
                     
-                    showScreen(successScreen);
+                    // Hash the entered PIN using the same method as in wallet dashboard
+                    const enteredPinHash = hashPin(enteredPin);
+                    
+                    // Compare the hashed PINs
+                    if (enteredPinHash === storedPinHash) {
+                        // PIN is correct, show withdrawal form
+                        pinVerificationScreen.style.display = 'none';
+                        withdrawFormScreen.style.display = 'block';
+                        pinError.textContent = '';
+                    } else {
+                        // PIN is incorrect
+                        pinError.textContent = 'Invalid PIN. Please try again.';
+                        pinDigits.forEach(digit => digit.value = '');
+                        pinDigits[0].focus();
+                    }
                 } else {
-                    // Error
-                    document.getElementById('errorMessage').textContent = 
-                        'Unable to process your withdrawal at this time. Please try again later.';
-                    showScreen(errorScreen);
+                    pinError.textContent = 'User data not found. Please try again.';
                 }
-            }, 3000);
-        });
-    }
-    
-    // Close success button
-    if (closeSuccessBtn) {
-        closeSuccessBtn.addEventListener('click', closeModal);
-    }
-    
-    // Try again button
-    if (tryAgainBtn) {
-        tryAgainBtn.addEventListener('click', function() {
-            showScreen(withdrawFormScreen);
-        });
-    }
-    
-    // Contact support button
-    if (contactSupportBtn) {
-        contactSupportBtn.addEventListener('click', function() {
-            // Implement contact support functionality
-            alert('Support contact: support@example.com');
-        });
-    }
-    
-    // Close modal buttons
-    closeModalButtons.forEach(button => {
-        button.addEventListener('click', closeModal);
+            })
+            .catch(error => {
+                console.error('Error verifying PIN:', error);
+                pinError.textContent = 'Error verifying PIN. Please try again.';
+            });
     });
     
-    // Open modal button (if exists)
-    const openModalBtn = document.getElementById('openWithdrawModal');
-    if (openModalBtn) {
-        openModalBtn.addEventListener('click', openModal);
-    }
-    
-    // Close modal when clicking outside the content
-    withdrawModal.addEventListener('click', function(e) {
-        if (e.target === withdrawModal) {
-            closeModal();
+    // Helper function to hash PIN (same as in wallet dashboard)
+    function hashPin(pin) {
+        // Simple hash for demonstration
+        let hash = 0;
+        for (let i = 0; i < pin.length; i++) {
+            const char = pin.charCodeAt(i);
+            hash = ((hash << 5) - hash) + char;
+            hash = hash & hash; // Convert to 32bit integer
         }
-    });
-    
-    // Prevent touchmove events from propagating on iOS to avoid body scrolling
-    document.querySelector('.modal-content').addEventListener('touchmove', function(e) {
-        e.stopPropagation();
-    }, { passive: false });
-    
-    // Fix for iOS keyboard issues
-    const inputs = document.querySelectorAll('input, select');
-    inputs.forEach(input => {
-        input.addEventListener('blur', function() {
-            // Small timeout to let iOS keyboard disappear
-            setTimeout(() => {
-                window.scrollTo(0, 0);
-            }, 100);
-        });
-    });
+        return hash.toString();
+    }
 });
-
-
 
 
 // JavaScript to fix the Font Awesome icon and handle the game portal
