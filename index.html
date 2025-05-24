@@ -15842,6 +15842,135 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+// Withdraw Modal JavaScript - Scrolling and Closing functionality only
+
+document.addEventListener('DOMContentLoaded', function() {
+    const withdrawModal = document.getElementById('withdrawModal');
+    const closeButtons = document.querySelectorAll('.close-withdraw-modal');
+    const closeSuccessBtn = document.getElementById('closeSuccessBtn');
+    
+    // Function to open modal
+    function openWithdrawModal() {
+        withdrawModal.style.display = 'flex';
+        withdrawModal.classList.add('active');
+        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        
+        // Focus management for accessibility
+        const firstInput = withdrawModal.querySelector('input, button, select');
+        if (firstInput) {
+            setTimeout(() => firstInput.focus(), 100);
+        }
+    }
+    
+    // Function to close modal
+    function closeWithdrawModal() {
+        withdrawModal.classList.remove('active');
+        document.body.style.overflow = ''; // Restore background scrolling
+        
+        setTimeout(() => {
+            withdrawModal.style.display = 'none';
+            // Reset all screens to initial state
+            resetModalScreens();
+        }, 300);
+    }
+    
+    // Function to reset modal screens
+    function resetModalScreens() {
+        const allScreens = withdrawModal.querySelectorAll('.modal-screen, .withdrawmodal-screen');
+        allScreens.forEach(screen => {
+            screen.classList.remove('active');
+        });
+        
+        // Show PIN verification screen by default
+        const pinScreen = document.getElementById('pinVerificationScreen');
+        if (pinScreen) {
+            pinScreen.classList.add('active');
+        }
+        
+        // Reset scroll positions
+        const scrollableContents = withdrawModal.querySelectorAll(
+            '.pin-verification-content, .withdraw-form-content, .withdrawsuccess-content, .withdrawerror-content'
+        );
+        scrollableContents.forEach(content => {
+            content.scrollTop = 0;
+        });
+    }
+    
+    // Close button event listeners
+    closeButtons.forEach(button => {
+        button.addEventListener('click', closeWithdrawModal);
+    });
+    
+    // Close success button
+    if (closeSuccessBtn) {
+        closeSuccessBtn.addEventListener('click', closeWithdrawModal);
+    }
+    
+    // Close modal when clicking outside
+    withdrawModal.addEventListener('click', function(e) {
+        if (e.target === withdrawModal) {
+            closeWithdrawModal();
+        }
+    });
+    
+    // Close modal with Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && withdrawModal.classList.contains('active')) {
+            closeWithdrawModal();
+        }
+    });
+    
+    // Smooth scrolling for modal content
+    function enableSmoothScrolling() {
+        const scrollableElements = withdrawModal.querySelectorAll(
+            '.pin-verification-content, .withdraw-form-content, .withdrawsuccess-content, .withdrawerror-content'
+        );
+        
+        scrollableElements.forEach(element => {
+            // Enable momentum scrolling on iOS
+            element.style.webkitOverflowScrolling = 'touch';
+            element.style.scrollBehavior = 'smooth';
+            
+            // Prevent scroll bounce on iOS when at top/bottom
+            element.addEventListener('touchstart', function() {
+                if (element.scrollTop === 0) {
+                    element.scrollTop = 1;
+                } else if (element.scrollTop + element.offsetHeight >= element.scrollHeight) {
+                    element.scrollTop = element.scrollHeight - element.offsetHeight - 1;
+                }
+            });
+        });
+    }
+    
+    // Initialize smooth scrolling
+    enableSmoothScrolling();
+    
+    // Handle orientation change for mobile devices
+    window.addEventListener('orientationchange', function() {
+        setTimeout(() => {
+            enableSmoothScrolling();
+            
+            // Recalculate modal height if needed
+            if (withdrawModal.classList.contains('active')) {
+                const modalContent = withdrawModal.querySelector('.withdraw-modal-content');
+                if (modalContent) {
+                    modalContent.style.maxHeight = '90vh';
+                }
+            }
+        }, 100);
+    });
+    
+    // Handle window resize
+    window.addEventListener('resize', function() {
+        if (withdrawModal.classList.contains('active')) {
+            enableSmoothScrolling();
+        }
+    });
+    
+    // Expose functions globally for external triggers
+    window.openWithdrawModal = openWithdrawModal;
+    window.closeWithdrawModal = closeWithdrawModal;
+});
 
 // JavaScript to fix the Font Awesome icon and handle the game portal
 document.addEventListener('DOMContentLoaded', function() {
