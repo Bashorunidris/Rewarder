@@ -4357,7 +4357,10 @@ button,
   }
 }
 
-/* Withdraw Modal Styles - Matching Buy Coins Modal Structure */
+
+
+
+/* Withdraw Modal - Exact Copy of Buy Coins Modal Structure */
 .withdraw-modal {
   position: fixed;
   top: 0;
@@ -4407,8 +4410,7 @@ button,
   font-weight: 600;
 }
 
-.close-withdraw-modal,
-.close-modal {
+.close-withdraw-modal, .close-modal {
   background: none;
   border: none;
   color: white;
@@ -4424,56 +4426,28 @@ button,
   touch-action: manipulation;
 }
 
-.close-withdraw-modal:hover,
-.close-modal:hover {
+.close-withdraw-modal:hover, .close-modal:hover {
   color: #e74c3c;
 }
 
-.close-withdraw-modal:focus,
-.close-modal:focus {
-  outline: 2px solid #473ce7;
-  outline-offset: 2px;
-}
-
-/* Modal Screens */
 .modal-screen {
   display: none;
+  padding: 2rem;
   width: 100%;
-  flex: 1;
 }
 
 .modal-screen.active {
-  display: flex;
-  flex-direction: column;
+  display: block;
 }
 
-/* PIN Verification Screen */
 .pin-verification-content {
-  padding: 2rem;
   text-align: center;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
 }
 
 .withdraw-pin-icon {
   font-size: 4rem;
   color: #3498db;
   margin-bottom: 1.5rem;
-}
-
-.pin-verification-content h3 {
-  margin: 0 0 1rem 0;
-  color: #2c3e50;
-  font-size: 1.5rem;
-}
-
-.pin-verification-content p {
-  color: #7f8c8d;
-  margin-bottom: 2rem;
-  font-size: 1rem;
 }
 
 .pin-input-container {
@@ -4491,15 +4465,120 @@ button,
   text-align: center;
   font-size: 1.5rem;
   font-weight: bold;
-  color: #2c3e50;
-  background-color: #fff;
-  transition: border-color 0.3s;
 }
 
-.pin-digit:focus {
-  outline: none;
-  border-color: #3498db;
-  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+.withdraw-form-group {
+  margin-bottom: 1.5rem;
+}
+
+.withdraw-form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.withdraw-form-group input, .withdraw-form-group select {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border: 2px solid #ecf0f1;
+  border-radius: 6px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.btn {
+  padding: 0.8rem 2rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  min-height: 48px;
+  touch-action: manipulation;
+}
+
+.btn-primary {
+  background-color: #3498db;
+  color: white;
+}
+
+.btn-success {
+  background-color: #28a745;
+  color: white;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  color: white;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideInUp {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .withdraw-modal {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .withdraw-modal-content {
+    width: 100%;
+    min-height: 100vh;
+    margin: 0;
+    border-radius: 0;
+    height: auto;
+  }
+  
+  .modal-screen {
+    padding: 1rem;
+    overflow: visible;
+  }
+  
+  .withdraw-modal-header {
+    padding: 1rem 1.5rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .withdraw-modal {
+    overflow-y: scroll !important;
+    -webkit-overflow-scrolling: touch !important;
+    overscroll-behavior: contain;
+  }
+  
+  .withdraw-modal-content {
+    max-height: none !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+  
+  .modal-screen {
+    overflow: visible !important;
+    height: auto !important;
+    max-height: none !important;
+  }
+}
+
+.withdraw-modal * {
+  touch-action: manipulation;
+}
+
+.withdraw-modal {
+  scroll-behavior: smooth;
 }
 
 .error-message {
@@ -4545,29 +4624,6 @@ button,
   font-weight: bold;
   color: #27ae60;
   font-size: 1.1rem;
-}
-
-/* Form Styles */
-.withdraw-form-group {
-  margin-bottom: 1.5rem;
-}
-
-.withdraw-form-group label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: 600;
-  color: #2c3e50;
-}
-
-.withdraw-form-group input,
-.withdraw-form-group select {
-  width: 100%;
-  padding: 0.8rem 1rem;
-  border: 2px solid #ecf0f1;
-  border-radius: 6px;
-  font-size: 16px;
-  transition: border-color 0.3s;
-  box-sizing: border-box;
 }
 
 .withdraw-form-group input:focus,
@@ -4772,143 +4828,7 @@ button,
   justify-content: center;
 }
 
-/* Buttons */
-.btn {
-  padding: 0.8rem 2rem;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 1rem;
-  font-weight: 600;
-  transition: all 0.3s;
-  text-decoration: none;
-  display: inline-block;
-  text-align: center;
-  min-height: 48px;
-  touch-action: manipulation;
-}
 
-.btn-primary {
-  background-color: #3498db;
-  color: white;
-}
-
-.btn-primary:hover {
-  background-color: #2980b9;
-}
-
-.btn-secondary {
-  background-color: #6c757d;
-  color: white;
-}
-
-.btn-secondary:hover {
-  background-color: #5a6268;
-}
-
-.btn-success {
-  background-color: #28a745;
-  color: white;
-}
-
-.btn-success:hover {
-  background-color: #218838;
-}
-
-.btn-sm {
-  padding: 0.5rem 1rem;
-  font-size: 0.9rem;
-  margin-top: 0.5rem;
-}
-
-.btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-.btn:disabled:hover {
-  background-color: inherit;
-}
-
-/* Animations */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes slideInUp {
-  from {
-    transform: translateY(50px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-/* Mobile Responsive */
-@media (max-width: 768px) {
-  .withdraw-modal {
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-  
-  .withdraw-modal-content {
-    width: 100%;
-    min-height: 100vh;
-    margin: 0;
-    border-radius: 0;
-    height: auto;
-  }
-  
-  .withdraw-form-content,
-  .pin-verification-content,
-  .processing-content,
-  .success-content,
-  .error-content {
-    padding: 1rem;
-    overflow: visible;
-  }
-  
-  .withdraw-modal-header {
-    padding: 1rem 1.5rem;
-  }
-  
-  .withdraw-modal-header h2 {
-    font-size: 1.3rem;
-  }
-  
-  .pin-input-container {
-    gap: 0.5rem;
-  }
-  
-  .pin-digit {
-    width: 50px;
-    height: 50px;
-    font-size: 1.3rem;
-  }
-  
-  .detail-row {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.3rem;
-  }
-  
-  .error-actions {
-    flex-direction: column;
-    width: 100%;
-  }
-  
-  .error-actions .btn {
-    width: 100%;
-  }
-}
 
 @media (max-width: 480px) {
   .withdraw-form-content,
@@ -5272,6 +5192,7 @@ button,
     display: none;
   }
 }
+
 
 
 
@@ -16505,159 +16426,6 @@ document.addEventListener('DOMContentLoaded', function() {
     };
 });
 
-     // Withdraw Modal Scroll Handler for Android and iOS
-document.addEventListener('DOMContentLoaded', function() {
-    let scrollPosition = 0;
-    
-    // Close button for withdraw modal
-    const closeWithdraw = document.getElementById('closewithdrawformscreen');
-    if (closeWithdraw) {
-        closeWithdraw.addEventListener('click', function() {
-            closeWithdrawModal();
-        });
-    }
-    
-    // Close button for PIN verification
-    const closePinModal = document.getElementById('closewithdrawmodal');
-    if (closePinModal) {
-        closePinModal.addEventListener('click', function() {
-            closeWithdrawModal();
-        });
-    }
-    
-    // Close on outside click
-    const withdrawModal = document.getElementById('withdrawModal');
-    if (withdrawModal) {
-        withdrawModal.addEventListener('click', function(e) {
-            if (e.target === withdrawModal) {
-                closeWithdrawModal();
-            }
-        });
-    }
-    
-    // Close on escape key
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
-            const modal = document.getElementById('withdrawModal');
-            if (modal && modal.style.display === 'block') {
-                closeWithdrawModal();
-            }
-        }
-    });
-    
-    // Override modal open function
-    window.openWithdrawModal = function() {
-        preventBodyScroll();
-        const modal = document.getElementById('withdrawModal');
-        if (modal) {
-            modal.style.display = 'block';
-        }
-    };
-    
-    function preventBodyScroll() {
-        scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
-        document.body.style.overflow = 'hidden';
-        document.body.style.position = 'fixed';
-        document.body.style.top = '-' + scrollPosition + 'px';
-        document.body.style.width = '100%';
-    }
-    
-    function restoreBodyScroll() {
-        document.body.style.overflow = '';
-        document.body.style.position = '';
-        document.body.style.top = '';
-        document.body.style.width = '';
-        window.scrollTo(0, scrollPosition);
-    }
-    
-    function closeWithdrawModal() {
-        const modal = document.getElementById('withdrawModal');
-        if (modal) {
-            modal.style.display = 'none';
-        }
-        restoreBodyScroll();
-    }
-    
-    // Fix mobile scrolling
-    fixMobileScrolling();
-    
-    function fixMobileScrolling() {
-        // Prevent background scroll on touch
-        document.addEventListener('touchmove', function(e) {
-            const modal = document.getElementById('withdrawModal');
-            
-            if (modal && modal.style.display === 'block') {
-                const target = e.target;
-                const scrollableElement = target.closest('.withdraw-modal-content');
-                
-                if (!scrollableElement) {
-                    e.preventDefault();
-                    return false;
-                }
-            }
-        }, { passive: false });
-        
-        // Fix viewport height
-        function setVH() {
-            const vh = window.innerHeight * 0.01;
-            document.documentElement.style.setProperty('--vh', vh + 'px');
-        }
-        
-        setVH();
-        window.addEventListener('resize', setVH);
-        window.addEventListener('orientationchange', function() {
-            setTimeout(setVH, 100);
-        });
-        
-        // Apply mobile fixes to modal
-        const modal = document.getElementById('withdrawModal');
-        if (modal) {
-            modal.style.webkitOverflowScrolling = 'touch';
-            modal.style.overscrollBehavior = 'contain';
-            
-            const modalContent = modal.querySelector('.withdraw-modal-content');
-            if (modalContent) {
-                modalContent.style.webkitOverflowScrolling = 'touch';
-                modalContent.style.overscrollBehavior = 'contain';
-                
-                // Fix iOS elastic scrolling
-                modalContent.addEventListener('touchstart', function() {
-                    const scrollTop = modalContent.scrollTop;
-                    const scrollHeight = modalContent.scrollHeight;
-                    const clientHeight = modalContent.clientHeight;
-                    
-                    if (scrollTop === 0) {
-                        modalContent.scrollTop = 1;
-                    } else if (scrollTop + clientHeight >= scrollHeight) {
-                        modalContent.scrollTop = scrollHeight - clientHeight - 1;
-                    }
-                });
-            }
-        }
-    }
-    
-    // Make close function globally available
-    window.closeWithdrawModal = closeWithdrawModal;
-});
-
-// Add CSS for mobile viewport fix
-const style = document.createElement('style');
-style.textContent = `
-    .withdraw-modal {
-        height: 100vh;
-        height: calc(var(--vh, 1vh) * 100);
-    }
-    
-    @media (max-width: 768px) {
-        .withdraw-modal-content {
-            height: 100vh;
-            height: calc(var(--vh, 1vh) * 100);
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
-        }
-    }
-`;
-document.head.appendChild(style);
- </script>
+      </script>
 </body>
 </html>
