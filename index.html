@@ -3650,8 +3650,7 @@ button,
 
 
 
-
-/* Buy Coins Modal Styles - Mobile Fixed Version */
+/* Buy Coins Modal Styles - Cleaned Version */
 .buy-coins-modal {
   position: fixed;
   top: 0;
@@ -3662,17 +3661,16 @@ button,
   z-index: 2000;
   display: none;
   animation: fadeIn 0.3s ease-in-out;
-  /* Critical: Add overflow and scrolling here for mobile */
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
 }
-
 
 .buyCoins-modal-content {
   position: relative;
   width: 90%;
   max-width: 800px;
-  /* Remove fixed height - let content determine height */
   min-height: 90vh;
   margin: 2rem auto;
   background-color: #fff;
@@ -3681,8 +3679,10 @@ button,
   display: flex;
   flex-direction: column;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  animation: slideInUp 0.3s ease-out;
 }
-
 
 .buyCoins-modal-header {
   display: flex;
@@ -3719,11 +3719,11 @@ button,
 .close-buycoins:hover {
   color: #e74c3c;
 }
+
 .close-buycoins:focus {
   outline: 2px solid #473ce7;
   outline-offset: 2px;
 }
-
 
 /* Modal Tabs */
 .buyCoins-modal-tabs {
@@ -3762,19 +3762,16 @@ button,
   outline-offset: -2px;
 }
 
-
-/* Tab Content - This is the key fix */
+/* Tab Content */
 .buyCoins-tab-content {
   display: none;
   padding: 2rem;
-  /* Remove flex: 1 and overflow properties */
   width: 100%;
 }
 
 .buyCoins-tab-content.active {
-  display: block; /* Change from flex to block */
+  display: block;
 }
-
 
 /* Coin Purchase Form */
 .coin-purchase-form h3 {
@@ -3799,7 +3796,6 @@ button,
   gap: 1rem;
   margin-bottom: 2rem;
 }
-
 
 .buyCoins-package-option {
   display: flex;
@@ -3832,7 +3828,6 @@ button,
   box-shadow: 0 4px 12px rgba(52, 152, 219, 0.15);
 }
 
-.b
 .buyCoins-package-option label {
   flex: 1;
   cursor: pointer;
@@ -3860,9 +3855,6 @@ button,
   top: -8px;
 }
 
-
-
-
 .instruction-note {
   background-color: #d1ecf1;
   color: #0c5460;
@@ -3878,7 +3870,6 @@ button,
   color: #2c3e50;
   font-size: 1.3rem;
 }
-
 
 /* Summary Section */
 .buyCoins-summary-section {
@@ -3984,11 +3975,10 @@ button,
   padding: 0.8rem 1rem;
   border: 2px solid #ecf0f1;
   border-radius: 6px;
-  font-size: 16px; /* Prevents zoom on iOS */
+  font-size: 16px;
   transition: border-color 0.3s;
   box-sizing: border-box;
 }
-
 
 .buyCoins-form-group input:focus {
   outline: none;
@@ -4049,14 +4039,6 @@ button,
   color: #2c3e50;
 }
 
-.buyCoins-modal-content {
-  animation: slideInUp 0.3s ease-out;
-}
-
-
-  
-  
-
 /* Buttons */
 .btn {
   padding: 0.8rem 2rem;
@@ -4112,13 +4094,22 @@ button,
   to { opacity: 1; }
 }
 
-/* CRITICAL MOBILE FIXES */
+@keyframes slideInUp {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Mobile Responsive */
 @media (max-width: 768px) {
   .buy-coins-modal {
-    /* Keep overflow-y: auto for scrolling */
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
-    /* Remove any height restrictions */
   }
   
   .buyCoins-modal-content {
@@ -4126,13 +4117,11 @@ button,
     min-height: 100vh;
     margin: 0;
     border-radius: 0;
-    /* Remove any height restrictions */
     height: auto;
   }
   
   .buyCoins-tab-content {
     padding: 1rem;
-    /* Ensure no overflow restrictions */
     overflow: visible;
   }
   
@@ -4179,7 +4168,6 @@ button,
   
   .buyCoins-tab-content {
     padding: 1rem;
-    /* Add bottom padding for better scrolling */
     padding-bottom: 3rem;
   }
   
@@ -4192,36 +4180,67 @@ button,
     margin-bottom: 3rem;
   }
   
-  .btn {
+   .btn {
     margin-bottom: 2rem;
     width: 100%;
   }
 }
 
 /* iOS specific fixes */
-@supports (-webkit-touch-callout: none) {
+@supports (-webkit-appearance: none) {
   .buy-coins-modal {
-    /* iOS Safari specific */
-    position: fixed;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-  
-  .buyCoins-modal-content {
-    /* Ensure proper height calculation on iOS */
-    min-height: calc(100vh - 2rem);
-    margin: 1rem auto;
+    height: 100vh;
+    height: -webkit-fill-available;
   }
   
   @media (max-width: 768px) {
     .buyCoins-modal-content {
       min-height: 100vh;
-      margin: 0;
+      min-height: -webkit-fill-available;
     }
   }
 }
 
-/* Focus and Accessibility Improvements */
+/* Android Chrome specific fixes */
+@media screen and (max-width: 768px) {
+  .buy-coins-modal {
+    overflow-y: scroll !important;
+    -webkit-overflow-scrolling: touch !important;
+    overscroll-behavior: contain;
+  }
+  
+  .buyCoins-modal-content {
+    max-height: none !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+  
+  .buyCoins-tab-content {
+    overflow: visible !important;
+    height: auto !important;
+    max-height: none !important;
+  }
+}
+
+/* Prevent zoom on double tap */
+.buy-coins-modal * {
+  touch-action: manipulation;
+}
+
+/* Ensure proper touch scrolling */
+.buy-coins-modal {
+  scroll-behavior: smooth;
+}
+
+/* Fix for very small screens */
+@media (max-height: 500px) {
+  .buyCoins-modal-content {
+    margin: 0.5rem auto;
+    min-height: calc(100vh - 1rem);
+  }
+}
+
+/* Focus and Accessibility */
 .buyCoins-package-option:focus-within {
   border-color: #3498db;
   box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
@@ -4295,33 +4314,6 @@ button,
   100% { transform: scale(1); }
 }
 
-/* Tooltip for Copy Button */
-.buyCoins-copy-btn {
-  position: relative;
-}
-
-.buyCoins-copy-btn::after {
-  content: 'Copied!';
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: #2c3e50;
-  color: white;
-  padding: 0.3rem 0.6rem;
-  border-radius: 4px;
-  font-size: 0.8rem;
-  white-space: nowrap;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s;
-  margin-bottom: 5px;
-}
-
-.buyCoins-copy-btn.copied::after {
-  opacity: 1;
-}
-
 /* Enhanced Package Selection Animation */
 .buyCoins-package-option {
   transform: translateY(0);
@@ -4349,65 +4341,6 @@ button,
   }
 }
 
-/* Modal Backdrop Blur Effect */
-.buy-coins-modal {
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
-}
-
-/* Scrollbar Styling for Modal Content */
-.buyCoins-tab-content::-webkit-scrollbar {
-  width: 6px;
-}
-
-.buyCoins-tab-content::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 3px;
-}
-
-.buyCoins-tab-content::-webkit-scrollbar-thumb {
-  background: #c1c1c1;
-  border-radius: 3px;
-}
-
-.buyCoins-tab-content::-webkit-scrollbar-thumb:hover {
-  background: #a8a8a8;
-}
-
-/* Print Styles */
-@media print {
-  .buy-coins-modal {
-    position: static;
-    background: white;
-  }
-  
-  .buyCoins-modal-content {
-    box-shadow: none;
-    border: 1px solid #000;
-  }
-  
-  .close-buycoins,
-  .btn {
-    display: none;
-  }
-}
-
-/* High Contrast Mode Support */
-@media (prefers-contrast: high) {
-  .buyCoins-package-option {
-    border-width: 3px;
-  }
-  
-  .buyCoins-package-option:has(input:checked) {
-    border-color: #000;
-    background-color: #fff;
-  }
-  
-  .btn {
-    border: 2px solid currentColor;
-  }
-}
-
 /* Reduced Motion Support */
 @media (prefers-reduced-motion: reduce) {
   .buy-coins-modal,
@@ -4424,224 +4357,6 @@ button,
   }
 }
 
-/* Dark Mode Support */
-@media (prefers-color-scheme: dark) {
-  .buyCoins-modal-content {
-    background-color: #2c3e50;
-    color: #ecf0f1;
-  }
-  
-  .buyCoins-tab-content {
-    background-color: #2c3e50;
-  }
-  
-  .coin-purchase-form h3,
-  .payment-confirmation-form h3,
-  .buyCoins-summary-row,
-  .buyCoins-detail-label {
-    color: #ecf0f1;
-  }
-  
-  .buyCoins-package-option {
-    background-color: #34495e;
-    border-color: #4a5f7a;
-    color: #ecf0f1;
-  }
-  
-  .buyCoins-package-option label {
-    color: #ecf0f1;
-  }
-  
-  .buyCoins-summary-section {
-    background-color: #34495e;
-    border-color: #4a5f7a;
-  }
-  
-  .buyCoins-form-group input {
-    background-color: #34495e;
-    border-color: #4a5f7a;
-    color: #ecf0f1;
-  }
-  
-  .account-details {
-    background-color: #34495e;
-    border-color: #f39c12;
-  }
-}
-
-/* Mobile-specific fixes */
-@media (max-width: 768px) {
-  .buy-coins-modal {
-    /* Enable body scroll lock when modal is open */
-    overflow: hidden;
-  }
-  
-  .buyCoins-modal-content {
-    width: 100%;
-    height: 100vh;
-    margin: 0;
-    border-radius: 0;
-    /* Make it full screen on mobile */
-  }
-  
-  .buyCoins-tab-content {
-    padding: 1rem;
-    /* Ensure content can scroll */
-    min-height: 0;
-    flex: 1;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-  
-  /* Fix for iOS Safari bottom bar */
-  .buyCoins-modal-content {
-    height: 100dvh; /* Use dynamic viewport height if supported */
-  }
-  
-  /* Fallback for older browsers */
-  @supports not (height: 100dvh) {
-    .buyCoins-modal-content {
-      height: 100vh;
-    }
-  }
-}
-
-@media (max-width: 480px) {
-  .buyCoins-modal-content {
-    width: 100%;
-    height: 100vh;
-    margin: 0;
-    border-radius: 0;
-  }
-  
-  .buyCoins-tab-content {
-    padding: 1rem;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    /* Add momentum scrolling for iOS */
-  }
-  
-  /* Ensure buttons are accessible */
-  .btn {
-    margin-bottom: 2rem; /* Add space at bottom */
-  }
-  
-  /* Fix for package options on small screens */
-  .coin-packages {
-    margin-bottom: 3rem; /* Extra space before summary */
-  }
-  
-  .buyCoins-summary-section {
-    margin-bottom: 3rem; /* Extra space before button */
-  }
-}
-
-/* Additional mobile touch improvements */
-.buyCoins-package-option {
-  /* Improve touch targets */
-  min-height: 60px;
-  touch-action: manipulation;
-}
-
-.btn {
-  /* Improve button touch targets */
-  min-height: 48px;
-  touch-action: manipulation;
-}
-
-.close-buycoins {
-  /* Improve close button touch target */
-  min-width: 48px;
-  min-height: 48px;
-  touch-action: manipulation;
-}
-
-/* Prevent zoom on input focus (iOS) */
-.buyCoins-form-group input {
-  font-size: 16px; /* Prevents zoom on iOS */
-}
-
-/* Fix for keyboard appearing on mobile */
-@media (max-height: 600px) {
-  .buyCoins-modal-content {
-    height: 100vh;
-  }
-  
-  .buyCoins-tab-content {
-    padding: 1rem 1rem 4rem 1rem; /* Extra bottom padding */
-  }
-}
-/* Additional Mobile Scroll Fixes */
-
-/* Force hardware acceleration for smoother scrolling */
-.buy-coins-modal {
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
-}
-
-.buyCoins-modal-content {
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
-}
-
-/* iOS specific viewport fixes */
-@supports (-webkit-appearance: none) {
-  .buy-coins-modal {
-    /* iOS Safari specific height calculation */
-    height: 100vh;
-    height: -webkit-fill-available;
-  }
-  
-  @media (max-width: 768px) {
-    .buyCoins-modal-content {
-      min-height: 100vh;
-      min-height: -webkit-fill-available;
-    }
-  }
-}
-
-/* Android Chrome specific fixes */
-@media screen and (max-width: 768px) {
-  .buy-coins-modal {
-    /* Ensure proper scrolling on Android */
-    overflow-y: scroll !important;
-    -webkit-overflow-scrolling: touch !important;
-    overscroll-behavior: contain;
-  }
-  
-  .buyCoins-modal-content {
-    /* Remove any height constraints that might interfere */
-    max-height: none !important;
-    height: auto !important;
-    overflow: visible !important;
-  }
-  
-  .buyCoins-tab-content {
-    /* Ensure tab content doesn't interfere with modal scroll */
-    overflow: visible !important;
-    height: auto !important;
-    max-height: none !important;
-  }
-}
-
-/* Prevent zoom on double tap */
-.buy-coins-modal * {
-  touch-action: manipulation;
-}
-
-/* Ensure proper touch scrolling */
-.buy-coins-modal {
-  -webkit-overflow-scrolling: touch;
-  scroll-behavior: smooth;
-}
-
-/* Fix for very small screens */
-@media (max-height: 500px) {
-  .buyCoins-modal-content {
-    margin: 0.5rem auto;
-    min-height: calc(100vh - 1rem);
-  }
-}
 
 /* Game Portal Styles */
 .game-portal-container {
@@ -14938,7 +14653,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// Mobile Modal Scroll Fix
+ // Mobile Modal Scroll Fix - Scrolling and Closing Only
 function openBuyCoinsModal() {
   const modal = document.getElementById('buyCoinsModal');
   modal.style.display = 'block';
@@ -14969,7 +14684,7 @@ function closeBuyCoinsModal() {
     window.scrollTo(0, parseInt(scrollY || '0') * -1);
   }
 }
-// Touch event handling for better mobile experience
+
 document.addEventListener('DOMContentLoaded', function() {
   const modal = document.getElementById('buyCoinsModal');
   const modalContent = document.querySelector('.buyCoins-modal-content');
@@ -14991,56 +14706,11 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
     
-    // Handle tab content scrolling
-    const tabContents = document.querySelectorAll('.buyCoins-tab-content');
-    tabContents.forEach(function(tabContent) {
-      // Enable momentum scrolling on iOS
-      tabContent.style.webkitOverflowScrolling = 'touch';
-      
-      // Prevent overscroll bounce
-      tabContent.addEventListener('touchstart', function() {
-        const scrollTop = tabContent.scrollTop;
-        const scrollHeight = tabContent.scrollHeight;
-        const height = tabContent.clientHeight;
-        
-        if (scrollTop === 0) {
-          tabContent.scrollTop = 1;
-        } else if (scrollTop + height === scrollHeight) {
-          tabContent.scrollTop = scrollTop - 1;
-        }
-      });
-    });
-    
-    // Handle package selection on mobile
-    const packageOptions = document.querySelectorAll('.buyCoins-package-option');
-    packageOptions.forEach(function(option) {
-      option.addEventListener('touchend', function(e) {
-        const radio = option.querySelector('input[type="radio"]');
-        if (radio && !radio.checked) {
-          radio.checked = true;
-          radio.dispatchEvent(new Event('change'));
-        }
-      });
-    });
-    
-    // Handle copy button functionality
-    const copyButtons = document.querySelectorAll('.buyCoins-copy-btn');
-    copyButtons.forEach(function(btn) {
-      btn.addEventListener('click', function(e) {
-        e.preventDefault();
-        const textToCopy = btn.previousElementSibling.textContent;
-        
-        // Use modern clipboard API if available
-        if (navigator.clipboard) {
-          navigator.clipboard.writeText(textToCopy).then(function() {
-            showCopyFeedback(btn);
-          }).catch(function() {
-            fallbackCopyText(textToCopy, btn);
-          });
-        } else {
-          fallbackCopyText(textToCopy, btn);
-        }
-      });
+    // Close modal when clicking backdrop
+    modal.addEventListener('click', function(e) {
+      if (e.target === modal) {
+        closeBuyCoinsModal();
+      }
     });
     
     // Resize handler for orientation changes
@@ -15048,216 +14718,19 @@ document.addEventListener('DOMContentLoaded', function() {
       setTimeout(function() {
         if (modal.style.display === 'block') {
           modal.scrollTop = 0;
-          // Recalculate modal height if needed
-          const content = modal.querySelector('.buyCoins-modal-content');
-          if (content && window.innerWidth <= 768) {
-            content.style.minHeight = window.innerHeight + 'px';
-          }
         }
       }, 100);
     });
-    
-    // Handle viewport changes (keyboard appearance on mobile)
-    let initialViewportHeight = window.innerHeight;
-    window.addEventListener('resize', function() {
-      if (modal.style.display === 'block' && window.innerWidth <= 768) {
-        const currentHeight = window.innerHeight;
-        const heightDifference = initialViewportHeight - currentHeight;
-        
-        // If keyboard is likely open (significant height reduction)
-        if (heightDifference > 150) {
-          modal.style.paddingBottom = heightDifference + 'px';
-        } else {
-          modal.style.paddingBottom = '';
-        }
-      }
-    });
   }
   
-  // Initialize modal event listeners
-  const openButtons = document.querySelectorAll('[data-action="open-buy-coins"]');
-  openButtons.forEach(function(btn) {
-    btn.addEventListener('click', openBuyCoinsModal);
-  });
-  
+  // Close button event listeners
   const closeButtons = document.querySelectorAll('.close-buycoins, #closeModalBtn');
   closeButtons.forEach(function(btn) {
     btn.addEventListener('click', closeBuyCoinsModal);
   });
-  
-  // Tab switching functionality
-  const tabButtons = document.querySelectorAll('.buyCoins-tab-btn');
-  tabButtons.forEach(function(btn) {
-    btn.addEventListener('click', function() {
-      const targetTab = btn.getAttribute('data-tab');
-      switchTab(targetTab);
-    });
-  });
 });
 
-// Helper functions
-function showCopyFeedback(button) {
-  const originalText = button.textContent;
-  button.textContent = 'Copied!';
-  button.classList.add('copied');
-  
-  setTimeout(function() {
-    button.textContent = originalText;
-    button.classList.remove('copied');
-  }, 2000);
-}
-
-function fallbackCopyText(text, button) {
-  // Create temporary textarea for copying
-  const textarea = document.createElement('textarea');
-  textarea.value = text;
-  textarea.style.position = 'fixed';
-  textarea.style.opacity = '0';
-  document.body.appendChild(textarea);
-  
-  try {
-    textarea.select();
-    textarea.setSelectionRange(0, 99999); // For mobile devices
-    document.execCommand('copy');
-    showCopyFeedback(button);
-  } catch (err) {
-    console.error('Copy failed:', err);
-    button.textContent = 'Copy failed';
-    setTimeout(function() {
-      button.textContent = 'Copy';
-    }, 2000);
-  }
-  
-  document.body.removeChild(textarea);
-}
-
-function switchTab(tabName) {
-  // Hide all tab contents
-  const tabContents = document.querySelectorAll('.buyCoins-tab-content');
-  tabContents.forEach(function(content) {
-    content.classList.remove('active');
-  });
-  
-  // Remove active class from all tab buttons
-  const tabButtons = document.querySelectorAll('.buyCoins-tab-btn');
-  tabButtons.forEach(function(btn) {
-    btn.classList.remove('active');
-  });
-  
-  // Show target tab content
-  const targetContent = document.getElementById(tabName);
-  if (targetContent) {
-    targetContent.classList.add('active');
-  }
-  
-  // Add active class to clicked button
-  const targetButton = document.querySelector(`[data-tab="${tabName}"]`);
-  if (targetButton) {
-    targetButton.classList.add('active');
-  }
-  
-  // Scroll to top of modal on tab switch (mobile)
-  if (window.innerWidth <= 768) {
-    const modal = document.getElementById('buyCoinsModal');
-    if (modal) {
-      modal.scrollTop = 0;
-    }
-  }
-}
-
-// Package selection handler
-function selectPackage(packageId, coins, price) {
-  // Update summary section
-  const summaryCoins = document.getElementById('summary-coins');
-  const summaryPrice = document.getElementById('summary-price');
-  const summaryTotal = document.getElementById('summary-total');
-  
-  if (summaryCoins) summaryCoins.textContent = coins;
-  if (summaryPrice) summaryPrice.textContent = price;
-  if (summaryTotal) summaryTotal.textContent = price;
-  
-  // Enable proceed button
-  const proceedBtn = document.getElementById('proceedToPayment');
-  if (proceedBtn) {
-    proceedBtn.disabled = false;
-    proceedBtn.classList.remove('btn-secondary');
-    proceedBtn.classList.add('btn-primary');
-  }
-}
-
-// Form validation
-function validatePaymentForm() {
-  const form = document.getElementById('paymentConfirmationForm');
-  if (!form) return false;
-  
-  const requiredFields = form.querySelectorAll('input[required]');
-  let isValid = true;
-  
-  requiredFields.forEach(function(field) {
-    const formGroup = field.closest('.buyCoins-form-group');
-    
-    if (!field.value.trim()) {
-      formGroup.classList.add('error');
-      isValid = false;
-      
-      // Add error message if not exists
-      if (!formGroup.querySelector('.error-message')) {
-        const errorMsg = document.createElement('span');
-        errorMsg.className = 'error-message';
-        errorMsg.textContent = 'This field is required';
-        formGroup.appendChild(errorMsg);
-      }
-    } else {
-      formGroup.classList.remove('error');
-      const errorMsg = formGroup.querySelector('.error-message');
-      if (errorMsg) {
-        errorMsg.remove();
-      }
-    }
-  });
-  
-  return isValid;
-}
-
-// Submit payment confirmation
-function submitPaymentConfirmation() {
-  if (!validatePaymentForm()) {
-    return;
-  }
-  
-  const submitBtn = document.getElementById('submitPayment');
-  if (submitBtn) {
-    submitBtn.classList.add('loading');
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Processing...';
-  }
-  
-  // Simulate API call
-  setTimeout(function() {
-    // Switch to success tab
-    switchTab('success');
-    
-    // Reset button
-    if (submitBtn) {
-      submitBtn.classList.remove('loading');
-      submitBtn.disabled = false;
-      submitBtn.textContent = 'Submit Payment Proof';
-    }
-  }, 2000);
-}
-
-// Prevent body scroll when modal is open (additional safety)
-function preventBodyScroll() {
-  document.body.style.overflow = 'hidden';
-  document.body.style.height = '100%';
-}
-
-function restoreBodyScroll() {
-  document.body.style.overflow = '';
-  document.body.style.height = '';
-}
-
-// Handle escape key
+// Handle escape key for closing
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') {
     const modal = document.getElementById('buyCoinsModal');
@@ -15270,11 +14743,6 @@ document.addEventListener('keydown', function(e) {
 // Export functions for global use
 window.openBuyCoinsModal = openBuyCoinsModal;
 window.closeBuyCoinsModal = closeBuyCoinsModal;
-window.switchTab = switchTab;
-window.selectPackage = selectPackage;
-window.submitPaymentConfirmation = submitPaymentConfirmation;
-
-
 
 
 document.addEventListener('DOMContentLoaded', function() {
