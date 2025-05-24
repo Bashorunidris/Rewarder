@@ -4400,8 +4400,10 @@ button,
    border-radius: 12px;
     padding: 0 40px 40px;
     text-align: center;
+    align-items: center;
     max-width: 100%;
     width: 100%;
+    min-height:100vh;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     animation: slideIn 0.3s ease-out;
 }
@@ -4423,21 +4425,23 @@ button,
 
 .pin-verification-content h3 {
     margin: 0 0 12px 0;
-    color: #1f2937;
+    color: #f5f6f8;
     font-size: 1.3rem;
     font-weight: 600;
 }
 
 .pin-verification-content p {
     margin: 0 0 32px 0;
-    color: #6b7280;
+    color: #f2f2f3;
     font-size: 0.95rem;
     line-height: 1.5;
 }
 
 /* PIN Input Container */
 .pin-input-container {
-    display: flex;
+color: #1f2937;
+    background-color: #1a1a2e;
+    align-items:center;
     justify-content: center;
     gap: 12px;
     margin-bottom: 24px;
@@ -4451,8 +4455,8 @@ button,
     text-align: center;
     font-size: 1.5rem;
     font-weight: 600;
-    color: #1f2937;
-    background-color: #fff;
+    color: #ffffff;
+    background-color: #1a1a2e;
     transition: all 0.2s ease;
     outline: none;
 }
@@ -4464,8 +4468,8 @@ button,
 }
 
 .pin-digit:valid {
-    border-color: #10b981;
-    background-color: #f0fdf4;
+    border-color: white;
+    background-color: #1a1a2e;
 }
 
 .pin-digit.error {
@@ -4594,24 +4598,12 @@ button,
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    .modal-screen {
-        padding: 15px;
-        align-items: flex-start;
-        padding-top: 60px;
-    }
     
     .pin-verification-content {
         padding: 0 30px 30px;
-        max-width: 350px;
+       
     }
     
-    .modal-header {
-        padding: 16px 20px 0;
-    }
-    
-    .modal-header h2 {
-        font-size: 1.3rem;
-    }
     
     .pin-verification-content h3 {
         font-size: 1.2rem;
@@ -4647,23 +4639,13 @@ button,
 }
 
 @media (max-width: 480px) {
-    .modal-screen {
-        padding: 10px;
-        padding-top: 40px;
-    }
+    
     
     .pin-verification-content {
         padding: 0 24px 24px;
-        max-width: 320px;
+        
     }
     
-    .modal-header {
-        padding: 12px 16px 0;
-    }
-    
-    .modal-header h2 {
-        font-size: 1.2rem;
-    }
     
     .pin-verification-content h3 {
         font-size: 1.1rem;
@@ -4706,8 +4688,7 @@ button,
 
 @media (max-width: 360px) {
     .pin-verification-content {
-        max-width: 280px;
-        padding: 0 20px 20px;
+       padding: 0 20px 20px;
     }
     
     .pin-input-container {
@@ -4718,56 +4699,6 @@ button,
         width: 35px;
         height: 35px;
         font-size: 1.1rem;
-    }
-}
-
-/* Dark mode support */
-@media (prefers-color-scheme: dark) {
-    .modal-screen {
-        background-color: rgba(0, 0, 0, 0.8);
-    }
-    
-    .pin-verification-content {
-        background-color: #1f2937;
-        color: #f9fafb;
-    }
-    
-    .modal-header h2 {
-        color: #f9fafb;
-    }
-    
-    .pin-verification-content h3 {
-        color: #f9fafb;
-    }
-    
-    .pin-verification-content p {
-        color: #9ca3af;
-    }
-    
-    .pin-digit {
-        background-color: #374151;
-        border-color: #4b5563;
-        color: #f9fafb;
-    }
-    
-    .pin-digit:focus {
-        border-color: #3b82f6;
-        background-color: #374151;
-    }
-    
-    .pin-digit:valid {
-        border-color: #10b981;
-        background-color: #064e3b;
-    }
-    
-    .pin-digit.error {
-        border-color: #ef4444;
-        background-color: #7f1d1d;
-    }
-    
-    .pin-icon {
-        background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
-        color: #93c5fd;
     }
 }
 
@@ -4849,11 +4780,7 @@ button,
 
 /* Print styles */
 @media print {
-    .modal-screen {
-        position: static;
-        background: none;
-        padding: 0;
-    }
+   
     
     .pin-verification-content {
         box-shadow: none;
@@ -4871,7 +4798,8 @@ button,
 }
 
 /* Withdrawal Modal Base Styles */
-.withdrawmodal-screen {
+.withdrawmodal-screen
+.modal-screen  {
     display: none;
     position: fixed;
     top: 0;
@@ -4887,7 +4815,9 @@ button,
     box-sizing: border-box;
 }
 
-.withdrawmodal-screen.active {
+.withdrawmodal-screen.active 
+.modal-screen.active
+{
     display: flex;
     align-items: center;
     justify-content: center;
