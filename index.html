@@ -16255,118 +16255,113 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Simple Modal Scroll and Close for Android and iOS
-class SimpleModalHandler {
-    constructor() {
-        this.scrollPosition = 0;
-        this.isModalOpen = false;
-        this.init();
+// Simple Modal Close and Scroll Handler
+document.addEventListener('DOMContentLoaded', function() {
+    let scrollPosition = 0;
+    
+    // Close button for withdraw modal
+    const closeWithdraw = document.getElementById('closewithdrawformscreen');
+    if (closeWithdraw) {
+        closeWithdraw.addEventListener('click', function() {
+            closeModal('withdrawModal');
+        });
     }
     
-    init() {
-        this.setupCloseEvents();
-        this.setupScrolling();
-        this.fixViewportHeight();
+    // Close button for transaction history modal
+    const closeTransaction = document.getElementById('closetransactionhistorymodal');
+    if (closeTransaction) {
+        closeTransaction.addEventListener('click', function() {
+            closeModal('transactionHistoryModal');
+        });
     }
     
-    setupCloseEvents() {
-        // Withdraw modal close button
-        const closeWithdraw = document.getElementById('closewithdrawformscreen');
-        if (closeWithdraw) {
-            closeWithdraw.addEventListener('click', () => this.closeModal('withdrawModal'));
+    // Close on outside click
+    setupOutsideClick();
+    
+    // Close on escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            const openModal = document.querySelector('.withdraw-modal[style*="block"], .transaction-modal[style*="block"], .transaction-details-modal[style*="block"]');
+            if (openModal) {
+                closeModal(openModal.id);
+            }
         }
-        
-        // Transaction history modal close button
-        const closeTransaction = document.getElementById('closetransactionhistorymodal');
-        if (closeTransaction) {
-            closeTransaction.addEventListener('click', () => this.closeModal('transactionHistoryModal'));
-        }
-        
-        // Close on outside click
-        this.setupOutsideClick();
-        
-        // Close on escape key
-        this.setupEscapeKey();
-    }
+    });
     
-    setupOutsideClick() {
+    // Override existing modal open functions to add scroll prevention
+    const originalOpenWithdraw = window.openWithdrawModal;
+    const originalOpenTransaction = window.openTransactionModal;
+    const originalOpenDetails = window.openTransactionDetails;
+    
+    window.openWithdrawModal = function() {
+        preventBodyScroll();
+        if (originalOpenWithdraw) originalOpenWithdraw();
+        document.getElementById('withdrawModal').style.display = 'block';
+    };
+    
+    window.openTransactionModal = function() {
+        preventBodyScroll();
+        if (originalOpenTransaction) originalOpenTransaction();
+        document.getElementById('transactionHistoryModal').style.display = 'block';
+    };
+    
+    window.openTransactionDetails = function() {
+        preventBodyScroll();
+        if (originalOpenDetails) originalOpenDetails();
+        document.getElementById('transactionDetailsModal').style.display = 'block';
+    };
+    
+    function setupOutsideClick() {
         const modals = ['withdrawModal', 'transactionHistoryModal', 'transactionDetailsModal'];
         
-        modals.forEach(modalId => {
+        modals.forEach(function(modalId) {
             const modal = document.getElementById(modalId);
             if (modal) {
-                modal.addEventListener('click', (e) => {
+                modal.addEventListener('click', function(e) {
                     if (e.target === modal) {
-                        this.closeModal(modalId);
+                        closeModal(modalId);
                     }
                 });
             }
         });
     }
     
-    setupEscapeKey() {
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && this.isModalOpen) {
-                const openModal = document.querySelector('.transaction-modal[style*="block"], .withdraw-modal[style*="block"], .transaction-details-modal[style*="block"]');
-                if (openModal) {
-                    this.closeModal(openModal.id);
-                }
-            }
-        });
+    function preventBodyScroll() {
+        scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+        document.body.style.overflow = 'hidden';
+        document.body.style.position = 'fixed';
+        document.body.style.top = '-' + scrollPosition + 'px';
+        document.body.style.width = '100%';
     }
     
-    setupScrolling() {
-        // Fix body scroll when modal opens
-        this.preventBodyScroll();
-        
-        // Fix modal scrolling on mobile
-        this.fixModalScrolling();
-        
-        // Handle touch events
-        this.handleTouchEvents();
+    function restoreBodyScroll() {
+        document.body.style.overflow = '';
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.width = '';
+        window.scrollTo(0, scrollPosition);
     }
     
-    preventBodyScroll() {
-        // Override modal open functions
-        window.openWithdrawModal = () => this.openModal('withdrawModal');
-        window.openTransactionModal = () => this.openModal('transactionHistoryModal');
-        window.openTransactionDetails = () => this.openModal('transactionDetailsModal');
+    function closeModal(modalId) {
+        const modal = document.getElementById(modalId);
+        if (modal) {
+            modal.style.display = 'none';
+        }
+        restoreBodyScroll();
     }
     
-    fixModalScrolling() {
-        const modals = document.querySelectorAll('#withdrawModal, #transactionHistoryModal, #transactionDetailsModal');
-        
-        modals.forEach(modal => {
-            // Ensure proper scrolling setup
-            modal.style.overflow = 'hidden';
-            modal.style.webkitOverflowScrolling = 'touch';
-            modal.style.overscrollBehavior = 'none';
-            
-            const modalContent = modal.querySelector('.modal-content, .withdraw-modal-content');
-            if (modalContent) {
-                modalContent.style.overflowY = 'auto';
-                modalContent.style.webkitOverflowScrolling = 'touch';
-                modalContent.style.overscrollBehavior = 'contain';
-                modalContent.style.height = '100vh';
-                modalContent.style.height = '100dvh';
-            }
-        });
-    }
+    // Fix mobile scrolling issues
+    fixMobileScrolling();
     
-    handleTouchEvents() {
+    function fixMobileScrolling() {
         // Prevent background scroll on touch devices
-        document.addEventListener('touchmove', (e) => {
-            if (this.isModalOpen) {
+        document.addEventListener('touchmove', function(e) {
+            const openModal = document.querySelector('.withdraw-modal[style*="block"], .transaction-modal[style*="block"], .transaction-details-modal[style*="block"]');
+            
+            if (openModal) {
                 const target = e.target;
-                const modal = target.closest('#withdrawModal, #transactionHistoryModal, #transactionDetailsModal');
+                const scrollableElement = target.closest('.withdraw-modal-content, .modal-content, .transaction-table-container');
                 
-                if (!modal) {
-                    e.preventDefault();
-                    return false;
-                }
-                
-                // Allow scrolling within modal content and table
-                const scrollableElement = target.closest('.modal-content, .withdraw-modal-content, .transaction-table-container');
                 if (!scrollableElement) {
                     e.preventDefault();
                     return false;
@@ -16374,12 +16369,32 @@ class SimpleModalHandler {
             }
         }, { passive: false });
         
-        // Fix elastic scrolling on iOS
+        // Fix viewport height for mobile
+        function setVH() {
+            const vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--vh', vh + 'px');
+        }
+        
+        setVH();
+        window.addEventListener('resize', setVH);
+        window.addEventListener('orientationchange', function() {
+            setTimeout(setVH, 100);
+        });
+        
+        // Apply mobile scroll fixes to existing modals
         const modals = document.querySelectorAll('#withdrawModal, #transactionHistoryModal, #transactionDetailsModal');
-        modals.forEach(modal => {
-            const modalContent = modal.querySelector('.modal-content, .withdraw-modal-content');
+        modals.forEach(function(modal) {
+            // Ensure modal has proper mobile scrolling
+            modal.style.webkitOverflowScrolling = 'touch';
+            modal.style.overscrollBehavior = 'contain';
+            
+            const modalContent = modal.querySelector('.withdraw-modal-content, .modal-content');
             if (modalContent) {
-                modalContent.addEventListener('touchstart', (e) => {
+                modalContent.style.webkitOverflowScrolling = 'touch';
+                modalContent.style.overscrollBehavior = 'contain';
+                
+                // Fix iOS elastic scrolling
+                modalContent.addEventListener('touchstart', function() {
                     const scrollTop = modalContent.scrollTop;
                     const scrollHeight = modalContent.scrollHeight;
                     const clientHeight = modalContent.clientHeight;
@@ -16394,100 +16409,41 @@ class SimpleModalHandler {
         });
     }
     
-    openModal(modalId) {
-        // Save current scroll position
-        this.scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
-        
-        // Prevent body scroll
-        document.body.style.overflow = 'hidden';
-        document.body.style.position = 'fixed';
-        document.body.style.top = `-${this.scrollPosition}px`;
-        document.body.style.width = '100%';
-        
-        // Show modal
-        const modal = document.getElementById(modalId);
-        if (modal) {
-            modal.style.display = 'block';
-            this.isModalOpen = true;
-            
-            // Reset modal scroll position
-            const modalContent = modal.querySelector('.modal-content, .withdraw-modal-content');
-            if (modalContent) {
-                modalContent.scrollTop = 0;
-            }
-            
-            // Force repaint for better mobile rendering
-            modal.offsetHeight;
-            
-            // Focus first element
-            setTimeout(() => {
-                const firstFocusable = modal.querySelector('button, input, select, textarea, [tabindex]:not([tabindex="-1"])');
-                if (firstFocusable) {
-                    firstFocusable.focus();
-                }
-            }, 100);
-        }
-    }
+    // Make close functions globally available
+    window.closeWithdrawModal = function() {
+        closeModal('withdrawModal');
+    };
     
-    closeModal(modalId) {
-        const modal = document.getElementById(modalId);
-        if (modal) {
-            modal.style.display = 'none';
-        }
-        
-        // Restore body scroll
-        document.body.style.overflow = '';
-        document.body.style.position = '';
-        document.body.style.top = '';
-        document.body.style.width = '';
-        
-        // Restore scroll position
-        window.scrollTo(0, this.scrollPosition);
-        
-        this.isModalOpen = false;
-    }
+    window.closeTransactionModal = function() {
+        closeModal('transactionHistoryModal');
+    };
     
-    fixViewportHeight() {
-        // Fix viewport height for mobile browsers
-        const setVH = () => {
-            const vh = window.innerHeight * 0.01;
-            document.documentElement.style.setProperty('--vh', `${vh}px`);
-            
-            // Apply to modals
-            const modals = document.querySelectorAll('#withdrawModal, #transactionHistoryModal, #transactionDetailsModal');
-            modals.forEach(modal => {
-                modal.style.height = '100vh';
-                modal.style.height = `calc(var(--vh, 1vh) * 100)`;
-                
-                const modalContent = modal.querySelector('.modal-content, .withdraw-modal-content');
-                if (modalContent) {
-                    modalContent.style.height = '100vh';
-                    modalContent.style.height = `calc(var(--vh, 1vh) * 100)`;
-                }
-            });
-        };
-        
-        setVH();
-        window.addEventListener('resize', setVH);
-        window.addEventListener('orientationchange', () => {
-            setTimeout(setVH, 100);
-        });
-    }
-}
-
-// Initialize when DOM is ready
-document.addEventListener('DOMContentLoaded', () => {
-    new SimpleModalHandler();
+    window.closeTransactionDetails = function() {
+        closeModal('transactionDetailsModal');
+    };
 });
 
-// Handle browser back button
-window.addEventListener('popstate', () => {
-    const openModal = document.querySelector('#withdrawModal[style*="block"], #transactionHistoryModal[style*="block"], #transactionDetailsModal[style*="block"]');
-    if (openModal) {
-        const handler = new SimpleModalHandler();
-        handler.closeModal(openModal.id);
+// Add CSS for mobile viewport fix
+const style = document.createElement('style');
+style.textContent = `
+    .withdraw-modal,
+    .transaction-modal,
+    .transaction-details-modal {
+        height: 100vh;
+        height: calc(var(--vh, 1vh) * 100);
     }
-});
+    
+    @media (max-width: 768px) {
+        .withdraw-modal-content,
+        .modal-content {
+            height: 100vh;
+            height: calc(var(--vh, 1vh) * 100);
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+    }
+`;
+document.head.appendChild(style);
 
 // JavaScript to fix the Font Awesome icon and handle the game portal
 document.addEventListener('DOMContentLoaded', function() {
