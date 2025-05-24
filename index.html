@@ -4375,31 +4375,60 @@ button,
 }
 
 
-/* Modal Screens */
-.modal-screen,
-.withdrawmodal-screen {
-  display: none;
-  flex-direction: column;
-  height: 100%;
-  min-height: 90vh;
-}
 
-.modal-screen.active,
-.withdrawmodal-screen.active {
+.withdraw-modal-content {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  background-color: #fff;
+  border-radius: 0;
+  overflow: visible;
   display: flex;
+  flex-direction: column;
+  box-shadow: none;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  animation: slideInUp 0.3s ease-out;
 }
-
-/* Modal Header */
 .withdraw-modal-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1.5rem 2rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background-color: #1a1a2e;
   color: white;
-  border-radius: 12px 12px 0 0;
   flex-shrink: 0;
+  padding-top: max(1rem, env(safe-area-inset-top));
 }
+
+
+/* Modal Screens */
+.modal-screen,
+.withdrawmodal-screen {
+  display: none;
+  flex-direction: column;
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  background-color: #fff;
+  border-radius: 0;
+  overflow: visible;
+  
+  flex-direction: column;
+  box-shadow: none;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  animation: slideInUp 0.3s ease-out;
+}
+.modal-screen.active,
+.withdrawmodal-screen.active {
+  display: flex;
+}
+
 
 .withdraw-modal-header h2 {
   margin: 0;
@@ -4412,17 +4441,18 @@ button,
   background: none;
   border: none;
   color: white;
-  font-size: 2rem;
+  font-size: 1.5rem;
   cursor: pointer;
   transition: all 0.3s ease;
-  padding: 0;
-  width: 48px;
-  height: 48px;
+  padding: 0.5rem;
+  width: 44px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
   touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .close-withdraw-modal:hover,
@@ -4434,12 +4464,25 @@ button,
 /* PIN Verification Screen */
 .pin-verification-content {
   flex: 1;
-  display: flex;
-  flex-direction: column;
+  
   align-items: center;
   justify-content: center;
-  padding: 2rem;
+  padding: 1.5rem 1rem;
   text-align: center;
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  background-color: #fff;
+  border-radius: 0;
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+  box-shadow: none;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  animation: slideInUp 0.3s ease-out;
 }
 
 .withdraw-pin-icon {
@@ -4498,6 +4541,20 @@ button,
   padding: 2rem;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  background-color: #fff;
+  border-radius: 0;
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+  box-shadow: none;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  animation: slideInUp 0.3s ease-out;
 }
 
 .withdraw-balance-info {
@@ -4865,6 +4922,179 @@ button,
 }
 
 
+/* Desktop Styles (1024px and up) */
+@media (min-width: 1024px) {
+  .withdraw-modal-content {
+    max-width: 800px;
+  }
+
+  .pin-input-container {
+    gap: 1.5rem;
+  }
+
+  .pin-digit {
+    width: 70px;
+    height: 70px;
+    font-size: 1.8rem;
+  }
+
+  .withdraw-form-group input,
+  .withdraw-form-group select {
+    font-size: 14px;
+  }
+
+  .btn {
+    font-size: 14px;
+  }
+}
+
+/* Large Desktop Styles (1200px and up) */
+@media (min-width: 1200px) {
+  .withdraw-modal-content {
+    max-width: 1000px;
+  }
+}
+
+/* iPhone X and newer - Safe Area Support */
+@supports (padding: max(0px)) {
+  .withdraw-modal-header {
+    padding-top: max(1rem, env(safe-area-inset-top));
+  }
+
+  .withdraw-form-content {
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+
+  .pin-verification-content,
+  .withdrawprocessing-content,
+  .withdrawsuccess-content,
+  .withdrawerror-content {
+    padding-bottom: max(1.5rem, env(safe-area-inset-bottom));
+  }
+}
+
+/* High DPI Displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .btn {
+    border: 1px solid transparent;
+  }
+}
+
+/* Landscape Orientation on Mobile */
+@media (max-height: 500px) and (orientation: landscape) {
+  .pin-verification-content,
+  .withdrawprocessing-content,
+  .withdrawsuccess-content,
+  .withdrawerror-content {
+    min-height: auto;
+    padding: 1rem;
+  }
+
+  .withdraw-pin-icon,
+  .success-icon,
+  .withdrawerror-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .loader {
+    width: 40px;
+    height: 40px;
+    border-width: 4px;
+    margin-bottom: 1rem;
+  }
+
+  .pin-input-container {
+    margin-bottom: 1rem;
+  }
+
+  .pin-digit {
+    width: 45px;
+    height: 45px;
+    font-size: 1.1rem;
+  }
+}
+
+/* Dark Mode Support (if needed) */
+@media (prefers-color-scheme: dark) {
+  
+
+  .withdraw-modal-content {
+    
+    color: #ffffff;
+  }
+
+  .pin-verification-content h3,
+  .withdrawprocessing-content h3 {
+    color: #ffffff;
+  }
+
+  .pin-verification-content p,
+  .withdrawprocessing-content p {
+    color: #cccccc;
+  }
+
+  .pin-digit {
+    
+    color: #ffffff;
+  }
+
+  .withdraw-form-group input,
+  .withdraw-form-group select {
+    
+    color: #ffffff;
+  }
+
+  
+}
+
+/* Accessibility Improvements */
+@media (prefers-reduced-motion: reduce) {
+  .withdraw-modal,
+  .withdraw-modal-content,
+  .btn,
+  .pin-digit,
+  .loader,
+  .success-icon,
+  .withdrawerror-icon {
+    animation: none;
+    transition: none;
+  }
+
+  .btn:hover:not(:disabled) {
+    transform: none;
+  }
+}
+
+/* Focus Visible for Better Accessibility */
+.btn:focus-visible,
+.pin-digit:focus-visible,
+.withdraw-form-group input:focus-visible,
+.withdraw-form-group select:focus-visible {
+  outline: 2px solid #667eea;
+  outline-offset: 2px;
+}
+
+/* Remove tap highlight on Android */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Prevent text selection on buttons */
+.btn,
+.close-withdraw-modal,
+.close-modal {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Smooth scrolling for better UX */
+.withdraw-modal,
+.withdraw-form-content {
+  scroll-behavior: smooth;
+}
 
 
 /* Transaction History Modal - Core Styles with BuyCoins Scrolling */
