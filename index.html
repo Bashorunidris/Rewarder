@@ -4356,8 +4356,9 @@ button,
     transform: none;
   }
 }
+ 
 
-/* Withdraw Modal - Core Styles with BuyCoins Scrolling */
+/* Withdraw Modal - Universal Mobile Responsive Styles */
 .withdraw-modal {
   position: fixed;
   top: 0;
@@ -4372,9 +4373,9 @@ button,
   -webkit-overflow-scrolling: touch;
   transform: translateZ(0);
   -webkit-transform: translateZ(0);
+  /* Prevent body scroll on mobile */
+  overscroll-behavior: contain;
 }
-
-
 
 .withdraw-modal-content {
   position: relative;
@@ -4392,48 +4393,48 @@ button,
   -webkit-transform: translateZ(0);
   animation: slideInUp 0.3s ease-out;
 }
-.withdraw-modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1.5rem 2rem;
-  background-color: #1a1a2e;
-  color: white;
-  flex-shrink: 0;
-  padding-top: max(1rem, env(safe-area-inset-top));
-}
-
 
 /* Modal Screens */
 .modal-screen,
 .withdrawmodal-screen {
   display: none;
   flex-direction: column;
-  position: relative;
-  width: 100%;
-  max-width: 100%;
+  height: 100%;
   min-height: 100vh;
-  margin: 0;
-  background-color: #fff;
-  border-radius: 0;
-  overflow: visible;
-  
-  flex-direction: column;
-  box-shadow: none;
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
-  animation: slideInUp 0.3s ease-out;
+  min-height: 100dvh; /* Dynamic viewport height for mobile browsers */
 }
+
 .modal-screen.active,
 .withdrawmodal-screen.active {
   display: flex;
 }
 
+/* Modal Header - Responsive to all screen sizes */
+.withdraw-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 0;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  /* Safe area support for all devices */
+  padding-top: max(0.75rem, env(safe-area-inset-top));
+  padding-left: max(1rem, env(safe-area-inset-left));
+  padding-right: max(1rem, env(safe-area-inset-right));
+}
 
 .withdraw-modal-header h2 {
   margin: 0;
-  font-size: 1.5rem;
+  font-size: clamp(1rem, 4vw, 1.5rem);
   font-weight: 600;
+  line-height: 1.2;
+  flex: 1;
+  padding-right: 1rem;
 }
 
 .close-withdraw-modal,
@@ -4441,87 +4442,87 @@ button,
   background: none;
   border: none;
   color: white;
-  font-size: 1.5rem;
+  font-size: clamp(1.2rem, 5vw, 2rem);
   cursor: pointer;
   transition: all 0.3s ease;
   padding: 0.5rem;
-  width: 44px;
-  height: 44px;
+  width: clamp(40px, 10vw, 48px);
+  height: clamp(40px, 10vw, 48px);
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
+  flex-shrink: 0;
 }
 
 .close-withdraw-modal:hover,
-.close-modal:hover {
+.close-modal:hover,
+.close-withdraw-modal:active,
+.close-modal:active {
   background-color: rgba(255, 255, 255, 0.2);
   transform: rotate(90deg);
 }
 
-/* PIN Verification Screen */
+/* PIN Verification Screen - All Mobile Sizes */
 .pin-verification-content {
   flex: 1;
-  
-  align-items: center;
-  justify-content: center;
-  padding: 1.5rem 1rem;
-  text-align: center;
-  position: relative;
-  width: 100%;
-  max-width: 100%;
-  min-height: 100vh;
-  margin: 0;
-  background-color: #fff;
-  border-radius: 0;
-  overflow: visible;
   display: flex;
   flex-direction: column;
-  box-shadow: none;
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
-  animation: slideInUp 0.3s ease-out;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(1rem, 5vw, 2rem);
+  text-align: center;
+  min-height: calc(100vh - 60px);
+  min-height: calc(100dvh - 60px);
 }
 
 .withdraw-pin-icon {
-  font-size: 3rem;
+  font-size: clamp(2rem, 8vw, 4rem);
   color: #667eea;
-  margin-bottom: 1.5rem;
+  margin-bottom: clamp(0.5rem, 3vw, 1.5rem);
 }
 
 .pin-verification-content h3 {
-  margin: 0 0 1rem 0;
+  margin: 0 0 clamp(0.5rem, 2vw, 1rem) 0;
   color: #333;
-  font-size: 1.5rem;
+  font-size: clamp(1.1rem, 5vw, 1.5rem);
   font-weight: 600;
+  line-height: 1.3;
 }
 
 .pin-verification-content p {
-  margin: 0 0 2rem 0;
+  margin: 0 0 clamp(1rem, 4vw, 2rem) 0;
   color: #666;
-  font-size: 1rem;
+  font-size: clamp(0.8rem, 3.5vw, 1rem);
+  line-height: 1.4;
+  max-width: 90%;
 }
 
 .pin-input-container {
   display: flex;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
+  gap: clamp(0.3rem, 2vw, 1rem);
+  margin-bottom: clamp(1rem, 4vw, 2rem);
   justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 350px;
 }
 
 .pin-digit {
-  width: 60px;
-  height: 60px;
+  width: clamp(40px, 12vw, 60px);
+  height: clamp(40px, 12vw, 60px);
   border: 2px solid #e1e8ed;
-  border-radius: 8px;
+  border-radius: clamp(6px, 2vw, 8px);
   text-align: center;
-  font-size: 1.5rem;
+  font-size: clamp(1rem, 4vw, 1.5rem);
   font-weight: bold;
   background-color: #fff;
   transition: all 0.3s ease;
   touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box;
 }
 
 .pin-digit:focus {
@@ -4535,33 +4536,20 @@ button,
   background-color: #f8f9fa;
 }
 
-/* Withdraw Form Screen */
+/* Withdraw Form Screen - Universal Mobile */
 .withdraw-form-content {
   flex: 1;
-  padding: 2rem;
+  padding: clamp(0.75rem, 3vw, 2rem);
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
-  position: relative;
-  width: 100%;
-  max-width: 100%;
-  min-height: 100vh;
-  margin: 0;
-  background-color: #fff;
-  border-radius: 0;
-  overflow: visible;
-  display: flex;
-  flex-direction: column;
-  box-shadow: none;
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
-  animation: slideInUp 0.3s ease-out;
+  padding-bottom: max(clamp(0.75rem, 3vw, 2rem), env(safe-area-inset-bottom));
 }
 
 .withdraw-balance-info {
   background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-  padding: 1.5rem;
-  border-radius: 8px;
-  margin-bottom: 2rem;
+  padding: clamp(0.75rem, 3vw, 1.5rem);
+  border-radius: clamp(6px, 2vw, 8px);
+  margin-bottom: clamp(1rem, 4vw, 2rem);
   border: 1px solid #dee2e6;
 }
 
@@ -4569,8 +4557,10 @@ button,
 .withdraw-balance-item {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.5rem;
+  align-items: flex-start;
+  margin-bottom: clamp(0.3rem, 1.5vw, 0.5rem);
+  flex-wrap: wrap;
+  gap: clamp(0.3rem, 1.5vw, 0.5rem);
 }
 
 .withdraw-balance-item:last-child {
@@ -4580,36 +4570,46 @@ button,
 .balance-label {
   font-weight: 600;
   color: #495057;
+  font-size: clamp(0.8rem, 3.5vw, 1rem);
+  flex: 1;
+  min-width: 100px;
 }
 
 .balance-value {
   font-weight: bold;
   color: #28a745;
-  font-size: 1.1rem;
+  font-size: clamp(0.9rem, 3.8vw, 1.1rem);
+  word-break: break-all;
+  text-align: right;
+  flex: 1;
 }
 
-/* Form Groups */
+/* Form Groups - All Screen Sizes */
 .withdraw-form-group {
-  margin-bottom: 1.5rem;
+  margin-bottom: clamp(1rem, 4vw, 1.5rem);
 }
 
 .withdraw-form-group label {
   display: block;
-  margin-bottom: 0.5rem;
+  margin-bottom: clamp(0.3rem, 1.5vw, 0.5rem);
   font-weight: 600;
   color: #495057;
+  font-size: clamp(0.8rem, 3.5vw, 1rem);
 }
 
 .withdraw-form-group input,
 .withdraw-form-group select {
   width: 100%;
-  padding: 0.8rem;
+  padding: clamp(0.6rem, 3vw, 1rem);
   border: 2px solid #e1e8ed;
-  border-radius: 8px;
-  font-size: 14px;
+  border-radius: clamp(6px, 2vw, 8px);
+  font-size: 16px; /* Prevents zoom on iOS */
   transition: all 0.3s ease;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box;
+  min-height: clamp(44px, 12vw, 48px);
 }
 
 .withdraw-form-group input:focus,
@@ -4625,50 +4625,62 @@ button,
 }
 
 .input-note {
-  font-size: 0.8rem;
+  font-size: clamp(0.7rem, 3vw, 0.85rem);
   color: #6c757d;
-  margin-top: 0.5rem;
+  margin-top: clamp(0.3rem, 1.5vw, 0.5rem);
   display: block;
+  line-height: 1.3;
 }
 
-/* Amount Preview */
+/* Amount Preview - Responsive */
 .withdraw-amount-preview {
   background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
-  padding: 1rem;
-  border-radius: 8px;
-  margin-bottom: 1.5rem;
+  padding: clamp(0.75rem, 3vw, 1rem);
+  border-radius: clamp(6px, 2vw, 8px);
+  margin-bottom: clamp(1rem, 4vw, 1.5rem);
   display: flex;
   justify-content: space-between;
   align-items: center;
   border: 1px solid #2196f3;
+  flex-wrap: wrap;
+  gap: clamp(0.3rem, 1.5vw, 0.5rem);
 }
 
 .withdraw-amount-preview span:first-child {
   font-weight: 600;
   color: #1976d2;
+  font-size: clamp(0.8rem, 3.5vw, 1rem);
+  flex: 1;
+  min-width: 120px;
 }
 
 .withdraw-amount-preview span:last-child {
   font-weight: bold;
   color: #0d47a1;
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 4vw, 1.2rem);
+  word-break: break-all;
+  text-align: right;
+  flex: 1;
 }
 
-/* Fee Summary */
+/* Fee Summary - All Mobile Sizes */
 .withdraw-fee-summary {
   background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
-  padding: 1.5rem;
-  border-radius: 8px;
-  margin-bottom: 2rem;
+  padding: clamp(0.75rem, 3vw, 1.5rem);
+  border-radius: clamp(6px, 2vw, 8px);
+  margin-bottom: clamp(1rem, 4vw, 2rem);
   border: 1px solid #ff9800;
 }
 
 .withdraw-summary-row {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.5rem;
+  align-items: flex-start;
+  margin-bottom: clamp(0.3rem, 1.5vw, 0.5rem);
   color: #e65100;
+  flex-wrap: wrap;
+  gap: clamp(0.3rem, 1.5vw, 0.5rem);
+  font-size: clamp(0.8rem, 3.5vw, 1rem);
 }
 
 .withdraw-summary-row:last-child {
@@ -4677,26 +4689,31 @@ button,
 
 .withdraw-summary-row.total {
   border-top: 1px solid #ff9800;
-  padding-top: 0.5rem;
-  margin-top: 0.5rem;
+  padding-top: clamp(0.3rem, 1.5vw, 0.5rem);
+  margin-top: clamp(0.3rem, 1.5vw, 0.5rem);
   font-weight: bold;
-  font-size: 1.1rem;
+  font-size: clamp(0.9rem, 3.8vw, 1.1rem);
 }
 
-/* Buttons */
+/* Buttons - Universal Mobile Responsive */
 .btn {
-  padding: 0.8rem 1.5rem;
+  padding: clamp(0.6rem, 3vw, 1rem) clamp(1rem, 4vw, 1.5rem);
   border: none;
-  border-radius: 8px;
+  border-radius: clamp(6px, 2vw, 8px);
   cursor: pointer;
   font-weight: 600;
   transition: all 0.3s ease;
-  font-size: 14px;
+  font-size: 16px; /* Prevents zoom on iOS */
   text-align: center;
   text-decoration: none;
-  display: inline-block;
+  display: block;
   touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
   transform: translateY(0);
+  width: 100%;
+  box-sizing: border-box;
+  min-height: clamp(44px, 12vw, 56px);
+  line-height: 1.2;
 }
 
 .btn-primary {
@@ -4716,16 +4733,28 @@ button,
   color: white;
   box-shadow: 0 2px 8px rgba(40, 167, 69, 0.3);
 }
-
-.btn-sm {
-  padding: 0.5rem 1rem;
-  font-size: 0.8rem;
-  margin-top: 0.5rem;
+.btn-danger {
+  background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+    color: white;
+    box-shadow: 0 2px 8px rgba(220, 53, 69, 0.3);
+}
+  .btn-sm {
+  padding: clamp(0.4rem, 2vw, 0.6rem) clamp(0.8rem, 3vw, 1rem);
+  font-size: clamp(0.7rem, 3vw, 0.85rem);
+  margin-top: clamp(0.3rem, 1.5vw, 0.5rem);
+  width: auto;
+  min-height: clamp(36px, 10vw, 44px);
+  display: inline-block;
 }
 
-.btn:hover:not(:disabled) {
-  transform: translateY(-2px);
+.btn:hover:not(:disabled),
+.btn:active:not(:disabled) {
+  transform: translateY(-1px);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.btn:active {
+  transform: translateY(0);
 }
 
 .btn:disabled {
@@ -4734,85 +4763,99 @@ button,
   transform: none;
 }
 
-/* Processing Screen */
+/* Processing Screen - All Mobile Devices */
 .withdrawprocessing-content {
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 2rem;
+  padding: clamp(1rem, 5vw, 2rem);
   text-align: center;
+  min-height: calc(100vh - 60px);
+  min-height: calc(100dvh - 60px);
 }
 
 .loader {
-  width: 60px;
-  height: 60px;
-  border: 6px solid #f3f3f3;
-  border-top: 6px solid #667eea;
+  width: clamp(40px, 12vw, 60px);
+  height: clamp(40px, 12vw, 60px);
+  border: clamp(4px, 1.5vw, 6px) solid #f3f3f3;
+  border-top: clamp(4px, 1.5vw, 6px) solid #667eea;
   border-radius: 50%;
   animation: spin 1s linear infinite;
-  margin-bottom: 2rem;
+  margin-bottom: clamp(1rem, 4vw, 2rem);
 }
 
 .withdrawprocessing-content h3 {
-  margin: 0 0 1rem 0;
+  margin: 0 0 clamp(0.5rem, 2vw, 1rem) 0;
   color: #333;
-  font-size: 1.5rem;
+  font-size: clamp(1.1rem, 5vw, 1.5rem);
   font-weight: 600;
+  line-height: 1.3;
 }
 
 .withdrawprocessing-content p {
   margin: 0;
   color: #666;
-  font-size: 1rem;
+  font-size: clamp(0.8rem, 3.5vw, 1rem);
+  line-height: 1.4;
+  max-width: 90%;
 }
 
-/* Success Screen */
+/* Success Screen - Universal Mobile */
 .withdrawsuccess-content {
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 2rem;
+  padding: clamp(1rem, 5vw, 2rem);
   text-align: center;
+  min-height: calc(100vh - 60px);
+  min-height: calc(100dvh - 60px);
 }
 
 .success-icon {
-  font-size: 4rem;
+  font-size: clamp(2.5rem, 10vw, 4rem);
   color: #28a745;
-  margin-bottom: 1.5rem;
+  margin-bottom: clamp(0.5rem, 3vw, 1.5rem);
   animation: bounce 0.6s ease-in-out;
 }
 
 .withdrawsuccess-content h3 {
-  margin: 0 0 1rem 0;
+  margin: 0 0 clamp(0.5rem, 2vw, 1rem) 0;
   color: #28a745;
-  font-size: 1.5rem;
+  font-size: clamp(1.1rem, 5vw, 1.5rem);
   font-weight: 600;
+  line-height: 1.3;
 }
 
 .withdrawsuccess-content p {
-  margin: 0 0 2rem 0;
+  margin: 0 0 clamp(1rem, 4vw, 2rem) 0;
   color: #666;
-  font-size: 1rem;
+  font-size: clamp(0.8rem, 3.5vw, 1rem);
+  line-height: 1.4;
+  max-width: 90%;
 }
 
 .withdrawtransaction-details {
   background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-  padding: 1.5rem;
-  border-radius: 8px;
-  margin-bottom: 1.5rem;
+  padding: clamp(0.75rem, 3vw, 1.5rem);
+  border-radius: clamp(6px, 2vw, 8px);
+  margin-bottom: clamp(1rem, 4vw, 1.5rem);
   width: 100%;
   border: 1px solid #dee2e6;
+  box-sizing: border-box;
+  max-width: 100%;
 }
 
 .withdrawdetail-row {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.8rem;
+  align-items: flex-start;
+  margin-bottom: clamp(0.5rem, 2vw, 0.8rem);
+  flex-wrap: wrap;
+  gap: clamp(0.3rem, 1.5vw, 0.5rem);
 }
 
 .withdrawdetail-row:last-child {
@@ -4822,66 +4865,104 @@ button,
 .withdrawdetail-label {
   font-weight: 600;
   color: #495057;
+  font-size: clamp(0.8rem, 3.5vw, 1rem);
+  flex: 1;
+  min-width: 100px;
 }
 
 .withdrawdetail-value {
   font-weight: bold;
   color: #28a745;
   text-align: right;
+  font-size: clamp(0.8rem, 3.5vw, 1rem);
+  word-break: break-all;
+  flex: 1;
+  max-width: 60%;
 }
 
 .success-note {
-  font-size: 0.9rem;
+  font-size: clamp(0.7rem, 3vw, 0.9rem);
   color: #6c757d;
-  margin-bottom: 2rem !important;
+  margin-bottom: clamp(1rem, 4vw, 2rem) !important;
   font-style: italic;
+  line-height: 1.3;
+  max-width: 90%;
 }
 
-/* Error Screen */
+/* Error Screen - All Mobile Sizes */
 .withdrawerror-content {
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 2rem;
+  padding: clamp(1rem, 5vw, 2rem);
   text-align: center;
+  min-height: calc(100vh - 60px);
+  min-height: calc(100dvh - 60px);
 }
 
 .withdrawerror-icon {
-  font-size: 4rem;
+  font-size: clamp(2.5rem, 10vw, 4rem);
   color: #dc3545;
-  margin-bottom: 1.5rem;
+  margin-bottom: clamp(0.5rem, 3vw, 1.5rem);
   animation: shake 0.5s ease-in-out;
 }
 
 .withdrawerror-content h3 {
-  margin: 0 0 1rem 0;
+  margin: 0 0 clamp(0.5rem, 2vw, 1rem) 0;
   color: #dc3545;
-  font-size: 1.5rem;
+  font-size: clamp(1.1rem, 5vw, 1.5rem);
   font-weight: 600;
+  line-height: 1.3;
 }
 
 .withdrawerror-content p {
-  margin: 0 0 2rem 0;
+  margin: 0 0 clamp(1rem, 4vw, 2rem) 0;
   color: #666;
-  font-size: 1rem;
+  font-size: clamp(0.8rem, 3.5vw, 1rem);
+  line-height: 1.4;
+  max-width: 90%;
 }
 
 .withdrawerror-actions {
   display: flex;
-  gap: 1rem;
+  gap: clamp(0.5rem, 2vw, 1rem);
   justify-content: center;
   flex-wrap: wrap;
+  width: 100%;
+  max-width: 400px;
+}
+
+.withdrawerror-actions .btn {
+  flex: 1;
+  min-width: clamp(100px, 25vw, 150px);
+  max-width: 200px;
 }
 
 /* Error Message */
 .error-message {
   color: #dc3545;
-  font-size: 0.9rem;
-  margin-bottom: 1rem;
+  font-size: clamp(0.7rem, 3vw, 0.9rem);
+  margin-bottom: clamp(0.5rem, 2vw, 1rem);
   text-align: center;
-  min-height: 1.2rem;
+  min-height: clamp(1rem, 3vw, 1.2rem);
+  line-height: 1.3;
+}
+
+/* Button Groups for All Mobile Sizes */
+.button-group {
+  display: flex;
+  gap: clamp(0.5rem, 2vw, 1rem);
+  flex-wrap: wrap;
+  margin-top: clamp(0.5rem, 2vw, 1rem);
+  width: 100%;
+}
+
+.button-group .btn {
+  flex: 1;
+  min-width: clamp(100px, 25vw, 150px);
+  max-width: 250px;
 }
 
 /* Animations */
@@ -4892,7 +4973,7 @@ button,
 
 @keyframes slideInUp {
   from {
-    transform: translateY(50px);
+    transform: translateY(clamp(20px, 5vw, 50px));
     opacity: 0;
   }
   to {
@@ -4911,190 +4992,203 @@ button,
     transform: translate3d(0, 0, 0);
   }
   40%, 43% {
-    transform: translate3d(0, -30px, 0);
+    transform: translate3d(0, clamp(-15px, -4vw, -30px), 0);
   }
   70% {
-    transform: translate3d(0, -15px, 0);
+    transform: translate3d(0, clamp(-8px, -2vw, -15px), 0);
   }
   90% {
-    transform: translate3d(0, -4px, 0);
+    transform: translate3d(0, clamp(-2px, -0.5vw, -4px), 0);
   }
 }
 
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(clamp(-3px, -1vw, -10px));
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(clamp(3px, 1vw, 10px));
+  }
+}
 
-/* Desktop Styles (1024px and up) */
-@media (min-width: 1024px) {
-  .withdraw-modal-content {
-    max-width: 800px;
+/* Small Mobile Devices (320px - 480px) */
+@media (max-width: 480px) {
+  .withdraw-modal-header {
+    padding: 0.5rem 0.75rem;
+    padding-top: max(0.5rem, env(safe-area-inset-top));
+  }
+
+  .withdraw-modal-header h2 {
+    font-size: clamp(0.9rem, 4.5vw, 1.2rem);
   }
 
   .pin-input-container {
-    gap: 1.5rem;
+    gap: clamp(0.2rem, 1.5vw, 0.5rem);
+    max-width: 280px;
   }
 
   .pin-digit {
-    width: 70px;
-    height: 70px;
-    font-size: 1.8rem;
-  }
-
-  .withdraw-form-group input,
-  .withdraw-form-group select {
-    font-size: 14px;
-  }
-
-  .btn {
-    font-size: 14px;
-  }
-}
-
-/* Large Desktop Styles (1200px and up) */
-@media (min-width: 1200px) {
-  .withdraw-modal-content {
-    max-width: 1000px;
-  }
-}
-
-/* iPhone X and newer - Safe Area Support */
-@supports (padding: max(0px)) {
-  .withdraw-modal-header {
-    padding-top: max(1rem, env(safe-area-inset-top));
+    width: clamp(35px, 11vw, 45px);
+    height: clamp(35px, 11vw, 45px);
+    font-size: clamp(0.9rem, 3.5vw, 1.2rem);
   }
 
   .withdraw-form-content {
-    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+    padding: clamp(0.5rem, 2.5vw, 1rem);
   }
 
-  .pin-verification-content,
-  .withdrawprocessing-content,
-  .withdrawsuccess-content,
-  .withdrawerror-content {
-    padding-bottom: max(1.5rem, env(safe-area-inset-bottom));
+  .withdrawdetail-value {
+    max-width: 55%;
+    font-size: clamp(0.75rem, 3.2vw, 0.9rem);
   }
 }
 
-/* High DPI Displays */
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-  .btn {
-    border: 1px solid transparent;
-  }
-}
-
-/* Landscape Orientation on Mobile */
-@media (max-height: 500px) and (orientation: landscape) {
-  .pin-verification-content,
-  .withdrawprocessing-content,
-  .withdrawsuccess-content,
-  .withdrawerror-content {
-    min-height: auto;
-    padding: 1rem;
+/* Medium Mobile Devices (481px - 768px) */
+@media (min-width: 481px) and (max-width: 768px) {
+  .withdraw-modal-content {
+    margin: clamp(0.5rem, 2vw, 1rem);
+    width: calc(100% - clamp(1rem, 4vw, 2rem));
+    border-radius: clamp(8px, 2vw, 12px);
+    min-height: calc(100vh - clamp(1rem, 4vw, 2rem));
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
   }
 
-  .withdraw-pin-icon,
-  .success-icon,
-  .withdrawerror-icon {
-    font-size: 2rem;
-    margin-bottom: 0.5rem;
-  }
-
-  .loader {
-    width: 40px;
-    height: 40px;
-    border-width: 4px;
-    margin-bottom: 1rem;
+  .withdraw-modal-header {
+    border-radius: clamp(8px, 2vw, 12px) clamp(8px, 2vw, 12px) 0 0;
+    padding-top: clamp(1rem, 3vw, 1.5rem);
   }
 
   .pin-input-container {
-    margin-bottom: 1rem;
+    max-width: 320px;
   }
 
-  .pin-digit {
-    width: 45px;
-    height: 45px;
-    font-size: 1.1rem;
+  .button-group .btn,
+  .withdrawerror-actions .btn {
+    min-width: clamp(120px, 28vw, 160px);
   }
 }
 
-/* Dark Mode Support (if needed) */
-@media (prefers-color-scheme: dark) {
-  
-
+/* Large Mobile/Small Tablet (769px - 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
   .withdraw-modal-content {
-    
-    color: #ffffff;
+    width: 90%;
+    max-width: 600px;
+    margin: 2rem auto;
+    border-radius: 12px;
+    min-height: 85vh;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
   }
 
-  .pin-verification-content h3,
-  .withdrawprocessing-content h3 {
-    color: #ffffff;
+  .withdraw-modal-header {
+    padding: 1.2rem 1.5rem;
+    border-radius: 12px 12px 0 0;
+    padding-top: 1.2rem;
   }
 
-  .pin-verification-content p,
-  .withdrawprocessing-content p {
-    color: #cccccc;
+  .withdraw-modal-header h2 {
+    font-size: 1.3rem;
+  }
+
+  .close-withdraw-modal,
+  .close-modal {
+    width: 44px;
+    height: 44px;
+    font-size: 1.8rem;
+  }
+
+  .pin-input-container {
+    gap: 0.8rem;
+    max-width: 350px;
   }
 
   .pin-digit {
-    
-    color: #ffffff;
+    width: 55px;
+    height: 55px;
+    font-size: 1.3rem;
   }
 
-  .withdraw-form-group input,
-  .withdraw-form-group select {
-    
-    color: #ffffff;
+  .btn {
+    width: auto;
+    display: inline-block;
+    min-width: 140px;
   }
 
-  
-}
-
-/* Accessibility Improvements */
-@media (prefers-reduced-motion: reduce) {
-  .withdraw-modal,
-  .withdraw-modal-content,
-  .btn,
-  .pin-digit,
-  .loader,
-  .success-icon,
-  .withdrawerror-icon {
-    animation: none;
-    transition: none;
+  .button-group .btn,
+  .withdrawerror-actions .btn {
+    flex: 0 1 auto;
+    min-width: 140px;
   }
 
-  .btn:hover:not(:disabled) {
-    transform: none;
+  .pin-verification-content,
+  .withdrawprocessing-content,
+  .withdrawsuccess-content,
+  .withdrawerror-content {
+    min-height: calc(85vh - 80px);
   }
 }
 
-/* Focus Visible for Better Accessibility */
-.btn:focus-visible,
-.pin-digit:focus-visible,
-.withdraw-form-group input:focus-visible,
-.withdraw-form-group select:focus-visible {
-  outline: 2px solid #667eea;
-  outline-offset: 2px;
-}
+/* Desktop and Large Screens (1025px+) */
+@media (min-width: 1025px) {
+  .withdraw-modal-content {
+    width: 85%;
+    max-width: 900px;
+    margin: 3rem auto;
+    border-radius: 16px;
+    min-height: 80vh;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
+  }
 
-/* Remove tap highlight on Android */
-* {
-  -webkit-tap-highlight-color: transparent;
-}
+  .withdraw-modal-header {
+    padding: 1.5rem 2rem;
+    border-radius: 16px 16px 0 0;
+    padding-top: 1.5rem;
+    }
 
-/* Prevent text selection on buttons */
-.btn,
+    .withdraw-modal-header h2 {
+    font-size: 1.5rem;
+    }
 .close-withdraw-modal,
 .close-modal {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+    width: 48px;
+    height: 48px;
+    font-size: 2rem;
+  }
+
+  .pin-input-container {
+    gap: 1rem;
+    max-width: 400px;
+  }
+
+  .pin-digit {
+    width: 60px;
+    height: 60px;
+    font-size: 1.5rem;
+  }
+
+  .btn {
+    width: auto;
+    display: inline-block;
+    min-width: 160px;
+  }
+
+  .button-group .btn,
+  .withdrawerror-actions .btn {
+    flex: 0 1 auto;
+    min-width: 160px;
+  }
+
+  .pin-verification-content,
+  .withdrawprocessing-content,
+  .withdrawsuccess-content,
+  .withdrawerror-content {
+    min-height: calc(80vh - 80px);
+  }
 }
 
-/* Smooth scrolling for better UX */
-.withdraw-modal,
-.withdraw-form-content {
-  scroll-behavior: smooth;
-}
+
 
 
 /* Transaction History Modal - Core Styles with BuyCoins Scrolling */
