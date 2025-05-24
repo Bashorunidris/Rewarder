@@ -16426,6 +16426,160 @@ document.addEventListener('DOMContentLoaded', function() {
     };
 });
 
+// Withdraw Modal Scroll Handler for Android and iOS
+document.addEventListener('DOMContentLoaded', function() {
+    let scrollPosition = 0;
+    
+    // Close button for withdraw modal
+    const closeWithdraw = document.getElementById('closewithdrawformscreen');
+    if (closeWithdraw) {
+        closeWithdraw.addEventListener('click', function() {
+            closeWithdrawModal();
+        });
+    }
+    
+    // Close button for PIN verification
+    const closePinModal = document.getElementById('closewithdrawmodal');
+    if (closePinModal) {
+        closePinModal.addEventListener('click', function() {
+            closeWithdrawModal();
+        });
+    }
+    
+    // Close on outside click
+    const withdrawModal = document.getElementById('withdrawModal');
+    if (withdrawModal) {
+        withdrawModal.addEventListener('click', function(e) {
+            if (e.target === withdrawModal) {
+                closeWithdrawModal();
+            }
+        });
+    }
+    
+    // Close on escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            const modal = document.getElementById('withdrawModal');
+            if (modal && modal.style.display === 'block') {
+                closeWithdrawModal();
+            }
+        }
+    });
+    
+    // Override modal open function
+    window.openWithdrawModal = function() {
+        preventBodyScroll();
+        const modal = document.getElementById('withdrawModal');
+        if (modal) {
+            modal.style.display = 'block';
+        }
+    };
+    
+    function preventBodyScroll() {
+        scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+        document.body.style.overflow = 'hidden';
+        document.body.style.position = 'fixed';
+        document.body.style.top = '-' + scrollPosition + 'px';
+        document.body.style.width = '100%';
+    }
+    
+    function restoreBodyScroll() {
+        document.body.style.overflow = '';
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.width = '';
+        window.scrollTo(0, scrollPosition);
+    }
+    
+    function closeWithdrawModal() {
+        const modal = document.getElementById('withdrawModal');
+        if (modal) {
+            modal.style.display = 'none';
+        }
+        restoreBodyScroll();
+    }
+    
+    // Fix mobile scrolling
+    fixMobileScrolling();
+    
+    function fixMobileScrolling() {
+        // Prevent background scroll on touch
+        document.addEventListener('touchmove', function(e) {
+            const modal = document.getElementById('withdrawModal');
+            
+            if (modal && modal.style.display === 'block') {
+                const target = e.target;
+                const scrollableElement = target.closest('.withdraw-modal-content');
+                
+                if (!scrollableElement) {
+                    e.preventDefault();
+                    return false;
+                }
+            }
+        }, { passive: false });
+        
+        // Fix viewport height
+        function setVH() {
+            const vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--vh', vh + 'px');
+        }
+        
+        setVH();
+        window.addEventListener('resize', setVH);
+        window.addEventListener('orientationchange', function() {
+            setTimeout(setVH, 100);
+        });
+        
+        // Apply mobile fixes to modal
+        const modal = document.getElementById('withdrawModal');
+        if (modal) {
+            modal.style.webkitOverflowScrolling = 'touch';
+            modal.style.overscrollBehavior = 'contain';
+            
+            const modalContent = modal.querySelector('.withdraw-modal-content');
+            if (modalContent) {
+                modalContent.style.webkitOverflowScrolling = 'touch';
+                modalContent.style.overscrollBehavior = 'contain';
+                
+                // Fix iOS elastic scrolling
+                modalContent.addEventListener('touchstart', function() {
+                    const scrollTop = modalContent.scrollTop;
+                    const scrollHeight = modalContent.scrollHeight;
+                    const clientHeight = modalContent.clientHeight;
+                    
+                    if (scrollTop === 0) {
+                        modalContent.scrollTop = 1;
+                    } else if (scrollTop + clientHeight >= scrollHeight) {
+                        modalContent.scrollTop = scrollHeight - clientHeight - 1;
+                    }
+                });
+            }
+        }
+    }
+    
+    // Make close function globally available
+    window.closeWithdrawModal = closeWithdrawModal;
+});
+
+// Add CSS for mobile viewport fix
+const style = document.createElement('style');
+style.textContent = `
+    .withdraw-modal {
+        height: 100vh;
+        height: calc(var(--vh, 1vh) * 100);
+    }
+    
+    @media (max-width: 768px) {
+        .withdraw-modal-content {
+            height: 100vh;
+            height: calc(var(--vh, 1vh) * 100);
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+    }
+`;
+document.head.appendChild(style);
+
       </script>
 </body>
 </html>
