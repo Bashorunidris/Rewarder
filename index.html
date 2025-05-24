@@ -4394,8 +4394,9 @@ button,
   animation: slideInUp 0.3s ease-out;
 }
 
-/* PIN Verification Modal */
-.modal-screen {
+
+/* Withdrawal Modal Base Styles */
+.withdrawmodal-screen {
     display: none;
     position: fixed;
     top: 0;
@@ -4407,520 +4408,6 @@ button,
     overflow-y: auto;
     padding: 20px;
     box-sizing: border-box;
-}
-
-.modal-screen.active {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/* Modal Header */
-.modal-header {
-    text-align: center;
-    padding: 20px 24px 0;
-}
-
-.modal-header h2 {
-    margin: 0;
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #1f2937;
-}
-
-/* PIN Verification Content */
-.pin-verification-content {
-    background-color: #fff;
-    border-radius: 12px;
-    padding: 0 40px 40px;
-    text-align: center;
-    max-width: 400px;
-    width: 100%;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-    animation: slideIn 0.3s ease-out;
-}
-
-/* PIN Icon */
-.pin-icon {
-    font-size: 3rem;
-    color: #3b82f6;
-    margin-bottom: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 80px;
-    height: 80px;
-    background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 100%);
-    border-radius: 50%;
-    margin: 0 auto 20px;
-}
-
-.pin-verification-content h3 {
-    margin: 0 0 12px 0;
-    color: #1f2937;
-    font-size: 1.3rem;
-    font-weight: 600;
-}
-
-.pin-verification-content p {
-    margin: 0 0 32px 0;
-    color: #6b7280;
-    font-size: 0.95rem;
-    line-height: 1.5;
-}
-
-/* PIN Input Container */
-.pin-input-container {
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-    margin-bottom: 24px;
-}
-
-.pin-digit {
-    width: 50px;
-    height: 50px;
-    border: 2px solid #e5e7eb;
-    border-radius: 8px;
-    text-align: center;
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #1f2937;
-    background-color: #fff;
-    transition: all 0.2s ease;
-    outline: none;
-}
-
-.pin-digit:focus {
-    border-color: #3b82f6;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-    transform: scale(1.05);
-}
-
-.pin-digit:valid {
-    border-color: #10b981;
-    background-color: #f0fdf4;
-}
-
-.pin-digit.error {
-    border-color: #ef4444;
-    background-color: #fef2f2;
-    animation: shake 0.5s ease-in-out;
-}
-
-/* Error Message */
-.error-message {
-    color: #ef4444;
-    font-size: 0.9rem;
-    margin-bottom: 24px;
-    min-height: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transform: translateY(-10px);
-    transition: all 0.3s ease;
-}
-
-.error-message.show {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.error-message::before {
-    content: '⚠️';
-    margin-right: 8px;
-}
-
-/* Verify Button */
-#verifyPinBtn {
-    width: 100%;
-    padding: 14px 24px;
-    background-color: #3b82f6;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    position: relative;
-}
-
-#verifyPinBtn:hover:not(:disabled) {
-    background-color: #2563eb;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-}
-
-#verifyPinBtn:active {
-    transform: translateY(0);
-}
-
-#verifyPinBtn:disabled {
-    background-color: #9ca3af;
-    cursor: not-allowed;
-    transform: none;
-    box-shadow: none;
-}
-
-/* Loading state for button */
-#verifyPinBtn.loading {
-    color: transparent;
-}
-
-#verifyPinBtn.loading::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 20px;
-    height: 20px;
-    border: 2px solid transparent;
-    border-top: 2px solid white;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-}
-
-/* Animations */
-@keyframes slideIn {
-    from {
-        opacity: 0;
-        transform: translateY(-20px) scale(0.95);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-}
-
-@keyframes shake {
-    0%, 100% {
-        transform: translateX(0);
-    }
-    25% {
-        transform: translateX(-3px);
-    }
-    75% {
-        transform: translateX(3px);
-    }
-}
-
-@keyframes spin {
-    0% { transform: translate(-50%, -50%) rotate(0deg); }
-    100% { transform: translate(-50%, -50%) rotate(360deg); }
-}
-
-@keyframes pulse {
-    0%, 100% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.02);
-    }
-}
-
-/* PIN input animations */
-.pin-digit.filled {
-    animation: pulse 0.3s ease-in-out;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .modal-screen {
-        padding: 15px;
-        align-items: flex-start;
-        padding-top: 60px;
-    }
-    
-    .pin-verification-content {
-        padding: 0 30px 30px;
-        max-width: 350px;
-    }
-    
-    .modal-header {
-        padding: 16px 20px 0;
-    }
-    
-    .modal-header h2 {
-        font-size: 1.3rem;
-    }
-    
-    .pin-verification-content h3 {
-        font-size: 1.2rem;
-    }
-    
-    .pin-verification-content p {
-        font-size: 0.9rem;
-        margin-bottom: 28px;
-    }
-    
-    .pin-icon {
-        width: 70px;
-        height: 70px;
-        font-size: 2.5rem;
-        margin-bottom: 16px;
-    }
-    
-    .pin-input-container {
-        gap: 10px;
-        margin-bottom: 20px;
-    }
-    
-    .pin-digit {
-        width: 45px;
-        height: 45px;
-        font-size: 1.3rem;
-    }
-    
-    #verifyPinBtn {
-        padding: 12px 20px;
-        font-size: 0.95rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .modal-screen {
-        padding: 10px;
-        padding-top: 40px;
-    }
-    
-    .pin-verification-content {
-        padding: 0 24px 24px;
-        max-width: 320px;
-    }
-    
-    .modal-header {
-        padding: 12px 16px 0;
-    }
-    
-    .modal-header h2 {
-        font-size: 1.2rem;
-    }
-    
-    .pin-verification-content h3 {
-        font-size: 1.1rem;
-    }
-    
-    .pin-verification-content p {
-        font-size: 0.85rem;
-        margin-bottom: 24px;
-    }
-    
-    .pin-icon {
-        width: 60px;
-        height: 60px;
-        font-size: 2rem;
-        margin-bottom: 12px;
-    }
-    
-    .pin-input-container {
-        gap: 8px;
-        margin-bottom: 18px;
-    }
-    
-    .pin-digit {
-        width: 40px;
-        height: 40px;
-        font-size: 1.2rem;
-        border-radius: 6px;
-    }
-    
-    .error-message {
-        font-size: 0.8rem;
-        margin-bottom: 20px;
-    }
-    
-    #verifyPinBtn {
-        padding: 11px 18px;
-        font-size: 0.9rem;
-    }
-}
-
-@media (max-width: 360px) {
-    .pin-verification-content {
-        max-width: 280px;
-        padding: 0 20px 20px;
-    }
-    
-    .pin-input-container {
-        gap: 6px;
-    }
-    
-    .pin-digit {
-        width: 35px;
-        height: 35px;
-        font-size: 1.1rem;
-    }
-}
-
-/* Dark mode support */
-@media (prefers-color-scheme: dark) {
-    .modal-screen {
-        background-color: rgba(0, 0, 0, 0.8);
-    }
-    
-    .pin-verification-content {
-        background-color: #1f2937;
-        color: #f9fafb;
-    }
-    
-    .modal-header h2 {
-        color: #f9fafb;
-    }
-    
-    .pin-verification-content h3 {
-        color: #f9fafb;
-    }
-    
-    .pin-verification-content p {
-        color: #9ca3af;
-    }
-    
-    .pin-digit {
-        background-color: #374151;
-        border-color: #4b5563;
-        color: #f9fafb;
-    }
-    
-    .pin-digit:focus {
-        border-color: #3b82f6;
-        background-color: #374151;
-    }
-    
-    .pin-digit:valid {
-        border-color: #10b981;
-        background-color: #064e3b;
-    }
-    
-    .pin-digit.error {
-        border-color: #ef4444;
-        background-color: #7f1d1d;
-    }
-    
-    .pin-icon {
-        background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
-        color: #93c5fd;
-    }
-}
-
-/* High contrast mode */
-@media (prefers-contrast: high) {
-    .pin-digit {
-        border-width: 3px;
-    }
-    
-    .pin-digit:focus {
-        border-width: 3px;
-        box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.3);
-    }
-    
-    #verifyPinBtn {
-        border: 2px solid #1d4ed8;
-    }
-}
-
-/* Reduced motion */
-@media (prefers-reduced-motion: reduce) {
-    .pin-verification-content {
-        animation: none;
-    }
-    
-    .pin-digit,
-    #verifyPinBtn,
-    .error-message {
-        transition: none;
-    }
-    
-    .pin-digit:focus {
-        transform: none;
-    }
-    
-    #verifyPinBtn:hover {
-        transform: none;
-    }
-    
-    .pin-digit.filled {
-        animation: none;
-    }
-    
-    .pin-digit.error {
-        animation: none;
-    }
-    
-    #verifyPinBtn.loading::after {
-        animation: none;
-        border: 2px solid white;
-        border-top-color: transparent;
-    }
-}
-
-/* Focus management for accessibility */
-.pin-digit:focus {
-    z-index: 1;
-}
-
-/* Touch device optimizations */
-@media (hover: none) and (pointer: coarse) {
-    .pin-digit {
-        width: 48px;
-        height: 48px;
-        font-size: 1.4rem;
-    }
-    
-    #verifyPinBtn {
-        padding: 16px 24px;
-        font-size: 1.1rem;
-    }
-    
-    #verifyPinBtn:hover {
-        transform: none;
-        box-shadow: none;
-        background-color: #3b82f6;
-    }
-}
-
-/* Print styles */
-@media print {
-    .modal-screen {
-        position: static;
-        background: none;
-        padding: 0;
-    }
-    
-    .pin-verification-content {
-        box-shadow: none;
-        border: 2px solid #000;
-    }
-    
-    .pin-icon {
-        background: none;
-        border: 2px solid #000;
-    }
-    
-    #verifyPinBtn {
-        display: none;
-    }
-}
-
-
-/* Withdrawal Modal Base Styles */
-.withdrawmodal-screen {
-    display: none;
-     width: 100%;
-  max-width: 100%;
-  min-height: 100vh;
-  margin: 0;
-  background-color: #fff;
-  border-radius: 0;
-  overflow: visible;
-  display: flex;
-  flex-direction: column;
-  box-shadow: none;
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
-  animation: slideInUp 0.3s ease-out;
 }
 
 .withdrawmodal-screen.active {
@@ -4984,8 +4471,79 @@ rgb(81, 67, 55)rgb(81, 61, 55)rgb(81, 58, 55)rgb(184, 50, 32);
     padding: 24px;
 }
 
+/* Balance Info - Compact Version */
+.withdraw-balance-info {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 6px;
+    padding: 12px 16px;
+    margin-bottom: 20px;
+    color: white;
+}
+
+.balance-item,
+.withdraw-balance-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+.withdraw-balance-item:last-child {
+    margin-bottom: 0;
+}
+
+.balance-label {
+    font-size: 0.85rem;
+    opacity: 0.9;
+}
+
+.balance-value {
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+/* Mobile adjustments for compact balance info */
+@media (max-width: 768px) {
+    .withdraw-balance-info {
+        padding: 10px 14px;
+        margin-bottom: 16px;
+    }
     
+    .balance-label {
+        font-size: 0.8rem;
+    }
     
+    .balance-value {
+        font-size: 0.9rem;
+    }
+    
+    .balance-item,
+    .withdraw-balance-item {
+        margin-bottom: 2px;
+    }
+}
+
+@media (max-width: 480px) {
+    .withdraw-balance-info {
+        padding: 8px 12px;
+    }
+    
+    .balance-item,
+    .withdraw-balance-item {
+        flex-direction: row; /* Keep horizontal layout even on small screens */
+        align-items: center;
+        gap: 8px;
+    }
+    
+    .balance-label {
+        font-size: 0.75rem;
+    }
+    
+    .balance-value {
+        font-size: 0.85rem;
+    }
+}
+
 /* Form Groups */
 .withdraw-form-group {
     margin-bottom: 20px;
@@ -5034,8 +4592,6 @@ rgb(81, 67, 55)rgb(81, 61, 55)rgb(81, 58, 55)rgb(184, 50, 32);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width:460px;
-    height:70px;
 }
 
 .withdraw-amount-preview span:first-child {
