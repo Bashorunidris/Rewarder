@@ -4357,6 +4357,1424 @@ button,
   }
 }
 
+/* Withdraw Modal Styles */
+.withdraw-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 2000;
+  display: none;
+  animation: fadeIn 0.3s ease-in-out;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+}
+
+.withdraw-modal-content {
+  position: relative;
+  width: 90%;
+  max-width: 600px;
+  min-height: 90vh;
+  margin: 2rem auto;
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  animation: slideInUp 0.3s ease-out;
+}
+
+.withdraw-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  background-color: #1a1a2e;
+  color: white;
+  flex-shrink: 0;
+  border-radius: 8px 8px 0 0;
+}
+
+.withdraw-modal-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.close-withdraw-modal,
+.close-modal {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 2rem;
+  cursor: pointer;
+  transition: color 0.2s;
+  padding: 0;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: manipulation;
+}
+
+.close-withdraw-modal:hover,
+.close-modal:hover {
+  color: #e74c3c;
+}
+
+.close-withdraw-modal:focus,
+.close-modal:focus {
+  outline: 2px solid #473ce7;
+  outline-offset: 2px;
+}
+
+/* Modal Screens */
+.modal-screen {
+  display: none;
+  flex: 1;
+  padding: 2rem;
+  overflow: visible;
+}
+
+.modal-screen.active {
+  display: flex;
+  flex-direction: column;
+}
+
+/* PIN Verification Screen */
+.pin-verification-content {
+  text-align: center;
+  padding: 2rem 0;
+}
+
+.withdraw-pin-icon {
+  font-size: 4rem;
+  color: #3498db;
+  margin-bottom: 1.5rem;
+}
+
+.pin-verification-content h3 {
+  color: #2c3e50;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.pin-verification-content p {
+  color: #7f8c8d;
+  margin-bottom: 2rem;
+  font-size: 1rem;
+}
+
+.pin-input-container {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.pin-digit {
+  width: 60px;
+  height: 60px;
+  border: 2px solid #ecf0f1;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  transition: border-color 0.3s;
+  background-color: #fff;
+}
+
+.pin-digit:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+.pin-digit.filled {
+  border-color: #27ae60;
+  background-color: #f8fff8;
+}
+
+.error-message {
+  color: #e74c3c;
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+  min-height: 20px;
+}
+
+/* Withdraw Form Screen */
+.withdraw-form-content {
+  flex: 1;
+}
+
+.withdraw-balance-info {
+  background-color: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  border: 1px solid #e9ecef;
+}
+
+.balance-item,
+.withdraw-balance-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.8rem;
+}
+
+.withdraw-balance-item:last-child {
+  margin-bottom: 0;
+}
+
+.balance-label {
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.balance-value {
+  font-weight: bold;
+  color: #27ae60;
+  font-size: 1.1rem;
+}
+
+.withdraw-form-group {
+  margin-bottom: 1.5rem;
+}
+
+.withdraw-form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.withdraw-form-group input,
+.withdraw-form-group select {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border: 2px solid #ecf0f1;
+  border-radius: 6px;
+  font-size: 16px;
+  transition: border-color 0.3s;
+  box-sizing: border-box;
+}
+
+.withdraw-form-group input:focus,
+.withdraw-form-group select:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+.withdraw-form-group input[readonly] {
+  background-color: #f8f9fa;
+  color: #6c757d;
+}
+
+.input-note {
+  font-size: 0.85rem;
+  color: #7f8c8d;
+  margin-top: 0.5rem;
+  display: block;
+}
+
+.withdraw-amount-preview {
+  background-color: #e8f4fd;
+  color: #2980b9;
+  padding: 1rem;
+  border-radius: 6px;
+  margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  border-left: 4px solid #3498db;
+}
+
+.withdraw-fee-summary {
+  background-color: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  border: 1px solid #e9ecef;
+}
+
+.withdraw-summary-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.8rem;
+  font-size: 1rem;
+}
+
+.withdraw-summary-row:last-child {
+  margin-bottom: 0;
+}
+
+.withdraw-summary-row.total {
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: #2c3e50;
+  border-top: 1px solid #dee2e6;
+  padding-top: 0.8rem;
+}
+
+/* Processing Screen */
+.processing-content {
+  text-align: center;
+  padding: 3rem 2rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.loader {
+  width: 60px;
+  height: 60px;
+  border: 4px solid #ecf0f1;
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 2rem;
+}
+
+.processing-content h3 {
+  color: #2c3e50;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.processing-content p {
+  color: #7f8c8d;
+  font-size: 1rem;
+}
+
+/* Success Screen */
+.success-content {
+  text-align: center;
+  padding: 2rem;
+  flex: 1;
+}
+
+.success-icon {
+  font-size: 4rem;
+  color: #28a745;
+  margin-bottom: 1.5rem;
+}
+
+.success-content h3 {
+  color: #28a745;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.success-content p {
+  color: #6c757d;
+  margin-bottom: 2rem;
+  line-height: 1.5;
+}
+
+.transaction-details {
+  background-color: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  border: 1px solid #e9ecef;
+  text-align: left;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px solid #ecf0f1;
+}
+
+.detail-row:last-child {
+  margin-bottom: 0;
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.detail-label {
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.detail-value {
+  font-weight: bold;
+  color: #27ae60;
+}
+
+.success-note {
+  background-color: #d1ecf1;
+  color: #0c5460;
+  padding: 1rem;
+  border-radius: 6px;
+  margin-bottom: 2rem;
+  border-left: 4px solid #17a2b8;
+}
+
+/* Error Screen */
+.error-content {
+  text-align: center;
+  padding: 2rem;
+  flex: 1;
+}
+
+.error-icon {
+  font-size: 4rem;
+  color: #e74c3c;
+  margin-bottom: 1.5rem;
+}
+
+.error-content h3 {
+  color: #e74c3c;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.error-content p {
+  color: #6c757d;
+  margin-bottom: 2rem;
+  line-height: 1.5;
+}
+
+.error-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+/* Buttons */
+.btn {
+  padding: 0.8rem 2rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.3s;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+  min-height: 48px;
+  touch-action: manipulation;
+}
+
+.btn-primary {
+  background-color: #3498db;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #2980b9;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background-color: #5a6268;
+}
+
+.btn-success {
+  background-color: #28a745;
+  color: white;
+}
+
+.btn-success:hover {
+  background-color: #218838;
+}
+
+.btn-sm {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  min-height: 36px;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn:disabled:hover {
+  background-color: inherit;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideInUp {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .withdraw-modal {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .withdraw-modal-content {
+    width: 100%;
+    min-height: 100vh;
+    margin: 0;
+    border-radius: 0;
+    height: auto;
+  }
+  
+  .withdraw-modal-header {
+    padding: 1rem 1.5rem;
+  }
+  
+  .withdraw-modal-header h2 {
+    font-size: 1.3rem;
+  }
+  
+  .modal-screen {
+    padding: 1rem;
+  }
+  
+  .pin-input-container {
+    gap: 0.5rem;
+  }
+  
+  .pin-digit {
+    width: 50px;
+    height: 50px;
+    font-size: 1.2rem;
+  }
+  
+  .error-actions {
+    flex-direction: column;
+  }
+  
+  .btn {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+  
+  .detail-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .modal-screen {
+    padding: 1rem;
+    padding-bottom: 3rem;
+  }
+  
+  .pin-input-container {
+    gap: 0.3rem;
+  }
+  
+  .pin-digit {
+    width: 45px;
+    height: 45px;
+    font-size: 1.1rem;
+  }
+  
+  .withdraw-balance-info,
+  .withdraw-fee-summary,
+  .transaction-details {
+    margin-bottom: 2rem;
+  }
+}
+
+/* iOS specific fixes */
+@supports (-webkit-appearance: none) {
+  .withdraw-modal {
+    height: 100vh;
+    height: -webkit-fill-available;
+  }
+  
+  @media (max-width: 768px) {
+    .withdraw-modal-content {
+      min-height: 100vh;
+      min-height: -webkit-fill-available;
+    }
+  }
+}
+
+/* Android Chrome specific fixes */
+@media screen and (max-width: 768px) {
+  .withdraw-modal {
+    overflow-y: scroll !important;
+    -webkit-overflow-scrolling: touch !important;
+    overscroll-behavior: contain;
+  }
+  
+  .withdraw-modal-content {
+    max-height: none !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+  
+  .modal-screen {
+    overflow: visible !important;
+    height: auto !important;
+    max-height: none !important;
+  }
+}
+
+/* Prevent zoom on double tap */
+.withdraw-modal * {
+  touch-action: manipulation;
+}
+
+/* Ensure proper touch scrolling */
+.withdraw-modal {
+  scroll-behavior: smooth;
+}
+
+/* Fix for very small screens */
+@media (max-height: 500px) {
+  .withdraw-modal-content {
+    margin: 0.5rem auto;
+    min-height: calc(100vh - 1rem);
+  }
+}
+
+/* Focus and Accessibility */
+.btn:focus {
+  outline: 2px solid #2c3e50;
+  outline-offset: 2px;
+}
+
+/* Loading States */
+.btn.loading {
+  opacity: 0.7;
+  cursor: not-allowed;
+  position: relative;
+}
+
+.btn.loading::after {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  margin: auto;
+  border: 2px solid transparent;
+  border-top-color: currentColor;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Error States */
+.withdraw-form-group.error input,
+.withdraw-form-group.error select {
+  border-color: #e74c3c;
+  box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
+}
+
+.withdraw-form-group .error-message {
+  color: #e74c3c;
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+  display: block;
+}
+
+/* Success States */
+.withdraw-form-group.success input,
+.withdraw-form-group.success select {
+  border-color: #28a745;
+  box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.1);
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .withdraw-modal,
+  .withdraw-modal-content,
+  .btn,
+  .loader {
+    animation: none;
+    transition: none;
+  }
+}
+
+/* Transaction History Modal Styles */
+.transaction-modal,
+.transaction-details-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 2000;
+  display: none;
+  animation: fadeIn 0.3s ease-in-out;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+}
+
+.transaction-modal .modal-content,
+.transaction-details-modal .modal-content {
+  position: relative;
+  width: 95%;
+  max-width: 1200px;
+  min-height: 90vh;
+  margin: 2rem auto;
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  animation: slideInUp 0.3s ease-out;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  background-color: #1a1a2e;
+  color: white;
+  flex-shrink: 0;
+  border-radius: 8px 8px 0 0;
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.close-modal {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 2rem;
+  cursor: pointer;
+  transition: color 0.2s;
+  padding: 0;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: manipulation;
+}
+
+.close-modal:hover {
+  color: #e74c3c;
+}
+
+.close-modal:focus {
+  outline: 2px solid #473ce7;
+  outline-offset: 2px;
+}
+
+/* Transaction Filters */
+.transaction-filters {
+  padding: 1.5rem 2rem;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #e9ecef;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: end;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  min-width: 150px;
+}
+
+.filter-group label {
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.filter-group select {
+  padding: 0.6rem 0.8rem;
+  border: 2px solid #ecf0f1;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border-color 0.3s;
+  background-color: white;
+}
+
+.filter-group select:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+.filter-btn {
+  padding: 0.6rem 1.5rem;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s;
+  height: fit-content;
+  touch-action: manipulation;
+}
+
+.filter-btn:hover {
+  background-color: #2980b9;
+}
+
+/* Transaction Summary */
+.transaction-summary {
+  padding: 1.5rem 2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  background-color: #fff;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.summary-card {
+  background-color: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 8px;
+  text-align: center;
+  border: 1px solid #e9ecef;
+  transition: transform 0.2s;
+}
+
+.summary-card:hover {
+  transform: translateY(-2px);
+}
+
+.summary-card h4 {
+  margin: 0 0 0.5rem 0;
+  color: #2c3e50;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.summary-card p {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #27ae60;
+}
+
+/* Transaction Table */
+.transaction-table-container {
+  flex: 1;
+  padding: 2rem;
+  overflow-x: auto;
+  position: relative;
+}
+
+.transaction-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.transaction-table thead {
+  background-color: #2c3e50;
+  color: white;
+}
+
+.transaction-table th,
+.transaction-table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.transaction-table th {
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.transaction-table tbody tr {
+  transition: background-color 0.2s;
+}
+
+.transaction-table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+.transaction-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Transaction Status Badges */
+.status-badge {
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status-completed {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.status-pending {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.status-failed {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+/* Transaction Type Badges */
+.type-badge {
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.type-purchase {
+  background-color: #e3f2fd;
+  color: #1565c0;
+}
+
+.type-withdrawal {
+  background-color: #fce4ec;
+  color: #c2185b;
+}
+
+.type-commission {
+  background-color: #f3e5f5;
+  color: #7b1fa2;
+}
+
+.type-earning {
+  background-color: #e8f5e8;
+  color: #2e7d32;
+}
+
+/* Amount Styling */
+.amount-positive {
+  color: #27ae60;
+  font-weight: 600;
+}
+
+.amount-negative {
+  color: #e74c3c;
+  font-weight: 600;
+}
+
+.amount-neutral {
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+/* Empty State */
+.empty-state {
+  display: none;
+  text-align: center;
+  padding: 3rem 2rem;
+  color: #7f8c8d;
+}
+
+.empty-state i {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: #bdc3c7;
+}
+
+.empty-state p {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: #2c3e50;
+}
+
+.empty-state span {
+  font-size: 0.9rem;
+  color: #7f8c8d;
+}
+
+/* Loading State */
+.loading-transactions {
+  display: none;
+  text-align: center;
+  padding: 3rem 2rem;
+  color: #7f8c8d;
+}
+
+.loading-transactions i {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #3498db;
+}
+
+.loading-transactions p {
+  font-size: 1.1rem;
+  color: #2c3e50;
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  background-color: #f8f9fa;
+  border-top: 1px solid #e9ecef;
+  gap: 1rem;
+}
+
+.pagination-btn {
+  padding: 0.6rem 1.2rem;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  touch-action: manipulation;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  background-color: #2980b9;
+}
+
+.pagination-btn:disabled {
+  background-color: #bdc3c7;
+  cursor: not-allowed;
+}
+
+#pageIndicator {
+  font-weight: 600;
+  color: #2c3e50;
+  min-width: 100px;
+  text-align: center;
+}
+
+/* Export Section */
+.export-section {
+  padding: 1.5rem 2rem;
+  background-color: #f8f9fa;
+  border-top: 1px solid #e9ecef;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.export-btn {
+  padding: 0.6rem 1.2rem;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  touch-action: manipulation;
+}
+
+.export-btn:hover {
+  background-color: #218838;
+}
+
+/* Transaction Details Modal */
+.transaction-details-modal .modal-content {
+  max-width: 600px;
+}
+
+.transaction-details-content {
+  padding: 2rem;
+  flex: 1;
+}
+
+.detail-section {
+  margin-bottom: 2rem;
+}
+
+.detail-section h3 {
+  color: #2c3e50;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  border-bottom: 2px solid #ecf0f1;
+  padding-bottom: 0.5rem;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px solid #ecf0f1;
+}
+
+.detail-row:last-child {
+  margin-bottom: 0;
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.detail-label {
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.detail-value {
+  font-weight: 500;
+  color: #34495e;
+}
+
+.modal-footer {
+  padding: 1.5rem 2rem;
+  background-color: #f8f9fa;
+  border-top: 1px solid #e9ecef;
+  display: flex;
+  justify-content: flex-end;
+  border-radius: 0 0 8px 8px;
+}
+
+.btn {
+  padding: 0.6rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s;
+  touch-action: manipulation;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background-color: #5a6268;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideInUp {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .transaction-modal,
+  .transaction-details-modal {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .transaction-modal .modal-content,
+  .transaction-details-modal .modal-content {
+    width: 100%;
+    min-height: 100vh;
+    margin: 0;
+    border-radius: 0;
+    height: auto;
+  }
+  
+  .modal-header {
+    padding: 1rem 1.5rem;
+  }
+  
+  .modal-header h2 {
+    font-size: 1.3rem;
+  }
+  
+  .transaction-filters {
+    padding: 1rem;
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .filter-group {
+    min-width: auto;
+    width: 100%;
+  }
+  
+  .filter-btn {
+    margin-top: 1rem;
+    width: 100%;
+  }
+  
+  .transaction-summary {
+    padding: 1rem;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.8rem;
+  }
+  
+  .summary-card {
+    padding: 1rem;
+  }
+  
+  .summary-card h4 {
+    font-size: 0.8rem;
+  }
+  
+  .summary-card p {
+    font-size: 1.2rem;
+  }
+  
+  .transaction-table-container {
+    padding: 1rem;
+    overflow-x: auto;
+  }
+  
+  .transaction-table {
+    min-width: 600px;
+  }
+  
+  .transaction-table th,
+  .transaction-table td {
+    padding: 0.8rem 0.5rem;
+    font-size: 0.85rem;
+  }
+  
+  .pagination {
+    padding: 1rem;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  
+  .pagination-btn {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .export-section {
+    padding: 1rem;
+    flex-direction: column;
+  }
+  
+  .export-btn {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .transaction-details-content {
+    padding: 1rem;
+  }
+  
+  .detail-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .modal-footer {
+    padding: 1rem;
+  }
+  
+  .btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .transaction-summary {
+    grid-template-columns: 1fr;
+  }
+  
+  .summary-card {
+    padding: 0.8rem;
+  }
+  
+  .summary-card h4 {
+    font-size: 0.75rem;
+  }
+  
+  .summary-card p {
+    font-size: 1.1rem;
+  }
+  
+  .transaction-table th,
+  .transaction-table td {
+    padding: 0.6rem 0.4rem;
+    font-size: 0.8rem;
+  }
+  
+  .status-badge,
+  .type-badge {
+    padding: 0.2rem 0.6rem;
+    font-size: 0.7rem;
+  }
+}
+
+/* iOS specific fixes */
+@supports (-webkit-appearance: none) {
+  .transaction-modal,
+  .transaction-details-modal {
+    height: 100vh;
+    height: -webkit-fill-available;
+  }
+  
+  @media (max-width: 768px) {
+    .transaction-modal .modal-content,
+    .transaction-details-modal .modal-content {
+      min-height: 100vh;
+      min-height: -webkit-fill-available;
+    }
+  }
+}
+
+/* Android Chrome specific fixes */
+@media screen and (max-width: 768px) {
+  .transaction-modal,
+  .transaction-details-modal {
+    overflow-y: scroll !important;
+    -webkit-overflow-scrolling: touch !important;
+    overscroll-behavior: contain;
+  }
+  
+  .transaction-modal .modal-content,
+  .transaction-details-modal .modal-content {
+    max-height: none !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+}
+
+/* Prevent zoom on double tap */
+.transaction-modal *,
+.transaction-details-modal * {
+  touch-action: manipulation;
+}
+
+/* Ensure proper touch scrolling */
+.transaction-modal,
+.transaction-details-modal {
+  scroll-behavior: smooth;
+}
+
+/* Fix for very small screens */
+@media (max-height: 500px) {
+  .transaction-modal .modal-content,
+  .transaction-details-modal .modal-content {
+    margin: 0.5rem auto;
+    min-height: calc(100vh - 1rem);
+  }
+}
+
+/* Focus and Accessibility */
+.close-modal:focus,
+.filter-btn:focus,
+.pagination-btn:focus,
+.export-btn:focus,
+.btn:focus {
+  outline: 2px solid #2c3e50;
+  outline-offset: 2px;
+}
+
+/* Loading States */
+.filter-btn.loading,
+.export-btn.loading {
+  opacity: 0.7;
+  cursor: not-allowed;
+  position: relative;
+}
+
+.filter-btn.loading::after,
+.export-btn.loading::after {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  margin: auto;
+  border: 2px solid transparent;
+  border-top-color: currentColor;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@keyframes spin {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .transaction-modal,
+  .transaction-details-modal,
+  .modal-content,
+  .summary-card,
+  .transaction-table tbody tr {
+    animation: none;
+    transition: none;
+  }
+  
+  .summary-card:hover {
+    transform: none;
+  }
+}
+
 
 /* Game Portal Styles */
 .game-portal-container {
@@ -14854,6 +16272,368 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         return hash.toString();
     }
+});
+
+// Withdraw Modal - Scrolling and Closing Only
+class WithdrawModal {
+    constructor() {
+        this.modal = document.getElementById('withdrawModal');
+        this.init();
+    }
+    
+    init() {
+        this.setupCloseEvents();
+        this.setupScrolling();
+    }
+    
+    setupCloseEvents() {
+        // Close modal buttons
+        const closeButtons = [
+            document.getElementById('closewithdrawmodal'),
+            document.getElementById('closewithdrawformscreen')
+        ];
+        
+        closeButtons.forEach(btn => {
+            if (btn) {
+                btn.addEventListener('click', () => this.closeModal());
+            }
+        });
+        
+        // Close modal when clicking outside
+        this.modal.addEventListener('click', (e) => {
+            if (e.target === this.modal) {
+                this.closeModal();
+            }
+        });
+        
+        // Escape key to close modal
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && this.modal.style.display === 'block') {
+                this.closeModal();
+            }
+        });
+        
+        // Success and error screen close buttons
+        const successBtn = document.getElementById('closeSuccessBtn');
+        if (successBtn) {
+            successBtn.addEventListener('click', () => this.closeModal());
+        }
+    }
+    
+    setupScrolling() {
+        // Prevent background scrolling when modal is open
+        this.modal.addEventListener('wheel', (e) => {
+            e.stopPropagation();
+        });
+        
+        // Handle touch scrolling on mobile
+        let startY = 0;
+        
+        this.modal.addEventListener('touchstart', (e) => {
+            startY = e.touches[0].clientY;
+        }, { passive: true });
+        
+        this.modal.addEventListener('touchmove', (e) => {
+            const modalContent = this.modal.querySelector('.withdraw-modal-content');
+            const currentY = e.touches[0].clientY;
+            const scrollTop = this.modal.scrollTop;
+            const scrollHeight = this.modal.scrollHeight;
+            const clientHeight = this.modal.clientHeight;
+            
+            // Prevent overscroll
+            if (scrollTop === 0 && currentY > startY) {
+                e.preventDefault();
+            }
+            
+            if (scrollTop >= scrollHeight - clientHeight && currentY < startY) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+        
+        // Smooth scrolling for modal content
+        this.modal.style.scrollBehavior = 'smooth';
+    }
+    
+    openModal() {
+        this.modal.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+        
+        // Reset scroll position
+        this.modal.scrollTop = 0;
+        
+        // Focus management for accessibility
+        setTimeout(() => {
+            const firstFocusable = this.modal.querySelector('button, input, select, textarea, [tabindex]:not([tabindex="-1"])');
+            if (firstFocusable) {
+                firstFocusable.focus();
+            }
+        }, 100);
+    }
+    
+    closeModal() {
+        this.modal.style.display = 'none';
+        document.body.style.overflow = '';
+        
+        // Return focus to trigger element if available
+        const triggerElement = document.querySelector('[data-withdraw-trigger]');
+        if (triggerElement) {
+            triggerElement.focus();
+        }
+    }
+}
+
+// Initialize the withdraw modal
+document.addEventListener('DOMContentLoaded', () => {
+    const withdrawModal = new WithdrawModal();
+    
+    // Make it globally accessible for opening
+    window.openWithdrawModal = () => withdrawModal.openModal();
+    window.closeWithdrawModal = () => withdrawModal.closeModal();
+});
+
+// Handle browser back button
+window.addEventListener('popstate', () => {
+    const modal = document.getElementById('withdrawModal');
+    if (modal && modal.style.display === 'block') {
+        window.closeWithdrawModal();
+    }
+});
+
+// Transaction History Modal - Scrolling and Closing Only
+class TransactionModal {
+    constructor() {
+        this.modal = document.getElementById('transactionHistoryModal');
+        this.detailsModal = document.getElementById('transactionDetailsModal');
+        this.init();
+    }
+    
+    init() {
+        this.setupCloseEvents();
+        this.setupScrolling();
+    }
+    
+    setupCloseEvents() {
+        // Close modal buttons for main modal
+        const closeMainModal = document.getElementById('closetransactionhistorymodal');
+        if (closeMainModal) {
+            closeMainModal.addEventListener('click', () => this.closeModal());
+        }
+        
+        // Close modal buttons for details modal
+        const closeDetailsModal = document.getElementById('closetransactiondetailsmodal');
+        const closeDetailsBtn = document.getElementById('closeDetailsBtn');
+        
+        if (closeDetailsModal) {
+            closeDetailsModal.addEventListener('click', () => this.closeDetailsModal());
+        }
+        
+        if (closeDetailsBtn) {
+            closeDetailsBtn.addEventListener('click', () => this.closeDetailsModal());
+        }
+        
+        // Close modal when clicking outside - Main Modal
+        this.modal.addEventListener('click', (e) => {
+            if (e.target === this.modal) {
+                this.closeModal();
+            }
+        });
+        
+        // Close modal when clicking outside - Details Modal
+        this.detailsModal.addEventListener('click', (e) => {
+            if (e.target === this.detailsModal) {
+                this.closeDetailsModal();
+            }
+        });
+        
+        // Escape key to close modals
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                if (this.detailsModal.style.display === 'block') {
+                    this.closeDetailsModal();
+                } else if (this.modal.style.display === 'block') {
+                    this.closeModal();
+                }
+            }
+        });
+    }
+    
+    setupScrolling() {
+        // Prevent background scrolling when modal is open
+        [this.modal, this.detailsModal].forEach(modal => {
+            modal.addEventListener('wheel', (e) => {
+                e.stopPropagation();
+            });
+            
+            // Handle touch scrolling on mobile
+            let startY = 0;
+            
+            modal.addEventListener('touchstart', (e) => {
+                startY = e.touches[0].clientY;
+            }, { passive: true });
+            
+            modal.addEventListener('touchmove', (e) => {
+                const currentY = e.touches[0].clientY;
+                const scrollTop = modal.scrollTop;
+                const scrollHeight = modal.scrollHeight;
+                const clientHeight = modal.clientHeight;
+                
+                // Prevent overscroll
+                if (scrollTop === 0 && currentY > startY) {
+                    e.preventDefault();
+                }
+                
+                if (scrollTop >= scrollHeight - clientHeight && currentY < startY) {
+                    e.preventDefault();
+                }
+            }, { passive: false });
+            
+            // Smooth scrolling for modal content
+            modal.style.scrollBehavior = 'smooth';
+        });
+        
+        // Handle table horizontal scrolling on mobile
+        const tableContainer = document.querySelector('.transaction-table-container');
+        if (tableContainer) {
+            let isScrolling = false;
+            
+            tableContainer.addEventListener('touchstart', () => {
+                isScrolling = false;
+            });
+            
+            tableContainer.addEventListener('touchmove', () => {
+                isScrolling = true;
+            });
+            
+            tableContainer.addEventListener('touchend', () => {
+                setTimeout(() => {
+                    isScrolling = false;
+                }, 100);
+            });
+            
+            // Prevent modal close when scrolling table
+            tableContainer.addEventListener('click', (e) => {
+                if (isScrolling) {
+                    e.stopPropagation();
+                }
+            });
+        }
+    }
+    
+    openModal() {
+        this.modal.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+        
+        // Reset scroll position
+        this.modal.scrollTop = 0;
+        
+        // Focus management for accessibility
+        setTimeout(() => {
+            const firstFocusable = this.modal.querySelector('button, input, select, textarea, [tabindex]:not([tabindex="-1"])');
+            if (firstFocusable) {
+                firstFocusable.focus();
+            }
+        }, 100);
+    }
+    
+    closeModal() {
+        this.modal.style.display = 'none';
+        document.body.style.overflow = '';
+        
+        // Also close details modal if open
+        if (this.detailsModal.style.display === 'block') {
+            this.closeDetailsModal();
+        }
+        
+        // Return focus to trigger element if available
+        const triggerElement = document.querySelector('[data-transaction-trigger]');
+        if (triggerElement) {
+            triggerElement.focus();
+        }
+    }
+    
+    openDetailsModal() {
+        this.detailsModal.style.display = 'block';
+        
+        // Reset scroll position
+        this.detailsModal.scrollTop = 0;
+        
+        // Focus management for accessibility
+        setTimeout(() => {
+            const firstFocusable = this.detailsModal.querySelector('button, input, select, textarea, [tabindex]:not([tabindex="-1"])');
+            if (firstFocusable) {
+                firstFocusable.focus();
+            }
+        }, 100);
+    }
+    
+    closeDetailsModal() {
+        this.detailsModal.style.display = 'none';
+        
+        // Return focus to main modal
+        setTimeout(() => {
+            const focusTarget = this.modal.querySelector('.close-modal');
+            if (focusTarget) {
+                focusTarget.focus();
+            }
+        }, 100);
+    }
+    
+    // Handle responsive table scrolling
+    handleTableScroll() {
+        const table = document.querySelector('.transaction-table');
+        const container = document.querySelector('.transaction-table-container');
+        
+        if (table && container) {
+            const tableWidth = table.offsetWidth;
+            const containerWidth = container.offsetWidth;
+            
+            if (tableWidth > containerWidth) {
+                container.style.overflowX = 'auto';
+                container.style.webkitOverflowScrolling = 'touch';
+            } else {
+                container.style.overflowX = 'visible';
+            }
+        }
+    }
+}
+
+// Initialize the transaction modal
+document.addEventListener('DOMContentLoaded', () => {
+    const transactionModal = new TransactionModal();
+    
+    // Make it globally accessible for opening
+    window.openTransactionModal = () => transactionModal.openModal();
+    window.closeTransactionModal = () => transactionModal.closeModal();
+    window.openTransactionDetails = () => transactionModal.openDetailsModal();
+    window.closeTransactionDetails = () => transactionModal.closeDetailsModal();
+    
+    // Handle window resize for responsive table
+    window.addEventListener('resize', () => {
+        transactionModal.handleTableScroll();
+    });
+    
+    // Initial table scroll setup
+    transactionModal.handleTableScroll();
+});
+
+// Handle browser back button
+window.addEventListener('popstate', () => {
+    const mainModal = document.getElementById('transactionHistoryModal');
+    const detailsModal = document.getElementById('transactionDetailsModal');
+    
+    if (detailsModal && detailsModal.style.display === 'block') {
+        window.closeTransactionDetails();
+    } else if (mainModal && mainModal.style.display === 'block') {
+        window.closeTransactionModal();
+    }
+});
+
+// Handle orientation change on mobile
+window.addEventListener('orientationchange', () => {
+    setTimeout(() => {
+        const transactionModal = new TransactionModal();
+        transactionModal.handleTableScroll();
+    }, 100);
 });
 
 
