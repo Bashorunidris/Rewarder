@@ -4799,7 +4799,7 @@ color: #1f2937;
 
 /* Withdrawal Modal Base Styles */
 .withdrawmodal-screen
-.modal-screen  {
+ {
     display: none;
     position: fixed;
     top: 0;
@@ -4815,6 +4815,7 @@ color: #1f2937;
     box-sizing: border-box;
 }
 
+
 .withdrawmodal-screen.active 
 .modal-screen.active
 {
@@ -4827,7 +4828,7 @@ color: #1f2937;
 #withdrawFormScreen {
     background-color: #fff;
     border-radius: 12px;
-    max-width: 500px;
+    padding: 20px;
     width: 100%;
     max-height: 90vh;
     overflow-y: auto;
@@ -4876,7 +4877,57 @@ rgb(81, 67, 55)rgb(81, 61, 55)rgb(81, 58, 55)rgb(184, 50, 32);
 /* Form Content */
 .withdraw-form-content {
     padding: 24px;
+    width:100%;
 }
+
+.withdraw-balance-container {
+    background: #1a1a2e;
+    width: 100%;
+    max-width: 480px;
+    height: 140px;
+    margin: 0 auto;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+/* Tablet styles */
+@media (max-width: 768px) {
+    .withdraw-balance-container {
+        max-width: 100%;
+        height: 120px;
+        margin: 0 10px;
+        width: calc(100% - 20px);
+    }
+}
+
+/* Mobile styles */
+@media (max-width: 480px) {
+    .withdraw-balance-container {
+        height: 100px;
+        margin: 0 15px;
+        width: calc(100% - 30px);
+        border-radius: 6px;
+    }
+}
+
+/* Small mobile styles */
+@media (max-width: 360px) {
+    .withdraw-balance-container {
+        height: 90px;
+        margin: 0 10px;
+        width: calc(100% - 20px);
+    }
+}
+
+/* Large screens */
+@media (min-width: 1200px) {
+    .withdraw-balance-container {
+        max-width: 520px;
+        height: 150px;
+    }
+}
+
+
 
 /* Balance Info - Compact Version */
 .withdraw-balance-info {
@@ -4999,17 +5050,189 @@ rgb(81, 67, 55)rgb(81, 61, 55)rgb(81, 58, 55)rgb(184, 50, 32);
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
+    max-width: 480px;
+    height: 60px;
+    box-sizing: border-box;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .withdraw-amount-preview span:first-child {
     color: #0369a1;
     font-weight: 500;
+    font-size: 1rem;
 }
 
 .withdraw-amount-preview span:last-child {
     color: #0c4a6e;
     font-weight: 600;
     font-size: 1.1rem;
+}
+
+/* Tablet styles */
+@media (max-width: 768px) {
+    .withdraw-amount-preview {
+        max-width: 100%;
+        height: 55px;
+        padding: 10px 14px;
+        margin-bottom: 18px;
+        border-radius: 6px;
+    }
+    
+    .withdraw-amount-preview span:first-child {
+        font-size: 0.95rem;
+    }
+    
+    .withdraw-amount-preview span:last-child {
+        font-size: 1.05rem;
+    }
+}
+
+/* Mobile styles */
+@media (max-width: 480px) {
+    .withdraw-amount-preview {
+        height: 50px;
+        padding: 8px 12px;
+        margin-bottom: 16px;
+        flex-direction: column;
+        justify-content: center;
+        gap: 2px;
+    }
+    
+    .withdraw-amount-preview span:first-child {
+        font-size: 0.85rem;
+    }
+    
+    .withdraw-amount-preview span:last-child {
+        font-size: 1rem;
+    }
+}
+
+/* Small mobile styles */
+@media (max-width: 360px) {
+    .withdraw-amount-preview {
+        height: 45px;
+        padding: 6px 10px;
+        margin-bottom: 14px;
+    }
+    
+    .withdraw-amount-preview span:first-child {
+        font-size: 0.8rem;
+    }
+    
+    .withdraw-amount-preview span:last-child {
+        font-size: 0.95rem;
+    }
+}
+
+/* Large screens */
+@media (min-width: 1200px) {
+    .withdraw-amount-preview {
+        max-width: 520px;
+        height: 65px;
+        padding: 14px 18px;
+    }
+    
+    .withdraw-amount-preview span:first-child {
+        font-size: 1.05rem;
+    }
+    
+    .withdraw-amount-preview span:last-child {
+        font-size: 1.15rem;
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    .withdraw-amount-preview {
+        background-color: #1e3a8a;
+        border-color: #3b82f6;
+    }
+    
+    .withdraw-amount-preview span:first-child {
+        color: #93c5fd;
+    }
+    
+    .withdraw-amount-preview span:last-child {
+        color: #dbeafe;
+    }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+    .withdraw-amount-preview {
+        border-width: 2px;
+        border-color: #0369a1;
+    }
+    
+    .withdraw-amount-preview span:first-child {
+        color: #1e40af;
+    }
+    
+    .withdraw-amount-preview span:last-child {
+        color: #1e3a8a;
+    }
+}
+
+/* Container wrapper if needed */
+.withdraw-amount-preview-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 0 15px;
+    box-sizing: border-box;
+}
+
+/* Animation for value changes */
+.withdraw-amount-preview span:last-child {
+    transition: all 0.3s ease;
+}
+
+.withdraw-amount-preview span:last-child.updated {
+    animation: highlight 0.5s ease-in-out;
+}
+
+@keyframes highlight {
+    0% {
+        transform: scale(1);
+        color: #0c4a6e;
+    }
+    50% {
+        transform: scale(1.05);
+        color: #1e40af;
+    }
+    100% {
+        transform: scale(1);
+        color: #0c4a6e;
+    }
+}
+
+/* Loading state */
+.withdraw-amount-preview.loading span:last-child::after {
+    content: '...';
+    animation: dots 1.5s infinite;
+}
+
+@keyframes dots {
+    0%, 20% {
+        color: rgba(12, 74, 110, 0.4);
+        text-shadow: 0.25em 0 0 rgba(12, 74, 110, 0.4),
+                     0.5em 0 0 rgba(12, 74, 110, 0.4);
+    }
+    40% {
+        color: #0c4a6e;
+        text-shadow: 0.25em 0 0 rgba(12, 74, 110, 0.4),
+                     0.5em 0 0 rgba(12, 74, 110, 0.4);
+    }
+    60% {
+        text-shadow: 0.25em 0 0 #0c4a6e,
+                     0.5em 0 0 rgba(12, 74, 110, 0.4);
+    }
+    80%, 100% {
+        text-shadow: 0.25em 0 0 #0c4a6e,
+                     0.5em 0 0 #0c4a6e;
+    }
 }
 
 /* Account Verification */
@@ -5020,7 +5243,7 @@ rgb(81, 67, 55)rgb(81, 61, 55)rgb(81, 58, 55)rgb(184, 50, 32);
 #verifyAccountBtn {
     position: absolute;
     right: 8px;
-    top: 32px;
+    top: -60px;
     padding: 6px 12px;
     font-size: 0.8rem;
 }
@@ -5032,6 +5255,7 @@ rgb(81, 67, 55)rgb(81, 61, 55)rgb(81, 58, 55)rgb(184, 50, 32);
     border-radius: 8px;
     padding: 16px;
     margin-bottom: 24px;
+    color:#333;
 }
 
 .withdraw-summary-row {
@@ -10713,7 +10937,7 @@ input:checked + .toggle-slider:before {
 <div id="withdrawModal" class="withdraw-modal">
     <div class="withdraw-modal-content">
         <!-- PIN Verification Screen -->
-        <div id="pinVerificationScreen" class="modal-screen active">
+        <div id="pinVerificationScreen" class="pinmodal-screen active">
             <div class="withdraw-modal-header">
                 <h2>Verify PIN</h2>    
                  <button class="close-withdraw-modal" id="closewithdrawmodal">&times;</button>
@@ -10747,8 +10971,9 @@ input:checked + .toggle-slider:before {
              
             </div>
             <div class="withdraw-form-content">
-                <div class="withdraw-balance-info">
-                    <div class="balance-item">
+              <div class="withdraw-balance-container">
+       
+                    <div class="balance-item">
                         <span class="balance-label">Talent Coin Balance:</span>
                         <span class="balance-value" id="talentcoinBalance">0 TC</span>
                     </div>
@@ -10757,6 +10982,7 @@ input:checked + .toggle-slider:before {
                         <span class="balance-value" id="nairaEquivalent">₦0</span>
                     </div>
                 </div>
+
                 
                 <form id="withdrawForm">
                     <div class="withdraw-form-group">
