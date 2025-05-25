@@ -38,11 +38,12 @@
         align-items: center;
         justify-content: center;
         padding: 20px;
+         background-color: #1a1a2e;
     }
     
     .split-screen {
         display: flex;
-        background-color: var(--white);
+        background-color: #1a1a2e;
         border-radius: 20px;
         overflow: hidden;
         box-shadow: var(--box-shadow);
@@ -147,8 +148,9 @@
     
     .auth-container {
         width: 100%;
-        max-width: 400px;
+        max-width: 1200px;
         transition: all 0.3s ease;
+        background-color: #1a1a2e;
     }
     
     .auth-container.hidden {
@@ -160,6 +162,7 @@
         font-weight: 600;
         margin-bottom: 10px;
         color: var(--text-color);
+        
     }
     
     .auth-container > p {
@@ -610,7 +613,7 @@
             --background-color: #1a1a2e;
             --text-color: #e6e6e6;
             --light-text: #a7a7a7;
-            --white: #222236;
+            --white:#1a1a2e:
             --border-color: #393954;
         }
         
@@ -1318,7 +1321,7 @@ body {
 .action-btn span {
     font-weight: 500;
     font-size: 0.8rem;
-    color: var(--text-color);
+    color: #333;
     text-align: center;
     white-space: nowrap;
 }
@@ -1357,7 +1360,7 @@ body {
 }
 
 .action-btn.Game-btn span {
-  color: #fff;
+  color: #333;
   font-size: 14px;
   font-weight: 500;
   letter-spacing: 0.5px;
@@ -1444,6 +1447,7 @@ body {
     flex: 1;
     position: relative;
     overflow: hidden;
+
 }
 
 .action-btn.rewarder-btn:active {
@@ -1529,7 +1533,7 @@ body {
 .action-btn.rewarder-btn span {
     font-weight: 500;
     font-size: 0.8rem;
-    color: var(--text-color);
+    color: #333;
     text-align: center;
     white-space: nowrap;
     position: relative;
@@ -2292,7 +2296,7 @@ body {
     left: -300px;
     width: 280px;
     height: 100%;
-    background-color: var(--sidebar-bg);
+    background-color: #333;
     z-index: 1000;
     transition: left 0.3s ease;
     box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
@@ -2313,12 +2317,14 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    background-color: var(--sidebar-bg);
 }
 
 .sidebar-user-info {
     display: flex;
     align-items: center;
     gap: 12px;
+    color: var(--sidebar-text);
 }
 
 .user-avatar {
@@ -2340,13 +2346,13 @@ body {
 .user-name {
     font-weight: 600;
     font-size: 16px;
-    color: var(--sidebar-text);
+    color: #1a1a2e;
 }
 
 .user-email {
     font-size: 12px;
-    color: var(--sidebar-text);
-    opacity: 0.8;
+  opacity: 0.8;
+  color: #1a1a2e;
 }
 
 .close-sidebar {
@@ -2378,9 +2384,9 @@ body {
     display: flex;
     align-items: center;
     padding: 12px 20px;
-    color: var(--sidebar-text);
-    text-decoration: none;
+   text-decoration: none;
     transition: all 0.2s ease;
+    color: #1a1a2e;
 }
 
 .menu-item a:hover {
@@ -2394,7 +2400,7 @@ body {
 }
 
 .logout-btn {
-    color: #ff6b6b !important;
+   color: #1a1a2e !important;
 }
 
 /* Theme Toggle */
@@ -2491,7 +2497,7 @@ input:checked + .slider:before {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: var(--overlay-bg);
+    background-color: #ffffff;
     z-index: 999;
     display: none;
 }
@@ -2508,7 +2514,7 @@ input:checked + .slider:before {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: var(--overlay-bg);
+    background-color: #ffffff;
     z-index: 1001;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
@@ -2521,8 +2527,7 @@ input:checked + .slider:before {
 }
 
 .modal-content {
-    background-color: var(--modal-bg);
-    width: 90%;
+   width: 90%;
     max-width: 600px;
     margin: 20px auto;
     border-radius: 12px;
@@ -2537,6 +2542,7 @@ input:checked + .slider:before {
     align-items: center;
     padding: 16px 20px;
     border-bottom: 1px solid var(--modal-border);
+    color: #1a1a2e;
 }
 
 .modal-header h2 {
@@ -2558,7 +2564,7 @@ input:checked + .slider:before {
 
 .modal-body {
     padding: 20px;
-    color: var(--modal-text);
+    color: #1a1a2e;
     max-height: 70vh;
     overflow-y: auto;
 }
@@ -9827,12 +9833,7 @@ input:checked + .toggle-slider:before {
                 </div>
                 <span>Rewarder</span>
             </div>
-            <div class="action-btn notification-btn">
-                <div class="action-icon">
-                    <i class="fas fa-bell"></i>
-                </div>
-                <span>Alerts</span>
-            </div>
+           
         </div>
     </div>
   
@@ -9851,7 +9852,10 @@ input:checked + .toggle-slider:before {
     <div class="profile-modal-content">
         <div class="profile-modal-header">
             <h2>My Profile</h2>
-            <button class="close-profile">&times;</button>
+               
+            
+             <button class="close-profile">&times;</button>
+            
         </div>
         
        
@@ -9894,9 +9898,17 @@ input:checked + .toggle-slider:before {
                     <label for="profileBio">Bio</label>
                     <textarea id="profileBio" placeholder="Tell us about yourself" rows="3"></textarea>
                 </div>
+                  <div class="form-group">
                 
+                <a href="#" id="logoutBtn" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+                </div>
+
                 <div class="profile-actions">
                     <button type="button" id="changePasswordBtn" class="secondary-btn">Change Password</button>
+                    
                     <button type="submit" id="saveProfileBtn" class="primary-btn">Save Changes</button>
                 </div>
             </form>
@@ -9972,18 +9984,7 @@ input:checked + .toggle-slider:before {
                 </a>
             </li>
             
-            <li class="menu-item theme-toggle">
-                <div class="theme-switch-wrapper">
-                    <span>
-                        <i class="fas fa-sun"></i>
-                        <span>Theme</span>
-                    </span>
-                    <label class="theme-switch" for="themeCheckbox">
-                        <input type="checkbox" id="themeCheckbox">
-                        <div class="slider round"></div>
-                    </label>
-                </div>
-            </li>
+          
             
             <li class="menu-item">
                 <a href="#" id="termsBtn">
@@ -9999,12 +10000,7 @@ input:checked + .toggle-slider:before {
                 </a>
             </li>
             
-            <li class="menu-item">
-                <a href="#" id="logoutBtn" class="logout-btn">
-                    <i class="fas fa-sign-out-alt"></i>
-                    <span>Logout</span>
-                </a>
-            </li>
+            
         </ul>
     </div>
     
@@ -10052,7 +10048,7 @@ input:checked + .toggle-slider:before {
     <div class="modal-content">
         <div class="modal-header">
             <h2>Privacy Policy</h2>
-            <button class="close-modal">&times;</button>
+            <button class="close-privacy">&times;</button>
         </div>
         <div class="modal-body">
             <div class="privacy-content">
