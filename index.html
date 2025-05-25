@@ -15864,6 +15864,96 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
+ // Mobile Modal Scroll Fix - Scrolling and Closing Only
+function openBuyCoinsModal() {
+  const modal = document.getElementById('buyCoinsModal');
+  modal.style.display = 'block';
+  
+  // Scroll to top of modal
+  modal.scrollTop = 0;
+  
+  // For mobile devices, prevent body scroll
+  if (window.innerWidth <= 768) {
+    document.body.style.overflow = 'hidden';
+    document.body.style.position = 'fixed';
+    document.body.style.width = '100%';
+    document.body.style.top = `-${window.scrollY}px`;
+  }
+}
+
+function closeBuyCoinsModal() {
+  const modal = document.getElementById('buyCoinsModal');
+  modal.style.display = 'none';
+  
+  // Restore body scroll on mobile
+  if (window.innerWidth <= 768) {
+    const scrollY = document.body.style.top;
+    document.body.style.overflow = '';
+    document.body.style.position = '';
+    document.body.style.width = '';
+    document.body.style.top = '';
+    window.scrollTo(0, parseInt(scrollY || '0') * -1);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  const modal = document.getElementById('buyCoinsModal');
+  const modalContent = document.querySelector('.modal-content');
+  
+  if (modal && modalContent) {
+    // Prevent modal from closing when touching content
+    modalContent.addEventListener('touchstart', function(e) {
+      e.stopPropagation();
+    });
+    
+    modalContent.addEventListener('touchmove', function(e) {
+      e.stopPropagation();
+    });
+    
+    // Close modal when touching backdrop
+    modal.addEventListener('touchstart', function(e) {
+      if (e.target === modal) {
+        closeBuyCoinsModal();
+      }
+    });
+    
+    // Close modal when clicking backdrop
+    modal.addEventListener('click', function(e) {
+      if (e.target === modal) {
+        closeBuyCoinsModal();
+      }
+    });
+    
+    // Resize handler for orientation changes
+    window.addEventListener('orientationchange', function() {
+      setTimeout(function() {
+        if (modal.style.display === 'block') {
+          modal.scrollTop = 0;
+        }
+      }, 100);
+    });
+  }
+  
+  // Close button event listeners
+  const closeButtons = document.querySelectorAll('.close-modal, #closeModalBtn');
+  closeButtons.forEach(function(btn) {
+    btn.addEventListener('click', closeBuyCoinsModal);
+  });
+});
+
+// Handle escape key for closing
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    const modal = document.getElementById('buyCoinsModal');
+    if (modal && modal.style.display === 'block') {
+      closeBuyCoinsModal();
+    }
+  }
+});
+
+// Export functions for global use
+window.openBuyCoinsModal = openBuyCoinsModal;
+window.closeBuyCoinsModal = closeBuyCoinsModal;
 
 
 document.addEventListener('DOMContentLoaded', function() {
