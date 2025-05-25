@@ -1318,7 +1318,7 @@ body {
 .action-btn span {
     font-weight: 500;
     font-size: 0.8rem;
-    color: var(--text-color);
+    color: #333;
     text-align: center;
     white-space: nowrap;
 }
@@ -1357,7 +1357,7 @@ body {
 }
 
 .action-btn.Game-btn span {
-  color: #fff;
+  color: #333;
   font-size: 14px;
   font-weight: 500;
   letter-spacing: 0.5px;
@@ -1529,7 +1529,7 @@ body {
 .action-btn.rewarder-btn span {
     font-weight: 500;
     font-size: 0.8rem;
-    color: var(--text-color);
+    color: #333;
     text-align: center;
     white-space: nowrap;
     position: relative;
@@ -1698,7 +1698,7 @@ body {
 .action-btn.wallet-btn span {
     font-weight: 500;
     font-size: 0.8rem;
-    color: var(--text-color);
+    color: ;
     text-align: center;
     white-space: nowrap;
     position: relative;
@@ -2520,24 +2520,6 @@ input:checked + .slider:before {
     align-items: flex-start;
 }
 
-.modal-content {
-    background-color: var(--modal-bg);
-    width: 90%;
-    max-width: 600px;
-    margin: 20px auto;
-    border-radius: 12px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-    overflow: hidden;
-    animation: modalFadeIn 0.3s ease;
-}
-
-.modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 16px 20px;
-    border-bottom: 1px solid var(--modal-border);
-}
 
 .modal-header h2 {
     margin: 0;
@@ -2602,7 +2584,7 @@ input:checked + .slider:before {
     }
     
     .modal-content {
-        width: 95%;
+        width: 100%;
         margin: 10px auto;
     }
     
@@ -3052,6 +3034,544 @@ body {
 }
 
 
+/* Buy Coins Button */
+.buy-coin-btn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: background-color 0.3s;
+}
+
+.buy-coin-btn:hover {
+  background-color: #45a049;
+}
+
+/* Modal Styles */
+.buy-coins-modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 15% auto;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    width: 90%;
+    max-width: 500px;
+    animation: modalFadeIn 0.3s ease;
+}
+
+@keyframes modalFadeIn {
+  from {opacity: 0; transform: translateY(-20px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #e9ecef;
+  border-radius: 8px 8px 0 0;
+}
+
+.modal-header h2 {
+  margin: 0;
+  color: #333;
+  font-size: 1.5rem;
+}
+
+.close-modal {
+  color: #aaa;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.close-modal:hover {
+  color: #333;
+}
+
+/* Tab Navigation */
+.modal-tabs {
+  display: flex;
+  border-bottom: 1px solid #e9ecef;
+  background-color: #f8f9fa;
+}
+
+.tab-btn {
+  flex: 1;
+  background-color: transparent;
+  border: none;
+  padding: 15px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #6c757d;
+  cursor: pointer;
+  transition: all 0.3s;
+  position: relative;
+}
+
+.tab-btn:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 3px;
+  background-color: #4CAF50;
+  transition: width 0.3s;
+}
+
+.tab-btn.active {
+  color: #4CAF50;
+}
+
+.tab-btn.active:after {
+  width: 100%;
+}
+
+.tab-btn:hover {
+  background-color: #f1f3f5;
+}
+
+/* Tab Content */
+.tab-content {
+  display: none;
+  padding: 20px;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+/* Buy Coins Tab */
+.coin-purchase-form {
+  padding: 10px 0;
+}
+
+.coin-rate-info {
+  background-color: #f8f9fa;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  font-weight: 600;
+  color: #495057;
+  text-align: center;
+}
+
+.coin-packages {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.package-option {
+  display: flex;
+  align-items: center;
+  padding: 12px 15px;
+  border: 1px solid #e9ecef;
+  border-radius: 6px;
+  transition: all 0.3s;
+  position: relative;
+}
+
+.package-option:hover {
+  border-color: #4CAF50;
+  background-color: #f1f8e9;
+}
+
+.package-option input[type="radio"] {
+  margin-right: 15px;
+  accent-color: #4CAF50;
+}
+
+.package-option label {
+  flex: 1;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.price {
+  font-weight: 600;
+  color: #495057;
+  margin-right: 10px;
+}
+
+.bonus-tag {
+  background-color: #4CAF50;
+  color: white;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.summary-section {
+  background-color: #f8f9fa;
+  padding: 15px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.summary-row:last-child {
+  border-bottom: none;
+  font-weight: 600;
+}
+
+.btn {
+  display: inline-block;
+  font-weight: 600;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  user-select: none;
+  border: 1px solid transparent;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 0.25rem;
+  transition: all 0.15s ease-in-out;
+  cursor: pointer;
+  width: 100%;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.btn-primary:hover {
+  background-color: #0069d9;
+  border-color: #0062cc;
+}
+
+.btn-success {
+  color: #fff;
+  background-color: #4CAF50;
+  border-color: #4CAF50;
+}
+.btn-success:hover {
+  background-color: #45a049;
+  border-color: #39843c;
+}
+
+.btn-secondary {
+  color: #fff;
+  background-color: #6c757d;
+  border-color: #6c757d;
+}
+
+.btn-secondary:hover {
+  background-color: #5a6268;
+  border-color: #545b62;
+}
+
+/* Payment Instructions */
+.payment-instructions {
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 6px;
+  margin-top: 20px;
+}
+
+.payment-instructions.hidden {
+  display: none;
+}
+
+.account-details {
+  background-color: white;
+  border: 1px solid #e9ecef;
+  border-radius: 6px;
+  padding: 15px;
+  margin: 15px 0;
+}
+
+.detail-row {
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #f1f3f5;
+}
+
+.detail-row:last-child {
+  border-bottom: none;
+}
+
+.detail-label {
+  font-weight: 600;
+  width: 40%;
+  color: #495057;
+}
+
+.detail-value {
+  flex: 1;
+}
+
+.copy-btn {
+  background-color: #e9ecef;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  margin-left: 10px;
+  transition: background-color 0.3s;
+}
+
+.copy-btn:hover {
+  background-color: #dee2e6;
+}
+
+.instruction-note {
+  background-color: #fff3cd;
+  border-left: 4px solid #ffc107;
+  padding: 10px 15px;
+  margin: 15px 0;
+  color: #856404;
+}
+
+.tab-nav-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  width: 100%;
+  margin-top: 15px;
+  transition: background-color 0.3s;
+}
+
+.tab-nav-btn:hover {
+  background-color: #0069d9;
+}
+
+/* Confirm Payment Tab */
+.payment-confirmation-form {
+  padding: 10px 0;
+}
+
+.confirmation-info {
+  margin-bottom: 20px;
+  color: #495057;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+  color: #495057;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 16px;
+  transition: border-color 0.3s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: #4CAF50;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+}
+
+.verification-notice {
+  background-color: #e8f5e9;
+  border-left: 4px solid #4CAF50;
+  padding: 10px 15px;
+  margin: 20px 0;
+  color: #2e7d32;
+}
+
+/* Confirmation Success Popup Styles */
+.confirmation-success {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  padding: 30px;
+  text-align: center;
+  max-width: 500px;
+  width: 90%;
+  z-index: 1000;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.hidden {
+  display: none;
+  opacity: 0;
+  transform: translate(-50%, -60%);
+}
+
+.success-icon {
+  margin-bottom: 20px;
+}
+
+.success-icon i {
+  font-size: 60px;
+  color: #28a745;
+}
+
+.confirmation-success h3 {
+  color: #333;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.confirmation-success p {
+  color: #666;
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+
+.pending-info {
+  background-color: #f8f9fa;
+  border-radius: 6px;
+  padding: 15px;
+  margin: 20px 0;
+  border-left: 4px solid #17a2b8;
+}
+
+.pending-info p {
+  margin: 5px 0;
+  font-size: 0.95em;
+}
+
+#closeModalBtn {
+  margin-top: 15px;
+  padding: 10px 25px;
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+#closeModalBtn:hover {
+  background-color: #5a6268;
+}
+
+/* Overlay background */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  display: none;
+}
+
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .modal-content {
+    width: 95%;
+    margin: 10% auto;
+  }
+  
+  .detail-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .detail-label {
+    width: 100%;
+    margin-bottom: 5px;
+  }
+  
+  .copy-btn {
+    margin-left: 0;
+    margin-top: 5px;
+  }
+}
+
+/* Animation for tab switching */
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+.tab-content.active {
+  animation: fadeIn 0.5s;
+}
+
+/* Highlight selected package */
+.package-option.selected {
+  border-color: #4CAF50;
+  background-color: #e8f5e9;
+  box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+}
+
+/* Loading state for buttons */
+.btn.loading {
+  position: relative;
+  color: transparent;
+  pointer-events: none;
+}
+
+.btn.loading:after {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  top: 50%;
+  left: 50%;
+  margin: -10px 0 0 -10px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: #fff;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.hidden {
+  display: none !important;
+} 
 
 .wallet-action-card:hover:after {
   transform: scaleX(1);
@@ -3092,6 +3612,31 @@ body {
   font-size: 0.95rem;
 }
 
+.bonus-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.bonus-list li {
+  position: relative;
+  padding-left: 20px;
+  margin-bottom: 8px;
+  font-size: 0.85rem;
+  color: #4caf50;
+}
+
+.bonus-list li:before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: #4caf50;
+  font-weight: bold;
+}
+
+.bonus-list li:last-child {
+  margin-bottom: 0;
+}
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
@@ -3650,1643 +4195,185 @@ button,
 
 
 
-/* Buy Coins Modal Styles - Cleaned Version */
-.buy-coins-modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.8);
-  z-index: 2000;
-  display: none;
-  animation: fadeIn 0.3s ease-in-out;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
+
+/* Transaction History Styles */
+.transaction-history {
+    margin-top: 20px;
+    background-color: #1a1a2e;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
-.buyCoins-modal-content {
-  position: relative;
-  width: 90%;
-  max-width: 800px;
-  min-height: 90vh;
-  margin: 2rem auto;
-  background-color: #fff;
-  border-radius: 8px;
-  overflow: visible;
-  display: flex;
-  flex-direction: column;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
-  animation: slideInUp 0.3s ease-out;
+.transaction-history h3 {
+    font-size: 16px;
+    margin-bottom: 15px;
+    color:  #333;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
-.buyCoins-modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1.5rem 2rem;
-  background-color: #1a1a2e;
-  color: white;
-  flex-shrink: 0;
-}
-
-.buyCoins-modal-header h2 {
-  margin: 0;
-  font-size: 1.5rem;
-  font-weight: 600;
-}
-
-.close-buycoins {
-  background: none;
-  border: none;
-  color: white;
-  font-size: 2rem;
-  cursor: pointer;
-  transition: color 0.2s;
-  padding: 0;
-  width: 48px;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  touch-action: manipulation;
-}
-
-.close-buycoins:hover {
-  color: #e74c3c;
-}
-
-.close-buycoins:focus {
-  outline: 2px solid #473ce7;
-  outline-offset: 2px;
-}
-
-/* Modal Tabs */
-.buyCoins-modal-tabs {
-  display: flex;
-  background-color: #2c3e50;
-  border-bottom: 1px solid #34495e;
-  flex-shrink: 0;
-}
-
-.buyCoins-tab-btn {
-  flex: 1;
-  padding: 1rem 1.5rem;
-  background-color: transparent;
-  color: #bdc3c7;
-  border: none;
-  cursor: pointer;
-  font-size: 1rem;
-  font-weight: 500;
-  transition: all 0.3s;
-  min-height: 48px;
-  touch-action: manipulation;
-}
-
-.buyCoins-tab-btn.active {
-  background-color: #3f3ce7;
-  color: white;
-}
-
-.buyCoins-tab-btn:hover {
-  background-color: #34495e;
-  color: white;
-}
-
-.buyCoins-tab-btn:focus {
-  outline: 2px solid #473ce7;
-  outline-offset: -2px;
-}
-
-/* Tab Content */
-.buyCoins-tab-content {
-  display: none;
-  padding: 2rem;
-  width: 100%;
-}
-
-.buyCoins-tab-content.active {
-  display: block;
-}
-
-/* Coin Purchase Form */
-.coin-purchase-form h3 {
-  margin: 0 0 1rem 0;
-  color: #2c3e50;
-  font-size: 1.3rem;
-}
-
-.coin-rate-info {
-  background-color: #e8f4fd;
-  color: #2980b9;
-  padding: 0.8rem 1rem;
-  border-radius: 6px;
-  margin-bottom: 1.5rem;
-  font-weight: 500;
-  border-left: 4px solid #3498db;
-}
-
-/* Coin Packages */
-.coin-packages {
-  display: grid;
-  gap: 1rem;
-  margin-bottom: 2rem;
-}
-
-.buyCoins-package-option {
-  display: flex;
-  align-items: center;
-  padding: 1rem 1.2rem;
-  border: 2px solid #ecf0f1;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.3s;
-  position: relative;
-  background-color: #fff;
-  min-height: 60px;
-  touch-action: manipulation;
-}
-
-.buyCoins-package-option:hover {
-  border-color: #3498db;
-  box-shadow: 0 2px 8px rgba(52, 152, 219, 0.1);
-}
-
-.buyCoins-package-option input[type="radio"] {
-  margin-right: 1rem;
-  transform: scale(1.2);
-  accent-color: #3498db;
-}
-
-.buyCoins-package-option:has(input:checked) {
-  border-color: #3498db;
-  background-color: #f8fcff;
-  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.15);
-}
-
-.buyCoins-package-option label {
-  flex: 1;
-  cursor: pointer;
-  font-size: 1rem;
-  color: #2c3e50;
-  margin: 0;
-}
-
-.buyCoins-price {
-  font-weight: bold;
-  color: #27ae60;
-  font-size: 1.1rem;
-  margin-right: 0.5rem;
-}
-
-.buyCoins-bonus-tag {
-  background-color: #e74c3c;
-  color: white;
-  padding: 0.3rem 0.6rem;
-  border-radius: 12px;
-  font-size: 0.8rem;
-  font-weight: bold;
-  position: absolute;
-  right: 1rem;
-  top: -8px;
-}
-
-.instruction-note {
-  background-color: #d1ecf1;
-  color: #0c5460;
-  padding: 1rem;
-  border-radius: 6px;
-  margin-bottom: 1.5rem;
-  border-left: 4px solid #17a2b8;
-}
-
-/* Payment Confirmation Form */
-.payment-confirmation-form h3 {
-  margin: 0 0 1rem 0;
-  color: #2c3e50;
-  font-size: 1.3rem;
-}
-
-/* Summary Section */
-.buyCoins-summary-section {
-  background-color: #f8f9fa;
-  padding: 1.5rem;
-  border-radius: 8px;
-  margin-bottom: 1.5rem;
-  border: 1px solid #e9ecef;
-}
-
-.buyCoins-summary-row {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 0.8rem;
-  font-size: 1rem;
-}
-
-.buyCoins-summary-row:last-child {
-  margin-bottom: 0;
-  font-weight: bold;
-  font-size: 1.1rem;
-  color: #2c3e50;
-  border-top: 1px solid #dee2e6;
-  padding-top: 0.8rem;
-}
-
-/* Payment Instructions */
-.payment-instructions {
-  margin-top: 2rem;
-  padding: 1.5rem;
-  background-color: #fff3cd;
-  border: 1px solid #ffeaa7;
-  border-radius: 8px;
-}
-
-.payment-instructions h3 {
-  color: #856404;
-  margin: 0 0 1rem 0;
-}
-
-.account-details {
-  background-color: white;
-  padding: 1.5rem;
-  border-radius: 6px;
-  margin-bottom: 1.5rem;
-  border: 1px solid #f1c40f;
-}
-
-.buyCoins-detail-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1rem;
-  padding-bottom: 0.8rem;
-  border-bottom: 1px solid #ecf0f1;
-}
-
-.buyCoins-detail-row:last-child {
-  margin-bottom: 0;
-  border-bottom: none;
-  padding-bottom: 0;
-}
-
-.buyCoins-detail-label {
-  font-weight: 600;
-  color: #2c3e50;
-}
-
-.buyCoins-detail-value {
-  font-weight: bold;
-  color: #27ae60;
-  font-size: 1.1rem;
-}
-
-.buyCoins-copy-btn {
-  background-color: #3498db;
-  color: white;
-  border: none;
-  padding: 0.4rem 0.8rem;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  margin-left: 0.5rem;
-  transition: background-color 0.2s;
-  min-height: 36px;
-  touch-action: manipulation;
-}
-
-/* Form Styles */
-.buyCoins-form-group {
-  margin-bottom: 1.5rem;
-}
-
-.buyCoins-form-group label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: 600;
-  color: #2c3e50;
-}
-
-.buyCoins-form-group input {
-  width: 100%;
-  padding: 0.8rem 1rem;
-  border: 2px solid #ecf0f1;
-  border-radius: 6px;
-  font-size: 16px;
-  transition: border-color 0.3s;
-  box-sizing: border-box;
-}
-
-.buyCoins-form-group input:focus {
-  outline: none;
-  border-color: #3498db;
-  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
-}
-
-.buyCoins-confirmation-info {
-  color: #7f8c8d;
-  margin-bottom: 2rem;
-  line-height: 1.5;
-}
-
-.buyCoins-verification-notice {
-  background-color: #e8f5e8;
-  color: #155724;
-  padding: 1rem;
-  border-radius: 6px;
-  margin-bottom: 1.5rem;
-  border-left: 4px solid #28a745;
-}
-
-/* Confirmation Success */
-.confirmation-success {
-  text-align: center;
-  padding: 2rem;
-}
-
-.success-icon {
-  font-size: 4rem;
-  color: #28a745;
-  margin-bottom: 1rem;
-}
-
-.confirmation-success h3 {
-  color: #28a745;
-  margin-bottom: 1rem;
-  font-size: 1.5rem;
-}
-
-.confirmation-success p {
-  color: #6c757d;
-  margin-bottom: 1.5rem;
-  line-height: 1.5;
-}
-
-.pending-info {
-  background-color: #fff3cd;
-  color: #856404;
-  padding: 1.5rem;
-  border-radius: 8px;
-  margin-bottom: 2rem;
-  border: 1px solid #ffeaa7;
-}
-
-.pending-info span {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-/* Buttons */
-.btn {
-  padding: 0.8rem 2rem;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 1rem;
-  font-weight: 600;
-  transition: all 0.3s;
-  text-decoration: none;
-  display: inline-block;
-  text-align: center;
-  min-height: 48px;
-  touch-action: manipulation;
-}
-
-.btn-success {
-  background-color: #28a745;
-  color: white;
-}
-
-.btn-primary {
-  background-color: #3498db;
-  color: white;
-}
-
-.btn-secondary {
-  background-color: #6c757d;
-  color: white;
-}
-
-.tab-nav-btn {
-  background-color: #f39c12;
-  color: white;
-  padding: 0.8rem 1.5rem;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: 600;
-  transition: background-color 0.3s;
-  min-height: 48px;
-  touch-action: manipulation;
-}
-
-/* Utility Classes */
-.hidden {
-  display: none !important;
-}
-
-/* Animations */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes slideInUp {
-  from {
-    transform: translateY(50px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-/* Mobile Responsive */
-@media (max-width: 768px) {
-  .buy-coins-modal {
+.transaction-list {
+    max-height: 300px;
     overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-  
-  .buyCoins-modal-content {
-    width: 100%;
-    min-height: 100vh;
-    margin: 0;
-    border-radius: 0;
-    height: auto;
-  }
-  
-  .buyCoins-tab-content {
-    padding: 1rem;
-    overflow: visible;
-  }
-  
-  .buyCoins-modal-header {
-    padding: 1rem 1.5rem;
-  }
-  
-  .buyCoins-modal-header h2 {
-    font-size: 1.3rem;
-  }
-  
-  .buyCoins-package-option {
-    padding: 0.8rem 1rem;
-    flex-wrap: wrap;
-  }
-  
-  .buyCoins-bonus-tag {
-    position: static;
-    margin-top: 0.5rem;
-    align-self: flex-start;
-  }
-  
-  .buyCoins-detail-row {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.5rem;
-  }
-  
-  .buyCoins-copy-btn {
-    margin-left: 0;
-    margin-top: 0.5rem;
-  }
 }
 
-@media (max-width: 480px) {
-  .buyCoins-modal-tabs {
-    flex-direction: column;
-  }
-  
-  .buyCoins-tab-btn {
-    padding: 0.8rem 1rem;
-    font-size: 0.9rem;
-  }
-  
-  .buyCoins-tab-content {
-    padding: 1rem;
-    padding-bottom: 3rem;
-  }
-  
-  .coin-packages {
-    gap: 0.8rem;
-    margin-bottom: 3rem;
-  }
-  
-  .buyCoins-summary-section {
-    margin-bottom: 3rem;
-  }
-  
-   .btn {
-    margin-bottom: 2rem;
-    width: 100%;
-  }
-}
-
-/* iOS specific fixes */
-@supports (-webkit-appearance: none) {
-  .buy-coins-modal {
-    height: 100vh;
-    height: -webkit-fill-available;
-  }
-  
-  @media (max-width: 768px) {
-    .buyCoins-modal-content {
-      min-height: 100vh;
-      min-height: -webkit-fill-available;
-    }
-  }
-}
-
-/* Android Chrome specific fixes */
-@media screen and (max-width: 768px) {
-  .buy-coins-modal {
-    overflow-y: scroll !important;
-    -webkit-overflow-scrolling: touch !important;
-    overscroll-behavior: contain;
-  }
-  
-  .buyCoins-modal-content {
-    max-height: none !important;
-    height: auto !important;
-    overflow: visible !important;
-  }
-  
-  .buyCoins-tab-content {
-    overflow: visible !important;
-    height: auto !important;
-    max-height: none !important;
-  }
-}
-
-/* Prevent zoom on double tap */
-.buy-coins-modal * {
-  touch-action: manipulation;
-}
-
-/* Ensure proper touch scrolling */
-.buy-coins-modal {
-  scroll-behavior: smooth;
-}
-
-/* Fix for very small screens */
-@media (max-height: 500px) {
-  .buyCoins-modal-content {
-    margin: 0.5rem auto;
-    min-height: calc(100vh - 1rem);
-  }
-}
-
-/* Focus and Accessibility */
-.buyCoins-package-option:focus-within {
-  border-color: #3498db;
-  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
-}
-
-.btn:focus {
-  outline: 2px solid #2c3e50;
-  outline-offset: 2px;
-}
-
-.tab-nav-btn:focus {
-  outline: 2px solid #2c3e50;
-  outline-offset: 2px;
-}
-
-/* Loading States */
-.btn.loading {
-  opacity: 0.7;
-  cursor: not-allowed;
-  position: relative;
-}
-
-.btn.loading::after {
-  content: '';
-  position: absolute;
-  width: 16px;
-  height: 16px;
-  margin: auto;
-  border: 2px solid transparent;
-  border-top-color: currentColor;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-@keyframes spin {
-  0% { transform: translate(-50%, -50%) rotate(0deg); }
-  100% { transform: translate(-50%, -50%) rotate(360deg); }
-}
-
-/* Error States */
-.buyCoins-form-group.error input {
-  border-color: #e74c3c;
-  box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
-}
-
-.buyCoins-form-group .error-message {
-  color: #e74c3c;
-  font-size: 0.85rem;
-  margin-top: 0.5rem;
-  display: block;
-}
-
-/* Success States */
-.buyCoins-form-group.success input {
-  border-color: #28a745;
-  box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.1);
-}
-
-/* Copy Button Animation */
-.buyCoins-copy-btn.copied {
-  background-color: #28a745;
-  animation: pulse 0.3s ease-in-out;
-}
-
-@keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-  100% { transform: scale(1); }
-}
-
-/* Enhanced Package Selection Animation */
-.buyCoins-package-option {
-  transform: translateY(0);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.buyCoins-package-option:hover {
-  transform: translateY(-2px);
-}
-
-.buyCoins-package-option:has(input:checked) {
-  transform: translateY(-2px);
-  animation: selectPackage 0.4s ease-out;
-}
-
-@keyframes selectPackage {
-  0% {
-    transform: translateY(0) scale(1);
-  }
-  50% {
-    transform: translateY(-4px) scale(1.02);
-  }
-  100% {
-    transform: translateY(-2px) scale(1);
-  }
-}
-
-/* Reduced Motion Support */
-@media (prefers-reduced-motion: reduce) {
-  .buy-coins-modal,
-  .buyCoins-modal-content,
-  .buyCoins-package-option,
-  .btn {
-    animation: none;
-    transition: none;
-  }
-  
-  .buyCoins-package-option:hover,
-  .buyCoins-package-option:has(input:checked) {
-    transform: none;
-  }
-}
- 
-
-/* Withdraw Modal - Universal Mobile Responsive Styles */
-.withdraw-modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: #ffffff;
-  z-index: 2000;
-  display: none;
-  animation: fadeIn 0.3s ease-in-out;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
-  /* Prevent body scroll on mobile */
-  overscroll-behavior: contain;
-}
-
-.withdraw-modal-content {
-  position: relative;
-  width: 100%;
-  max-width: 100%;
-  min-height: 100vh;
-  margin: 0;
-  background-color: #1a1a2e;
-  border-radius: 0;
-  overflow: visible;
-  display: flex;
-  flex-direction: column;
-  box-shadow: none;
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
-  animation: slideInUp 0.3s ease-out;
-}
-
-
-/* PIN Verification Content */
-.pin-verification-content {
-   border-radius: 12px;
-    padding: 0 40px 40px;
-    text-align: center;
-    align-items: center;
-    max-width: 100%;
-    width: 100%;
-    min-height:100vh;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-    animation: slideIn 0.3s ease-out;
-}
-
-/* PIN Icon */
-.pin-icon {
-    font-size: 3rem;
-    color: #3b82f6;
-    margin-bottom: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 80px;
-    height: 80px;
-    background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 100%);
-    border-radius: 50%;
-    margin: 0 auto 20px;
-}
-
-.pin-verification-content h3 {
-    margin: 0 0 12px 0;
-    color: #f5f6f8;
-    font-size: 1.3rem;
-    font-weight: 600;
-}
-
-.pin-verification-content p {
-    margin: 0 0 32px 0;
-    color: #f2f2f3;
-    font-size: 0.95rem;
-    line-height: 1.5;
-}
-
-/* PIN Input Container */
-.pin-input-container {
-color: #1f2937;
-    background-color: #1a1a2e;
-    align-items:center;
-    justify-content: center;
-    gap: 12px;
-    margin-bottom: 24px;
-}
-
-.pin-digit {
-    width: 50px;
-    height: 50px;
-    border: 2px solid #e5e7eb;
-    border-radius: 8px;
-    text-align: center;
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #ffffff;
-    background-color: #1a1a2e;
-    transition: all 0.2s ease;
-    outline: none;
-}
-
-.pin-digit:focus {
-    border-color: #3b82f6;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-    transform: scale(1.05);
-}
-
-.pin-digit:valid {
-    border-color: white;
-    background-color: #1a1a2e;
-}
-
-.pin-digit.error {
-    border-color: #ef4444;
-    background-color: #fef2f2;
-    animation: shake 0.5s ease-in-out;
-}
-
-/* Error Message */
-.error-message {
-    color: #ef4444;
-    font-size: 0.9rem;
-    margin-bottom: 24px;
-    min-height: 20px;
+.transaction-item {
     display: flex;
     align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transform: translateY(-10px);
-    transition: all 0.3s ease;
-}
-
-.error-message.show {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.error-message::before {
-    content: '⚠️';
-    margin-right: 8px;
-}
-
-/* Verify Button */
-#verifyPinBtn {
-    width: 100%;
-    padding: 14px 24px;
-    background-color: #3b82f6;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: 600;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border-color, #eee);
+    transition: background-color 0.2s;
     cursor: pointer;
-    transition: all 0.2s ease;
-    position: relative;
 }
 
-#verifyPinBtn:hover:not(:disabled) {
-    background-color: #2563eb;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+.transaction-item:hover {
+    background-color: #1a1a2e;
 }
 
-#verifyPinBtn:active {
-    transform: translateY(0);
-}
-
-#verifyPinBtn:disabled {
-    background-color: #9ca3af;
-    cursor: not-allowed;
-    transform: none;
-    box-shadow: none;
-}
-
-/* Loading state for button */
-#verifyPinBtn.loading {
-    color: transparent;
-}
-
-#verifyPinBtn.loading::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 20px;
-    height: 20px;
-    border: 2px solid transparent;
-    border-top: 2px solid white;
+.transaction-icon {
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
-    animation: spin 1s linear infinite;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 12px;
+    flex-shrink: 0;
 }
 
-/* Animations */
-@keyframes slideIn {
-    from {
-        opacity: 0;
-        transform: translateY(-20px) scale(0.95);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
+.transaction-icon.purchase {
+    background-color: rgba(52, 152, 219, 0.1);
+    color: #3498db;
 }
 
-@keyframes shake {
-    0%, 100% {
-        transform: translateX(0);
-    }
-    25% {
-        transform: translateX(-3px);
-    }
-    75% {
-        transform: translateX(3px);
-    }
+.transaction-icon.withdrawal {
+    background-color: rgba(231, 76, 60, 0.1);
+    color: #e74c3c;
 }
 
-@keyframes spin {
-    0% { transform: translate(-50%, -50%) rotate(0deg); }
-    100% { transform: translate(-50%, -50%) rotate(360deg); }
+.transaction-icon.commission {
+    background-color: rgba(46, 204, 113, 0.1);
+    color: #2ecc71;
 }
 
-@keyframes pulse {
-    0%, 100% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.02);
-    }
+.transaction-icon.earning {
+    background-color: rgba(155, 89, 182, 0.1);
+    color: #9b59b6;
 }
 
-/* PIN input animations */
-.pin-digit.filled {
-    animation: pulse 0.3s ease-in-out;
+.transaction-details {
+    flex: 1;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-    
-    .pin-verification-content {
-        padding: 0 30px 30px;
-       
-    }
-    
-    
-    .pin-verification-content h3 {
-        font-size: 1.2rem;
-    }
-    
-    .pin-verification-content p {
-        font-size: 0.9rem;
-        margin-bottom: 28px;
-    }
-    
-    .pin-icon {
-        width: 70px;
-        height: 70px;
-        font-size: 2.5rem;
-        margin-bottom: 16px;
-    }
-    
-    .pin-input-container {
-        gap: 10px;
-        margin-bottom: 20px;
-    }
-    
-    .pin-digit {
-        width: 45px;
-        height: 45px;
-        font-size: 1.3rem;
-    }
-    
-    #verifyPinBtn {
-        padding: 12px 20px;
-        font-size: 0.95rem;
-    }
+.transaction-title {
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--text-color, #333);
+    margin-bottom: 4px;
 }
 
-@media (max-width: 480px) {
-    
-    
-    .pin-verification-content {
-        padding: 0 24px 24px;
-        
-    }
-    
-    
-    .pin-verification-content h3 {
-        font-size: 1.1rem;
-    }
-    
-    .pin-verification-content p {
-        font-size: 0.85rem;
-        margin-bottom: 24px;
-    }
-    
-    .pin-icon {
-        width: 60px;
-        height: 60px;
-        font-size: 2rem;
-        margin-bottom: 12px;
-    }
-    
-    .pin-input-container {
-        gap: 8px;
-        margin-bottom: 18px;
-    }
-    
-    .pin-digit {
-        width: 40px;
-        height: 40px;
-        font-size: 1.2rem;
-        border-radius: 6px;
-    }
-    
-    .error-message {
-        font-size: 0.8rem;
-        margin-bottom: 20px;
-    }
-    
-    #verifyPinBtn {
-        padding: 11px 18px;
-        font-size: 0.9rem;
-    }
+.transaction-date {
+    font-size: 12px;
+    color: var(--text-light, #888);
 }
 
-@media (max-width: 360px) {
-    .pin-verification-content {
-       padding: 0 20px 20px;
-    }
-    
-    .pin-input-container {
-        gap: 6px;
-    }
-    
-    .pin-digit {
-        width: 35px;
-        height: 35px;
-        font-size: 1.1rem;
-    }
+.transaction-amount {
+    font-weight: 600;
+    font-size: 14px;
+    text-align: right;
 }
 
-/* High contrast mode */
-@media (prefers-contrast: high) {
-    .pin-digit {
-        border-width: 3px;
-    }
-    
-    .pin-digit:focus {
-        border-width: 3px;
-        box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.3);
-    }
-    
-    #verifyPinBtn {
-        border: 2px solid #1d4ed8;
-    }
+.transaction-amount.positive {
+    color: var(--success-color, #2ecc71);
 }
 
-/* Reduced motion */
-@media (prefers-reduced-motion: reduce) {
-    .pin-verification-content {
-        animation: none;
-    }
-    
-    .pin-digit,
-    #verifyPinBtn,
-    .error-message {
-        transition: none;
-    }
-    
-    .pin-digit:focus {
-        transform: none;
-    }
-    
-    #verifyPinBtn:hover {
-        transform: none;
-    }
-    
-    .pin-digit.filled {
-        animation: none;
-    }
-    
-    .pin-digit.error {
-        animation: none;
-    }
-    
-    #verifyPinBtn.loading::after {
-        animation: none;
-        border: 2px solid white;
-        border-top-color: transparent;
-    }
+.transaction-amount.negative {
+    color: var(--danger-color, #e74c3c);
 }
 
-/* Focus management for accessibility */
-.pin-digit:focus {
-    z-index: 1;
+.transaction-status {
+    font-size: 12px;
+    padding: 3px 8px;
+    border-radius: 12px;
+    margin-left: 8px;
 }
 
-/* Touch device optimizations */
-@media (hover: none) and (pointer: coarse) {
-    .pin-digit {
-        width: 48px;
-        height: 48px;
-        font-size: 1.4rem;
-    }
-    
-    #verifyPinBtn {
-        padding: 16px 24px;
-        font-size: 1.1rem;
-    }
-    
-    #verifyPinBtn:hover {
-        transform: none;
-        box-shadow: none;
-        background-color: #3b82f6;
-    }
+.transaction-status.completed {
+    background-color: rgba(46, 204, 113, 0.1);
+    color: #2ecc71;
 }
 
-/* Print styles */
-@media print {
-   
-    
-    .pin-verification-content {
-        box-shadow: none;
-        border: 2px solid #000;
-    }
-    
-    .pin-icon {
-        background: none;
-        border: 2px solid #000;
-    }
-    
-    #verifyPinBtn {
-        display: none;
-    }
+.transaction-status.pending {
+    background-color: rgba(241, 196, 15, 0.1);
+    color: #f1c40f;
 }
 
-/* Withdrawal Modal Base Styles */
-.withdrawmodal-screen
- {
+.transaction-status.failed {
+    background-color: rgba(231, 76, 60, 0.1);
+    color: #e74c3c;
+}
+
+.empty-transactions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 0;
+    color: var(--text-light, #888);
+}
+
+.empty-transactions i {
+    font-size: 32px;
+    margin-bottom: 10px;
+    opacity: 0.5;
+}
+
+.view-all-btn {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-top: 15px;
+    background-color: transparent;
+    border: 1px solid var(--primary-color, #3498db);
+    color: var(--primary-color, #3498db);
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.view-all-btn:hover {
+    background-color: #1a1a2e;
+    color: white;
+}
+
+/* Transaction Modal Styles */
+.transaction-modal {
     display: none;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-  max-width: 100%;
-  min-height: 100vh;
-  margin: 0;
-    background-color: rgba(0, 0, 0, 0.5);
+    height: 100%;
+    background-color: #1a1a2e;
     z-index: 1000;
     overflow-y: auto;
-    padding: 20px;
-    box-sizing: border-box;
 }
 
-
-.withdrawmodal-screen.active 
-.modal-screen.active
-{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/* Withdrawal Form Screen */
-#withdrawFormScreen {
-    background-color: #fff;
-    border-radius: 12px;
-    padding: 20px;
-    width: 100%;
-    max-height: 90vh;
-    overflow-y: auto;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-    animation: slideIn 0.3s ease-out;
-}
-
-/* Modal Header */
-.withdraw-modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 24px;
-    border-bottom: 1px solid #e5e7eb;
-    background-color: #f8fafc;
-    border-radius: 12px 12px 0 0;
-}
-
-.withdraw-modal-header h2 {
-    margin: 0;
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #1f2937;
-}
-
-.close-withdraw-modal {
-    background: none;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
-    color: #111111;
-    padding: 0;
-    width: 32px;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    transition: all 0.2s ease;
-}
-
-.close-withdraw-modal:hover {
-   color: 
-rgb(81, 67, 55)rgb(81, 61, 55)rgb(81, 58, 55)rgb(184, 50, 32);
-}
-/* Form Content */
-.withdraw-form-content {
-    padding: 24px;
-    width:100%;
-}
-
-
-.withdraw-amount-preview {
-  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
-  border-radius: 10px;
-  padding: 16px 20px;
-  margin: 16px 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  box-shadow: 0 3px 12px rgba(40, 167, 69, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  position: relative;
-  overflow: hidden;
-  transition: all 0.3s ease;
-}
-
-.withdraw-amount-preview::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  transition: left 0.5s ease;
-}
-
-.withdraw-amount-preview:hover::before {
-  left: 100%;
-}
-
-.withdraw-amount-preview:hover {
-  transform: scale(1.02);
-  box-shadow: 0 5px 18px rgba(40, 167, 69, 0.3);
-}
-
-.withdraw-amount-preview span:first-child {
-  color: rgba(255, 255, 255, 0.9);
-  font-size: 14px;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  position: relative;
-}
-
-.withdraw-amount-preview span:first-child::before {
-  content: "💸";
-  margin-right: 8px;
-  font-size: 16px;
-}
-.withdraw-amount-preview span:first-child::after {
-  content: "";
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background-color: #ffffff;
-  opacity: 0.5;
-}
-.withdraw-amount-preview span:first-child:hover::after {
-  opacity: 1;
-}
-#nairaAmount {
-  color: #ffffff;
-  font-size: 24px;
-  font-weight: 700;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  position: relative;
-  min-width: 80px;
-  text-align: right;
-}
-
-/* Pulse animation for amount updates */
-@keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-  100% { transform: scale(1); }
-}
-
-#nairaAmount.updated {
-  animation: pulse 0.6s ease-in-out;
-}
-
-/* Success state when amount is greater than 0 */
-.withdraw-amount-preview.has-amount {
-  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
-  box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
-}
-
-/* Warning state for low amounts */
-.withdraw-amount-preview.low-amount {
-  background: linear-gradient(135deg, #ffc107 0%, #fd7e14 100%);
-  box-shadow: 0 4px 15px rgba(255, 193, 7, 0.3);
-}
-
-/* Error state for invalid amounts */
-.withdraw-amount-preview.error {
-  background: linear-gradient(135deg, #dc3545 0%, #e83e8c 100%);
-  box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
-}
-
-/* Responsive design */
-@media (max-width: 768px) {
-  .withdraw-amount-preview {
-    padding: 12px 16px;
-    flex-direction: column;
-    gap: 8px;
-    text-align: center;
-  }
-  
-  .withdraw-amount-preview span:first-child {
-    font-size: 12px;
-  }
-  
-  #nairaAmount {
-    font-size: 20px;
-    text-align: center;
-    min-width: auto;
-  }
-}
-.withdrawmodal-screen.active #withdrawFormScreen {
-    max-width: 600px;
-    width: 100%;
-    height: auto;
-    border-radius: 12px;
-    overflow-y: auto;
-    padding: 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-}
-
-
-/* Form Groups */
-.withdraw-form-group {
-    margin-bottom: 20px;
-}
-
-.withdraw-form-group label {
-    display: block;
-    margin-bottom: 6px;
-    font-weight: 500;
-    color: #374151;
-    font-size: 0.9rem;
-}
-
-.withdraw-form-group input,
-.withdraw-form-group select {
-    width: 100%;
-    padding: 12px 16px;
-    border: 2px solid #e5e7eb;
-    border-radius: 8px;
-    font-size: 1rem;
-    transition: border-color 0.2s ease;
-    box-sizing: border-box;
-}
-
-.withdraw-form-group input:focus,
-.withdraw-form-group select:focus {
-    outline: none;
-    border-color: #3b82f6;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-}
-
-.input-note {
-    display: block;
-    margin-top: 4px;
-    font-size: 0.8rem;
-    color: #6b7280;
-}
-
-
-
-
-/* Account Verification */
-.withdraw-form-group:has(#accountName) {
+.transaction-modal .modal-content {
+    background-color: #1a1a2e;
+    margin: 50px auto;
+    width: 90%;
+    max-width: 900px;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
     position: relative;
+    animation: modalFadeIn 0.3s;
 }
 
-#verifyAccountBtn {
-    position: absolute;
-    right: 8px;
-    top: -60px;
-    padding: 6px 12px;
-    font-size: 0.8rem;
-}
-
-/* Fee Summary */
-.withdraw-fee-summary {
-    background-color: #f9fafb;
-    border: 1px solid #e5e7eb;
-    border-radius: 8px;
-    padding: 16px;
-    margin-bottom: 24px;
-    color:#333;
-}
-
-.withdraw-summary-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 8px;
-    font-size: 0.9rem;
-}
-
-.withdraw-summary-row:last-child {
-    margin-bottom: 0;
-}
-
-.withdraw-summary-row.total {
-    border-top: 1px solid #e5e7eb;
-    padding-top: 8px;
-    margin-top: 8px;
-    font-weight: 600;
-    color: #1f2937;
-}
-
-/* Buttons */
-.btn {
-    padding: 12px 24px;
-    border: none;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-}
-
-.btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
-.btn-primary {
-    background-color: #3b82f6;
-    color: white;
-}
-
-.btn-primary:hover:not(:disabled) {
-    background-color: #2563eb;
-}
-
-.btn-secondary {
-    background-color: #6b7280;
-    color: white;
-}
-
-.btn-secondary:hover:not(:disabled) {
-    background-color: #4b5563;
-}
-
-.btn-success {
-    background-color: #10b981;
-    color: white;
-    width: 100%;
-}
-
-.btn-success:hover:not(:disabled) {
-    background-color: #059669;
-}
-
-.btn-sm {
-    padding: 6px 12px;
-    font-size: 0.8rem;
-}
-
-/* Processing Screen */
-.withdrawprocessing-content {
-    background-color: #fff;
-    border-radius: 12px;
-    padding: 40px;
-    text-align: center;
-    max-width: 400px;
-    width: 100%;
-}
-
-.loader {
-    border: 4px solid #f3f4f6;
-    border-top: 4px solid #3b82f6;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    animation: spin 1s linear infinite;
-    margin: 0 auto 20px;
-}
-
-.withdrawprocessing-content h3 {
-    margin: 0 0 12px 0;
-    color: #1f2937;
-    font-size: 1.3rem;
-}
-
-.withdrawprocessing-content p {
-    margin: 0;
-    color: #6b7280;
-}
-
-/* Success Screen */
-.withdrawsuccess-content {
-    background-color: #fff;
-    border-radius: 12px;
-    padding: 40px;
-    text-align: center;
-    max-width: 500px;
-    width: 100%;
-}
-
-.success-icon {
-    font-size: 4rem;
-    color: #10b981;
-    margin-bottom: 20px;
-}
-
-.withdrawsuccess-content h3 {
-    margin: 0 0 12px 0;
-    color: #1f2937;
-    font-size: 1.5rem;
-}
-
-.withdrawsuccess-content > p {
-    margin: 0 0 24px 0;
-    color: #6b7280;
-}
-
-/* Transaction Details */
-.withdrawtransaction-details {
-    background-color: #f9fafb;
-    border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 20px;
-    text-align: left;
-}
-
-.withdrawdetail-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 12px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid #e5e7eb;
-}
-
-.withdrawdetail-row:last-child {
-    margin-bottom: 0;
-    border-bottom: none;
-    padding-bottom: 0;
-}
-
-.withdrawdetail-label {
-    font-weight: 500;
-    color: #6b7280;
-    font-size: 0.9rem;
-}
-
-.withdrawdetail-value {
-    font-weight: 600;
-    color: #1f2937;
-    text-align: right;
-    word-break: break-all;
-}
-
-.success-note {
-    background-color: #ecfdf5;
-    color: #065f46;
-    padding: 12px;
-    border-radius: 6px;
-    margin-bottom: 24px;
-    font-size: 0.9rem;
-}
-
-/* Error Screen */
-.withdrawerror-content {
-    background-color: #fff;
-    border-radius: 12px;
-    padding: 40px;
-    text-align: center;
-    max-width: 400px;
-    width: 100%;
-}
-
-.withdrawerror-icon {
-    font-size: 4rem;
-    color: #ef4444;
-    margin-bottom: 20px;
-}
-
-.withdrawerror-content h3 {
-    margin: 0 0 12px 0;
-    color: #1f2937;
-    font-size: 1.3rem;
-}
-
-.withdrawerror-content p {
-    margin: 0 0 24px 0;
-    color: #6b7280;
-}
-
-.withdrawerror-actions {
-    display: flex;
-    gap: 12px;
-    justify-content: center;
-}
-
-/* Animations */
-@keyframes slideIn {
+@keyframes modalFadeIn {
     from {
         opacity: 0;
         transform: translateY(-20px);
@@ -5297,1489 +4384,912 @@ rgb(81, 67, 55)rgb(81, 61, 55)rgb(81, 58, 55)rgb(184, 50, 32);
     }
 }
 
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: #1a1a2e;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-    .withdrawmodal-screen {
-        padding: 10px;
-        align-items: flex-start;
-        padding-top: 20px;
-    }
-    
-    #withdrawFormScreen {
-        max-height: calc(100vh - 40px);
-        margin: 0;
-    }
-    
-    .withdraw-modal-header {
-        padding: 16px 20px;
-    }
-    
-    .withdraw-modal-header h2 {
-        font-size: 1.3rem;
-    }
-    
-    .withdraw-form-content {
-        padding: 20px;
-    }
-    
-    
-    .withdraw-form-group {
-        margin-bottom: 16px;
-    }
-    
-    .withdraw-form-group input,
-    .withdraw-form-group select {
-        padding: 10px 14px;
-        font-size: 16px; /* Prevents zoom on iOS */
-    }
-    
-    .withdrawdetail-value {
-        font-size: 0.85rem;
-        max-width: 60%;
-    }
-    
-    .withdrawerror-actions {
-        flex-direction: column;
-    }
-    
-    .withdrawerror-actions .btn {
-        width: 100%;
-    }
-    
-    .withdrawprocessing-content,
-    .withdrawsuccess-content,
-    .withdrawerror-content {
-        padding: 30px 20px;
-    }
+.modal-header h2 {
+    font-size: 20px;
+    color: var(--text-color, #333);
+    margin: 0;
 }
 
-@media (max-width: 480px) {
-    .withdrawmodal-screen {
-        padding: 5px;
-        padding-top: 10px;
-    }
-    
-    .withdraw-modal-header {
-        padding: 12px 16px;
-    }
-    
-    .withdraw-form-content {
-        padding: 16px;
-    }
-    
-    
-    .withdrawdetail-row {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 4px;
-    }
-    
-    .withdrawdetail-value {
-        max-width: 100%;
-        text-align: left;
-    }
-    
-    #verifyAccountBtn {
-        position: static;
-        margin-top: 8px;
-        width: 100%;
-    }
+.close-modal {
+    font-size: 24px;
+    color: var(--text-light, #888);
+    cursor: pointer;
+    transition: color 0.2s;
 }
 
-   
- /* Withdraw Balance Container */
-.withdraw-balance-container {
+.close-modal:hover {
+    color: var(--danger-color, #e74c3c);
+}
+
+/* Transaction Filters */
+.transaction-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    padding: 20px;
+    background-color: #1a1a2e;
+    border-bottom: 1px solid var(--border-color, #eee);
+}
+
+.filter-group {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    border-radius: 16px;
-    padding: 1.5rem;
-    margin-bottom: 2rem;
-    box-shadow: 0 8px 32px rgba(102, 126, 234, 0.2);
-    position: relative;
-    overflow: hidden;
+    min-width: 150px;
+    flex: 1;
 }
 
-.withdraw-balance-container::before {
-    content: '';
+.filter-group label {
+    font-size: 12px;
+    margin-bottom: 5px;
+    color: #ffffff;
+}
+
+.filter-group select {
+    padding: 8px 12px;
+    border: #1a1a2e;
+    border-radius: 5px;
+    background-color: ;
+    font-size: 14px;
+    color:  #333;
+}
+
+.filter-btn {
+    align-self: flex-end;
+    padding: 8px 15px;
+    background-color: #1a1a2e;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-top: 22px;
+}
+
+.filter-btn:hover {
+    background-color: #1a1a2e;
+}
+
+/* Transaction Summary */
+.transaction-summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    padding: 20px;
+}
+
+.summary-card {
+    background-color: #1a1a2e;
+    border-radius: 8px;
+    padding: 15px;
+    text-align: center;
+}
+
+.summary-card h4 {
+    font-size: 14px;
+    color: var(--text-light, #888);
+    margin: 0 0 10px 0;
+}
+
+.summary-card p {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-color, #333);
+    margin: 0;
+}
+
+/* Transaction Table */
+.transaction-table-container {
+    padding: 0 20px 20px;
+    position: relative;
+    min-height: 300px;
+}
+
+.transaction-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+.transaction-table th {
+    text-align: left;
+    padding: 12px 15px;
+    background-color: #1a1a2e;
+    color: var(--text-color, #333);
+    font-weight: 600;
+    font-size: 14px;
+    border-bottom: 2px solid var(--border-color, #eee);
+}
+
+.transaction-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid var(--border-color, #eee);
+    font-size: 14px;
+    color: var(--text-color, #333);
+}
+
+.transaction-table tr:hover {
+    background-color: var(--hover-bg-color, #f9f9f9);
+}
+/* Continuing Transaction Table Styles */
+.transaction-type {
+    display: flex;
+    align-items: center;
+}
+
+.transaction-type-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+    flex-shrink: 0;
+    font-size: 12px;
+}
+
+.transaction-table .amount {
+    font-weight: 600;
+}
+
+.transaction-table .amount.positive {
+    color: var(--success-color, #2ecc71);
+}
+
+.transaction-table .amount.negative {
+    color: var(--danger-color, #e74c3c);
+}
+
+.transaction-table .status-badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.transaction-table .status-badge.completed {
+    background-color: rgba(46, 204, 113, 0.1);
+    color: #2ecc71;
+}
+
+.transaction-table .status-badge.pending {
+    background-color: rgba(241, 196, 15, 0.1);
+    color: #f1c40f;
+}
+
+.transaction-table .status-badge.failed {
+    background-color: rgba(231, 76, 60, 0.1);
+    color: #e74c3c;
+}
+
+.transaction-table .details-btn {
+    background-color: transparent;
+    border: 1px solid var(--border-color, #ddd);
+    border-radius: 4px;
+    padding: 4px 8px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.transaction-table .details-btn:hover {
+    background-color: var(--light-bg-color, #f5f5f5);
+    border-color: var(--text-light, #aaa);
+}
+
+/* Empty and Loading States */
+.empty-state, .loading-transactions {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 50px 0;
+    color: var(--text-light, #888);
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    border-radius: 16px;
-    z-index: 1;
+    background-color: rgba(255, 255, 255, 0.9);
 }
 
-.withdraw-balance-container > * {
-    position: relative;
-    z-index: 2;
-}
-
-/* Balance Items */
-.withdraw-balance-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem;
-    background: rgba(255, 255, 255, 0.15);
-    border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(10px);
-    transition: all 0.3s ease;
-}
-
-.withdraw-balance-item:hover {
-    background: rgba(255, 255, 255, 0.2);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-}
-
-/* Balance Labels */
-.balance-label {
-    font-size: 1rem;
-    font-weight: 500;
-    color: rgba(255, 255, 255, 0.9);
-    letter-spacing: 0.3px;
-    text-transform: uppercase;
-    font-size: 0.85rem;
-}
-
-/* Balance Values */
-.balance-value {
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: white;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    letter-spacing: 0.5px;
-}
-
-/* Talent Coin specific styling */
-#talentcoinBalance {
-    color: #ffd700;
-    text-shadow: 0 2px 8px rgba(255, 215, 0, 0.3);
-}
-
-/* Naira specific styling */
-#nairaEquivalent {
-    color: #00ff88;
-    text-shadow: 0 2px 8px rgba(0, 255, 136, 0.3);
-}
-
-/* Tablet Styles */
-@media (max-width: 1024px) {
-    .withdraw-balance-container {
-        padding: 1.25rem;
-        margin-bottom: 1.5rem;
-    }
-    
-    .withdraw-balance-item {
-        padding: 0.875rem;
-    }
-    
-    .balance-label {
-        font-size: 0.8rem;
-    }
-    
-    .balance-value {
-        font-size: 1.3rem;
-    }
-}
-
-/* Mobile Styles (General) */
-@media (max-width: 768px) {
-    .withdraw-balance-container {
-        padding: 1rem;
-        margin-bottom: 1rem;
-        border-radius: 12px;
-        gap: 0.75rem;
-    }
-    
-    .withdraw-balance-item {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.5rem;
-        padding: 1rem 0.875rem;
-        border-radius: 10px;
-    }
-    
-    .balance-label {
-        font-size: 0.75rem;
-        opacity: 0.9;
-        align-self: flex-start;
-    }
-    
-    .balance-value {
-        font-size: 1.5rem;
-        align-self: flex-end;
-        width: 100%;
-        text-align: right;
-    }
-}
-
-/* iPhone and Small Mobile Styles */
-@media (max-width: 480px) {
-    .withdraw-balance-container {
-        padding: 0.875rem;
-        margin: 0 0.5rem 1rem 0.5rem;
-        border-radius: 10px;
-        gap: 0.5rem;
-    }
-    
-    .withdraw-balance-item {
-        padding: 0.75rem;
-        border-radius: 8px;
-        gap: 0.375rem;
-    }
-    
-    .balance-label {
-        font-size: 0.7rem;
-        font-weight: 600;
-    }
-    
-    .balance-value {
-        font-size: 1.25rem;
-        font-weight: 800;
-    }
-}
-
-/* iPhone SE and Very Small Screens */
-@media (max-width: 375px) {
-    .withdraw-balance-container {
-        padding: 0.75rem;
-        margin: 0 0.25rem 0.875rem 0.25rem;
-        gap: 0.3rem;
-    }
-    
-    .withdraw-balance-item {
-        padding: 0.625rem;
-        gap: 0.25rem;
-    }
-    
-    .balance-label {
-        font-size: 0.65rem;
-    }
-    
-    .balance-value {
-        font-size: 1.1rem;
-    }
-}
-
-/* Landscape Mobile Orientation */
-@media (max-width: 768px) and (orientation: landscape) {
-    .withdraw-balance-container {
-        flex-direction: row;
-        gap: 1rem;
-    }
-    
-    .withdraw-balance-item {
-        flex: 1;
-        flex-direction: column;
-        gap: 0.5rem;
-    }
-    
-    .balance-value {
-        text-align: center;
-    }
-}
-
-/* iPhone 12/13/14 Pro Max */
-@media (max-width: 428px) {
-    .withdraw-balance-container {
-        padding: 1rem;
-    }
-    
-    .balance-value {
-        font-size: 1.3rem;
-    }
-}
-
-/* iPhone 12/13/14 Mini */
-@media (max-width: 375px) and (max-height: 812px) {
-    .withdraw-balance-item {
-        padding: 0.75rem 0.625rem;
-    }
-    
-    .balance-label {
-        font-size: 0.7rem;
-    }
-    
-    .balance-value {
-        font-size: 1.15rem;
-    }
-}
-
-/* Dark mode support (optional) */
-@media (prefers-color-scheme: dark) {
-    .withdraw-balance-container {
-        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-    }
-    
-    .withdraw-balance-item {
-        background: rgba(255, 255, 255, 0.1);
-        border: 1px solid rgba(255, 255, 255, 0.15);
-    }
-    
-    .withdraw-balance-item:hover {
-        background: rgba(255, 255, 255, 0.15);
-    }
-}
-
-/* Animation for loading states */
-.withdraw-balance-container.loading .balance-value {
-    animation: pulse 1.5s ease-in-out infinite;
-}
-
-@keyframes pulse {
-    0%, 100% {
-        opacity: 1;
-    }
-    50% {
-        opacity: 0.7;
-    }
-}
-
-/* Focus states for accessibility */
-.withdraw-balance-item:focus-within {
-    outline: 2px solid rgba(255, 255, 255, 0.5);
-    outline-offset: 2px;
-}
-
-
-/* Focus management for accessibility */
-.withdrawmodal-screen:focus-within {
-    outline: none;
-}
-
-.withdraw-form-group input:invalid {
-    border-color: #ef4444;
-}
-
-.withdraw-form-group input:invalid:focus {
-    border-color: #ef4444;
-    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
-}
-
-/* Loading states */
-.btn.loading {
-    position: relative;
-    color: transparent;
-}
-
-.btn.loading::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 16px;
-    height: 16px;
-    border: 2px solid transparent;
-    border-top: 2px solid currentColor;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-    color: white;
-}
-
-/* Tooltip styles for form validation */
-.withdraw-form-group {
-    position: relative;
-}
-
-.withdraw-form-group .error-tooltip {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background-color: #ef4444;
-    color: white;
-    padding: 6px 10px;
-    border-radius: 4px;
-    font-size: 0.8rem;
-    margin-top: 4px;
-    z-index: 10;
-    opacity: 0;
-    transform: translateY(-10px);
-    transition: all 0.2s ease;
-    pointer-events: none;
-}
-
-.withdraw-form-group .error-tooltip.show {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.withdraw-form-group .error-tooltip::before {
-    content: '';
-    position: absolute;
-    top: -4px;
-    left: 10px;
-    width: 0;
-    height: 0;
-    border-left: 4px solid transparent;
-    border-right: 4px solid transparent;
-    border-bottom: 4px solid #ef4444;
-}
-
-/* Success states */
-.withdraw-form-group input.success {
-    border-color: #10b981;
-}
-
-.withdraw-form-group input.success:focus {
-    border-color: #10b981;
-    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
-}
-
-/* Custom scrollbar for modal content */
-.withdrawmodal-screen::-webkit-scrollbar {
-    width: 8px;
-}
-
-.withdrawmodal-screen::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 4px;
-}
-
-.withdrawmodal-screen::-webkit-scrollbar-thumb {
-    background: #c1c1c1;
-    border-radius: 4px;
-}
-
-.withdrawmodal-screen::-webkit-scrollbar-thumb:hover {
-    background: #a8a8a8;
-}
-
-/* Firefox scrollbar */
-.withdrawmodal-screen {
-    scrollbar-width: thin;
-    scrollbar-color: #c1c1c1 #f1f1f1;
-}
-
-/* Additional utility classes */
-.text-center {
-    text-align: center;
-}
-
-.text-left {
-    text-align: left;
-}
-
-.text-right {
-    text-align: right;
-}
-
-.mb-0 {
-    margin-bottom: 0;
-}
-
-.mt-0 {
-    margin-top: 0;
-}
-
-.hidden {
-    display: none;
-}
-
-.visible {
-    display: block;
-}
-
-/* Animation for screen transitions */
-.withdrawmodal-screen.fade-in {
-    animation: fadeIn 0.3s ease-in-out;
-}
-
-.withdrawmodal-screen.fade-out {
-    animation: fadeOut 0.3s ease-in-out;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-
-@keyframes fadeOut {
-    from {
-        opacity: 1;
-    }
-    to {
-        opacity: 0;
-    }
-}
-
-/* Pulse animation for important elements */
-.pulse {
-    animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-    0% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.05);
-    }
-    100% {
-        transform: scale(1);
-    }
-}
-
-/* Shake animation for errors */
-.shake {
-    animation: shake 0.5s ease-in-out;
-}
-
-@keyframes shake {
-    0%, 100% {
-        transform: translateX(0);
-    }
-    25% {
-        transform: translateX(-5px);
-    }
-    75% {
-        transform: translateX(5px);
-    }
-}
-
-
-
-/* Transaction History Modal - Core Styles with BuyCoins Scrolling */
-.transaction-modal,
-.transaction-details-modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.8);
-  z-index: 2000;
-  display: none;
-  animation: fadeIn 0.3s ease-in-out;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
-}
-
-.Historymodal-content
-.withdraw-modal-content  {
-  position: relative;
-  width: 95%;
-  max-width: 1200px;
-  min-height: 90vh;
-  margin: 2rem auto;
-  background-color: #fff;
-  border-radius: 12px;
-  overflow: visible;
-  display: flex;
-  flex-direction: column;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
-  animation: slideInUp 0.3s ease-out;
-}
-
-/* Modal Header */
-.Historymodal-header,
-.modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1.5rem 2rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  border-radius: 12px 12px 0 0;
-  flex-shrink: 0;
-}
-
-.Historymodal-header h2,
-.modal-header h2 {
-  margin: 0;
-  font-size: 1.5rem;
-  font-weight: 600;
-}
-
-.close-History {
-  background: none;
-  border: none;
-  color: white;
-  font-size: 2rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  padding: 0;
-  width: 48px;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  touch-action: manipulation;
-}
-
-.close-History:hover {
-  background-color: rgba(255, 255, 255, 0.2);
-  transform: rotate(90deg);
-}
-
-/* Filters Section */
-.Historytransaction-filters {
-  padding: 2rem;
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-  border-bottom: 1px solid #dee2e6;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1.5rem;
-  align-items: end;
-}
-
-.Historyfilter-group {
-  display: flex;
-  flex-direction: column;
-}
-
-.Historyfilter-group label {
-  font-weight: 600;
-  color: #495057;
-  margin-bottom: 0.5rem;
-  font-size: 0.9rem;
-}
-
-.Historyfilter-group select {
-  padding: 0.8rem;
-  border: 2px solid #e1e8ed;
-  border-radius: 8px;
-  font-size: 14px;
-  background-color: #fff;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-}
-
-.Historyfilter-group select:focus {
-  outline: none;
-  border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
-}
-
-.Historyfilter-btn {
-  padding: 0.8rem 1.5rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 600;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
-  touch-action: manipulation;
-}
-
-.Historyfilter-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
-}
-
-/* Transaction Summary */
-.transaction-summary {
-  padding: 2rem;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1.5rem;
-  background-color: #fff;
-  border-bottom: 1px solid #dee2e6;
-}
-
-.Historysummary-card {
-  background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
-  padding: 1.5rem;
-  border-radius: 12px;
-  text-align: center;
-  border: 1px solid #e9ecef;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  transition: all 0.3s ease;
-}
-
-.Historysummary-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-}
-
-.Historysummary-card h4 {
-  margin: 0 0 1rem 0;
-  color: #495057;
-  font-size: 1rem;
-  font-weight: 600;
-}
-
-.Historysummary-card p {
-  margin: 0;
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #28a745;
-}
-
-/* Transaction Table Container */
-.transaction-table-container {
-  flex: 1;
-  padding: 2rem;
-  overflow-x: auto;
-  position: relative;
-}
-
-.transaction-table {
-  width: 100%;
-  border-collapse: collapse;
-  background-color: #fff;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-}
-
-.transaction-table thead {
-  background: linear-gradient(135deg, #495057 0%, #343a40 100%);
-  color: white;
-}
-
-.transaction-table th,
-.transaction-table td {
-  padding: 1rem;
-  text-align: left;
-  border-bottom: 1px solid #dee2e6;
-}
-
-.transaction-table th {
-  font-weight: 600;
-  font-size: 0.9rem;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.transaction-table tbody tr {
-  transition: all 0.3s ease;
-}
-
-.transaction-table tbody tr:hover {
-  background-color: #f8f9fa;
-  transform: scale(1.01);
-}
-
-.transaction-table tbody tr:last-child td {
-  border-bottom: none;
-}
-
-/* Transaction Status Badges */
-.status-completed {
-  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
-  color: white;
-  padding: 0.3rem 0.8rem;
-  border-radius: 20px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  text-transform: uppercase;
-}
-
-.status-pending {
-  background: linear-gradient(135deg, #ffc107 0%, #fd7e14 100%);
-  color: white;
-  padding: 0.3rem 0.8rem;
-  border-radius: 20px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  text-transform: uppercase;
-}
-
-.status-failed {
-  background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
-  color: white;
-  padding: 0.3rem 0.8rem;
-  border-radius: 20px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  text-transform: uppercase;
-}
-
-/* Transaction Type Badges */
-.type-purchase {
-  color: #007bff;
-  font-weight: 600;
-}
-
-.type-withdrawal {
-  color: #dc3545;
-  font-weight: 600;
-}
-
-.type-commission {
-  color: #28a745;
-  font-weight: 600;
-}
-
-.type-earning {
-  color: #17a2b8;
-  font-weight: 600;
-}
-
-/* Empty State */
-.empty-state {
-  display: none;
-  text-align: center;
-  padding: 3rem;
-  color: #6c757d;
-}
-
-.empty-state.show {
-  display: block;
-}
-
-.empty-state i {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-  color: #adb5bd;
-}
-
-.empty-state p {
-  font-size: 1.2rem;
-  margin-bottom: 0.5rem;
-  font-weight: 600;
+.empty-state i, .loading-transactions i {
+    font-size: 40px;
+    margin-bottom: 15px;
+    opacity: 0.5;
 }
 
 .empty-state span {
-  font-size: 0.9rem;
-  color: #adb5bd;
-}
-
-/* Loading State */
-.loading-transactions {
-  display: none;
-  text-align: center;
-  padding: 3rem;
-  color: #667eea;
-}
-
-.loading-transactions.show {
-  display: block;
+    font-size: 12px;
+    margin-top: 5px;
+    opacity: 0.7;
 }
 
 .loading-transactions i {
-  font-size: 2rem;
-  margin-bottom: 1rem;
-}
-
-.loading-transactions p {
-  font-size: 1.1rem;
-  font-weight: 600;
+    color: var(--primary-color, #3498db);
+    opacity: 1;
 }
 
 /* Pagination */
-.History-pagination {
-  padding: 1.5rem 2rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #f8f9fa;
-  border-top: 1px solid #dee2e6;
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    border-top: 1px solid var(--border-color, #eee);
 }
 
 .pagination-btn {
-  padding: 0.8rem 1.5rem;
-  background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 600;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  touch-action: manipulation;
-}
-
-.pagination-btn:disabled {
-  background: #e9ecef;
-  color: #6c757d;
-  cursor: not-allowed;
-  transform: none;
+    background-color: transparent;
+    border: 1px solid var(--border-color, #ddd);
+    border-radius: 5px;
+    padding: 8px 15px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
 .pagination-btn:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(108, 117, 125, 0.3);
+    background-color: var(--light-bg-color, #f5f5f5);
+    border-color: var(--text-light, #aaa);
+}
+
+.pagination-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
 }
 
 #pageIndicator {
-  font-weight: 600;
-  color: #495057;
+    margin: 0 15px;
+    font-size: 14px;
+    color: var(--text-light, #888);
 }
 
 /* Export Section */
-.Historyexport-section {
-  padding: 1.5rem 2rem;
-  background-color: #fff;
-  border-top: 1px solid #dee2e6;
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
+.export-section {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 0 20px 20px;
 }
 
 .export-btn {
-  padding: 0.8rem 1.5rem;
-  background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 600;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  box-shadow: 0 2px 8px rgba(23, 162, 184, 0.3);
-  touch-action: manipulation;
+    background-color: transparent;
+    border: 1px solid var(--border-color, #ddd);
+    border-radius: 5px;
+    padding: 8px 15px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
 .export-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(23, 162, 184, 0.4);
+    background-color: var(--light-bg-color, #f5f5f5);
+    border-color: var(--text-light, #aaa);
 }
 
 /* Transaction Details Modal */
-.transaction-details-modal .Historymodal-content {
-  max-width: 600px;
+.transaction-details-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1100;
+    overflow-y: auto;
+}
+
+.transaction-details-modal .modal-content {
+    background-color: var(--card-bg-color, #fff);
+    margin: 80px auto;
+    width: 90%;
+    max-width: 600px;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+    position: relative;
+    animation: modalFadeIn 0.3s;
 }
 
 .transaction-details-content {
-  padding: 2rem;
-  flex: 1;
+    padding: 20px;
 }
 
-.Historymodal-footer {
-  padding: 1.5rem 2rem;
-  background-color: #f8f9fa;
-  border-top: 1px solid #dee2e6;
-  display: flex;
-  justify-content: flex-end;
-  border-radius: 0 0 12px 12px;
+.transaction-detail-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.transaction-detail-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    flex-shrink: 0;
+}
+
+.transaction-detail-title {
+    flex: 1;
+}
+
+.transaction-detail-title h3 {
+    font-size: 18px;
+    margin: 0 0 5px 0;
+    color: var(--text-color, #333);
+}
+
+.transaction-detail-title p {
+    font-size: 14px;
+    margin: 0;
+    color: var(--text-light, #888);
+}
+
+.transaction-detail-amount {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.transaction-detail-amount.positive {
+    color: var(--success-color, #2ecc71);
+}
+
+.transaction-detail-amount.negative {
+    color: var(--danger-color, #e74c3c);
+}
+
+.transaction-info-list {
+    margin-top: 20px;
+    border-top: 1px solid var(--border-color, #eee);
+    padding-top: 20px;
+}
+
+.transaction-info-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border-color, #eee);
+}
+
+.transaction-info-label {
+    font-size: 14px;
+    color: var(--text-light, #888);
+}
+
+.transaction-info-value {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-color, #333);
+    text-align: right;
+}
+
+.transaction-note {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: var(--light-bg-color, #f9f9f9);
+    border-radius: 5px;
+    font-size: 14px;
+    color: var(--text-color, #333);
+}
+
+.modal-footer {
+    padding: 15px 20px;
+    border-top: 1px solid var(--border-color, #eee);
+    display: flex;
+    justify-content: flex-end;
 }
 
 .btn {
-  padding: 0.8rem 1.5rem;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 600;
-  transition: all 0.3s ease;
-  touch-action: manipulation;
+    padding: 8px 15px;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
 }
 
 .btn-secondary {
-  background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
-  color: white;
+    background-color: var(--light-bg-color, #f5f5f5);
+    border: 1px solid var(--border-color, #ddd);
+    color: var(--text-color, #333);
 }
 
-.btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+.btn-secondary:hover {
+    background-color: var(--border-color, #ddd);
 }
 
-/* Animations */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes slideInUp {
-  from {
-    transform: translateY(50px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-/* Mobile Responsive */
+/* Responsive Styles */
 @media (max-width: 768px) {
-  .transaction-modal,
-  .transaction-details-modal {
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-  
-  .Historymodal-content {
-    width: 100%;
-    min-height: 100vh;
-    margin: 0;
-    border-radius: 0;
-    height: auto;
-  }
-  
-  .Historymodal-header,
-  .modal-header {
-    padding: 1rem 1.5rem;
-    border-radius: 0;
-  }
-  
-  .Historymodal-header h2,
-  .modal-header h2 {
-    font-size: 1.3rem;
-  }
-  
-  .Historytransaction-filters {
-    padding: 1.5rem;
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
-  
-  .transaction-summary {
-    padding: 1.5rem;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-  }
-  
-  .transaction-table-container {
-    padding: 1rem;
-    overflow-x: auto;
-  }
-  
-  .transaction-table {
-    min-width: 600px;
-  
-      padding: 0.8rem 0.5rem;
-    font-size: 0.9rem;
-  }
-  
-  .History-pagination {
-    padding: 1rem 1.5rem;
-    flex-direction: column;
-    gap: 1rem;
-  }
-  
-  .pagination-btn {
-    width: 100%;
-    justify-content: center;
-  }
-  
-  .Historyexport-section {
-    padding: 1rem 1.5rem;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-  
-  .export-btn {
-    width: 100%;
-    justify-content: center;
-  }
-  
-  .transaction-details-content {
-    padding: 1.5rem;
-  }
-  
-  .Historymodal-footer {
-    padding: 1rem 1.5rem;
-  }
+    .transaction-filters {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .filter-group {
+        width: 100%;
+    }
+    
+    .filter-btn {
+        width: 100%;
+        margin-top: 10px;
+    }
+    
+    .transaction-summary {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .transaction-table th:nth-child(4),
+    .transaction-table td:nth-child(4) {
+        display: none;
+    }
+    
+    .export-section {
+        flex-direction: column;
+    }
+    
+    .export-btn {
+        width: 100%;
+    }
 }
 
 @media (max-width: 480px) {
-  .Historymodal-header,
-  .modal-header {
-    padding: 1rem;
-  }
-  
-  .Historymodal-header h2,
-  .modal-header h2 {
-    font-size: 1.2rem;
-  }
-  
-  .close-History {
-    width: 40px;
-    height: 40px;
-    font-size: 1.5rem;
-  }
-  
-  .Historytransaction-filters {
-    padding: 1rem;
-  }
-  
-  .transaction-summary {
-    padding: 1rem;
-    grid-template-columns: 1fr;
-  }
-  
-  .Historysummary-card {
-    padding: 1rem;
-  }
-  
-  .Historysummary-card h4 {
-    font-size: 0.9rem;
-  }
-  
-  .Historysummary-card p {
-    font-size: 1.3rem;
-  }
-  
-  .transaction-table th,
-  .transaction-table td {
-    padding: 0.6rem 0.3rem;
-    font-size: 0.8rem;
-  }
-  
-  .status-completed,
-  .status-pending,
-  .status-failed {
-    padding: 0.2rem 0.5rem;
-    font-size: 0.7rem;
-  }
-}
-
-/* iOS specific fixes */
-@supports (-webkit-appearance: none) {
-  .transaction-modal,
-  .transaction-details-modal {
-    height: 100vh;
-    height: -webkit-fill-available;
-  }
-  
-  @media (max-width: 768px) {
-    .Historymodal-content {
-      min-height: 100vh;
-      min-height: -webkit-fill-available;
+    .transaction-summary {
+        grid-template-columns: 1fr;
     }
-  }
+    
+    .transaction-table th:nth-child(3),
+    .transaction-table td:nth-child(3) {
+        display: none;
+    }
+    
+    .modal-content {
+        margin: 20px auto;
+        width: 100%;
+    }
 }
 
-/* Android Chrome specific fixes */
-@media screen and (max-width: 768px) {
-  .transaction-modal,
-  .transaction-details-modal {
-    overflow-y: scroll !important;
-    -webkit-overflow-scrolling: touch !important;
-    overscroll-behavior: contain;
-  }
-  
-  .Historymodal-content {
-    max-height: none !important;
-    height: auto !important;
-    overflow: visible !important;
-  }
-  
-  .transaction-table-container {
-    overflow: visible !important;
-    height: auto !important;
-    max-height: none !important;
-  }
+
+/* Withdraw Modal Styles - Compact Version */
+.withdraw-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #1a1a2e;
+    z-index: 1000;
+    overflow-y: auto;
+    justify-content: center;
+    align-items: center;
 }
 
-/* Prevent zoom on double tap */
-.transaction-modal *,
-.transaction-details-modal * {
-  touch-action: manipulation;
+
+
+.modal-header h2 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 0;
+    color: white;
+    
 }
 
-/* Ensure proper touch scrolling */
-.transaction-modal,
-.transaction-details-modal {
-  scroll-behavior: smooth;
+.close-modal {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    line-height: 1;
 }
 
-/* Fix for very small screens */
-@media (max-height: 500px) {
-  .Historymodal-content {
-    margin: 0.5rem auto;
-    min-height: calc(100vh - 1rem);
-  }
+.close-modal:hover {
+    opacity: 0.8;
 }
 
-/* Focus and Accessibility */
-.Historyfilter-group select:focus {
-  border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+/* Screen Styles */
+.modal-screen {
+    display: none;
 }
 
-.Historyfilter-btn:focus,
-.pagination-btn:focus,
-.export-btn:focus,
-.btn:focus {
-  outline: 2px solid #495057;
-  outline-offset: 2px;
+.modal-screen.active {
+    display: block;
 }
 
-/* Loading States */
-.Historyfilter-btn.loading,
-.pagination-btn.loading,
-.export-btn.loading {
-  opacity: 0.7;
-  cursor: not-allowed;
-  position: relative;
+/* PIN Verification Screen */
+.pin-verification-content {
+    padding: 20px 16px;
+    text-align: center;
+    background-color: #1a1a2e;
 }
 
-.Historyfilter-btn.loading::after,
-.pagination-btn.loading::after,
-.export-btn.loading::after {
-  content: '';
-  position: absolute;
-  width: 16px;
-  height: 16px;
-  margin: auto;
-  border: 2px solid transparent;
-  border-top-color: currentColor;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.pin-icon {
+    font-size: 2.5rem;
+    color: #4a6cf7;
+    margin-bottom: 15px;
+}
+
+.pin-verification-content h3 {
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+    color: #ffffff;
+}
+
+.pin-verification-content p {
+    color: #ece7e7;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+}
+
+.pin-input-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.pin-digit {
+    width: 45px;
+    height: 50px;
+    font-size: 1.3rem;
+    text-align: center;
+    border: 1.5px solid #ddd;
+    border-radius: 8px;
+    background-color: #1a1a2e;
+    transition: all 0.2s ease;
+}
+
+.pin-digit:focus {
+    border-color: #4a6cf7;
+    box-shadow: 0 0 0 2px rgba(74, 108, 247, 0.2);
+    outline: none;
+}
+
+.error-message {
+    color: #dc3545;
+    font-size: 0.85rem;
+    margin-bottom: 15px;
+    min-height: 18px;
+}
+
+/* Withdraw Form Screen */
+.withdraw-form-content {
+    padding: 16px;
+}
+
+.balance-info {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 16px;
+    border: 1px solid #eaeaea;
+}
+
+.balance-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+    font-size: 0.9rem;
+}
+
+.balance-item:last-child {
+    margin-bottom: 0;
+}
+
+.balance-label {
+    font-weight: 500;
+    color: #666;
+}
+
+.balance-value {
+    font-weight: 600;
+    color: #333;
+}
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 500;
+    color: #444;
+    font-size: 0.9rem;
+}
+
+input, select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1.5px solid #ddd;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+    background-color: #f9f9f9;
+}
+
+input:focus, select:focus {
+    border-color: #4a6cf7;
+    box-shadow: 0 0 0 2px rgba(74, 108, 247, 0.2);
+    outline: none;
+    background-color: #fff;
+}
+
+.input-note {
+    display: block;
+    font-size: 0.75rem;
+    color: #777;
+    margin-top: 4px;
+}
+
+.amount-preview {
+    background-color: #e9f0ff;
+    border-radius: 8px;
+    padding: 10px 12px;
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #d1e0ff;
+    font-size: 0.9rem;
+}
+
+#nairaAmount {
+    font-weight: 700;
+    font-size: 1rem;
+    color: #4a6cf7;
+}
+
+.btn {
+    display: inline-block;
+    font-weight: 500;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: 10px 16px;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    width: 100%;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #1a1a2e;
+    
+}
+
+.btn-primary:hover {
+    background-color:#1a1a2e;
+    
+}
+
+.btn-secondary {
+    color: #fff;
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+.btn-secondary:hover {
+    background-color: #333;
+    border-color: #333;
+}
+
+.btn-success {
+    color: #fff;
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+}
+
+.btn-sm {
+    padding: 5px 10px;
+    font-size: 0.8rem;
+    width: auto;
+}
+
+.btn:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+#verifyAccountBtn {
+    margin-top: 6px;
+}
+
+.fee-summary {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 16px;
+    border: 1px solid #eaeaea;
+    font-size: 0.9rem;
+    color: #333;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+}
+
+.summary-row.total {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px dashed #ddd;
+    font-weight: 700;
+    font-size: 0.95rem;
+}
+
+/* Processing Screen */
+.processing-content {
+    padding: 30px 16px;
+    text-align: center;
+}
+
+.loader {
+    border: 4px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 4px solid #4a6cf7;
+    width: 50px;
+    height: 50px;
+    margin: 0 auto 20px;
+    animation: spin 1.2s linear infinite;
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
-/* Table Responsive Enhancements */
-@media (max-width: 600px) {
-  .transaction-table {
-    font-size: 0.8rem;
-  }
-  
-  .transaction-table th:nth-child(5),
-  .transaction-table td:nth-child(5) {
-    display: none;
-  }
-}
-
-@media (max-width: 400px) {
-  .transaction-table th:nth-child(4),
-  .transaction-table td:nth-child(4) {
-    display: none;
-  }
-}
-
-/* Enhanced Button Animations */
-.Historyfilter-btn,
-.pagination-btn,
-.export-btn,
-.btn {
-  transform: translateY(0);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.Historyfilter-btn:active:not(:disabled),
-.pagination-btn:active:not(:disabled),
-.export-btn:active:not(:disabled),
-.btn:active:not(:disabled) {
-  transform: translateY(0);
-  transition: transform 0.1s;
-}
-
-/* Transaction Details Styling */
-.transaction-detail-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 0;
-  border-bottom: 1px solid #e9ecef;
-}
-
-.transaction-detail-item:last-child {
-  border-bottom: none;
-}
-
-.transaction-detail-label {
-  font-weight: 600;
-  color: #495057;
-}
-
-.transaction-detail-value {
-  font-weight: bold;
-  color: #28a745;
-}
-
-/* Reduced Motion Support */
-@media (prefers-reduced-motion: reduce) {
-  .transaction-modal,
-  .transaction-details-modal,
-  .Historymodal-content,
-  .Historyfilter-btn,
-  .pagination-btn,
-  .export-btn,
-  .btn,
-  .Historysummary-card,
-  .transaction-table tbody tr {
-    animation: none;
-    transition: none;
-  }
-  
-  .Historyfilter-btn:hover:not(:disabled),
-  .pagination-btn:hover:not(:disabled),
-  .export-btn:hover:not(:disabled),
-  .btn:hover:not(:disabled),
-  .Historysummary-card:hover,
-  .transaction-table tbody tr:hover {
-    transform: none;
-    box-shadow: initial;
-  }
-  
-  .close-History:hover {
-    transform: none;
-  }
-  
-  .loading-transactions i {
-    animation: none;
-  }
-}
-
-/* High Contrast Mode Support */
-@media (prefers-contrast: high) {
-  .Historymodal-content {
-    border: 3px solid #000;
-  }
-  
-  .transaction-table,
-  .Historyfilter-group select {
-    border-width: 3px;
-  }
-  
-  .Historyfilter-btn,
-  .pagination-btn,
-  .export-btn,
-  .btn {
-    border: 2px solid currentColor;
-  }
-}
-
-/* Print Styles */
-@media print {
-  .transaction-modal,
-  .transaction-details-modal {
-    position: static;
-    background: white;
-  }
-  
-  .Historymodal-content {
-    box-shadow: none;
-    border: 1px solid #000;
-    max-width: none;
-    width: 100%;
-  }
-  
-  .close-History,
-  .Historyfilter-btn,
-  .pagination-btn,
-  .export-btn {
-    display: none;
-  }
-  
-  .transaction-table {
-    border: 1px solid #000;
-  }
-  
-  .Historytransaction-filters,
-  .History-pagination,
-  .Historyexport-section {
-    display: none;
-  }
-}
-
-/* Keyboard Navigation Enhancement */
-.transaction-modal:focus-within,
-.transaction-details-modal:focus-within {
-  outline: none;
-}
-
-.Historyfilter-group select:focus,
-.Historyfilter-btn:focus,
-.pagination-btn:focus,
-.export-btn:focus {
-  z-index: 1;
-  position: relative;
-}
-
-/* Mobile Keyboard Adjustments */
-@media (max-height: 600px) and (max-width: 768px) {
-  .Historymodal-content {
-    height: 100vh;
-  }
-  
-  .Historytransaction-filters {
-    padding: 1rem 1rem 2rem 1rem;
-  }
-}
-
-/* Very Small Mobile Devices */
-@media (max-width: 320px) {
-  .Historymodal-header h2,
-  .modal-header h2 {
-    font-size: 1.1rem;
-  }
-  
-  .close-History {
-    width: 36px;
-    height: 36px;
-    font-size: 1.3rem;
-  }
-  
-  .transaction-table {
-    min-width: 500px;
-  }
-}
-
-/* Landscape Mobile Orientation */
-@media (max-height: 500px) and (orientation: landscape) {
-  .transaction-summary {
-    grid-template-columns: repeat(4, 1fr);
-    padding: 1rem;
-  }
-  
-  .Historysummary-card {
-    padding: 1rem;
-  }
-  
-  .Historysummary-card h4 {
-    font-size: 0.9rem;
-    margin-bottom: 0.5rem;
-  }
-  
-  .Historysummary-card p {
+.processing-content h3 {
     font-size: 1.2rem;
-  }
+    margin-bottom: 10px;
+    color: #333;
 }
 
-/* Scrollbar Styling for Desktop */
-@media (min-width: 769px) {
-  .transaction-table-container::-webkit-scrollbar {
-    height: 8px;
-  }
-  
-  .transaction-table-container::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 4px;
-  }
-  
-  .transaction-table-container::-webkit-scrollbar-thumb {
-    background: #c1c1c1;
-    border-radius: 4px;
-  }
-  
-  .transaction-table-container::-webkit-scrollbar-thumb:hover {
-    background: #a8a8a8;
-  }
+.processing-content p {
+    color: #666;
+    font-size: 0.9rem;
 }
 
+/* Success Screen */
+.success-content {
+    padding: 25px 16px;
+    text-align: center;
+}
 
+.success-icon {
+    font-size: 3rem;
+    color: #28a745;
+    margin-bottom: 15px;
+}
 
+.success-content h3 {
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.success-content p {
+    color: #666;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+}
+
+.transaction-details {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 16px;
+    border: 1px solid #eaeaea;
+    text-align: left;
+    font-size: 0.85rem;
+}
+
+.detail-row {
+    display: flex;
+    margin-bottom: 8px;
+}
+
+.detail-row:last-child {
+    margin-bottom: 0;
+}
+
+.detail-label {
+    font-weight: 500;
+    color: #666;
+    width: 40%;
+}
+
+.detail-value {
+    font-weight: 500;
+    color: #333;
+}
+
+.success-note {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 20px;
+    font-style: italic;
+}
+
+/* Error Screen */
+.error-content {
+    padding: 25px 16px;
+    text-align: center;
+}
+
+.error-icon {
+    font-size: 3rem;
+    color: #dc3545;
+    margin-bottom: 15px;
+}
+
+.error-content h3 {
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.error-content p {
+    color: #666;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+}
+
+.error-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.error-actions .btn {
+    flex: 1;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 480px) {
+    .modal-content {
+        width: 100%;
+        max-height: 90vh;
+    }
+    
+    .pin-digit {
+        width: 40px;
+        height: 45px;
+    }
+    
+    .error-actions {
+        flex-direction: column;
+        gap: 8px;
+    }
+}
 /* Game Portal Styles */
 .game-portal-container {
   position: fixed;
@@ -10833,20 +9343,20 @@ input:checked + .toggle-slider:before {
 
 <!-- Buy Coins Modal -->
 <div id="buyCoinsModal" class="buy-coins-modal">
-  <div class="buyCoins-modal-content">
-    <div class="buyCoins-modal-header">
+  <div class="modal-content">
+    <div class="modal-header">
       <h2>Buy Talent Coins</h2>
          <button class="close-buycoins" id="closebuycoinsmodal">&times;</button>
            
     </div>
     
-    <div class="buyCoins-modal-tabs">
-      <button class="buyCoins-tab-btn active" data-tab="buyTab">Buy Coins</button>
-      <button class="buyCoins-tab-btn" data-tab="confirmTab">Confirm Payment</button>
+    <div class="modal-tabs">
+      <button class="tab-btn active" data-tab="buyTab">Buy Coins</button>
+      <button class="tab-btn" data-tab="confirmTab">Confirm Payment</button>
     </div>
     
     <!-- Tab 1: Buy Coins -->
-    <div id="buyTab" class="buyCoins-tab-content active">
+    <div id="buyTab" class="tab-content active">
       <div class="coin-purchase-form">
         <h3>Select Coin Package</h3>
         <p class="coin-rate-info">1 Talent Coin = 15 Naira</p>
@@ -10855,62 +9365,62 @@ input:checked + .toggle-slider:before {
           <div class="package-option">
             <input type="radio" id="package1" name="coinPackage" value="1">
             <label for="package1">1 Talent Coin</label>
-            <span class="buyCoins-price">₦15</span>
+            <span class="price">₦15</span>
           </div>
           
-          <div class="buyCoins-package-option">
+          <div class="package-option">
             <input type="radio" id="package10" name="coinPackage" value="11">
             <label for="package10">10 + 1 Bonus Talent Coins</label>
-            <span class="buyCoins-price">₦150</span>
-            <span class="buyCoins-bonus-tag">+1 Bonus</span>
+            <span class="price">₦150</span>
+            <span class="bonus-tag">+1 Bonus</span>
           </div>
           
-          <div class="buyCoins-package-option">
+          <div class="package-option">
             <input type="radio" id="package50" name="coinPackage" value="55">
             <label for="package50">50 + 5 Bonus Talent Coins</label>
-            <span class="buyCoins-price">₦750</span>
-            <span class="buyCoins-bonus-tag">+5 Bonus</span>
+            <span class="price">₦750</span>
+            <span class="bonus-tag">+5 Bonus</span>
           </div>
           
-          <div class="buyCoins-package-option">
+          <div class="package-option">
             <input type="radio" id="package100" name="coinPackage" value="110">
             <label for="package100">100 + 10 Bonus Talent Coins</label>
-            <span class="buyCoins-price">₦1,500</span>
-            <span class="buyCoins-bonus-tag">+10 Bonus</span>
+            <span class="price">₦1,500</span>
+            <span class="bonus-tag">+10 Bonus</span>
           </div>
           
-          <div class="buyCoins-package-option">
+          <div class="package-option">
             <input type="radio" id="package200" name="coinPackage" value="220">
             <label for="package200">200 + 20 Bonus Talent Coins</label>
-            <span class="buyCoins-price">₦3,000</span>
-            <span class="buyCoins-bonus-tag">+20 Bonus</span>
+            <span class="price">₦3,000</span>
+            <span class="bonus-tag">+20 Bonus</span>
           </div>
           
-          <div class="buyCoins-package-option">
+          <div class="package-option">
             <input type="radio" id="package1000" name="coinPackage" value="1300">
             <label for="package1000">1000 + 300 Bonus Talent Coins</label>
-            <span class="buyCoins-price">₦15,000</span>
-            <span class="buyCoins-bonus-tag">+300 Bonus</span>
+            <span class="price">₦15,000</span>
+            <span class="bonus-tag">+300 Bonus</span>
           </div>
           
-          <div class="buyCoins-package-option">
+          <div class="package-option">
             <input type="radio" id="package2000" name="coinPackage" value="2600">
             <label for="package2000">2000 + 600 Bonus Talent Coins</label>
-            <span class="buyCoins-price">₦30,000</span>
-            <span class="buyCoins-bonus-tag">+600 Bonus</span>
+            <span class="price">₦30,000</span>
+            <span class="bonus-tag">+600 Bonus</span>
           </div>
         </div>
         
-        <div class="buyCoins-summary-section">
-          <div class="buyCoins-summary-row">
+        <div class="summary-section">
+          <div class="summary-row">
             <span>Selected Package:</span>
             <span id="selectedPackage">None</span>
           </div>
-          <div class="buyCoins-summary-row">
+          <div class="summary-row">
             <span>Total Coins:</span>
             <span id="totalCoins">0</span>
           </div>
-          <div class="buyCoins-summary-row">
+          <div class="summary-row">
             <span>Amount to Pay:</span>
             <span id="amountToPay">₦0</span>
           </div>
@@ -10925,18 +9435,18 @@ input:checked + .toggle-slider:before {
         <p>Please transfer the exact amount to the following account:</p>
         
         <div class="account-details">
-          <div class="buyCoins-detail-row">
-            <span class="buyCoins-detail-label">Account Name:</span>
-            <span class="buyCoins-detail-value">Rewarder Quest</span>
+          <div class="detail-row">
+            <span class="detail-label">Account Name:</span>
+            <span class="detail-value">Rewarder Quest</span>
           </div>
-          <div class="buyCoins-detail-row">
-            <span class="buyCoins-detail-label">Account Number (Opay):</span>
-            <span class="buyCoins-detail-value">9078139367</span>
-            <button class="buyCoins-copy-btn" data-copy="9078139367">Copy</button>
+          <div class="detail-row">
+            <span class="detail-label">Account Number (Opay):</span>
+            <span class="detail-value">9078139367</span>
+            <button class="copy-btn" data-copy="9078139367">Copy</button>
           </div>
-          <div class="buyCoins-detail-row">
-            <span class="buyCoins-detail-label">Amount:</span>
-            <span class="buyCoins-detail-value" id="transferAmount">₦0</span>
+          <div class="detail-row">
+            <span class="detail-label">Amount:</span>
+            <span class="detail-value" id="transferAmount">₦0</span>
           </div>
         </div>
         
@@ -10949,33 +9459,94 @@ input:checked + .toggle-slider:before {
     </div>
     
     <!-- Tab 2: Confirm Payment -->
-    <div id="confirmTab" class="buyCoins-tab-content">
+    <div id="confirmTab" class="tab-content">
       <div class="payment-confirmation-form">
         <h3>Confirm Your Payment</h3>
-        <p class="buyCoins-confirmation-info">Please fill in the details of your payment to verify your transaction.</p>
-        </div>
+        <p class="confirmation-info">Please fill in the details of your payment to verify your transaction.</p>
+        
         <form id="paymentConfirmationForm">
-          <div class="buyCoins-form-group">
+          <div class="form-group">
             <label for="fullName">Full Name</label>
             <input type="text" id="fullName" name="fullName" required>
           </div>
           
-          
+          <div class="form-group">
+            <label for="wallettag">@wallet tag</label>
+            <input type="text" id="walletTagInput" placeholder="yourname" maxlength="15">
+       <div id="tagStatus" class="tag-status"></div>
         
-
+        </div>
+        
+        </div>
           
-          <div class="buyCoins-form-group">
-            <label for="email">Email</label>
-            <input type="tel" id="email" name="email" required>
+          <div class="form-group">
+            <label for="phoneNumber">Phone Number</label>
+            <input type="tel" id="phoneNumber" name="phoneNumber" required>
           </div>
           
+          <div class="form-group">
+            <label for="bankName">Bank Used for Transfer</label>
+            <input type="text" id="bankName" name="bankName" required>
+          </div>
           
-          <div class="buyCoins-verification-notice">
+          <div class="form-group">
+            <label for="accountName">Account Name Used</label>
+            <input type="text" id="accountName" name="accountName" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="amountPaid">Amount Paid (₦)</label>
+            <input type="number" id="amountPaid" name="amountPaid" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="transactionReference">Transaction Reference/ID (if available)</label>
+            <input type="text" id="transactionReference" name="transactionReference">
+          </div>
+          
+          <div class="form-group">
+            <label for="additionalInfo">Additional Information</label>
+            <textarea id="additionalInfo" name="additionalInfo" rows="3"></textarea>
+          </div>
+          
+          <div class="verification-notice">
             <p>Talent Coins will be credited to your wallet within 1 to 30 minutes after successful verification.</p>
           </div>
-         
+          <div class="payment-proof-section">
+  <h3>Upload Payment Proof</h3>
+  <p class="section-description">
+    Please upload screenshots of your payment confirmation to verify your purchase.
+  </p>
+  
+  <div class="upload-container">
+    <div class="upload-item">
+      <label for="paymentProof1" class="upload-label">
+        <div class="upload-icon">
+          <i class="fas fa-upload"></i>
+        </div>
+        <span class="upload-text">Upload Screenshot 1</span>
+        <span class="upload-subtext">(Required)</span>
+      </label>
+      <input type="file" id="paymentProof1" class="file-input" accept="image/*" required>
+      <div class="preview-container" id="preview1Container">
+        <img id="preview1" class="image-preview hidden">
+        <button type="button" class="remove-btn" id="removeProof1">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+    </div>
     
   
+  <div class="upload-instructions">
+    <h4>Instructions:</h4>
+    <ul>
+      <li>Upload clear screenshots of your payment confirmation</li>
+      <li>Make sure the transaction details are clearly visible</li>
+      <li>Include transaction reference number if available</li>
+      <li>Supported formats: JPG, PNG, JPEG (Max size: 5MB)</li>
+    </ul>
+  </div>
+</div>
           <button type="submit" id="submitConfirmation" class="btn btn-primary">Submit Confirmation</button>
         </form>
       </div>
@@ -10995,198 +9566,198 @@ input:checked + .toggle-slider:before {
       </div>
     </div>
   </div>
+</div>
 
 <!-- Withdraw Modal (Add this to your existing HTML) -->
 <div id="withdrawModal" class="withdraw-modal">
-    <div class="withdraw-modal-content">
-        <!-- PIN Verification Screen -->
-        <div id="pinVerificationScreen" class="pinmodal-screen active">
-            <div class="withdraw-modal-header">
-                <h2>Verify PIN</h2>    
-                 <button class="close-withdraw-modal" id="closewithdrawmodal">&times;</button>
-           
-           </div>
-            <div class="pin-verification-content">
-                <div class="withdraw-pin-icon">
-                    <i class="fas fa-lock"></i>
-                </div>
-                <h3>Enter Your Wallet PIN</h3>
-                <p>Please enter your 4-digit wallet PIN to continue</p>
-                
-                <div class="pin-input-container">
-                    <input type="password" class="pin-digit" maxlength="1" inputmode="numeric" pattern="[0-9]*">
-                    <input type="password" class="pin-digit" maxlength="1" inputmode="numeric" pattern="[0-9]*">
-                    <input type="password" class="pin-digit" maxlength="1" inputmode="numeric" pattern="[0-9]*">
-                    <input type="password" class="pin-digit" maxlength="1" inputmode="numeric" pattern="[0-9]*">
-                </div>
-                
-                <div class="error-message" id="pinError"></div>
-                
-                <button id="verifyPinBtn" class="btn btn-primary">Verify PIN</button>
-            </div>
-        </div>
-        
-        <!-- Withdrawal Form Screen -->
-        <div id="withdrawFormScreen" class="withdrawmodal-screen">
-            <div class="withdraw-modal-header">
-                <h2>Withdraw Funds</h2>
-                   <button class="close-withdraw-modal" id="closewithdrawmodal">&times;</button>
-             
-            </div>
-            <div class="withdraw-form-content">
-              <div class="withdraw-balance-container">
-       
-                    <div class="withdraw-balance-item">
-                        <span class="balance-label">Talent Coin Balance:</span>
-                        <span class="balance-value" id="talentcoinBalance">0 TC</span>
-                    </div>
-                    <div class="withdraw-balance-item">
-                        <span class="balance-label">Naira Equivalent:</span>
-                        <span class="balance-value" id="nairaEquivalent">₦0</span>
-                    </div>
-                </div>
-
-                
-                <form id="withdrawForm">
-                    <div class="withdraw-form-group">
-                        <label for="withdrawAmount">Amount (Talent Coins)</label>
-                        <input type="number" id="withdrawAmount" name="withdrawAmount" min="10" step="1" required>
-                        <span class="input-note">Minimum withdrawal: 10 Talent Coins</span>
-                    </div>
-                    
-                    <div class="withdraw-amount-preview">
-                       <label for="nairaAmount">You will receive:</label>
-                        
-                       <span id="nairaAmount">₦0</span>
-                    </div>
-                    
-                    <div class="withdraw-form-group">
-                        <label for="bankSelect">Select Bank</label>
-                        <select id="bankSelect" name="bankSelect" required>
-                            <option value="">-- Select Bank --</option>
-                            <option value="access">Access Bank</option>
-                            <option value="firstbank">First Bank</option>
-                            <option value="gtb">Guaranty Trust Bank</option>
-                            <option value="zenith">Zenith Bank</option>
-                            <option value="uba">United Bank for Africa</option>
-                            <option value="stanbic">Stanbic IBTC Bank</option>
-                            <option value="fcmb">First City Monument Bank</option>
-                            <option value="fidelity">Fidelity Bank</option>
-                            <option value="ecobank">Ecobank</option>
-                            <option value="union">Union Bank</option>
-                            <option value="sterling">Sterling Bank</option>
-                            <option value="polaris">Polaris Bank</option>
-                            <option value="wema">Wema Bank</option>
-                            <option value="opay">OPay</option>
-                            <option value="palmpay">PalmPay</option>
-                            <option value="kuda">Kuda Bank</option>
-                            <option value="moniepoint">Moniepoint</option>
-                        </select>
-                    </div>
-                    
-                    <div class="withdraw-form-group">
-                        <label for="accountNumber">Account Number</label>
-                        <input type="text" id="accountNumber" name="accountNumber" pattern="[0-9]{10}" maxlength="10" inputmode="numeric" required>
-                        <span class="input-note">Enter a valid 10-digit account number</span>
-                    </div>
-                    
-                    <div class="withdraw-form-group">
-                        <label for="accountName">Account Name</label>
-                        <input type="text" id="accountName" name="accountName" readonly>
-                        <button type="button" id="verifyAccountBtn" class="btn btn-secondary btn-sm">Verify Account</button>
-                    </div>
-                    
-                    <div class="withdraw-fee-summary">
-                        <div class="withdraw-summary-row">
-                            <span>Withdrawal Amount:</span>
-                            <span id="withdraw-summaryAmount">0 TC</span>
-                        </div>
-                        <div class="withdraw-summary-row">
-                            <span>Processing Fee:</span>
-                            <span id="processingFee">0 TC</span>
-                        </div>
-                        <div class="withdraw-summary-row total">
-                            <span>Total Deduction:</span>
-                            <span id="totalDeduction">0 TC</span>
-                        </div>
-                    </div>
-                    
-                    <button type="submit" id="submitWithdrawBtn" class="btn btn-success" disabled>Withdraw Funds</button>
-                </form>
-            </div>
-        </div>
-        
-        <!-- Processing Screen -->
-        <div id="processingScreen" class="withdrawmodal-screen">
-            <div class="withdrawprocessing-content">
-                <div class="loader"></div>
-                <h3>Processing Your Withdrawal</h3>
-                <p>Please wait while we process your request...</p>
-            </div>
-        </div>
-        
-        <!-- Success Screen -->
-        <div id="successScreen" class="withdrawmodal-screen">
-            <div class="withdrawsuccess-content">
-                <div class="success-icon">
-                    <i class="fas fa-check-circle"></i>
-                </div>
-                <h3>Withdrawal Successful!</h3>
-                <p>Your withdrawal request has been processed successfully.</p>
-                
-                <div class="withdrawtransaction-details">
-                    <div class="withdrawdetail-row">
-                        <span class="withdrawdetail-label">Amount:</span>
-                        <span class="withdrawdetail-value" id="successAmount">0 TC (₦0)</span>
-                    </div>
-                    <div class="withdrawdetail-row">
-                        <span class="withdrawdetail-label">Account:</span>
-                        <span class="withdrawdetail-value" id="successAccount"></span>
-                    </div>
-                    <div class="withdrawdetail-row">
-                        <span class="withdrawdetail-label">Transaction ID:</span>
-                        <span class="withdrawdetail-value" id="transactionId"></span>
-                    </div>
-                    <div class="withdrawdetail-row">
-                        <span class="withdrawdetail-label">Date & Time:</span>
-                        <span class="withdrawdetail-value" id="transactionDate"></span>
-                    </div>
-                </div>
-                
-                <p class="success-note">The funds will be credited to your account within 1min to 5 mins.</p>
-                
-                <button id="closeSuccessBtn" class="btn btn-primary">Done</button>
-            </div>
-        </div>
-        
-        <!-- Error Screen -->
-        <div id="errorScreen" class="withdrawmodal-screen">
-            <div class="withdrawerror-content">
-                <div class="withdrawerror-icon">
-                    <i class="fas fa-exclamation-circle"></i>
-                </div>
-                <h3>Withdrawal Failed</h3>
-                <p id="withdrawerrorMessage">There was an error processing your withdrawal request.</p>
-                
-                <div class="withdrawerror-actions"> <button id="tryAgainBtn" class="btn btn-primary">Try Again</button>
-                    <button id="contactSupportBtn" class="btn btn-secondary">Contact Support</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    <div class="modal-content">
+        <!-- PIN Verification Screen -->
+        <div id="pinVerificationScreen" class="modal-screen active">
+            <div class="modal-header">
+                <h2>Verify PIN</h2>    
+                 <button class="close-modal" id="closewithdrawmodal">&times;</button>
+           
+           </div>
+            <div class="pin-verification-content">
+                <div class="pin-icon">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <h3>Enter Your Wallet PIN</h3>
+                <p>Please enter your 4-digit wallet PIN to continue</p>
+                
+                <div class="pin-input-container">
+                    <input type="password" class="pin-digit" maxlength="1" inputmode="numeric" pattern="[0-9]*">
+                    <input type="password" class="pin-digit" maxlength="1" inputmode="numeric" pattern="[0-9]*">
+                    <input type="password" class="pin-digit" maxlength="1" inputmode="numeric" pattern="[0-9]*">
+                    <input type="password" class="pin-digit" maxlength="1" inputmode="numeric" pattern="[0-9]*">
+                </div>
+                
+                <div class="error-message" id="pinError"></div>
+                
+                <button id="verifyPinBtn" class="btn btn-primary">Verify PIN</button>
+            </div>
+        </div>
+        
+        <!-- Withdrawal Form Screen -->
+        <div id="withdrawFormScreen" class="modal-screen">
+            <div class="modal-header">
+                <h2>Withdraw Funds</h2>
+                     <button class="close-modal" id="closewithdrawformscreen">&times;</button>
+           
+            </div>
+            <div class="withdraw-form-content">
+                <div class="balance-info">
+                    <div class="balance-item">
+                        <span class="balance-label">Available Balance:</span>
+                        <span class="balance-value" id="availableBalance">0 TC</span>
+                    </div>
+                    <div class="balance-item">
+                        <span class="balance-label">Naira Equivalent:</span>
+                        <span class="balance-value" id="nairaEquivalent">₦0</span>
+                    </div>
+                </div>
+                
+                <form id="withdrawForm">
+                    <div class="form-group">
+                        <label for="withdrawAmount">Amount (Talent Coins)</label>
+                        <input type="number" id="withdrawAmount" name="withdrawAmount" min="10" step="1" required>
+                        <span class="input-note">Minimum withdrawal: 10 Talent Coins</span>
+                    </div>
+                    
+                    <div class="amount-preview">
+                        <span>You will receive:</span>
+                        <span id="nairaAmount">₦0</span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="bankSelect">Select Bank</label>
+                        <select id="bankSelect" name="bankSelect" required>
+                            <option value="">-- Select Bank --</option>
+                            <option value="access">Access Bank</option>
+                            <option value="firstbank">First Bank</option>
+                            <option value="gtb">Guaranty Trust Bank</option>
+                            <option value="zenith">Zenith Bank</option>
+                            <option value="uba">United Bank for Africa</option>
+                            <option value="stanbic">Stanbic IBTC Bank</option>
+                            <option value="fcmb">First City Monument Bank</option>
+                            <option value="fidelity">Fidelity Bank</option>
+                            <option value="ecobank">Ecobank</option>
+                            <option value="union">Union Bank</option>
+                            <option value="sterling">Sterling Bank</option>
+                            <option value="polaris">Polaris Bank</option>
+                            <option value="wema">Wema Bank</option>
+                            <option value="opay">OPay</option>
+                            <option value="palmpay">PalmPay</option>
+                            <option value="kuda">Kuda Bank</option>
+                            <option value="moniepoint">Moniepoint</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="accountNumber">Account Number</label>
+                        <input type="text" id="accountNumber" name="accountNumber" pattern="[0-9]{10}" maxlength="10" inputmode="numeric" required>
+                        <span class="input-note">Enter a valid 10-digit account number</span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="accountName">Account Name</label>
+                        <input type="text" id="accountName" name="accountName" readonly>
+                        <button type="button" id="verifyAccountBtn" class="btn btn-secondary btn-sm">Verify Account</button>
+                    </div>
+                    
+                    <div class="fee-summary">
+                        <div class="summary-row">
+                            <span>Withdrawal Amount:</span>
+                            <span id="summaryAmount">0 TC</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Processing Fee:</span>
+                            <span id="processingFee">0 TC</span>
+                        </div>
+                        <div class="summary-row total">
+                            <span>Total Deduction:</span>
+                            <span id="totalDeduction">0 TC</span>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" id="submitWithdrawBtn" class="btn btn-success" disabled>Withdraw Funds</button>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Processing Screen -->
+        <div id="processingScreen" class="modal-screen">
+            <div class="processing-content">
+                <div class="loader"></div>
+                <h3>Processing Your Withdrawal</h3>
+                <p>Please wait while we process your request...</p>
+            </div>
+        </div>
+        
+        <!-- Success Screen -->
+        <div id="successScreen" class="modal-screen">
+            <div class="success-content">
+                <div class="success-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h3>Withdrawal Successful!</h3>
+                <p>Your withdrawal request has been processed successfully.</p>
+                
+                <div class="transaction-details">
+                    <div class="detail-row">
+                        <span class="detail-label">Amount:</span>
+                        <span class="detail-value" id="successAmount">0 TC (₦0)</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Account:</span>
+                        <span class="detail-value" id="successAccount"></span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Transaction ID:</span>
+                        <span class="detail-value" id="transactionId"></span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Date & Time:</span>
+                        <span class="detail-value" id="transactionDate"></span>
+                    </div>
+                </div>
+                
+                <p class="success-note">The funds will be credited to your account within 1min to 5 mins.</p>
+                
+                <button id="closeSuccessBtn" class="btn btn-primary">Done</button>
+            </div>
+        </div>
+        
+        <!-- Error Screen -->
+        <div id="errorScreen" class="modal-screen">
+            <div class="error-content">
+                <div class="error-icon">
+                    <i class="fas fa-exclamation-circle"></i>
+                </div>
+                <h3>Withdrawal Failed</h3>
+                <p id="errorMessage">There was an error processing your withdrawal request.</p>
+                
+                <div class="error-actions">
+                    <button id="tryAgainBtn" class="btn btn-primary">Try Again</button>
+                    <button id="contactSupportBtn" class="btn btn-secondary">Contact Support</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
 
 <!-- Transaction History Modal -->
 <div id="transactionHistoryModal" class="transaction-modal">
-    <div class="Historymodal-content">
-        <div class="Historymodal-header">
+    <div class="modal-content">
+        <div class="modal-header">
             <h2>Transaction History</h2>
-                 <button class="close-History" id="closetransactionhistorymodal">&times;</button>
+                 <button class="close-modal" id="closetransactionhistorymodal">&times;</button>
            
         </div>
         
-        <div class="Historytransaction-filters">
-            <div class="Historyfilter-group">
+        <div class="transaction-filters">
+            <div class="filter-group">
                 <label for="transactionType">Type:</label>
                 <select id="transactionType">
                     <option value="all">All Transactions</option>
@@ -11197,7 +9768,7 @@ input:checked + .toggle-slider:before {
                 </select>
             </div>
             
-            <div class="Historyfilter-group">
+            <div class="filter-group">
                 <label for="dateRange">Period:</label>
                 <select id="dateRange">
                     <option value="all">All Time</option>
@@ -11208,7 +9779,7 @@ input:checked + .toggle-slider:before {
                 </select>
             </div>
             
-            <div class="Historyfilter-group">
+            <div class="filter-group">
                 <label for="transactionStatus">Status:</label>
                 <select id="transactionStatus">
                     <option value="all">All Status</option>
@@ -11218,23 +9789,23 @@ input:checked + .toggle-slider:before {
                 </select>
             </div>
             
-            <button id="applyFilters" class="Historyfilter-btn">Apply Filters</button>
+            <button id="applyFilters" class="filter-btn">Apply Filters</button>
         </div>
         
         <div class="transaction-summary">
-            <div class="Historysummary-card">
+            <div class="summary-card">
                 <h4>Total Purchases</h4>
                 <p id="totalPurchases">0 TC</p>
             </div>
-            <div class="Historysummary-card">
+            <div class="summary-card">
                 <h4>Total Withdrawals</h4>
                 <p id="totalWithdrawals">0 TC</p>
             </div>
-            <div class="Historysummary-card">
+            <div class="summary-card">
                 <h4>Total Earnings</h4>
                 <p id="totalEarnings">0 TC</p>
             </div>
-            <div class="Historysummary-card">
+            <div class="summary-card">
                 <h4>Total Commissions</h4>
                 <p id="totalCommissions">0 TC</p>
             </div>
@@ -11268,7 +9839,7 @@ input:checked + .toggle-slider:before {
             </div>
         </div>
         
-        <div class="History-pagination">
+        <div class="pagination">
             <button id="prevPage" class="pagination-btn" disabled>
                 <i class="fas fa-chevron-left"></i> Previous
             </button>
@@ -11278,7 +9849,7 @@ input:checked + .toggle-slider:before {
             </button>
         </div>
         
-        <div class="Historyexport-section">
+        <div class="export-section">
             <button id="exportCSV" class="export-btn">
                 <i class="fas fa-file-csv"></i> Export CSV
             </button>
@@ -11291,10 +9862,10 @@ input:checked + .toggle-slider:before {
 
 <!-- Transaction Details Modal -->
 <div id="transactionDetailsModal" class="transaction-details-modal">
-    <div class="Historymodal-content">
+    <div class="modal-content">
         <div class="modal-header">
             <h2>Transaction Details</h2>
-                 <button class="close-History" id="closetransactiondetailsmodal">&times;</button>
+                 <button class="close-modal" id="closetransactiondetailsmodal">&times;</button>
            
         </div>
         
@@ -11302,7 +9873,7 @@ input:checked + .toggle-slider:before {
             <!-- Transaction details will be loaded here -->
         </div>
         
-        <div class="Historymodal-footer">
+        <div class="modal-footer">
             <button id="closeDetailsBtn" class="btn btn-secondary">Close</button>
         </div>
     </div>
@@ -17075,96 +15646,8 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
- // Mobile Modal Scroll Fix - Scrolling and Closing Only
-function openBuyCoinsModal() {
-  const modal = document.getElementById('buyCoinsModal');
-  modal.style.display = 'block';
-  
-  // Scroll to top of modal
-  modal.scrollTop = 0;
-  
-  // For mobile devices, prevent body scroll
-  if (window.innerWidth <= 768) {
-    document.body.style.overflow = 'hidden';
-    document.body.style.position = 'fixed';
-    document.body.style.width = '100%';
-    document.body.style.top = `-${window.scrollY}px`;
-  }
-}
 
-function closeBuyCoinsModal() {
-  const modal = document.getElementById('buyCoinsModal');
-  modal.style.display = 'none';
-  
-  // Restore body scroll on mobile
-  if (window.innerWidth <= 768) {
-    const scrollY = document.body.style.top;
-    document.body.style.overflow = '';
-    document.body.style.position = '';
-    document.body.style.width = '';
-    document.body.style.top = '';
-    window.scrollTo(0, parseInt(scrollY || '0') * -1);
-  }
-}
 
-document.addEventListener('DOMContentLoaded', function() {
-  const modal = document.getElementById('buyCoinsModal');
-  const modalContent = document.querySelector('.buyCoins-modal-content');
-  
-  if (modal && modalContent) {
-    // Prevent modal from closing when touching content
-    modalContent.addEventListener('touchstart', function(e) {
-      e.stopPropagation();
-    });
-    
-    modalContent.addEventListener('touchmove', function(e) {
-      e.stopPropagation();
-    });
-    
-    // Close modal when touching backdrop
-    modal.addEventListener('touchstart', function(e) {
-      if (e.target === modal) {
-        closeBuyCoinsModal();
-      }
-    });
-    
-    // Close modal when clicking backdrop
-    modal.addEventListener('click', function(e) {
-      if (e.target === modal) {
-        closeBuyCoinsModal();
-      }
-    });
-    
-    // Resize handler for orientation changes
-    window.addEventListener('orientationchange', function() {
-      setTimeout(function() {
-        if (modal.style.display === 'block') {
-          modal.scrollTop = 0;
-        }
-      }, 100);
-    });
-  }
-  
-  // Close button event listeners
-  const closeButtons = document.querySelectorAll('.close-buycoins, #closeModalBtn');
-  closeButtons.forEach(function(btn) {
-    btn.addEventListener('click', closeBuyCoinsModal);
-  });
-});
-
-// Handle escape key for closing
-document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') {
-    const modal = document.getElementById('buyCoinsModal');
-    if (modal && modal.style.display === 'block') {
-      closeBuyCoinsModal();
-    }
-  }
-});
-
-// Export functions for global use
-window.openBuyCoinsModal = openBuyCoinsModal;
-window.closeBuyCoinsModal = closeBuyCoinsModal;
 
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -17277,272 +15760,6 @@ document.addEventListener('DOMContentLoaded', function() {
         return hash.toString();
     }
 });
-
-// Mobile Modal Scroll Fix - Scrolling and Closing Only
-function openWithdrawModal() {
-  const modal = document.getElementById('withdrawModal');
-  modal.style.display = 'block';
-  
-  // Scroll to top of modal
-  modal.scrollTop = 0;
-  
-  // For mobile devices, prevent body scroll
-  if (window.innerWidth <= 768) {
-    document.body.style.overflow = 'hidden';
-    document.body.style.position = 'fixed';
-    document.body.style.width = '100%';
-    document.body.style.top = `-${window.scrollY}px`;
-  }
-}
-
-function closeWithdrawModal() {
-  const modal = document.getElementById('withdrawModal');
-  modal.style.display = 'none';
-  
-  // Restore body scroll on mobile
-  if (window.innerWidth <= 768) {
-    const scrollY = document.body.style.top;
-    document.body.style.overflow = '';
-    document.body.style.position = '';
-    document.body.style.width = '';
-    document.body.style.top = '';
-    window.scrollTo(0, parseInt(scrollY || '0') * -1);
-  }
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-  const modal = document.getElementById('withdrawModal');
-  const modalContent = document.querySelector('.withdraw-modal-content');
-  
-  if (modal && modalContent) {
-    // Prevent modal from closing when touching content
-    modalContent.addEventListener('touchstart', function(e) {
-      e.stopPropagation();
-    });
-    
-    modalContent.addEventListener('touchmove', function(e) {
-      e.stopPropagation();
-    });
-    
-    // Close modal when touching backdrop
-    modal.addEventListener('touchstart', function(e) {
-      if (e.target === modal) {
-        closeWithdrawModal();
-      }
-    });
-    
-    // Close modal when clicking backdrop
-    modal.addEventListener('click', function(e) {
-      if (e.target === modal) {
-        closeWithdrawModal();
-      }
-    });
-    
-    // Resize handler for orientation changes
-    window.addEventListener('orientationchange', function() {
-      setTimeout(function() {
-        if (modal.style.display === 'block') {
-          modal.scrollTop = 0;
-        }
-      }, 100);
-    });
-  }
-  
-  // Close button event listeners
-  const closeButtons = document.querySelectorAll('.close-withdraw-modal, .close-modal, #closewithdrawmodal, #closewithdrawformscreen');
-  closeButtons.forEach(function(btn) {
-    btn.addEventListener('click', closeWithdrawModal);
-  });
-});
-
-// Handle escape key for closing
-document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') {
-    const modal = document.getElementById('withdrawModal');
-    if (modal && modal.style.display === 'block') {
-      closeWithdrawModal();
-    }
-  }
-});
-
-// Export functions for global use
-window.openWithdrawModal = openWithdrawModal;
-window.closeWithdrawModal = closeWithdrawModal;
-
-
-// Mobile Modal Scroll Fix - Scrolling and Closing Only
-function openTransactionHistoryModal() {
-  const modal = document.getElementById('transactionHistoryModal');
-  modal.style.display = 'block';
-  
-  // Scroll to top of modal
-  modal.scrollTop = 0;
-  
-  // For mobile devices, prevent body scroll
-  if (window.innerWidth <= 768) {
-    document.body.style.overflow = 'hidden';
-    document.body.style.position = 'fixed';
-    document.body.style.width = '100%';
-    document.body.style.top = `-${window.scrollY}px`;
-  }
-}
-
-function closeTransactionHistoryModal() {
-  const modal = document.getElementById('transactionHistoryModal');
-  modal.style.display = 'none';
-  
-  // Restore body scroll on mobile
-  if (window.innerWidth <= 768) {
-    const scrollY = document.body.style.top;
-    document.body.style.overflow = '';
-    document.body.style.position = '';
-    document.body.style.width = '';
-    document.body.style.top = '';
-    window.scrollTo(0, parseInt(scrollY || '0') * -1);
-  }
-}
-
-function openTransactionDetailsModal() {
-  const modal = document.getElementById('transactionDetailsModal');
-  modal.style.display = 'block';
-  
-  // Scroll to top of modal
-  modal.scrollTop = 0;
-  
-  // For mobile devices, prevent body scroll
-  if (window.innerWidth <= 768) {
-    document.body.style.overflow = 'hidden';
-    document.body.style.position = 'fixed';
-    document.body.style.width = '100%';
-    document.body.style.top = `-${window.scrollY}px`;
-  }
-}
-
-function closeTransactionDetailsModal() {
-  const modal = document.getElementById('transactionDetailsModal');
-  modal.style.display = 'none';
-  
-  // Restore body scroll on mobile
-  if (window.innerWidth <= 768) {
-    const scrollY = document.body.style.top;
-    document.body.style.overflow = '';
-    document.body.style.position = '';
-    document.body.style.width = '';
-    document.body.style.top = '';
-    window.scrollTo(0, parseInt(scrollY || '0') * -1);
-  }
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-  const historyModal = document.getElementById('transactionHistoryModal');
-  const historyModalContent = document.querySelector('.Historymodal-content');
-  const detailsModal = document.getElementById('transactionDetailsModal');
-  const detailsModalContent = document.querySelectorAll('.Historymodal-content')[1];
-  
-  // Transaction History Modal Event Handlers
-  if (historyModal && historyModalContent) {
-    // Prevent modal from closing when touching content
-    historyModalContent.addEventListener('touchstart', function(e) {
-      e.stopPropagation();
-    });
-    
-    historyModalContent.addEventListener('touchmove', function(e) {
-      e.stopPropagation();
-    });
-    
-    // Close modal when touching backdrop
-    historyModal.addEventListener('touchstart', function(e) {
-      if (e.target === historyModal) {
-        closeTransactionHistoryModal();
-      }
-    });
-    
-    // Close modal when clicking backdrop
-    historyModal.addEventListener('click', function(e) {
-      if (e.target === historyModal) {
-        closeTransactionHistoryModal();
-      }
-    });
-    
-    // Resize handler for orientation changes
-    window.addEventListener('orientationchange', function() {
-      setTimeout(function() {
-        if (historyModal.style.display === 'block') {
-          historyModal.scrollTop = 0;
-        }
-      }, 100);
-    });
-  }
-  
-  // Transaction Details Modal Event Handlers
-  if (detailsModal && detailsModalContent) {
-    // Prevent modal from closing when touching content
-    detailsModalContent.addEventListener('touchstart', function(e) {
-      e.stopPropagation();
-    });
-    
-    detailsModalContent.addEventListener('touchmove', function(e) {
-      e.stopPropagation();
-    });
-    
-    // Close modal when touching backdrop
-    detailsModal.addEventListener('touchstart', function(e) {
-      if (e.target === detailsModal) {
-        closeTransactionDetailsModal();
-      }
-    });
-    
-    // Close modal when clicking backdrop
-    detailsModal.addEventListener('click', function(e) {
-      if (e.target === detailsModal) {
-        closeTransactionDetailsModal();
-      }
-    });
-    
-    // Resize handler for orientation changes
-    window.addEventListener('orientationchange', function() {
-      setTimeout(function() {
-        if (detailsModal.style.display === 'block') {
-          detailsModal.scrollTop = 0;
-        }
-      }, 100);
-    });
-  }
-  
-  // Close button event listeners for Transaction History Modal
-  const historyCloseButtons = document.querySelectorAll('.close-History, #closetransactionhistorymodal');
-  historyCloseButtons.forEach(function(btn) {
-    btn.addEventListener('click', closeTransactionHistoryModal);
-  });
-  
-  // Close button event listeners for Transaction Details Modal
-  const detailsCloseButtons = document.querySelectorAll('#closetransactiondetailsmodal, #closeDetailsBtn');
-  detailsCloseButtons.forEach(function(btn) {
-    btn.addEventListener('click', closeTransactionDetailsModal);
-  });
-});
-
-// Handle escape key for closing
-document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') {
-    const historyModal = document.getElementById('transactionHistoryModal');
-    const detailsModal = document.getElementById('transactionDetailsModal');
-    
-    if (historyModal && historyModal.style.display === 'block') {
-      closeTransactionHistoryModal();
-    }
-    
-    if (detailsModal && detailsModal.style.display === 'block') {
-      closeTransactionDetailsModal();
-    }
-  }
-});
-
-// Export functions for global use
-window.openTransactionHistoryModal = openTransactionHistoryModal;
-window.closeTransactionHistoryModal = closeTransactionHistoryModal;
-window.openTransactionDetailsModal = openTransactionDetailsModal;
-window.closeTransactionDetailsModal = closeTransactionDetailsModal;
 
 
 // JavaScript to fix the Font Awesome icon and handle the game portal
