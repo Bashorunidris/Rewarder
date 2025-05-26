@@ -179,7 +179,6 @@
         padding: 12px;
         border-radius: 8px;
         border: 1px solid var(--border-color);
-        background-color: var(--white);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -187,9 +186,6 @@
         transition: all 0.3s ease;
     }
     
-    .social-btn:hover {
-        background-color: #f5f5f5;
-    }
     
     .social-btn img {
         width: 20px;
@@ -197,6 +193,11 @@
         margin-right: 10px;
     }
     
+    .social-btn span {
+        font-size: 1rem;
+        color: var(--text-color);
+        font-weight: 500;
+    }
     .divider {
         display: flex;
         align-items: center;
@@ -7776,6 +7777,179 @@ input:checked + .toggle-slider:before {
     transform: translateX(26px);
 }
 
+/* Payment Message Card Styles */
+.payment-message-card {
+    margin-top: 15px;
+    padding: 12px 15px;
+    border-radius: 6px;
+    border-left: 4px solid;
+    animation: slideIn 0.3s ease-in-out;
+}
+
+.payment-message-card.success {
+    background-color: #d4edda;
+    border-left-color: #28a745;
+    color: #155724;
+}
+
+.payment-message-card.error {
+    background-color: #f8d7da;
+    border-left-color: #dc3545;
+    color: #721c24;
+}
+
+.payment-message-card .message-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.payment-message-card .message-content i {
+    font-size: 16px;
+}
+
+.payment-message-card.success .message-content i {
+    color: #28a745;
+}
+
+.payment-message-card.error .message-content i {
+    color: #dc3545;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* Additional CSS for new elements */
+.pricing-info, .balance-info {
+    background-color: #f8f9fa;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 15px;
+    margin-top: 10px;
+}
+
+.pricing-item, .balance-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.pricing-item:last-child, .balance-item:last-child {
+    margin-bottom: 0;
+}
+
+.pricing-item span, .balance-item span {
+    color: #4a6cf7;
+    font-weight: 600;
+}
+
+.conversion-rate {
+    border-top: 1px solid #e0e0e0;
+    padding-top: 8px;
+    margin-top: 8px;
+    justify-content: center;
+}
+
+.conversion-rate small {
+    color: #6c757d;
+    font-style: italic;
+}
+
+/* Textarea styles */
+textarea.form-control {
+    resize: vertical;
+    min-height: 80px;
+}
+/* Close Event Creator Modal Button */
+.close-eventCreatorModal {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    font-weight: 700;
+    color: #6c757d;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    z-index: 10;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    padding: 0;
+}
+
+.close-eventCreatorModal:hover {
+    color: #dc3545;
+    background-color: rgba(220, 53, 69, 0.1);
+}
+
+.close-eventCreatorModal:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.2);
+}
+
+.close-eventCreatorModal:active {
+    transform: scale(0.95);
+}
+
+/* Make sure modal header has relative positioning for absolute positioning of close button */
+.event-creator-modal .modal-header {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 1px solid #e0e0e0;
+    background-color: #f8f9fa;
+    border-radius: 10px 10px 0 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+    .close-eventCreatorModal {
+        top: 12px;
+        right: 15px;
+        font-size: 20px;
+        width: 26px;
+        height: 26px;
+    }
+}
+
+/* Word count styling */
+#wordCount {
+    font-weight: 600;
+    color: #6c757d;
+}
+
+#wordCount.valid {
+    color: #28a745;
+}
+
+#wordCount.invalid {
+    color: #dc3545;
+}
+
+/* Disabled state for create button */
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
 /* Range Slider */
 .range-slider-container {
     display: flex;
@@ -7892,6 +8066,16 @@ input:checked + .toggle-slider:before {
 .add-rule-btn i {
     margin-right: 8px;
     color: #4a6cf7;
+}
+/* Paid button state */
+.btn.paid {
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+.btn.paid:hover {
+    background-color: #28a745 !important;
+    color: white !important;
 }
 
 /* Form Actions */
@@ -9460,7 +9644,7 @@ input:checked + .toggle-slider:before {
                     
                     <div class="social-login">
                         <button class="social-btn google-btn">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google">
+                           <img src="https://i.ibb.co/wZqXcy6z/thegogglelogo.png" alt="thegogglelogo" border="0">
                             <span>Continue with Google</span>
                         </button>
                     </div>
@@ -9502,7 +9686,8 @@ input:checked + .toggle-slider:before {
                     
                     <div class="social-login">
                         <button class="social-btn google-btn">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google">
+                           <img src="https://i.ibb.co/wZqXcy6z/thegogglelogo.png" alt="thegogglelogo" border="0">
+                          
                             <span>Continue with Google</span>
                         </button>
                     </div>
@@ -9562,211 +9747,8 @@ input:checked + .toggle-slider:before {
         </div>
     </div>
 
-            
-             <!-- Main Dashboard -->
-    <div class="dashboard hidden" id="dashboard">
-            <main class="dashboard-content">
-            <header class="app-header">
-                <div class="header-left">
-                    <div class="app-logo">
-                        <i class="fas fa-headset"></i>
-                    </div>
-                    <h1>Support Dashboard</h1>
-                </div>
-                
-                <div class="header-right">
-                    <div class="moderator-info">
-                        <span class="moderator-name">Moderator</span>
-                        <span class="status-badge online">Online</span>
-                    </div>
-                    <button class="icon-btn" id="logoutBtn">
-                        <i class="fas fa-sign-out-alt"></i>
-                    </button>
-                </div>
-            </header>
-            
-            <!-- Section Navigation -->
-            <div class="section-navigation">
-                <a href="#overview" class="active">Overview</a>
-                <a href="#buyCoinSupport">Buy Coin Support</a>
-                <a href="#withdrawSupport">Withdraw Support</a>
-                <a href="#transferSupport">Transfer Support</a>
-                <a href="#talentCoinDispenser">Talent Coin Dispenser</a>
-                <a href="#feesReporter">Fees Reporter</a>
-            </div>
        
-
-<!-- Buy Coin Support Section -->
-<div class="admin-section buy-coin-support">
-    <div class="section-header">
-      <h2>Buy Coin Support</h2>
-      <div class="pending-indicator">
-        <span class="pending-count">3</span>
-      </div>
-    </div>
-  
-    <!-- Request List -->
-    <div class="request-list-container">
-      <div class="request-list-header">
-        <div class="header-item">Request ID</div>
-        <div class="header-item">Username</div>
-        <div class="header-item">Amount</div>
-        <div class="header-item">Date</div>
-        <div class="header-item">Actions</div>
-      </div>
-      
-      <div class="request-list">
-        <!-- Request Item 1 -->
-        <div class="request-item" data-request-id="12">
-          <div class="request-data">#12</div>
-          <div class="request-data">johndoe</div>
-          <div class="request-data">₦1,500 (110 TC)</div>
-          <div class="request-data">2023-05-15 14:30</div>
-          <div class="request-actions">
-            <button class="view-btn" data-request-id="12">View</button>
-            <div class="action-buttons">
-              <button class="action-btn approve" title="Approve Request">✓</button>
-              <button class="action-btn reject" title="Reject Request">×</button>
-              <button class="action-btn message" title="Send Message">□</button>
-            </div>
-          </div>
-        </div>
-        
-        <!-- Request Item 2 -->
-        <div class="request-item" data-request-id="11">
-          <div class="request-data">#11</div>
-          <div class="request-data">sarahsmith</div>
-          <div class="request-data">₦3,000 (220 TC)</div>
-          <div class="request-data">2023-05-15 13:45</div>
-          <div class="request-actions">
-            <button class="view-btn" data-request-id="11">View</button>
-            <div class="action-buttons">
-              <button class="action-btn approve" title="Approve Request">✓</button>
-              <button class="action-btn reject" title="Reject Request">×</button>
-              <button class="action-btn message" title="Send Message">□</button>
-            </div>
-          </div>
-        </div>
-        
-        <!-- Request Item 3 -->
-        <div class="request-item" data-request-id="10">
-          <div class="request-data">#10</div>
-          <div class="request-data">mikebrown</div>
-          <div class="request-data">₦15,000 (1300 TC)</div>
-          <div class="request-data">2023-05-15 12:20</div>
-          <div class="request-actions">
-            <button class="view-btn" data-request-id="10">View</button>
-            <div class="action-buttons">
-              <button class="action-btn approve" title="Approve Request">✓</button>
-              <button class="action-btn reject" title="Reject Request">×</button>
-              <button class="action-btn message" title="Send Message">□</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  
-    <!-- Request Detail Popup -->
-    <div id="requestDetailPopup" class="request-detail-popup">
-      <div class="popup-content">
-        <div class="popup-header">
-          <h3>Buy coin request #<span id="popupRequestId">12</span></h3>
-          <div class="popup-controls">
-            <button id="backButton" class="popup-control-btn">B</button>
-            <button id="closePopup" class="popup-control-btn">X</button>
-          </div>
-        </div>
-        
-        <div class="request-details">
-          <div class="detail-row">
-            <div class="detail-label">Date:</div>
-            <div class="detail-value" id="popupDate">2023-05-15 14:30</div>
-          </div>
-          
-          <div class="detail-row">
-            <div class="detail-label">Username:</div>
-            <div class="detail-value" id="popupUsername">johndoe</div>
-          </div>
-          
-          <div class="detail-row">
-            <div class="detail-label">Wallet Tag:</div>
-            <div class="detail-value" id="popupWalletTag">JD123456</div>
-          </div>
-          
-          <div class="detail-row">
-            <div class="detail-label">Amount:</div>
-            <div class="detail-value" id="popupAmount">₦1,500 (110 TC)</div>
-          </div>
-          
-          <div class="detail-row">
-            <div class="detail-label">User Talent Coin Balance:</div>
-            <div class="detail-value" id="popupBalance">25 TC</div>
-            <div class="balance-note">User's Talent Coin balance when Talent Coin was requested</div>
-          </div>
-          
-          <div class="detail-row">
-            <div class="detail-label">Status:</div>
-            <div class="detail-value status-indicator" id="popupStatus">
-              <span class="status-pending">Pending</span>
-              <!-- Will be replaced with accepted/rejected when appropriate -->
-            </div>
-          </div>
-        </div>
-        
-        <div class="screenshot-section">
-          <h4>Payment Proof</h4>
-          <div class="screenshots">
-            <div class="screenshot-container">
-              <div class="screenshot" id="screenshot1">
-                <span>Shot 1</span>
-              </div>
-            </div>
-            <div class="screenshot-container">
-              <div class="screenshot" id="screenshot2">
-                <span>Shot 2</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <div class="popup-actions">
-          <div class="action-note">
-            <p>Please verify the payment details before taking action.</p>
-          </div>
-          <div class="action-buttons-large">
-            <button id="popupApproveBtn" class="action-btn-large approve">Approve Request</button>
-            <button id="popupRejectBtn" class="action-btn-large reject">Reject Request</button>
-            <button id="popupMessageBtn" class="action-btn-large message">Send Message</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <!-- Confirmation Dialog -->
-    <div id="confirmationDialog" class="confirmation-dialog">
-      <div class="dialog-content">
-        <h3 id="confirmationTitle">Confirm Action</h3>
-        <p id="confirmationMessage">Are you sure you want to approve this request?</p>
-        <div class="dialog-buttons">
-          <button id="confirmYes" class="dialog-btn confirm">Yes</button>
-          <button id="confirmNo" class="dialog-btn cancel">No</button>
-        </div>
-      </div>
-    </div>
-    
-    <!-- Success Message -->
-    <div id="successMessage" class="success-message">
-      <div class="message-content">
-        <div class="success-icon">✓</div>
-        <h3 id="successTitle">Request Approved</h3>
-        <p id="successMessage">The user has been credited with 110 Talent Coins.</p>
-        <button id="successClose" class="message-btn">Close</button>
-      </div>
-    </div>
-  </div>
-    
-        </main>
-    </div>     
+   
 
     <!-- Dashboard Page -->
 <div class="dashboard-page" id="dashboardPage">
@@ -11265,22 +11247,35 @@ input:checked + .toggle-slider:before {
 </div>
 
 
-       <!-- Event Creator Modal -->
+                    
+<!-- Event Creator Modal -->
 <div id="eventCreatorModal" class="event-creator-modal">
     <div class="modal-content">
         <div class="modal-header">
             <h2>Create New Event</h2>
-            <span class="close-modal">&times;</span>
+        <button class="close-eventCreatorModal">&times;</button>
+        
         </div>
-        
+                
         <div class="modal-body">
             <form id="eventCreatorForm" class="event-creator-form">
                 <!-- Basic Information -->
                 <div class="form-group">
                     <label for="eventName">Event Name</label>
-                                        <input type="text" id="eventName" name="eventName" class="form-control" placeholder="Enter a catchy name for your event" required>
+                    <input type="text" id="eventName" name="eventName" class="form-control" placeholder="Enter a catchy name for your event" required>
                 </div>
-                
+
+                <!-- Event Description (Added to top) -->
+                <div class="form-group">
+                    <label for="eventDescription">Event Description</label>
+                    <textarea id="eventDescription" name="eventDescription" class="form-control" 
+                              placeholder="Describe your event in detail (50-85 words minimum)" 
+                              rows="4" required></textarea>
+                    <div class="form-text">
+                        <span id="wordCount">0</span> words (minimum 50, maximum 85)
+                    </div>
+                </div>
+                                
                 <!-- Accordion Sections -->
                 <!-- Background Section -->
                 <div class="accordion-section">
@@ -11298,7 +11293,7 @@ input:checked + .toggle-slider:before {
                                 </select>
                             </div>
                         </div>
-                        
+                                                
                         <div id="imageUploadOption">
                             <div class="form-group">
                                 <div class="image-upload">
@@ -11310,7 +11305,7 @@ input:checked + .toggle-slider:before {
                                 <div class="image-preview" id="imagePreview"></div>
                             </div>
                         </div>
-                        
+                                                
                         <div id="colorPickerOption" style="display: none;">
                             <div class="form-group">
                                 <div class="color-picker">
@@ -11321,48 +11316,81 @@ input:checked + .toggle-slider:before {
                         </div>
                     </div>
                 </div>
-                
-                <!-- Category Section -->
+                                
+                <!-- Category Section (Modified) -->
                 <div class="accordion-section">
                     <div class="accordion-header" data-section="category">
                         <h3><i class="fas fa-tag"></i> Event Category</h3>
                         <i class="fas fa-chevron-down toggle-icon"></i>
                     </div>
                     <div class="accordion-content" id="category-section">
+                        <!-- Main Category Selection -->
                         <div class="form-group">
-                            <label>Select Categories (up to 3)</label>
+                            <label>Select Event Type</label>
                             <div class="dropdown-select">
-                                <select id="eventCategory" name="eventCategory[]" multiple size="3">
-                                    <option value="music">Music</option>
-                                    <option value="sports">Sports</option>
-                                    <option value="arts">Arts & Culture</option>
-                                    <option value="tech">Technology</option>
-                                    <option value="business">Business</option>
-                                    <option value="lifestyle">Lifestyle</option>
-                                    <option value="education">Education</option>
-                                    <option value="food">Food & Drink</option>
+                                <select id="eventType" name="eventType" required>
+                                    <option value="">Choose event type...</option>
+                                    <option value="medium">Medium Events (75 TC)</option>
+                                    <option value="tactical">Tactical (150 TC)</option>
+                                    <option value="bigrush">Big Rush (200 TC)</option>
                                 </select>
                             </div>
-                            <div class="form-text">Hold Ctrl/Cmd to select multiple categories</div>
+                        </div>
+
+                        <!-- Sub Category Selection -->
+                        <div class="form-group" id="subCategoryGroup" style="display: none;">
+                            <label>Select Category</label>
+                            <div class="dropdown-select">
+                                <select id="eventCategory" name="eventCategory" required>
+                                    <option value="">Choose category...</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Duration Selection -->
+                        <div class="form-group" id="durationGroup" style="display: none;">
+                            <label>Event Duration</label>
+                            <div class="dropdown-select">
+                                <select id="eventDuration" name="eventDuration" required>
+                                    <option value="">Choose duration...</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Participants Selection -->
+                        <div class="form-group" id="participantsGroup" style="display: none;">
+                            <label>Maximum Participants</label>
+                            <div class="dropdown-select">
+                                <select id="maxParticipants" name="maxParticipants" required>
+                                    <option value="">Choose participant limit...</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Pricing Display -->
+                        <div class="form-group" id="pricingDisplay" style="display: none;">
+                            <div class="pricing-info">
+                                <div class="pricing-item">
+                                    <strong>Creation Fee:</strong> <span id="creationFee">0</span> TC
+                                </div>
+                                <div class="pricing-item">
+                                    <strong>Entry Fee:</strong> <span id="entryFee">0</span> TC
+                                </div>
+                                <div class="pricing-item">
+                                    <strong>Voting Fee:</strong> <span id="votingFee">0</span> TC
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                
-                <!-- Participation Section -->
+                                
+                <!-- Participation Section (Modified) -->
                 <div class="accordion-section">
                     <div class="accordion-header" data-section="participation">
                         <h3><i class="fas fa-users"></i> Participation Settings</h3>
                         <i class="fas fa-chevron-down toggle-icon"></i>
                     </div>
                     <div class="accordion-content" id="participation-section">
-                        <div class="form-group">
-                            <label for="maxParticipants">Maximum Participants</label>
-                            <div class="range-slider-container">
-                                <input type="range" id="maxParticipants" name="maxParticipants" min="2" max="100" value="10">
-                                <div class="range-value"><span id="maxParticipantsValue">10</span></div>
-                            </div>
-                        </div>
-                        
                         <div class="form-group">
                             <label>Event Rules</label>
                             <div class="rules-list" id="rulesContainer">
@@ -11375,7 +11403,7 @@ input:checked + .toggle-slider:before {
                                 <i class="fas fa-plus"></i> Add Rule
                             </button>
                         </div>
-                        
+                                                
                         <div class="form-group">
                             <label>Privacy Setting</label>
                             <div class="dropdown-select">
@@ -11387,32 +11415,14 @@ input:checked + .toggle-slider:before {
                         </div>
                     </div>
                 </div>
-                
-                <!-- Fees Section -->
+                                
+                <!-- Payment Section (Modified) -->
                 <div class="accordion-section">
-                    <div class="accordion-header" data-section="fees">
-                        <h3><i class="fas fa-coins"></i> Fees & Payments</h3>
+                    <div class="accordion-header" data-section="payment">
+                        <h3><i class="fas fa-coins"></i> Payment Method</h3>
                         <i class="fas fa-chevron-down toggle-icon"></i>
                     </div>
-                    <div class="accordion-content" id="fees-section">
-                        <div class="form-group">
-                            <label for="entryFee">Entry Fee (Talent Coins)</label>
-                            <div class="input-with-icon">
-                                <span class="icon"><i class="fas fa-coins"></i></span>
-                                <input type="number" id="entryFee" name="entryFee" min="0" value="0" class="form-control">
-                            </div>
-                            <div class="form-text">Set 0 for free entry</div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="votersFee">Voters Fee (Talent Coins)</label>
-                            <div class="input-with-icon">
-                                <span class="icon"><i class="fas fa-coins"></i></span>
-                                <input type="number" id="votersFee" name="votersFee" min="0" value="0" class="form-control">
-                            </div>
-                            <div class="form-text">Set 0 for free voting</div>
-                        </div>
-                        
+                    <div class="accordion-content" id="payment-section">
                         <div class="form-group">
                             <label>Payment Method</label>
                             <div class="dropdown-select">
@@ -11422,32 +11432,46 @@ input:checked + .toggle-slider:before {
                                 </select>
                             </div>
                         </div>
-                        
-                        <div id="hostingCodeInput" style="display: none;">
+                                                
+                        <div id="hostingCodeInput">
                             <div class="form-group">
                                 <label for="hostingCode">Hosting Code</label>
-                                <input type="text" id="hostingCode" name="hostingCode" class="form-control" placeholder="Enter your hosting code">
+                                <input type="text" id="hostingCode" name="hostingCode" class="form-control" placeholder="Enter your hosting code (e.g., Xcvb153, Ertfc20, Bisa019)">
+                                <div class="form-text">Use a valid hosting code to create event for free</div>
                             </div>
                         </div>
-                        
+                                                
                         <div class="form-group">
-                            <div class="form-text">
-                                <strong>Event Creation Fee:</strong> 10 Talent Coins<br>
-                                <strong>Your Balance:</strong> <span id="userBalance">0</span> Talent Coins
+                            <div class="balance-info">
+                                <div class="balance-item">
+                                    <strong>Your Balance:</strong> <span id="userBalance">0</span> TC
+                                </div>
+                                <div class="balance-item">
+                                    <strong>Total Cost:</strong> <span id="totalCost">0</span> TC
+                                </div>
+                                <div class="balance-item conversion-rate">
+                                    <small>1 TC = ₦15</small>
+                                </div>
                             </div>
+                             <!-- Form Actions -->
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="cancelEventBtn">Cancel</button>
+                   
+                             <button type="button" class="btn btn-secondary" id="payHostFeeBtn">Pay Host Fee</button>
+    </div>
                         </div>
                     </div>
                 </div>
-                
+                                
                 <!-- Form Actions -->
                 <div class="form-actions">
-                    <button type="button" class="btn btn-secondary" id="cancelEventBtn">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Create Event</button>
+                   <button type="submit" class="btn btn-primary" id="createEventBtn">Create Event</button>
                 </div>
-            </form>
+            </form>   
         </div>
     </div>
 </div>
+
 
 <!-- Spin Wheel Modal -->
 <div id="spinWheelModal" class="sg-spin-wheel-modal">
@@ -16451,6 +16475,297 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 
+// Custom Error Classes
+class WalletError extends Error {
+    constructor(message, code, recoverable = false, retryable = false) {
+        super(message);
+        this.name = 'WalletError';
+        this.code = code;
+        this.recoverable = recoverable;
+        this.retryable = retryable;
+        this.timestamp = new Date().toISOString();
+    }
+}
+
+class NetworkError extends WalletError {
+    constructor(message, originalError = null) {
+        super(message, 'NETWORK_ERROR', true, true);
+        this.name = 'NetworkError';
+        this.originalError = originalError;
+    }
+}
+
+class AuthenticationError extends WalletError {
+    constructor(message) {
+        super(message, 'AUTH_ERROR', true, false);
+        this.name = 'AuthenticationError';
+    }
+}
+
+class ValidationError extends WalletError {
+    constructor(message, field = null) {
+        super(message, 'VALIDATION_ERROR', true, false);
+        this.name = 'ValidationError';
+        this.field = field;
+    }
+}
+
+// Retry Mechanism
+class RetryManager {
+    constructor() {
+        this.defaultConfig = {
+            maxRetries: 3,
+            baseDelay: 1000, // 1 second
+            maxDelay: 10000, // 10 seconds
+            backoffMultiplier: 2,
+            retryableErrors: ['NETWORK_ERROR', 'TIMEOUT_ERROR', 'SERVER_ERROR']
+        };
+    }
+
+    async executeWithRetry(operation, config = {}) {
+        const finalConfig = { ...this.defaultConfig, ...config };
+        let lastError;
+        
+        for (let attempt = 0; attempt <= finalConfig.maxRetries; attempt++) {
+            try {
+                const result = await operation();
+                
+                // If we succeeded after retries, log the recovery
+                if (attempt > 0) {
+                    console.log(`Operation succeeded after ${attempt} retries`);
+                    this.showRecoveryMessage(attempt);
+                }
+                
+                return result;
+            } catch (error) {
+                lastError = error;
+                
+                // Check if error is retryable
+                if (!this.isRetryableError(error, finalConfig.retryableErrors)) {
+                    throw error;
+                }
+                
+                // If this was the last attempt, throw the error
+                if (attempt === finalConfig.maxRetries) {
+                    throw new WalletError(
+                        `Operation failed after ${finalConfig.maxRetries} retries: ${error.message}`,
+                        'MAX_RETRIES_EXCEEDED',
+                        false,
+                        false
+                    );
+                }
+                
+                // Calculate delay with exponential backoff
+                const delay = Math.min(
+                    finalConfig.baseDelay * Math.pow(finalConfig.backoffMultiplier, attempt),
+                    finalConfig.maxDelay
+                );
+                
+                console.log(`Attempt ${attempt + 1} failed, retrying in ${delay}ms...`, error);
+                this.showRetryMessage(attempt + 1, finalConfig.maxRetries, delay);
+                
+                await this.delay(delay);
+            }
+        }
+        
+        throw lastError;
+    }
+
+    isRetryableError(error, retryableErrors) {
+        if (error instanceof WalletError) {
+            return error.retryable && retryableErrors.includes(error.code);
+        }
+        
+        // Check for common network errors
+        if (error.code === 'unavailable' || 
+            error.code === 'deadline-exceeded' ||
+            error.message.includes('network') ||
+            error.message.includes('timeout')) {
+            return true;
+        }
+        
+        return false;
+    }
+
+    delay(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    showRetryMessage(attempt, maxRetries, delay) {
+        showToast(
+            `Connection issue detected. Retrying... (${attempt}/${maxRetries})`,
+            'warning',
+            delay / 1000
+        );
+    }
+
+    showRecoveryMessage(attempts) {
+        showToast(
+            `Connection restored after ${attempts} attempt${attempts > 1 ? 's' : ''}`,
+            'success'
+        );
+    }
+}
+
+// Global retry manager instance
+const retryManager = new RetryManager();
+
+// Enhanced Error Handler
+class ErrorHandler {
+    constructor() {
+        this.errorLog = [];
+        this.maxLogSize = 100;
+    }
+
+    handle(error, context = '', showToUser = true) {
+        // Log error
+        this.logError(error, context);
+        
+        // Handle based on error type
+        if (error instanceof ValidationError) {
+            this.handleValidationError(error, showToUser);
+        } else if (error instanceof AuthenticationError) {
+            this.handleAuthError(error, showToUser);
+        } else if (error instanceof NetworkError) {
+            this.handleNetworkError(error, showToUser);
+        } else if (error instanceof WalletError) {
+            this.handleWalletError(error, showToUser);
+        } else {
+            this.handleUnknownError(error, context, showToUser);
+        }
+    }
+
+    logError(error, context) {
+        const errorEntry = {
+            timestamp: new Date().toISOString(),
+            error: {
+                name: error.name,
+                message: error.message,
+                code: error.code || 'UNKNOWN',
+                stack: error.stack
+            },
+            context,
+            userAgent: navigator.userAgent,
+            url: window.location.href
+        };
+
+        this.errorLog.push(errorEntry);
+        
+        // Keep log size manageable
+        if (this.errorLog.length > this.maxLogSize) {
+            this.errorLog.shift();
+        }
+
+        // Log to console in development
+        if (window.location.hostname === 'localhost') {
+            console.error('Wallet Error:', errorEntry);
+        }
+    }
+
+    handleValidationError(error, showToUser) {
+        if (showToUser) {
+            showToast(error.message, 'error');
+            
+            // Focus on the problematic field if specified
+            if (error.field) {
+                const field = document.getElementById(error.field);
+                if (field) {
+                    field.focus();
+                    field.classList.add('error');
+                    setTimeout(() => field.classList.remove('error'), 3000);
+                }
+            }
+        }
+    }
+
+    handleAuthError(error, showToUser) {
+        if (showToUser) {
+            showToast(error.message, 'error');
+        }
+        
+        // Redirect to login if needed
+        if (error.code === 'AUTH_REQUIRED') {
+            setTimeout(() => {
+                // Redirect to login page or show login modal
+                window.location.href = '/login';
+            }, 2000);
+        }
+    }
+
+    handleNetworkError(error, showToUser) {
+        if (showToUser) {
+            showToast(
+                'Network connection issue. Please check your internet connection.',
+                'error',
+                5
+            );
+        }
+    }
+
+    handleWalletError(error, showToUser) {
+        if (showToUser) {
+            if (error.recoverable) {
+                showToast(error.message, 'warning');
+                this.showRecoveryOptions(error);
+            } else {
+                showToast(error.message, 'error');
+            }
+        }
+    }
+
+    handleUnknownError(error, context, showToUser) {
+        if (showToUser) {
+            showToast(
+                'An unexpected error occurred. Please try again.',
+                'error'
+            );
+        }
+        
+        // Send error to monitoring service in production
+        this.reportError(error, context);
+    }
+
+    showRecoveryOptions(error) {
+        if (error.retryable) {
+            // Show retry button
+            const retryToast = this.createRetryToast(error);
+            document.body.appendChild(retryToast);
+        }
+    }
+
+    createRetryToast(error) {
+        const toast = document.createElement('div');
+        toast.className = 'toast retry-toast';
+        toast.innerHTML = `
+            <div class="toast-content">
+                <i class="fas fa-exclamation-triangle"></i>
+                <span>${error.message}</span>
+                <button class="retry-btn" onclick="this.parentElement.parentElement.remove()">
+                    <i class="fas fa-redo"></i> Retry
+                </button>
+            </div>
+        `;
+        
+        return toast;
+    }
+
+    reportError(error, context) {
+        // In production, send to error monitoring service
+        // For now, just log to console
+        console.error('Unhandled error:', { error, context });
+    }
+
+    getErrorLog() {
+        return [...this.errorLog];
+    }
+
+    clearErrorLog() {
+        this.errorLog = [];
+    }
+}
+
+// Global error handler instance
+const errorHandler = new ErrorHandler();
 
 
   
@@ -17083,324 +17398,890 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Close modal functions
-    function closeModal() {
-        eventCreatorModal.classList.remove('active');
-        document.body.style.overflow = ''; // Restore scrolling
-    }
-    
-    // Close modal with X button
-    if (closeModalButton) {
-        closeModalButton.addEventListener('click', closeModal);
-    }
-    
-    // Close modal with Cancel button
-    if (cancelEventButton) {
-        cancelEventButton.addEventListener('click', closeModal);
-    }
-    
+   
     // Close modal when clicking outside
     eventCreatorModal.addEventListener('click', function(e) {
         if (e.target === eventCreatorModal) {
             closeModal();
         }
     });
+    // Modal controls
+function setupModalControls() {
+    // Close modal handlers
+    closeModal.addEventListener('click', closeEventModal);  // <-- This line handles your close button
+    cancelBtn.addEventListener('click', closeEventModal);
     
+    // Close on outside click
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            closeEventModal();
+        }
+    });
+    
+    // Close on escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+            closeEventModal();
+        }
+    });
+}
     // Rest of the modal functionality (tab switching, form handling, etc.)
     // ... (include the rest of the event-creator-modal.js code here)
 });
-document.addEventListener('DOMContentLoaded', function() {
-    // Get the creator button and modal elements
-    const creatorBtn = document.querySelector('.action-btn.creator-btn');
-    const eventCreatorModal = document.getElementById('eventCreatorModal');
-    const closeModalButton = document.querySelector('.close-modal');
-    const cancelEventButton = document.getElementById('cancelEventBtn');
     
-    // Open modal when creator button is clicked
-    if (creatorBtn) {
-        creatorBtn.addEventListener('click', function() {
-            eventCreatorModal.classList.add('active');
-            document.body.style.overflow = 'hidden'; // Prevent scrolling of background
-        });
-    }
+
+// Add this to your existing JavaScript
+
+// Get the close button element
+const closeEventCreatorModalBtn = document.querySelector('.close-eventCreatorModal');
+
+// Add event listener for the close button
+if (closeEventCreatorModalBtn) {
+    closeEventCreatorModalBtn.addEventListener('click', closeEventModal);
+}
+
+// Update the setupModalControls function to include the new close button
+function setupModalControls() {
+    // Existing close modal handlers
+    const closeModal = document.querySelector('.close-modal');
+    const cancelBtn = document.getElementById('cancelEventBtn');
+    const newCloseBtn = document.querySelector('.close-eventCreatorModal');
     
-    // Close modal functions
-    function closeModal() {
-        eventCreatorModal.classList.remove('active');
-        document.body.style.overflow = ''; // Restore scrolling
-    }
+    // Close modal handlers
+    if (closeModal) closeModal.addEventListener('click', closeEventModal);
+    if (cancelBtn) cancelBtn.addEventListener('click', closeEventModal);
+    if (newCloseBtn) newCloseBtn.addEventListener('click', closeEventModal);
     
-    // Close modal with X button
-    if (closeModalButton) {
-        closeModalButton.addEventListener('click', closeModal);
-    }
-    
-    // Close modal with Cancel button
-    if (cancelEventButton) {
-        cancelEventButton.addEventListener('click', closeModal);
-    }
-    
-    // Close modal when clicking outside
-    eventCreatorModal.addEventListener('click', function(e) {
-        if (e.target === eventCreatorModal) {
-            closeModal();
+    // Close on outside click
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            closeEventModal();
         }
     });
     
-    // Accordion functionality
-    const accordionHeaders = document.querySelectorAll('.accordion-header');
-    accordionHeaders.forEach(header => {
-        header.addEventListener('click', function() {
-            this.classList.toggle('active');
-            const content = this.nextElementSibling;
-            if (content.style.display === 'block') {
-                content.style.display = 'none';
-            } else {
-                content.style.display = 'block';
-            }
-        });
+    // Close on escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+            closeEventModal();
+        }
+    });
+}
+
+  // Event Creator Modal JavaScript (excluding userBalance and createEventBtn)
+
+// Category data structure
+const eventCategories = {
+    medium: {
+        name: "Medium Events",
+        creationFee: 75,
+        entryFee: 50,
+        votingFee: 17,
+        durations: [14, 30, 40],
+        participants: [10, 15, 20, 25, 30, 40, 50],
+        categories: [
+            "Singing",
+            "Dancing", 
+            "Photography",
+            "Graphics Designing",
+            "Story Writing",
+            "Painting",
+            "Drawing"
+        ]
+    },
+    tactical: {
+        name: "Tactical",
+        creationFee: 150,
+        entryFee: 75,
+        votingFee: 27,
+        durations: [14, 30, 45],
+        participants: [10, 15, 20, 25, 30],
+        categories: [
+            "Comedy",
+            "Video Editing",
+            "Rap Battle", 
+            "Business Case Study",
+            "The Best of Talents"
+        ]
+    },
+    bigrush: {
+        name: "Big Rush",
+        creationFee: 200,
+        entryFee: 95,
+        votingFee: 40,
+        durations: [20, 30, 45, 60],
+        participants: [10, 15, 20, 25, 30],
+        categories: [
+            "Amazing Inventions",
+            "Virtual Met Gala",
+            "Pitch Deck"
+        ]
+    }
+};
+
+// Valid hosting codes
+const validHostingCodes = [
+    "Xcvb153", "Ertfc20", "Bisa019"
+    // Add more codes as needed
+];
+
+// DOM Elements
+const modal = document.getElementById('eventCreatorModal');
+const closeModal = document.querySelector('.close-modal');
+const cancelBtn = document.getElementById('cancelEventBtn');
+const form = document.getElementById('eventCreatorForm');
+
+// Form elements
+const eventTypeSelect = document.getElementById('eventType');
+const eventCategorySelect = document.getElementById('eventCategory');
+const eventDurationSelect = document.getElementById('eventDuration');
+const maxParticipantsSelect = document.getElementById('maxParticipants');
+const paymentMethodSelect = document.getElementById('paymentMethod');
+const hostingCodeInput = document.getElementById('hostingCodeInput');
+const hostingCodeField = document.getElementById('hostingCode');
+const eventDescriptionField = document.getElementById('eventDescription');
+const wordCountSpan = document.getElementById('wordCount');
+
+// Display elements
+const subCategoryGroup = document.getElementById('subCategoryGroup');
+const durationGroup = document.getElementById('durationGroup');
+const participantsGroup = document.getElementById('participantsGroup');
+const pricingDisplay = document.getElementById('pricingDisplay');
+const creationFeeSpan = document.getElementById('creationFee');
+const entryFeeSpan = document.getElementById('entryFee');
+const votingFeeSpan = document.getElementById('votingFee');
+const totalCostSpan = document.getElementById('totalCost');
+
+// Background elements
+const backgroundTypeSelect = document.getElementById('backgroundType');
+const imageUploadOption = document.getElementById('imageUploadOption');
+const colorPickerOption = document.getElementById('colorPickerOption');
+const backgroundImageInput = document.getElementById('backgroundImage');
+const imagePreview = document.getElementById('imagePreview');
+const backgroundColorInput = document.getElementById('backgroundColor');
+const colorCodeInput = document.getElementById('colorCode');
+
+// Initialize modal functionality
+function initializeEventCreatorModal() {
+    setupModalControls();
+    setupAccordionFunctionality();
+    setupCategoryLogic();
+    setupBackgroundControls();
+    setupPaymentControls();
+    setupRulesManagement();
+    setupDescriptionValidation();
+}
+
+// Modal controls
+function setupModalControls() {
+    // Close modal handlers
+    closeModal.addEventListener('click', closeEventModal);
+    cancelBtn.addEventListener('click', closeEventModal);
+    
+    // Close on outside click
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            closeEventModal();
+        }
     });
     
-    // Background type selection
-    const backgroundTypeSelect = document.getElementById('backgroundType');
-    const imageUploadOption = document.getElementById('imageUploadOption');
-    const colorPickerOption = document.getElementById('colorPickerOption');
+    // Close on escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+            closeEventModal();
+        }
+    });
+}
+
+// Open modal function (call this from outside)
+function openEventCreatorModal() {
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    resetForm();
+}
+
+// Close modal function
+function closeEventModal() {
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+    resetForm();
+}
+
+// Reset form to initial state
+function resetForm() {
+    form.reset();
+    hideAllCategoryGroups();
+    hidePricingDisplay();
+    resetBackgroundOptions();
+    resetRules();
+    updateWordCount();
+}
+
+// Accordion functionality
+function setupAccordionFunctionality() {
+    const accordionHeaders = document.querySelectorAll('.accordion-header');
     
-    if (backgroundTypeSelect) {
-        backgroundTypeSelect.addEventListener('change', function() {
-            if (this.value === 'image') {
-                imageUploadOption.style.display = 'block';
-                colorPickerOption.style.display = 'none';
-            } else {
-                imageUploadOption.style.display = 'none';
-                colorPickerOption.style.display = 'block';
-            }
+    accordionHeaders.forEach(header => {
+        header.addEventListener('click', () => {
+            const section = header.dataset.section;
+            const content = document.getElementById(`${section}-section`);
+            const toggleIcon = header.querySelector('.toggle-icon');
+            
+            // Toggle active state
+            header.classList.toggle('active');
+            content.classList.toggle('active');
+            
+            // Update icon rotation is handled by CSS
         });
+    });
+}
+
+// Category selection logic
+function setupCategoryLogic() {
+    eventTypeSelect.addEventListener('change', handleEventTypeChange);
+    eventCategorySelect.addEventListener('change', handleCategoryChange);
+    eventDurationSelect.addEventListener('change', handleDurationChange);
+    maxParticipantsSelect.addEventListener('change', handleParticipantsChange);
+}
+
+function handleEventTypeChange() {
+    const selectedType = eventTypeSelect.value;
+    
+    if (!selectedType) {
+        hideAllCategoryGroups();
+        return;
     }
     
-    // Image upload preview
-    const backgroundImage = document.getElementById('backgroundImage');
-    const imagePreview = document.getElementById('imagePreview');
+    const categoryData = eventCategories[selectedType];
     
-    if (backgroundImage && imagePreview) {
-        backgroundImage.addEventListener('change', function() {
-            const file = this.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    imagePreview.style.backgroundImage = `url(${e.target.result})`;
-                    imagePreview.style.display = 'block';
-                }
-                reader.readAsDataURL(file);
-            }
-        });
+    // Populate sub-categories
+    populateSubCategories(categoryData.categories);
+    
+    // Show sub-category group
+    subCategoryGroup.style.display = 'block';
+    
+    // Hide other groups until sub-category is selected
+    durationGroup.style.display = 'none';
+    participantsGroup.style.display = 'none';
+    hidePricingDisplay();
+}
+
+function populateSubCategories(categories) {
+    eventCategorySelect.innerHTML = '<option value="">Choose category...</option>';
+    
+    categories.forEach(category => {
+        const option = document.createElement('option');
+        option.value = category.toLowerCase().replace(/\s+/g, '-');
+        option.textContent = category;
+        eventCategorySelect.appendChild(option);
+    });
+}
+
+function handleCategoryChange() {
+    const selectedType = eventTypeSelect.value;
+    const selectedCategory = eventCategorySelect.value;
+    
+    if (!selectedCategory) {
+        durationGroup.style.display = 'none';
+        participantsGroup.style.display = 'none';
+        hidePricingDisplay();
+        return;
     }
     
-    // Color picker synchronization
-    const backgroundColorInput = document.getElementById('backgroundColor');
-    const colorCodeInput = document.getElementById('colorCode');
+    const categoryData = eventCategories[selectedType];
     
-    if (backgroundColorInput && colorCodeInput) {
-        backgroundColorInput.addEventListener('input', function() {
-            colorCodeInput.value = this.value;
-        });
-        
-        colorCodeInput.addEventListener('input', function() {
-            backgroundColorInput.value = this.value;
-        });
+    // Populate durations
+    populateDurations(categoryData.durations);
+    
+    // Show duration group
+    durationGroup.style.display = 'block';
+    
+    // Hide other groups until duration is selected
+    participantsGroup.style.display = 'none';
+    hidePricingDisplay();
+}
+
+function populateDurations(durations) {
+    eventDurationSelect.innerHTML = '<option value="">Choose duration...</option>';
+    
+    durations.forEach(duration => {
+        const option = document.createElement('option');
+        option.value = duration;
+        option.textContent = `${duration} days`;
+        eventDurationSelect.appendChild(option);
+    });
+}
+
+function handleDurationChange() {
+    const selectedType = eventTypeSelect.value;
+    const selectedDuration = eventDurationSelect.value;
+    
+    if (!selectedDuration) {
+        participantsGroup.style.display = 'none';
+        hidePricingDisplay();
+        return;
     }
     
-    // Range slider for participants
-    const maxParticipantsSlider = document.getElementById('maxParticipants');
-    const maxParticipantsValue = document.getElementById('maxParticipantsValue');
+    const categoryData = eventCategories[selectedType];
     
-    if (maxParticipantsSlider && maxParticipantsValue) {
-        maxParticipantsSlider.addEventListener('input', function() {
-            maxParticipantsValue.textContent = this.value;
-        });
+    // Populate participants
+    populateParticipants(categoryData.participants);
+    
+    // Show participants group
+    participantsGroup.style.display = 'block';
+    
+    // Update pricing display
+    updatePricingDisplay();
+}
+
+function populateParticipants(participants) {
+    maxParticipantsSelect.innerHTML = '<option value="">Choose participant limit...</option>';
+    
+    participants.forEach(count => {
+        const option = document.createElement('option');
+        option.value = count;
+        option.textContent = `${count} participants`;
+        maxParticipantsSelect.appendChild(option);
+    });
+}
+
+function handleParticipantsChange() {
+    updatePricingDisplay();
+}
+
+function updatePricingDisplay() {
+    const selectedType = eventTypeSelect.value;
+    const selectedDuration = eventDurationSelect.value;
+    const selectedParticipants = maxParticipantsSelect.value;
+    
+    if (!selectedType || !selectedDuration || !selectedParticipants) {
+        hidePricingDisplay();
+        return;
     }
     
-    // Add/remove rules
-    const rulesContainer = document.getElementById('rulesContainer');
+    const categoryData = eventCategories[selectedType];
+    
+    // Update pricing display
+    creationFeeSpan.textContent = categoryData.creationFee;
+    entryFeeSpan.textContent = categoryData.entryFee;
+    votingFeeSpan.textContent = categoryData.votingFee;
+    
+    // Calculate total cost (creation fee for now)
+    updateTotalCost();
+    
+    // Show pricing display
+    pricingDisplay.style.display = 'block';
+}
+
+function updateTotalCost() {
+    const selectedType = eventTypeSelect.value;
+    const paymentMethod = paymentMethodSelect.value;
+    
+    if (!selectedType) return;
+    
+    const categoryData = eventCategories[selectedType];
+    let totalCost = categoryData.creationFee;
+    
+    // If using hosting code, cost is 0
+    if (paymentMethod === 'hostingCode') {
+        const hostingCode = hostingCodeField.value.trim();
+        if (validHostingCodes.includes(hostingCode)) {
+            totalCost = 0;
+        }
+    }
+    
+    totalCostSpan.textContent = totalCost;
+}
+
+function hideAllCategoryGroups() {
+    subCategoryGroup.style.display = 'none';
+    durationGroup.style.display = 'none';
+    participantsGroup.style.display = 'none';
+}
+
+function hidePricingDisplay() {
+    pricingDisplay.style.display = 'none';
+}
+
+// Background controls
+function setupBackgroundControls() {
+    backgroundTypeSelect.addEventListener('change', handleBackgroundTypeChange);
+    backgroundImageInput.addEventListener('change', handleImageUpload);
+    backgroundColorInput.addEventListener('input', handleColorChange);
+    colorCodeInput.addEventListener('input', handleColorCodeChange);
+}
+
+function handleBackgroundTypeChange() {
+    const selectedType = backgroundTypeSelect.value;
+    
+    if (selectedType === 'image') {
+        imageUploadOption.style.display = 'block';
+        colorPickerOption.style.display = 'none';
+    } else if (selectedType === 'color') {
+        imageUploadOption.style.display = 'none';
+        colorPickerOption.style.display = 'block';
+    }
+}
+
+function handleImageUpload(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    
+    // Validate file size (5MB max)
+    if (file.size > 5 * 1024 * 1024) {
+        alert('File size must be less than 5MB');
+        e.target.value = '';
+        return;
+    }
+    
+    // Validate file type
+    if (!file.type.startsWith('image/')) {
+        alert('Please select a valid image file');
+        e.target.value = '';
+        return;
+    }
+    
+    // Show preview
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        imagePreview.style.backgroundImage = `url(${e.target.result})`;
+        imagePreview.style.display = 'block';
+    };
+    reader.readAsDataURL(file);
+}
+
+function handleColorChange() {
+    const color = backgroundColorInput.value;
+    colorCodeInput.value = color;
+}
+
+function handleColorCodeChange() {
+    const color = colorCodeInput.value;
+    if (/^#[0-9A-F]{6}$/i.test(color)) {
+        backgroundColorInput.value = color;
+    }
+}
+
+function resetBackgroundOptions() {
+    imageUploadOption.style.display = 'block';
+    colorPickerOption.style.display = 'none';
+    imagePreview.style.display = 'none';
+    imagePreview.style.backgroundImage = '';
+}
+
+// Payment controls
+function setupPaymentControls() {
+    paymentMethodSelect.addEventListener('change', handlePaymentMethodChange);
+    hostingCodeField.addEventListener('input', handleHostingCodeInput);
+}
+
+function handlePaymentMethodChange() {
+    const selectedMethod = paymentMethodSelect.value;
+    
+    if (selectedMethod === 'hostingCode') {
+        hostingCodeInput.style.display = 'block';
+    } else {
+        hostingCodeInput.style.display = 'none';
+        hostingCodeField.value = '';
+    }
+    
+    updateTotalCost();
+}
+
+function handleHostingCodeInput() {
+    updateTotalCost();
+    
+    // Validate hosting code
+    const code = hostingCodeField.value.trim();
+    const isValid = validHostingCodes.includes(code);
+    
+    if (code && !isValid) {
+        hostingCodeField.classList.add('error');
+    } else {
+        hostingCodeField.classList.remove('error');
+    }
+}
+
+// Rules management
+function setupRulesManagement() {
     const addRuleBtn = document.getElementById('addRuleBtn');
+    const rulesContainer = document.getElementById('rulesContainer');
     
-    if (addRuleBtn && rulesContainer) {
-        addRuleBtn.addEventListener('click', function() {
-            const ruleItem = document.createElement('div');
-            ruleItem.className = 'rule-item';
-            ruleItem.innerHTML = `
-                <input type="text" name="eventRules[]" class="form-control" placeholder="Enter a rule for your event">
-                <button type="button" class="remove-rule-btn"><i class="fas fa-times"></i></button>
-            `;
-            rulesContainer.appendChild(ruleItem);
-            
-            // Add event listener to the new remove button
-            const removeBtn = ruleItem.querySelector('.remove-rule-btn');
-            removeBtn.addEventListener('click', function() {
-                rulesContainer.removeChild(ruleItem);
-            });
-        });
-        
-        // Add event listeners to existing remove buttons
-        const removeButtons = document.querySelectorAll('.remove-rule-btn');
-        removeButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                const ruleItem = this.parentElement;
-                rulesContainer.removeChild(ruleItem);
-            });
-        });
+    addRuleBtn.addEventListener('click', addNewRule);
+    
+    // Setup remove buttons for existing rules
+    setupRuleRemoveButtons();
+}
+
+function addNewRule() {
+    const rulesContainer = document.getElementById('rulesContainer');
+    const ruleItem = document.createElement('div');
+    ruleItem.className = 'rule-item';
+    ruleItem.innerHTML = `
+        <input type="text" name="eventRules[]" class="form-control" placeholder="Enter a rule for your event">
+        <button type="button" class="remove-rule-btn"><i class="fas fa-times"></i></button>
+    `;
+    
+    rulesContainer.appendChild(ruleItem);
+    setupRuleRemoveButtons();
+}
+
+function setupRuleRemoveButtons() {
+    const removeButtons = document.querySelectorAll('.remove-rule-btn');
+    
+    removeButtons.forEach(button => {
+        button.removeEventListener('click', removeRule); // Prevent duplicate listeners
+        button.addEventListener('click', removeRule);
+    });
+}
+
+function removeRule(e) {
+    const ruleItem = e.target.closest('.rule-item');
+    const rulesContainer = document.getElementById('rulesContainer');
+    
+    // Don't remove if it's the last rule
+    if (rulesContainer.children.length > 1) {
+        ruleItem.remove();
+    }
+}
+
+function resetRules() {
+    const rulesContainer = document.getElementById('rulesContainer');
+    
+    // Keep only the first rule and clear its value
+    while (rulesContainer.children.length > 1) {
+        rulesContainer.removeChild(rulesContainer.lastChild);
     }
     
-    // Payment method selection
-    const paymentMethodSelect = document.getElementById('paymentMethod');
-    const hostingCodeInput = document.getElementById('hostingCodeInput');
+    // Clear the remaining rule input
+    const firstRuleInput = rulesContainer.querySelector('input');
+    if (firstRuleInput) {
+        firstRuleInput.value = '';
+    }
+}
+
+// Description validation
+function setupDescriptionValidation() {
+    eventDescriptionField.addEventListener('input', updateWordCount);
+    eventDescriptionField.addEventListener('paste', () => {
+        setTimeout(updateWordCount, 10); // Delay to allow paste content to be processed
+    });
+}
+
+function updateWordCount() {
+    const text = eventDescriptionField.value.trim();
+    const words = text ? text.split(/\s+/).filter(word => word.length > 0) : [];
+    const wordCount = words.length;
     
-    if (paymentMethodSelect && hostingCodeInput) {
-        paymentMethodSelect.addEventListener('change', function() {
-            if (this.value === 'hostingCode') {
-                hostingCodeInput.style.display = 'block';
-            } else {
-                hostingCodeInput.style.display = 'none';
-            }
-        });
+    wordCountSpan.textContent = wordCount;
+    
+    // Update styling based on word count
+    if (wordCount >= 50 && wordCount <= 85) {
+        wordCountSpan.className = 'valid';
+        eventDescriptionField.classList.remove('error');
+    } else if (wordCount > 0) {
+        wordCountSpan.className = 'invalid';
+        eventDescriptionField.classList.add('error');
+    } else {
+        wordCountSpan.className = '';
+        eventDescriptionField.classList.remove('error');
+    }
+}
+
+// Form validation
+function validateForm() {
+    let isValid = true;
+    const errors = [];
+    
+    // Event name validation
+    const eventName = document.getElementById('eventName').value.trim();
+    if (!eventName) {
+        errors.push('Event name is required');
+        document.getElementById('eventName').classList.add('error');
+        isValid = false;
+    } else {
+        document.getElementById('eventName').classList.remove('error');
     }
     
-    // Form submission
-    const eventCreatorForm = document.getElementById('eventCreatorForm');
-    if (eventCreatorForm) {
-        eventCreatorForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Validate form
-            if (validateForm()) {
-                // Show loading state
-                showLoading();
-                
-                // Simulate form submission (replace with actual API call)
-                setTimeout(() => {
-                    hideLoading();
-                    showSuccess();
-                    closeModal();
-                }, 1500);
-            }
-        });
+    // Description validation
+    const description = eventDescriptionField.value.trim();
+    const words = description ? description.split(/\s+/).filter(word => word.length > 0) : [];
+    const wordCount = words.length;
+    
+    if (wordCount < 50 || wordCount > 85) {
+        errors.push('Event description must be between 50-85 words');
+        eventDescriptionField.classList.add('error');
+        isValid = false;
+    } else {
+        eventDescriptionField.classList.remove('error');
     }
     
-    // Form validation
-    function validateForm() {
-        let isValid = true;
-        
-        // Event name validation
-        const eventName = document.getElementById('eventName');
-        if (!eventName.value.trim()) {
-            showError(eventName, 'Event name is required');
+    // Category validation
+    if (!eventTypeSelect.value) {
+        errors.push('Please select an event type');
+        eventTypeSelect.classList.add('error');
+        isValid = false;
+    } else {
+        eventTypeSelect.classList.remove('error');
+    }
+    
+    if (!eventCategorySelect.value) {
+        errors.push('Please select a category');
+        eventCategorySelect.classList.add('error');
+        isValid = false;
+    } else {
+        eventCategorySelect.classList.remove('error');
+    }
+    
+    if (!eventDurationSelect.value) {
+        errors.push('Please select event duration');
+        eventDurationSelect.classList.add('error');
+        isValid = false;
+    } else {
+        eventDurationSelect.classList.remove('error');
+    }
+    
+    if (!maxParticipantsSelect.value) {
+        errors.push('Please select maximum participants');
+        maxParticipantsSelect.classList.add('error');
+        isValid = false;
+    } else {
+        maxParticipantsSelect.classList.remove('error');
+    }
+    
+    // Payment validation
+    if (paymentMethodSelect.value === 'hostingCode') {
+        const hostingCode = hostingCodeField.value.trim();
+        if (!hostingCode) {
+            errors.push('Please enter a hosting code');
+            hostingCodeField.classList.add('error');
+            isValid = false;
+        } else if (!validHostingCodes.includes(hostingCode)) {
+            errors.push('Invalid hosting code');
+            hostingCodeField.classList.add('error');
             isValid = false;
         } else {
-            clearError(eventName);
-        }
-        
-        return isValid;
-    }
-        function showError(input, message) {
-        input.classList.add('error');
-        
-        // Remove existing error message if any
-        const existingError = input.parentElement.querySelector('.error-message');
-        if (existingError) {
-            existingError.remove();
-        }
-        
-        // Create and append error message
-        const errorElement = document.createElement('div');
-        errorElement.className = 'error-message';
-        errorElement.textContent = message;
-        input.parentElement.appendChild(errorElement);
-    }
-    
-    function clearError(input) {
-        input.classList.remove('error');
-        const errorMessage = input.parentElement.querySelector('.error-message');
-        if (errorMessage) {
-            errorMessage.remove();
+            hostingCodeField.classList.remove('error');
         }
     }
     
-    function showLoading() {
-        const loadingOverlay = document.createElement('div');
-        loadingOverlay.className = 'loading-overlay';
-        loadingOverlay.innerHTML = '<div class="spinner"></div>';
-        document.querySelector('.modal-content').appendChild(loadingOverlay);
+    // Rules validation
+    const ruleInputs = document.querySelectorAll('input[name="eventRules[]"]');
+    const hasValidRule = Array.from(ruleInputs).some(input => input.value.trim().length > 0);
+    
+    if (!hasValidRule) {
+        errors.push('Please add at least one event rule');
+        isValid = false;
     }
     
-    function hideLoading() {
-        const loadingOverlay = document.querySelector('.loading-overlay');
-        if (loadingOverlay) {
-            loadingOverlay.remove();
-        }
-    }
-    
-    function showSuccess() {
-        // Show success message or redirect
-        const successToast = document.createElement('div');
-        successToast.className = 'success-toast';
-        successToast.innerHTML = `
-            <div class="success-icon"><i class="fas fa-check-circle"></i></div>
-            <div class="success-message">Event created successfully!</div>
-        `;
-        document.body.appendChild(successToast);
-        
-        // Auto remove after 3 seconds
-        setTimeout(() => {
-            successToast.remove();
-        }, 3000);
-        
-        // Reset form
-        eventCreatorForm.reset();
-        
-        // Reset image preview
-        if (imagePreview) {
-            imagePreview.style.display = 'none';
-            imagePreview.style.backgroundImage = '';
-        }
-    }
-    
-    // Open first accordion by default
-    const firstAccordionHeader = document.querySelector('.accordion-header');
-    if (firstAccordionHeader) {
-        firstAccordionHeader.click();
-    }
-});
+    return { isValid, errors };
+}
 
+// Utility functions
+function showToast(message, type = 'info') {
+    // Create toast element
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+    toast.textContent = message;
+    
+    // Add to page
+    document.body.appendChild(toast);
+    
+    // Remove after 3 seconds
+    setTimeout(() => {
+        if (toast.parentNode) {
+            toast.parentNode.removeChild(toast);
+        }
+    }, 3000);
+}
 
-document.addEventListener('DOMContentLoaded', function() {
-    // Get the existing spin button
-    const spinButton = document.querySelector('.action-btn.spin-btn');
+function getFormData() {
+    const formData = new FormData(form);
+    const data = {};
     
-    // Get the spin wheel modal
-    const spinWheelModal = document.getElementById('spinWheelModal');
+    // Convert FormData to regular object
+    for (let [key, value] of formData.entries()) {
+        if (key === 'eventRules[]') {
+            if (!data.eventRules) data.eventRules = [];
+            if (value.trim()) data.eventRules.push(value.trim());
+        } else {
+            data[key] = value;
+        }
+    }
     
-    // Add click event listener to the spin button
-    if (spinButton) {
-        spinButton.addEventListener('click', function() {
-            // Show the spin wheel modal
-            if (spinWheelModal) {
-                spinWheelModal.style.display = 'block';
-                
-                // If there's a function to update free spins display, call it
-                if (typeof updateFreeSpinsDisplay === 'function') {
-                    updateFreeSpinsDisplay();
-                }
-                
-                // If there's a function to update button states, call it
-                if (typeof updateSpinButtonStates === 'function') {
-                    updateSpinButtonStates();
-                }
-            }
+    // Add calculated values
+    const selectedType = eventTypeSelect.value;
+    if (selectedType) {
+        const categoryData = eventCategories[selectedType];
+        data.creationFee = categoryData.creationFee;
+        data.entryFee = categoryData.entryFee;
+        data.votingFee = categoryData.votingFee;
+        data.eventType = selectedType;
+        data.eventTypeName = categoryData.name;
+    }
+    
+    // Add total cost
+    data.totalCost = parseInt(totalCostSpan.textContent) || 0;
+    
+    return data;
+}
+
+// Range slider functionality (if you want to add it back later)
+function setupRangeSlider() {
+    const rangeSlider = document.getElementById('maxParticipants');
+    const rangeValue = document.getElementById('maxParticipantsValue');
+    
+    if (rangeSlider && rangeValue) {
+        rangeSlider.addEventListener('input', () => {
+            rangeValue.textContent = rangeSlider.value;
         });
     }
+}
+
+// Initialize everything when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    initializeEventCreatorModal();
 });
- 
+
+// Export functions for external use
+window.EventCreatorModal = {
+    open: openEventCreatorModal,
+    close: closeEventModal,
+    validate: validateForm,
+    getFormData: getFormData
+};
+
+
+
+// Pay Host Fee Functionality (Fixed)
+async function payHostFee() {
+    console.log('Pay Host Fee button clicked'); // Debug log
     
+    const paymentMethod = paymentMethodSelect.value;
+    const selectedType = eventTypeSelect.value;
+    
+    console.log('Payment method:', paymentMethod); // Debug log
+    console.log('Selected type:', selectedType); // Debug log
+    
+    if (!selectedType) {
+        showPaymentMessage('Please select an event type first', 'error');
+        return;
+    }
+    
+    const categoryData = eventCategories[selectedType];
+    const hostFeeAmount = categoryData.creationFee;
+    
+    // Show loading state
+    const payHostFeeBtn = document.getElementById('payHostFeeBtn');
+    const originalText = payHostFeeBtn.textContent;
+    payHostFeeBtn.disabled = true;
+    payHostFeeBtn.textContent = 'Processing...';
+    
+    try {
+        if (paymentMethod === 'talentCoins') {
+            await handleTalentCoinPayment(hostFeeAmount);
+        } else if (paymentMethod === 'hostingCode') {
+            await handleHostingCodePayment();
+        }
+    } catch (error) {
+        console.error('Payment error:', error);
+        showPaymentMessage('Payment failed. Please try again.', 'error');
+    } finally {
+        // Reset button
+        payHostFeeBtn.disabled = false;
+        payHostFeeBtn.textContent = originalText;
+    }
+}
+
+// Handle Hosting Code Payment (Fixed)
+async function handleHostingCodePayment() {
+    console.log('Handling hosting code payment'); // Debug log
+    
+    const hostingCode = hostingCodeField.value.trim();
+    console.log('Hosting code entered:', hostingCode); // Debug log
+    
+    if (!hostingCode) {
+        showPaymentMessage('Please enter a hosting code', 'error');
+        return;
+    }
+    
+    console.log('Valid codes:', validHostingCodes); // Debug log
+    console.log('Code is valid:', validHostingCodes.includes(hostingCode)); // Debug log
+    
+    if (!validHostingCodes.includes(hostingCode)) {
+        showPaymentMessage('Invalid hosting code. Please check and try again.', 'error');
+        return;
+    }
+    
+    // Simulate processing delay
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    
+    // Show success message
+    showPaymentMessage(`Hosting code "${hostingCode}" validated successfully! No payment required.`, 'success');
+}
+
+// Updated initialization to ensure button event is attached
+function initializeEventCreatorModal() {
+    setupModalControls();
+    setupAccordionFunctionality();
+    setupCategoryLogic();
+    setupBackgroundControls();
+    setupPaymentControls();
+    setupRulesManagement();
+    setupDescriptionValidation();
+    setupPayHostFeeButton(); // Add this line
+}
+
+// Setup Pay Host Fee Button
+function setupPayHostFeeButton() {
+    const payHostFeeBtn = document.getElementById('payHostFeeBtn');
+    if (payHostFeeBtn) {
+        // Remove existing listener to prevent duplicates
+        payHostFeeBtn.removeEventListener('click', payHostFee);
+        // Add event listener
+        payHostFeeBtn.addEventListener('click', payHostFee);
+        console.log('Pay Host Fee button event listener attached'); // Debug log
+    } else {
+        console.error('Pay Host Fee button not found'); // Debug log
+    }
+}
+
+// Show payment message in card under accordion-content (Fixed)
+function showPaymentMessage(message, type) {
+    console.log('Showing payment message:', message, type); // Debug log
+    
+    // Remove existing message if any
+    const existingMessage = document.querySelector('.payment-message-card');
+    if (existingMessage) {
+        existingMessage.remove();
+    }
+    
+    // Create message card
+    const messageCard = document.createElement('div');
+    messageCard.className = `payment-message-card ${type}`;
+    messageCard.innerHTML = `
+        <div class="message-content">
+            <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
+            <span>${message}</span>
+        </div>
+    `;
+    
+    // Add to payment section accordion content
+    const paymentSection = document.getElementById('payment-section');
+    if (paymentSection) {
+        paymentSection.appendChild(messageCard);
+        console.log('Message card added to payment section'); // Debug log
+    } else {
+        console.error('Payment section not found'); // Debug log
+    }
+    
+    // Auto remove after 5 seconds
+    setTimeout(() => {
+        if (messageCard.parentNode) {
+            messageCard.remove();
+        }
+    }, 5000);
+}
+
   // Improved Spin Wheel Functionality with isolated class names
 document.addEventListener('DOMContentLoaded', function() {
     // Modal Elements
