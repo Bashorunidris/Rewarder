@@ -7777,6 +7777,100 @@ input:checked + .toggle-slider:before {
     transform: translateX(26px);
 }
 
+.input-wrapper {
+    position: relative;
+}
+
+.validation-indicator {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: none;
+}
+
+.validation-indicator.loading {
+    display: block;
+    border: 2px solid #f3f3f3;
+    border-top: 2px solid #007bff;
+    animation: spin 1s linear infinite;
+}
+
+.validation-indicator.success {
+    display: block;
+    background-color: #28a745;
+}
+
+.validation-indicator.success::after {
+    content: '✓';
+    color: white;
+    font-size: 12px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.validation-indicator.error {
+    display: block;
+    background-color: #dc3545;
+}
+
+.validation-indicator.error::after {
+    content: '✗';
+    color: white;
+    font-size: 12px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.form-control.success {
+    border-color: #28a745;
+    box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+}
+
+.form-control.error {
+    border-color: #dc3545;
+    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+}
+
+.form-control.loading {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.validation-message {
+    margin-top: 5px;
+    font-size: 0.875rem;
+}
+
+.validation-message.success {
+    color: #28a745;
+}
+
+.validation-message.error {
+    color: #dc3545;
+}
+
+.validation-message.warning {
+    color: #ffc107;
+}
+
+.validation-message.loading {
+    color: #007bff;
+}
+
+@keyframes spin {
+    0% { transform: translateY(-50%) rotate(0deg); }
+    100% { transform: translateY(-50%) rotate(360deg); }
+}
+
+
 /* Payment Message Card Styles */
 .payment-message-card {
     margin-top: 15px;
@@ -8078,16 +8172,6 @@ textarea.form-control {
     color: white !important;
 }
 
-/* Form Actions */
-.form-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-    margin-top: 20px;
-    padding-top: 15px;
-    border-top: 1px solid #e0e0e0;
-}
-
 .btn {
     padding: 10px 20px;
     border-radius: 6px;
@@ -8123,6 +8207,467 @@ textarea.form-control {
     to { opacity: 1; }
 }
 
+
+/* Form Actions Styling */
+.form-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+    padding: 20px;
+    border-top: 1px solid #e0e0e0;
+}
+
+.form-actions .form-group {
+    margin-bottom: 15px;
+}
+
+.form-actions .form-group label {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.form-actions .form-text {
+    font-size: 12px;
+    color: #666;
+    margin-top: 5px;
+}
+
+.form-actions .btn {
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.form-actions .btn-primary {
+    background: linear-gradient(135deg, #4a6cf7, #667eea);
+    color: white;
+}
+
+.form-actions .btn-secondary {
+    background: #f8f9fa;
+    color: #6c757d;
+    border: 1px solid #dee2e6;
+}
+
+.form-actions .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.form-actions .btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Create Event Message Styling */
+.create-event-message {
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    animation: slideIn 0.3s ease;
+}
+
+.create-event-message.success {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.create-event-message.error {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.create-event-message .message-content {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Created Events Section */
+.created-events-section {
+    margin-top: 40px;
+    padding: 20px;
+}
+/* Move to Preview Button Styling */
+.move-to-preview-section {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+}
+
+.move-to-preview-btn {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 20px;
+    padding: 8px 16px;
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.move-to-preview-btn:hover {
+    background: rgba(255,255,255,0.25);
+    border-color: rgba(255,255,255,0.5);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.move-to-preview-btn i {
+    font-size: 12px;
+}
+.section-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.section-header h2 {
+    color: #333;
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.section-header p {
+    color: #666;
+    font-size: 16px;
+}
+
+
+.event-card {
+    position: relative;
+    width: 400px;
+    height: 300px;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    margin: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.event-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+}
+
+/* Card Background */
+.event-card .card-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* Event Name (Top Left) */
+.event-card .event-name {
+    position: absolute;
+    top: 15px;
+    left: 50px;
+    z-index: 10;
+}
+
+.event-card .event-name h3 {
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Menu Container (Top Left Corner) */
+.event-card .menu-container {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 20;
+}
+
+.event-card .menu-btn {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.event-card .menu-btn:hover {
+    background: white;
+    transform: scale(1.1);
+}
+
+.event-card .menu-btn i {
+    color: #333;
+    font-size: 14px;
+}
+
+.event-card .menu-dropdown {
+    position: absolute;
+    top: 40px;
+    left: 0;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    min-width: 200px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+}
+
+.event-card .menu-container:hover .menu-dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.event-card .menu-item {
+    padding: 12px 15px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: #333;
+    transition: background 0.2s ease;
+}
+
+.event-card .menu-item:hover {
+    background: #f5f5f5;
+}
+
+.event-card .menu-item:first-child:hover {
+    background: #fee;
+    color: #e74c3c;
+}
+
+.event-card .menu-item i {
+    width: 16px;
+}
+
+/* Participants Counter (Top Right) */
+.event-card .participants-counter {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 10;
+}
+
+.event-card .counter-circle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.95);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+.event-card .joined-count, 
+.event-card .max-count {
+    text-align: center;
+    flex: 1;
+}
+
+.event-card .joined-count .count, 
+.event-card .max-count .count {
+    display: block;
+    font-size: 16px;
+    font-weight: 700;
+    color: #333;
+    line-height: 1;
+}
+
+.event-card .joined-count small, 
+.event-card .max-count small {
+    font-size: 10px;
+    color: #666;
+    text-transform: uppercase;
+}
+
+.event-card .divider {
+    width: 1px;
+    height: 40px;
+    background: #ddd;
+    margin: 0 5px;
+}
+
+/* Duration Circle (Right Middle) */
+.event-card .duration-circle {
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    z-index: 10;
+}
+
+.event-card .duration-content {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.95);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+.event-card .duration-number {
+    font-size: 18px;
+    font-weight: 700;
+    color: #333;
+    line-height: 1;
+}
+
+.event-card .duration-unit {
+    font-size: 10px;
+    color: #666;
+    text-transform: uppercase;
+}
+
+/* Creation Date (Left Bottom) */
+.event-card .creation-date {
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 8px 12px;
+    border-radius: 20px;
+    color: white;
+    font-size: 12px;
+}
+
+.event-card .creation-date i {
+    font-size: 12px;
+}
+
+/* Creator Name Input (Center Bottom) */
+.event-card .creator-name-section {
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+}
+
+.event-card .creator-name-input {
+    width: 150px;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.95);
+    text-align: center;
+    font-size: 12px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.event-card .creator-name-input:focus {
+    background: white;
+    box-shadow: 0 0 0 2px #4a6cf7;
+}
+
+.event-card .creator-name-input::placeholder {
+    color: #999;
+}
+
+/* Enter & Move Dropdown (Right Bottom) */
+.event-card .enter-move-section {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    z-index: 10;
+}
+
+.event-card .enter-move-dropdown {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.95);
+    font-size: 12px;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.3s ease;
+    min-width: 120px;
+}
+
+.event-card .enter-move-dropdown:focus {
+    background: white;
+    box-shadow: 0 0 0 2px #4a6cf7;
+}
+
+.event-card .enter-move-dropdown option {
+    background: white;
+    color: #333;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .event-card {
+        width: 350px;
+        height: 280px;
+    }
+    
+    .event-card .event-name h3 {
+        font-size: 16px;
+        max-width: 150px;
+    }
+    
+    .event-card .counter-circle {
+        width: 70px;
+        height: 70px;
+    }
+    
+    .event-card .duration-content {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .event-card .creator-name-input {
+        width: 130px;
+    }
+}
+
+
 /* Responsive Adjustments */
 @media (max-width: 576px) {
     .event-creator-modal .modal-content {
@@ -8157,6 +8702,760 @@ textarea.form-control {
     margin-top: 4px;
 }
 
+
+
+/* Preview Page Button Styling - Specific ID targeting */
+#openpreviewpagebtn {
+    background: linear-gradient(135deg, #4a6cf7, #667eea);
+    color: white;
+    border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+    min-width: 70px;
+    
+    /* Positioning */
+    position: absolute;
+    top: 100px; /* Distance from top of modal (below header) */
+    left: 20px; /* Distance from left edge */
+    z-index: 10001; /* Above modal content */
+}
+
+#openpreviewpagebtn:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 8px 25px rgba(74, 108, 247, 0.3);
+}
+
+#openpreviewpagebtn i {
+    font-size: 16px;
+}
+
+/* Ensure modal content has relative positioning for absolute positioning to work */
+.preview-page-modal .modal-content {
+    position: relative;
+}
+
+/* Add some top padding to modal body to avoid content overlap with button */
+.preview-page-modal .modal-body {
+    padding-top: 80px; /* Space for the button */
+    padding-left: 100px; /* Space for the button on the left */
+    padding-right: 20px;
+    padding-bottom: 20px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    #openpreviewpagebtn {
+        top: 85px;
+        left: 15px;
+        width: 45px;
+        height: 45px;
+        min-width: 60px;
+    }
+    
+    .preview-page-modal .modal-body {
+        padding-top: 70px;
+        padding-left: 80px;
+        padding-right: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    #openpreviewpagebtn {
+        top: 75px;
+        left: 10px;
+        width: 40px;
+        height: 40px;
+        min-width: 50px;
+    }
+    
+    #openpreviewpagebtn i {
+        font-size: 14px;
+    }
+    
+    .preview-page-modal .modal-body {
+        padding-top: 60px;
+        padding-left: 65px;
+        padding-right: 10px;
+    }
+}
+
+/* Preview Page Modal - Base Styles */
+#previewpageModal.preview-page-modal {
+    display: none;
+    position: fixed;
+    z-index: 10000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+}
+
+#previewpageModal .modal-content {
+    background-color: #ffffff;
+    margin: 2% auto;
+    padding: 0;
+    border: none;
+    border-radius: 20px;
+    width: 95%;
+    max-width: 1200px;
+    height: 90vh;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+/* Modal Header */
+#previewpageModal .modal-header {
+    background: linear-gradient(135deg, #4a6cf7, #667eea);
+    color: white;
+    padding: 20px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 20px 20px 0 0;
+}
+
+#previewpageModal .header-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+#previewpageModal .header-left h2 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+#previewpageModal .back-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 10px;
+    color: white;
+    padding: 10px 15px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+#previewpageModal .back-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateX(-3px);
+}
+
+#previewpageModal .close-previewpageModal {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+#previewpageModal .close-previewpageModal:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.1);
+}
+
+/* Modal Body */
+#previewpageModal .modal-body {
+    height: calc(90vh - 80px);
+    overflow-y: auto;
+    padding: 0;
+    scroll-behavior: smooth;
+}
+
+/* Ads Banner */
+#previewpageModal .ads-banner {
+    position: relative;
+    width: 100%;
+    height: 250px;
+    margin: 0;
+    overflow: hidden;
+}
+
+#previewpageModal .ads-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+#previewpageModal .ad-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+#previewpageModal .ad-slide.active {
+    opacity: 1;
+}
+
+#previewpageModal .ad-slide img,
+#previewpageModal .ad-slide video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#previewpageModal .ad-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+    color: white;
+    padding: 30px;
+    text-align: left;
+}
+
+#previewpageModal .ad-overlay h3 {
+    margin: 0 0 10px 0;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+#previewpageModal .ad-overlay p {
+    margin: 0;
+    font-size: 16px;
+    opacity: 0.9;
+}
+
+#previewpageModal .ads-indicators {
+    position: absolute;
+    bottom: 15px;
+    right: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+#previewpageModal .ads-indicators .indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#previewpageModal .ads-indicators .indicator.active {
+    background: white;
+    transform: scale(1.2);
+}
+
+/* Events Stats */
+#previewpageModal .events-stats {
+    padding: 30px;
+    background: #f8f9fa;
+}
+
+#previewpageModal .stats-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+#previewpageModal .stat-box {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    border: 1px solid #f0f0f0;
+}
+
+#previewpageModal .stat-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+#previewpageModal .stat-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: white;
+}
+
+#previewpageModal .stat-box.live-events .stat-icon {
+    background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+}
+
+#previewpageModal .stat-box.new-events .stat-icon {
+    background: linear-gradient(135deg, #4ecdc4, #44a08d);
+}
+
+#previewpageModal .stat-box.total-events .stat-icon {
+    background: linear-gradient(135deg, #45b7d1, #96c93d);
+}
+
+#previewpageModal .stat-content h3 {
+    margin: 0 0 5px 0;
+    font-size: 28px;
+    font-weight: 700;
+    color: #333;
+}
+
+#previewpageModal .stat-content p {
+    margin: 0;
+    color: #666;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* Created Events Section */
+#previewpageModal .created-events-section {
+    padding: 30px;
+    min-height: 400px;
+}
+
+#previewpageModal .section-header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 25px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+
+#previewpageModal .section-header h2 {
+    margin: 0 0 10px 0;
+    font-size: 28px;
+    font-weight: 700;
+    color: #333;
+}
+
+#previewpageModal .section-header p {
+    margin: 0 0 15px 0;
+    color: #666;
+    font-size: 16px;
+}
+
+#previewpageModal .events-counter {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-top: 15px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #4a6cf7;
+}
+
+#previewpageModal .counter-progress {
+    width: 200px;
+    height: 8px;
+    background: #e9ecef;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+#previewpageModal .progress-bar {
+    height: 100%;
+    background: linear-gradient(135deg, #4a6cf7, #667eea);
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+/* Created Events Container */
+#previewpageModal .created-events-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 25px;
+    max-height: 600px;
+    overflow-y: auto;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 15px;
+    border: 1px solid #e9ecef;
+}
+
+/* Event Card Styles */
+#previewpageModal .event-card {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    border: 1px solid #f0f0f0;
+    position: relative;
+    overflow: hidden;
+}
+
+#previewpageModal .event-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+#previewpageModal .event-card .event-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    background: linear-gradient(135deg, #4a6cf7, #667eea);
+    border-radius: 15px 15px 0 0;
+}
+
+#previewpageModal .event-card .event-content {
+    position: relative;
+    z-index: 2;
+    padding-top: 60px;
+}
+
+#previewpageModal .event-card .event-content h4 {
+    margin: 0 0 15px 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: #333;
+}
+
+#previewpageModal .event-card .event-details {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 15px;
+}
+
+#previewpageModal .event-card .event-details span {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: #666;
+}
+
+#previewpageModal .event-card .event-details i {
+    width: 16px;
+    color: #4a6cf7;
+}
+
+#previewpageModal .event-card .event-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+#previewpageModal .event-card .edit-btn,
+#previewpageModal .event-card .delete-btn {
+    flex: 1;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#previewpageModal .event-card .edit-btn {
+    background: #4a6cf7;
+    color: white;
+}
+
+#previewpageModal .event-card .edit-btn:hover {
+    background: #3b5bdb;
+    transform: translateY(-2px);
+}
+
+#previewpageModal .event-card .delete-btn {
+    background: #ff6b6b;
+    color: white;
+}
+
+#previewpageModal .event-card .delete-btn:hover {
+    background: #ee5a52;
+    transform: translateY(-2px);
+}
+
+/* No Events Message */
+#previewpageModal .no-events-message {
+    text-align: center;
+    padding: 60px 30px;
+    background: white;
+    border-radius: 20px;
+    border: 2px dashed #dee2e6;
+    margin: 20px;
+}
+
+#previewpageModal .no-events-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #4a6cf7, #667eea);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+}
+
+#previewpageModal .no-events-icon i {
+    font-size: 36px;
+    color: white;
+}
+
+#previewpageModal .no-events-message h3 {
+    margin: 0 0 15px 0;
+    font-size: 24px;
+    font-weight: 700;
+    color: #333;
+}
+
+#previewpageModal .no-events-message p {
+    margin: 0 0 25px 0;
+    color: #666;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+#previewpageModal .create-event-link {
+    background: linear-gradient(135deg, #4a6cf7, #667eea);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 15px 30px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+#previewpageModal .create-event-link:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(74, 108, 247, 0.3);
+}
+
+/* Footer Section */
+#previewpageModal .preview-footer {
+    background: #343a40;
+    color: white;
+    padding: 20px 30px;
+    text-align: center;
+}
+
+#previewpageModal .footer-content p {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+#previewpageModal .help-link {
+    color: #4a6cf7;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+#previewpageModal .help-link:hover {
+    text-decoration: underline;
+}
+
+#previewpageModal .footer-note {
+    opacity: 0.7;
+    font-size: 12px;
+}
+
+/* Custom Scrollbar */
+#previewpageModal .modal-body::-webkit-scrollbar,
+#previewpageModal .created-events-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+#previewpageModal .modal-body::-webkit-scrollbar-track,
+#previewpageModal .created-events-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+#previewpageModal .modal-body::-webkit-scrollbar-thumb,
+#previewpageModal .created-events-container::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+}
+
+#previewpageModal .modal-body::-webkit-scrollbar-thumb:hover,
+#previewpageModal .created-events-container::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    #previewpageModal .modal-content {
+        width: 98%;
+        height: 95vh;
+        margin: 1% auto;
+    }
+    
+    #previewpageModal .modal-header {
+        padding: 15px 20px;
+    }
+    
+    #previewpageModal .header-left {
+        gap: 15px;
+    }
+    
+    #previewpageModal .header-left h2 {
+        font-size: 20px;
+    }
+    
+    #previewpageModal .back-btn span {
+        display: none;
+    }
+    
+    #previewpageModal .stats-container {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    #previewpageModal .created-events-container {
+        grid-template-columns: 1fr;
+        max-height: 500px;
+        padding: 15px;
+    }
+    
+    #previewpageModal .events-stats,
+    #previewpageModal .created-events-section {
+        padding: 20px;
+    }
+    
+    #previewpageModal .ads-banner {
+        height: 200px;
+    }
+    
+    #previewpageModal .ad-overlay {
+        padding: 20px;
+    }
+    
+    #previewpageModal .ad-overlay h3 {
+        font-size: 20px;
+    }
+    
+    #previewpageModal .ad-overlay p {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    #previewpageModal .modal-header {
+        padding: 12px 15px;
+    }
+    
+    #previewpageModal .header-left {
+        gap: 10px;
+    }
+    
+    #previewpageModal .header-left h2 {
+        font-size: 18px;
+    }
+    
+    #previewpageModal .ads-banner {
+        height: 160px;
+    }
+    
+    #previewpageModal .stat-box {
+        padding: 20px;
+        gap: 15px;
+    }
+    
+    #previewpageModal .stat-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+    }
+    
+    #previewpageModal .stat-content h3 {
+        font-size: 24px;
+    }
+    
+    #previewpageModal .created-events-container {
+        max-height: 400px;
+        padding: 10px;
+    }
+    
+    #previewpageModal .event-card {
+        padding: 15px;
+    }
+    
+    #previewpageModal .no-events-message {
+        padding: 40px 20px;
+    }
+    
+    #previewpageModal .no-events-icon {
+        width: 60px;
+        height: 60px;
+    }
+    
+    #previewpageModal .no-events-icon i {
+        font-size: 28px;
+    }
+}
+
+/* Animation for modal opening */
+#previewpageModal.preview-page-modal {
+    animation: fadeIn 0.3s ease;
+}
+
+#previewpageModal .modal-content {
+    animation: slideInDown 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideInDown {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Prevent body scroll when modal is open */
+body.modal-open {
+    overflow: hidden;
+}
+
+ 
 /* Loading States */
 .loading-overlay {
     position: absolute;
@@ -11247,7 +12546,7 @@ textarea.form-control {
 </div>
 
 
-                    
+                           
 <!-- Event Creator Modal -->
 <div id="eventCreatorModal" class="event-creator-modal">
     <div class="modal-content">
@@ -11256,7 +12555,8 @@ textarea.form-control {
         <button class="close-eventCreatorModal">&times;</button>
         
         </div>
-                
+          
+
         <div class="modal-body">
             <form id="eventCreatorForm" class="event-creator-form">
                 <!-- Basic Information -->
@@ -11432,9 +12732,10 @@ textarea.form-control {
                                 </select>
                             </div>
                         </div>
-                                                
-                        <div id="hostingCodeInput">
-                            <div class="form-group">
+                            
+                        
+                        <div id="hostingCodeInput" style="display: none;">
+                           <div class="form-group">
                                 <label for="hostingCode">Hosting Code</label>
                                 <input type="text" id="hostingCode" name="hostingCode" class="form-control" placeholder="Enter your hosting code (e.g., Xcvb153, Ertfc20, Bisa019)">
                                 <div class="form-text">Use a valid hosting code to create event for free</div>
@@ -11458,20 +12759,113 @@ textarea.form-control {
                     <button type="button" class="btn btn-secondary" id="cancelEventBtn">Cancel</button>
                    
                              <button type="button" class="btn btn-secondary" id="payHostFeeBtn">Pay Host Fee</button>
-    </div>
+                  
+                            </div>
+<div class="form-group">
+    <label for="creatorHostingCode">Enter Hosting Code Used for Payment</label>
+    <input type="text" id="creatorHostingCode" placeholder="Enter hosting code (e.g., Xcvb153)">
+</div>
+<div class="form-actions">
+    <button type="submit" class="btn btn-primary" id="createEventBtn">Create Event</button>
+</div>
+
                         </div>
                     </div>
                 </div>
-                                
-                <!-- Form Actions -->
-                <div class="form-actions">
-                   <button type="submit" class="btn btn-primary" id="createEventBtn">Create Event</button>
-                </div>
-            </form>   
-        </div>
+             <!-- Add this section after the modal div -->
+<div class="created-events-section">
+    <div class="section-header">
+        <h2>Your Created Events</h2>
+        <p>Manage your events below</p>
+    </div>
+    <div class="events-container" id="eventsContainer">
+        <!-- Event cards will be dynamically added here -->
     </div>
 </div>
 
+            </form>  
+             
+        </div>
+    </div>
+</div>          
+                   
+          <div class="event-card" data-event-id="unique-event-id">
+    <!-- Card Background (Image or Color) -->
+    <div class="card-background" style="background: linear-gradient(135deg, #4a6cf7, #667eea);">
+        <!-- You can also use: style="background-image: url('path-to-image.jpg');" -->
+    </div>
+    
+    <!-- Event Name (Top Left) -->
+    <div class="event-name">
+        <h3>Amazing Talent Show</h3>
+    </div>
+    
+    <!-- Menu Button (Top Left Corner) -->
+    <div class="menu-container">
+        <button class="menu-btn">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="menu-dropdown">
+            <div class="menu-item" data-action="delete">
+                <i class="fas fa-trash"></i>
+                Delete Event & Get Code Back
+            </div>
+            <div class="menu-item" data-action="edit">
+                <i class="fas fa-edit"></i>
+                Edit Event Name
+            </div>
+        </div>
+    </div>
+    
+    <!-- Participants Counter (Top Right) -->
+    <div class="participants-counter">
+        <div class="counter-circle">
+            <div class="joined-count">
+                <span class="count">12</span>
+                <small>Joined</small>
+            </div>
+            <div class="divider"></div>
+            <div class="max-count">
+                <span class="count">50</span>
+                <small>Max</small>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Duration Circle (Right Middle) -->
+    <div class="duration-circle">
+        <div class="duration-content">
+            <span class="duration-number">30</span>
+            <small class="duration-unit">days</small>
+        </div>
+    </div>
+    
+    <!-- Creation Date (Left Bottom) -->
+    <div class="creation-date">
+        <i class="fas fa-calendar"></i>
+        <span>Dec 15, 2024</span>
+    </div>
+    
+    <!-- Creator Name Input (Center Bottom) -->
+    <div class="creator-name-section">
+        <input type="text" class="creator-name-input" placeholder="Enter your creator name" value="">
+    </div>
+    
+    <!-- Enter & Move Dropdown (Right Bottom) -->
+    <div class="enter-move-section">
+        <select class="enter-move-dropdown">
+            <option value="">Enter</option>
+            <option value="move-to-trackpage">Move to Track page</option>
+        </select>
+    </div>
+</div>
+ 
+
+
+<div class="spin-wheel-container">
+    <button id="openSpinWheelBtn" class="spin-wheel-btn">
+        <i class="fas fa-spinner"></i> Spin & Win
+    </button>
 
 <!-- Spin Wheel Modal -->
 <div id="spinWheelModal" class="sg-spin-wheel-modal">
@@ -17520,8 +18914,12 @@ const eventCategories = {
 
 // Valid hosting codes
 const validHostingCodes = [
-    "Xcvb153", "Ertfc20", "Bisa019"
-    // Add more codes as needed
+     // Starting with 4 letters + 3 numbers (complex combinations)
+    "Xcvb153",     "Ertfc20",     "Bisa019",    "Qzxm847",    "Wvpk392",    "Hjnr658",
+    "Bgtl074",    "Fkdw521",    "Ymqs936",    "Rzpx417",    "Nclv803",    "Jthg259",        
+    // Starting with 4 numbers + 3 letters (complex combinations)
+    "8472Qzx",    "3916Wvp",     "6583Hjn",    "0741Bgt",    "5218Fkd",    "9364Ymq",
+    "4179Rzp",    "8035Ncl"
 ];
 
 // DOM Elements
@@ -18094,6 +19492,7 @@ function showToast(message, type = 'info') {
     }, 3000);
 }
 
+
 function getFormData() {
     const formData = new FormData(form);
     const data = {};
@@ -18108,6 +19507,16 @@ function getFormData() {
         }
     }
     
+    // Add manually collected values
+    data.eventName = document.getElementById('eventName').value.trim();
+    data.eventDescription = eventDescriptionField.value.trim();
+    data.eventType = eventTypeSelect.value;
+    data.eventCategory = eventCategorySelect.value;
+    data.eventDuration = eventDurationSelect.value;
+    data.maxParticipants = maxParticipantsSelect.value;
+    data.backgroundType = backgroundTypeSelect.value;
+    data.backgroundColor = backgroundColorInput.value;
+    
     // Add calculated values
     const selectedType = eventTypeSelect.value;
     if (selectedType) {
@@ -18115,7 +19524,6 @@ function getFormData() {
         data.creationFee = categoryData.creationFee;
         data.entryFee = categoryData.entryFee;
         data.votingFee = categoryData.votingFee;
-        data.eventType = selectedType;
         data.eventTypeName = categoryData.name;
     }
     
@@ -18125,17 +19533,93 @@ function getFormData() {
     return data;
 }
 
-// Range slider functionality (if you want to add it back later)
-function setupRangeSlider() {
-    const rangeSlider = document.getElementById('maxParticipants');
-    const rangeValue = document.getElementById('maxParticipantsValue');
-    
-    if (rangeSlider && rangeValue) {
-        rangeSlider.addEventListener('input', () => {
-            rangeValue.textContent = rangeSlider.value;
-        });
+// ADD this new function - place it after the getFormData function
+async function saveEventHostingFeeToFirestore(eventData, creatorFee) {
+    try {
+        // Get current authenticated user
+        const currentUser = auth.currentUser;
+        
+        if (!currentUser) {
+            throw new Error('User not authenticated');
+        }
+
+        // Prepare the data to save
+        const hostingFeeData = {
+            // Event details
+            eventName: eventData.eventName || '',
+            eventType: eventData.eventType || '',
+            eventTypeName: eventData.eventTypeName || '',
+            eventCategory: eventData.eventCategory || '',
+            eventDuration: parseInt(eventData.eventDuration) || 0,
+            maxParticipants: parseInt(eventData.maxParticipants) || 0,
+            eventDescription: eventData.eventDescription || '',
+            
+            // Fee information
+            creatorFee: creatorFee,
+            entryFee: eventData.entryFee || 0,
+            votingFee: eventData.votingFee || 0,
+            totalCost: eventData.totalCost || 0,
+            
+            // Payment details
+            paymentMethod: paymentMethodSelect.value,
+            hostingCode: paymentMethodSelect.value === 'hostingCode' ? hostingCodeField.value.trim() : null,
+            
+            // User information
+            creatorId: currentUser.uid,
+            creatorEmail: currentUser.email,
+            creatorDisplayName: currentUser.displayName || 'Anonymous',
+            
+            // Event rules
+            eventRules: eventData.eventRules || [],
+            
+            // Background settings
+            backgroundType: eventData.backgroundType || 'color',
+            backgroundColor: eventData.backgroundColor || '#ffffff',
+            
+            // Timestamps
+            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+            
+            // Status
+            status: 'paid',
+            eventStatus: 'created'
+        };
+
+        // Save to Firestore collection "event_hosting_fee"
+        const docRef = await db.collection('event_hosting_fee').add(hostingFeeData);
+        
+        console.log('Event hosting fee data saved with ID:', docRef.id);
+        return docRef.id;
+        
+    } catch (error) {
+        console.error('Error saving event hosting fee to Firestore:', error);
+        throw error;
     }
 }
+
+// ADD this new function for enhanced error handling
+function handleFirebaseError(error) {
+    console.error('Firebase error:', error);
+    
+    let userMessage = 'An error occurred. Please try again.';
+    
+    switch (error.code) {
+        case 'permission-denied':
+            userMessage = 'Permission denied. Please check your authentication.';
+            break;
+        case 'unavailable':
+            userMessage = 'Service temporarily unavailable. Please try again later.';
+            break;
+        case 'unauthenticated':
+            userMessage = 'Please log in to continue.';
+            break;
+        default:
+            userMessage = error.message || 'An unexpected error occurred.';
+    }
+    
+    showPaymentMessage(userMessage, 'error');
+}
+
 
 // Initialize everything when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
@@ -18151,16 +19635,25 @@ window.EventCreatorModal = {
 };
 
 
+// Valid hosting codes
+ [
+    // Starting with 4 letters + 3 numbers (complex combinations)
+    "Xcvb153",     "Ertfc20",     "Bisa019",    "Qzxm847",    "Wvpk392",    "Hjnr658",
+    "Bgtl074",    "Fkdw521",    "Ymqs936",    "Rzpx417",    "Nclv803",    "Jthg259",        
+    // Starting with 4 numbers + 3 letters (complex combinations)
+    "8472Qzx",    "3916Wvp",     "6583Hjn",    "0741Bgt",    "5218Fkd",    "9364Ymq",
+    "4179Rzp",    "8035Ncl"
+];
 
-// Pay Host Fee Functionality (Fixed)
+// Pay Host Fee Functionality (Updated)
 async function payHostFee() {
-    console.log('Pay Host Fee button clicked'); // Debug log
+    console.log('Pay Host Fee button clicked');
     
     const paymentMethod = paymentMethodSelect.value;
     const selectedType = eventTypeSelect.value;
     
-    console.log('Payment method:', paymentMethod); // Debug log
-    console.log('Selected type:', selectedType); // Debug log
+    console.log('Payment method:', paymentMethod);
+    console.log('Selected type:', selectedType);
     
     if (!selectedType) {
         showPaymentMessage('Please select an event type first', 'error');
@@ -18192,62 +19685,311 @@ async function payHostFee() {
     }
 }
 
-// Handle Hosting Code Payment (Fixed)
+// NEW FUNCTION: Check if hosting code has been used
+async function checkIfCodeUsed(hostingCode) {
+    try {
+        console.log('Checking Firebase for used hosting code:', hostingCode);
+        
+        // Query the event_hosting_fee collection for this hosting code
+        const querySnapshot = await db.collection('event_hosting_fee')
+            .where('hostingCode', '==', hostingCode)
+            .where('paymentMethod', '==', 'hostingCode')
+            .limit(1)
+            .get();
+        
+        const isUsed = !querySnapshot.empty;
+        console.log('Code usage check result:', isUsed);
+        
+        if (isUsed) {
+            const usedDoc = querySnapshot.docs[0];
+            const usedData = usedDoc.data();
+            console.log('Code was used by:', {
+                userId: usedData.creatorId,
+                email: usedData.creatorEmail,
+                eventName: usedData.eventName,
+                createdAt: usedData.createdAt
+            });
+        }
+        
+        return isUsed;
+        
+    } catch (error) {
+        console.error('Error checking code usage:', error);
+        // If there's an error checking, assume code might be used (safer approach)
+        throw new Error('Unable to verify hosting code. Please try again.');
+    }
+}
+
+// Handle Hosting Code Payment (UPDATED - Now checks for usage)
 async function handleHostingCodePayment() {
-    console.log('Handling hosting code payment'); // Debug log
+    console.log('=== HANDLING HOSTING CODE PAYMENT ===');
     
     const hostingCode = hostingCodeField.value.trim();
-    console.log('Hosting code entered:', hostingCode); // Debug log
+    console.log('Hosting code entered:', `"${hostingCode}"`);
     
     if (!hostingCode) {
         showPaymentMessage('Please enter a hosting code', 'error');
         return;
     }
     
-    console.log('Valid codes:', validHostingCodes); // Debug log
-    console.log('Code is valid:', validHostingCodes.includes(hostingCode)); // Debug log
+    console.log('Valid codes:', validHostingCodes);
+    console.log('Code is valid:', validHostingCodes.includes(hostingCode));
     
+    // Step 1: Check if code exists in valid codes (hardcoded)
     if (!validHostingCodes.includes(hostingCode)) {
         showPaymentMessage('Invalid hosting code. Please check and try again.', 'error');
         return;
     }
     
+    // Step 2: Check if code has been used before in Firebase
+    console.log('Checking if code has been used before...');
+    try {
+        const isCodeUsed = await checkIfCodeUsed(hostingCode);
+        
+        if (isCodeUsed) {
+            showPaymentMessage('This hosting code has already been used. Please use a different code.', 'error');
+            return;
+        }
+    } catch (error) {
+        console.error('Error checking code usage:', error);
+        showPaymentMessage('Unable to verify hosting code. Please try again.', 'error');
+        return;
+    }
+    
+    // Validate form before saving
+    console.log('Validating form...');
+    const validation = validateForm();
+    console.log('Form validation result:', validation);
+    
+    if (!validation.isValid) {
+        showPaymentMessage(`Please fix the following: ${validation.errors.join(', ')}`, 'error');
+        return;
+    }
+    
+    // Check authentication
+    const currentUser = auth.currentUser;
+    console.log('Current user:', currentUser);
+    
+    if (!currentUser) {
+        showPaymentMessage('Please log in to continue', 'error');
+        return;
+    }
+    
     // Simulate processing delay
+    console.log('Processing payment...');
     await new Promise(resolve => setTimeout(resolve, 1000));
     
-    // Show success message
-    showPaymentMessage(`Hosting code "${hostingCode}" validated successfully! No payment required.`, 'success');
+    try {
+        // Get form data
+        console.log('Getting form data...');
+        const formData = getFormData();
+        console.log('Form data collected:', formData);
+        
+        const selectedType = eventTypeSelect.value;
+        const categoryData = eventCategories[selectedType];
+        const creatorFee = categoryData.creationFee;
+        
+        // Save to Firestore
+        console.log('Saving to Firestore...');
+        const documentId = await saveEventHostingFeeToFirestore(formData, creatorFee);
+        console.log('Document saved with ID:', documentId);
+        
+        // Show success message with document ID
+        showPaymentMessage(
+            `Hosting code "${hostingCode}" validated successfully! Event created and saved to database. Reference ID: ${documentId.substring(0, 8)}...`, 
+            'success'
+        );
+        
+    } catch (error) {
+        console.error('=== ERROR SAVING EVENT DATA ===');
+        console.error('Error details:', error);
+        
+        let errorMessage = 'Event validated but failed to save. ';
+        if (error.code === 'permission-denied') {
+            errorMessage += 'Permission denied. Please check your authentication.';
+        } else if (error.code === 'unauthenticated') {
+            errorMessage += 'Please log in again.';
+        } else {
+            errorMessage += error.message || 'Please try again.';
+        }
+        
+        showPaymentMessage(errorMessage, 'error');
+    }
 }
 
-// Updated initialization to ensure button event is attached
-function initializeEventCreatorModal() {
-    setupModalControls();
-    setupAccordionFunctionality();
-    setupCategoryLogic();
-    setupBackgroundControls();
-    setupPaymentControls();
-    setupRulesManagement();
-    setupDescriptionValidation();
-    setupPayHostFeeButton(); // Add this line
+// ADD this function - Save Event to Firestore
+async function saveEventHostingFeeToFirestore(eventData, creatorFee) {
+    try {
+        console.log('=== SAVING TO FIRESTORE ===');
+        
+        const currentUser = auth.currentUser;
+        if (!currentUser) {
+            throw new Error('User not authenticated');
+        }
+
+        const hostingFeeData = {
+            // Event details
+            eventName: eventData.eventName || '',
+            eventType: eventData.eventType || '',
+            eventTypeName: eventData.eventTypeName || '',
+            eventCategory: eventData.eventCategory || '',
+            eventDuration: parseInt(eventData.eventDuration) || 0,
+            maxParticipants: parseInt(eventData.maxParticipants) || 0,
+            eventDescription: eventData.eventDescription || '',
+            
+            // Fee information
+            creatorFee: creatorFee,
+            entryFee: eventData.entryFee || 0,
+            votingFee: eventData.votingFee || 0,
+            totalCost: eventData.totalCost || 0,
+            
+            // Payment details
+            paymentMethod: paymentMethodSelect.value,
+            hostingCode: paymentMethodSelect.value === 'hostingCode' ? hostingCodeField.value.trim() : null,
+            
+            // User information
+            creatorId: currentUser.uid,
+            creatorEmail: currentUser.email,
+            creatorDisplayName: currentUser.displayName || 'Anonymous',
+            
+            // Event rules
+            eventRules: eventData.eventRules || [],
+            
+            // Background settings
+            backgroundType: eventData.backgroundType || 'color',
+            backgroundColor: eventData.backgroundColor || '#ffffff',
+            
+            // Timestamps
+            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+            
+            // Status
+            status: 'paid',
+            eventStatus: 'created'
+        };
+
+        console.log('Data to save:', hostingFeeData);
+        const docRef = await db.collection('event_hosting_fee').add(hostingFeeData);
+        console.log('Event saved with ID:', docRef.id);
+        return docRef.id;
+        
+    } catch (error) {
+        console.error('Firestore save error:', error);
+        throw error;
+    }
 }
+
+// ADD this function - Get Form Data
+function getFormData() {
+    const formData = new FormData(form);
+    const data = {};
+    
+    // Convert FormData to regular object
+    for (let [key, value] of formData.entries()) {
+        if (key === 'eventRules[]') {
+            if (!data.eventRules) data.eventRules = [];
+            if (value.trim()) data.eventRules.push(value.trim());
+        } else {
+            data[key] = value;
+        }
+    }
+    
+    // Add manually collected values
+    data.eventName = document.getElementById('eventName').value.trim();
+    data.eventDescription = eventDescriptionField.value.trim();
+    data.eventType = eventTypeSelect.value;
+    data.eventCategory = eventCategorySelect.value;
+    data.eventDuration = eventDurationSelect.value;
+    data.maxParticipants = maxParticipantsSelect.value;
+    data.backgroundType = backgroundTypeSelect.value;
+    data.backgroundColor = backgroundColorInput.value;
+    
+    // Add calculated values
+    const selectedType = eventTypeSelect.value;
+    if (selectedType) {
+        const categoryData = eventCategories[selectedType];
+        data.creationFee = categoryData.creationFee;
+        data.entryFee = categoryData.entryFee;
+        data.votingFee = categoryData.votingFee;
+        data.eventTypeName = categoryData.name;
+    }
+    
+    // Add total cost
+    data.totalCost = parseInt(totalCostSpan.textContent) || 0;
+    
+    return data;
+}
+
+// ADD this function - Form Validation
+function validateForm() {
+    console.log('=== FORM VALIDATION ===');
+    let isValid = true;
+    const errors = [];
+
+    // Event name validation
+    const eventName = document.getElementById('eventName').value.trim();
+    console.log('Event name:', `"${eventName}"`);
+    if (!eventName) {
+        errors.push('Event name is required');
+        isValid = false;
+    }
+
+    // Description validation
+    const description = eventDescriptionField.value.trim();
+    const words = description ? description.split(/\s+/).filter(word => word.length > 0) : [];
+    const wordCount = words.length;
+    console.log('Description word count:', wordCount);
+    if (wordCount < 50 || wordCount > 85) {
+        errors.push('Event description must be between 50-85 words');
+        isValid = false;
+    }
+
+    // Category validation
+    if (!eventTypeSelect.value) {
+        errors.push('Please select an event type');
+        isValid = false;
+    }
+    if (!eventCategorySelect.value) {
+        errors.push('Please select a category');
+        isValid = false;
+    }
+    if (!eventDurationSelect.value) {
+        errors.push('Please select event duration');
+        isValid = false;
+    }
+    if (!maxParticipantsSelect.value) {
+        errors.push('Please select maximum participants');
+        isValid = false;
+    }
+
+    // Rules validation
+    const ruleInputs = document.querySelectorAll('input[name="eventRules[]"]');
+    const hasValidRule = Array.from(ruleInputs).some(input => input.value.trim().length > 0);
+    if (!hasValidRule) {
+        errors.push('Please add at least one event rule');
+        isValid = false;
+    }
+
+    console.log('Validation result:', { isValid, errors });
+    return { isValid, errors };
+}
+
 
 // Setup Pay Host Fee Button
 function setupPayHostFeeButton() {
     const payHostFeeBtn = document.getElementById('payHostFeeBtn');
     if (payHostFeeBtn) {
-        // Remove existing listener to prevent duplicates
         payHostFeeBtn.removeEventListener('click', payHostFee);
-        // Add event listener
         payHostFeeBtn.addEventListener('click', payHostFee);
-        console.log('Pay Host Fee button event listener attached'); // Debug log
+        console.log('Pay Host Fee button event listener attached');
     } else {
-        console.error('Pay Host Fee button not found'); // Debug log
+        console.error('Pay Host Fee button not found');
     }
 }
 
-// Show payment message in card under accordion-content (Fixed)
+// Show payment message (Updated - prevent modal from closing)
 function showPaymentMessage(message, type) {
-    console.log('Showing payment message:', message, type); // Debug log
+    console.log('Showing payment message:', message, type);
     
     // Remove existing message if any
     const existingMessage = document.querySelector('.payment-message-card');
@@ -18265,22 +20007,989 @@ function showPaymentMessage(message, type) {
         </div>
     `;
     
-    // Add to payment section accordion content
+    // Add to payment section
     const paymentSection = document.getElementById('payment-section');
     if (paymentSection) {
         paymentSection.appendChild(messageCard);
-        console.log('Message card added to payment section'); // Debug log
+        console.log('Message card added to payment section');
+        
+        // Scroll to message
+        messageCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     } else {
-        console.error('Payment section not found'); // Debug log
+        console.error('Payment section not found');
     }
     
-    // Auto remove after 5 seconds
+        // Auto remove after 8 seconds for success, 5 seconds for error
+    const timeout = type === 'success' ? 8000 : 5000;
     setTimeout(() => {
         if (messageCard.parentNode) {
             messageCard.remove();
         }
-    }, 5000);
+    }, timeout);
 }
+
+// User Balance Fetching (Compatible with your Firebase setup)
+let currentUserBalance = 0;
+
+// Fetch user's talent coin balance from Firebase
+async function fetchUserBalance() {
+    try {
+        const user = firebase.auth().currentUser;
+        if (!user) {
+            console.error('No user authenticated');
+            return 0;
+        }
+
+        // Fetch from users collection (not wallets collection)
+        const userDoc = await firebase.firestore().collection('users').doc(user.uid).get();
+        
+        if (userDoc.exists) {
+            const userData = userDoc.data();
+            const balance = userData.talentCoinBalance || 0; // Note: talentCoinBalance (not talentcoinbalance)
+            currentUserBalance = balance;
+            
+            // Update the balance display
+            const userBalanceSpan = document.getElementById('userBalance');
+            if (userBalanceSpan) {
+                userBalanceSpan.textContent = balance;
+            }
+            
+            return balance;
+        } else {
+            console.error('User document not found');
+            return 0;
+        }
+    } catch (error) {
+        console.error('Error fetching user balance:', error);
+        return 0;
+    }
+}
+
+// Update the existing modal open function to fetch balance
+function openEventCreatorModal() {
+    // Your existing modal opening code here
+    modal.classList.add('active'); 
+    document.body.style.overflow = 'hidden';
+    resetForm();
+    
+    // Fetch balance when modal opens
+    fetchUserBalance();
+}
+               
+// Add these new variables at the top with other DOM elements
+const createEventBtn = document.getElementById('createEventBtn');
+const creatorHostingCodeInput = document.getElementById('creatorHostingCode');
+const eventsContainer = document.getElementById('eventsContainer');
+
+// Update the initialization function
+function initializeEventCreatorModal() {
+    setupModalControls();
+    setupAccordionFunctionality();
+    setupCategoryLogic();
+    setupBackgroundControls();
+    setupPaymentControls();
+    setupRulesManagement();
+    setupDescriptionValidation();
+    setupPayHostFeeButton();
+    setupCreateEventButton(); // Add this new function
+    loadUserEvents(); // Load existing events on page load
+}
+
+// New function to setup Create Event button
+function setupCreateEventButton() {
+    if (createEventBtn) {
+        createEventBtn.addEventListener('click', handleCreateEvent);
+        console.log('Create Event button event listener attached');
+    } else {
+        console.error('Create Event button not found');
+    }
+}
+
+      
+    // Main function to handle Create Event - FIXED VERSION
+async function handleCreateEvent(e) {
+    e.preventDefault();
+    console.log('=== CREATE EVENT CLICKED ===');
+    
+    const hostingCode = creatorHostingCodeInput.value.trim();
+    console.log('Hosting code entered:', hostingCode);
+    
+    if (!hostingCode) {
+        showCreateEventMessage('Please enter the hosting code you used for payment', 'error');
+        return; // STOP HERE
+    }
+    
+    // Show loading state
+    const originalText = createEventBtn.textContent;
+    createEventBtn.disabled = true;
+    createEventBtn.textContent = 'Creating Event...';
+    
+    try {
+        // First check if hosting code has already been used to create an event card
+        const isCodeAlreadyUsed = await checkIfHostingCodeUsed(hostingCode);
+        if (isCodeAlreadyUsed) {
+            showCreateEventMessage('You have already used this hosting code to create an event card', 'error');
+            return; // STOP HERE - DON'T CREATE CARD
+        }
+        
+        // Query Firebase for the hosting fee data
+        const eventData = await getEventDataFromHostingCode(hostingCode);
+        
+        if (!eventData) {
+            showCreateEventMessage('Hosting code not found or invalid. Please check your code.', 'error');
+            return; // STOP HERE - DON'T CREATE CARD
+        }
+        
+        // Check if event card already exists for this hosting code (DOM check)
+        const existingCard = document.querySelector(`[data-hosting-code="${hostingCode}"]`);
+        if (existingCard) {
+            showCreateEventMessage('Event card already exists for this hosting code', 'error');
+            return; // STOP HERE - DON'T CREATE CARD
+        }
+        
+        // ONLY CREATE CARD IF ALL VALIDATIONS PASS
+        createEventCard(eventData);
+        
+        // Mark hosting code as used for event card creation in Firebase
+        await markHostingCodeAsUsedForEventCard(eventData.id, hostingCode);
+        
+        // Show success message
+        showCreateEventMessage('Event card created successfully!', 'success');
+        
+        // Clear the input
+        creatorHostingCodeInput.value = '';
+        
+        // Close modal
+        setTimeout(() => {
+            closeEventModal();
+        }, 1500);
+        
+    } catch (error) {
+        console.error('Error creating event:', error);
+        showCreateEventMessage('Failed to create event. Please try again.', 'error');
+        // DON'T CREATE CARD ON ERROR
+    } finally {
+        // Reset button state
+        createEventBtn.disabled = false;
+        createEventBtn.textContent = originalText;
+    }
+}
+
+
+// Function to get event data from Firebase using hosting code
+async function getEventDataFromHostingCode(hostingCode) {
+    try {
+        console.log('Querying Firebase for hosting code:', hostingCode);
+        
+        const currentUser = auth.currentUser;
+        if (!currentUser) {
+            throw new Error('User not authenticated');
+        }
+        
+        // Query the event_hosting_fee collection
+        const querySnapshot = await db.collection('event_hosting_fee')
+            .where('hostingCode', '==', hostingCode)
+            .where('creatorId', '==', currentUser.uid)
+            .where('status', '==', 'paid')
+            .limit(1)
+            .get();
+        
+        if (querySnapshot.empty) {
+            console.log('No matching event found for hosting code');
+            return null;
+        }
+        
+        const doc = querySnapshot.docs[0];
+        const data = doc.data();
+        
+        console.log('Event data found:', data);
+        
+        return {
+            id: doc.id,
+            hostingCode: hostingCode,
+            eventName: data.eventName,
+            eventType: data.eventType,
+            eventCategory: data.eventCategory,
+            eventDuration: data.eventDuration,
+            maxParticipants: data.maxParticipants,
+            backgroundColor: data.backgroundColor,
+            backgroundType: data.backgroundType,
+            createdAt: data.createdAt,
+            creatorDisplayName: data.creatorDisplayName
+        };
+        
+    } catch (error) {
+        console.error('Error querying Firebase:', error);
+        throw error;
+    }
+}
+
+// Update the createEventCard function to include the Move to Preview button
+function createEventCard(eventData) {
+    console.log('Creating event card with data:', eventData);
+    
+    // Format creation date
+    const creationDate = eventData.createdAt ? 
+        new Date(eventData.createdAt.toDate()).toLocaleDateString('en-US', {
+            month: 'short',
+            day: 'numeric',
+            year: 'numeric'
+        }) : 
+        new Date().toLocaleDateString('en-US', {
+            month: 'short',
+            day: 'numeric',
+            year: 'numeric'
+        });
+    
+    // Determine background style
+    let backgroundStyle = '';
+    if (eventData.backgroundType === 'color') {
+        backgroundStyle = `background: ${eventData.backgroundColor || '#4a6cf7'};`;
+    } else {
+        backgroundStyle = `background: linear-gradient(135deg, ${eventData.backgroundColor || '#4a6cf7'}, #667eea);`;
+    }
+    
+    const eventCard = document.createElement('div');
+    eventCard.className = 'event-card';
+    eventCard.setAttribute('data-event-id', eventData.id);
+    eventCard.setAttribute('data-hosting-code', eventData.hostingCode);
+    
+    eventCard.innerHTML = `
+        <!-- Card Background -->
+        <div class="card-background" style="${backgroundStyle}"></div>
+        
+        <!-- Event Name (Top Left) -->
+        <div class="event-name">
+            <h3>${eventData.eventName}</h3>
+        </div>
+        
+        <!-- Menu Button (Top Right Corner) -->
+        <div class="menu-container">
+            <button class="menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="menu-dropdown">
+                <div class="menu-item" data-action="delete">
+                    <i class="fas fa-trash"></i>
+                    Delete Event (No Refund)
+                </div>
+                <div class="menu-item" data-action="edit">
+                    <i class="fas fa-edit"></i>
+                    Edit Event Details
+                </div>
+            </div>
+        </div>
+        
+        <!-- Participants Counter (Top Right) -->
+        <div class="participants-counter">
+            <div class="counter-circle">
+                <div class="joined-count">
+                    <span class="count">0</span>
+                    <small>Joined</small>
+                </div>
+                <div class="divider"></div>
+                <div class="max-count">
+                    <span class="count">${eventData.maxParticipants}</span>
+                    <small>Max</small>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Duration Circle (Right Middle) -->
+        <div class="duration-circle">
+            <div class="duration-content">
+                <span class="duration-number">${eventData.eventDuration}</span>
+                <small class="duration-unit">days</small>
+            </div>
+        </div>
+        
+        <!-- Creation Date (Left Bottom) -->
+        <div class="creation-date">
+            <i class="fas fa-calendar"></i>
+            <span>${creationDate}</span>
+        </div>
+        
+        <!-- Creator Name Input (Center Bottom) -->
+        <div class="creator-name-section">
+            <input type="text" class="creator-name-input" placeholder="Enter your creator name" 
+                   value="${eventData.creatorDisplayName || ''}" 
+                   data-event-id="${eventData.id}">
+        </div>
+        
+        <!-- Move to Preview Button (Bottom Right) -->
+        <div class="move-to-preview-section">
+            <button class="move-to-preview-btn" data-action="move-to-preview">
+                <i class="fas fa-eye"></i>
+                <span>Move to Preview</span>
+            </button>
+        </div>
+    `;
+    
+    // Add event card to container
+    eventsContainer.appendChild(eventCard);
+    
+    // Setup event listeners for this card
+    setupEventCardListeners(eventCard, eventData);
+    
+    console.log('Event card created and added to DOM');
+}
+
+// Update the setupEventCardListeners function
+function setupEventCardListeners(eventCard, eventData) {
+    // Menu button toggle
+    const menuBtn = eventCard.querySelector('.menu-btn');
+    const menuDropdown = eventCard.querySelector('.menu-dropdown');
+    
+    menuBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        menuDropdown.classList.toggle('active');
+    });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', () => {
+        menuDropdown.classList.remove('active');
+    });
+    
+    // Menu item actions
+    const deleteBtn = eventCard.querySelector('[data-action="delete"]');
+    const editBtn = eventCard.querySelector('[data-action="edit"]');
+    const moveToPreviewBtn = eventCard.querySelector('[data-action="move-to-preview"]');
+    
+    deleteBtn.addEventListener('click', () => handleDeleteEvent(eventCard, eventData));
+    editBtn.addEventListener('click', () => handleEditEvent(eventCard, eventData));
+    moveToPreviewBtn.addEventListener('click', () => handleMoveToPreview(eventCard, eventData));
+    
+    // Creator name input save
+    const creatorNameInput = eventCard.querySelector('.creator-name-input');
+    creatorNameInput.addEventListener('blur', () => saveCreatorName(eventData.id, creatorNameInput.value));
+    creatorNameInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            creatorNameInput.blur();
+        }
+    });
+}
+
+
+
+// Function to handle delete event
+function handleDeleteEvent(eventCard, eventData) {
+    const confirmDelete = confirm(
+        `Are you sure you want to delete "${eventData.eventName}"?\n\n` +
+        `⚠️ This action cannot be undone.\n` +
+        `⚠️ No refund will be provided.\n` +
+        `⚠️ Contact consumer care if you need assistance.`
+    );
+    
+    if (confirmDelete) {
+        // Remove from DOM
+        eventCard.remove();
+        
+        // Optionally update Firebase to mark as deleted
+        markEventAsDeleted(eventData.id);
+        
+        showCreateEventMessage('Event deleted successfully', 'success');
+    }
+}
+
+// Function to mark event as deleted in Firebase
+async function markEventAsDeleted(eventId) {
+    try {
+        await db.collection('event_hosting_fee').doc(eventId).update({
+            status: 'deleted',
+            deletedAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        console.log('Event marked as deleted in Firebase');
+    } catch (error) {
+        console.error('Error marking event as deleted:', error);
+    }
+}
+
+// Function to handle edit event
+function handleEditEvent(eventCard, eventData) {
+    // Create edit modal or inline editing
+    // For now, let's create a simple prompt-based editing
+    
+    const newEventName = prompt('Enter new event name:', eventData.eventName);
+    if (newEventName && newEventName.trim() !== eventData.eventName) {
+        // Update the card
+        const eventNameElement = eventCard.querySelector('.event-name h3');
+        eventNameElement.textContent = newEventName.trim();
+        
+        // Update Firebase
+        updateEventInFirebase(eventData.id, { eventName: newEventName.trim() });
+        
+        showCreateEventMessage('Event name updated successfully', 'success');
+    }
+}
+
+// Function to update event in Firebase
+async function updateEventInFirebase(eventId, updates) {
+    try {
+        await db.collection('event_hosting_fee').doc(eventId).update({
+            ...updates,
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        console.log('Event updated in Firebase');
+    } catch (error) {
+        console.error('Error updating event:', error);
+    }
+}
+
+// Function to save creator name
+async function saveCreatorName(eventId, creatorName) {
+    try {
+        await db.collection('event_hosting_fee').doc(eventId).update({
+            creatorDisplayName: creatorName.trim(),
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        console.log('Creator name saved');
+    } catch (error) {
+        console.error('Error saving creator name:', error);
+    }
+}
+
+// Function to load user's existing events on page load
+async function loadUserEvents() {
+    try {
+        const currentUser = auth.currentUser;
+        if (!currentUser) return;
+        
+        const querySnapshot = await db.collection('event_hosting_fee')
+            .where('creatorId', '==', currentUser.uid)
+            .where('status', '==', 'paid')
+            .orderBy('createdAt', 'desc')
+            .get();
+        
+        querySnapshot.forEach(doc => {
+            const data = doc.data();
+            const eventData = {
+                id: doc.id,
+                hostingCode: data.hostingCode,
+                eventName: data.eventName,
+                eventType: data.eventType,
+                eventCategory: data.eventCategory,
+                eventDuration: data.eventDuration,
+                maxParticipants: data.maxParticipants,
+                backgroundColor: data.backgroundColor,
+                backgroundType: data.backgroundType,
+                createdAt: data.createdAt,
+                creatorDisplayName: data.creatorDisplayName
+            };
+            
+            createEventCard(eventData);
+        });
+        
+    } catch (error) {
+        console.error('Error loading user events:', error);
+    }
+}
+
+// Function to show create event messages (continued)
+function showCreateEventMessage(message, type) {
+    console.log('Showing create event message:', message, type);
+    
+    // Remove existing message if any
+    const existingMessage = document.querySelector('.create-event-message');
+    if (existingMessage) {
+        existingMessage.remove();
+    }
+    
+    // Create message element
+    const messageElement = document.createElement('div');
+    messageElement.className = `create-event-message ${type}`;
+    messageElement.innerHTML = `
+        <div class="message-content">
+            <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
+            <span>${message}</span>
+        </div>
+    `;
+    
+    // Add to form actions section
+    const formActions = document.querySelector('.form-actions');
+    if (formActions) {
+        formActions.appendChild(messageElement);
+        
+        // Scroll to message
+        messageElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+    
+    // Auto remove after timeout
+    const timeout = type === 'success' ? 3000 : 5000;
+    setTimeout(() => {
+        if (messageElement.parentNode) {
+            messageElement.remove();
+        }
+    }, timeout);
+}
+
+// Update the existing resetForm function to include the new input
+function resetForm() {
+    form.reset();
+    hideAllCategoryGroups();
+    hidePricingDisplay();
+    resetBackgroundOptions();
+    resetRules();
+    updateWordCount();
+    
+    // Clear the hosting code input
+    if (creatorHostingCodeInput) {
+        creatorHostingCodeInput.value = '';
+    }
+}
+
+// Preview Page Modal Functionality
+document.addEventListener('DOMContentLoaded', function() {
+    initializePreviewPageModal();
+});
+
+function initializePreviewPageModal() {
+    const openPreviewBtn = document.getElementById('openpreviewpagebtn');
+    const previewModal = document.getElementById('previewpageModal');
+    const closePreviewBtn = document.querySelector('.close-previewpageModal');
+    
+    // Check if elements exist
+    if (!openPreviewBtn || !previewModal || !closePreviewBtn) {
+        console.error('Preview page modal elements not found');
+        return;
+    }
+    
+    // Open modal function
+    function openPreviewModal() {
+        console.log('Opening preview page modal');
+        previewModal.style.display = 'block';
+        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        
+        // Add animation class if needed
+        setTimeout(() => {
+            previewModal.classList.add('active');
+        }, 10);
+    }
+    
+    // Close modal function
+    function closePreviewModal() {
+        console.log('Closing preview page modal');
+        previewModal.classList.remove('active');
+        document.body.style.overflow = 'auto'; // Restore scrolling
+        
+        // Hide modal after animation
+        setTimeout(() => {
+            previewModal.style.display = 'none';
+        }, 300);
+    }
+    
+    // Event listeners
+    openPreviewBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        openPreviewModal();
+    });
+    
+    closePreviewBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        closePreviewModal();
+    });
+    
+    // Close modal when clicking outside
+    previewModal.addEventListener('click', function(e) {
+        if (e.target === previewModal) {
+            closePreviewModal();
+        }
+    });
+    
+    // Close modal with Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && previewModal.style.display === 'block') {
+            closePreviewModal();
+        }
+    });
+    
+    console.log('Preview page modal initialized successfully');
+}
+
+// Optional: Function to go back to creator (if needed)
+function goBackToCreator() {
+    const previewModal = document.getElementById('previewpageModal');
+    if (previewModal) {
+        previewModal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+    
+    // You can add additional logic here if needed
+    console.log('Going back to event creator');
+}
+
+// Function to handle move to preview
+function handleMoveToPreview(eventCard, eventData) {
+    console.log('Moving event to preview:', eventData);
+    
+    // Close the event creator modal
+    closeEventModal();
+    
+    // Open the preview page modal
+    openPreviewPageModal();
+    
+    // Move the event card to the preview page
+    moveEventCardToPreview(eventCard, eventData);
+    
+    // Update stats in preview page
+    updatePreviewPageStats();
+    
+    // Show success message in preview page
+    showPreviewMessage('Event moved to preview successfully!', 'success');
+}
+
+// Function to open preview page modal
+function openPreviewPageModal() {
+    const previewModal = document.getElementById('previewpageModal');
+    if (previewModal) {
+        previewModal.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+        
+        // Initialize preview page if not already done
+        initializePreviewPage();
+    } else {
+        console.error('Preview page modal not found');
+    }
+}
+
+// Function to close preview page modal
+function closePreviewPageModal() {
+    const previewModal = document.getElementById('previewpageModal');
+    if (previewModal) {
+        previewModal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+}
+
+// Function to move event card to preview page
+function moveEventCardToPreview(eventCard, eventData) {
+    const previewContainer = document.getElementById('createdEventsContainer');
+    const noEventsMessage = document.getElementById('noEventsMessage');
+    
+    if (!previewContainer) {
+        console.error('Preview events container not found');
+        return;
+    }
+    
+    // Clone the event card
+    const clonedCard = eventCard.cloneNode(true);
+    
+    // Remove the original card from the creator page
+    eventCard.remove();
+    
+    // Update the cloned card for preview page (remove move to preview button)
+    const moveToPreviewSection = clonedCard.querySelector('.move-to-preview-section');
+    if (moveToPreviewSection) {
+        moveToPreviewSection.remove();
+    }
+    
+    // Add preview-specific styling
+    clonedCard.classList.add('preview-event-card');
+    
+    // Add the cloned card to preview container
+    previewContainer.appendChild(clonedCard);
+    
+    // Hide no events message if visible
+    if (noEventsMessage) {
+        noEventsMessage.style.display = 'none';
+    }
+    
+    // Re-setup event listeners for the cloned card
+    setupPreviewEventCardListeners(clonedCard, eventData);
+    
+    console.log('Event card moved to preview page');
+}
+
+// Function to setup event listeners for preview page event cards
+function setupPreviewEventCardListeners(eventCard, eventData) {
+    // Menu button toggle
+    const menuBtn = eventCard.querySelector('.menu-btn');
+    const menuDropdown = eventCard.querySelector('.menu-dropdown');
+    
+    if (menuBtn && menuDropdown) {
+        menuBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            menuDropdown.classList.toggle('active');
+        });
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', () => {
+            menuDropdown.classList.remove('active');
+        });
+        
+        // Menu item actions
+        const deleteBtn = eventCard.querySelector('[data-action="delete"]');
+        const editBtn = eventCard.querySelector('[data-action="edit"]');
+        
+        if (deleteBtn) {
+            deleteBtn.addEventListener('click', () => handleDeleteEventFromPreview(eventCard, eventData));
+        }
+        
+        if (editBtn) {
+            editBtn.addEventListener('click', () => handleEditEventFromPreview(eventCard, eventData));
+        }
+    }
+    
+    // Creator name input save
+    const creatorNameInput = eventCard.querySelector('.creator-name-input');
+    if (creatorNameInput) {
+        creatorNameInput.addEventListener('blur', () => saveCreatorName(eventData.id, creatorNameInput.value));
+        creatorNameInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                creatorNameInput.blur();
+            }
+        });
+    }
+}
+
+// Function to handle delete event from preview
+function handleDeleteEventFromPreview(eventCard, eventData) {
+    const confirmDelete = confirm(
+        `Are you sure you want to delete "${eventData.eventName}"?\n\n` +
+        `⚠️ This action cannot be undone.\n` +
+        `⚠️ No refund will be provided.\n` +
+        `⚠️ Contact consumer care if you need assistance.`
+    );
+    
+    if (confirmDelete) {
+        // Remove from DOM
+        eventCard.remove();
+        
+        // Update Firebase to mark as deleted
+        markEventAsDeleted(eventData.id);
+        
+        // Update preview page stats
+        updatePreviewPageStats();
+        
+        // Check if no events left
+        checkNoEventsInPreview();
+        
+        showPreviewMessage('Event deleted successfully', 'success');
+    }
+}
+
+// Function to handle edit event from preview
+function handleEditEventFromPreview(eventCard, eventData) {
+    // Create edit modal or inline editing
+    const newEventName = prompt('Enter new event name:', eventData.eventName);
+    if (newEventName && newEventName.trim() !== eventData.eventName) {
+        // Update the card
+        const eventNameElement = eventCard.querySelector('.event-name h3');
+        eventNameElement.textContent = newEventName.trim();
+        
+        // Update Firebase
+        updateEventInFirebase(eventData.id, { eventName: newEventName.trim() });
+        
+        showPreviewMessage('Event name updated successfully', 'success');
+    }
+}
+
+// Function to update preview page stats
+function updatePreviewPageStats() {
+    const previewContainer = document.getElementById('createdEventsContainer');
+    const currentEventsCount = document.getElementById('currentEventsCount');
+    const eventsProgressBar = document.getElementById('eventsProgressBar');
+    const liveEventsCount = document.getElementById('liveEventsCount');
+    const newEventsCount = document.getElementById('newEventsCount');
+    const totalEventsCount = document.getElementById('totalEventsCount');
+    
+    if (previewContainer) {
+        const eventCards = previewContainer.querySelectorAll('.event-card');
+        const totalEvents = eventCards.length;
+        
+        // Update current events count
+        if (currentEventsCount) {
+            currentEventsCount.textContent = totalEvents;
+        }
+        
+        // Update progress bar (max 20 events)
+        if (eventsProgressBar) {
+            const progressPercentage = (totalEvents / 20) * 100;
+            eventsProgressBar.style.width = `${Math.min(progressPercentage, 100)}%`;
+        }
+        
+        // Update stats boxes
+        if (liveEventsCount) {
+            liveEventsCount.textContent = totalEvents; // For now, all events are considered live
+        }
+        
+        if (newEventsCount) {
+            // Count events created in the last 24 hours
+            const newEvents = Array.from(eventCards).filter(card => {
+                // This would need to check the creation date
+                return true; // Simplified for now
+            });
+            newEventsCount.textContent = newEvents.length;
+        }
+        
+        if (totalEventsCount) {
+            totalEventsCount.textContent = totalEvents;
+        }
+    }
+}
+
+// Function to check if no events in preview
+function checkNoEventsInPreview() {
+    const previewContainer = document.getElementById('createdEventsContainer');
+    const noEventsMessage = document.getElementById('noEventsMessage');
+    
+    if (previewContainer && noEventsMessage) {
+        const eventCards = previewContainer.querySelectorAll('.event-card');
+        
+        if (eventCards.length === 0) {
+            noEventsMessage.style.display = 'block';
+        } else {
+            noEventsMessage.style.display = 'none';
+        }
+    }
+}
+
+// Function to initialize preview page
+function initializePreviewPage() {
+    console.log('Initializing preview page...');
+    
+    // Initialize ads banner if needed
+    initializeAdsBanner();
+    
+    // Update stats
+    updatePreviewPageStats();
+    
+    // Check no events message
+    checkNoEventsInPreview();
+}
+
+  // Function to initialize ads banner (continued)
+function initializeAdsBanner() {
+    const adsBanner = document.getElementById('adsBanner');
+    if (!adsBanner) return;
+    
+    const slides = adsBanner.querySelectorAll('.ad-slide');
+    const indicators = adsBanner.querySelectorAll('.indicator');
+    let currentSlide = 0;
+    
+    function showSlide(index) {
+        // Hide all slides
+        slides.forEach(slide => slide.classList.remove('active'));
+        indicators.forEach(indicator => indicator.classList.remove('active'));
+        
+        // Show current slide
+        if (slides[index]) {
+            slides[index].classList.add('active');
+        }
+        if (indicators[index]) {
+            indicators[index].classList.add('active');
+        }
+    }
+    
+    function nextSlide() {
+        currentSlide = (currentSlide + 1) % slides.length;
+        showSlide(currentSlide);
+        
+        // Set timeout for next slide based on current slide duration
+        const currentSlideDuration = slides[currentSlide]?.getAttribute('data-duration') || 10000;
+        setTimeout(nextSlide, parseInt(currentSlideDuration));
+    }
+    
+    // Start auto-rotation if slides exist
+    if (slides.length > 0) {
+        const firstSlideDuration = slides[0]?.getAttribute('data-duration') || 10000;
+        setTimeout(nextSlide, parseInt(firstSlideDuration));
+    }
+    
+    // Add click handlers for indicators
+    indicators.forEach((indicator, index) => {
+        indicator.addEventListener('click', () => {
+            currentSlide = index;
+            showSlide(currentSlide);
+        });
+    });
+}
+
+// Function to show preview messages
+function showPreviewMessage(message, type) {
+    console.log('Showing preview message:', message, type);
+    
+    // Remove existing message if any
+    const existingMessage = document.querySelector('.preview-message');
+    if (existingMessage) {
+        existingMessage.remove();
+    }
+    
+    // Create message element
+    const messageElement = document.createElement('div');
+    messageElement.className = `preview-message ${type}`;
+    messageElement.innerHTML = `
+        <div class="message-content">
+            <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
+            <span>${message}</span>
+        </div>
+    `;
+    
+    // Add to preview modal header
+    const modalHeader = document.querySelector('#previewpageModal .modal-header');
+    if (modalHeader) {
+        modalHeader.appendChild(messageElement);
+        
+        // Auto remove after timeout
+        const timeout = type === 'success' ? 3000 : 5000;
+        setTimeout(() => {
+            if (messageElement.parentNode) {
+                messageElement.remove();
+            }
+        }, timeout);
+    }
+}
+
+// Function to go back to creator (called from preview page)
+function goBackToCreator() {
+    closePreviewPageModal();
+    // Optionally open the event creator modal
+    // openEventModal();
+}
+
+// Add event listeners for preview page modal
+function setupPreviewPageModalListeners() {
+    // Close button
+    const closeBtn = document.querySelector('.close-previewpageModal');
+    if (closeBtn) {
+        closeBtn.addEventListener('click', closePreviewPageModal);
+    }
+    
+    // Click outside modal to close
+    const previewModal = document.getElementById('previewpageModal');
+    if (previewModal) {
+        previewModal.addEventListener('click', (e) => {
+            if (e.target === previewModal) {
+                closePreviewPageModal();
+            }
+        });
+    }
+    
+    // Escape key to close
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            const previewModal = document.getElementById('previewpageModal');
+            if (previewModal && previewModal.style.display === 'block') {
+                closePreviewPageModal();
+            }
+        }
+    });
+}
+
+// Update the initialization function to include preview page listeners
+function initializeEventCreatorModal() {
+    setupModalControls();
+    setupAccordionFunctionality();
+    setupCategoryLogic();
+    setupBackgroundControls();
+    setupPaymentControls();
+    setupRulesManagement();
+    setupDescriptionValidation();
+    setupPayHostFeeButton();
+    setupCreateEventButton();
+    setupPreviewPageModalListeners(); // Add this line
+    loadUserEvents();
+}
+  
 
   // Improved Spin Wheel Functionality with isolated class names
 document.addEventListener('DOMContentLoaded', function() {
