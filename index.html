@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20105,8 +20106,7 @@ function setupCreateEventButton() {
     }
 }
 
-      
-    // Main function to handle Create Event - FIXED VERSION
+// Main function to handle Create Event
 async function handleCreateEvent(e) {
     e.preventDefault();
     console.log('=== CREATE EVENT CLICKED ===');
@@ -20116,7 +20116,7 @@ async function handleCreateEvent(e) {
     
     if (!hostingCode) {
         showCreateEventMessage('Please enter the hosting code you used for payment', 'error');
-        return; // STOP HERE
+        return;
     }
     
     // Show loading state
@@ -20125,33 +20125,23 @@ async function handleCreateEvent(e) {
     createEventBtn.textContent = 'Creating Event...';
     
     try {
-        // First check if hosting code has already been used to create an event card
-        const isCodeAlreadyUsed = await checkIfHostingCodeUsed(hostingCode);
-        if (isCodeAlreadyUsed) {
-            showCreateEventMessage('You have already used this hosting code to create an event card', 'error');
-            return; // STOP HERE - DON'T CREATE CARD
-        }
-        
         // Query Firebase for the hosting fee data
         const eventData = await getEventDataFromHostingCode(hostingCode);
         
         if (!eventData) {
             showCreateEventMessage('Hosting code not found or invalid. Please check your code.', 'error');
-            return; // STOP HERE - DON'T CREATE CARD
+            return;
         }
         
-        // Check if event card already exists for this hosting code (DOM check)
+        // Check if event card already exists for this hosting code
         const existingCard = document.querySelector(`[data-hosting-code="${hostingCode}"]`);
         if (existingCard) {
             showCreateEventMessage('Event card already exists for this hosting code', 'error');
-            return; // STOP HERE - DON'T CREATE CARD
+            return;
         }
         
-        // ONLY CREATE CARD IF ALL VALIDATIONS PASS
+        // Create the event card
         createEventCard(eventData);
-        
-        // Mark hosting code as used for event card creation in Firebase
-        await markHostingCodeAsUsedForEventCard(eventData.id, hostingCode);
         
         // Show success message
         showCreateEventMessage('Event card created successfully!', 'success');
@@ -20167,14 +20157,12 @@ async function handleCreateEvent(e) {
     } catch (error) {
         console.error('Error creating event:', error);
         showCreateEventMessage('Failed to create event. Please try again.', 'error');
-        // DON'T CREATE CARD ON ERROR
     } finally {
-        // Reset button state
+        // Reset button
         createEventBtn.disabled = false;
         createEventBtn.textContent = originalText;
     }
 }
-
 
 // Function to get event data from Firebase using hosting code
 async function getEventDataFromHostingCode(hostingCode) {
