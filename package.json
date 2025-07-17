@@ -1,0 +1,16 @@
+{
+  "name": "rewarder-hub-webhooks",
+  "version": "1.0.0",
+  "description": "Flutterwave webhook handler for Rewarder Hub",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vercel dev",
+    "deploy": "vercel --prod"
+  },
+  "dependencies": {
+    "firebase-admin": "^12.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
