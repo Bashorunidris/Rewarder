@@ -36713,10 +36713,22 @@ function processBoostPayment(eventId) {
             logo: "https://i.ibb.co/VpC27tbt/Rewarder-logo.png"
         },
         callback: (response) => {
+            console.log('🔔 Flutterwave callback response:', response);
             if (response.status === "successful") {
-                // Verify payment and handle success with email
-                handlePaymentSuccessWithEmail(eventId, response.transaction_id, total);
+                // Payment completed - wait for webhook to process
+                showNotification('Payment successful! Processing your ad package...', 'success');
+                
+                // Add debugging
+                console.log('💳 Payment successful, transaction ID:', response.transaction_id);
+                console.log('📍 Event ID:', eventId);
+                
+                showPaymentProcessingModal(eventId, response.transaction_id);
+                closeBoostEventModal();
+                
+                // Listen for webhook-processed package
+                listenForWebhookPackage(eventId, response.transaction_id);
             } else {
+                console.log('❌ Payment failed:', response);
                 showNotification('Payment failed. Please try again.', 'error');
             }
         },
@@ -36733,6 +36745,196 @@ function processBoostPayment(eventId) {
         loadFlutterwaveScript(() => {
             FlutterwaveCheckout(paymentData);
         });
+    }
+}
+
+// Listen for webhook-processed packages
+function listenForWebhookPackage(eventId, transactionId) {
+    console.log('🔍 Starting to listen for webhook package:', { eventId, transactionId });
+    
+    const packagesRef = db.collection('physicalEvents').doc(eventId).collection('adsPackages');
+    
+    // Listen for new packages with matching payment ID
+    const unsubscribe = packagesRef
+        .where('paymentId', '==', transactionId)
+        .onSnapshot((snapshot) => {
+            console.log('📡 Firebase listener triggered, snapshot size:', snapshot.size);
+            
+            if (!snapshot.empty) {
+                // Package found - webhook processed successfully
+                const packageDoc = snapshot.docs[0];
+                const packageData = packageDoc.data();
+                
+                console.log('✅ Webhook package found:', packageData);
+                unsubscribe(); // Stop listening
+                
+                // Show success modal with real data
+                showWebhookSuccessModal(packageData, eventId);
+                
+                showNotification('🎉 Payment processed successfully!', 'success');
+            } else {
+                console.log('⏳ No package found yet, still listening...');
+                
+                // Also check all packages for debugging
+                packagesRef.get().then(allSnapshot => {
+                    console.log('📊 All packages in event:', allSnapshot.size);
+                    allSnapshot.forEach(doc => {
+                        const data = doc.data();
+                        console.log('📦 Package found:', {
+                            id: doc.id,
+                            paymentId: data.paymentId,
+                            adCode: data.adCode,
+                            status: data.status
+                        });
+                    });
+                });
+            }
+        }, (error) => {
+            console.error('❌ Error listening for package:', error);
+            unsubscribe();
+            showNotification('Error checking payment status. Please contact support.', 'error');
+        });
+    
+    // Stop listening after 2 minutes if no package found
+    setTimeout(() => {
+        console.log('⏰ Timeout reached, stopping listener');
+        unsubscribe();
+        showNotification('Payment verification timeout. Please contact support if amount was deducted.', 'warning');
+    }, 120000); // 2 minutes
+}
+
+// Show payment processing modal
+function showPaymentProcessingModal(eventId, transactionId) {
+    const processingHTML = `
+        <div id="payment-processing-modal" class="boost-event-modal" style="display: block;">
+            <div class="boost-modal-content" style="max-width: 500px;">
+                <div class="boost-modal-header" style="background: linear-gradient(135deg, #007bff, #0056b3);">
+                    <h2 class="boost-modal-title">
+                        <i class="fas fa-cog fa-spin"></i>
+                        Processing Payment
+                    </h2>
+                </div>
+                
+                <div style="padding: 40px; text-align: center;">
+                    <div style="font-size: 48px; margin-bottom: 20px;">
+                        <i class="fas fa-credit-card" style="color: #28a745;"></i>
+                    </div>
+                    
+                    <h3 style="color: white; margin-bottom: 15px;">Payment Successful!</h3>
+                    
+                    <p style="color: rgba(255,255,255,0.8); margin-bottom: 20px;">
+                        We're setting up your ad campaign. This usually takes 10-30 seconds.
+                    </p>
+                    
+                    <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; margin: 20px 0;">
+                        <div class="spinner" style="
+                            border: 3px solid rgba(255,255,255,0.3);
+                            border-radius: 50%;
+                            border-top: 3px solid #00c6ff;
+                            width: 30px;
+                            height: 30px;
+                            animation: spin 1s linear infinite;
+                            margin: 0 auto 10px;
+                        "></div>
+                        <p style="color: #00c6ff; margin: 0; font-weight: 600;">Creating your ad package...</p>
+                    </div>
+                    
+                    <div style="font-size: 12px; color: rgba(255,255,255,0.6); margin-top: 20px;">
+                        Transaction ID: ${transactionId}
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <style>
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        </style>
+    `;
+    
+    document.body.insertAdjacentHTML('beforeend', processingHTML);
+}
+
+// Show webhook success modal
+function showWebhookSuccessModal(packageData, eventId) {
+    // Close processing modal
+    const processingModal = document.getElementById('payment-processing-modal');
+    if (processingModal) {
+        processingModal.remove();
+    }
+    
+    const successHTML = `
+        <div id="webhook-success-modal" class="boost-event-modal" style="display: block;">
+            <div class="boost-modal-content" style="max-width: 500px;">
+                <div class="boost-modal-header" style="background: linear-gradient(135deg, #28a745, #20c997);">
+                    <h2 class="boost-modal-title">
+                        <i class="fas fa-check-circle"></i>
+                        Ad Campaign Created!
+                    </h2>
+                    <button class="boost-close-btn" onclick="closeWebhookSuccessModal()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                
+                <div style="padding: 30px; text-align: center;">
+                    <div style="font-size: 48px; color: #28a745; margin-bottom: 20px;">
+                        🎉
+                    </div>
+                    
+                    <h3 style="color: white; margin-bottom: 15px;">Your Ad Campaign is Ready!</h3>
+                    
+                    <div style="background: rgba(40, 167, 69, 0.1); padding: 15px; border-radius: 8px; margin: 20px 0; border: 1px solid #28a745;">
+                        <p style="color: #28a745; font-weight: 600; margin: 0;">Campaign Code:</p>
+                        <p style="font-size: 24px; font-weight: 700; color: white; margin: 5px 0; letter-spacing: 2px;">${packageData.adCode}</p>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 20px 0;">
+                        <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px;">
+                            <div style="color: #00c6ff; font-weight: 600;">Amount Paid</div>
+                            <div style="color: white; font-size: 18px; font-weight: 700;">₦${packageData.totalAmountPaid.toLocaleString()}</div>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px;">
+                            <div style="color: #00c6ff; font-weight: 600;">Campaign Type</div>
+                            <div style="color: white; font-size: 18px; font-weight: 700;">${packageData.packageName}</div>
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: left; margin: 20px 0; padding: 15px; background: rgba(255,255,255,0.05); border-radius: 8px;">
+                        <h4 style="color: #00c6ff; margin-bottom: 10px;">🚀 What's Next?</h4>
+                        <ul style="color: rgba(255,255,255,0.9); padding-left: 20px; margin: 0;">
+                            <li>Upload your ad content</li>
+                            <li>Monitor campaign performance</li>
+                            <li>Track views and clicks in real-time</li>
+                        </ul>
+                    </div>
+                    
+                    <button onclick="accessAdsActivities('${eventId}')" 
+                            style="background: linear-gradient(135deg, #007bff, #0056b3); color: white; border: none; 
+                                   padding: 15px 30px; border-radius: 8px; cursor: pointer; font-weight: 600; 
+                                   font-size: 16px; margin: 10px; transition: all 0.3s ease; width: 100%;">
+                        <i class="fas fa-chart-line"></i>
+                        Manage Your Ads
+                    </button>
+                    
+                    <p style="color: rgba(255,255,255,0.6); font-size: 12px; margin-top: 20px;">
+                        Contact: +234 9078139367 | 
+                        <a href="https://rewarder-hub.vercel.app/" target="_blank" style="color: #007bff;">rewarder-hub.vercel.app</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    document.body.insertAdjacentHTML('beforeend', successHTML);
+}
+
+// Close webhook success modal
+function closeWebhookSuccessModal() {
+    const modal = document.getElementById('webhook-success-modal');
+    if (modal) {
+        modal.remove();
     }
 }
 
