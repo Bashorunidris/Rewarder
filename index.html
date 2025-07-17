@@ -36715,18 +36715,16 @@ function processBoostPayment(eventId) {
         callback: (response) => {
             console.log('🔔 Flutterwave callback response:', response);
             if (response.status === "successful") {
-                // Payment completed - wait for webhook to process
-                showNotification('Payment successful! Processing your ad package...', 'success');
+                // Payment completed - process immediately
+                showNotification('Payment successful! Creating your ad package...', 'success');
                 
-                // Add debugging
                 console.log('💳 Payment successful, transaction ID:', response.transaction_id);
                 console.log('📍 Event ID:', eventId);
                 
-                showPaymentProcessingModal(eventId, response.transaction_id);
                 closeBoostEventModal();
                 
-                // Listen for webhook-processed package
-                listenForWebhookPackage(eventId, response.transaction_id);
+                // Process payment directly - no webhook needed
+                handlePaymentSuccess(eventId, response);
             } else {
                 console.log('❌ Payment failed:', response);
                 showNotification('Payment failed. Please try again.', 'error');
@@ -36749,58 +36747,102 @@ function processBoostPayment(eventId) {
 }
 
 // Listen for webhook-processed packages
-function listenForWebhookPackage(eventId, transactionId) {
-    console.log('🔍 Starting to listen for webhook package:', { eventId, transactionId });
-    
-    const packagesRef = db.collection('physicalEvents').doc(eventId).collection('adsPackages');
-    
-    // Listen for new packages with matching payment ID
-    const unsubscribe = packagesRef
-        .where('paymentId', '==', transactionId)
-        .onSnapshot((snapshot) => {
-            console.log('📡 Firebase listener triggered, snapshot size:', snapshot.size);
+// Simple payment success handler - no webhooks needed
+async function handlePaymentSuccess(eventId, flutterwaveResponse) {
+    try {
+        console.log('🎯 Processing payment success directly:', { eventId, flutterwaveResponse });
+        
+        // Show processing message
+        showNotification('Creating your ad package...', 'success');
+        
+        // Generate ad code
+        const adCode = generateAdCode();
+        
+        // Create ad package data
+        const now = new Date();
+        const packageData = {
+            packageId: `ads_pkg_${Date.now()}`,
+            packageName: 'Boost Package',
+            packageType: 'boost',
             
-            if (!snapshot.empty) {
-                // Package found - webhook processed successfully
-                const packageDoc = snapshot.docs[0];
-                const packageData = packageDoc.data();
-                
-                console.log('✅ Webhook package found:', packageData);
-                unsubscribe(); // Stop listening
-                
-                // Show success modal with real data
-                showWebhookSuccessModal(packageData, eventId);
-                
-                showNotification('🎉 Payment processed successfully!', 'success');
-            } else {
-                console.log('⏳ No package found yet, still listening...');
-                
-                // Also check all packages for debugging
-                packagesRef.get().then(allSnapshot => {
-                    console.log('📊 All packages in event:', allSnapshot.size);
-                    allSnapshot.forEach(doc => {
-                        const data = doc.data();
-                        console.log('📦 Package found:', {
-                            id: doc.id,
-                            paymentId: data.paymentId,
-                            adCode: data.adCode,
-                            status: data.status
-                        });
-                    });
-                });
-            }
-        }, (error) => {
-            console.error('❌ Error listening for package:', error);
-            unsubscribe();
-            showNotification('Error checking payment status. Please contact support.', 'error');
+            // Status & Timing
+            status: 'pending_upload',
+            createdAt: now.toISOString(),
+            expiresAt: new Date(now.getTime() + (7 * 24 * 60 * 60 * 1000)).toISOString(), // 7 days
+            
+            // Payment Info
+            totalAmountPaid: flutterwaveResponse.amount,
+            paymentId: flutterwaveResponse.transaction_id,
+            adCode: adCode,
+            currency: flutterwaveResponse.currency,
+            
+            // Customer Info from Firebase Auth
+            customerEmail: auth.currentUser.email,
+            customerName: auth.currentUser.displayName || "User",
+            
+            // Payment metadata
+            paymentProcessedAt: now.toISOString(),
+            flutterwaveData: {
+                txRef: flutterwaveResponse.tx_ref,
+                flwRef: flutterwaveResponse.flw_ref || '',
+                paymentType: flutterwaveResponse.payment_type || 'card'
+            },
+            
+            // Default configuration
+            adTypes: ['image'],
+            placements: ['app_ads_footer'],
+            duration: 7,
+            
+            // Individual Ad Data
+            ads: {
+                image: {
+                    contentType: null,
+                    dataUrl: null,
+                    websiteUrl: null,
+                    editsUsed: 0,
+                    totalEdits: 1,
+                    views: 0,
+                    clicks: 0,
+                    uploaded: false
+                }
+            },
+            
+            // Analytics
+            totalViews: 0,
+            totalClicks: 0,
+            viewsPerDay: {}
+        };
+        
+        // Save to Firebase
+        const adPackagesRef = db.collection('physicalEvents').doc(eventId).collection('adsPackages').doc(packageData.packageId);
+        
+        await adPackagesRef.set(packageData);
+        
+        console.log('✅ Ad package saved successfully:', {
+            eventId,
+            packageId: packageData.packageId,
+            adCode
         });
-    
-    // Stop listening after 2 minutes if no package found
-    setTimeout(() => {
-        console.log('⏰ Timeout reached, stopping listener');
-        unsubscribe();
-        showNotification('Payment verification timeout. Please contact support if amount was deducted.', 'warning');
-    }, 120000); // 2 minutes
+        
+        // Show success modal immediately
+        showSimpleSuccessModal(packageData, eventId);
+        
+        showNotification('🎉 Payment successful! Your ad package is ready!', 'success');
+        
+    } catch (error) {
+        console.error('❌ Error processing payment:', error);
+        showNotification('Payment received but there was an error setting up your package. Please contact support.', 'error');
+    }
+}
+
+// Generate simple ad code
+function generateAdCode() {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let result = 'AD';
+    for (let i = 0; i < 11; i++) {
+        result += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return result;
 }
 
 // Show payment processing modal
@@ -36858,7 +36900,8 @@ function showPaymentProcessingModal(eventId, transactionId) {
 }
 
 // Show webhook success modal
-function showWebhookSuccessModal(packageData, eventId) {
+// Simple success modal - no webhook needed
+function showSimpleSuccessModal(packageData, eventId) {
     // Close processing modal
     const processingModal = document.getElementById('payment-processing-modal');
     if (processingModal) {
