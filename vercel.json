@@ -1,7 +1,0 @@
-{
-  "functions": {
-    "api/webhooks/flutterwave.js": {
-      "maxDuration": 30
-    }
-  }
-}
