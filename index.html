@@ -1587,11 +1587,778 @@ body {
     display: none;
 }
 
+/* Physical Events Section Styles */
+.physical-events-section {
+    padding: 20px;
+    background-color: var(--background-color);
+    margin-top: 15px;
+}
 
+.section-header {
+    margin-bottom: 20px;
+    color:ffffff;
+}
+
+.section-header-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.see-more-events-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+}
+
+.see-more-events-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.see-more-events-btn i {
+    font-size: 0.75rem;
+}
+
+.physical-events-section .section-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: white !important;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+}
+
+.physical-events-section .section-title i {
+    color: white !important;
+    font-size: 1.2rem;
+}
+
+.section-subtitle {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+    margin-left: 0;
+}
+
+.physical-events-container {
+    width: 100%;
+    overflow: hidden;
+}
+
+.events-scroll-wrapper {
+    display: flex;
+    gap: 15px;
+    overflow-x: auto;
+    padding: 10px 0 20px 0;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+}
+
+.events-scroll-wrapper::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
+
+.physical-event-display-card {
+    min-width: 280px;
+    max-width: 280px;
+    height: 340px;
+    background: var(--white);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.physical-event-display-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+.event-card-image {
+    width: 100%;
+    height: 160px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: cover;
+    background-position: center;
+}
+
+.event-card-image::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(0,0,0,0.3), rgba(0,0,0,0.1));
+}
+
+.event-category-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--text-color);
+    z-index: 2;
+}
+
+.event-card-body {
+    padding: 16px;
+    height: 180px;
+    display: flex;
+    flex-direction: column;
+}
+
+.event-card-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 8px;
+    line-height: 1.3;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.event-card-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.event-detail-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.event-detail-item i {
+    width: 14px;
+    color: var(--primary-color);
+    font-size: 0.8rem;
+}
+
+.event-sponsors {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 8px;
+}
+
+.sponsor-logo {
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    background: var(--bg-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.sponsors-count {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    margin-left: 4px;
+}
+
+.buy-ticket-btn {
+    width: 100%;
+    background: linear-gradient(135deg, var(--primary-color), #667eea);
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: auto;
+}
+
+.buy-ticket-btn:hover {
+    background: linear-gradient(135deg, #667eea, var(--primary-color));
+    transform: translateY(-1px);
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.buy-ticket-btn:active {
+    transform: translateY(0);
+}
+
+/* Ad Card Styles */
+.ad-display-card {
+    min-width: 280px;
+    max-width: 280px;
+    height: 340px;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.ad-display-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+    animation: shimmer 3s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+    0%, 100% { transform: rotate(0deg); }
+    50% { transform: rotate(180deg); }
+}
+
+.ad-content {
+    z-index: 2;
+    padding: 20px;
+}
+
+.ad-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.ad-subtitle {
+    font-size: 0.9rem;
+    opacity: 0.9;
+    margin-bottom: 20px;
+}
+
+.ad-cta-btn {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.ad-cta-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .physical-events-section {
+        padding: 15px;
+    }
+    
+    .section-title {
+        font-size: 1.2rem;
+    }
+    
+    .physical-event-display-card,
+    .ad-display-card {
+        min-width: 250px;
+        max-width: 250px;
+        height: 320px;
+    }
+    
+    .event-card-image {
+        height: 140px;
+    }
+    
+    .event-card-body {
+        height: 180px;
+        padding: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .physical-event-display-card,
+    .ad-display-card {
+        min-width: 220px;
+        max-width: 220px;
+        height: 300px;
+    }
+    
+    .event-card-image {
+        height: 120px;
+    }
+    
+    .event-card-body {
+        height: 180px;
+        padding: 12px;
+    }
+    
+    .events-scroll-wrapper {
+        gap: 12px;
+    }
+}
+
+/* Loading and Error States for Physical Events Display */
+.loading-events-display, .no-events-display, .error-events-display {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text-secondary);
+}
+
+.loading-events-display i {
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+    animation: spin 1s linear infinite;
+}
+
+.no-events-display i, .error-events-display i {
+    font-size: 2.5rem;
+    color: var(--text-secondary);
+    margin-bottom: 15px;
+}
+
+.loading-events-display h3, .no-events-display h3, .error-events-display h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 8px;
+}
+
+.loading-events-display p, .no-events-display p, .error-events-display p {
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+}
+
+.retry-btn {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.retry-btn:hover {
+    background: #667eea;
+    transform: translateY(-1px);
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Advanced Physical Event Card Styles */
+.advanced-event-card {
+    min-width: 320px;
+    max-width: 320px;
+    height: 400px;
+    border-radius: 24px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    flex-shrink: 0;
+    background: #fff;
+}
+
+.advanced-event-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+}
+
+.advanced-event-background {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    object-fit: cover;
+    border-radius: 24px;
+}
+
+.advanced-event-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        135deg,
+        rgba(0, 0, 0, 0.2) 0%,
+        rgba(0, 0, 0, 0.4) 50%,
+        rgba(0, 0, 0, 0.7) 100%
+    );
+    z-index: 2;
+}
+
+.advanced-category-badge {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    z-index: 3;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.advanced-tickets-badge {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    padding: 8px 12px;
+    background: rgba(255, 87, 87, 0.9);
+    color: white;
+    border-radius: 16px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    box-shadow: 0 4px 20px rgba(255, 87, 87, 0.3);
+}
+
+.advanced-tickets-badge i {
+    font-size: 0.6rem;
+    animation: flicker 2s ease-in-out infinite alternate;
+}
+
+@keyframes flicker {
+    0% { opacity: 1; }
+    100% { opacity: 0.7; }
+}
+
+.advanced-event-content {
+    position: absolute;
+    bottom: 80px;
+    left: 20px;
+    right: 20px;
+    z-index: 3;
+    color: white;
+}
+
+.advanced-event-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin: 0 0 16px 0;
+    line-height: 1.3;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.advanced-event-details {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.advanced-detail-row {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.advanced-detail-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.advanced-detail-item i {
+    width: 14px;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.advanced-card-actions {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    z-index: 3;
+}
+
+.advanced-buy-btn {
+    width: 100%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 14px 20px;
+    border-radius: 16px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.advanced-buy-btn:hover {
+    background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(102, 126, 234, 0.4);
+}
+
+.advanced-buy-btn:active {
+    transform: translateY(0);
+}
+
+/* Enhanced Ad Cards */
+.ad-display-card {
+    min-width: 320px;
+    max-width: 320px;
+    height: 400px;
+    border-radius: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+}
+
+.ad-display-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+}
+
+.ad-display-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+    animation: shimmer 4s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+    0%, 100% { transform: rotate(0deg); }
+    50% { transform: rotate(180deg); }
+}
+
+.ad-content {
+    z-index: 2;
+    padding: 30px;
+}
+
+.ad-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-bottom: 12px;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.ad-subtitle {
+    font-size: 1rem;
+    opacity: 0.9;
+    margin-bottom: 24px;
+    line-height: 1.4;
+    text-shadow: 0 1px 5px rgba(0,0,0,0.2);
+}
+
+.ad-cta-btn {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(15px);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 30px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 0.85rem;
+}
+
+.ad-cta-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Responsive Design for Advanced Cards */
+@media (max-width: 768px) {
+    .advanced-event-card,
+    .ad-display-card {
+        min-width: 280px;
+        max-width: 280px;
+        height: 360px;
+    }
+    
+    .advanced-event-title {
+        font-size: 1.2rem;
+    }
+    
+    .advanced-event-content {
+        bottom: 70px;
+        left: 16px;
+        right: 16px;
+    }
+    
+    .advanced-card-actions {
+        bottom: 16px;
+        left: 16px;
+        right: 16px;
+    }
+    
+    .advanced-buy-btn {
+        padding: 12px 16px;
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .advanced-event-card,
+    .ad-display-card {
+        min-width: 260px;
+        max-width: 260px;
+        height: 340px;
+    }
+    
+    .advanced-category-badge,
+    .advanced-tickets-badge {
+        top: 12px;
+    }
+    
+    .advanced-category-badge {
+        left: 12px;
+        padding: 6px 12px;
+        font-size: 0.7rem;
+    }
+    
+    .advanced-tickets-badge {
+        right: 12px;
+        padding: 6px 10px;
+        font-size: 0.65rem;
+    }
+}
 
 .action-btn.Game-btn:active {
   transform: translateY(1px);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Simple Shimmer Effect for Event Cards */
+.advanced-event-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        45deg,
+        transparent 30%,
+        rgba(255, 255, 255, 0.1) 50%,
+        transparent 70%
+    );
+    animation: shimmer 6s ease-in-out infinite;
+    z-index: 2;
+    pointer-events: none;
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%) translateY(-100%); }
+    50% { transform: translateX(0%) translateY(0%); }
+    100% { transform: translateX(100%) translateY(100%); }
+}
+
+
+
+/* Enhanced Category Badge with Icon */
+.advanced-category-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+}
+
+.advanced-category-badge i {
+    font-size: 0.7rem;
+    animation: badgeIconSpin 4s ease-in-out infinite;
+}
+
+@keyframes badgeIconSpin {
+    0%, 100% { transform: rotate(0deg); }
+    50% { transform: rotate(5deg); }
 }
 
 
@@ -20521,10 +21288,9 @@ rgb(81, 67, 55)rgb(81, 61, 55)rgb(81, 58, 55)rgb(184, 50, 32);
         </div>
     </div>
 
-       
-   
+        
 
-    <!-- Dashboard Page -->
+        <!-- Dashboard Page -->
 <div class="dashboard-page" id="dashboardPage">
     <!-- Top Navigation Bar -->
     <div class="dashboard-nav">
@@ -20686,97 +21452,33 @@ rgb(81, 67, 55)rgb(81, 61, 55)rgb(81, 58, 55)rgb(184, 50, 32);
 
         </div>
 
-
-<!-- Tournament Dashboard Section -->
-<div class="tournament-dashboard" id="tournamentDashboard" style="display: block;">
-    <!-- Tournament Header -->
-    <div class="tournament-header">
-        <div class="tournament-info">
-            <h2 class="tournament-title">
-                <i class="fas fa-trophy"></i>
-                Lasusu Games Tournament
-            </h2>
-            <p class="tournament-subtitle">Live Football Championship</p>
+        <!-- Physical Events Section -->
+        <div class="physical-events-section">
+            <div class="section-header">
+                <div class="section-header-row">
+                    
+                    <h2 class="section-title">
+                      <i class="fas fa-calendar-alt"></i>
+                        Physical Events
+                        <button class="see-more-events-btn" onclick="showAllEvents()">
+                        <i class="fas fa-plus"></i>
+                        See More Events
+                    </button>
+                     </h2>
+                </div>
+                <div class="section-subtitle">Discover amazing events near you</div>
+            </div>
+            
+            <div class="physical-events-container" id="physicalEventsContainer">
+                <div class="events-scroll-wrapper">
+                    <!-- Events will be dynamically loaded here -->
+                </div>
+            </div>
         </div>
+
+
         
-        <div class="tournament-actions">
-            <!-- Hidden Admin Button -->
-            <button class="admin-btn" onclick="adminLogin()" title="Admin Access">
-                <i class="fas fa-cog"></i>
-            </button>
-        </div>
-    </div>
 
-    <!-- Navigation Tabs -->
-    <div class="tournament-tabs">
-        <button class="tab-btn active" onclick="showTab('live')">
-            <i class="fas fa-circle live-dot"></i>
-            Live Matches
-        </button>
-        <button class="tab-btn" onclick="showTab('new')">
-            <i class="fas fa-calendar-plus"></i>
-            Upcoming
-        </button>
-        <button class="tab-btn" onclick="showTab('last')">
-            <i class="fas fa-history"></i>
-            Finished
-        </button>
-    </div>
-
-    <!-- Tab Contents -->
-    <div class="tournament-content">
-        <!-- Live Tab -->
-        <div id="live" class="tab-content active">
-            <div class="matches-container" id="liveMatches">
-                <div class="loading-container">
-                    <div class="loading"></div>
-                    <p>Loading live matches...</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- New Tab -->
-        <div id="new" class="tab-content">
-            <div class="matches-container" id="newMatches">
-                <div class="loading-container">
-                    <div class="loading"></div>
-                    <p>Loading upcoming matches...</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Last Match Tab -->
-        <div id="last" class="tab-content">
-            <div class="matches-container" id="lastMatches">
-                <div class="loading-container">
-                    <div class="loading"></div>
-                    <p>Loading finished matches...</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Admin Edit Modal -->
-<div id="adminModal" class="modal">
-    <div class="modal-content">
-        <span class="close" onclick="closeAdminModal()">&times;</span>
-        <h2><i class="fas fa-edit"></i> Admin Panel - Edit Match</h2>
-        <div id="adminForm">
-            <!-- Admin form will be populated when editing -->
-        </div>
-    </div>
-</div>
-
-<!-- Match Stats Modal -->
-<div id="matchStatsModal" class="modal">
-    <div class="modal-content">
-        <span class="close" onclick="closeMatchStatsModal()">&times;</span>
-        <div id="matchStatsContent">
-            <!-- Match stats will be populated when viewing -->
-        </div>
-    </div>
-</div>
 
           
         </div>
@@ -23858,7 +24560,8 @@ rgb(81, 67, 55)rgb(81, 61, 55)rgb(81, 58, 55)rgb(184, 50, 32);
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-analytics-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
-
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6058145320758437"
+     crossorigin="anonymous"></script>
 
 <script>
  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -24216,17 +24919,17 @@ async function loadUserBankDetails() {
                             <i class="fas fa-check-circle"></i>
                             <strong>Bank:</strong>
                         </div>
-                        <div>${userBankDetails.bankName}</div>
+                        <div style="color: #333; font-weight: 500;">${userBankDetails.bankName}</div>
                         <div style="display: flex; align-items: center; gap: 6px; color: #28a745;">
                             <i class="fas fa-check-circle"></i>
                             <strong>Account:</strong>
                         </div>
-                        <div>${userBankDetails.accountNumber}</div>
+                        <div style="color: #333; font-weight: 500;">${userBankDetails.accountNumber}</div>
                         <div style="display: flex; align-items: center; gap: 6px; color: #28a745;">
                             <i class="fas fa-check-circle"></i>
                             <strong>Name:</strong>
                         </div>
-                        <div>${userBankDetails.accountName}</div>
+                        <div style="color: #333; font-weight: 500;">${userBankDetails.accountName}</div>
                     </div>
                 `;
                 
@@ -29406,6 +30109,531 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 
+// Physical Events Auto-Loading System
+document.addEventListener('DOMContentLoaded', function() {
+    loadPhysicalEventsDisplay();
+});
+
+async function loadPhysicalEventsDisplay() {
+    const container = document.querySelector('.events-scroll-wrapper');
+    if (!container) return;
+
+    try {
+        // Show loading state
+        container.innerHTML = `
+            <div class="loading-events-display">
+                <i class="fas fa-spinner fa-spin"></i>
+                <p>Loading physical events...</p>
+            </div>
+        `;
+
+        // Check if Firebase is initialized
+        if (typeof firebase === 'undefined') {
+            throw new Error('Firebase is not initialized');
+        }
+
+        const db = firebase.firestore();
+        
+        // Get all physical events and calculate ticket sales
+        let allEventsSnapshot;
+        try {
+            allEventsSnapshot = await db.collection('physicalEvents').get();
+        } catch (error) {
+            console.log('Error fetching events:', error);
+            throw error;
+        }
+
+        // Clear loading state
+        container.innerHTML = '';
+
+        if (allEventsSnapshot.empty) {
+            container.innerHTML = `
+                <div class="no-events-display">
+                    <i class="fas fa-calendar-alt"></i>
+                    <h3>No Events Available</h3>
+                    <p>Be the first to create a physical event!</p>
+                </div>
+            `;
+            return;
+        }
+
+        // Convert Firebase events to array and calculate ticket sales
+        let events = [];
+        allEventsSnapshot.forEach((doc) => {
+            const eventData = { ...doc.data(), id: doc.id };
+            
+            // Debug: Log the first event data to see structure
+            if (events.length === 0) {
+                console.log('First event data structure:', eventData);
+                console.log('Background data:', eventData.background);
+            }
+            
+            // Calculate total tickets sold
+            let ticketsSold = 0;
+            if (eventData.tickets && Array.isArray(eventData.tickets)) {
+                ticketsSold = eventData.tickets.reduce((total, ticket) => {
+                    return total + (ticket.sold || 0);
+                }, 0);
+            }
+            
+            eventData.totalTicketsSold = ticketsSold;
+            eventData.createdAtTime = eventData.createdAt ? new Date(eventData.createdAt.seconds * 1000) : new Date();
+            
+            events.push(eventData);
+        });
+
+        // Sort by ticket sales first, then by creation date
+        events.sort((a, b) => {
+            if (b.totalTicketsSold !== a.totalTicketsSold) {
+                return b.totalTicketsSold - a.totalTicketsSold; // Most sold first
+            }
+            return b.createdAtTime - a.createdAtTime; // Most recent first
+        });
+
+        // Take top 15 events
+        const topEvents = events.slice(0, 15);
+
+        console.log(`Loaded ${topEvents.length} trending physical events`);
+
+        // Create cards with ads every 4th position
+        let cardCount = 0;
+        topEvents.forEach((eventData, index) => {
+            if ((cardCount + 1) % 4 === 0 && cardCount < 12) {
+                // Every 4th position gets an ad card
+                const adCard = createAdvancedAdCard(cardCount);
+                container.appendChild(adCard);
+                cardCount++;
+            }
+            
+            const eventCard = createAdvancedPhysicalEventCard(eventData);
+            container.appendChild(eventCard);
+            cardCount++;
+        });
+
+        // Fill remaining slots with ads if needed
+        while (cardCount < 15) {
+            const adCard = createAdvancedAdCard(cardCount);
+            container.appendChild(adCard);
+            cardCount++;
+        }
+
+        // If we have fewer than 12 events, fill remaining slots with sample data
+        if (events.length < 12) {
+            const sampleEvents = [
+                {
+                    id: 'sample_1',
+                    eventName: "Summer Music Festival 2024",
+                    category: "Music",
+                    location: "Central Park, Lagos",
+                    startDateTime: "2024-08-15T18:00",
+                    background: { type: 'gradient', value: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' },
+                    sponsors: [{ name: "Coca-Cola" }, { name: "MTN" }, { name: "First Bank" }],
+                    tickets: [{ price: 5000, currency: '₦' }]
+                }
+            ];
+
+            while (cardCount < 15 && eventIndex < 12) {
+                if ((cardCount + 1) % 4 === 0) {
+                    const adCard = createAdCard(cardCount);
+                    container.appendChild(adCard);
+                } else {
+                    const sampleEventData = sampleEvents[0];
+                    sampleEventData.id = `sample_${eventIndex + 1}`;
+                    sampleEventData.eventName = `Sample Event ${eventIndex + 1}`;
+                    const eventCard = createPhysicalEventDisplayCard(sampleEventData);
+                    container.appendChild(eventCard);
+                    eventIndex++;
+                }
+                cardCount++;
+            }
+        }
+
+    } catch (error) {
+        console.error('Error loading physical events for display:', error);
+        container.innerHTML = `
+            <div class="error-events-display">
+                <i class="fas fa-exclamation-triangle"></i>
+                <h3>Error Loading Events</h3>
+                <p>Unable to load events. Please try again.</p>
+                <button onclick="loadPhysicalEventsDisplay()" class="retry-btn">Retry</button>
+            </div>
+        `;
+    }
+}
+
+function showAllEvents() {
+    // Redirect to a full events page or open a modal with all events
+    // For now, let's show an alert - you can customize this behavior
+    alert('See More Events feature coming soon! This will open a page with all available events.');
+    
+    // Alternative: You could redirect to a specific page
+    // window.location.href = '/all-events.html';
+    
+    // Or open a modal with more events
+    // openEventsModal();
+}
+
+function createPhysicalEventDisplayCard(eventData) {
+    const card = document.createElement('div');
+    card.className = 'physical-event-display-card';
+    card.setAttribute('data-event-id', eventData.id || eventData.physicalEventId);
+
+    // Handle Firebase data structure vs sample data
+    const eventName = eventData.eventName || eventData.title || 'Untitled Event';
+    const category = eventData.category || 'General';
+    const location = eventData.location || 'Location TBD';
+    
+    // Format date from Firebase startDateTime or fallback
+    let formattedDate = 'Date TBD';
+    let timeDisplay = '';
+    
+    if (eventData.startDateTime) {
+        try {
+            const eventDate = new Date(eventData.startDateTime);
+            formattedDate = eventDate.toLocaleDateString('en-US', { 
+                month: 'short', 
+                day: 'numeric' 
+            });
+            timeDisplay = eventDate.toLocaleTimeString('en-US', { 
+                hour: '2-digit', 
+                minute: '2-digit',
+                hour12: true 
+            });
+        } catch (e) {
+            console.log('Date parsing error:', e);
+        }
+    } else if (eventData.date && eventData.time) {
+        // Fallback for sample data structure
+        const eventDate = new Date(eventData.date);
+        formattedDate = eventDate.toLocaleDateString('en-US', { 
+            month: 'short', 
+            day: 'numeric' 
+        });
+        timeDisplay = eventData.time;
+    }
+
+    // Handle background from Firebase or fallback
+    let backgroundStyle = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+    if (eventData.background) {
+        if (typeof eventData.background === 'string') {
+            backgroundStyle = eventData.background;
+        } else if (eventData.background.type === 'gradient') {
+            backgroundStyle = eventData.background.value;
+        } else if (eventData.background.type === 'color') {
+            backgroundStyle = eventData.background.value;
+        } else if (eventData.background.type === 'image' && eventData.background.url) {
+            backgroundStyle = `url(${eventData.background.url})`;
+        }
+    }
+
+    // Handle sponsors from Firebase
+    let sponsorsHtml = '';
+    let extraSponsors = '';
+    
+    if (eventData.sponsors && eventData.sponsors.length > 0) {
+        const sponsorList = Array.isArray(eventData.sponsors) ? eventData.sponsors : [];
+        const validSponsors = sponsorList.filter(sponsor => sponsor && (sponsor.name || typeof sponsor === 'string'));
+        
+        sponsorsHtml = validSponsors.slice(0, 3).map(sponsor => {
+            const sponsorName = sponsor.name || sponsor;
+            return `<div class="sponsor-logo">${sponsorName.charAt(0).toUpperCase()}</div>`;
+        }).join('');
+        
+        if (validSponsors.length > 3) {
+            extraSponsors = `<span class="sponsors-count">+${validSponsors.length - 3}</span>`;
+        }
+    }
+
+    // Handle pricing from Firebase tickets
+    let priceDisplay = 'Free';
+    if (eventData.tickets && eventData.tickets.length > 0) {
+        const firstTicket = eventData.tickets[0];
+        if (firstTicket.price && firstTicket.price > 0) {
+            const currency = firstTicket.currency || '₦';
+            priceDisplay = `${currency}${firstTicket.price.toLocaleString()}`;
+        }
+    } else if (eventData.price) {
+        priceDisplay = eventData.price;
+    }
+
+    card.innerHTML = `
+        <div class="event-card-image" style="background: ${backgroundStyle}; background-size: cover; background-position: center;">
+            <div class="event-category-badge">${category}</div>
+        </div>
+        <div class="event-card-body">
+            <h3 class="event-card-title">${eventName}</h3>
+            <div class="event-card-details">
+                <div class="event-detail-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>${location}</span>
+                </div>
+                <div class="event-detail-item">
+                    <i class="fas fa-calendar"></i>
+                    <span>${formattedDate}${timeDisplay ? ' • ' + timeDisplay : ''}</span>
+                </div>
+                <div class="event-detail-item">
+                    <i class="fas fa-money-bill-wave"></i>
+                    <span>${priceDisplay}</span>
+                </div>
+            </div>
+            ${sponsorsHtml ? `<div class="event-sponsors">${sponsorsHtml}${extraSponsors}</div>` : ''}
+            <button class="buy-ticket-btn" onclick="openTicketModal('${eventData.id || eventData.physicalEventId}')">
+                <i class="fas fa-ticket-alt"></i> Buy Ticket
+            </button>
+        </div>
+    `;
+
+    return card;
+}
+
+// Advanced Physical Event Card with Modern Design
+function createAdvancedPhysicalEventCard(eventData) {
+    const card = document.createElement('div');
+    card.className = 'advanced-event-card';
+    card.setAttribute('data-event-id', eventData.id || eventData.physicalEventId);
+
+    // Extract data
+    const eventName = eventData.eventName || 'Untitled Event';
+    const category = eventData.category || 'General';
+    const location = eventData.location || 'Location TBD';
+    const ticketsSold = eventData.totalTicketsSold || 0;
+    
+    // Format date and time
+    let formattedDate = 'Date TBD';
+    let timeDisplay = '';
+    
+    if (eventData.startDateTime) {
+        try {
+            const eventDate = new Date(eventData.startDateTime);
+            formattedDate = eventDate.toLocaleDateString('en-US', { 
+                weekday: 'short',
+                month: 'short', 
+                day: 'numeric' 
+            });
+            timeDisplay = eventDate.toLocaleTimeString('en-US', { 
+                hour: '2-digit', 
+                minute: '2-digit',
+                hour12: true 
+            });
+        } catch (e) {
+            console.log('Date parsing error:', e);
+        }
+    }
+
+    // Handle Firebase background using same logic as createPhysicalEventCard
+    let backgroundStyle = 'background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);';
+    let isVideo = false;
+    
+    console.log('Event background data:', eventData.background); // Debug log
+    
+    if (!eventData.background) {
+        backgroundStyle = 'background: linear-gradient(135deg, #FF6B6B, #4ECDC4);';
+    } else {
+        switch (eventData.background.type) {
+            case 'media':
+                backgroundStyle = `background-image: url('${eventData.background.data}'); background-size: cover; background-position: center; background-repeat: no-repeat;`;
+                console.log('Using background media:', eventData.background.data?.substring(0, 50) + '...');
+                break;
+            case 'gradient':
+                backgroundStyle = `background: ${eventData.background.gradient};`;
+                console.log('Using background gradient:', eventData.background.gradient);
+                break;
+            case 'color':
+                backgroundStyle = `background-color: ${eventData.background.color};`;
+                console.log('Using background color:', eventData.background.color);
+                break;
+            default:
+                backgroundStyle = 'background: linear-gradient(135deg, #FF6B6B, #4ECDC4);';
+                console.log('Using default gradient - unknown type:', eventData.background.type);
+        }
+    }
+    
+    // Generate random gradients for cards without backgrounds (fallback)
+    if (backgroundStyle === 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)') {
+        const gradients = [
+            'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+            'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+            'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+            'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
+            'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)',
+            'linear-gradient(135deg, #d299c2 0%, #fef9d7 100%)',
+            'linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%)',
+            'linear-gradient(135deg, #fdbb2d 0%, #22c1c3 100%)',
+            'linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%)',
+            'linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%)'
+        ];
+        const eventIndex = parseInt(eventData.id?.slice(-1)) || 0;
+        backgroundStyle = gradients[eventIndex % gradients.length];
+    }
+    
+    console.log('Final background style:', backgroundStyle); // Debug log
+
+    // Generate category color and icon
+    const categoryData = {
+        'Music': {
+            color: '#FF6B6B',
+            icon: 'fas fa-music'
+        },
+        'Technology': {
+            color: '#4ECDC4',
+            icon: 'fas fa-microchip'
+        },
+        'Sports': {
+            color: '#45B7D1',
+            icon: 'fas fa-running'
+        },
+        'Food': {
+            color: '#FFA07A',
+            icon: 'fas fa-utensils'
+        },
+        'Art': {
+            color: '#98D8C8',
+            icon: 'fas fa-palette'
+        },
+        'Entertainment': {
+            color: '#F7DC6F',
+            icon: 'fas fa-star'
+        },
+        'Business': {
+            color: '#BB8FCE',
+            icon: 'fas fa-chart-line'
+        },
+        'Fashion': {
+            color: '#F8C471',
+            icon: 'fas fa-tshirt'
+        },
+        'Education': {
+            color: '#85C1E9',
+            icon: 'fas fa-graduation-cap'
+        },
+        'Health': {
+            color: '#82E0AA',
+            icon: 'fas fa-heartbeat'
+        },
+        'Gaming': {
+            color: '#F1948A',
+            icon: 'fas fa-gamepad'
+        },
+        'Literature': {
+            color: '#D7BDE2',
+            icon: 'fas fa-book'
+        }
+    };
+    
+    const categoryInfo = categoryData[category] || {
+        color: '#667eea',
+        icon: 'fas fa-calendar'
+    };
+
+    card.innerHTML = `
+        ${isVideo ? `
+            <video class="advanced-event-background" autoplay muted loop>
+                <source src="${backgroundStyle}" type="video/mp4">
+            </video>
+        ` : `
+            <div class="advanced-event-background" style="${backgroundStyle}"></div>
+        `}
+        
+        <div class="advanced-event-overlay"></div>
+        
+        <div class="advanced-category-badge" style="background: ${categoryInfo.color}">
+            <i class="${categoryInfo.icon}"></i>
+            ${category}
+        </div>
+        
+        <div class="advanced-tickets-badge">
+            <i class="fas fa-fire"></i>
+            ${ticketsSold} sold
+        </div>
+        
+        <div class="advanced-event-content">
+            <h3 class="advanced-event-title">${eventName}</h3>
+            
+            <div class="advanced-event-details">
+                <div class="advanced-detail-row">
+                    <div class="advanced-detail-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>${location}</span>
+                    </div>
+                </div>
+                
+                <div class="advanced-detail-row">
+                    <div class="advanced-detail-item">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>${formattedDate}</span>
+                    </div>
+                    ${timeDisplay ? `
+                        <div class="advanced-detail-item">
+                            <i class="fas fa-clock"></i>
+                            <span>${timeDisplay}</span>
+                        </div>
+                    ` : ''}
+                </div>
+            </div>
+        </div>
+        
+        <div class="advanced-card-actions">
+            <button class="advanced-buy-btn" onclick="openTicketModal('${eventData.id || eventData.physicalEventId}')">
+                <i class="fas fa-ticket-alt"></i>
+                Get Tickets
+            </button>
+        </div>
+    `;
+
+    return card;
+}
+
+function createAdvancedAdCard(index) {
+    const adCard = document.createElement('div');
+    adCard.className = 'ad-display-card';
+    
+    const adVariants = [
+        {
+            title: "Boost Your Event",
+            subtitle: "Get more visibility with our premium advertising",
+            cta: "Learn More",
+            gradient: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)"
+        },
+        {
+            title: "Host Your Event",
+            subtitle: "Create amazing experiences for your audience",
+            cta: "Start Now",
+            gradient: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)"
+        },
+        {
+            title: "Event Analytics",
+            subtitle: "Track your event performance in real-time",
+            cta: "View Stats",
+            gradient: "linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)"
+        }
+    ];
+    
+    const adData = adVariants[index % adVariants.length];
+    
+    adCard.style.background = adData.gradient;
+    adCard.innerHTML = `
+        <div class="ad-content">
+            <h3 class="ad-title">${adData.title}</h3>
+            <p class="ad-subtitle">${adData.subtitle}</p>
+            <button class="ad-cta-btn" onclick="handleAdClick('${adData.title.toLowerCase().replace(/\s+/g, '_')}')">${adData.cta}</button>
+        </div>
+    `;
+
+    return adCard;
+}
+
+function openTicketModal(eventId) {
+    // Placeholder for ticket modal functionality
+    alert(`Opening ticket purchase for event ID: ${eventId}`);
+    // You can integrate with existing ticket modal system here
+}
+
+function handleAdClick(adType) {
+    // Placeholder for ad click functionality
+    alert(`Ad clicked: ${adType}`);
+    // You can implement specific ad actions here
+}
+
 // Handle escape key for closing
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') {
@@ -33420,29 +34648,8 @@ function createPhysicalEventCard(eventData) {
                     Withdraw PEE
                 </button>
                 
-                <button class="boost-event-btn" 
-                        onclick="openBoostEventModal('${eventData.physicalEventId}')"
-                        title="Boost your Event with Ads"
-                        style="
-                            background: linear-gradient(135deg, #007bff, #0056b3);
-                            color: white;
-                            border: none;
-                            padding: 8px 12px;
-                            border-radius: 6px;
-                            cursor: pointer;
-                            font-weight: 600;
-                            transition: all 0.3s ease;
-                            display: flex;
-                            align-items: center;
-                            gap: 6px;
-                            font-size: 13px;
-                            flex: 1;
-                        ">
-                    <i class="fas fa-rocket"></i>
-                    Boost your Event
-                </button>
-            </div>
-
+              
+             
                
         </div>
     `;
@@ -35519,7 +36726,7 @@ async function openWithdrawPEEForm(physicalEventId, eventName, totalRevenue) {
                         </div>
                     </div>
                     
-                    <form class="withdraw-pee-form" onsubmit="handleWithdrawPEESubmit(event, '${physicalEventId}', ${totalRevenue}, ${!requestStatus.canRequest})" style="
+                    <form class="withdraw-pee-form" onsubmit="handleWithdrawPEESubmit(event, '${physicalEventId}', ${totalRevenue}); return false;" style="
                         display: flex;
                         flex-direction: column;
                         gap: 16px;
@@ -35533,8 +36740,9 @@ async function openWithdrawPEEForm(physicalEventId, eventName, totalRevenue) {
                                     border-radius: 6px;
                                     font-size: 14px;
                                     background: #f8f9fa;
-                                    color: #6c757d;
+                                    color: #333;
                                     cursor: not-allowed;
+                                    font-weight: 500;
                                 ">
                             </div>
                             
@@ -35546,29 +36754,14 @@ async function openWithdrawPEEForm(physicalEventId, eventName, totalRevenue) {
                                     border-radius: 6px;
                                     font-size: 14px;
                                     background: #f8f9fa;
-                                    color: #6c757d;
+                                    color: #333;
                                     cursor: not-allowed;
+                                    font-weight: 500;
                                 ">
                             </div>
                         </div>
                         
-                        <div class="form-group" style="display: flex; flex-direction: column; gap: 6px;">
-                            <label style="font-weight: 600; color: #495057; font-size: 14px;">
-                                Bank to Receive Payment: <span style="color: #dc3545;">*</span>
-                            </label>
-                            <select id="withdraw-bank" required readonly style="
-                                padding: 10px 12px;
-                                border: 2px solid #e9ecef;
-                                border-radius: 6px;
-                                font-size: 14px;
-                                transition: border-color 0.2s ease;
-                                background: #f8f9fa;
-                                cursor: not-allowed;
-                            ">
-                                <option value="">Select your bank</option>
-                                ${nigerianBanks.map(bank => `<option value="${bank}">${bank}</option>`).join('')}
-                            </select>
-                        </div>
+                        
                         
                         <div class="form-group" style="display: flex; flex-direction: column; gap: 6px;">
                             <label style="font-weight: 600; color: #495057; font-size: 14px;">
@@ -35581,7 +36774,9 @@ async function openWithdrawPEEForm(physicalEventId, eventName, totalRevenue) {
                                 font-size: 14px;
                                 transition: border-color 0.2s ease;
                                 background: #f8f9fa;
+                                color: #333;
                                 cursor: not-allowed;
+                                font-weight: 500;
                             ">
                         </div>
                         
@@ -35597,7 +36792,9 @@ async function openWithdrawPEEForm(physicalEventId, eventName, totalRevenue) {
                                 font-size: 14px;
                                 transition: border-color 0.2s ease;
                                 background: #f8f9fa;
+                                color: #333;
                                 cursor: not-allowed;
+                                font-weight: 500;
                             ">
                         </div>
                         
@@ -35616,6 +36813,9 @@ async function openWithdrawPEEForm(physicalEventId, eventName, totalRevenue) {
                                     font-size: 14px;
                                     transition: border-color 0.2s ease;
                                     width: 100%;
+                                    color: #333;
+                                cursor: allowed;
+                                font-weight: 500;
                                 ">
                             </div>
                             <small style="color: #6c757d; font-size: 12px;">
@@ -35785,9 +36985,8 @@ function calculateWithdrawPEEFee(isExtraRequest = false) {
 }
 
 // Handle withdrawal form submission
-async function handleWithdrawPEESubmit(event, physicalEventId, totalRevenue, isExtraRequest) {
+async function handleWithdrawPEESubmit(event, physicalEventId, totalRevenue) {
     event.preventDefault();
-    console.log('Submitting withdrawal request...');
     
     const submitBtn = event.target.querySelector('button[type="submit"]');
     const originalText = submitBtn.innerHTML;
@@ -35796,86 +36995,153 @@ async function handleWithdrawPEESubmit(event, physicalEventId, totalRevenue, isE
         submitBtn.disabled = true;
         submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
         
-        const currentUser = auth.currentUser;
+        const currentUser = firebase.auth().currentUser;
         if (!currentUser) {
-            throw new Error('User not authenticated');
+            alert('User not authenticated');
+            return;
         }
         
-        const formData = {
-            eventName: event.target.querySelector('input[readonly]').value,
-            physicalEventId: physicalEventId,
-            bank: document.getElementById('withdraw-bank').value,
-            accountName: document.getElementById('withdraw-account-name').value.trim(),
-            accountNumber: document.getElementById('withdraw-account-number').value.trim(),
-            amount: parseFloat(document.getElementById('withdraw-amount').value),
-            acceptedTerms: document.getElementById('pee-accept-terms').checked
-        };
+        const amount = parseFloat(document.getElementById('withdraw-amount').value);
         
-        console.log('Form data:', formData);
-        
-        // Validate form
-        const validation = await validateWithdrawPEERequest(formData, physicalEventId, totalRevenue, currentUser.uid);
-        if (!validation.isValid) {
-            throw new Error(validation.error);
+        // Simple validation
+        if (!amount || amount < 500) {
+            alert('Minimum withdrawal amount is ₦500');
+            return;
         }
         
-        // Calculate fees
-        const processingFee = withdrawPEESystem.getFee(formData.amount);
-        const extraFee = isExtraRequest ? withdrawPEESystem.extraRequestFee : 0;
-        const totalFee = processingFee + extraFee;
-        const netAmount = formData.amount - totalFee;
+        if (amount > totalRevenue) {
+            alert('Withdrawal amount exceeds available revenue');
+            return;
+        }
         
-        // Create withdrawal request
-        const withdrawalRequest = {
+        // Get saved bank details
+        const db = firebase.firestore();
+        const eventDoc = await db.collection('physicalEvents').doc(physicalEventId).get();
+        
+        if (!eventDoc.exists) {
+            alert('Physical event not found');
+            return;
+        }
+        
+        const eventData = eventDoc.data();
+        const userBankDetails = eventData.userBankDetails && eventData.userBankDetails[currentUser.uid];
+        
+        if (!userBankDetails) {
+            alert('Please setup your bank details first by clicking "Setup Bank" button');
+            return;
+        }
+        
+        // Get daily request count and calculate fee
+        const dailyCount = await getDailyWithdrawalCount(currentUser.uid);
+        const processingFee = calculateDailyFee(dailyCount + 1, amount);
+        
+        // Generate unique request ID
+        const requestId = 'withdraw_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+        
+        // Create withdrawal request data
+        const withdrawalData = {
+            requestId: requestId,
             userId: currentUser.uid,
             userEmail: currentUser.email,
-            eventName: formData.eventName,
-            physicalEventId: formData.physicalEventId,
-            bank: formData.bank,
-            accountName: formData.accountName,
-            accountNumber: formData.accountNumber,
-            requestedAmount: formData.amount,
+            eventName: eventData.eventName || 'Physical Event',
+            physicalEventId: physicalEventId,
+            bank: userBankDetails.bankName,
+            accountName: userBankDetails.accountName,
+            accountNumber: userBankDetails.accountNumber,
+            requestedAmount: amount,
+            totalRevenue: totalRevenue,
             processingFee: processingFee,
-            extraRequestFee: extraFee,
-            totalFee: totalFee,
-            netAmount: netAmount,
-            isExtraRequest: isExtraRequest,
+            dailyRequestNumber: dailyCount + 1,
             status: 'pending',
-            requestDate: new Date().toISOString().split('T')[0],
-            requestTimestamp: new Date().toISOString(),
-            createdAt: serverTimestamp()
+            createdAt: new Date().toISOString()
         };
         
-        console.log('Saving withdrawal request:', withdrawalRequest);
+        // Store withdrawal request in the physical event document
+        const eventRef = db.collection('physicalEvents').doc(physicalEventId);
+        const currentRequests = eventData.withdrawalRequests || [];
+        currentRequests.push(withdrawalData);
         
-        // Save to Firebase
-        await addDoc(collection(db, 'withdrawPEE_requests'), withdrawalRequest);
+        await eventRef.update({
+            withdrawalRequests: currentRequests,
+            updatedAt: new Date().toISOString()
+        });
         
         closeWithdrawPEEModal();
-        showNotification('Withdrawal request submitted successfully!', 'success');
+        alert('Withdrawal request submitted successfully!');
         
     } catch (error) {
         console.error('Withdrawal submission error:', error);
-        showNotification(error.message || 'Failed to submit withdrawal request', 'error');
+        alert('Error: ' + error.message);
     } finally {
         submitBtn.disabled = false;
         submitBtn.innerHTML = originalText;
     }
 }
 
+// Get daily withdrawal count for fee calculation
+async function getDailyWithdrawalCount(userId) {
+    try {
+        const today = new Date().toISOString().split('T')[0];
+        const db = firebase.firestore();
+        
+        // Get all withdrawal request documents
+        const snapshot = await db.collection('withdrawPEE_requests').get();
+        let count = 0;
+        
+        snapshot.forEach(doc => {
+            const data = doc.data();
+            if (data.withdrawalRequests) {
+                data.withdrawalRequests.forEach(request => {
+                    if (request.userId === userId && request.createdAt.startsWith(today)) {
+                        count++;
+                    }
+                });
+            }
+        });
+        
+        return count;
+    } catch (error) {
+        console.error('Error getting daily count:', error);
+        return 0;
+    }
+}
+
+// Calculate fee based on daily request number
+function calculateDailyFee(requestNumber, amount) {
+    if (requestNumber <= 3) {
+        // First 3 requests: normal fee based on amount
+        if (amount < 10000) return 100;
+        if (amount >= 10000 && amount < 20000) return 300;
+        return 500;
+    } else if (requestNumber <= 8) {
+        // Requests 4-8: fixed fee of 500
+        return 500;
+    } else if (requestNumber <= 15) {
+        // Requests 9-15: fixed fee of 1000
+        return 1000;
+    } else {
+        // Requests 16+: fixed fee of 2000
+        return 2000;
+    }
+}
+
+
+
 // Validate withdrawal request
 async function validateWithdrawPEERequest(formData, physicalEventId, totalRevenue, userId) {
     try {
-        if (!formData.bank) {
-            return { isValid: false, error: 'Please select a bank' };
+        // Check if user has saved bank details
+        const db = firebase.firestore();
+        const eventDoc = await db.collection('physicalEvents').doc(physicalEventId).get();
+        if (!eventDoc.exists) {
+            return { isValid: false, error: 'Physical event not found' };
         }
         
-        if (!formData.accountName || formData.accountName.length < 2) {
-            return { isValid: false, error: 'Please enter a valid account name' };
-        }
+        const eventData = eventDoc.data();
+        const userBankDetails = eventData.userBankDetails && eventData.userBankDetails[userId];
         
-        if (!formData.accountNumber || !/^\d{10}$/.test(formData.accountNumber)) {
-            return { isValid: false, error: 'Please enter a valid 10-digit account number' };
+        if (!userBankDetails) {
+            return { isValid: false, error: 'Please setup your bank details first by clicking "Setup Bank" button' };
         }
         
         // ₦500 minimum validation
@@ -35883,23 +37149,9 @@ async function validateWithdrawPEERequest(formData, physicalEventId, totalRevenu
             return { isValid: false, error: 'Minimum withdrawal amount is ₦500' };
         }
         
+        // Check if amount is less than or equal to available revenue
         if (formData.amount > totalRevenue) {
             return { isValid: false, error: 'Withdrawal amount exceeds available revenue' };
-        }
-        
-        if (!formData.acceptedTerms) {
-            return { isValid: false, error: 'Please accept the withdrawal terms' };
-        }
-        
-        // Verify physical event exists and belongs to user
-        const eventDoc = await getDoc(doc(db, 'physicalEvents', physicalEventId));
-        if (!eventDoc.exists()) {
-            return { isValid: false, error: 'Physical event not found' };
-        }
-        
-        const eventData = eventDoc.data();
-        if (eventData.userId !== userId) {
-            return { isValid: false, error: 'You can only withdraw from your own events' };
         }
         
         return { isValid: true };
@@ -35919,2285 +37171,12 @@ function closeWithdrawPEEModal() {
     }
 }
 
-// ================================
-// BOOST EVENT ADS SYSTEM
-// ================================
 
-// Ad configuration data
-const adTypes = {
-    video: { basePrice: 250, maxDuration: "15 seconds" },
-    image: { basePrice: 50, formats: ["JPG", "PNG", "GIF"] }
-};
 
-const contentOptions = {
-    fileUpload: "Upload from device",
-    imageURL: "Provide image URL", 
-    videoURL: "Provide video URL",
-    websiteURL: "Website URL (for clickable ads)"
-};
-
-const placements = {
-    app_ads_top: 100,
-    app_ads_footer: 25, 
-    app_ads_between: 50,
-    game_ads_top: 100,
-    game_ads_footer: 25,
-    game_modal_between: 50,
-    popup_ads_video: 300,
-    popup_ads_image: 150,
-    after_payment_ads_video: 500,
-    after_payment_ads_image: 200,
-    spin_ads_top: 100,
-    live_event_ads_top: 100,
-    live_event_ads_footer: 25,
-    live_event_ads_between: 50
-};
-
-const durationPricing = {
-    3: 50,   // 3 days = ₦50
-    7: 100,  // 7 days = ₦100  
-    14: 150, // 14 days = ₦150
-    30: 250  // 30 days = ₦250
-};
-
-const promoCodes = {
-    "RRIS2025": { 
-        discount: 20, 
-        type: "percentage", 
-        usage: 2, 
-        activateAfterCampaigns: 2,
-        description: "20% off for next 2 campaigns" 
-    },
-    "IsmartDC": { 
-        discount: 100, 
-        type: "percentage", 
-        usage: -1, // unlimited for admin testing
-        activateAfterCampaigns: 0,
-        description: "100% off - Admin code" 
-    },
-    "Bisask": { 
-        discount: 30, 
-        type: "percentage", 
-        usage: 2, 
-        activateAfterCampaigns: 3,
-        description: "30% off for 3rd campaign onwards" 
-    },
-    "Rewarder": { 
-        discount: 50, 
-        type: "percentage", 
-        usage: 2, 
-        activateAfterCampaigns: 5,
-        description: "50% off for 5th campaign onwards" 
-    },
-    "off10": { 
-        discount: 10, 
-        type: "percentage", 
-        usage: 31, 
-        activateAfterCampaigns: 6,
-        description: "10% off for 1 month after 6 campaigns" 
-    }
-};
-
-// 15 predefined packages
-const predefinedPackages = [
-    // CHEAP PACKAGES (< ₦700) - Students
-    {
-        id: "student_starter",
-        name: "Student Starter",
-        price: 350,
-        type: "cheap",
-        badge: "STUDENT",
-        features: ["Image Ad", "App Footer Placement", "3 Days Duration", "1 Edit"],
-        config: { adTypes: ["image"], placements: ["app_ads_footer"], duration: 3, edits: 1 }
-    },
-    {
-        id: "quick_boost",
-        name: "Quick Boost",
-        price: 450,
-        type: "cheap",
-        badge: "POPULAR",
-        features: ["Image Ad", "App Between Placement", "3 Days Duration", "2 Edits"],
-        config: { adTypes: ["image"], placements: ["app_ads_between"], duration: 3, edits: 2 }
-    },
-    {
-        id: "weekend_special",
-        name: "Weekend Special",
-        price: 550,
-        type: "cheap",
-        features: ["Image Ad", "App Top Placement", "3 Days Duration", "1 Edit"],
-        config: { adTypes: ["image"], placements: ["app_ads_top"], duration: 3, edits: 1 }
-    },
-    {
-        id: "social_buzz",
-        name: "Social Buzz",
-        price: 600,
-        type: "cheap",
-        features: ["Image Ad", "Live Event Footer", "7 Days Duration", "1 Edit"],
-        config: { adTypes: ["image"], placements: ["live_event_ads_footer"], duration: 7, edits: 1 }
-    },
-    {
-        id: "game_player",
-        name: "Game Player",
-        price: 650,
-        type: "cheap",
-        features: ["Image Ad", "Game Footer", "7 Days Duration", "2 Edits"],
-        config: { adTypes: ["image"], placements: ["game_ads_footer"], duration: 7, edits: 2 }
-    },
-    {
-        id: "basic_video",
-        name: "Basic Video",
-        price: 680,
-        type: "cheap",
-        features: ["Video Ad", "App Footer", "3 Days Duration", "1 Edit"],
-        config: { adTypes: ["video"], placements: ["app_ads_footer"], duration: 3, edits: 1 }
-    },
-    {
-        id: "triple_exposure",
-        name: "Triple Exposure",
-        price: 690,
-        type: "cheap",
-        features: ["Image Ad", "3 Footer Placements", "3 Days Duration"],
-        config: { adTypes: ["image"], placements: ["app_ads_footer", "live_event_ads_footer", "game_ads_footer"], duration: 3, edits: 1 }
-    },
-    // MEDIUM PACKAGES (< ₦1500) - Small Business
-    {
-        id: "business_booster",
-        name: "Business Booster",
-        price: 1250,
-        type: "medium",
-        badge: "RECOMMENDED",
-        features: ["Video + Image Option", "App Top", "7 Days", "3 Edits Each"],
-        config: { adTypes: ["video", "image"], placements: ["app_ads_top"], duration: 7, edits: 3 }
-    },
-    {
-        id: "multi_platform",
-        name: "Multi-Platform",
-        price: 1400,
-        type: "medium",
-        features: ["Video + Image Option", "App + Game Tops", "7 Days", "5 Edits Each"],
-        config: { adTypes: ["video", "image"], placements: ["app_ads_top", "game_ads_top"], duration: 7, edits: 5 }
-    },
-    {
-        id: "event_dominator",
-        name: "Event Dominator",
-        price: 1450,
-        type: "medium",
-        features: ["Video + Image Option", "All Top Placements", "7 Days", "3 Edits Each"],
-        config: { adTypes: ["video", "image"], placements: ["app_ads_top", "live_event_ads_top", "game_ads_top"], duration: 7, edits: 3 }
-    },
-    {
-        id: "extended_reach",
-        name: "Extended Reach", 
-        price: 1480,
-        type: "medium",
-        features: ["Video + Image Option", "All App Placements", "14 Days", "5 Edits Each"],
-        config: { adTypes: ["video", "image"], placements: ["app_ads_top", "app_ads_footer", "app_ads_between"], duration: 14, edits: 5 }
-    },
-    {
-        id: "premium_visibility",
-        name: "Premium Visibility",
-        price: 1500,
-        type: "medium",
-        features: ["Video + Image Option", "Top + Between + Popup", "7 Days", "4 Edits Each"],
-        config: { adTypes: ["video", "image"], placements: ["app_ads_top", "app_ads_between", "popup_ads_image"], duration: 7, edits: 4 }
-    },
-    // PREMIUM PACKAGES
-    {
-        id: "solo_premium",
-        name: "Solo Premium",
-        price: 2800,
-        type: "premium",
-        badge: "PREMIUM",
-        features: ["Video + Image Option", "All Placements", "30 Days", "10 Edits", "Popup + After-payment"],
-        config: { adTypes: ["video", "image"], placements: ["app_ads_top", "app_ads_footer", "app_ads_between", "game_ads_top", "game_ads_footer", "live_event_ads_top", "popup_ads_image", "after_payment_ads_image"], duration: 30, edits: 10 }
-    },
-    {
-        id: "influencer_power",
-        name: "Influencer Power",
-        price: 4300,
-        type: "premium",
-        badge: "INFLUENCER",
-        features: ["Video + Image Option", "Top Placements", "14 Days", "5 Edits", "1 Influencer (5k-10k)"],
-        config: { adTypes: ["video", "image"], placements: ["app_ads_top", "game_ads_top", "live_event_ads_top"], duration: 14, edits: 5, influencer: "5k-10k" }
-    },
-    {
-        id: "ultimate_domination",
-        name: "Ultimate Domination",
-        price: 6800,
-        type: "premium",
-        badge: "ULTIMATE",
-        features: ["Video + Image Option", "All Placements", "30 Days", "10 Edits", "1 Channel + 1 Influencer"],
-        config: { adTypes: ["video", "image"], placements: ["app_ads_top", "app_ads_footer", "app_ads_between", "game_ads_top", "game_ads_footer", "live_event_ads_top", "popup_ads_image", "after_payment_ads_image"], duration: 30, edits: 10, channel: "Lasumirrior", influencer: "5k-10k" }
-    }
-];
-
-// Open boost event modal
-function openBoostEventModal(eventId) {
-    // Remove existing modal if any
-    const existingModal = document.getElementById('boost-event-modal');
-    if (existingModal) {
-        existingModal.remove();
-    }
-
-    // Create modal HTML
-    const modalHTML = `
-        <div id="boost-event-modal" class="boost-event-modal">
-            <div class="boost-modal-content">
-                <div class="boost-modal-header">
-                    <h2 class="boost-modal-title">
-                        <i class="fas fa-rocket"></i>
-                        Boost your Event
-                    </h2>
-                    <button class="boost-close-btn" onclick="closeBoostEventModal()">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
+    
+    
                 
-                <div class="boost-tabs">
-                    <button class="boost-tab active" data-tab="payment">
-                        <i class="fas fa-credit-card"></i>
-                        ADS PAYMENT
-                    </button>
-                    <button class="boost-tab locked" data-tab="activities">
-                        <i class="fas fa-lock"></i>
-                        Ads Activities
-                    </button>
-                </div>
-                
-                <div class="boost-tab-content">
-                    <div id="boost-payment-tab" class="boost-tab-pane active">
-                        ${generatePaymentTabContent()}
-                    </div>
-                    
-                    <div id="boost-activities-tab" class="boost-tab-pane">
-                        <div style="text-align: center; padding: 50px; color: rgba(255,255,255,0.6);">
-                            <i class="fas fa-lock" style="font-size: 48px; margin-bottom: 20px;"></i>
-                            <h3>Complete Payment to Access</h3>
-                            <p>This section will be unlocked after successful payment</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="boost-price-display">
-                    <div class="boost-total-price">
-                        Total: ₦<span id="boost-total-amount">0</span>
-                    </div>
-                    <button class="boost-payment-btn" onclick="processBoostPayment('${eventId}')">
-                        <i class="fas fa-credit-card"></i>
-                        Complete Payment
-                    </button>
-                </div>
-            </div>
-        </div>
-    `;
-
-    // Add modal to body
-    document.body.insertAdjacentHTML('beforeend', modalHTML);
-    
-    // Show modal
-    document.getElementById('boost-event-modal').style.display = 'block';
-    
-    // Initialize tab switching (only payment tab for now)
-    initializeBoostTabs();
-    
-    // Initialize pricing calculation
-    calculateBoostPrice();
-}
-
-// Close boost event modal
-function closeBoostEventModal() {
-    const modal = document.getElementById('boost-event-modal');
-    if (modal) {
-        modal.remove();
-    }
-}
-
-// Generate payment tab content
-function generatePaymentTabContent() {
-    return `
-        <div class="boost-form-section">
-            <h3><i class="fas fa-ad"></i> Ad Type Selection</h3>
-            <div class="boost-radio-group">
-                <div class="boost-radio-item">
-                    <input type="radio" name="adType" value="image" id="adType-image" checked onchange="calculateBoostPrice()">
-                    <label for="adType-image">
-                        <strong>Image Ad - ₦50</strong><br>
-                        <small>Formats: JPG, PNG, GIF</small>
-                    </label>
-                </div>
-                <div class="boost-radio-item">
-                    <input type="radio" name="adType" value="video" id="adType-video" onchange="calculateBoostPrice()">
-                    <label for="adType-video">
-                        <strong>Video Ad - ₦250</strong><br>
-                        <small>Max 15 seconds duration</small>
-                    </label>
-                </div>
-            </div>
-        </div>
-
-        <div class="boost-form-section">
-            <h3><i class="fas fa-map-marker-alt"></i> Ad Placements</h3>
-            <div class="boost-checkbox-group">
-                <div class="boost-checkbox-item">
-                    <input type="checkbox" id="place-app-top" value="app_ads_top" onchange="calculateBoostPrice()">
-                    <label for="place-app-top">App Top - ₦100</label>
-                </div>
-                <div class="boost-checkbox-item">
-                    <input type="checkbox" id="place-app-footer" value="app_ads_footer" onchange="calculateBoostPrice()">
-                    <label for="place-app-footer">App Footer - ₦25</label>
-                </div>
-                <div class="boost-checkbox-item">
-                    <input type="checkbox" id="place-app-between" value="app_ads_between" onchange="calculateBoostPrice()">
-                    <label for="place-app-between">App Between - ₦50</label>
-                </div>
-                <div class="boost-checkbox-item">
-                    <input type="checkbox" id="place-game-top" value="game_ads_top" onchange="calculateBoostPrice()">
-                    <label for="place-game-top">Game Top - ₦100</label>
-                </div>
-                <div class="boost-checkbox-item">
-                    <input type="checkbox" id="place-game-footer" value="game_ads_footer" onchange="calculateBoostPrice()">
-                    <label for="place-game-footer">Game Footer - ₦25</label>
-                </div>
-                <div class="boost-checkbox-item">
-                    <input type="checkbox" id="place-live-top" value="live_event_ads_top" onchange="calculateBoostPrice()">
-                    <label for="place-live-top">Live Event Top - ₦100</label>
-                </div>
-                <div class="boost-checkbox-item">
-                    <input type="checkbox" id="place-live-footer" value="live_event_ads_footer" onchange="calculateBoostPrice()">
-                    <label for="place-live-footer">Live Event Footer - ₦25</label>
-                </div>
-                <div class="boost-checkbox-item">
-                    <input type="checkbox" id="place-popup" value="popup_ads" onchange="calculateBoostPrice()">
-                    <label for="place-popup">Popup Ads - ₦150-300</label>
-                </div>
-            </div>
-        </div>
-
-        <div class="boost-form-section">
-            <h3><i class="fas fa-calendar-alt"></i> Duration & Edits</h3>
-            <div class="boost-form-group">
-                <label for="duration-select">Ad Duration:</label>
-                <select id="duration-select" class="boost-form-control" onchange="calculateBoostPrice()">
-                    <option value="3">3 Days - ₦50</option>
-                    <option value="7">7 Days - ₦100</option>
-                    <option value="14">14 Days - ₦150</option>
-                    <option value="30">30 Days - ₦250</option>
-                </select>
-            </div>
-            <div class="boost-form-group">
-                <label for="edits-select">Number of Edits (₦50 each):</label>
-                <select id="edits-select" class="boost-form-control" onchange="calculateBoostPrice()">
-                    <option value="1">1 Edit - ₦50</option>
-                    <option value="2">2 Edits - ₦100</option>
-                    <option value="3">3 Edits - ₦150</option>
-                    <option value="5">5 Edits - ₦250</option>
-                    <option value="10">10 Edits - ₦500</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="boost-form-section">
-            <h3><i class="fas fa-gift"></i> Predefined Packages</h3>
-            <p style="color: rgba(255,255,255,0.7); margin-bottom: 15px;">Choose a package or build custom:</p>
-            ${generatePackageCards()}
-        </div>
-
-        <div class="boost-form-section">
-            <h3><i class="fas fa-tag"></i> Promo Code</h3>
-            <div class="boost-form-group">
-                <input type="text" id="promo-code" class="boost-form-control" 
-                       placeholder="Enter promo code (optional)" 
-                       onchange="handlePromoCodeChange()" 
-                       onkeyup="handlePromoCodeChange()">
-                <div id="promo-message" style="margin-top: 8px; font-size: 14px;"></div>
-            </div>
-        </div>
-    `;
-}
-
-// Generate package cards
-function generatePackageCards() {
-    const cheapPackages = predefinedPackages.filter(p => p.type === 'cheap');
-    const mediumPackages = predefinedPackages.filter(p => p.type === 'medium');
-    const premiumPackages = predefinedPackages.filter(p => p.type === 'premium');
-
-    let html = '';
-    
-    // Cheap packages
-    html += '<h4 style="color: #ffc107; margin: 20px 0 10px 0;">💰 CHEAP PACKAGES - Students</h4>';
-    html += '<div class="boost-packages-grid">';
-    cheapPackages.forEach(pkg => {
-        html += generateSinglePackageCard(pkg);
-    });
-    html += '</div>';
-    
-    // Medium packages
-    html += '<h4 style="color: #17a2b8; margin: 20px 0 10px 0;">🚀 MEDIUM PACKAGES - Small Business</h4>';
-    html += '<div class="boost-packages-grid">';
-    mediumPackages.forEach(pkg => {
-        html += generateSinglePackageCard(pkg);
-    });
-    html += '</div>';
-    
-    // Premium packages
-    html += '<h4 style="color: #6f42c1; margin: 20px 0 10px 0;">👑 PREMIUM PACKAGES</h4>';
-    html += '<div class="boost-packages-grid">';
-    premiumPackages.forEach(pkg => {
-        html += generateSinglePackageCard(pkg);
-    });
-    html += '</div>';
-    
-    return html;
-}
-
-// Generate single package card
-function generateSinglePackageCard(pkg) {
-    const badgeHTML = pkg.badge ? `<div class="boost-package-badge">${pkg.badge}</div>` : '';
-    
-    return `
-        <div class="boost-package-card" onclick="selectPackage('${pkg.id}')" data-package-id="${pkg.id}">
-            ${badgeHTML}
-            <div class="boost-package-header">
-                <h4 class="boost-package-name">${pkg.name}</h4>
-                <p class="boost-package-price">₦${pkg.price}</p>
-            </div>
-            <ul class="boost-package-features">
-                ${pkg.features.map(feature => `<li>${feature}</li>`).join('')}
-            </ul>
-        </div>
-    `;
-}
-
-// Select package
-function selectPackage(packageId) {
-    // Remove previous selection
-    document.querySelectorAll('.boost-package-card').forEach(card => {
-        card.classList.remove('selected');
-    });
-    
-    // Select new package
-    const selectedCard = document.querySelector(`[data-package-id="${packageId}"]`);
-    if (selectedCard) {
-        selectedCard.classList.add('selected');
-    }
-    
-    // Find package config
-    const pkg = predefinedPackages.find(p => p.id === packageId);
-    if (pkg) {
-        // Update form based on package config
-        applyPackageConfig(pkg.config);
-        
-        // Update total price
-        calculateBoostPrice();
-    }
-}
-
-// Apply package configuration to form
-function applyPackageConfig(config) {
-    // Clear all selections first
-    document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
-    document.querySelectorAll('input[type="radio"]').forEach(rb => rb.checked = false);
-    
-    // Set ad types
-    if (config.adTypes.includes('image')) {
-        document.getElementById('adType-image').checked = true;
-    } else if (config.adTypes.includes('video')) {
-        document.getElementById('adType-video').checked = true;
-    }
-    
-    // Set placements
-    config.placements.forEach(placement => {
-        const checkbox = document.querySelector(`input[value="${placement}"]`);
-        if (checkbox) {
-            checkbox.checked = true;
-        }
-    });
-    
-    // Set duration
-    const durationSelect = document.getElementById('duration-select');
-    if (durationSelect) {
-        durationSelect.value = config.duration;
-    }
-    
-    // Set edits
-    const editsSelect = document.getElementById('edits-select');
-    if (editsSelect) {
-        editsSelect.value = config.edits;
-    }
-}
-
-// Initialize boost tabs
-function initializeBoostTabs() {
-    const tabs = document.querySelectorAll('.boost-tab');
-    tabs.forEach(tab => {
-        tab.addEventListener('click', function() {
-            if (this.classList.contains('locked')) {
-                return; // Don't allow switching to locked tabs
-            }
-            
-            // Remove active class from all tabs and panes
-            tabs.forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.boost-tab-pane').forEach(pane => {
-                pane.classList.remove('active');
-            });
-            
-            // Add active class to clicked tab
-            this.classList.add('active');
-            
-            // Show corresponding pane
-            const tabName = this.getAttribute('data-tab');
-            const pane = document.getElementById(`boost-${tabName}-tab`);
-            if (pane) {
-                pane.classList.add('active');
-            }
-        });
-    });
-}
-
-// Calculate boost price
-function calculateBoostPrice() {
-    let total = 0;
-    
-    // Check if package is selected
-    const selectedPackage = document.querySelector('.boost-package-card.selected');
-    if (selectedPackage) {
-        const packageId = selectedPackage.getAttribute('data-package-id');
-        const pkg = predefinedPackages.find(p => p.id === packageId);
-        if (pkg) {
-            total = pkg.price;
-        }
-    } else {
-        // Calculate custom pricing
-        const adType = document.querySelector('input[name="adType"]:checked')?.value;
-        const selectedPlacements = Array.from(document.querySelectorAll('input[type="checkbox"]:checked')).map(cb => cb.value);
-        const duration = parseInt(document.getElementById('duration-select')?.value || 3);
-        const edits = parseInt(document.getElementById('edits-select')?.value || 1);
-        
-        // Add base ad type cost
-        if (adType === 'video') {
-            total += adTypes.video.basePrice;
-        } else {
-            total += adTypes.image.basePrice;
-        }
-        
-        // Add placement costs
-        selectedPlacements.forEach(placement => {
-            if (placement === 'popup_ads') {
-                total += adType === 'video' ? 300 : 150;
-            } else if (placement === 'after_payment_ads') {
-                total += adType === 'video' ? 500 : 200;
-            } else {
-                total += placements[placement] || 0;
-            }
-        });
-        
-        // Add duration cost
-        total += durationPricing[duration] || 0;
-        
-        // Add edit costs (₦50 per edit)
-        total += edits * 50;
-    }
-    
-    // Apply promo code discount
-    const promoDiscount = calculatePromoDiscount(total);
-    total -= promoDiscount;
-    
-    // Ensure minimum of 0
-    total = Math.max(0, total);
-    
-    // Update display
-    const totalElement = document.getElementById('boost-total-amount');
-    if (totalElement) {
-        totalElement.textContent = total.toLocaleString();
-    }
-    
-    return total;
-}
-
-// Validate promo code with campaign count check
-async function validatePromoCode() {
-    const promoInput = document.getElementById('promo-code');
-    const messageDiv = document.getElementById('promo-message');
-    
-    if (!promoInput || !messageDiv) return;
-    
-    const code = promoInput.value.trim().toUpperCase();
-    
-    if (!code) {
-        messageDiv.innerHTML = '';
-        calculateBoostPrice();
-        return;
-    }
-    
-    const promo = promoCodes[code];
-    if (!promo) {
-        messageDiv.innerHTML = `
-            <div style="color: #dc3545; display: flex; align-items: center; gap: 6px;">
-                <i class="fas fa-times-circle"></i>
-                Invalid promo code
-            </div>
-        `;
-        return;
-    }
-    
-    // Check if user has enough campaigns to unlock this code
-    const userCampaignCount = await getUserCampaignCount();
-    
-    if (userCampaignCount < promo.activateAfterCampaigns) {
-        messageDiv.innerHTML = `
-            <div style="color: #ffc107; display: flex; align-items: center; gap: 6px;">
-                <i class="fas fa-lock"></i>
-                Code unlocks after ${promo.activateAfterCampaigns} campaigns. You have ${userCampaignCount}.
-            </div>
-        `;
-        return;
-    }
-    
-    // Check usage limits (except for unlimited codes)
-    if (promo.usage !== -1) {
-        const usageCount = await getPromoCodeUsageCount(code);
-        if (usageCount >= promo.usage) {
-            messageDiv.innerHTML = `
-                <div style="color: #dc3545; display: flex; align-items: center; gap: 6px;">
-                    <i class="fas fa-times-circle"></i>
-                    Code usage limit reached (${promo.usage}/${promo.usage})
-                </div>
-            `;
-            return;
-        }
-        
-        // Show remaining uses
-        const remainingUses = promo.usage - usageCount;
-        messageDiv.innerHTML = `
-            <div style="color: #28a745; display: flex; align-items: center; gap: 6px;">
-                <i class="fas fa-check-circle"></i>
-                Valid! ${promo.discount}% off applied (${remainingUses} uses left)
-            </div>
-        `;
-    } else {
-        // Unlimited usage (admin code)
-        messageDiv.innerHTML = `
-            <div style="color: #28a745; display: flex; align-items: center; gap: 6px;">
-                <i class="fas fa-check-circle"></i>
-                Valid! ${promo.discount}% off applied (unlimited)
-            </div>
-        `;
-    }
-    
-    calculateBoostPrice();
-}
-
-// Get user's total campaign count
-async function getUserCampaignCount() {
-    try {
-        const user = auth.currentUser;
-        if (!user) return 0;
-        
-        // Count all ad packages across all events for this user
-        const eventsRef = db.collection('physicalEvents');
-        const eventsSnapshot = await eventsRef.where('userId', '==', user.uid).get();
-        
-        let totalCampaigns = 0;
-        
-        for (const eventDoc of eventsSnapshot.docs) {
-            const packagesRef = eventDoc.ref.collection('adsPackages');
-            const packagesSnapshot = await packagesRef.get();
-            totalCampaigns += packagesSnapshot.size;
-        }
-        
-        return totalCampaigns;
-        
-    } catch (error) {
-        console.error('Error getting user campaign count:', error);
-        return 0;
-    }
-}
-
-// Get promo code usage count for current user
-async function getPromoCodeUsageCount(promoCode) {
-    try {
-        const user = auth.currentUser;
-        if (!user) return 0;
-        
-        // Count how many times this user has used this promo code
-        const eventsRef = db.collection('physicalEvents');
-        const eventsSnapshot = await eventsRef.where('userId', '==', user.uid).get();
-        
-        let usageCount = 0;
-        
-        for (const eventDoc of eventsSnapshot.docs) {
-            const packagesRef = eventDoc.ref.collection('adsPackages');
-            const packagesSnapshot = await packagesRef.where('promoCodeUsed', '==', promoCode).get();
-            usageCount += packagesSnapshot.size;
-        }
-        
-        return usageCount;
-        
-    } catch (error) {
-        console.error('Error getting promo code usage count:', error);
-        return 0;
-    }
-}
-
-// Handle promo code change (wrapper for async validation)
-function handlePromoCodeChange() {
-    validatePromoCode().catch(error => {
-        console.error('Error validating promo code:', error);
-        const messageDiv = document.getElementById('promo-message');
-        if (messageDiv) {
-            messageDiv.innerHTML = `
-                <div style="color: #dc3545; display: flex; align-items: center; gap: 6px;">
-                    <i class="fas fa-exclamation-triangle"></i>
-                    Error validating code. Please try again.
-                </div>
-            `;
-        }
-    });
-}
-
-// Calculate promo discount
-function calculatePromoDiscount(subtotal) {
-    const promoInput = document.getElementById('promo-code');
-    if (!promoInput) return 0;
-    
-    const code = promoInput.value.trim().toUpperCase();
-    const promo = promoCodes[code];
-    
-    if (!promo) return 0;
-    
-    if (promo.type === 'percentage') {
-        return Math.floor(subtotal * (promo.discount / 100));
-    } else {
-        return Math.min(promo.discount, subtotal);
-    }
-}
-
-// Process boost payment
-function processBoostPayment(eventId) {
-    const total = calculateBoostPrice();
-    
-    if (total === 0) {
-        // Free package - skip payment
-        handlePaymentSuccessWithEmail(eventId, null, 0);
-        return;
-    }
-    
-    // Validate form before payment
-    if (!validateBoostForm()) {
-        return;
-    }
-    
-    // Get user email for payment
-    const user = auth.currentUser;
-    if (!user) {
-        showNotification('Please login to continue', 'error');
-        return;
-    }
-    
-    // Configure Flutterwave payment
-    const paymentData = {
-        public_key: "FLWPUBK-d3902fdb2f80f41ada9c077eb569466a-X", // Your public key
-        tx_ref: `boost_${eventId}_${Date.now()}`,
-        amount: total,
-        currency: "NGN",
-        country: "NG",
-        payment_options: "card,ussd,banktransfer,mobilemoney",
-        customer: {
-            email: user.email,
-            phone_number: "",
-            name: user.displayName || "User"
-        },
-        customizations: {
-            title: "Boost your Event - Rewarder",
-            description: "Event Advertisement Package",
-            logo: "https://i.ibb.co/VpC27tbt/Rewarder-logo.png"
-        },
-        callback: (response) => {
-            console.log('🔔 Flutterwave callback response:', response);
-            if (response.status === "successful") {
-                // Payment completed - process immediately
-                showNotification('Payment successful! Creating your ad package...', 'success');
-                
-                console.log('💳 Payment successful, transaction ID:', response.transaction_id);
-                console.log('📍 Event ID:', eventId);
-                
-                closeBoostEventModal();
-                
-                // Process payment directly - no webhook needed
-                handlePaymentSuccess(eventId, response);
-            } else {
-                console.log('❌ Payment failed:', response);
-                showNotification('Payment failed. Please try again.', 'error');
-            }
-        },
-        onclose: () => {
-            console.log('Payment modal closed');
-        }
-    };
-    
-    // Launch Flutterwave payment modal
-    if (typeof FlutterwaveCheckout !== 'undefined') {
-        FlutterwaveCheckout(paymentData);
-    } else {
-        // Fallback - load Flutterwave script if not already loaded
-        loadFlutterwaveScript(() => {
-            FlutterwaveCheckout(paymentData);
-        });
-    }
-}
-
-// Listen for webhook-processed packages
-// Simple payment success handler - no webhooks needed
-async function handlePaymentSuccess(eventId, flutterwaveResponse) {
-    try {
-        console.log('🎯 Processing payment success directly:', { eventId, flutterwaveResponse });
-        
-        // Show processing message
-        showNotification('Creating your ad package...', 'success');
-        
-        // Generate ad code
-        const adCode = generateAdCode();
-        
-        // Create ad package data
-        const now = new Date();
-        const packageData = {
-            packageId: `ads_pkg_${Date.now()}`,
-            packageName: 'Boost Package',
-            packageType: 'boost',
-            
-            // Status & Timing
-            status: 'pending_upload',
-            createdAt: now.toISOString(),
-            expiresAt: new Date(now.getTime() + (7 * 24 * 60 * 60 * 1000)).toISOString(), // 7 days
-            
-            // Payment Info
-            totalAmountPaid: flutterwaveResponse.amount,
-            paymentId: flutterwaveResponse.transaction_id,
-            adCode: adCode,
-            currency: flutterwaveResponse.currency,
-            
-            // Customer Info from Firebase Auth
-            customerEmail: auth.currentUser.email,
-            customerName: auth.currentUser.displayName || "User",
-            
-            // Payment metadata
-            paymentProcessedAt: now.toISOString(),
-            flutterwaveData: {
-                txRef: flutterwaveResponse.tx_ref,
-                flwRef: flutterwaveResponse.flw_ref || '',
-                paymentType: flutterwaveResponse.payment_type || 'card'
-            },
-            
-            // Default configuration
-            adTypes: ['image'],
-            placements: ['app_ads_footer'],
-            duration: 7,
-            
-            // Individual Ad Data
-            ads: {
-                image: {
-                    contentType: null,
-                    dataUrl: null,
-                    websiteUrl: null,
-                    editsUsed: 0,
-                    totalEdits: 1,
-                    views: 0,
-                    clicks: 0,
-                    uploaded: false
-                }
-            },
-            
-            // Analytics
-            totalViews: 0,
-            totalClicks: 0,
-            viewsPerDay: {}
-        };
-        
-        // Save to Firebase
-        const adPackagesRef = db.collection('physicalEvents').doc(eventId).collection('adsPackages').doc(packageData.packageId);
-        
-        await adPackagesRef.set(packageData);
-        
-        console.log('✅ Ad package saved successfully:', {
-            eventId,
-            packageId: packageData.packageId,
-            adCode
-        });
-        
-        // Show success modal immediately
-        showSimpleSuccessModal(packageData, eventId);
-        
-        showNotification('🎉 Payment successful! Your ad package is ready!', 'success');
-        
-    } catch (error) {
-        console.error('❌ Error processing payment:', error);
-        showNotification('Payment received but there was an error setting up your package. Please contact support.', 'error');
-    }
-}
-
-// Generate simple ad code
-function generateAdCode() {
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    let result = 'AD';
-    for (let i = 0; i < 11; i++) {
-        result += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    return result;
-}
-
-// Show payment processing modal
-function showPaymentProcessingModal(eventId, transactionId) {
-    const processingHTML = `
-        <div id="payment-processing-modal" class="boost-event-modal" style="display: block;">
-            <div class="boost-modal-content" style="max-width: 500px;">
-                <div class="boost-modal-header" style="background: linear-gradient(135deg, #007bff, #0056b3);">
-                    <h2 class="boost-modal-title">
-                        <i class="fas fa-cog fa-spin"></i>
-                        Processing Payment
-                    </h2>
-                </div>
-                
-                <div style="padding: 40px; text-align: center;">
-                    <div style="font-size: 48px; margin-bottom: 20px;">
-                        <i class="fas fa-credit-card" style="color: #28a745;"></i>
-                    </div>
-                    
-                    <h3 style="color: white; margin-bottom: 15px;">Payment Successful!</h3>
-                    
-                    <p style="color: rgba(255,255,255,0.8); margin-bottom: 20px;">
-                        We're setting up your ad campaign. This usually takes 10-30 seconds.
-                    </p>
-                    
-                    <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; margin: 20px 0;">
-                        <div class="spinner" style="
-                            border: 3px solid rgba(255,255,255,0.3);
-                            border-radius: 50%;
-                            border-top: 3px solid #00c6ff;
-                            width: 30px;
-                            height: 30px;
-                            animation: spin 1s linear infinite;
-                            margin: 0 auto 10px;
-                        "></div>
-                        <p style="color: #00c6ff; margin: 0; font-weight: 600;">Creating your ad package...</p>
-                    </div>
-                    
-                    <div style="font-size: 12px; color: rgba(255,255,255,0.6); margin-top: 20px;">
-                        Transaction ID: ${transactionId}
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <style>
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        </style>
-    `;
-    
-    document.body.insertAdjacentHTML('beforeend', processingHTML);
-}
-
-// Show webhook success modal
-// Simple success modal - no webhook needed
-function showSimpleSuccessModal(packageData, eventId) {
-    // Close processing modal
-    const processingModal = document.getElementById('payment-processing-modal');
-    if (processingModal) {
-        processingModal.remove();
-    }
-    
-    const successHTML = `
-        <div id="webhook-success-modal" class="boost-event-modal" style="display: block;">
-            <div class="boost-modal-content" style="max-width: 500px;">
-                <div class="boost-modal-header" style="background: linear-gradient(135deg, #28a745, #20c997);">
-                    <h2 class="boost-modal-title">
-                        <i class="fas fa-check-circle"></i>
-                        Ad Campaign Created!
-                    </h2>
-                    <button class="boost-close-btn" onclick="closeWebhookSuccessModal()">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-                
-                <div style="padding: 30px; text-align: center;">
-                    <div style="font-size: 48px; color: #28a745; margin-bottom: 20px;">
-                        🎉
-                    </div>
-                    
-                    <h3 style="color: white; margin-bottom: 15px;">Your Ad Campaign is Ready!</h3>
-                    
-                    <div style="background: rgba(40, 167, 69, 0.1); padding: 15px; border-radius: 8px; margin: 20px 0; border: 1px solid #28a745;">
-                        <p style="color: #28a745; font-weight: 600; margin: 0;">Campaign Code:</p>
-                        <p style="font-size: 24px; font-weight: 700; color: white; margin: 5px 0; letter-spacing: 2px;">${packageData.adCode}</p>
-                    </div>
-                    
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 20px 0;">
-                        <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px;">
-                            <div style="color: #00c6ff; font-weight: 600;">Amount Paid</div>
-                            <div style="color: white; font-size: 18px; font-weight: 700;">₦${packageData.totalAmountPaid.toLocaleString()}</div>
-                        </div>
-                        <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px;">
-                            <div style="color: #00c6ff; font-weight: 600;">Campaign Type</div>
-                            <div style="color: white; font-size: 18px; font-weight: 700;">${packageData.packageName}</div>
-                        </div>
-                    </div>
-                    
-                    <div style="text-align: left; margin: 20px 0; padding: 15px; background: rgba(255,255,255,0.05); border-radius: 8px;">
-                        <h4 style="color: #00c6ff; margin-bottom: 10px;">🚀 What's Next?</h4>
-                        <ul style="color: rgba(255,255,255,0.9); padding-left: 20px; margin: 0;">
-                            <li>Upload your ad content</li>
-                            <li>Monitor campaign performance</li>
-                            <li>Track views and clicks in real-time</li>
-                        </ul>
-                    </div>
-                    
-                    <button onclick="accessAdsActivities('${eventId}')" 
-                            style="background: linear-gradient(135deg, #007bff, #0056b3); color: white; border: none; 
-                                   padding: 15px 30px; border-radius: 8px; cursor: pointer; font-weight: 600; 
-                                   font-size: 16px; margin: 10px; transition: all 0.3s ease; width: 100%;">
-                        <i class="fas fa-chart-line"></i>
-                        Manage Your Ads
-                    </button>
-                    
-                    <p style="color: rgba(255,255,255,0.6); font-size: 12px; margin-top: 20px;">
-                        Contact: +234 9078139367 | 
-                        <a href="https://rewarder-hub.vercel.app/" target="_blank" style="color: #007bff;">rewarder-hub.vercel.app</a>
-                    </p>
-                </div>
-            </div>
-        </div>
-    `;
-    
-    document.body.insertAdjacentHTML('beforeend', successHTML);
-}
-
-// Close webhook success modal
-function closeWebhookSuccessModal() {
-    const modal = document.getElementById('webhook-success-modal');
-    if (modal) {
-        modal.remove();
-    }
-}
-
-// Load Flutterwave script dynamically
-function loadFlutterwaveScript(callback) {
-    if (document.getElementById('flutterwave-script')) {
-        callback();
-        return;
-    }
-    
-    const script = document.createElement('script');
-    script.id = 'flutterwave-script';
-    script.src = 'https://checkout.flutterwave.com/v3.js';
-    script.onload = callback;
-    document.head.appendChild(script);
-}
-
-// Validate boost form
-function validateBoostForm() {
-    // Check if at least one placement is selected or package is selected
-    const selectedPackage = document.querySelector('.boost-package-card.selected');
-    const selectedPlacements = document.querySelectorAll('input[type="checkbox"]:checked');
-    
-    if (!selectedPackage && selectedPlacements.length === 0) {
-        showNotification('Please select at least one ad placement or choose a package', 'error');
-        return false;
-    }
-    
-    return true;
-}
-
-// Handle payment success
-async function handlePaymentSuccess(eventId, transactionId, amount) {
-    try {
-        // Generate 13-digit ad code
-        const adCode = generateAdCode();
-        
-        // Collect form data
-        const adPackageData = collectAdPackageData(eventId, transactionId, amount, adCode);
-        
-        // Save to Firebase
-        await saveAdPackageToFirebase(eventId, adPackageData);
-        
-        // Show success modal
-        showPaymentSuccessModal(adCode, eventId);
-        
-        // Close boost modal
-        closeBoostEventModal();
-        
-        // Send confirmation email (TODO: implement EmailJS)
-        
-        showNotification('🎉 Ad package activated successfully!', 'success');
-        
-    } catch (error) {
-        console.error('Error processing payment success:', error);
-        showNotification('Payment successful but there was an error saving your ad. Please contact support.', 'error');
-    }
-}
-
-// Generate 13-digit ad code
-function generateAdCode() {
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    let result = 'AD';
-    for (let i = 0; i < 11; i++) {
-        result += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    return result;
-}
-
-// Collect ad package data from form
-function collectAdPackageData(eventId, transactionId, amount, adCode) {
-    const selectedPackage = document.querySelector('.boost-package-card.selected');
-    const adType = document.querySelector('input[name="adType"]:checked')?.value;
-    const selectedPlacements = Array.from(document.querySelectorAll('input[type="checkbox"]:checked')).map(cb => cb.value);
-    const duration = parseInt(document.getElementById('duration-select')?.value || 3);
-    const edits = parseInt(document.getElementById('edits-select')?.value || 1);
-    const promoCode = document.getElementById('promo-code')?.value.trim().toUpperCase();
-    
-    const now = new Date();
-    const expiresAt = new Date(now.getTime() + (duration * 24 * 60 * 60 * 1000));
-    
-    const packageData = {
-        packageId: `ads_pkg_${Date.now()}`,
-        packageName: selectedPackage ? 
-            predefinedPackages.find(p => p.id === selectedPackage.getAttribute('data-package-id'))?.name : 
-            'Custom Package',
-        packageType: selectedPackage ? 
-            predefinedPackages.find(p => p.id === selectedPackage.getAttribute('data-package-id'))?.type : 
-            'custom',
-        
-        // Status & Timing
-        status: 'pending_upload',
-        createdAt: now.toISOString(),
-        expiresAt: expiresAt.toISOString(),
-        
-        // Payment Info
-        totalAmountPaid: amount,
-        paymentId: transactionId,
-        promoCodeUsed: promoCode || null,
-        discountApplied: calculatePromoDiscount(amount + calculatePromoDiscount(amount)),
-        adCode: adCode,
-        
-        // Configuration
-        adTypes: selectedPackage ? 
-            predefinedPackages.find(p => p.id === selectedPackage.getAttribute('data-package-id'))?.config.adTypes : 
-            [adType],
-        placements: selectedPackage ? 
-            predefinedPackages.find(p => p.id === selectedPackage.getAttribute('data-package-id'))?.config.placements : 
-            selectedPlacements,
-        duration: duration,
-        
-        // Individual Ad Data (initialized empty)
-        ads: {},
-        
-        // Analytics
-        totalViews: 0,
-        totalClicks: 0,
-        viewsPerDay: {}
-    };
-    
-    // Initialize ads object based on selected ad types
-    packageData.adTypes.forEach(type => {
-        packageData.ads[type] = {
-            contentType: null,
-            dataUrl: null,
-            websiteUrl: null,
-            editsUsed: 0,
-            totalEdits: edits,
-            views: 0,
-            clicks: 0,
-            uploaded: false
-        };
-    });
-    
-    return packageData;
-}
-
-// Save ad package to Firebase
-async function saveAdPackageToFirebase(eventId, packageData) {
-    try {
-        const user = auth.currentUser;
-        if (!user) throw new Error('User not authenticated');
-        
-        // Reference to the event's ad packages
-        const adPackagesRef = db.collection('physicalEvents').doc(eventId).collection('adsPackages').doc(packageData.packageId);
-        
-        await adPackagesRef.set(packageData);
-        
-        console.log('Ad package saved successfully:', packageData.packageId);
-        
-    } catch (error) {
-        console.error('Error saving ad package:', error);
-        throw error;
-    }
-}
-
-// Show payment success modal
-function showPaymentSuccessModal(adCode, eventId) {
-    const successHTML = `
-        <div id="payment-success-modal" class="boost-event-modal" style="display: block;">
-            <div class="boost-modal-content" style="max-width: 500px;">
-                <div class="boost-modal-header" style="background: linear-gradient(135deg, #28a745, #20c997);">
-                    <h2 class="boost-modal-title">
-                        <i class="fas fa-check-circle"></i>
-                        Payment Successful!
-                    </h2>
-                    <button class="boost-close-btn" onclick="closePaymentSuccessModal()">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-                
-                <div style="padding: 30px; text-align: center;">
-                    <div style="font-size: 48px; color: #28a745; margin-bottom: 20px;">
-                        🎉
-                    </div>
-                    
-                    <h3 style="color: white; margin-bottom: 15px;">Your Ad Campaign is Ready!</h3>
-                    
-                    <div style="background: rgba(40, 167, 69, 0.1); padding: 15px; border-radius: 8px; margin: 20px 0; border: 1px solid #28a745;">
-                        <p style="color: #28a745; font-weight: 600; margin: 0;">Campaign Code:</p>
-                        <p style="font-size: 24px; font-weight: 700; color: white; margin: 5px 0; letter-spacing: 2px;">${adCode}</p>
-                    </div>
-                    
-                    <div style="text-align: left; margin: 20px 0; padding: 15px; background: rgba(255,255,255,0.05); border-radius: 8px;">
-                        <h4 style="color: #00c6ff; margin-bottom: 10px;">🚀 What's Next?</h4>
-                        <ul style="color: rgba(255,255,255,0.9); padding-left: 20px;">
-                            <li>Upload your ad content in the "Ads Activities" tab</li>
-                            <li>Monitor your campaign performance</li>
-                            <li>Track views and clicks in real-time</li>
-                        </ul>
-                    </div>
-                    
-                    <div style="text-align: left; margin: 20px 0; padding: 15px; background: rgba(0, 123, 255, 0.1); border-radius: 8px; border: 1px solid #007bff;">
-                        <h4 style="color: #007bff; margin-bottom: 10px;">🎁 Special Offers:</h4>
-                        <p style="color: rgba(255,255,255,0.9); margin: 0; font-size: 14px;">
-                            • Next 2 campaigns: Use <strong>RRISDC2025</strong> for 20% off<br>
-                            • 3rd campaign: Use <strong>BISASK</strong> for 30% off<br>
-                            • 5th campaign: Use <strong>Rewarder</strong> for 50% off
-                        </p>
-                    </div>
-                    
-                    <button onclick="accessAdsActivities('${eventId}')" 
-                            style="background: linear-gradient(135deg, #007bff, #0056b3); color: white; border: none; 
-                                   padding: 15px 30px; border-radius: 8px; cursor: pointer; font-weight: 600; 
-                                   font-size: 16px; margin: 10px; transition: all 0.3s ease;">
-                        <i class="fas fa-chart-line"></i>
-                        Access Ads Activities
-                    </button>
-                    
-                    <p style="color: rgba(255,255,255,0.6); font-size: 12px; margin-top: 20px;">
-                        Contact: +234 9078139367 | 
-                        <a href="https://rewarder-hub.vercel.app/" target="_blank" style="color: #007bff;">rewarder-hub.vercel.app</a>
-                    </p>
-                </div>
-            </div>
-        </div>
-    `;
-    
-    document.body.insertAdjacentHTML('beforeend', successHTML);
-}
-
-// Close payment success modal
-function closePaymentSuccessModal() {
-    const modal = document.getElementById('payment-success-modal');
-    if (modal) {
-        modal.remove();
-    }
-}
-
-// Access ads activities tab
-function accessAdsActivities(eventId) {
-    closePaymentSuccessModal();
-    openBoostEventModal(eventId);
-    
-    // Unlock and switch to activities tab
-    const activitiesTab = document.querySelector('.boost-tab[data-tab="activities"]');
-    if (activitiesTab) {
-        activitiesTab.classList.remove('locked');
-        activitiesTab.innerHTML = '<i class="fas fa-chart-line"></i> Ads Activities';
-        
-        // Load activities content
-        loadAdsActivitiesContent(eventId);
-        
-        activitiesTab.click();
-    }
-}
-
-// Load ads activities content
-async function loadAdsActivitiesContent(eventId) {
-    try {
-        // Check for existing packages first, then load content
-        const packages = await loadUserAdPackages(eventId);
-        
-        const activitiesPane = document.getElementById('boost-activities-tab');
-        if (activitiesPane) {
-            activitiesPane.innerHTML = await generateActivitiesTabContent(eventId, packages);
-            
-            // Initialize package navigation if multiple packages
-            if (packages.length > 1) {
-                initializePackageNavigation(packages);
-            }
-            
-            // Check for expiration
-            checkAdPackageExpiration(eventId);
-        }
-        
-    } catch (error) {
-        console.error('Error loading activities content:', error);
-        showNotification('Error loading ad activities. Please refresh and try again.', 'error');
-    }
-}
-
-// Load user ad packages from Firebase
-async function loadUserAdPackages(eventId) {
-    try {
-        const user = auth.currentUser;
-        if (!user) return [];
-        
-        const packagesRef = db.collection('physicalEvents').doc(eventId).collection('adsPackages');
-        const snapshot = await packagesRef.orderBy('createdAt', 'desc').get();
-        
-        const packages = [];
-        snapshot.forEach(doc => {
-            packages.push({ id: doc.id, ...doc.data() });
-        });
-        
-        return packages;
-        
-    } catch (error) {
-        console.error('Error loading ad packages:', error);
-        return [];
-    }
-}
-
-// Generate activities tab content
-async function generateActivitiesTabContent(eventId, packages) {
-    if (packages.length === 0) {
-        return `
-            <div style="text-align: center; padding: 50px; color: rgba(255,255,255,0.6);">
-                <i class="fas fa-ad" style="font-size: 48px; margin-bottom: 20px; color: rgba(255,255,255,0.3);"></i>
-                <h3>No Ad Packages Found</h3>
-                <p>You don't have any active ad packages for this event yet.</p>
-                <button onclick="document.querySelector('.boost-tab[data-tab=\"payment\"]').click()" 
-                        style="background: linear-gradient(135deg, #007bff, #0056b3); color: white; border: none; 
-                               padding: 12px 24px; border-radius: 8px; cursor: pointer; font-weight: 600; margin-top: 15px;">
-                    <i class="fas fa-plus"></i> Create Ad Package
-                </button>
-            </div>
-        `;
-    }
-    
-    const activePackages = packages.filter(pkg => pkg.status !== 'expired');
-    
-    if (activePackages.length === 0) {
-        return `
-            <div style="text-align: center; padding: 50px; color: rgba(255,255,255,0.6);">
-                <i class="fas fa-clock" style="font-size: 48px; margin-bottom: 20px; color: rgba(255,193,7,0.6);"></i>
-                <h3>All Packages Expired</h3>
-                <p>All your ad packages have expired. Create a new one to continue advertising.</p>
-                <button onclick="document.querySelector('.boost-tab[data-tab=\"payment\"]').click()" 
-                        style="background: linear-gradient(135deg, #007bff, #0056b3); color: white; border: none; 
-                               padding: 12px 24px; border-radius: 8px; cursor: pointer; font-weight: 600; margin-top: 15px;">
-                    <i class="fas fa-plus"></i> Create New Package
-                </button>
-            </div>
-        `;
-    }
-    
-    let html = '';
-    
-    // Package navigation (if multiple packages)
-    if (activePackages.length > 1) {
-        html += generatePackageNavigation(activePackages);
-    }
-    
-    // Current package content (show first active package by default)
-    html += generateSinglePackageContent(activePackages[0], eventId);
-    
-    return html;
-}
-
-// Generate package navigation bar
-function generatePackageNavigation(packages) {
-    return `
-        <div class="package-navigation" style="
-            display: flex; 
-            gap: 10px; 
-            margin-bottom: 20px; 
-            padding: 15px; 
-            background: rgba(255,255,255,0.05); 
-            border-radius: 10px;
-            overflow-x: auto;
-        ">
-            ${packages.map((pkg, index) => `
-                <button class="package-nav-btn ${index === 0 ? 'active' : ''}" 
-                        data-package-id="${pkg.id}"
-                        onclick="switchToPackage('${pkg.id}')"
-                        style="
-                            background: ${index === 0 ? 'linear-gradient(135deg, #007bff, #0056b3)' : 'rgba(255,255,255,0.1)'};
-                            color: white;
-                            border: none;
-                            padding: 10px 15px;
-                            border-radius: 8px;
-                            cursor: pointer;
-                            font-weight: 600;
-                            white-space: nowrap;
-                            transition: all 0.3s ease;
-                            min-width: 120px;
-                        ">
-                    ${pkg.packageName}
-                    <div style="font-size: 11px; opacity: 0.8; margin-top: 2px;">
-                        ${calculateDaysLeft(pkg.expiresAt)} days left
-                    </div>
-                </button>
-            `).join('')}
-            
-            <button onclick="document.querySelector('.boost-tab[data-tab=\"payment\"]').click()" 
-                    style="
-                        background: rgba(40, 167, 69, 0.2);
-                        color: #28a745;
-                        border: 2px dashed #28a745;
-                        padding: 10px 15px;
-                        border-radius: 8px;
-                        cursor: pointer;
-                        font-weight: 600;
-                        white-space: nowrap;
-                        transition: all 0.3s ease;
-                        min-width: 120px;
-                    ">
-                <i class="fas fa-plus"></i>
-                <div style="font-size: 11px; margin-top: 2px;">New Package</div>
-            </button>
-        </div>
-    `;
-}
-
-// Generate single package content
-function generateSinglePackageContent(pkg, eventId) {
-    const daysLeft = calculateDaysLeft(pkg.expiresAt);
-    const isExpiringSoon = daysLeft <= 2;
-    
-    return `
-        <div id="package-content-${pkg.id}" class="package-content">
-            <!-- Package Header Stats -->
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 25px;">
-                <div class="stats-card" style="background: rgba(0,123,255,0.1); border: 1px solid #007bff; padding: 20px; border-radius: 10px; text-align: center;">
-                    <div style="font-size: 24px; font-weight: 700; color: #007bff;">${daysLeft}</div>
-                    <div style="color: rgba(255,255,255,0.8); font-size: 14px;">
-                        <i class="fas fa-calendar-alt"></i> Days Left
-                    </div>
-                    ${isExpiringSoon ? '<div style="color: #ffc107; font-size: 12px; margin-top: 5px;"><i class="fas fa-exclamation-triangle"></i> Expiring Soon!</div>' : ''}
-                </div>
-                
-                <div class="stats-card" style="background: rgba(40,167,69,0.1); border: 1px solid #28a745; padding: 20px; border-radius: 10px; text-align: center;">
-                    <div style="font-size: 24px; font-weight: 700; color: #28a745;">${pkg.totalViews.toLocaleString()}</div>
-                    <div style="color: rgba(255,255,255,0.8); font-size: 14px;">
-                        <i class="fas fa-eye"></i> Total Views
-                    </div>
-                </div>
-                
-                <div class="stats-card" style="background: rgba(255,193,7,0.1); border: 1px solid #ffc107; padding: 20px; border-radius: 10px; text-align: center;">
-                    <div style="font-size: 24px; font-weight: 700; color: #ffc107;">${pkg.totalClicks.toLocaleString()}</div>
-                    <div style="color: rgba(255,255,255,0.8); font-size: 14px;">
-                        <i class="fas fa-mouse-pointer"></i> Total Clicks
-                    </div>
-                </div>
-                
-                <div class="stats-card" style="background: rgba(108,117,125,0.1); border: 1px solid #6c757d; padding: 20px; border-radius: 10px; text-align: center;">
-                    <div style="font-size: 24px; font-weight: 700; color: #6c757d;">₦${pkg.totalAmountPaid.toLocaleString()}</div>
-                    <div style="color: rgba(255,255,255,0.8); font-size: 14px;">
-                        <i class="fas fa-credit-card"></i> Amount Paid
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Package Info -->
-            <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 10px; margin-bottom: 25px;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                    <h3 style="color: #00c6ff; margin: 0;">
-                        <i class="fas fa-box"></i> ${pkg.packageName}
-                    </h3>
-                    <div style="background: rgba(0,123,255,0.2); color: #007bff; padding: 5px 10px; border-radius: 15px; font-size: 12px; font-weight: 600;">
-                        ${pkg.adCode}
-                    </div>
-                </div>
-                
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
-                    <div>
-                        <strong style="color: rgba(255,255,255,0.9);">Ad Types:</strong>
-                        <div style="color: rgba(255,255,255,0.7);">${pkg.adTypes.join(', ')}</div>
-                    </div>
-                    <div>
-                        <strong style="color: rgba(255,255,255,0.9);">Placements:</strong>
-                        <div style="color: rgba(255,255,255,0.7);">${pkg.placements.length} locations</div>
-                    </div>
-                    <div>
-                        <strong style="color: rgba(255,255,255,0.9);">Status:</strong>
-                        <div style="color: ${getStatusColor(pkg.status)};">${formatStatus(pkg.status)}</div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Ad Management Sections -->
-            ${generateAdManagementSections(pkg, eventId)}
-        </div>
-    `;
-}
-
-// Generate ad management sections for each ad type
-function generateAdManagementSections(pkg, eventId) {
-    let html = '';
-    
-    pkg.adTypes.forEach(adType => {
-        const adData = pkg.ads[adType];
-        html += `
-            <div class="ad-management-section" style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 10px; margin-bottom: 20px;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                    <h4 style="color: #00c6ff; margin: 0;">
-                        <i class="fas fa-${adType === 'video' ? 'video' : 'image'}"></i> 
-                        ${adType.charAt(0).toUpperCase() + adType.slice(1)} Ad Management
-                    </h4>
-                    <div style="color: rgba(255,255,255,0.6); font-size: 14px;">
-                        Edits: ${adData.editsUsed}/${adData.totalEdits}
-                    </div>
-                </div>
-                
-                ${generateAdContentArea(pkg.id, adType, adData, eventId)}
-                
-                <div style="display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap;">
-                    ${!adData.uploaded ? `
-                        <button onclick="openAdUploadModal('${pkg.id}', '${adType}', '${eventId}')" 
-                                style="background: linear-gradient(135deg, #28a745, #20c997); color: white; border: none; 
-                                       padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: 600;">
-                            <i class="fas fa-upload"></i> Upload ${adType}
-                        </button>
-                    ` : `
-                        <button onclick="openAdUploadModal('${pkg.id}', '${adType}', '${eventId}')" 
-                                style="background: linear-gradient(135deg, #007bff, #0056b3); color: white; border: none; 
-                                       padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: 600;"
-                                ${adData.editsUsed >= adData.totalEdits ? 'disabled style="background: #6c757d; cursor: not-allowed;"' : ''}>
-                            <i class="fas fa-edit"></i> 
-                            ${adData.editsUsed >= adData.totalEdits ? 'No Edits Left' : `Edit (${adData.totalEdits - adData.editsUsed} left)`}
-                        </button>
-                        
-                        <button onclick="previewAd('${pkg.id}', '${adType}')" 
-                                style="background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.3); 
-                                       padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: 600;">
-                            <i class="fas fa-eye"></i> Preview
-                        </button>
-                    `}
-                    
-                    <div style="margin-left: auto; color: rgba(255,255,255,0.7); display: flex; align-items: center; gap: 15px;">
-                        <div><i class="fas fa-eye"></i> ${adData.views.toLocaleString()}</div>
-                        <div><i class="fas fa-mouse-pointer"></i> ${adData.clicks.toLocaleString()}</div>
-                    </div>
-                </div>
-            </div>
-        `;
-    });
-    
-    return html;
-}
-
-// Generate ad content area
-function generateAdContentArea(packageId, adType, adData, eventId) {
-    if (!adData.uploaded) {
-        return `
-            <div style="text-align: center; padding: 40px; border: 2px dashed rgba(255,255,255,0.3); border-radius: 8px; color: rgba(255,255,255,0.6);">
-                <i class="fas fa-cloud-upload-alt" style="font-size: 48px; margin-bottom: 15px; opacity: 0.5;"></i>
-                <h4>No ${adType} uploaded yet</h4>
-                <p>Upload your ${adType} content to start your ad campaign</p>
-            </div>
-        `;
-    }
-    
-    if (adType === 'video') {
-        return `
-            <div style="text-align: center; padding: 20px; background: rgba(0,0,0,0.3); border-radius: 8px;">
-                <video controls style="max-width: 100%; max-height: 200px; border-radius: 8px;">
-                    <source src="${adData.dataUrl}" type="video/mp4">
-                    Your browser does not support video playback.
-                </video>
-                ${adData.websiteUrl ? `<div style="margin-top: 10px; color: rgba(255,255,255,0.7);"><i class="fas fa-link"></i> Links to: ${adData.websiteUrl}</div>` : ''}
-            </div>
-        `;
-    } else {
-        return `
-            <div style="text-align: center; padding: 20px; background: rgba(0,0,0,0.3); border-radius: 8px;">
-                <img src="${adData.dataUrl}" alt="Ad Image" style="max-width: 100%; max-height: 200px; object-fit: contain; border-radius: 8px;">
-                ${adData.websiteUrl ? `<div style="margin-top: 10px; color: rgba(255,255,255,0.7);"><i class="fas fa-link"></i> Links to: ${adData.websiteUrl}</div>` : ''}
-            </div>
-        `;
-    }
-}
-
-// Utility functions for Tab 2
-function calculateDaysLeft(expiresAt) {
-    const now = new Date();
-    const expiry = new Date(expiresAt);
-    const diffTime = expiry - now;
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    return Math.max(0, diffDays);
-}
-
-function getStatusColor(status) {
-    switch (status) {
-        case 'active': return '#28a745';
-        case 'pending_upload': return '#ffc107';
-        case 'expired': return '#dc3545';
-        default: return '#6c757d';
-    }
-}
-
-function formatStatus(status) {
-    switch (status) {
-        case 'active': return 'Active';
-        case 'pending_upload': return 'Pending Upload';
-        case 'expired': return 'Expired';
-        default: return 'Unknown';
-    }
-}
-
-// Switch to package (for navigation)
-async function switchToPackage(packageId) {
-    // Update navigation buttons
-    document.querySelectorAll('.package-nav-btn').forEach(btn => {
-        btn.classList.remove('active');
-        btn.style.background = 'rgba(255,255,255,0.1)';
-    });
-    
-    const clickedBtn = document.querySelector(`[data-package-id="${packageId}"]`);
-    if (clickedBtn) {
-        clickedBtn.classList.add('active');
-        clickedBtn.style.background = 'linear-gradient(135deg, #007bff, #0056b3)';
-    }
-    
-    // Hide all package content
-    document.querySelectorAll('.package-content').forEach(content => {
-        content.style.display = 'none';
-    });
-    
-    // Show selected package content
-    const selectedContent = document.getElementById(`package-content-${packageId}`);
-    if (selectedContent) {
-        selectedContent.style.display = 'block';
-    }
-}
-
-// Initialize package navigation
-function initializePackageNavigation(packages) {
-    // Already handled in the generatePackageNavigation function
-    console.log('Package navigation initialized for', packages.length, 'packages');
-}
-
-// Open ad upload modal
-function openAdUploadModal(packageId, adType, eventId) {
-    const modalHTML = `
-        <div id="ad-upload-modal" class="boost-event-modal" style="display: block;">
-            <div class="boost-modal-content" style="max-width: 600px;">
-                <div class="boost-modal-header">
-                    <h2 class="boost-modal-title">
-                        <i class="fas fa-${adType === 'video' ? 'video' : 'image'}"></i>
-                        Upload ${adType.charAt(0).toUpperCase() + adType.slice(1)} Ad
-                    </h2>
-                    <button class="boost-close-btn" onclick="closeAdUploadModal()">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-                
-                <div style="padding: 30px;">
-                    <div class="boost-form-section">
-                        <h3><i class="fas fa-upload"></i> Content Upload</h3>
-                        
-                        <div class="boost-radio-group" style="margin-bottom: 20px;">
-                            <div class="boost-radio-item">
-                                <input type="radio" name="contentType" value="file" id="content-file" checked onchange="toggleContentInputs()">
-                                <label for="content-file">Upload from Device</label>
-                            </div>
-                            <div class="boost-radio-item">
-                                <input type="radio" name="contentType" value="url" id="content-url" onchange="toggleContentInputs()">
-                                <label for="content-url">Provide URL</label>
-                            </div>
-                        </div>
-                        
-                        <div id="file-upload-section">
-                            <div class="boost-form-group">
-                                <label for="ad-file">Choose ${adType} file:</label>
-                                <input type="file" id="ad-file" class="boost-form-control" 
-                                       accept="${adType === 'video' ? 'video/*' : 'image/*'}"
-                                       onchange="handleFileSelect(event)">
-                                <small style="color: rgba(255,255,255,0.6); margin-top: 5px; display: block;">
-                                    ${adType === 'video' ? 'Max 15 seconds, MP4 format recommended' : 'JPG, PNG, GIF formats supported'}
-                                </small>
-                            </div>
-                        </div>
-                        
-                        <div id="url-input-section" style="display: none;">
-                            <div class="boost-form-group">
-                                <label for="ad-url">${adType.charAt(0).toUpperCase() + adType.slice(1)} URL:</label>
-                                <input type="url" id="ad-url" class="boost-form-control" 
-                                       placeholder="https://example.com/${adType}.${adType === 'video' ? 'mp4' : 'jpg'}">
-                            </div>
-                        </div>
-                        
-                        <div class="boost-form-group">
-                            <label for="website-url">Website URL (optional):</label>
-                            <input type="url" id="website-url" class="boost-form-control" 
-                                   placeholder="https://example.com (where users go when they click your ad)">
-                        </div>
-                        
-                        <div id="preview-area" style="margin-top: 20px; text-align: center; padding: 20px; background: rgba(0,0,0,0.3); border-radius: 8px; display: none;">
-                            <h4 style="color: #00c6ff; margin-bottom: 15px;">Preview:</h4>
-                            <div id="preview-content"></div>
-                        </div>
-                    </div>
-                    
-                    <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px;">
-                        <button onclick="closeAdUploadModal()" 
-                                style="background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.3); 
-                                       padding: 12px 24px; border-radius: 8px; cursor: pointer; font-weight: 600;">
-                            Cancel
-                        </button>
-                        
-                        <button onclick="saveAdContent('${packageId}', '${adType}', '${eventId}')" 
-                                style="background: linear-gradient(135deg, #28a745, #20c997); color: white; border: none; 
-                                       padding: 12px 24px; border-radius: 8px; cursor: pointer; font-weight: 600;">
-                            <i class="fas fa-save"></i> Save Ad
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    `;
-    
-    document.body.insertAdjacentHTML('beforeend', modalHTML);
-}
-
-// Close ad upload modal
-function closeAdUploadModal() {
-    const modal = document.getElementById('ad-upload-modal');
-    if (modal) {
-        modal.remove();
-    }
-}
-
-// Toggle content input sections
-function toggleContentInputs() {
-    const fileSection = document.getElementById('file-upload-section');
-    const urlSection = document.getElementById('url-input-section');
-    const fileRadio = document.getElementById('content-file');
-    
-    if (fileRadio.checked) {
-        fileSection.style.display = 'block';
-        urlSection.style.display = 'none';
-    } else {
-        fileSection.style.display = 'none';
-        urlSection.style.display = 'block';
-    }
-    
-    // Clear preview
-    const previewArea = document.getElementById('preview-area');
-    if (previewArea) {
-        previewArea.style.display = 'none';
-    }
-}
-
-// Handle file select for preview
-function handleFileSelect(event) {
-    const file = event.target.files[0];
-    if (!file) return;
-    
-    const reader = new FileReader();
-    reader.onload = function(e) {
-        showPreview(e.target.result, file.type);
-    };
-    reader.readAsDataURL(file);
-}
-
-// Show preview of content
-function showPreview(dataUrl, fileType) {
-    const previewArea = document.getElementById('preview-area');
-    const previewContent = document.getElementById('preview-content');
-    
-    if (!previewArea || !previewContent) return;
-    
-    let previewHTML = '';
-    
-    if (fileType.startsWith('video/')) {
-        previewHTML = `
-            <video controls style="max-width: 100%; max-height: 200px; border-radius: 8px;">
-                <source src="${dataUrl}" type="${fileType}">
-            </video>
-        `;
-    } else if (fileType.startsWith('image/')) {
-        previewHTML = `
-            <img src="${dataUrl}" alt="Preview" style="max-width: 100%; max-height: 200px; object-fit: contain; border-radius: 8px;">
-        `;
-    }
-    
-    previewContent.innerHTML = previewHTML;
-    previewArea.style.display = 'block';
-}
-
-// Save ad content
-async function saveAdContent(packageId, adType, eventId) {
-    try {
-        const contentType = document.querySelector('input[name="contentType"]:checked').value;
-        const websiteUrl = document.getElementById('website-url').value.trim();
-        
-        let dataUrl = '';
-        
-        if (contentType === 'file') {
-            const fileInput = document.getElementById('ad-file');
-            if (!fileInput.files[0]) {
-                showNotification('Please select a file to upload', 'error');
-                return;
-            }
-            
-            // Convert file to base64
-            dataUrl = await fileToBase64(fileInput.files[0]);
-        } else {
-            dataUrl = document.getElementById('ad-url').value.trim();
-            if (!dataUrl) {
-                showNotification('Please provide a valid URL', 'error');
-                return;
-            }
-        }
-        
-        // Update Firebase
-        await updateAdContent(eventId, packageId, adType, {
-            contentType: contentType,
-            dataUrl: dataUrl,
-            websiteUrl: websiteUrl || null,
-            uploaded: true
-        });
-        
-        // Update package status if this was the last pending upload
-        await updatePackageStatus(eventId, packageId);
-        
-        showNotification('Ad content saved successfully!', 'success');
-        closeAdUploadModal();
-        
-        // Reload activities content
-        loadAdsActivitiesContent(eventId);
-        
-    } catch (error) {
-        console.error('Error saving ad content:', error);
-        showNotification('Error saving ad content. Please try again.', 'error');
-    }
-}
-
-// Convert file to base64
-function fileToBase64(file) {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = error => reject(error);
-    });
-}
-
-// Update ad content in Firebase
-async function updateAdContent(eventId, packageId, adType, adData) {
-    try {
-        const user = auth.currentUser;
-        if (!user) throw new Error('User not authenticated');
-        
-        const packageRef = db.collection('physicalEvents').doc(eventId).collection('adsPackages').doc(packageId);
-        
-        // Update the specific ad data
-        await packageRef.update({
-            [`ads.${adType}`]: {
-                ...adData,
-                editsUsed: 0, // Reset for initial upload
-                views: 0,
-                clicks: 0
-            }
-        });
-        
-        console.log('Ad content updated successfully');
-        
-    } catch (error) {
-        console.error('Error updating ad content:', error);
-        throw error;
-    }
-}
-
-// Update package status
-async function updatePackageStatus(eventId, packageId) {
-    try {
-        const packageRef = db.collection('physicalEvents').doc(eventId).collection('adsPackages').doc(packageId);
-        const packageDoc = await packageRef.get();
-        
-        if (!packageDoc.exists) return;
-        
-        const packageData = packageDoc.data();
-        
-        // Check if all ads are uploaded
-        const allUploaded = packageData.adTypes.every(type => 
-            packageData.ads[type] && packageData.ads[type].uploaded
-        );
-        
-        if (allUploaded && packageData.status === 'pending_upload') {
-            await packageRef.update({ status: 'active' });
-        }
-        
-    } catch (error) {
-        console.error('Error updating package status:', error);
-    }
-}
-
-// Preview ad
-function previewAd(packageId, adType) {
-    // This would open a preview modal - simplified for now
-    showNotification('Preview functionality coming soon!', 'info');
-}
-
-// ================================
-// EXPIRATION SYSTEM
-// ================================
-
-// Check ad package expiration
-async function checkAdPackageExpiration(eventId) {
-    try {
-        const user = auth.currentUser;
-        if (!user) return;
-        
-        const packagesRef = db.collection('physicalEvents').doc(eventId).collection('adsPackages');
-        const snapshot = await packagesRef.where('status', '!=', 'expired').get();
-        
-        const now = new Date();
-        const expiredPackages = [];
-        
-        snapshot.forEach(doc => {
-            const packageData = doc.data();
-            const expiryDate = new Date(packageData.expiresAt);
-            
-            if (expiryDate <= now && packageData.status !== 'expired') {
-                expiredPackages.push({ id: doc.id, ...packageData });
-            }
-        });
-        
-        // Process expired packages
-        for (const pkg of expiredPackages) {
-            await deactivateAdPackage(eventId, pkg.id);
-            await sendExpirationEmail(pkg);
-        }
-        
-        if (expiredPackages.length > 0) {
-            showNotification(`${expiredPackages.length} ad package(s) have expired and been deactivated.`, 'warning');
-            
-            // Reload activities content to reflect changes
-            setTimeout(() => {
-                loadAdsActivitiesContent(eventId);
-            }, 2000);
-        }
-        
-    } catch (error) {
-        console.error('Error checking ad package expiration:', error);
-    }
-}
-
-// Deactivate expired ad package
-async function deactivateAdPackage(eventId, packageId) {
-    try {
-        const packageRef = db.collection('physicalEvents').doc(eventId).collection('adsPackages').doc(packageId);
-        
-        await packageRef.update({
-            status: 'expired',
-            expiredAt: new Date().toISOString()
-        });
-        
-        console.log('Package deactivated:', packageId);
-        
-    } catch (error) {
-        console.error('Error deactivating package:', error);
-        throw error;
-    }
-}
-
-// Remove expired package from UI (slide navigation)
-function removePackageSlide(packageId) {
-    const packageBtn = document.querySelector(`[data-package-id="${packageId}"]`);
-    if (packageBtn) {
-        packageBtn.remove();
-    }
-    
-    const packageContent = document.getElementById(`package-content-${packageId}`);
-    if (packageContent) {
-        packageContent.remove();
-    }
-    
-    // If this was the active package, switch to first available
-    const remainingBtns = document.querySelectorAll('.package-nav-btn');
-    if (remainingBtns.length > 0) {
-        remainingBtns[0].click();
-    }
-}
-
-// Send expiration email notification
-async function sendExpirationEmail(packageData) {
-    try {
-        const user = auth.currentUser;
-        if (!user || !user.email) return;
-        
-        // Get event data for email context
-        const eventDoc = await db.collection('physicalEvents').doc(packageData.eventId).get();
-        const eventData = eventDoc.exists ? eventDoc.data() : null;
-        
-        const emailData = {
-            to_email: user.email,
-            to_name: user.displayName || 'User',
-            event_name: eventData?.eventName || 'Your Event',
-            package_name: packageData.packageName,
-            total_views: packageData.totalViews.toLocaleString(),
-            total_clicks: packageData.totalClicks.toLocaleString(),
-            amount_paid: packageData.totalAmountPaid.toLocaleString(),
-            ad_code: packageData.adCode
-        };
-        
-        // TODO: Implement EmailJS sending
-        console.log('Expiration email data prepared:', emailData);
-        
-        // For now, just show notification
-        showNotification(`Expiration notification sent for ${packageData.packageName}`, 'info');
-        
-    } catch (error) {
-        console.error('Error sending expiration email:', error);
-    }
-}
-
-// Auto-check expiration on page load
-function initializeExpirationCheck() {
-    // Check every time the page loads
-    const checkInterval = setInterval(() => {
-        // Get all currently open boost modals
-        const boostModal = document.getElementById('boost-event-modal');
-        if (boostModal) {
-            const activitiesTab = document.querySelector('.boost-tab[data-tab="activities"]:not(.locked)');
-            if (activitiesTab) {
-                // Extract event ID from the modal context (would need to be stored)
-                // For now, we'll check on tab activation
-                console.log('Auto-checking expiration...');
-            }
-        }
-    }, 60000); // Check every minute
-    
-    // Clear interval after 30 minutes to prevent memory leaks
-    setTimeout(() => {
-        clearInterval(checkInterval);
-    }, 30 * 60 * 1000);
-}
-
-// ================================
-// EMAIL INTEGRATION (EmailJS)
-// ================================
-
-// EmailJS Configuration
-const emailjsConfig = {
-    serviceId: 'service_rewarder', // Replace with your EmailJS service ID
-    templateId: 'template_boost_success', // Replace with your success template ID
-    expirationTemplateId: 'template_boost_expiration', // Replace with your expiration template ID
-    publicKey: 'YOUR_EMAILJS_PUBLIC_KEY' // Replace with your EmailJS public key
-};
-
-// Initialize EmailJS
-function initializeEmailJS() {
-    if (typeof emailjs !== 'undefined') {
-        emailjs.init(emailjsConfig.publicKey);
-        console.log('EmailJS initialized');
-    } else {
-        // Load EmailJS script
-        loadEmailJSScript();
-    }
-}
-
-// Load EmailJS script
-function loadEmailJSScript() {
-    const script = document.createElement('script');
-    script.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js';
-    script.onload = () => {
-        emailjs.init(emailjsConfig.publicKey);
-        console.log('EmailJS loaded and initialized');
-    };
-    document.head.appendChild(script);
-}
-
-// Send success email
-async function sendSuccessEmail(packageData, eventData) {
-    try {
-        if (typeof emailjs === 'undefined') {
-            console.log('EmailJS not available, skipping email');
-            return;
-        }
-        
-        const user = auth.currentUser;
-        if (!user || !user.email) return;
-        
-        const templateParams = {
-            to_email: user.email,
-            to_name: user.displayName || 'User',
-            event_name: eventData?.eventName || 'Your Event',
-            package_name: packageData.packageName,
-            package_type: packageData.packageType,
-            ad_code: packageData.adCode,
-            amount_paid: packageData.totalAmountPaid.toLocaleString(),
-            duration: packageData.duration,
-            ad_types: packageData.adTypes.join(', '),
-            placements_count: packageData.placements.length,
-            expires_date: new Date(packageData.expiresAt).toLocaleDateString(),
-            company_contact: '+234 9078139367',
-            website_url: 'https://rewarder-hub.vercel.app/',
-            promo_code_1: 'RRISDC2025',
-            promo_code_2: 'BISASK',
-            promo_code_3: 'Rewarder',
-            current_year: new Date().getFullYear()
-        };
-        
-        await emailjs.send(
-            emailjsConfig.serviceId,
-            emailjsConfig.templateId,
-            templateParams
-        );
-        
-        console.log('Success email sent successfully');
-        showNotification('Confirmation email sent!', 'success');
-        
-    } catch (error) {
-        console.error('Error sending success email:', error);
-        // Don't show error to user as it's not critical
-    }
-}
-
-// Send expiration email (updated)
-async function sendExpirationEmailJS(packageData, eventData) {
-    try {
-        if (typeof emailjs === 'undefined') {
-            console.log('EmailJS not available, skipping email');
-            return;
-        }
-        
-        const user = auth.currentUser;
-        if (!user || !user.email) return;
-        
-        const templateParams = {
-            to_email: user.email,
-            to_name: user.displayName || 'User',
-            event_name: eventData?.eventName || 'Your Event',
-            package_name: packageData.packageName,
-            ad_code: packageData.adCode,
-            total_views: packageData.totalViews.toLocaleString(),
-            total_clicks: packageData.totalClicks.toLocaleString(),
-            amount_paid: packageData.totalAmountPaid.toLocaleString(),
-            expired_date: new Date().toLocaleDateString(),
-            company_contact: '+234 9078139367',
-            website_url: 'https://rewarder-hub.vercel.app/',
-            current_year: new Date().getFullYear()
-        };
-        
-        await emailjs.send(
-            emailjsConfig.serviceId,
-            emailjsConfig.expirationTemplateId,
-            templateParams
-        );
-        
-        console.log('Expiration email sent successfully');
-        
-    } catch (error) {
-        console.error('Error sending expiration email:', error);
-    }
-}
-
-// Update sendExpirationEmail to use EmailJS
-async function sendExpirationEmail(packageData) {
-    try {
-        const user = auth.currentUser;
-        if (!user || !user.email) return;
-        
-        // Get event data for email context
-        const eventDoc = await db.collection('physicalEvents').doc(packageData.eventId).get();
-        const eventData = eventDoc.exists ? eventDoc.data() : null;
-        
-        // Send via EmailJS
-        await sendExpirationEmailJS(packageData, eventData);
-        
-    } catch (error) {
-        console.error('Error sending expiration email:', error);
-    }
-}
-
-// Update handlePaymentSuccess to include email sending
-async function handlePaymentSuccessWithEmail(eventId, transactionId, amount) {
-    try {
-        // Generate 13-digit ad code
-        const adCode = generateAdCode();
-        
-        // Collect form data
-        const adPackageData = collectAdPackageData(eventId, transactionId, amount, adCode);
-        
-        // Save to Firebase
-        await saveAdPackageToFirebase(eventId, adPackageData);
-        
-        // Get event data for email
-        const eventDoc = await db.collection('physicalEvents').doc(eventId).get();
-        const eventData = eventDoc.exists ? eventDoc.data() : null;
-        
-        // Send success email
-        await sendSuccessEmail(adPackageData, eventData);
-        
-        // Show success modal
-        showPaymentSuccessModal(adCode, eventId);
-        
-        // Close boost modal
-        closeBoostEventModal();
-        
-        showNotification('🎉 Ad package activated successfully!', 'success');
-        
-    } catch (error) {
-        console.error('Error processing payment success:', error);
-        showNotification('Payment successful but there was an error saving your ad. Please contact support.', 'error');
-    }
-}
-
-// Initialize EmailJS on page load
-document.addEventListener('DOMContentLoaded', function() {
-    initializeEmailJS();
-    initializeExpirationCheck();
-});
-
-// Add the withdraw button to your existing createPhysicalEventCard function
-// Replace the event-actions section with this:
-/*
-<div class="event-actions">
-    <button class="launch-btn" onclick="launchPhysicalEvent('${eventData.physicalEventId}')">
-        <i class="fas fa-rocket"></i>
-        Launch Event
-    </button>
-    <button class="withdraw-pee-btn" 
-            onclick="openWithdrawPEEForm('${eventData.physicalEventId}', '${eventData.eventName}', ${totalRevenue})"
-            title="Withdraw Physical Event Earnings"
-            style="
-                background: linear-gradient(135deg, #28a745, #20c997);
-                color: white;
-                border: none;
-                padding: 8px 12px;
-                border-radius: 6px;
-                cursor: pointer;
-                font-weight: 600;
-                transition: all 0.3s ease;
-                display: flex;
-                align-items: center;
-                gap: 6px;
-                font-size: 13px;
-                margin-left: 8px;
-            ">
-        <i class="fas fa-money-bill-wave"></i>
-        Withdraw PEE
-    </button>
-</div>
-*/
+  
 
 console.log('Withdraw PEE system loaded successfully');
 
@@ -38727,17 +37706,17 @@ async function loadUserBankDetails() {
                             <i class="fas fa-check-circle"></i>
                             <strong>Bank:</strong>
                         </div>
-                        <div>${userBankDetails.bankName}</div>
+                        <div style="color: #333; font-weight: 500;">${userBankDetails.bankName}</div>
                         <div style="display: flex; align-items: center; gap: 6px; color: #28a745;">
                             <i class="fas fa-check-circle"></i>
                             <strong>Account:</strong>
                         </div>
-                        <div>${userBankDetails.accountNumber}</div>
+                        <div style="color: #333; font-weight: 500;">${userBankDetails.accountNumber}</div>
                         <div style="display: flex; align-items: center; gap: 6px; color: #28a745;">
                             <i class="fas fa-check-circle"></i>
                             <strong>Name:</strong>
                         </div>
-                        <div>${userBankDetails.accountName}</div>
+                        <div style="color: #333; font-weight: 500;">${userBankDetails.accountName}</div>
                     </div>
                 `;
                 
@@ -49086,6 +48065,7 @@ document.addEventListener('DOMContentLoaded', function() {
     border-radius: 6px;
     color: #9ca3af;
     font-size: 24px;
+    
 }
 
 .sponsor-link {
@@ -49179,322 +48159,8 @@ document.addEventListener('DOMContentLoaded', function() {
     opacity: 1;
 }
 
-/* Boost Event Modal Styles */
-.boost-event-modal {
-    display: none;
-    position: fixed;
-    z-index: 10000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(5px);
-}
 
-.boost-modal-content {
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-    margin: 2% auto;
-    padding: 0;
-    border: none;
-    border-radius: 15px;
-    width: 90%;
-    max-width: 900px;
-    max-height: 95vh;
-    overflow-y: auto;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-    color: white;
-}
-
-.boost-modal-header {
-    padding: 25px 30px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 15px 15px 0 0;
-}
-
-.boost-modal-title {
-    font-size: 24px;
-    font-weight: 700;
-    color: #fff;
-    margin: 0;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.boost-close-btn {
-    background: rgba(255, 255, 255, 0.1);
-    border: none;
-    color: white;
-    font-size: 24px;
-    cursor: pointer;
-    padding: 8px 12px;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-}
-
-.boost-close-btn:hover {
-    background: rgba(255, 255, 255, 0.2);
-    transform: scale(1.1);
-}
-
-.boost-tabs {
-    display: flex;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 0;
-    margin: 0 30px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.boost-tab {
-    flex: 1;
-    padding: 15px 20px;
-    background: transparent;
-    border: none;
-    color: rgba(255, 255, 255, 0.7);
-    cursor: pointer;
-    font-weight: 600;
-    font-size: 16px;
-    transition: all 0.3s ease;
-    position: relative;
-}
-
-.boost-tab.active {
-    color: white;
-    background: rgba(0, 123, 255, 0.2);
-}
-
-.boost-tab.active:after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, #007bff, #00c6ff);
-}
-
-.boost-tab.locked {
-    color: rgba(255, 255, 255, 0.3);
-    cursor: not-allowed;
-}
-
-.boost-tab-content {
-    padding: 30px;
-    min-height: 500px;
-}
-
-.boost-tab-pane {
-    display: none;
-}
-
-.boost-tab-pane.active {
-    display: block;
-}
-
-/* Form Styles */
-.boost-form-section {
-    margin-bottom: 25px;
-    padding: 20px;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.boost-form-section h3 {
-    margin: 0 0 15px 0;
-    color: #00c6ff;
-    font-size: 18px;
-    font-weight: 600;
-}
-
-.boost-form-group {
-    margin-bottom: 20px;
-}
-
-.boost-form-group label {
-    display: block;
-    margin-bottom: 8px;
-    color: rgba(255, 255, 255, 0.9);
-    font-weight: 500;
-}
-
-.boost-form-control {
-    width: 100%;
-    padding: 12px 15px;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 8px;
-    color: white;
-    font-size: 14px;
-    transition: all 0.3s ease;
-}
-
-.boost-form-control:focus {
-    outline: none;
-    border-color: #007bff;
-    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
-}
-
-.boost-form-control::placeholder {
-    color: rgba(255, 255, 255, 0.5);
-}
-
-/* Checkbox and Radio Styles */
-.boost-checkbox-group, .boost-radio-group {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 12px;
-    margin-top: 10px;
-}
-
-.boost-checkbox-item, .boost-radio-item {
-    display: flex;
-    align-items: center;
-    padding: 12px 15px;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.boost-checkbox-item:hover, .boost-radio-item:hover {
-    background: rgba(255, 255, 255, 0.12);
-    border-color: #007bff;
-}
-
-.boost-checkbox-item input, .boost-radio-item input {
-    margin-right: 10px;
-    cursor: pointer;
-}
-
-/* Price Display */
-.boost-price-display {
-    position: sticky;
-    bottom: 0;
-    background: linear-gradient(135deg, #007bff, #0056b3);
-    padding: 20px 30px;
-    margin: 0 -30px -30px -30px;
-    border-radius: 0 0 15px 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.boost-total-price {
-    font-size: 24px;
-    font-weight: 700;
-    color: white;
-}
-
-.boost-payment-btn {
-    background: linear-gradient(135deg, #28a745, #20c997);
-    color: white;
-    border: none;
-    padding: 15px 30px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 600;
-    font-size: 16px;
-    transition: all 0.3s ease;
-}
-
-.boost-payment-btn:hover {
-    transform: scale(1.05);
-    box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
-}
-
-.boost-payment-btn:disabled {
-    background: #6c757d;
-    cursor: not-allowed;
-    transform: none;
-}
-
-/* Package Cards */
-.boost-packages-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 15px;
-    margin-top: 15px;
-}
-
-.boost-package-card {
-    background: rgba(255, 255, 255, 0.08);
-    border: 2px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    padding: 20px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    position: relative;
-}
-
-.boost-package-card:hover {
-    border-color: #007bff;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(0, 123, 255, 0.2);
-}
-
-.boost-package-card.selected {
-    border-color: #28a745;
-    background: rgba(40, 167, 69, 0.1);
-}
-
-.boost-package-header {
-    text-align: center;
-    margin-bottom: 15px;
-}
-
-.boost-package-name {
-    font-size: 18px;
-    font-weight: 700;
-    color: #00c6ff;
-    margin: 0 0 5px 0;
-}
-
-.boost-package-price {
-    font-size: 24px;
-    font-weight: 700;
-    color: #28a745;
-    margin: 0;
-}
-
-.boost-package-features {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.boost-package-features li {
-    padding: 5px 0;
-    color: rgba(255, 255, 255, 0.9);
-    font-size: 14px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.boost-package-features li:before {
-    content: '✓';
-    color: #28a745;
-    font-weight: bold;
-}
-
-.boost-package-badge {
-    position: absolute;
-    top: -8px;
-    right: 15px;
-    background: linear-gradient(135deg, #ff6b6b, #ee5a52);
-    color: white;
-    font-size: 12px;
-    padding: 4px 8px;
-    border-radius: 12px;
-    font-weight: 600;
-}
+  
 </style>
 
 </body>
