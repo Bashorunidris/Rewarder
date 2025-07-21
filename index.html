@@ -37957,10 +37957,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }, 500);
 });
 
-
-
-
-  // Complete Withdraw PEE JavaScript - Add this to your existing JS file
+       // Complete Withdraw PEE JavaScript - Add this to your existing JS file
 
 // Withdrawal system configuration
 const withdrawPEESystem = {
@@ -49785,11 +49782,27 @@ async function loadEventphyPageData(eventLink) {
 
         console.log('Loading Eventphy event with link:', eventLink);
         
+        // Wait for Firebase to be ready
+        if (typeof firebase === 'undefined') {
+            throw new Error('Firebase not loaded');
+        }
+        
         const db = firebase.firestore();
-        const querySnapshot = await db.collection('physicalEvents')
-            .where('eventLink', '==', eventLink)
-            .limit(1)
-            .get();
+        
+        // Try multiple query approaches for better compatibility
+        let querySnapshot;
+        try {
+            querySnapshot = await db.collection('physicalEvents')
+                .where('eventLink', '==', eventLink)
+                .limit(1)
+                .get();
+        } catch (error) {
+            console.log('First query failed, trying alternative approach:', error);
+            // Try querying all events and filter client-side as fallback
+            const allEvents = await db.collection('physicalEvents').get();
+            const matchingDocs = allEvents.docs.filter(doc => doc.data().eventLink === eventLink);
+            querySnapshot = { empty: matchingDocs.length === 0, docs: matchingDocs };
+        }
 
         if (querySnapshot.empty) {
             console.log('No event found with link:', eventLink);
@@ -49812,11 +49825,31 @@ async function loadEventphyPageData(eventLink) {
 
     } catch (error) {
         console.error('Error loading event data:', error);
+        console.error('Error details:', {
+            message: error.message,
+            code: error.code,
+            stack: error.stack
+        });
         contentContainer.innerHTML = `
             <div class="eventphy-error">
                 <i class="fas fa-exclamation-triangle"></i>
                 <h2>Error Loading Event</h2>
-                <p>There was an error loading the event. Please try again later.</p>
+                <p>There was an error loading the event: ${error.message}</p>
+                <p style="font-size: 0.9rem; margin-top: 10px; opacity: 0.8;">
+                    Event Link: ${eventLink}<br>
+                    Error Code: ${error.code || 'Unknown'}
+                </p>
+                <button onclick="loadEventphyPageData('${eventLink}')" style="
+                    background: #ff6b6b; 
+                    color: white; 
+                    border: none; 
+                    padding: 10px 20px; 
+                    border-radius: 8px; 
+                    cursor: pointer; 
+                    margin-top: 15px;
+                ">
+                    Try Again
+                </button>
             </div>
         `;
     }
@@ -50055,8 +50088,10 @@ function redirectToEventphySignUp() {
 
 // Initialize Eventphy on page load
 document.addEventListener('DOMContentLoaded', function() {
-    // Add Eventphy page container to body if not exists
-    if (!document.getElementById('eventphyPageContainer')) {
+    // Wait a bit for Firebase to fully initialize
+    setTimeout(() => {
+        // Add Eventphy page container to body if not exists
+        if (!document.getElementById('eventphyPageContainer')) {
         const eventphyContainer = document.createElement('div');
         eventphyContainer.id = 'eventphyPageContainer';
         eventphyContainer.innerHTML = `
@@ -50091,13 +50126,14 @@ document.addEventListener('DOMContentLoaded', function() {
         document.body.appendChild(eventphyContainer);
     }
 
-    // Check if current URL is for Eventphy page
-    const isEventphyPage = checkEventphyPageURL();
-    
-    // Only initialize main app if not on Eventphy page
-    if (!isEventphyPage) {
-        // Initialize main app components here
-    }
+        // Check if current URL is for Eventphy page
+        const isEventphyPage = checkEventphyPageURL();
+        
+        // Only initialize main app if not on Eventphy page
+        if (!isEventphyPage) {
+            // Initialize main app components here
+        }
+    }, 1000); // Wait 1 second for Firebase to initialize
 });
 
 // Handle browser navigation for Eventphy
