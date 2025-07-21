@@ -49840,6 +49840,8 @@ function displayEventphyPage(event) {
         <div class="eventphy-hero-section" style="${backgroundStyle}">
             <div class="eventphy-hero-overlay"></div>
             <div class="eventphy-hero-content">
+                <h1 class="eventphy-title">${event.eventName || 'Event'}</h1>
+                <p class="eventphy-description">${event.eventDescription || 'Join us for an amazing event!'}</p>
                 <button class="eventphy-get-tickets-btn" onclick="openEventphyTicketsModal()">
                     <i class="fas fa-ticket-alt"></i> Get Tickets
                 </button>
@@ -49848,11 +49850,8 @@ function displayEventphyPage(event) {
 
         <!-- Event Details Section -->
         <div class="eventphy-details-section">
-             <p class="eventphy-description">${event.eventDescription || 'Join us for an amazing event!'}</p>
-               
             <h2 class="eventphy-section-title">Event Details</h2>
-              <h1 class="eventphy-title">${event.eventName || 'Event'}</h1>
-              
+            
             <div class="eventphy-info-grid">
                 <div class="eventphy-info-card">
                     <h3><i class="fas fa-calendar-alt"></i> Date & Time</h3>
