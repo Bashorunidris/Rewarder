@@ -21587,70 +21587,21 @@ rgb(81, 67, 55)rgb(81, 61, 55)rgb(81, 58, 55)rgb(184, 50, 32);
 
 .eventphy-rewarder-brand {
     text-align: center;
-    padding: 60px 20px;
+    padding: 50px 20px;
     background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
     margin-top: 40px;
-    border-radius: 20px;
 }
 
-.eventphy-brand-content {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-    align-items: center;
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-.eventphy-brand-logo h3 {
-    font-size: 2.5rem;
+.eventphy-rewarder-brand h3 {
+    font-size: 2rem;
     margin-bottom: 10px;
     color: white;
-    font-weight: 700;
 }
 
-.eventphy-brand-tagline {
-    font-size: 1.3rem;
-    margin-bottom: 20px;
-    color: white;
-    opacity: 0.95;
-}
-
-.eventphy-brand-cta {
-    text-align: center;
-}
-
-.eventphy-cta-text {
+.eventphy-rewarder-brand p {
     font-size: 1.2rem;
-    color: white;
-    margin-bottom: 20px;
     opacity: 0.9;
-    font-weight: 500;
-}
-
-.eventphy-signup-btn {
-    background: white;
-    color: #ff6b6b;
-    padding: 15px 30px;
-    border: none;
-    border-radius: 50px;
-    font-size: 1.1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.eventphy-signup-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
-}
-
-.eventphy-signup-btn i {
-    font-size: 1.2rem;
+    color: white;
 }
 
 .eventphy-modal-overlay {
@@ -21712,34 +21663,6 @@ rgb(81, 67, 55)rgb(81, 61, 55)rgb(81, 58, 55)rgb(184, 50, 32);
 .eventphy-copy-btn:hover {
     background: #45b7aa;
     transform: translateY(-2px);
-}
-
-.eventphy-modal-instructions {
-    margin: 25px 0;
-    text-align: left;
-    background: rgba(0, 0, 0, 0.2);
-    padding: 20px;
-    border-radius: 10px;
-}
-
-.eventphy-modal-instructions h4 {
-    color: #4ecdc4;
-    margin-bottom: 15px;
-    font-size: 1.1rem;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.eventphy-modal-instructions ol {
-    color: white;
-    padding-left: 20px;
-}
-
-.eventphy-modal-instructions li {
-    margin-bottom: 8px;
-    font-size: 0.95rem;
-    line-height: 1.4;
 }
 
 .eventphy-modal-actions {
@@ -31552,9 +31475,6 @@ function createPhysicalEventDisplayCard(eventData) {
             <button class="get-ticket-btn-top" onclick="openTicketModal('${eventData.id || eventData.physicalEventId}')">
                 <i class="fas fa-ticket-alt"></i> Get Ticket
             </button>
-            <button class="sharephy-btn" onclick="openSharephyModal('${eventData.eventLink || eventData.id || eventData.physicalEventId}')" style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.6); color: white; border: none; width: 35px; height: 35px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 2; transition: all 0.3s ease;">
-                <i class="fas fa-share-alt" style="font-size: 14px;"></i>
-            </button>
         </div>
         <div class="event-card-body">
             <h3 class="event-card-title">${eventName}</h3>
@@ -31777,10 +31697,6 @@ function createAdvancedPhysicalEventCard(eventData) {
             ${ticketsSold} sold
         </div>
         
-        <button class="sharephy-btn" onclick="openSharephyModal('${eventData.eventLink || eventData.id || eventData.physicalEventId}')" style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.6); color: white; border: none; width: 35px; height: 35px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 4; transition: all 0.3s ease;">
-            <i class="fas fa-share-alt" style="font-size: 14px;"></i>
-        </button>
-        
         <div class="advanced-event-content">
             <h3 class="advanced-event-title">${eventName}</h3>
             
@@ -31952,146 +31868,6 @@ function handleAdClick(adType) {
     // Placeholder for ad click functionality
     alert(`Ad clicked: ${adType}`);
     // You can implement specific ad actions here
-}
-
-// Sharephy Modal Functions
-function openSharephyModal(eventLink) {
-    console.log('Opening sharephy modal for:', eventLink);
-    
-    // Create modal if it doesn't exist
-    if (!document.getElementById('sharephyModal')) {
-        const modal = document.createElement('div');
-        modal.id = 'sharephyModal';
-        modal.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: none; justify-content: center; align-items: center; z-index: 10000;';
-        modal.innerHTML = `
-                <div style="background: white; border-radius: 15px; padding: 30px; max-width: 500px; width: 90%; max-height: 80vh; overflow-y: auto; position: relative; box-shadow: 0 20px 40px rgba(0,0,0,0.3);">
-                    <button onclick="closeSharephyModal()" style="position: absolute; top: 15px; right: 15px; background: none; border: none; font-size: 24px; cursor: pointer; color: #666; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease;">
-                        <i class="fas fa-times"></i>
-                    </button>
-                    
-                    <div style="text-align: center; margin-bottom: 25px;">
-                        <i class="fas fa-share-alt" style="font-size: 48px; color: #6c5ce7; margin-bottom: 15px;"></i>
-                        <h2 style="margin: 0 0 10px 0; color: #2d3436; font-size: 24px; font-weight: 600;">Share Event</h2>
-                        <p style="color: #636e72; margin: 0; font-size: 16px;">Share this amazing event with your friends!</p>
-                    </div>
-                    
-                    <div style="background: #f8f9fa; border-radius: 12px; padding: 20px; margin-bottom: 25px;">
-                        <label style="display: block; font-weight: 600; color: #2d3436; margin-bottom: 10px; font-size: 14px;">Event Link:</label>
-                        <div style="display: flex; gap: 10px; align-items: center;">
-                            <input type="text" id="sharephyLink" readonly style="flex: 1; padding: 12px 15px; border: 2px solid #e9ecef; border-radius: 8px; font-size: 14px; background: white; color: #495057; font-family: monospace;">
-                            <button onclick="copySharephyLink()" id="copyLinkBtn" style="background: #6c5ce7; color: white; border: none; padding: 12px 16px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 14px; transition: all 0.3s ease; display: flex; align-items: center; gap: 5px;">
-                                <i class="fas fa-copy"></i> Copy
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div style="margin-bottom: 20px;">
-                        <h3 style="margin: 0 0 15px 0; color: #2d3436; font-size: 18px; font-weight: 600;">Share on Social Media</h3>
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 12px;">
-                            <button onclick="shareOnWhatsApp()" style="background: #25D366; color: white; border: none; padding: 12px; border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 14px; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; gap: 8px;">
-                                <i class="fab fa-whatsapp" style="font-size: 16px;"></i> WhatsApp
-                            </button>
-                            <button onclick="shareOnTwitter()" style="background: #1DA1F2; color: white; border: none; padding: 12px; border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 14px; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; gap: 8px;">
-                                <i class="fab fa-twitter" style="font-size: 16px;"></i> Twitter
-                            </button>
-                            <button onclick="shareOnFacebook()" style="background: #4267B2; color: white; border: none; padding: 12px; border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 14px; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; gap: 8px;">
-                                <i class="fab fa-facebook-f" style="font-size: 16px;"></i> Facebook
-                            </button>
-                            <button onclick="shareOnTelegram()" style="background: #0088cc; color: white; border: none; padding: 12px; border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 14px; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; gap: 8px;">
-                                <i class="fab fa-telegram-plane" style="font-size: 16px;"></i> Telegram
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div style="border-top: 2px solid #e9ecef; padding-top: 20px;">
-                        <button onclick="shareViaWebShare()" style="width: 100%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; padding: 15px; border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 16px; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; gap: 10px;">
-                            <i class="fas fa-share" style="font-size: 16px;"></i> More Sharing Options
-                        </button>
-                    </div>
-                </div>
-        `;
-        document.body.appendChild(modal);
-    }
-    
-    // Set the event link
-    const eventUrl = `https://rewarder-hub.vercel.app/event/${eventLink}`;
-    document.getElementById('sharephyLink').value = eventUrl;
-    
-    // Store current event link for sharing functions
-    window.currentShareEventLink = eventUrl;
-    
-    // Show modal
-    const modal = document.getElementById('sharephyModal');
-    modal.style.display = 'flex';
-    console.log('Modal should be visible now');
-}
-
-function closeSharephyModal() {
-    document.getElementById('sharephyModal').style.display = 'none';
-}
-
-function copySharephyLink() {
-    const linkInput = document.getElementById('sharephyLink');
-    const copyBtn = document.getElementById('copyLinkBtn');
-    
-    linkInput.select();
-    linkInput.setSelectionRange(0, 99999);
-    
-    navigator.clipboard.writeText(linkInput.value).then(() => {
-        copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
-        copyBtn.style.background = '#2ecc71';
-        
-        setTimeout(() => {
-            copyBtn.innerHTML = '<i class="fas fa-copy"></i> Copy';
-            copyBtn.style.background = '#6c5ce7';
-        }, 2000);
-    }).catch(() => {
-        // Fallback for older browsers
-        document.execCommand('copy');
-        copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
-        copyBtn.style.background = '#2ecc71';
-        
-        setTimeout(() => {
-            copyBtn.innerHTML = '<i class="fas fa-copy"></i> Copy';
-            copyBtn.style.background = '#6c5ce7';
-        }, 2000);
-    });
-}
-
-function shareOnWhatsApp() {
-    const text = `Check out this amazing event! ${window.currentShareEventLink}`;
-    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(text)}`;
-    window.open(whatsappUrl, '_blank');
-}
-
-function shareOnTwitter() {
-    const text = `Check out this amazing event!`;
-    const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(window.currentShareEventLink)}`;
-    window.open(twitterUrl, '_blank');
-}
-
-function shareOnFacebook() {
-    const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.currentShareEventLink)}`;
-    window.open(facebookUrl, '_blank');
-}
-
-function shareOnTelegram() {
-    const text = `Check out this amazing event! ${window.currentShareEventLink}`;
-    const telegramUrl = `https://t.me/share/url?url=${encodeURIComponent(window.currentShareEventLink)}&text=${encodeURIComponent(text)}`;
-    window.open(telegramUrl, '_blank');
-}
-
-function shareViaWebShare() {
-    if (navigator.share) {
-        navigator.share({
-            title: 'Amazing Event',
-            text: 'Check out this amazing event!',
-            url: window.currentShareEventLink
-        }).catch(console.error);
-    } else {
-        // Fallback - copy to clipboard
-        copySharephyLink();
-    }
 }
 
 // Handle escape key for closing
@@ -38181,9 +37957,10 @@ document.addEventListener('DOMContentLoaded', function() {
     }, 500);
 });
 
-                      
 
-       // Complete Withdraw PEE JavaScript - Add this to your existing JS file
+
+
+  // Complete Withdraw PEE JavaScript - Add this to your existing JS file
 
 // Withdrawal system configuration
 const withdrawPEESystem = {
@@ -50008,34 +49785,11 @@ async function loadEventphyPageData(eventLink) {
 
         console.log('Loading Eventphy event with link:', eventLink);
         
-        // Wait for Firebase to be ready
-        if (typeof firebase === 'undefined') {
-            throw new Error('Firebase not loaded');
-        }
-        
-        // Sign in anonymously to access public events
-        const auth = firebase.auth();
-        if (!auth.currentUser) {
-            await auth.signInAnonymously();
-            console.log('Signed in anonymously for public event access');
-        }
-        
         const db = firebase.firestore();
-        
-        // Try multiple query approaches for better compatibility
-        let querySnapshot;
-        try {
-            querySnapshot = await db.collection('physicalEvents')
-                .where('eventLink', '==', eventLink)
-                .limit(1)
-                .get();
-        } catch (error) {
-            console.log('First query failed, trying alternative approach:', error);
-            // Try querying all events and filter client-side as fallback
-            const allEvents = await db.collection('physicalEvents').get();
-            const matchingDocs = allEvents.docs.filter(doc => doc.data().eventLink === eventLink);
-            querySnapshot = { empty: matchingDocs.length === 0, docs: matchingDocs };
-        }
+        const querySnapshot = await db.collection('physicalEvents')
+            .where('eventLink', '==', eventLink)
+            .limit(1)
+            .get();
 
         if (querySnapshot.empty) {
             console.log('No event found with link:', eventLink);
@@ -50058,31 +49812,11 @@ async function loadEventphyPageData(eventLink) {
 
     } catch (error) {
         console.error('Error loading event data:', error);
-        console.error('Error details:', {
-            message: error.message,
-            code: error.code,
-            stack: error.stack
-        });
         contentContainer.innerHTML = `
             <div class="eventphy-error">
                 <i class="fas fa-exclamation-triangle"></i>
                 <h2>Error Loading Event</h2>
-                <p>There was an error loading the event: ${error.message}</p>
-                <p style="font-size: 0.9rem; margin-top: 10px; opacity: 0.8;">
-                    Event Link: ${eventLink}<br>
-                    Error Code: ${error.code || 'Unknown'}
-                </p>
-                <button onclick="loadEventphyPageData('${eventLink}')" style="
-                    background: #ff6b6b; 
-                    color: white; 
-                    border: none; 
-                    padding: 10px 20px; 
-                    border-radius: 8px; 
-                    cursor: pointer; 
-                    margin-top: 15px;
-                ">
-                    Try Again
-                </button>
+                <p>There was an error loading the event. Please try again later.</p>
             </div>
         `;
     }
@@ -50092,28 +49826,20 @@ async function loadEventphyPageData(eventLink) {
 function displayEventphyPage(event) {
     const contentContainer = document.getElementById('eventphyPageContent');
     
-    console.log('Displaying event data:', event); // Debug log
-    
     // Generate background style
     const backgroundStyle = generateEventphyBackgroundStyle(event);
     
     // Generate tickets HTML
-    const ticketsHTML = generateEventphyTicketsHTML(event.tickets || event.eventTickets);
+    const ticketsHTML = generateEventphyTicketsHTML(event.tickets);
     
     // Generate sponsors HTML
-    const sponsorsHTML = generateEventphySponsorsHTML(event.sponsors || event.eventSponsors);
+    const sponsorsHTML = generateEventphySponsorsHTML(event.sponsors);
 
     const eventHTML = `
         <!-- Hero Section -->
         <div class="eventphy-hero-section" style="${backgroundStyle}">
             <div class="eventphy-hero-overlay"></div>
-            <div class="eventphy-powered-by" style="position: absolute; bottom: 10px; right: 10px; display: flex; align-items: center; background: rgba(0,0,0,0.6); padding: 8px 12px; border-radius: 20px; z-index: 3;">
-                <img src="https://i.ibb.co/VpC27tbt/Rewarder-logo.png" alt="Rewarder" style="width: 20px; height: 20px; margin-right: 6px;">
-                <span style="color: white; font-size: 12px; font-weight: 500;">Powered by Rewarder</span>
-            </div>
             <div class="eventphy-hero-content">
-                <h1 class="eventphy-title">${event.eventName || event.name || 'Event'}</h1>
-                <p class="eventphy-description">${event.eventDescription || event.description || 'Join us for an amazing event!'}</p>
                 <button class="eventphy-get-tickets-btn" onclick="openEventphyTicketsModal()">
                     <i class="fas fa-ticket-alt"></i> Get Tickets
                 </button>
@@ -50122,49 +49848,40 @@ function displayEventphyPage(event) {
 
         <!-- Event Details Section -->
         <div class="eventphy-details-section">
+             <p class="eventphy-description">${event.eventDescription || 'Join us for an amazing event!'}</p>
+               
             <h2 class="eventphy-section-title">Event Details</h2>
-            
+              <h1 class="eventphy-title">${event.eventName || 'Event'}</h1>
+              
             <div class="eventphy-info-grid">
                 <div class="eventphy-info-card">
                     <h3><i class="fas fa-calendar-alt"></i> Date & Time</h3>
-                    <p>${formatEventphyDateTime(event)}</p>
+                    <p>${formatEventphyDateTime(event.eventDate, event.eventTime)}</p>
                 </div>
                 
                 <div class="eventphy-info-card">
                     <h3><i class="fas fa-map-marker-alt"></i> Location</h3>
-                    <p>${event.eventLocation || event.location || event.venue || 'Location TBA'}</p>
+                    <p>${event.eventLocation || 'Location TBA'}</p>
                 </div>
                 
                 <div class="eventphy-info-card">
                     <h3><i class="fas fa-users"></i> Capacity</h3>
-                    <p>${event.tickets && event.tickets.length > 0 ? event.tickets.reduce((total, ticket) => total + (ticket.quantity || 0), 0) : 'Unlimited'} attendees</p>
-                
+                    <p>${event.maxCapacity || 'Unlimited'} attendees</p>
                 </div>
                 
                 <div class="eventphy-info-card">
                     <h3><i class="fas fa-info-circle"></i> Category</h3>
-                    <p>${event.eventCategory || event.category || event.type || 'General Event'}</p>
+                    <p>${event.eventCategory || 'General Event'}</p>
                 </div>
             </div>
 
             ${ticketsHTML}
             ${sponsorsHTML}
 
-            <!-- Enhanced Rewarder Branding & Marketing -->
+            <!-- Rewarder Branding -->
             <div class="eventphy-rewarder-brand">
-                <div class="eventphy-brand-content">
-                    <div class="eventphy-brand-logo">
-                        <h3>🏆 Rewarder</h3>
-                        <p class="eventphy-brand-tagline">This event is created on Rewarder</p>
-                    </div>
-                    
-                    <div class="eventphy-brand-cta">
-                        <p class="eventphy-cta-text">Sign Up - Click Creator Button and Create Your Event Too</p>
-                        <button class="eventphy-signup-btn" onclick="redirectToEventphySignUp()">
-                            <i class="fas fa-plus-circle"></i> Sign Up & Create Events
-                        </button>
-                    </div>
-                </div>
+                <h3>Powered by Rewarder</h3>
+                <p>Your gateway to amazing events and experiences</p>
             </div>
         </div>
     `;
@@ -50174,22 +49891,14 @@ function displayEventphyPage(event) {
 
 // Generate background style for event
 function generateEventphyBackgroundStyle(event) {
-    console.log('Background data:', event.background);
-
-    // Use the same structure as working code
-    if (!event.background) {
+    if (event.eventBackgroundType === 'image' && event.eventBackgroundImage) {
+        return `background-image: url('${event.eventBackgroundImage}');`;
+    } else if (event.eventBackgroundType === 'color' && event.eventBackgroundColor) {
+        return `background: ${event.eventBackgroundColor};`;
+    } else if (event.eventBackgroundType === 'gradient' && event.eventBackgroundGradient) {
+        return `background: ${event.eventBackgroundGradient};`;
+    } else {
         return 'background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);';
-    }
-
-    switch (event.background.type) {
-        case 'media':
-            return `background-image: url('${event.background.data}'); background-size: cover; background-position: center; background-repeat: no-repeat;`;
-        case 'gradient':
-            return `background: ${event.background.gradient};`;
-        case 'color':
-            return `background-color: ${event.background.color};`;
-        default:
-            return 'background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);';
     }
 }
 
@@ -50214,18 +49923,11 @@ function generateEventphyTicketsHTML(tickets) {
     `;
 
     tickets.forEach(ticket => {
-         const ticketBg = ticket.background ? 
-            (ticket.background.type === 'media' ? `background-image: url('${ticket.background.data}'); background-size: cover; background-position: center;` :
-             ticket.background.type === 'gradient' ? `background: ${ticket.background.gradient};` :
-             ticket.background.type === 'color' ? `background-color: ${ticket.background.color};` :
-             'background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);') :
-            'background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);';
-            
         ticketsHTML += `
-              <div class="eventphy-ticket-card" style="${ticketBg}">
-                <div class="eventphy-ticket-type">${ticket.name || ticket.type || 'General'}</div>
-              <div class="eventphy-ticket-price">₦${parseFloat(ticket.price || 0).toLocaleString()}</div>
-               <p>${ticket.description || ticket.name || 'Event ticket'}</p>
+            <div class="eventphy-ticket-card">
+                <div class="eventphy-ticket-type">${ticket.type || 'General'}</div>
+                <div class="eventphy-ticket-price">₦${parseFloat(ticket.price || 0).toLocaleString()}</div>
+                <p>${ticket.description || 'Standard ticket'}</p>
             </div>
         `;
     });
@@ -50251,15 +49953,13 @@ function generateEventphySponsorsHTML(sponsors) {
     `;
 
     sponsors.forEach(sponsor => {
-        const sponsorName = sponsor.name || sponsor;
-        
         sponsorsHTML += `
             <div class="eventphy-sponsor-item">
-                ${sponsor.logo && sponsor.logo.data ? 
-                    `<img src="${sponsor.logo.data}" alt="${sponsorName}" class="eventphy-sponsor-logo">` : 
-                    `<div class="eventphy-sponsor-logo" style="background: #4ecdc4; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">${sponsorName.charAt(0)}</div>`
+                ${sponsor.logo ? 
+                    `<img src="${sponsor.logo}" alt="${sponsor.name}" class="eventphy-sponsor-logo">` : 
+                    `<div class="eventphy-sponsor-logo" style="background: #4ecdc4; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">${sponsor.name.charAt(0)}</div>`
                 }
-                <div class="eventphy-sponsor-name">${sponsorName}</div>
+                <div class="eventphy-sponsor-name">${sponsor.name}</div>
             </div>
         `;
     });
@@ -50273,51 +49973,24 @@ function generateEventphySponsorsHTML(sponsors) {
 }
 
 // Format date and time for Eventphy display
-function formatEventphyDateTime(eventData) {
-    // Use startDateTime like in working code
-    if (eventData.startDateTime) {
-        try {
-            const eventDate = new Date(eventData.startDateTime);
-            const options = { 
-                weekday: 'long', 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric' 
-            };
-            
-            let formatted = eventDate.toLocaleDateString('en-US', options);
-            const timeDisplay = eventDate.toLocaleTimeString('en-US', { 
-                hour: '2-digit', 
-                minute: '2-digit',
-                hour12: true 
-            });
-            
-            return `${formatted} at ${timeDisplay}`;
-        } catch (e) {
-            console.log('Date parsing error:', e);
-        }
+function formatEventphyDateTime(eventDate, eventTime) {
+    if (!eventDate) return 'Date TBA';
+    
+    const date = new Date(eventDate);
+    const options = { 
+        weekday: 'long', 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+    };
+    
+    let formatted = date.toLocaleDateString('en-US', options);
+    
+    if (eventTime) {
+        formatted += ` at ${eventTime}`;
     }
     
-    // Fallback to separate date/time fields
-    if (eventData.eventDate || eventData.date) {
-        const date = new Date(eventData.eventDate || eventData.date);
-        const options = { 
-            weekday: 'long', 
-            year: 'numeric', 
-            month: 'long', 
-            day: 'numeric' 
-        };
-        
-        let formatted = date.toLocaleDateString('en-US', options);
-        
-        if (eventData.eventTime || eventData.time) {
-            formatted += ` at ${eventData.eventTime || eventData.time}`;
-        }
-        
-        return formatted;
-    }
-    
-    return 'Date TBA';
+    return formatted;
 }
 
 // Open Eventphy tickets modal
@@ -50383,10 +50056,8 @@ function redirectToEventphySignUp() {
 
 // Initialize Eventphy on page load
 document.addEventListener('DOMContentLoaded', function() {
-    // Wait a bit for Firebase to fully initialize
-    setTimeout(() => {
-        // Add Eventphy page container to body if not exists
-        if (!document.getElementById('eventphyPageContainer')) {
+    // Add Eventphy page container to body if not exists
+    if (!document.getElementById('eventphyPageContainer')) {
         const eventphyContainer = document.createElement('div');
         eventphyContainer.id = 'eventphyPageContainer';
         eventphyContainer.innerHTML = `
@@ -50398,7 +50069,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="eventphy-modal-overlay" id="eventphyTicketsModal">
                 <div class="eventphy-modal">
                     <h3><i class="fas fa-ticket-alt"></i> Get Tickets</h3>
-                    <p><strong>Copy this event name and paste it in the search bar of the Rewarder app</strong></p>
+                    <p>To purchase tickets for this event, copy the event name below and search for it in the Rewarder app.</p>
                     
                     <div class="eventphy-copy-section">
                         <div class="eventphy-copy-text" id="eventphyEventName">Event Name</div>
@@ -50407,19 +50078,9 @@ document.addEventListener('DOMContentLoaded', function() {
                         </button>
                     </div>
                     
-                    <div class="eventphy-modal-instructions">
-                        <h4><i class="fas fa-info-circle"></i> How to Get Tickets:</h4>
-                        <ol>
-                            <li>Copy the event name above</li>
-                            <li>Open or sign up for the Rewarder app</li>
-                            <li>Paste the event name in the search bar</li>
-                            <li>Purchase your tickets directly in the app</li>
-                        </ol>
-                    </div>
-                    
                     <div class="eventphy-modal-actions">
                         <button class="eventphy-modal-btn eventphy-primary-btn" onclick="redirectToEventphySignUp()">
-                            <i class="fas fa-external-link-alt"></i> Sign Up for Rewarder
+                            <i class="fas fa-external-link-alt"></i> Open Rewarder App
                         </button>
                         <button class="eventphy-modal-btn eventphy-secondary-btn" onclick="closeEventphyModal()">
                             <i class="fas fa-times"></i> Close
@@ -50431,14 +50092,13 @@ document.addEventListener('DOMContentLoaded', function() {
         document.body.appendChild(eventphyContainer);
     }
 
-        // Check if current URL is for Eventphy page
-        const isEventphyPage = checkEventphyPageURL();
-        
-        // Only initialize main app if not on Eventphy page
-        if (!isEventphyPage) {
-            // Initialize main app components here
-        }
-    }, 1000); // Wait 1 second for Firebase to initialize
+    // Check if current URL is for Eventphy page
+    const isEventphyPage = checkEventphyPageURL();
+    
+    // Only initialize main app if not on Eventphy page
+    if (!isEventphyPage) {
+        // Initialize main app components here
+    }
 });
 
 // Handle browser navigation for Eventphy
