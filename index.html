@@ -49787,6 +49787,13 @@ async function loadEventphyPageData(eventLink) {
             throw new Error('Firebase not loaded');
         }
         
+        // Sign in anonymously to access public events
+        const auth = firebase.auth();
+        if (!auth.currentUser) {
+            await auth.signInAnonymously();
+            console.log('Signed in anonymously for public event access');
+        }
+        
         const db = firebase.firestore();
         
         // Try multiple query approaches for better compatibility
