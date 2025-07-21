@@ -21363,215 +21363,829 @@ rgb(81, 67, 55)rgb(81, 61, 55)rgb(81, 58, 55)rgb(184, 50, 32);
   margin-bottom: 5px;
   color: #555;
 }
-/* ===== EVENTPHY PAGE STYLES ===== */
+
+
+/* ===== EVENTPHY PAGE STYLES - PROFESSIONAL & RESPONSIVE ===== */
+
+/* CSS Custom Properties for consistent theming */
+:root {
+  --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  --dark-bg: #0f0f23;
+  --card-bg: linear-gradient(145deg, #1a1a2e 0%, #16213e 100%);
+  --text-primary: #ffffff;
+  --text-secondary: #b8b9db;
+  --border-color: rgba(255, 255, 255, 0.1);
+  --shadow-light: 0 8px 32px rgba(31, 38, 135, 0.37);
+  --shadow-heavy: 0 15px 35px rgba(31, 38, 135, 0.5);
+  --border-radius: 16px;
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Base Container */
 #eventphyPageContainer {
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  background-color: #0a0a0f;
-  color: #fff;
+  background: var(--dark-bg);
+  color: var(--text-primary);
   z-index: 15000;
   overflow-y: auto;
   display: none;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
+/* Hero Section */
 .eventphy-hero-section {
-  min-height: 70vh;
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+  background: var(--primary-gradient);
+  background-attachment: fixed;
   background-size: cover;
   background-position: center;
-  position: relative;
 }
 
 .eventphy-hero-overlay {
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(15, 15, 35, 0.4);
+  backdrop-filter: blur(10px);
 }
 
 .eventphy-hero-content {
   position: relative;
   z-index: 2;
   text-align: center;
-  padding: 4rem 1.5rem;
-  max-width: 90%;
-  margin: auto;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 .eventphy-title {
-  font-size: clamp(2.5rem, 5vw, 4rem);
-  font-weight: 700;
-  margin-bottom: 1rem;
-  background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
+  background-clip: text;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
 }
 
 .eventphy-description {
-  font-size: clamp(1rem, 2.5vw, 1.5rem);
-  max-width: 700px;
-  margin: 1.5rem auto;
+  font-size: clamp(1.1rem, 3vw, 1.4rem);
+  margin-bottom: 2.5rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
   opacity: 0.95;
   line-height: 1.6;
+  color: var(--text-secondary);
+  font-weight: 400;
 }
 
 .eventphy-get-tickets-btn {
-  background: linear-gradient(135deg, #ff6b6b, #ee5a52);
-  color: #fff;
+  background: var(--secondary-gradient);
+  color: white;
   padding: 1rem 2.5rem;
-  font-size: 1.2rem;
-  font-weight: 600;
   border: none;
-  border-radius: 999px;
+  border-radius: 50px;
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
+  font-weight: 600;
   cursor: pointer;
-  box-shadow: 0 10px 30px rgba(255, 107, 107, 0.4);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: var(--transition);
+  box-shadow: var(--shadow-light);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  position: relative;
+  overflow: hidden;
+}
+
+.eventphy-get-tickets-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.eventphy-get-tickets-btn:hover::before {
+  left: 100%;
 }
 
 .eventphy-get-tickets-btn:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 15px 40px rgba(255, 107, 107, 0.6);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-heavy);
 }
 
+/* Details Section */
 .eventphy-details-section {
-  padding: 5rem 1.5rem;
-  background: linear-gradient(180deg, #0a0a0f 0%, #1a1a2e 100%);
-  max-width: 1200px;
-  margin: auto;
+  padding: clamp(3rem, 8vw, 6rem) 1rem;
+  background: var(--dark-bg);
+  position: relative;
+}
+
+.eventphy-details-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--accent-gradient);
 }
 
 .eventphy-section-title {
-  font-size: clamp(2rem, 5vw, 3rem);
+  font-size: clamp(2rem, 6vw, 3rem);
   text-align: center;
-  color: #fff;
-  font-weight: 600;
   margin-bottom: 3rem;
+  color: var(--text-primary);
+  font-weight: 700;
+  position: relative;
+}
+
+.eventphy-section-title::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background: var(--accent-gradient);
+  border-radius: 2px;
 }
 
 .eventphy-info-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
   gap: 2rem;
+  margin-bottom: 4rem;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .eventphy-info-card {
-  background: linear-gradient(135deg, #2d2d4a, #1e1e3a);
-  padding: 2.5rem;
-  border-radius: 1.25rem;
-  border: 1px solid rgba(255, 107, 107, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  background: var(--card-bg);
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--border-color);
+  transition: var(--transition);
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+}
+
+.eventphy-info-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--accent-gradient);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.eventphy-info-card:hover::before {
+  transform: scaleX(1);
 }
 
 .eventphy-info-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 20px 40px rgba(255, 107, 107, 0.1);
-  border-color: rgba(255, 107, 107, 0.3);
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-heavy);
+  border-color: rgba(255, 255, 255, 0.2);
 }
 
 .eventphy-info-card h3 {
   font-size: 1.5rem;
-  color: #ff6b6b;
   margin-bottom: 1rem;
+  color: var(--text-primary);
   display: flex;
   align-items: center;
   gap: 0.75rem;
+  font-weight: 600;
+}
+
+.eventphy-info-card h3 i {
+  font-size: 1.8rem;
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .eventphy-info-card p {
-  font-size: 1.1rem;
-  opacity: 0.9;
+  font-size: 1rem;
+  color: var(--text-secondary);
   line-height: 1.6;
+  font-weight: 400;
 }
 
+/* Tickets Section */
 .eventphy-tickets-section {
-  background: #1a1a2e;
-  padding: 4rem 1.5rem;
-  border-radius: 1.5rem;
-  border: 2px solid rgba(255, 107, 107, 0.2);
-  margin: 3rem 0;
+  background: var(--card-bg);
+  padding: clamp(2rem, 6vw, 4rem) 1rem;
+  margin: 2rem 0;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--border-color);
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  overflow: hidden;
+}
+
+.eventphy-tickets-section::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(102, 126, 234, 0.1) 0%, transparent 70%);
+  pointer-events: none;
 }
 
 .eventphy-tickets-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  gap: 1.5rem;
   max-width: 1000px;
-  margin: auto;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
 }
 
 .eventphy-ticket-card {
-  background: linear-gradient(135deg, #2d2d4a, #1e1e3a);
+  background: rgba(255, 255, 255, 0.05);
   padding: 2rem;
+  border-radius: var(--border-radius);
   text-align: center;
-  border-radius: 1rem;
-  border: 1px solid rgba(78, 205, 196, 0.2);
-  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  border: 1px solid var(--border-color);
+  transition: var(--transition);
+  backdrop-filter: blur(10px);
+  position: relative;
 }
 
 .eventphy-ticket-card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 15px 30px rgba(78, 205, 196, 0.2);
-  border-color: rgba(78, 205, 196, 0.5);
+  transform: scale(1.02);
+  border-color: rgba(79, 172, 254, 0.5);
+  box-shadow: 0 20px 40px rgba(79, 172, 254, 0.2);
 }
 
 .eventphy-ticket-type {
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   font-weight: 600;
-  color: #4ecdc4;
-  margin-bottom: 0.75rem;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .eventphy-ticket-price {
   font-size: 2rem;
-  font-weight: bold;
-  color: #fff;
-  margin-bottom: 1rem;
+  font-weight: 800;
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 1.5rem;
 }
 
-/* Add similar improvements for all other sections... */
+/* Sponsors Section */
+.eventphy-sponsors-section {
+  background: rgba(255, 255, 255, 0.02);
+  padding: clamp(2rem, 6vw, 4rem) 1rem;
+  margin: 2rem 0;
+  border-radius: var(--border-radius);
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
 
-/* MEDIA QUERIES FOR RESPONSIVENESS */
-@media (max-width: 1024px) {
-  .eventphy-hero-content,
-  .eventphy-details-section,
-  .eventphy-tickets-section {
-    padding-left: 1rem;
-    padding-right: 1rem;
+.eventphy-sponsors-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 180px), 1fr));
+  gap: 1.5rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.eventphy-sponsor-item {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 1.5rem;
+  border-radius: var(--border-radius);
+  text-align: center;
+  transition: var(--transition);
+  border: 1px solid var(--border-color);
+}
+
+.eventphy-sponsor-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-light);
+}
+
+.eventphy-sponsor-logo {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 1rem;
+  border-radius: 12px;
+  object-fit: cover;
+  background: rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.eventphy-sponsor-name {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+/* Brand Section */
+.eventphy-rewarder-brand {
+  text-align: center;
+  padding: clamp(2rem, 6vw, 4rem) 1rem;
+  background: var(--primary-gradient);
+  margin-top: 2rem;
+  border-radius: var(--border-radius);
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  overflow: hidden;
+}
+
+.eventphy-brand-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.eventphy-brand-logo h3 {
+  font-size: clamp(2rem, 5vw, 2.5rem);
+  margin-bottom: 0.5rem;
+  color: white;
+  font-weight: 800;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.eventphy-brand-tagline {
+  font-size: clamp(1rem, 3vw, 1.2rem);
+  margin-bottom: 1rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 400;
+}
+
+.eventphy-cta-text {
+  font-size: clamp(1rem, 3vw, 1.1rem);
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+}
+
+.eventphy-signup-btn {
+  background: white;
+  color: #667eea;
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.eventphy-signup-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
+  background: #f8f9ff;
+}
+
+/* Modal Styles - Continued */
+.eventphy-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(5px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 20000;
+  padding: 1rem;
+}
+
+.eventphy-modal {
+  background: var(--card-bg);
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+  border-radius: var(--border-radius);
+  max-width: 500px;
+  width: 100%;
+  text-align: center;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-heavy);
+  backdrop-filter: blur(20px);
+  position: relative;
+  animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
   }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
 
-  .eventphy-info-grid,
+.eventphy-modal h3 {
+  font-size: clamp(1.3rem, 4vw, 1.6rem);
+  margin-bottom: 1.5rem;
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 600;
+}
+
+.eventphy-copy-section {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin: 1.5rem 0;
+  border: 1px solid var(--border-color);
+  backdrop-filter: blur(10px);
+}
+
+.eventphy-copy-text {
+  font-size: clamp(0.9rem, 2.5vw, 1rem);
+  color: var(--text-primary);
+  font-weight: 600;
+  margin-bottom: 1rem;
+  word-break: break-all;
+  font-family: 'Monaco', 'Menlo', monospace;
+  background: rgba(79, 172, 254, 0.1);
+  padding: 0.5rem;
+  border-radius: 6px;
+}
+
+.eventphy-copy-btn {
+  background: var(--accent-gradient);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: var(--transition);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.eventphy-copy-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(79, 172, 254, 0.3);
+}
+
+.eventphy-modal-instructions {
+  margin: 1.5rem 0;
+  text-align: left;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 1.5rem;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+}
+
+.eventphy-modal-instructions h4 {
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+}
+
+.eventphy-modal-instructions h4 i {
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.eventphy-modal-instructions ol {
+  color: var(--text-secondary);
+  padding-left: 1.25rem;
+  line-height: 1.6;
+}
+
+.eventphy-modal-instructions li {
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.eventphy-modal-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+.eventphy-modal-btn {
+  flex: 1;
+  min-width: 120px;
+  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.eventphy-primary-btn {
+  background: var(--secondary-gradient);
+  color: white;
+}
+
+.eventphy-primary-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(245, 87, 108, 0.3);
+}
+
+.eventphy-secondary-btn {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+}
+
+.eventphy-secondary-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Loading States */
+.eventphy-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: var(--dark-bg);
+  padding: 1rem;
+}
+
+.eventphy-loading i {
+  font-size: 3rem;
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: pulse 2s ease-in-out infinite alternate;
+  margin-bottom: 1.5rem;
+}
+
+.eventphy-loading h2 {
+  color: var(--text-primary);
+  font-size: clamp(1.2rem, 4vw, 1.5rem);
+  font-weight: 600;
+  text-align: center;
+}
+
+@keyframes pulse {
+  from {
+    opacity: 0.5;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+}
+
+/* Error States */
+.eventphy-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: var(--dark-bg);
+  text-align: center;
+  padding: 2rem;
+}
+
+.eventphy-error i {
+  font-size: 4rem;
+  background: var(--secondary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 1.5rem;
+}
+
+.eventphy-error h2 {
+  color: var(--text-primary);
+  font-size: clamp(1.5rem, 5vw, 2rem);
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.eventphy-error p {
+  color: var(--text-secondary);
+  font-size: clamp(1rem, 3vw, 1.1rem);
+  max-width: 500px;
+  line-height: 1.6;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .eventphy-hero-section {
+    min-height: 100vh;
+    background-attachment: scroll;
+  }
+  
+  .eventphy-hero-content {
+    padding: 1rem;
+  }
+  
+  .eventphy-info-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
   .eventphy-tickets-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .eventphy-sponsors-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 1rem;
+  }
+  
+  .eventphy-modal-actions {
+    flex-direction: column;
+  }
+  
+  .eventphy-modal-btn {
+    width: 100%;
+  }
+  
+  .eventphy-brand-content {
     gap: 1.5rem;
   }
 }
 
-@media (max-width: 768px) {
-  .eventphy-title {
-    font-size: clamp(2rem, 6vw, 2.5rem);
-  }
-
-  .eventphy-description {
-    font-size: 1rem;
-  }
-
+@media (max-width: 480px) {
   .eventphy-info-card,
   .eventphy-ticket-card {
     padding: 1.5rem;
   }
+  
+  .eventphy-sponsors-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  }
+  
+  .eventphy-modal {
+    margin: 1rem;
+    padding: 1.5rem;
+  }
+  
+  .eventphy-copy-text {
+    font-size: 0.8rem;
+  }
 }
 
-@media (max-width: 480px) {
-  .eventphy-title {
-    font-size: 2rem;
+/* Large Desktop Optimizations */
+@media (min-width: 1200px) {
+  .eventphy-hero-content {
+    padding: 4rem 2rem;
   }
+  
+  .eventphy-details-section {
+    padding: 8rem 2rem;
+  }
+  
+  .eventphy-info-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3rem;
+  }
+  
+  .eventphy-tickets-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+}
 
-  .eventphy-get-tickets-btn {
-    width: 100%;
-    padding: 1rem;
-    font-size: 1rem;
+/* High DPI Display Optimizations */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .eventphy-title,
+  .eventphy-section-title {
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .eventphy-hero-section {
+    background-attachment: scroll;
+  }
+}
+
+/* Dark Mode Enhancements */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --border-color: rgba(255, 255, 255, 0.15);
+    --text-secondary: #c9c9d3;
+  }
+}
+
+/* Focus States for Accessibility */
+.eventphy-get-tickets-btn:focus,
+.eventphy-signup-btn:focus,
+.eventphy-copy-btn:focus,
+.eventphy-modal-btn:focus {
+  outline: 2px solid #4facfe;
+  outline-offset: 2px;
+}
+
+/* Print Styles */
+@media print {
+  #eventphyPageContainer {
+    position: static;
+    background: white;
+    color: black;
+  }
+  
+  .eventphy-hero-overlay,
+  .eventphy-modal-overlay {
+    display: none;
+  }
+  
+  .eventphy-hero-section {
+    background: none;
+    min-height: auto;
+  }
+}
+
+/* Container Queries Support (Future-proofing) */
+@supports (container-type: inline-size) {
+  .eventphy-info-grid {
+    container-type: inline-size;
+  }
+  
+  @container (max-width: 600px) {
+    .eventphy-info-card {
+      padding: 1.5rem;
+    }
   }
 }
 
