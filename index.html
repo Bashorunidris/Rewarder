@@ -50137,7 +50137,8 @@ function displayEventphyPage(event) {
                 
                 <div class="eventphy-info-card">
                     <h3><i class="fas fa-users"></i> Capacity</h3>
-                    <p>${event.maxCapacity || event.capacity || event.attendeeLimit || 'Unlimited'} attendees</p>
+                    <p>${event.tickets && event.tickets.length > 0 ? event.tickets.reduce((total, ticket) => total + (ticket.quantity || 0), 0) : 'Unlimited'} attendees</p>
+                
                 </div>
                 
                 <div class="eventphy-info-card">
@@ -50213,11 +50214,18 @@ function generateEventphyTicketsHTML(tickets) {
     `;
 
     tickets.forEach(ticket => {
+         const ticketBg = ticket.background ? 
+            (ticket.background.type === 'media' ? `background-image: url('${ticket.background.data}'); background-size: cover; background-position: center;` :
+             ticket.background.type === 'gradient' ? `background: ${ticket.background.gradient};` :
+             ticket.background.type === 'color' ? `background-color: ${ticket.background.color};` :
+             'background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);') :
+            'background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);';
+            
         ticketsHTML += `
-            <div class="eventphy-ticket-card">
-                <div class="eventphy-ticket-type">${ticket.type || 'General'}</div>
-                <div class="eventphy-ticket-price">₦${parseFloat(ticket.price || 0).toLocaleString()}</div>
-                <p>${ticket.description || 'Standard ticket'}</p>
+              <div class="eventphy-ticket-card" style="${ticketBg}">
+                <div class="eventphy-ticket-type">${ticket.name || ticket.type || 'General'}</div>
+              <div class="eventphy-ticket-price">₦${parseFloat(ticket.price || 0).toLocaleString()}</div>
+               <p>${ticket.description || ticket.name || 'Event ticket'}</p>
             </div>
         `;
     });
