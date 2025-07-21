@@ -38033,11 +38033,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }, 500);
 });
-
-   
-    
-  
-    
+ 
 
        // Complete Withdraw PEE JavaScript - Add this to your existing JS file
 
@@ -49979,7 +49975,7 @@ function displayEventphyPage(event) {
             <div class="eventphy-info-grid">
                 <div class="eventphy-info-card">
                     <h3><i class="fas fa-calendar-alt"></i> Date & Time</h3>
-                    <p>${formatEventphyDateTime(event.eventDate || event.date, event.eventTime || event.time)}</p>
+                    <p>${formatEventphyDateTime(event)}</p>
                 </div>
                 
                 <div class="eventphy-info-card">
@@ -50025,27 +50021,22 @@ function displayEventphyPage(event) {
 
 // Generate background style for event
 function generateEventphyBackgroundStyle(event) {
-    console.log('Background data:', {
-        type: event.eventBackgroundType || event.backgroundType,
-        image: event.eventBackgroundImage || event.backgroundImage,
-        color: event.eventBackgroundColor || event.backgroundColor,
-        gradient: event.eventBackgroundGradient || event.backgroundGradient
-    });
+    console.log('Background data:', event.background);
 
-    const backgroundType = event.eventBackgroundType || event.backgroundType;
-    const backgroundImage = event.eventBackgroundImage || event.backgroundImage;
-    const backgroundColor = event.eventBackgroundColor || event.backgroundColor;
-    const backgroundGradient = event.eventBackgroundGradient || event.backgroundGradient;
-
-    if (backgroundType === 'image' && backgroundImage) {
-        return `background-image: url('${backgroundImage}'); background-size: cover; background-position: center; background-repeat: no-repeat;`;
-    } else if (backgroundType === 'color' && backgroundColor) {
-        return `background: ${backgroundColor};`;
-    } else if (backgroundType === 'gradient' && backgroundGradient) {
-        return `background: ${backgroundGradient};`;
-    } else {
-        // Default gradient if no background is set
+    // Use the same structure as working code
+    if (!event.background) {
         return 'background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);';
+    }
+
+    switch (event.background.type) {
+        case 'media':
+            return `background-image: url('${event.background.data}'); background-size: cover; background-position: center; background-repeat: no-repeat;`;
+        case 'gradient':
+            return `background: ${event.background.gradient};`;
+        case 'color':
+            return `background-color: ${event.background.color};`;
+        default:
+            return 'background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);';
     }
 }
 
@@ -50100,13 +50091,15 @@ function generateEventphySponsorsHTML(sponsors) {
     `;
 
     sponsors.forEach(sponsor => {
+        const sponsorName = sponsor.name || sponsor;
+        
         sponsorsHTML += `
             <div class="eventphy-sponsor-item">
-                ${sponsor.logo ? 
-                    `<img src="${sponsor.logo}" alt="${sponsor.name}" class="eventphy-sponsor-logo">` : 
-                    `<div class="eventphy-sponsor-logo" style="background: #4ecdc4; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">${sponsor.name.charAt(0)}</div>`
+                ${sponsor.logo && sponsor.logo.data ? 
+                    `<img src="${sponsor.logo.data}" alt="${sponsorName}" class="eventphy-sponsor-logo">` : 
+                    `<div class="eventphy-sponsor-logo" style="background: #4ecdc4; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">${sponsorName.charAt(0)}</div>`
                 }
-                <div class="eventphy-sponsor-name">${sponsor.name}</div>
+                <div class="eventphy-sponsor-name">${sponsorName}</div>
             </div>
         `;
     });
@@ -50120,24 +50113,51 @@ function generateEventphySponsorsHTML(sponsors) {
 }
 
 // Format date and time for Eventphy display
-function formatEventphyDateTime(eventDate, eventTime) {
-    if (!eventDate) return 'Date TBA';
-    
-    const date = new Date(eventDate);
-    const options = { 
-        weekday: 'long', 
-        year: 'numeric', 
-        month: 'long', 
-        day: 'numeric' 
-    };
-    
-    let formatted = date.toLocaleDateString('en-US', options);
-    
-    if (eventTime) {
-        formatted += ` at ${eventTime}`;
+function formatEventphyDateTime(eventData) {
+    // Use startDateTime like in working code
+    if (eventData.startDateTime) {
+        try {
+            const eventDate = new Date(eventData.startDateTime);
+            const options = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            };
+            
+            let formatted = eventDate.toLocaleDateString('en-US', options);
+            const timeDisplay = eventDate.toLocaleTimeString('en-US', { 
+                hour: '2-digit', 
+                minute: '2-digit',
+                hour12: true 
+            });
+            
+            return `${formatted} at ${timeDisplay}`;
+        } catch (e) {
+            console.log('Date parsing error:', e);
+        }
     }
     
-    return formatted;
+    // Fallback to separate date/time fields
+    if (eventData.eventDate || eventData.date) {
+        const date = new Date(eventData.eventDate || eventData.date);
+        const options = { 
+            weekday: 'long', 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric' 
+        };
+        
+        let formatted = date.toLocaleDateString('en-US', options);
+        
+        if (eventData.eventTime || eventData.time) {
+            formatted += ` at ${eventData.eventTime || eventData.time}`;
+        }
+        
+        return formatted;
+    }
+    
+    return 'Date TBA';
 }
 
 // Open Eventphy tickets modal
