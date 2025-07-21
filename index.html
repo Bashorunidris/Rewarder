@@ -50214,15 +50214,10 @@ function generateEventphyTicketsHTML(tickets) {
     `;
 
     tickets.forEach(ticket => {
-         const ticketBg = ticket.background ? 
-            (ticket.background.type === 'media' ? `background-image: url('${ticket.background.data}'); background-size: cover; background-position: center;` :
-             ticket.background.type === 'gradient' ? `background: ${ticket.background.gradient};` :
-             ticket.background.type === 'color' ? `background-color: ${ticket.background.color};` :
-             'background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);') :
-            'background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);';
+        
             
         ticketsHTML += `
-              <div class="eventphy-ticket-card" style="${ticketBg}">
+              <div class="eventphy-ticket-card" style="${ticketBackground}">
                 <div class="eventphy-ticket-type">${ticket.name || ticket.type || 'General'}</div>
               <div class="eventphy-ticket-price">₦${parseFloat(ticket.price || 0).toLocaleString()}</div>
                <p>${ticket.description || ticket.name || 'Event ticket'}</p>
