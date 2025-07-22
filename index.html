@@ -21849,9 +21849,349 @@ rgb(81, 67, 55)rgb(81, 61, 55)rgb(81, 58, 55)rgb(184, 50, 32);
         grid-template-columns: 1fr;
     }
     
-    .eventphy-sponsors-grid {
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+
+/* Enhanced Sponsors Section */
+.eventphy-sponsors-section {
+    margin: 4rem 0;
+    padding: 3rem 0;
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+}
+
+.eventphy-sponsors-title {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: #1a202c;
+    margin-bottom: 3rem;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+}
+
+.eventphy-sponsors-title::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 2px;
+}
+
+/* Auto-scrolling container */
+.eventphy-sponsors-container {
+    position: relative;
+    overflow: hidden;
+    padding: 2rem 0;
+    mask: linear-gradient(
+        90deg,
+        transparent 0%,
+        black 10%,
+        black 90%,
+        transparent 100%
+    );
+    -webkit-mask: linear-gradient(
+        90deg,
+        transparent 0%,
+        black 10%,
+        black 90%,
+        transparent 100%
+    );
+}
+
+.eventphy-sponsors-scroll {
+    display: flex;
+    align-items: center;
+    gap: 4rem;
+    animation: scrollSponsors 30s linear infinite;
+    width: max-content;
+}
+
+.eventphy-sponsors-scroll:hover {
+    animation-play-state: paused;
+}
+
+/* Duplicate the content for seamless loop */
+.eventphy-sponsors-scroll::after {
+    content: '';
+    display: flex;
+    align-items: center;
+    gap: 4rem;
+}
+
+.eventphy-sponsor-logo {
+    background: white;
+    padding: 2.5rem 3rem;
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    transition: all 0.4s ease;
+    border: 2px solid transparent;
+    min-width: 200px;
+    min-height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.eventphy-sponsor-logo::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(102, 126, 234, 0.1),
+        transparent
+    );
+    transition: left 0.6s ease;
+}
+
+.eventphy-sponsor-logo:hover::before {
+    left: 100%;
+}
+
+.eventphy-sponsor-logo:hover {
+    transform: translateY(-8px) scale(1.05);
+    box-shadow: 0 15px 40px rgba(102, 126, 234, 0.2);
+    border-color: #667eea;
+}
+
+.eventphy-sponsor-logo img {
+    max-width: 100%;
+    width: auto;
+    height: auto;
+    max-height: 80px;
+    min-height: 50px;
+    object-fit: contain;
+    filter: grayscale(0%) contrast(1.2) brightness(1.1);
+    transition: all 0.3s ease;
+}
+
+.eventphy-sponsor-logo:hover img {
+    filter: grayscale(0%) contrast(1.3) brightness(1.2);
+    transform: scale(1.1);
+}
+
+/* Alternative: Static Grid Layout (if you prefer non-scrolling) */
+.eventphy-sponsors-grid-static {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2.5rem;
+    align-items: center;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.eventphy-sponsors-grid-static .eventphy-sponsor-logo {
+    min-width: auto;
+    width: 100%;
+}
+
+/* Keyframe for auto-scroll animation */
+@keyframes scrollSponsors {
+    0% {
+        transform: translateX(0);
     }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+/* Enhanced sponsor logo styles for better visibility */
+.eventphy-sponsor-logo-enhanced {
+    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+    padding: 3rem 4rem;
+    border-radius: 20px;
+    box-shadow: 
+        0 10px 40px rgba(0, 0, 0, 0.1),
+        0 4px 15px rgba(0, 0, 0, 0.05);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 3px solid transparent;
+    min-width: 280px;
+    min-height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.eventphy-sponsor-logo-enhanced::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        135deg,
+        rgba(102, 126, 234, 0.05) 0%,
+        rgba(118, 75, 162, 0.05) 100%
+    );
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.eventphy-sponsor-logo-enhanced:hover::after {
+    opacity: 1;
+}
+
+.eventphy-sponsor-logo-enhanced:hover {
+    transform: translateY(-10px) scale(1.08);
+    box-shadow: 
+        0 20px 60px rgba(102, 126, 234, 0.15),
+        0 8px 25px rgba(0, 0, 0, 0.1);
+    border-color: rgba(102, 126, 234, 0.3);
+}
+
+.eventphy-sponsor-logo-enhanced img {
+    max-width: 100%;
+    width: auto;
+    height: auto;
+    max-height: 100px;
+    min-height: 60px;
+    object-fit: contain;
+    filter: contrast(1.3) brightness(1.1) saturate(1.2);
+    transition: all 0.4s ease;
+    position: relative;
+    z-index: 1;
+}
+
+.eventphy-sponsor-logo-enhanced:hover img {
+    filter: contrast(1.4) brightness(1.2) saturate(1.3);
+    transform: scale(1.15);
+}
+
+/* Multiple scroll speeds for variety */
+.eventphy-sponsors-scroll-fast {
+    animation: scrollSponsors 20s linear infinite;
+}
+
+.eventphy-sponsors-scroll-slow {
+    animation: scrollSponsors 40s linear infinite;
+}
+
+.eventphy-sponsors-scroll-reverse {
+    animation: scrollSponsorsReverse 35s linear infinite;
+}
+
+@keyframes scrollSponsorsReverse {
+    0% {
+        transform: translateX(-50%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .eventphy-sponsors-title {
+        font-size: 1.8rem;
+        margin-bottom: 2rem;
+    }
+    
+    .eventphy-sponsors-scroll {
+        gap: 2rem;
+    }
+    
+    .eventphy-sponsor-logo,
+    .eventphy-sponsor-logo-enhanced {
+        min-width: 180px;
+        min-height: 100px;
+        padding: 2rem;
+    }
+    
+    .eventphy-sponsor-logo-enhanced {
+        min-width: 200px;
+        min-height: 120px;
+        padding: 2.5rem;
+    }
+    
+    .eventphy-sponsor-logo img,
+    .eventphy-sponsor-logo-enhanced img {
+        max-height: 60px;
+        min-height: 40px;
+    }
+    
+    .eventphy-sponsors-grid-static {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .eventphy-sponsors-container {
+        padding: 1rem 0;
+    }
+    
+    .eventphy-sponsors-scroll {
+        gap: 1.5rem;
+    }
+    
+    .eventphy-sponsor-logo,
+    .eventphy-sponsor-logo-enhanced {
+        min-width: 150px;
+        min-height: 80px;
+        padding: 1.5rem;
+    }
+    
+    .eventphy-sponsor-logo img,
+    .eventphy-sponsor-logo-enhanced img {
+        max-height: 50px;
+        min-height: 30px;
+    }
+}
+
+/* Pause animation on reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+    .eventphy-sponsors-scroll,
+    .eventphy-sponsors-scroll-fast,
+    .eventphy-sponsors-scroll-slow,
+    .eventphy-sponsors-scroll-reverse {
+        animation: none;
+    }
+    
+    .eventphy-sponsors-container {
+        overflow-x: auto;
+        overflow-y: hidden;
+        scrollbar-width: thin;
+        scrollbar-color: #cbd5e0 #f7fafc;
+    }
+    
+    .eventphy-sponsors-container::-webkit-scrollbar {
+        height: 8px;
+    }
+    
+    .eventphy-sponsors-container::-webkit-scrollbar-track {
+        background: #f7fafc;
+        border-radius: 4px;
+    }
+    
+    .eventphy-sponsors-container::-webkit-scrollbar-thumb {
+        background: #cbd5e0;
+        border-radius: 4px;
+    }
+    
+    .eventphy-sponsors-container::-webkit-scrollbar-thumb:hover {
+        background: #a0aec0;
+    }
+}
+
+   
 }
 
 /* ===== EVENT PAGE STYLES ===== */
@@ -22293,809 +22633,6 @@ rgb(81, 67, 55)rgb(81, 61, 55)rgb(81, 58, 55)rgb(184, 50, 32);
         flex-direction: column;
     }
 }
-
-
-/* Reset and Base Styles */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    line-height: 1.6;
-    color: #333;
-    background: #f8fafc;
-}
-
-/* Hero Section */
-.eventphy-hero-section {
-    position: relative;
-    height: 100vh;
-    min-height: 600px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    overflow: hidden;
-}
-
-.eventphy-hero-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(
-        135deg,
-        rgba(0, 0, 0, 0.7) 0%,
-        rgba(0, 0, 0, 0.4) 50%,
-        rgba(0, 0, 0, 0.6) 100%
-    );
-    z-index: 1;
-}
-
-.eventphy-hero-overlay::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: radial-gradient(
-        ellipse at center,
-        transparent 0%,
-        rgba(0, 0, 0, 0.3) 100%
-    );
-}
-
-.eventphy-powered-by {
-    position: absolute !important;
-    bottom: 20px !important;
-    right: 20px !important;
-    display: flex !important;
-    align-items: center !important;
-    background: rgba(255, 255, 255, 0.15) !important;
-    backdrop-filter: blur(10px) !important;
-    border: 1px solid rgba(255, 255, 255, 0.2) !important;
-    padding: 10px 16px !important;
-    border-radius: 25px !important;
-    z-index: 3 !important;
-    transition: all 0.3s ease !important;
-}
-
-.eventphy-powered-by:hover {
-    background: rgba(255, 255, 255, 0.25) !important;
-    transform: translateY(-2px);
-}
-
-.eventphy-powered-by img {
-    width: 24px !important;
-    height: 24px !important;
-    margin-right: 8px !important;
-    border-radius: 50%;
-}
-
-.eventphy-powered-by span {
-    color: white !important;
-    font-size: 13px !important;
-    font-weight: 600 !important;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-}
-
-.eventphy-hero-content {
-    position: relative;
-    z-index: 2;
-    text-align: center;
-    max-width: 800px;
-    padding: 0 20px;
-    animation: fadeInUp 1s ease-out;
-}
-
-.eventphy-title {
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    font-weight: 800;
-    color: white;
-    margin-bottom: 2rem;
-    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-    line-height: 1.2;
-    letter-spacing: -0.02em;
-}
-
-.eventphy-get-tickets-btn {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    border: none;
-    padding: 18px 40px;
-    font-size: 18px;
-    font-weight: 600;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    position: relative;
-    overflow: hidden;
-}
-
-.eventphy-get-tickets-btn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-    transition: left 0.5s;
-}
-
-.eventphy-get-tickets-btn:hover::before {
-    left: 100%;
-}
-
-.eventphy-get-tickets-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 15px 40px rgba(102, 126, 234, 0.6);
-}
-
-.eventphy-get-tickets-btn i {
-    margin-right: 10px;
-    font-size: 16px;
-}
-
-/* Details Section */
-.eventphy-details-section {
-    max-width: 1200px;
-    margin: -50px auto 0;
-    padding: 80px 20px 60px;
-    position: relative;
-    z-index: 2;
-    background: white;
-    border-radius: 20px 20px 0 0;
-    box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.1);
-}
-
-.eventphy-section-title {
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: #1a202c;
-    margin-bottom: 1.5rem;
-    text-align: center;
-    position: relative;
-}
-
-.eventphy-section-title::after {
-    content: '';
-    position: absolute;
-    bottom: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80px;
-    height: 4px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    border-radius: 2px;
-}
-
-.eventphy-description {
-    font-size: 1.2rem;
-    color: #4a5568;
-    text-align: center;
-    margin-bottom: 3rem;
-    line-height: 1.8;
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-/* Info Grid */
-.eventphy-info-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2rem;
-    margin-bottom: 4rem;
-}
-
-.eventphy-info-card {
-    background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
-    padding: 2rem;
-    border-radius: 16px;
-    border: 1px solid #e2e8f0;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-.eventphy-info-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-}
-
-.eventphy-info-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-    background: white;
-}
-
-.eventphy-info-card h3 {
-    font-size: 1.3rem;
-    font-weight: 600;
-    color: #2d3748;
-    margin-bottom: 1rem;
-    display: flex;
-    align-items: center;
-}
-
-.eventphy-info-card h3 i {
-    margin-right: 12px;
-    color: #667eea;
-    font-size: 1.2rem;
-}
-
-.eventphy-info-card p {
-    font-size: 1.1rem;
-    color: #4a5568;
-    line-height: 1.6;
-}
-
-/* Rewarder Branding */
-.eventphy-rewarder-brand {
-    background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
-    border-radius: 20px;
-    padding: 3rem;
-    margin-top: 4rem;
-    position: relative;
-    overflow: hidden;
-}
-
-.eventphy-rewarder-brand::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.05)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.05)"/><circle cx="50" cy="10" r="0.5" fill="rgba(255,255,255,0.03)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
-    opacity: 0.3;
-}
-
-.eventphy-brand-content {
-    position: relative;
-    z-index: 1;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
-    align-items: center;
-}
-
-.eventphy-brand-logo h3 {
-    font-size: 2rem;
-    font-weight: 800;
-    color: white;
-    margin-bottom: 0.5rem;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
-
-.eventphy-brand-tagline {
-    color: #a0aec0;
-    font-size: 1.1rem;
-    margin-bottom: 0;
-}
-
-.eventphy-brand-cta {
-    text-align: right;
-}
-
-.eventphy-cta-text {
-    color: #e2e8f0;
-    font-size: 1.1rem;
-    margin-bottom: 1.5rem;
-    line-height: 1.6;
-}
-
-.eventphy-signup-btn {
-    background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
-    color: white;
-    border: none;
-    padding: 16px 32px;
-    font-size: 16px;
-    font-weight: 600;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 8px 25px rgba(72, 187, 120, 0.3);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-.eventphy-signup-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 35px rgba(72, 187, 120, 0.4);
-    background: linear-gradient(135deg, #38a169 0%, #2f855a 100%);
-}
-
-.eventphy-signup-btn i {
-    margin-right: 8px;
-}
-
-/* Animations */
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .eventphy-hero-section {
-        height: 70vh;
-        min-height: 500px;
-        background-attachment: scroll;
-    }
-    
-    .eventphy-powered-by {
-        bottom: 15px !important;
-        right: 15px !important;
-        padding: 8px 12px !important;
-    }
-    
-    .eventphy-powered-by img {
-        width: 20px !important;
-        height: 20px !important;
-    }
-    
-    .eventphy-powered-by span {
-        font-size: 12px !important;
-    }
-    
-    .eventphy-title {
-        font-size: 2.5rem;
-        margin-bottom: 1.5rem;
-    }
-    
-    .eventphy-get-tickets-btn {
-        padding: 16px 32px;
-        font-size: 16px;
-    }
-    
-    .eventphy-details-section {
-        margin-top: -30px;
-        padding: 60px 15px 40px;
-        border-radius: 15px 15px 0 0;
-    }
-    
-    .eventphy-section-title {
-        font-size: 2rem;
-    }
-    
-    .eventphy-description {
-        font-size: 1.1rem;
-        margin-bottom: 2rem;
-    }
-    
-    .eventphy-info-grid {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-        margin-bottom: 3rem;
-    }
-    
-    .eventphy-info-card {
-        padding: 1.5rem;
-    }
-    
-    .eventphy-brand-content {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-        text-align: center;
-    }
-    
-    .eventphy-brand-cta {
-        text-align: center;
-    }
-    
-    .eventphy-rewarder-brand {
-        padding: 2rem;
-        margin-top: 3rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .eventphy-hero-content {
-        padding: 0 15px;
-    }
-    
-    .eventphy-title {
-        font-size: 2rem;
-    }
-    
-    .eventphy-get-tickets-btn {
-        padding: 14px 28px;
-        font-size: 15px;
-    }
-    
-    .eventphy-info-card h3 {
-        font-size: 1.2rem;
-    }
-    
-    .eventphy-info-card p {
-        font-size: 1rem;
-    }
-    
-    .eventphy-brand-logo h3 {
-        font-size: 1.8rem;
-    }
-    
-    .eventphy-signup-btn {
-        padding: 14px 28px;
-        font-size: 15px;
-    }
-}
-
-/* Enhanced Visual Effects */
-.eventphy-info-card:nth-child(1) { animation-delay: 0.1s; }
-.eventphy-info-card:nth-child(2) { animation-delay: 0.2s; }
-.eventphy-info-card:nth-child(3) { animation-delay: 0.3s; }
-/* Enhanced Visual Effects (continued) */
-.eventphy-info-card:nth-child(4) { animation-delay: 0.4s; }
-
-.eventphy-info-card {
-    animation: fadeInUp 0.6s ease-out both;
-}
-
-/* Smooth scrolling */
-html {
-    scroll-behavior: smooth;
-}
-
-/* Loading states and micro-interactions */
-.eventphy-get-tickets-btn:active {
-    transform: translateY(-1px);
-    transition: transform 0.1s ease;
-}
-
-.eventphy-signup-btn:active {
-    transform: translateY(-1px);
-    transition: transform 0.1s ease;
-}
-
-/* Enhanced hover effects for cards */
-.eventphy-info-card:hover h3 i {
-    transform: scale(1.1);
-    transition: transform 0.3s ease;
-}
-
-/* Gradient text effects */
-.eventphy-section-title {
-    background: linear-gradient(135deg, #1a202c 0%, #4a5568 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
-
-/* Enhanced button states */
-.eventphy-get-tickets-btn:focus,
-.eventphy-signup-btn:focus {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.3);
-}
-
-/* Ticket section styling (if tickets HTML is present) */
-.eventphy-tickets-section {
-    margin: 3rem 0;
-    padding: 2rem;
-    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-    border-radius: 16px;
-    border: 1px solid #e2e8f0;
-}
-
-.eventphy-tickets-title {
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: #2d3748;
-    margin-bottom: 1.5rem;
-    text-align: center;
-}
-
-.eventphy-ticket-card {
-    background: white;
-    padding: 2rem;
-    border-radius: 12px;
-    margin-bottom: 1rem;
-    border: 2px solid transparent;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-.eventphy-ticket-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-}
-
-.eventphy-ticket-card:hover {
-    border-color: #667eea;
-    transform: translateY(-2px);
-    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.15);
-}
-
-.eventphy-ticket-name {
-    font-size: 1.4rem;
-    font-weight: 600;
-    color: #2d3748;
-    margin-bottom: 0.5rem;
-}
-
-.eventphy-ticket-price {
-    font-size: 1.8rem;
-    font-weight: 800;
-    color: #667eea;
-    margin-bottom: 1rem;
-}
-
-.eventphy-ticket-description {
-    color: #4a5568;
-    margin-bottom: 1rem;
-    line-height: 1.6;
-}
-
-.eventphy-ticket-quantity {
-    color: #718096;
-    font-size: 0.9rem;
-    margin-bottom: 1rem;
-}
-
-.eventphy-select-ticket-btn {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    border: none;
-    padding: 12px 24px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    width: 100%;
-}
-
-.eventphy-select-ticket-btn:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
-}
-
-/* Sponsors section styling (if sponsors HTML is present) */
-.eventphy-sponsors-section {
-    margin: 3rem 0;
-    text-align: center;
-}
-
-.eventphy-sponsors-title {
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: #2d3748;
-    margin-bottom: 2rem;
-}
-
-.eventphy-sponsors-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 2rem;
-    align-items: center;
-}
-
-.eventphy-sponsor-logo {
-    background: white;
-    padding: 2rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-    transition: all 0.3s ease;
-    border: 1px solid #e2e8f0;
-}
-
-.eventphy-sponsor-logo:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
-}
-
-.eventphy-sponsor-logo img {
-    max-width: 100%;
-    height: auto;
-    max-height: 80px;
-    object-fit: contain;
-}
-
-/* Additional responsive improvements */
-@media (max-width: 640px) {
-    .eventphy-ticket-card {
-        padding: 1.5rem;
-    }
-    
-    .eventphy-ticket-name {
-        font-size: 1.2rem;
-    }
-    
-    .eventphy-ticket-price {
-        font-size: 1.5rem;
-    }
-    
-    .eventphy-sponsors-grid {
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-        gap: 1rem;
-    }
-    
-    .eventphy-sponsor-logo {
-        padding: 1.5rem;
-    }
-}
-
-/* Dark mode support (optional) */
-@media (prefers-color-scheme: dark) {
-    .eventphy-details-section {
-        background: #1a202c;
-        color: #e2e8f0;
-    }
-    
-    .eventphy-section-title {
-        color: #f7fafc;
-        background: linear-gradient(135deg, #f7fafc 0%, #e2e8f0 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-    }
-    
-    .eventphy-description {
-        color: #a0aec0;
-    }
-    
-    .eventphy-info-card {
-        background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%);
-        border-color: #4a5568;
-        color: #e2e8f0;
-    }
-    
-    .eventphy-info-card h3 {
-        color: #f7fafc;
-    }
-    
-    .eventphy-info-card p {
-        color: #cbd5e0;
-    }
-    
-    .eventphy-ticket-card {
-        background: #2d3748;
-        color: #e2e8f0;
-    }
-    
-    .eventphy-ticket-name {
-        color: #f7fafc;
-    }
-    
-    .eventphy-sponsor-logo {
-        background: #2d3748;
-        border-color: #4a5568;
-    }
-}
-
-/* Print styles */
-@media print {
-    .eventphy-hero-section {
-        height: auto;
-        min-height: auto;
-        background: none !important;
-        color: black;
-    }
-    
-    .eventphy-hero-overlay {
-        display: none;
-    }
-    
-    .eventphy-get-tickets-btn,
-    .eventphy-signup-btn {
-        display: none;
-    }
-    
-    .eventphy-powered-by {
-        position: static !important;
-        background: none !important;
-        color: black !important;
-    }
-    
-    .eventphy-title {
-        color: black;
-        text-shadow: none;
-    }
-}
-
-/* Accessibility improvements */
-@media (prefers-reduced-motion: reduce) {
-    * {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-    }
-    
-    .eventphy-hero-section {
-        background-attachment: scroll;
-    }
-}
-
-/* High contrast mode support */
-@media (prefers-contrast: high) {
-    .eventphy-info-card {
-        border: 2px solid #000;
-    }
-    
-    .eventphy-get-tickets-btn,
-    .eventphy-signup-btn {
-        border: 2px solid #000;
-    }
-}
-
-/* Focus indicators for better accessibility */
-.eventphy-info-card:focus-within {
-    outline: 2px solid #667eea;
-    outline-offset: 2px;
-}
-
-/* Ensure text remains readable on all backgrounds */
-.eventphy-hero-content * {
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
-}
-
-/* Additional utility classes */
-.eventphy-fade-in {
-    animation: fadeInUp 0.6s ease-out;
-}
-
-.eventphy-slide-in-left {
-    animation: slideInLeft 0.6s ease-out;
-}
-
-.eventphy-slide-in-right {
-    animation: slideInRight 0.6s ease-out;
-}
-
-@keyframes slideInLeft {
-    from {
-        opacity: 0;
-        transform: translateX(-30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-@keyframes slideInRight {
-    from {
-        opacity: 0;
-        transform: translateX(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
 
 </style>
 
@@ -32254,15 +31791,134 @@ async function loadPhysicalEventsDisplay() {
 }
 
 function showAllEvents() {
-    // Redirect to a full events page or open a modal with all events
-    // For now, let's show an alert - you can customize this behavior
-    alert('See More Events feature coming soon! This will open a page with all available events.');
+    openSeePhyMoreEventModal();
+}
+
+function openSeePhyMoreEventModal() {
+    // Create modal if it doesn't exist
+    if (!document.getElementById('seePhyMoreEventModal')) {
+        const modal = document.createElement('div');
+        modal.id = 'seePhyMoreEventModal';
+        modal.innerHTML = `
+            <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: none; justify-content: center; align-items: center; z-index: 10000; padding: 20px;">
+                <div style="background: white; border-radius: 20px; padding: 40px; max-width: 800px; width: 100%; max-height: 90vh; overflow-y: auto; position: relative; box-shadow: 0 25px 50px rgba(0,0,0,0.3);">
+                    <button onclick="closeSeePhyMoreEventModal()" style="position: absolute; top: 20px; right: 20px; background: none; border: none; font-size: 28px; cursor: pointer; color: #666; width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease;">
+                        <i class="fas fa-times"></i>
+                    </button>
+                    
+                    <div style="text-align: center; margin-bottom: 35px;">
+                        <i class="fas fa-calendar-star" style="font-size: 56px; color: #1a1a2e; margin-bottom: 20px;"></i>
+                        <h2 style="margin: 0 0 12px 0; color: #1a1a2e; font-size: 28px; font-weight: 700;">Explore Event Categories</h2>
+                        <p style="color: #666; margin: 0; font-size: 16px;">Discover amazing events in your favorite categories</p>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-bottom: 30px;">
+                        <button onclick="filterEventsByCategory('singing')" style="background: #1a1a2e; color: white; border: none; padding: 20px 15px; border-radius: 12px; cursor: pointer; font-weight: 600; font-size: 14px; transition: all 0.3s ease; display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center;">
+                            <i class="fas fa-microphone" style="font-size: 24px;"></i> Singing
+                        </button>
+                        <button onclick="filterEventsByCategory('music')" style="background: #1a1a2e; color: white; border: none; padding: 20px 15px; border-radius: 12px; cursor: pointer; font-weight: 600; font-size: 14px; transition: all 0.3s ease; display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center;">
+                            <i class="fas fa-music" style="font-size: 24px;"></i> Music
+                        </button>
+                        <button onclick="filterEventsByCategory('dance')" style="background: #1a1a2e; color: white; border: none; padding: 20px 15px; border-radius: 12px; cursor: pointer; font-weight: 600; font-size: 14px; transition: all 0.3s ease; display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center;">
+                            <i class="fas fa-dancing" style="font-size: 24px;"></i> Dance
+                        </button>
+                        <button onclick="filterEventsByCategory('theater')" style="background: #1a1a2e; color: white; border: none; padding: 20px 15px; border-radius: 12px; cursor: pointer; font-weight: 600; font-size: 14px; transition: all 0.3s ease; display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center;">
+                            <i class="fas fa-theater-masks" style="font-size: 24px;"></i> Theater
+                        </button>
+                        <button onclick="filterEventsByCategory('comedy')" style="background: #1a1a2e; color: white; border: none; padding: 20px 15px; border-radius: 12px; cursor: pointer; font-weight: 600; font-size: 14px; transition: all 0.3s ease; display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center;">
+                            <i class="fas fa-laugh" style="font-size: 24px;"></i> Comedy
+                        </button>
+                        <button onclick="filterEventsByCategory('art_exhibition')" style="background: #1a1a2e; color: white; border: none; padding: 20px 15px; border-radius: 12px; cursor: pointer; font-weight: 600; font-size: 14px; transition: all 0.3s ease; display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center;">
+                            <i class="fas fa-palette" style="font-size: 24px;"></i> Art Exhibition
+                        </button>
+                        <button onclick="filterEventsByCategory('fashion_show')" style="background: #1a1a2e; color: white; border: none; padding: 20px 15px; border-radius: 12px; cursor: pointer; font-weight: 600; font-size: 14px; transition: all 0.3s ease; display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center;">
+                            <i class="fas fa-tshirt" style="font-size: 24px;"></i> Fashion Show
+                        </button>
+                        <button onclick="filterEventsByCategory('sport_event')" style="background: #1a1a2e; color: white; border: none; padding: 20px 15px; border-radius: 12px; cursor: pointer; font-weight: 600; font-size: 14px; transition: all 0.3s ease; display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center;">
+                            <i class="fas fa-running" style="font-size: 24px;"></i> Sport Event
+                        </button>
+                        <button onclick="filterEventsByCategory('conference')" style="background: #1a1a2e; color: white; border: none; padding: 20px 15px; border-radius: 12px; cursor: pointer; font-weight: 600; font-size: 14px; transition: all 0.3s ease; display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center;">
+                            <i class="fas fa-users" style="font-size: 24px;"></i> Conference
+                        </button>
+                        <button onclick="filterEventsByCategory('workshop')" style="background: #1a1a2e; color: white; border: none; padding: 20px 15px; border-radius: 12px; cursor: pointer; font-weight: 600; font-size: 14px; transition: all 0.3s ease; display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center;">
+                            <i class="fas fa-tools" style="font-size: 24px;"></i> Workshop
+                        </button>
+                        <button onclick="filterEventsByCategory('food_drinks')" style="background: #1a1a2e; color: white; border: none; padding: 20px 15px; border-radius: 12px; cursor: pointer; font-weight: 600; font-size: 14px; transition: all 0.3s ease; display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center;">
+                            <i class="fas fa-utensils" style="font-size: 24px;"></i> Food & Drinks
+                        </button>
+                        <button onclick="filterEventsByCategory('networking')" style="background: #1a1a2e; color: white; border: none; padding: 20px 15px; border-radius: 12px; cursor: pointer; font-weight: 600; font-size: 14px; transition: all 0.3s ease; display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center;">
+                            <i class="fas fa-handshake" style="font-size: 24px;"></i> Networking
+                        </button>
+                        <button onclick="filterEventsByCategory('festival')" style="background: #1a1a2e; color: white; border: none; padding: 20px 15px; border-radius: 12px; cursor: pointer; font-weight: 600; font-size: 14px; transition: all 0.3s ease; display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center;">
+                            <i class="fas fa-flag" style="font-size: 24px;"></i> Festival
+                        </button>
+                        <button onclick="filterEventsByCategory('trade_fair')" style="background: #1a1a2e; color: white; border: none; padding: 20px 15px; border-radius: 12px; cursor: pointer; font-weight: 600; font-size: 14px; transition: all 0.3s ease; display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center;">
+                            <i class="fas fa-store" style="font-size: 24px;"></i> Trade Fair
+                        </button>
+                        <button onclick="filterEventsByCategory('summit')" style="background: #1a1a2e; color: white; border: none; padding: 20px 15px; border-radius: 12px; cursor: pointer; font-weight: 600; font-size: 14px; transition: all 0.3s ease; display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center;">
+                            <i class="fas fa-mountain" style="font-size: 24px;"></i> Summit
+                        </button>
+                        <button onclick="filterEventsByCategory('tech_event')" style="background: #1a1a2e; color: white; border: none; padding: 20px 15px; border-radius: 12px; cursor: pointer; font-weight: 600; font-size: 14px; transition: all 0.3s ease; display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center;">
+                            <i class="fas fa-laptop-code" style="font-size: 24px;"></i> Tech Event
+                        </button>
+                        <button onclick="filterEventsByCategory('business_event')" style="background: #1a1a2e; color: white; border: none; padding: 20px 15px; border-radius: 12px; cursor: pointer; font-weight: 600; font-size: 14px; transition: all 0.3s ease; display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center;">
+                            <i class="fas fa-briefcase" style="font-size: 24px;"></i> Business Event
+                        </button>
+                        <button onclick="filterEventsByCategory('product_launch')" style="background: #1a1a2e; color: white; border: none; padding: 20px 15px; border-radius: 12px; cursor: pointer; font-weight: 600; font-size: 14px; transition: all 0.3s ease; display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center;">
+                            <i class="fas fa-rocket" style="font-size: 24px;"></i> Product Launch
+                        </button>
+                        <button onclick="filterEventsByCategory('christmas_event')" style="background: #1a1a2e; color: white; border: none; padding: 20px 15px; border-radius: 12px; cursor: pointer; font-weight: 600; font-size: 14px; transition: all 0.3s ease; display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center;">
+                            <i class="fas fa-tree" style="font-size: 24px;"></i> Christmas Event
+                        </button>
+                        <button onclick="filterEventsByCategory('all')" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; padding: 20px 15px; border-radius: 12px; cursor: pointer; font-weight: 600; font-size: 14px; transition: all 0.3s ease; display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center; grid-column: span 2;">
+                            <i class="fas fa-calendar-check" style="font-size: 24px;"></i> All Events
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+        
+        // Add hover effects with CSS
+        const style = document.createElement('style');
+        style.textContent = `
+            #seePhyMoreEventModal button:hover {
+                transform: translateY(-3px) !important;
+                box-shadow: 0 8px 25px rgba(26, 26, 46, 0.3) !important;
+                background: #2a2a4a !important;
+            }
+            #seePhyMoreEventModal button:active {
+                transform: translateY(-1px) !important;
+            }
+            #seePhyMoreEventModal button:last-child:hover {
+                background: linear-gradient(135deg, #764ba2 0%, #667eea 100%) !important;
+            }
+        `;
+        document.head.appendChild(style);
+    }
     
-    // Alternative: You could redirect to a specific page
-    // window.location.href = '/all-events.html';
+    // Show modal
+    document.getElementById('seePhyMoreEventModal').style.display = 'flex';
+}
+
+function closeSeePhyMoreEventModal() {
+    document.getElementById('seePhyMoreEventModal').style.display = 'none';
+}
+
+function filterEventsByCategory(category) {
+    // Close modal first
+    closeSeePhyMoreEventModal();
     
-    // Or open a modal with more events
-    // openEventsModal();
+    // Filter events based on category
+    console.log('Filtering events by category:', category);
+    
+    // You can implement the actual filtering logic here
+    // For now, show an alert with the selected category
+    if (category === 'all') {
+        alert('Showing all events');
+    } else {
+        alert(`Filtering events by: ${category.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}`);
+    }
 }
 
 function createPhysicalEventDisplayCard(eventData) {
@@ -38983,8 +38639,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }, 500);
 });
 
-
-
+              
        // Complete Withdraw PEE JavaScript - Add this to your existing JS file
 
 // Withdrawal system configuration
@@ -50805,10 +50460,6 @@ async function loadEventphyPageData(eventLink) {
             <div class="eventphy-loading">
                 <i class="fas fa-spinner"></i>
                 <h2>Loading Event...</h2>
-                <div class="eventphy-powered-by" style="position: absolute; bottom: 10px; right: 10px; display: flex; align-items: center; background: rgba(0,0,0,0.6); padding: 8px 12px; border-radius: 20px; z-index: 3;">
-                <img src="https://i.ibb.co/VpC27tbt/Rewarder-logo.png" alt="Rewarder" style="width: 20px; height: 20px; margin-right: 6px;">
-                <span style="color: white; font-size: 12px; font-weight: 500;">Powered by Rewarder</span>
-            </div>
             </div>
         `;
 
@@ -50922,6 +50573,7 @@ function displayEventphyPage(event) {
             </div>
             <div class="eventphy-hero-content">
                 <h1 class="eventphy-title">${event.eventName || event.name || 'Event'}</h1>
+                <p class="eventphy-description">${event.eventDescription || event.description || 'Join us for an amazing event!'}</p>
                 <button class="eventphy-get-tickets-btn" onclick="openEventphyTicketsModal()">
                     <i class="fas fa-ticket-alt"></i> Get Tickets
                 </button>
@@ -50930,10 +50582,8 @@ function displayEventphyPage(event) {
 
         <!-- Event Details Section -->
         <div class="eventphy-details-section">
-            
             <h2 class="eventphy-section-title">Event Details</h2>
-                <p class="eventphy-description">${event.eventDescription || event.description || 'Join us for an amazing event!'}</p>
-               
+            
             <div class="eventphy-info-grid">
                 <div class="eventphy-info-card">
                     <h3><i class="fas fa-calendar-alt"></i> Date & Time</h3>
