@@ -25809,7 +25809,7 @@ rgb(81, 67, 55)rgb(81, 61, 55)rgb(81, 58, 55)rgb(184, 50, 32);
 <script src="https://checkout.flutterwave.com/v3.js"></script>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6058145320758437"
      crossorigin="anonymous"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
 <script>
  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
@@ -41325,6 +41325,7 @@ function generateNewPhyEventTicketCard(ticket) {
 
     // Get stored user name or placeholder
     const storedName = ticket.userName || '';
+const savedBuyerName = ticket.ticketbuyername || '';
 
     return `
         <div style="
@@ -41379,7 +41380,7 @@ function generateNewPhyEventTicketCard(ticket) {
     type="text" 
     id="ticketName_${ticket.id}"
     placeholder="Enter your name for this ticket" 
-    value="${storedName}"
+    value="${savedBuyerName}"
     ${ticket.boughtticketstatus !== 'unused' ? 'readonly' : ''}
     style="
         width: 100%;
@@ -41459,7 +41460,8 @@ ${ticket.boughtticketstatus === 'unused' ? `
     `;
 }
 
-      // Save ticket buyer name to Firebase
+      
+     // Save ticket buyer name with debugging
 async function saveTicketBuyerName(ticketId) {
     try {
         const nameInput = document.getElementById(`ticketName_${ticketId}`);
@@ -41481,14 +41483,24 @@ async function saveTicketBuyerName(ticketId) {
             ticketbuyername: buyerName
         });
 
+        console.log('✅ Name saved to Firebase:', buyerName);
+        console.log('✅ Ticket ID:', ticketId);
+        
+        // Verify it was saved by reading it back
+        const ticketDoc = await db.collection('BoughtTicket').doc(ticketId).get();
+        console.log('✅ Saved ticket data:', ticketDoc.data());
+
         alert('Name saved successfully!');
-        console.log('Ticket buyer name saved:', buyerName);
+        
+        // Reload the tickets to show updated data
+        loadNewEventTickets();
         
     } catch (error) {
-        console.error('Error saving ticket buyer name:', error);
+        console.error('❌ Error saving ticket buyer name:', error);
         alert('Error: ' + error.message);
     }
 }
+
 // Update ticket user name
 async function updateTicketUserName(ticketId, userName) {
     try {
@@ -42188,6 +42200,24 @@ function openPhysicalEventTicketPage() {
                 ">
                     ${generateTicketBannersHTML()}
                 </div>
+                <button id="ticket-validator-scanner-btn" onclick="openTicketValidatorOptions()" style="
+     flex: 1;
+                        background: rgba(255, 255, 255, 0.9);
+                        color: #333;
+                        border: none;
+                        padding: 15px 20px;
+                        border-radius: 10px;
+                        font-size: 16px;
+                        font-weight: 600;
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+                        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+                
+" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 25px rgba(255,107,107,0.3)'" 
+   onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+    <i class="fas fa-qrcode" style="margin-right: 10px;"></i>
+    Ticket Validator Scanner
+</button>
             </div>
 
             <!-- Tabs -->
@@ -42228,6 +42258,7 @@ function openPhysicalEventTicketPage() {
                     ">
                         Old Event Tickets
                     </button>
+                    
                 </div>
             </div>
 
@@ -42343,7 +42374,1300 @@ function switchPhysicalTicketTab(tabType) {
         loadOldEventTickets();
     }
 }
+function openTicketValidatorOptions() {
+    closeTicketsSelectionModal();
+    
+    const existingModal = document.getElementById('validatorOptionsModal');
+    if (existingModal) {
+        existingModal.remove();
+    }
 
+    const modalHTML = `
+        <div id="validatorOptionsModal" style="
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            backdrop-filter: blur(5px);
+        ">
+            <div style="
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                border-radius: 20px;
+                padding: 40px;
+                width: 90%;
+                max-width: 500px;
+                text-align: center;
+                position: relative;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            ">
+                <button onclick="closeValidatorOptionsModal()" style="
+                    position: absolute;
+                    top: 15px;
+                    right: 20px;
+                    background: none;
+                    border: none;
+                    color: white;
+                    font-size: 24px;
+                    cursor: pointer;
+                    opacity: 0.7;
+                    transition: opacity 0.3s ease;
+                " onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'">
+                    <i class="fas fa-times"></i>
+                </button>
+                
+                <h2 style="color: white; font-size: 28px; margin-bottom: 30px; font-weight: 600;">
+                    Ticket Validator
+                </h2>
+                
+                <div style="display: flex; flex-direction: column; gap: 20px;">
+                    <button onclick="openTicketInputScanner()" style="
+                        background: rgba(255, 255, 255, 0.1);
+                        border: 2px solid rgba(255, 255, 255, 0.3);
+                        color: white;
+                        padding: 20px 30px;
+                        border-radius: 15px;
+                        font-size: 18px;
+                        font-weight: 600;
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+                        backdrop-filter: blur(10px);
+                    " onmouseover="this.style.background='rgba(255, 255, 255, 0.2)'; this.style.transform='translateY(-3px)'" 
+                       onmouseout="this.style.background='rgba(255, 255, 255, 0.1)'; this.style.transform='translateY(0)'">
+                        <i class="fas fa-keyboard" style="margin-right: 10px;"></i>
+                        Ticket Input Scanner
+                    </button>
+                    
+                    <button onclick="openTicketQRScanner()" style="
+                        background: rgba(255, 255, 255, 0.1);
+                        border: 2px solid rgba(255, 255, 255, 0.3);
+                        color: white;
+                        padding: 20px 30px;
+                        border-radius: 15px;
+                        font-size: 18px;
+                        font-weight: 600;
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+                        backdrop-filter: blur(10px);
+                    " onmouseover="this.style.background='rgba(255, 255, 255, 0.2)'; this.style.transform='translateY(-3px)'" 
+                       onmouseout="this.style.background='rgba(255, 255, 255, 0.1)'; this.style.transform='translateY(0)'">
+                        <i class="fas fa-camera" style="margin-right: 10px;"></i>
+                        Ticket QR Scanner
+                    </button>
+                </div>
+                
+                <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.2);">
+                    <p style="color: rgba(255,255,255,0.8); font-size: 14px; margin: 0;">
+                        Powered by <strong style="color: white;">Rewarder</strong>
+                    </p>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+    document.body.style.overflow = 'hidden';
+}
+
+function closeValidatorOptionsModal() {
+    const modal = document.getElementById('validatorOptionsModal');
+    if (modal) {
+        modal.remove();
+        document.body.style.overflow = 'auto';
+    }
+}
+
+// Web Audio API for validation sounds
+class ValidationAudio {
+    constructor() {
+        this.audioContext = null;
+        this.initAudio();
+    }
+    
+    initAudio() {
+        try {
+            this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        } catch (error) {
+            console.log('Web Audio API not supported');
+        }
+    }
+    
+    playSuccessSound() {
+        if (!this.audioContext) return;
+        
+        const oscillator = this.audioContext.createOscillator();
+        const gainNode = this.audioContext.createGain();
+        
+        oscillator.connect(gainNode);
+        gainNode.connect(this.audioContext.destination);
+        
+        oscillator.frequency.setValueAtTime(800, this.audioContext.currentTime);
+        oscillator.frequency.setValueAtTime(1000, this.audioContext.currentTime + 0.1);
+        
+        gainNode.gain.setValueAtTime(0.3, this.audioContext.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, this.audioContext.currentTime + 0.3);
+        
+        oscillator.start(this.audioContext.currentTime);
+        oscillator.stop(this.audioContext.currentTime + 0.3);
+    }
+    
+    playFailureSound() {
+        if (!this.audioContext) return;
+        
+        const oscillator = this.audioContext.createOscillator();
+        const gainNode = this.audioContext.createGain();
+        
+        oscillator.connect(gainNode);
+        gainNode.connect(this.audioContext.destination);
+        
+        oscillator.frequency.setValueAtTime(400, this.audioContext.currentTime);
+        oscillator.frequency.setValueAtTime(200, this.audioContext.currentTime + 0.2);
+        
+        gainNode.gain.setValueAtTime(0.3, this.audioContext.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, this.audioContext.currentTime + 0.4);
+        
+        oscillator.start(this.audioContext.currentTime);
+        oscillator.stop(this.audioContext.currentTime + 0.4);
+    }
+}
+
+const validationAudio = new ValidationAudio();
+
+// Global variables for session management
+let currentValidationEventId = null;
+let validationSessionStart = null;
+let validationSessionDuration = 30 * 60 * 1000; // 30 minutes
+
+function openTicketInputScanner() {
+    closeValidatorOptionsModal();
+    
+    // Check if session is still valid
+    if (currentValidationEventId && validationSessionStart && 
+        (Date.now() - validationSessionStart < validationSessionDuration)) {
+        showTicketQuantitySelector();
+        return;
+    }
+    
+    showEventIdInput('input');
+}
+
+function showEventIdInput(scannerType) {
+    const existingModal = document.getElementById('eventIdInputModal');
+    if (existingModal) {
+        existingModal.remove();
+    }
+
+    const modalHTML = `
+        <div id="eventIdInputModal" style="
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            backdrop-filter: blur(10px);
+        ">
+            <div style="
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                border-radius: 20px;
+                padding: 40px;
+                width: 90%;
+                max-width: 450px;
+                text-align: center;
+                position: relative;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            ">
+                <button onclick="closeEventIdInputModal()" style="
+                    position: absolute;
+                    top: 15px;
+                    right: 20px;
+                    background: none;
+                    border: none;
+                    color: white;
+                    font-size: 24px;
+                    cursor: pointer;
+                    opacity: 0.7;
+                " onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'">
+                    <i class="fas fa-times"></i>
+                </button>
+                
+                <h3 style="color: white; font-size: 24px; margin-bottom: 30px; font-weight: 600;">
+                    Enter Event ID
+                </h3>
+                
+                <input type="text" id="eventIdInput" placeholder="Enter Event ID" style="
+                    width: 100%;
+                    padding: 15px;
+                    border: 2px solid rgba(255, 255, 255, 0.3);
+                    border-radius: 10px;
+                    background: rgba(255, 255, 255, 0.1);
+                    color: white;
+                    font-size: 16px;
+                    margin-bottom: 20px;
+                    text-align: center;
+                " />
+                
+                <button onclick="verifyEventId('${scannerType}')" style="
+                    background: #4ECDC4;
+                    color: white;
+                    border: none;
+                    padding: 15px 30px;
+                    border-radius: 10px;
+                    font-size: 16px;
+                    font-weight: 600;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                    width: 100%;
+                " onmouseover="this.style.background='#45a9a9'" onmouseout="this.style.background='#4ECDC4'">
+                    Verify Event ID
+                </button>
+                
+                <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.2);">
+                    <p style="color: rgba(255,255,255,0.8); font-size: 12px; margin: 0;">
+                        Powered by <strong style="color: white;">Rewarder</strong>
+                    </p>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+    document.body.style.overflow = 'hidden';
+}
+
+async function verifyEventId(scannerType) {
+    const eventIdInput = document.getElementById('eventIdInput');
+    const eventId = eventIdInput.value.trim();
+    
+    if (!eventId) {
+        alert('Please enter an Event ID');
+        return;
+    }
+    
+    try {
+        // Check if event exists in physicalEvents
+        const eventDoc = await db.collection('physicalEvents').doc(eventId).get();
+        
+        if (!eventDoc.exists) {
+            alert('Event ID not found');
+            return;
+        }
+        
+        const eventData = eventDoc.data();
+        const eventEndDate = new Date(eventData.endDateTime);
+        const now = new Date();
+        
+        // Check if event has ended
+        if (eventEndDate <= now) {
+            alert('This event has already ended');
+            return;
+        }
+        
+        // Check if there are tickets for this event
+        const ticketsSnapshot = await db.collection('BoughtTicket')
+            .where('physicaleventid', '==', eventId)
+            .limit(1)
+            .get();
+            
+        if (ticketsSnapshot.empty) {
+            alert('No tickets found for this event');
+            return;
+        }
+        
+        // Set session variables
+        currentValidationEventId = eventId;
+        validationSessionStart = Date.now();
+        
+        closeEventIdInputModal();
+        
+        if (scannerType === 'input') {
+            showTicketQuantitySelector();
+        } else {
+            showQRScanner();
+        }
+        
+    } catch (error) {
+        console.error('Error verifying event ID:', error);
+        alert('Error verifying event. Please try again.');
+    }
+}
+
+function showTicketQuantitySelector() {
+    const existingModal = document.getElementById('quantitySelectorModal');
+    if (existingModal) {
+        existingModal.remove();
+    }
+
+    const modalHTML = `
+        <div id="quantitySelectorModal" style="
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            backdrop-filter: blur(10px);
+        ">
+            <div style="
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                border-radius: 20px;
+                padding: 40px;
+                width: 90%;
+                max-width: 450px;
+                text-align: center;
+                position: relative;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            ">
+                <button onclick="closeQuantitySelectorModal()" style="
+                    position: absolute;
+                    top: 15px;
+                    right: 20px;
+                    background: none;
+                    border: none;
+                    color: white;
+                    font-size: 24px;
+                    cursor: pointer;
+                    opacity: 0.7;
+                " onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'">
+                    <i class="fas fa-times"></i>
+                </button>
+                
+                <h3 style="color: white; font-size: 24px; margin-bottom: 30px; font-weight: 600;">
+                    How many tickets to validate?
+                </h3>
+                
+                <input type="number" id="ticketQuantityInput" min="1" max="15" value="1" style="
+                    width: 100%;
+                    padding: 15px;
+                    border: 2px solid rgba(255, 255, 255, 0.3);
+                    border-radius: 10px;
+                    background: rgba(255, 255, 255, 0.1);
+                    color: white;
+                    font-size: 18px;
+                    margin-bottom: 20px;
+                    text-align: center;
+                " />
+                
+                <button onclick="openInputValidationPage()" style="
+                    background: #4ECDC4;
+                    color: white;
+                    border: none;
+                    padding: 15px 30px;
+                    border-radius: 10px;
+                    font-size: 16px;
+                    font-weight: 600;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                    width: 100%;
+                " onmouseover="this.style.background='#45a9a9'" onmouseout="this.style.background='#4ECDC4'">
+                    Start Validation
+                </button>
+                
+                <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.2);">
+                    <p style="color: rgba(255,255,255,0.8); font-size: 12px; margin: 0;">
+                        Powered by <strong style="color: white;">Rewarder</strong>
+                    </p>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+    document.body.style.overflow = 'hidden';
+}
+
+function openInputValidationPage() {
+    const quantityInput = document.getElementById('ticketQuantityInput');
+    const quantity = parseInt(quantityInput.value);
+    
+    if (quantity < 1 || quantity > 15) {
+        alert('Please enter a number between 1 and 15');
+        return;
+    }
+    
+    closeQuantitySelectorModal();
+    showInputValidationPage(quantity);
+}
+
+function closeEventIdInputModal() {
+    const modal = document.getElementById('eventIdInputModal');
+    if (modal) {
+        modal.remove();
+        document.body.style.overflow = 'auto';
+    }
+}
+
+function closeQuantitySelectorModal() {
+    const modal = document.getElementById('quantitySelectorModal');
+    if (modal) {
+        modal.remove();
+        document.body.style.overflow = 'auto';
+    }
+}
+function showInputValidationPage(quantity) {
+    const existingPage = document.getElementById('inputValidationPage');
+    if (existingPage) {
+        existingPage.remove();
+    }
+
+    // Generate input fields
+    let inputFieldsHTML = '';
+    for (let i = 1; i <= quantity; i++) {
+        inputFieldsHTML += `
+            <div class="validation-input-row" style="
+                display: flex;
+                gap: 10px;
+                margin-bottom: 15px;
+                align-items: center;
+            ">
+                <span style="color: white; font-weight: 600; min-width: 30px;">${i}.</span>
+                <input type="text" id="ticketInput_${i}" placeholder="Enter Ticket ID" style="
+                    flex: 1;
+                    padding: 12px;
+                    border: 2px solid rgba(255, 255, 255, 0.3);
+                    border-radius: 8px;
+                    background: rgba(255, 255, 255, 0.1);
+                    color: white;
+                    font-size: 14px;
+                " />
+                <button onclick="validateSingleTicket(${i})" style="
+                    background: #4ECDC4;
+                    color: white;
+                    border: none;
+                    padding: 12px 20px;
+                    border-radius: 8px;
+                    font-size: 14px;
+                    font-weight: 600;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                    white-space: nowrap;
+                " onmouseover="this.style.background='#45a9a9'" onmouseout="this.style.background='#4ECDC4'">
+                    Validate
+                </button>
+            </div>
+            <div id="validationResult_${i}" style="margin-bottom: 20px;"></div>
+        `;
+    }
+
+    const pageHTML = `
+        <div id="inputValidationPage" style="
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            z-index: 10000;
+            overflow-y: auto;
+        ">
+            <div style="
+                background: rgba(255, 255, 255, 0.95);
+                backdrop-filter: blur(10px);
+                padding: 15px 20px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                position: sticky;
+                top: 0;
+                z-index: 100;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            ">
+                <h1 style="color: #333; font-size: 24px; font-weight: 600; margin: 0;">Ticket Validation</h1>
+                <button onclick="closeInputValidationPage()" style="
+                    background: #ff4757;
+                    color: white;
+                    border: none;
+                    padding: 10px 15px;
+                    border-radius: 8px;
+                    cursor: pointer;
+                    font-size: 16px;
+                    transition: all 0.3s ease;
+                " onmouseover="this.style.background='#ff3742'" onmouseout="this.style.background='#ff4757'">
+                    <i class="fas fa-times"></i> Close
+                </button>
+            </div>
+
+            <div style="padding: 20px; max-width: 800px; margin: 0 auto;">
+                <div style="
+                    background: rgba(255, 255, 255, 0.1);
+                    border-radius: 15px;
+                    padding: 20px;
+                    margin-bottom: 20px;
+                    backdrop-filter: blur(10px);
+                ">
+                    <h3 style="color: white; margin-bottom: 20px; text-align: center;">
+                        Event ID: ${currentValidationEventId}
+                    </h3>
+                    ${inputFieldsHTML}
+                </div>
+                
+                <div style="text-align: center; margin-top: 20px;">
+                    <p style="color: rgba(255,255,255,0.8); font-size: 12px;">
+                        Powered by <strong style="color: white;">Rewarder</strong>
+                    </p>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    document.body.insertAdjacentHTML('beforeend', pageHTML);
+    document.body.style.overflow = 'hidden';
+}
+
+async function validateSingleTicket(inputNumber) {
+    const ticketInput = document.getElementById(`ticketInput_${inputNumber}`);
+    const resultDiv = document.getElementById(`validationResult_${inputNumber}`);
+    const ticketId = ticketInput.value.trim();
+    
+    if (!ticketId) {
+        alert('Please enter a ticket ID');
+        return;
+    }
+    
+    try {
+        // Get ticket from BoughtTicket collection
+        const ticketDoc = await db.collection('BoughtTicket').doc(ticketId).get();
+        
+        if (!ticketDoc.exists) {
+            validationAudio.playFailureSound();
+            resultDiv.innerHTML = `
+                <div style="
+                    background: #ff4757;
+                    color: white;
+                    padding: 15px;
+                    border-radius: 10px;
+                    text-align: center;
+                ">
+                    <i class="fas fa-times-circle" style="font-size: 20px; margin-bottom: 10px;"></i>
+                    <div>Ticket not found</div>
+                </div>
+            `;
+            return;
+        }
+        
+        const ticketData = ticketDoc.data();
+        
+        // Verify ticket belongs to current event
+        if (ticketData.physicaleventid !== currentValidationEventId) {
+            validationAudio.playFailureSound();
+            resultDiv.innerHTML = `
+                <div style="
+                    background: #ff4757;
+                    color: white;
+                    padding: 15px;
+                    border-radius: 10px;
+                    text-align: center;
+                ">
+                    <i class="fas fa-exclamation-triangle" style="font-size: 20px; margin-bottom: 10px;"></i>
+                    <div>Ticket is not for this event</div>
+                </div>
+            `;
+            return;
+        }
+        
+        // Get event name
+        const eventDoc = await db.collection('physicalEvents').doc(currentValidationEventId).get();
+        const eventName = eventDoc.exists ? eventDoc.data().eventName : 'Unknown Event';
+        
+        validationAudio.playSuccessSound();
+        
+        // Display ticket validation box based on status
+        const status = ticketData.boughtticketstatus;
+        const buyerName = ticketData.ticketbuyername || 'No name provided';
+        
+        let actionButtons = '';
+        let statusColor = '#4ECDC4';
+        let statusText = status.toUpperCase();
+        
+        if (status === 'unused') {
+            statusColor = '#4ECDC4';
+            actionButtons = `
+                <button onclick="stampTicket('${ticketId}', ${inputNumber})" style="
+                    background: #27ae60;
+                    color: white;
+                    border: none;
+                    padding: 8px 15px;
+                    border-radius: 6px;
+                    font-size: 12px;
+                    cursor: pointer;
+                    margin-right: 5px;
+                ">
+                    <i class="fas fa-stamp"></i> Stamp
+                </button>
+                <button onclick="deletePhyTicketValidation('${ticketId}', ${inputNumber})" style="
+                    background: #e74c3c;
+                    color: white;
+                    border: none;
+                    padding: 8px 15px;
+                    border-radius: 6px;
+                    font-size: 12px;
+                    cursor: pointer;
+                    margin-right: 5px;
+                ">
+                    <i class="fas fa-trash"></i> Delete
+                </button>
+                <button onclick="cancelTicketValidation(${inputNumber})" style="
+                    background: #95a5a6;
+                    color: white;
+                    border: none;
+                    padding: 8px 15px;
+                    border-radius: 6px;
+                    font-size: 12px;
+                    cursor: pointer;
+                ">
+                    <i class="fas fa-times"></i> Cancel
+                </button>
+            `;
+        } else if (status === 'used') {
+            statusColor = '#f39c12';
+            actionButtons = `
+                <button onclick="deletePhyTicketValidation('${ticketId}', ${inputNumber})" style="
+                    background: #e74c3c;
+                    color: white;
+                    border: none;
+                    padding: 8px 15px;
+                    border-radius: 6px;
+                    font-size: 12px;
+                    cursor: pointer;
+                    margin-right: 5px;
+                ">
+                    <i class="fas fa-trash"></i> Delete
+                </button>
+                <button onclick="cancelTicketValidation(${inputNumber})" style="
+                    background: #95a5a6;
+                    color: white;
+                    border: none;
+                    padding: 8px 15px;
+                    border-radius: 6px;
+                    font-size: 12px;
+                    cursor: pointer;
+                ">
+                    <i class="fas fa-times"></i> Cancel
+                </button>
+            `;
+        } else if (status === 'terminated') {
+            statusColor = '#e74c3c';
+            statusText = 'TERMINATED';
+            actionButtons = `
+                <button onclick="cancelTicketValidation(${inputNumber})" style="
+                    background: #95a5a6;
+                    color: white;
+                    border: none;
+                    padding: 8px 15px;
+                    border-radius: 6px;
+                    font-size: 12px;
+                    cursor: pointer;
+                ">
+                    <i class="fas fa-times"></i> Cancel
+                </button>
+            `;
+        }
+        
+        resultDiv.innerHTML = `
+            <div class="ticketvalidationbox" style="
+                background: rgba(255, 255, 255, 0.1);
+                border: 2px solid ${statusColor};
+                border-radius: 10px;
+                padding: 15px;
+                backdrop-filter: blur(10px);
+            ">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                    <span style="color: white; font-weight: 600;">${buyerName}</span>
+                    <span style="
+                        background: ${statusColor};
+                        color: white;
+                        padding: 4px 8px;
+                        border-radius: 12px;
+                        font-size: 12px;
+                        font-weight: 600;
+                    ">${statusText}</span>
+                </div>
+                <div style="color: rgba(255,255,255,0.8); font-size: 14px; margin-bottom: 15px;">
+                    Event: ${eventName}<br>
+                    Ticket ID: ${ticketId}
+                </div>
+                <div class="ticketvalidation-tools" style="display: flex; gap: 5px; flex-wrap: wrap;">
+                    ${actionButtons}
+                </div>
+            </div>
+        `;
+        
+    } catch (error) {
+        console.error('Error validating ticket:', error);
+        validationAudio.playFailureSound();
+        resultDiv.innerHTML = `
+            <div style="
+                background: #ff4757;
+                color: white;
+                padding: 15px;
+                border-radius: 10px;
+                text-align: center;
+            ">
+                <i class="fas fa-exclamation-triangle" style="font-size: 20px; margin-bottom: 10px;"></i>
+                <div>Error validating ticket</div>
+            </div>
+        `;
+    }
+}
+
+function closeInputValidationPage() {
+    const page = document.getElementById('inputValidationPage');
+    if (page) {
+        page.remove();
+        document.body.style.overflow = 'auto';
+    }
+}
+
+// Stamp ticket - change status from unused to used
+async function stampTicket(ticketId, inputNumber) {
+    try {
+        await db.collection('BoughtTicket').doc(ticketId).update({
+            boughtticketstatus: 'used'
+        });
+        
+        validationAudio.playSuccessSound();
+        
+        // Update the validation box
+        const resultDiv = document.getElementById(`validationResult_${inputNumber}`);
+        const currentBox = resultDiv.querySelector('.ticketvalidationbox');
+        if (currentBox) {
+            const statusSpan = currentBox.querySelector('span:last-child');
+            statusSpan.style.background = '#f39c12';
+            statusSpan.textContent = 'USED';
+            
+            // Update border color
+            currentBox.style.borderColor = '#f39c12';
+            
+            // Update action buttons
+            const toolsDiv = currentBox.querySelector('.ticketvalidation-tools');
+            toolsDiv.innerHTML = `
+                <button onclick="deletePhyTicketValidation('${ticketId}', ${inputNumber})" style="
+                    background: #e74c3c;
+                    color: white;
+                    border: none;
+                    padding: 8px 15px;
+                    border-radius: 6px;
+                    font-size: 12px;
+                    cursor: pointer;
+                    margin-right: 5px;
+                ">
+                    <i class="fas fa-trash"></i> Delete
+                </button>
+                <button onclick="cancelTicketValidation(${inputNumber})" style="
+                    background: #95a5a6;
+                    color: white;
+                    border: none;
+                    padding: 8px 15px;
+                    border-radius: 6px;
+                    font-size: 12px;
+                    cursor: pointer;
+                ">
+                    <i class="fas fa-times"></i> Cancel
+                </button>
+            `;
+        }
+        
+        console.log('Ticket stamped successfully:', ticketId);
+        
+    } catch (error) {
+        console.error('Error stamping ticket:', error);
+        validationAudio.playFailureSound();
+        alert('Error stamping ticket. Please try again.');
+    }
+}
+
+// Delete ticket - change status to terminated
+async function deletePhyTicketValidation(ticketId, inputNumber) {
+    if (!confirm('Are you sure you want to terminate this ticket? This action cannot be undone.')) {
+        return;
+    }
+    
+    try {
+        await db.collection('BoughtTicket').doc(ticketId).update({
+            boughtticketstatus: 'terminated'
+        });
+        
+        validationAudio.playFailureSound();
+        
+        // Update the validation box
+        const resultDiv = document.getElementById(`validationResult_${inputNumber}`);
+        const currentBox = resultDiv.querySelector('.ticketvalidationbox');
+        if (currentBox) {
+            const statusSpan = currentBox.querySelector('span:last-child');
+            statusSpan.style.background = '#e74c3c';
+            statusSpan.textContent = 'TERMINATED';
+            
+            // Update border color
+            currentBox.style.borderColor = '#e74c3c';
+            
+            // Update action buttons
+            const toolsDiv = currentBox.querySelector('.ticketvalidation-tools');
+            toolsDiv.innerHTML = `
+                <button onclick="cancelTicketValidation(${inputNumber})" style="
+                    background: #95a5a6;
+                    color: white;
+                    border: none;
+                    padding: 8px 15px;
+                    border-radius: 6px;
+                    font-size: 12px;
+                    cursor: pointer;
+                ">
+                    <i class="fas fa-times"></i> Cancel
+                </button>
+            `;
+        }
+        
+        console.log('Ticket terminated successfully:', ticketId);
+        
+    } catch (error) {
+        console.error('Error terminating ticket:', error);
+        validationAudio.playFailureSound();
+        alert('Error terminating ticket. Please try again.');
+    }
+}
+
+// Cancel ticket validation - clear the input and result
+function cancelTicketValidation(inputNumber) {
+    const ticketInput = document.getElementById(`ticketInput_${inputNumber}`);
+    const resultDiv = document.getElementById(`validationResult_${inputNumber}`);
+    
+    if (ticketInput) {
+        ticketInput.value = '';
+    }
+    
+    if (resultDiv) {
+        resultDiv.innerHTML = '';
+    }
+}
+
+function openTicketQRScanner() {
+    closeValidatorOptionsModal();
+    
+    // Check if session is still valid
+    if (currentValidationEventId && validationSessionStart && 
+        (Date.now() - validationSessionStart < validationSessionDuration)) {
+        showQRScanner();
+        return;
+    }
+    
+    showEventIdInput('qr');
+}
+
+function showQRScanner() {
+    const existingPage = document.getElementById('qrScannerPage');
+    if (existingPage) {
+        existingPage.remove();
+    }
+
+    const pageHTML = `
+        <div id="qrScannerPage" style="
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            z-index: 10000;
+            overflow-y: auto;
+        ">
+            <div style="
+                background: rgba(255, 255, 255, 0.95);
+                backdrop-filter: blur(10px);
+                padding: 15px 20px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                position: sticky;
+                top: 0;
+                z-index: 100;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            ">
+                <h1 style="color: #333; font-size: 24px; font-weight: 600; margin: 0;">QR Scanner</h1>
+                <button onclick="closeQRScannerPage()" style="
+                    background: #ff4757;
+                    color: white;
+                    border: none;
+                    padding: 10px 15px;
+                    border-radius: 8px;
+                    cursor: pointer;
+                    font-size: 16px;
+                    transition: all 0.3s ease;
+                " onmouseover="this.style.background='#ff3742'" onmouseout="this.style.background='#ff4757'">
+                    <i class="fas fa-times"></i> Close
+                </button>
+            </div>
+
+            <div style="padding: 20px; max-width: 600px; margin: 0 auto;">
+                <div style="
+                    background: rgba(255, 255, 255, 0.1);
+                    border-radius: 15px;
+                    padding: 20px;
+                    margin-bottom: 20px;
+                    backdrop-filter: blur(10px);
+                    text-align: center;
+                ">
+                    <h3 style="color: white; margin-bottom: 20px;">
+                        Event ID: ${currentValidationEventId}
+                    </h3>
+                    
+                    <!-- Camera Preview -->
+                    <div id="qr-reader" style="
+                        width: 100%;
+                        max-width: 400px;
+                        margin: 0 auto 20px auto;
+                        border-radius: 10px;
+                        overflow: hidden;
+                        background: #000;
+                        min-height: 300px;
+                        position: relative;
+                    ">
+                        <video id="qr-video" style="
+                            width: 100%;
+                            height: 100%;
+                            object-fit: cover;
+                        " autoplay muted playsinline></video>
+                        
+                        <div style="
+                            position: absolute;
+                            top: 50%;
+                            left: 50%;
+                            transform: translate(-50%, -50%);
+                            border: 2px solid #4ECDC4;
+                            width: 200px;
+                            height: 200px;
+                            border-radius: 10px;
+                            pointer-events: none;
+                        "></div>
+                    </div>
+                    
+                    <div style="display: flex; gap: 10px; justify-content: center; margin-bottom: 20px;">
+                        <button onclick="startCamera()" style="
+                            background: #27ae60;
+                            color: white;
+                            border: none;
+                            padding: 12px 20px;
+                            border-radius: 8px;
+                            font-size: 14px;
+                            font-weight: 600;
+                            cursor: pointer;
+                        ">
+                            <i class="fas fa-camera"></i> Start Camera
+                        </button>
+                        
+                        <button onclick="stopCamera()" style="
+                            background: #e74c3c;
+                            color: white;
+                            border: none;
+                            padding: 12px 20px;
+                            border-radius: 8px;
+                            font-size: 14px;
+                            font-weight: 600;
+                            cursor: pointer;
+                        ">
+                            <i class="fas fa-stop"></i> Stop Camera
+                        </button>
+                        
+                        <input type="file" id="qr-file-input" accept="image/*" style="display: none;" onchange="handleFileUpload(event)">
+                        <button onclick="document.getElementById('qr-file-input').click()" style="
+                            background: #f39c12;
+                            color: white;
+                            border: none;
+                            padding: 12px 20px;
+                            border-radius: 8px;
+                            font-size: 14px;
+                            font-weight: 600;
+                            cursor: pointer;
+                        ">
+                            <i class="fas fa-upload"></i> Upload QR
+                        </button>
+                    </div>
+                    
+                    <div id="qr-scan-status" style="
+                        color: white;
+                        font-size: 14px;
+                        margin-bottom: 20px;
+                        min-height: 20px;
+                    ">
+                        Ready to scan...
+                    </div>
+                    
+                    <!-- Validation Result -->
+                    <div id="qr-validation-result" style="margin-bottom: 20px;"></div>
+                </div>
+                
+                <div style="text-align: center;">
+                    <p style="color: rgba(255,255,255,0.8); font-size: 12px;">
+                        Powered by <strong style="color: white;">Rewarder</strong>
+                    </p>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    document.body.insertAdjacentHTML('beforeend', pageHTML);
+    document.body.style.overflow = 'hidden';
+    
+    // Initialize QR scanning
+    initQRScanner();
+}
+
+let qrStream = null;
+let qrScanInterval = null;
+
+async function initQRScanner() {
+    // Auto-start camera
+    setTimeout(() => {
+        startCamera();
+    }, 500);
+}
+
+async function startCamera() {
+    const video = document.getElementById('qr-video');
+    const statusDiv = document.getElementById('qr-scan-status');
+    
+    try {
+        statusDiv.textContent = 'Starting camera...';
+        
+        qrStream = await navigator.mediaDevices.getUserMedia({ 
+            video: { 
+                facingMode: 'environment',
+                width: { ideal: 640 },
+                height: { ideal: 480 }
+            } 
+        });
+        
+        video.srcObject = qrStream;
+        statusDiv.textContent = 'Camera ready - Point at QR code';
+        
+        // Start scanning
+        startQRScanning();
+        
+    } catch (error) {
+        console.error('Error accessing camera:', error);
+        statusDiv.textContent = 'Camera access denied. Please use file upload.';
+    }
+}
+
+function stopCamera() {
+    const statusDiv = document.getElementById('qr-scan-status');
+    
+    if (qrStream) {
+        qrStream.getTracks().forEach(track => track.stop());
+        qrStream = null;
+    }
+    
+    if (qrScanInterval) {
+        clearInterval(qrScanInterval);
+        qrScanInterval = null;
+    }
+    
+    statusDiv.textContent = 'Camera stopped';
+}
+
+function startQRScanning() {
+    const video = document.getElementById('qr-video');
+    const canvas = document.createElement('canvas');
+    const context = canvas.getContext('2d');
+    
+    qrScanInterval = setInterval(() => {
+        if (video.readyState === video.HAVE_ENOUGH_DATA) {
+            canvas.height = video.videoHeight;
+            canvas.width = video.videoWidth;
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            
+            const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+            const code = jsQR(imageData.data, imageData.width, imageData.height);
+            
+            if (code) {
+                processQRCode(code.data);
+            }
+        }
+    }, 300);
+}
+
+function handleFileUpload(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        const img = new Image();
+        img.onload = function() {
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+            canvas.width = img.width;
+            canvas.height = img.height;
+            context.drawImage(img, 0, 0);
+            
+            const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+            const code = jsQR(imageData.data, imageData.width, imageData.height);
+            
+            if (code) {
+                processQRCode(code.data);
+            } else {
+                document.getElementById('qr-scan-status').textContent = 'No QR code found in image';
+            }
+        };
+        img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+}
+
+async function processQRCode(qrData) {
+    const statusDiv = document.getElementById('qr-scan-status');
+    const resultDiv = document.getElementById('qr-validation-result');
+    
+    try {
+        statusDiv.textContent = 'Processing QR code...';
+        
+        // Parse QR data
+        let ticketInfo;
+        try {
+            ticketInfo = JSON.parse(qrData);
+        } catch (error) {
+            throw new Error('Invalid QR code format');
+        }
+        
+        const ticketId = ticketInfo.ticketId;
+        if (!ticketId) {
+            throw new Error('No ticket ID found in QR code');
+        }
+        
+        // Get ticket from Firebase
+        const ticketDoc = await db.collection('BoughtTicket').doc(ticketId).get();
+        
+        if (!ticketDoc.exists) {
+            throw new Error('Ticket not found');
+        }
+        
+        const ticketData = ticketDoc.data();
+        
+        // Verify ticket belongs to current event
+        if (ticketData.physicaleventid !== currentValidationEventId) {
+            throw new Error('Ticket is not for this event');
+        }
+        
+        const status = ticketData.boughtticketstatus;
+        const buyerName = ticketData.ticketbuyername || 'No name provided';
+        
+        if (status === 'unused') {
+            // Success - show validation box and change status
+            validationAudio.playSuccessSound();
+            statusDiv.textContent = 'Valid ticket scanned!';
+            
+            // Change status to used
+            await db.collection('BoughtTicket').doc(ticketId).update({
+                boughtticketstatus: 'used'
+            });
+            
+            resultDiv.innerHTML = `
+                <div class="ticketvalidationbox" style="
+                    background: rgba(255, 255, 255, 0.1);
+                    border: 2px solid #27ae60;
+                    border-radius: 10px;
+                    padding: 15px;
+                    backdrop-filter: blur(10px);
+                ">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <span style="color: white; font-weight: 600;">${buyerName}</span>
+                        <span style="
+                            background: #27ae60;
+                            color: white;
+                            padding: 4px 8px;
+                            border-radius: 12px;
+                            font-size: 12px;
+                            font-weight: 600;
+                        ">VALIDATED</span>
+                    </div>
+                    <div style="color: rgba(255,255,255,0.8); font-size: 14px;">
+                        Ticket ID: ${ticketId}<br>
+                        Status changed to: USED
+                    </div>
+                </div>
+            `;
+            
+            // Auto-clear result after 3 seconds for next scan
+            setTimeout(() => {
+                resultDiv.innerHTML = '';
+                statusDiv.textContent = 'Ready for next scan...';
+            }, 3000);
+            
+        } else {
+            // Failed - ticket already used or terminated
+            validationAudio.playFailureSound();
+            statusDiv.textContent = `Ticket ${status.toUpperCase()}`;
+            
+            let statusColor = status === 'used' ? '#f39c12' : '#e74c3c';
+            
+            resultDiv.innerHTML = `
+                <div style="
+                    background: ${statusColor};
+                    color: white;
+                    padding: 15px;
+                    border-radius: 10px;
+                    text-align: center;
+                ">
+                    <i class="fas fa-exclamation-triangle" style="font-size: 20px; margin-bottom: 10px;"></i>
+                    <div style="font-weight: 600;">${buyerName}</div>
+                    <div>Ticket Status: ${status.toUpperCase()}</div>
+                    <div style="font-size: 12px; opacity: 0.8; margin-top: 5px;">ID: ${ticketId}</div>
+                </div>
+            `;
+            
+            // Auto-clear result after 3 seconds
+            setTimeout(() => {
+                resultDiv.innerHTML = '';
+                statusDiv.textContent = 'Ready for next scan...';
+            }, 3000);
+        }
+        
+    } catch (error) {
+        validationAudio.playFailureSound();
+        statusDiv.textContent = 'Scan failed';
+        
+        resultDiv.innerHTML = `
+            <div style="
+                background: #ff4757;
+                color: white;
+                padding: 15px;
+                border-radius: 10px;
+                text-align: center;
+            ">
+                <i class="fas fa-times-circle" style="font-size: 20px; margin-bottom: 10px;"></i>
+                <div>${error.message}</div>
+            </div>
+        `;
+        
+        // Auto-clear result after 3 seconds
+        setTimeout(() => {
+            resultDiv.innerHTML = '';
+            statusDiv.textContent = 'Ready for next scan...';
+        }, 3000);
+    }
+}
+
+function closeQRScannerPage() {
+    stopCamera();
+    
+    const page = document.getElementById('qrScannerPage');
+    if (page) {
+        page.remove();
+        document.body.style.overflow = 'auto';
+    }
+}
 // Load new event tickets (unused and not expired)
 async function loadNewEventTickets() {
     const container = document.getElementById('new-tickets-container');
