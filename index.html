@@ -25809,7 +25809,7 @@ rgb(81, 67, 55)rgb(81, 61, 55)rgb(81, 58, 55)rgb(184, 50, 32);
 <script src="https://checkout.flutterwave.com/v3.js"></script>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6058145320758437"
      crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
+
 <script>
  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
@@ -42927,7 +42927,7 @@ function showInputValidationPage(quantity) {
     document.body.style.overflow = 'hidden';
 }
 
-async function validateSingleTicket(inputNumber) {
+     async function validateSingleTicket(inputNumber) {
     const ticketInput = document.getElementById(`ticketInput_${inputNumber}`);
     const resultDiv = document.getElementById(`validationResult_${inputNumber}`);
     const ticketId = ticketInput.value.trim();
@@ -42938,6 +42938,10 @@ async function validateSingleTicket(inputNumber) {
     }
     
     try {
+        // Get current event data first
+        const currentEventDoc = await db.collection('physicalEvents').doc(currentValidationEventId).get();
+        const currentEventName = currentEventDoc.exists ? currentEventDoc.data().eventName : 'Unknown Event';
+        
         // Get ticket from BoughtTicket collection
         const ticketDoc = await db.collection('BoughtTicket').doc(ticketId).get();
         
@@ -42953,15 +42957,32 @@ async function validateSingleTicket(inputNumber) {
                 ">
                     <i class="fas fa-times-circle" style="font-size: 20px; margin-bottom: 10px;"></i>
                     <div>Ticket not found</div>
+                    <button onclick="cancelTicketValidation(${inputNumber})" style="
+                        background: #95a5a6;
+                        color: white;
+                        border: none;
+                        padding: 8px 15px;
+                        border-radius: 6px;
+                        font-size: 12px;
+                        cursor: pointer;
+                        margin-top: 10px;
+                    ">
+                        <i class="fas fa-times"></i> Cancel
+                    </button>
                 </div>
             `;
             return;
         }
         
         const ticketData = ticketDoc.data();
+        const buyerName = ticketData.ticketbuyername || 'No name provided';
         
         // Verify ticket belongs to current event
         if (ticketData.physicaleventid !== currentValidationEventId) {
+            // Get the actual event this ticket belongs to
+            const actualEventDoc = await db.collection('physicalEvents').doc(ticketData.physicaleventid).get();
+            const actualEventName = actualEventDoc.exists ? actualEventDoc.data().eventName : 'Unknown Event';
+            
             validationAudio.playFailureSound();
             resultDiv.innerHTML = `
                 <div style="
@@ -42972,21 +42993,29 @@ async function validateSingleTicket(inputNumber) {
                     text-align: center;
                 ">
                     <i class="fas fa-exclamation-triangle" style="font-size: 20px; margin-bottom: 10px;"></i>
-                    <div>Ticket is not for this event</div>
+                    <div style="font-weight: 600; margin-bottom: 5px;">No part of this event</div>
+                    <div style="font-size: 14px; margin-bottom: 5px;">User: ${buyerName}</div>
+                    <div style="font-size: 14px; margin-bottom: 15px;">This ticket is for: ${actualEventName}</div>
+                    <button onclick="cancelTicketValidation(${inputNumber})" style="
+                        background: #95a5a6;
+                        color: white;
+                        border: none;
+                        padding: 8px 15px;
+                        border-radius: 6px;
+                        font-size: 12px;
+                        cursor: pointer;
+                    ">
+                        <i class="fas fa-times"></i> Cancel
+                    </button>
                 </div>
             `;
             return;
         }
         
-        // Get event name
-        const eventDoc = await db.collection('physicalEvents').doc(currentValidationEventId).get();
-        const eventName = eventDoc.exists ? eventDoc.data().eventName : 'Unknown Event';
-        
         validationAudio.playSuccessSound();
         
-        // Display ticket validation box based on status
+        // Display ticket validation box based on status (rest of function remains the same)
         const status = ticketData.boughtticketstatus;
-        const buyerName = ticketData.ticketbuyername || 'No name provided';
         
         let actionButtons = '';
         let statusColor = '#4ECDC4';
@@ -42994,6 +43023,7 @@ async function validateSingleTicket(inputNumber) {
         
         if (status === 'unused') {
             statusColor = '#4ECDC4';
+            statusText = 'VERIFIED';
             actionButtons = `
                 <button onclick="stampTicket('${ticketId}', ${inputNumber})" style="
                     background: #27ae60;
@@ -43033,6 +43063,7 @@ async function validateSingleTicket(inputNumber) {
             `;
         } else if (status === 'used') {
             statusColor = '#f39c12';
+            statusText = 'USED';
             actionButtons = `
                 <button onclick="deletePhyTicketValidation('${ticketId}', ${inputNumber})" style="
                     background: #e74c3c;
@@ -43096,7 +43127,7 @@ async function validateSingleTicket(inputNumber) {
                     ">${statusText}</span>
                 </div>
                 <div style="color: rgba(255,255,255,0.8); font-size: 14px; margin-bottom: 15px;">
-                    Event: ${eventName}<br>
+                    Event: ${currentEventName}<br>
                     Ticket ID: ${ticketId}
                 </div>
                 <div class="ticketvalidation-tools" style="display: flex; gap: 5px; flex-wrap: wrap;">
@@ -43118,11 +43149,61 @@ async function validateSingleTicket(inputNumber) {
             ">
                 <i class="fas fa-exclamation-triangle" style="font-size: 20px; margin-bottom: 10px;"></i>
                 <div>Error validating ticket</div>
+                <button onclick="cancelTicketValidation(${inputNumber})" style="
+                    background: #95a5a6;
+                    color: white;
+                    border: none;
+                    padding: 8px 15px;
+                    border-radius: 6px;
+                    font-size: 12px;
+                    cursor: pointer;
+                    margin-top: 10px;
+                ">
+                    <i class="fas fa-times"></i> Cancel
+                </button>
             </div>
         `;
     }
 }
 
+
+function addEventIdResetButton() {
+    return `
+        <button onclick="resetEventId()" style="
+            background: #f39c12;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            margin-left: 10px;
+        ">
+            <i class="fas fa-sync"></i> Change Event
+        </button>
+    `;
+}
+
+function resetEventId() {
+    if (confirm('Are you sure you want to change the event ID? This will restart the validation session.')) {
+        currentValidationEventId = null;
+        validationSessionStart = null;
+        
+        // Close current page and restart
+        const qrPage = document.getElementById('qrScannerPage');
+        const inputPage = document.getElementById('inputValidationPage');
+        
+        if (qrPage) {
+            closeQRScannerPage();
+            openTicketQRScanner();
+        } else if (inputPage) {
+            closeInputValidationPage();
+            openTicketInputScanner();
+        }
+    }
+}
+        
+  
 function closeInputValidationPage() {
     const page = document.getElementById('inputValidationPage');
     if (page) {
@@ -43526,14 +43607,23 @@ function handleFileUpload(event) {
     reader.readAsDataURL(file);
 }
 
-async function processQRCode(qrData) {
+        
+   
+    async function processQRCode(qrData) {
     const statusDiv = document.getElementById('qr-scan-status');
     const resultDiv = document.getElementById('qr-validation-result');
     
+    // Start processing timer
+    const processingStart = Date.now();
+    
     try {
-        statusDiv.textContent = 'Processing QR code...';
+        statusDiv.innerHTML = `
+            <div style="color: #f39c12;">
+                <i class="fas fa-spinner fa-spin"></i> Scanned! Processing...
+            </div>
+        `;
         
-        // Parse QR data
+        // Parse QR data with timeout
         let ticketInfo;
         try {
             ticketInfo = JSON.parse(qrData);
@@ -43546,27 +43636,71 @@ async function processQRCode(qrData) {
             throw new Error('No ticket ID found in QR code');
         }
         
-        // Get ticket from Firebase
-        const ticketDoc = await db.collection('BoughtTicket').doc(ticketId).get();
+        // Get ticket from Firebase with timeout
+        const ticketPromise = db.collection('BoughtTicket').doc(ticketId).get();
+        const eventPromise = db.collection('physicalEvents').doc(currentValidationEventId).get();
+        
+        const [ticketDoc, currentEventDoc] = await Promise.race([
+            Promise.all([ticketPromise, eventPromise]),
+            new Promise((_, reject) => setTimeout(() => reject(new Error('Processing timeout')), 8000))
+        ]);
         
         if (!ticketDoc.exists) {
             throw new Error('Ticket not found');
         }
         
         const ticketData = ticketDoc.data();
+        const currentEventData = currentEventDoc.data();
+        const currentEventName = currentEventData ? currentEventData.eventName : 'Unknown Event';
+        const buyerName = ticketData.ticketbuyername || 'No name provided';
         
-        // Verify ticket belongs to current event
+        // Check if ticket belongs to current event
         if (ticketData.physicaleventid !== currentValidationEventId) {
-            throw new Error('Ticket is not for this event');
+            // Get the actual event this ticket belongs to
+            const actualEventDoc = await db.collection('physicalEvents').doc(ticketData.physicaleventid).get();
+            const actualEventName = actualEventDoc.exists ? actualEventDoc.data().eventName : 'Unknown Event';
+            
+            validationAudio.playFailureSound();
+            statusDiv.textContent = 'Wrong Event';
+            
+            resultDiv.innerHTML = `
+                <div style="
+                    background: #ff4757;
+                    color: white;
+                    padding: 15px;
+                    border-radius: 10px;
+                    text-align: center;
+                ">
+                    <i class="fas fa-exclamation-triangle" style="font-size: 20px; margin-bottom: 10px;"></i>
+                    <div style="font-weight: 600; margin-bottom: 5px;">No part of this event</div>
+                    <div style="font-size: 14px; margin-bottom: 10px;">User: ${buyerName}</div>
+                    <div style="font-size: 14px; margin-bottom: 15px;">This ticket is for: ${actualEventName}</div>
+                    <button onclick="clearQRResult()" style="
+                        background: #95a5a6;
+                        color: white;
+                        border: none;
+                        padding: 8px 15px;
+                        border-radius: 6px;
+                        font-size: 12px;
+                        cursor: pointer;
+                    ">
+                        <i class="fas fa-times"></i> Cancel
+                    </button>
+                </div>
+            `;
+            return;
         }
         
         const status = ticketData.boughtticketstatus;
-        const buyerName = ticketData.ticketbuyername || 'No name provided';
         
         if (status === 'unused') {
-            // Success - show validation box and change status
+            // Success - show verification and change status
             validationAudio.playSuccessSound();
-            statusDiv.textContent = 'Valid ticket scanned!';
+            statusDiv.innerHTML = `
+                <div style="color: #27ae60; font-weight: 600;">
+                    <i class="fas fa-check-circle"></i> Verified!
+                </div>
+            `;
             
             // Change status to used
             await db.collection('BoughtTicket').doc(ticketId).update({
@@ -43574,69 +43708,88 @@ async function processQRCode(qrData) {
             });
             
             resultDiv.innerHTML = `
-                <div class="ticketvalidationbox" style="
-                    background: rgba(255, 255, 255, 0.1);
-                    border: 2px solid #27ae60;
-                    border-radius: 10px;
-                    padding: 15px;
-                    backdrop-filter: blur(10px);
-                ">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                        <span style="color: white; font-weight: 600;">${buyerName}</span>
-                        <span style="
-                            background: #27ae60;
-                            color: white;
-                            padding: 4px 8px;
-                            border-radius: 12px;
-                            font-size: 12px;
-                            font-weight: 600;
-                        ">VALIDATED</span>
-                    </div>
-                    <div style="color: rgba(255,255,255,0.8); font-size: 14px;">
-                        Ticket ID: ${ticketId}<br>
-                        Status changed to: USED
-                    </div>
-                </div>
-            `;
-            
-            // Auto-clear result after 3 seconds for next scan
-            setTimeout(() => {
-                resultDiv.innerHTML = '';
-                statusDiv.textContent = 'Ready for next scan...';
-            }, 3000);
-            
-        } else {
-            // Failed - ticket already used or terminated
-            validationAudio.playFailureSound();
-            statusDiv.textContent = `Ticket ${status.toUpperCase()}`;
-            
-            let statusColor = status === 'used' ? '#f39c12' : '#e74c3c';
-            
-            resultDiv.innerHTML = `
                 <div style="
-                    background: ${statusColor};
+                    background: rgba(39, 174, 96, 0.2);
+                    border: 2px solid #27ae60;
                     color: white;
                     padding: 15px;
                     border-radius: 10px;
                     text-align: center;
                 ">
-                    <i class="fas fa-exclamation-triangle" style="font-size: 20px; margin-bottom: 10px;"></i>
-                    <div style="font-weight: 600;">${buyerName}</div>
-                    <div>Ticket Status: ${status.toUpperCase()}</div>
-                    <div style="font-size: 12px; opacity: 0.8; margin-top: 5px;">ID: ${ticketId}</div>
+                    <i class="fas fa-check-circle" style="font-size: 24px; margin-bottom: 10px; color: #27ae60;"></i>
+                    <div style="font-weight: 600; font-size: 18px; margin-bottom: 5px;">VERIFIED</div>
+                    <div style="font-size: 16px; margin-bottom: 5px;">User: ${buyerName}</div>
+                    <div style="font-size: 14px; opacity: 0.9;">Event: ${currentEventName}</div>
                 </div>
             `;
             
-            // Auto-clear result after 3 seconds
-            setTimeout(() => {
-                resultDiv.innerHTML = '';
-                statusDiv.textContent = 'Ready for next scan...';
-            }, 3000);
+        } else if (status === 'used') {
+            // Already used
+            validationAudio.playFailureSound();
+            statusDiv.innerHTML = `
+                <div style="color: #f39c12; font-weight: 600;">
+                    <i class="fas fa-exclamation-circle"></i> Already Used!
+                </div>
+            `;
+            
+            resultDiv.innerHTML = `
+                <div style="
+                    background: rgba(243, 156, 18, 0.2);
+                    border: 2px solid #f39c12;
+                    color: white;
+                    padding: 15px;
+                    border-radius: 10px;
+                    text-align: center;
+                ">
+                    <i class="fas fa-exclamation-circle" style="font-size: 24px; margin-bottom: 10px; color: #f39c12;"></i>
+                    <div style="font-weight: 600; font-size: 18px; margin-bottom: 5px;">USED</div>
+                    <div style="font-size: 16px; margin-bottom: 5px;">User: ${buyerName}</div>
+                    <div style="font-size: 14px; opacity: 0.9;">Event: ${currentEventName}</div>
+                </div>
+            `;
+            
+        } else if (status === 'terminated') {
+            // Terminated ticket
+            validationAudio.playFailureSound();
+            statusDiv.innerHTML = `
+                <div style="color: #e74c3c; font-weight: 600;">
+                    <i class="fas fa-ban"></i> Terminated!
+                </div>
+            `;
+            
+            resultDiv.innerHTML = `
+                <div style="
+                    background: rgba(231, 76, 60, 0.2);
+                    border: 2px solid #e74c3c;
+                    color: white;
+                    padding: 15px;
+                    border-radius: 10px;
+                    text-align: center;
+                ">
+                    <i class="fas fa-ban" style="font-size: 24px; margin-bottom: 10px; color: #e74c3c;"></i>
+                    <div style="font-weight: 600; font-size: 18px; margin-bottom: 5px;">TERMINATED</div>
+                    <div style="font-size: 16px; margin-bottom: 5px;">User: ${buyerName}</div>
+                    <div style="font-size: 14px; opacity: 0.9;">Event: ${currentEventName}</div>
+                </div>
+            `;
         }
+        
+        // Show processing time
+        const processingTime = ((Date.now() - processingStart) / 1000).toFixed(1);
+        console.log(`QR processed in ${processingTime}s`);
+        
+        // Auto-clear result after 3 seconds for next scan
+        setTimeout(() => {
+            clearQRResult();
+        }, 3000);
         
     } catch (error) {
         validationAudio.playFailureSound();
-        statusDiv.textContent = 'Scan failed';
+        statusDiv.innerHTML = `
+            <div style="color: #e74c3c; font-weight: 600;">
+                <i class="fas fa-times-circle"></i> Scan Failed
+            </div>
+        `;
         
         resultDiv.innerHTML = `
             <div style="
@@ -43647,15 +43800,37 @@ async function processQRCode(qrData) {
                 text-align: center;
             ">
                 <i class="fas fa-times-circle" style="font-size: 20px; margin-bottom: 10px;"></i>
-                <div>${error.message}</div>
+                <div style="font-weight: 600; margin-bottom: 10px;">${error.message}</div>
+                <button onclick="clearQRResult()" style="
+                    background: #95a5a6;
+                    color: white;
+                    border: none;
+                    padding: 8px 15px;
+                    border-radius: 6px;
+                    font-size: 12px;
+                    cursor: pointer;
+                ">
+                    <i class="fas fa-times"></i> Cancel
+                </button>
             </div>
         `;
         
-        // Auto-clear result after 3 seconds
+        // Auto-clear result after 5 seconds
         setTimeout(() => {
-            resultDiv.innerHTML = '';
-            statusDiv.textContent = 'Ready for next scan...';
-        }, 3000);
+            clearQRResult();
+        }, 5000);
+    }
+}
+
+function clearQRResult() {
+    const statusDiv = document.getElementById('qr-scan-status');
+    const resultDiv = document.getElementById('qr-validation-result');
+    
+    if (statusDiv) {
+        statusDiv.textContent = 'Ready for next scan...';
+    }
+    if (resultDiv) {
+        resultDiv.innerHTML = '';
     }
 }
 
@@ -43668,6 +43843,8 @@ function closeQRScannerPage() {
         document.body.style.overflow = 'auto';
     }
 }
+
+
 // Load new event tickets (unused and not expired)
 async function loadNewEventTickets() {
     const container = document.getElementById('new-tickets-container');
