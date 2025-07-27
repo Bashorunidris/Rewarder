@@ -41810,6 +41810,8 @@ async function loadOldEventTickets() {
 // Generate old physical event ticket card (same layout but grayed out)
 function generateOldPhyEventTicketCard(ticket) {
     const eventData = ticket.eventData;
+    const isMobile = window.innerWidth <= 768;
+    const isSmallMobile = window.innerWidth <= 480;
     
     // Format date and time
     const startDate = new Date(eventData.startDateTime);
@@ -41893,10 +41895,6 @@ function generateOldPhyEventTicketCard(ticket) {
         `;
     }
 
-   function generateResponsiveTicketCard(ticket, eventData, statusBadge, backgroundStyle, sponsorsHTML, formattedDate, formattedTime) {
-    const isMobile = window.innerWidth <= 768;
-    const isSmallMobile = window.innerWidth <= 480;
-    
     return `
         <div style="
             background: rgba(255, 255, 255, 0.05);
@@ -41977,7 +41975,7 @@ function generateOldPhyEventTicketCard(ticket) {
         </div>
     `;
 }
-        
+
 // Update the other close functions to include function definitions that might be missing
 function closePhysicalEventTicketPage() {
     const page = document.getElementById('physical-event-ticket-page');
