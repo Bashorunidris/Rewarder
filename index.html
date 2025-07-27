@@ -41811,9 +41811,6 @@ async function loadOldEventTickets() {
 function generateOldPhyEventTicketCard(ticket) {
     const eventData = ticket.eventData;
     
-    const isMobile = window.innerWidth <= 768;
-    const isUltraMobile = window.innerWidth <= 480;
-    
     // Format date and time
     const startDate = new Date(eventData.startDateTime);
     const endDate = new Date(eventData.endDateTime);
@@ -41896,8 +41893,12 @@ function generateOldPhyEventTicketCard(ticket) {
         `;
     }
 
+   function generateResponsiveTicketCard(ticket, eventData, statusBadge, backgroundStyle, sponsorsHTML, formattedDate, formattedTime) {
+    const isMobile = window.innerWidth <= 768;
+    const isSmallMobile = window.innerWidth <= 480;
+    
     return `
-         <div style="
+        <div style="
             background: rgba(255, 255, 255, 0.05);
             border-radius: 20px;
             padding: ${isMobile ? '15px' : '20px'};
@@ -41905,26 +41906,20 @@ function generateOldPhyEventTicketCard(ticket) {
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             opacity: 0.8;
+            box-sizing: border-box;
         ">
-            
             <!-- Status Badge -->
             <div style="display: flex; justify-content: flex-end; margin-bottom: ${isMobile ? '12px' : '15px'};">
                 ${statusBadge}
             </div>
             
             <!-- Main Card Content -->
-            <div style="
-                display: flex; 
-                gap: ${isMobile ? '15px' : '20px'}; 
-                margin-bottom: ${isMobile ? '15px' : '20px'};
-                flex-direction: ${isMobile ? 'column' : 'row'};
-            ">
+            <div style="display: ${isMobile ? 'block' : 'flex'}; gap: ${isMobile ? '0' : '20px'}; margin-bottom: ${isMobile ? '15px' : '20px'};">
                 
-                <!-- Left: PhyEvent Background Container -->
+                <!-- Event Background Container -->
                 <div style="
-                    flex: ${isMobile ? '1' : '0 0 200px'};
-                    width: ${isMobile ? '100%' : 'auto'};
-                    height: ${isUltraMobile ? '120px' : isMobile ? '140px' : '150px'};
+                    ${isMobile ? 'width: 100%; margin-bottom: 15px;' : 'flex: 0 0 200px;'}
+                    height: ${isSmallMobile ? '120px' : isMobile ? '140px' : '150px'};
                     border-radius: 15px;
                     ${backgroundStyle}
                     display: flex;
@@ -41936,102 +41931,41 @@ function generateOldPhyEventTicketCard(ticket) {
                     position: relative;
                     overflow: hidden;
                 ">
-                    <div style="
-                        position: absolute;
-                        top: 0;
-                        left: 0;
-                        right: 0;
-                        bottom: 0;
-                        background: rgba(0,0,0,0.4);
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                    ">
-                        <i class="fas fa-ticket-alt" style="font-size: ${isMobile ? '24px' : '32px'}; opacity: 0.6;"></i>
+                    <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-ticket-alt" style="font-size: ${isSmallMobile ? '20px' : isMobile ? '24px' : '32px'}; opacity: 0.6;"></i>
                     </div>
                 </div>
                 
-                <!-- Right: Ticket Details -->
-                <div style="flex: 1; color: rgba(255,255,255,0.8);">
-                    <!-- User Name (read-only) -->
+                <!-- Ticket Details -->
+                <div style="${isMobile ? 'width: 100%;' : 'flex: 1;'} color: rgba(255,255,255,0.8);">
+                    <!-- User Name -->
                     <div style="margin-bottom: ${isMobile ? '12px' : '15px'};">
-                        <div style="
-                            width: 100%;
-                            padding: ${isMobile ? '12px' : '10px'};
-                            border: 2px solid rgba(255, 255, 255, 0.1);
-                            border-radius: 8px;
-                            background: rgba(255, 255, 255, 0.05);
-                            color: rgba(255,255,255,0.7);
-                            font-size: ${isUltraMobile ? '14px' : isMobile ? '15px' : '16px'};
-                            font-weight: 600;
-                            box-sizing: border-box;
-                            -webkit-user-select: none;
-                            user-select: none;
-                        ">
+                        <div style="width: 100%; padding: ${isMobile ? '12px' : '10px'}; border: 2px solid rgba(255, 255, 255, 0.1); border-radius: 8px; background: rgba(255, 255, 255, 0.05); color: rgba(255,255,255,0.7); font-size: ${isSmallMobile ? '14px' : isMobile ? '15px' : '16px'}; font-weight: 600; box-sizing: border-box;">
                             ${ticket.userName || 'No name provided'}
                         </div>
                     </div>
                     
                     <!-- Ticket Info -->
                     <div style="display: flex; flex-direction: column; gap: ${isMobile ? '6px' : '8px'};">
-                        <div style="
-                            font-size: ${isUltraMobile ? '12px' : isMobile ? '13px' : '14px'}; 
-                            opacity: 0.6;
-                            word-break: break-all;
-                        ">
+                        <div style="font-size: ${isSmallMobile ? '11px' : isMobile ? '12px' : '14px'}; opacity: 0.6; word-break: break-all;">
                             <strong>Ticket ID:</strong> ${ticket.ticketid}
                         </div>
-                        <div style="
-                            font-size: ${isUltraMobile ? '14px' : isMobile ? '15px' : '16px'}; 
-                            font-weight: 600; 
-                            opacity: 0.8;
-                        ">
+                        <div style="font-size: ${isSmallMobile ? '13px' : isMobile ? '14px' : '16px'}; font-weight: 600; opacity: 0.8;">
                             <strong>Type:</strong> ${ticket.boughtticketname}
                         </div>
-                        <div style="
-                            font-size: ${isUltraMobile ? '12px' : isMobile ? '13px' : '14px'}; 
-                            opacity: 0.7;
-                        ">
+                        <div style="font-size: ${isSmallMobile ? '11px' : isMobile ? '12px' : '14px'}; opacity: 0.7;">
                             <strong>Date:</strong> ${formattedDate}
                         </div>
-                        <div style="
-                            font-size: ${isUltraMobile ? '12px' : isMobile ? '13px' : '14px'}; 
-                            opacity: 0.7;
-                        ">
+                        <div style="font-size: ${isSmallMobile ? '11px' : isMobile ? '12px' : '14px'}; opacity: 0.7;">
                             <strong>Time:</strong> ${formattedTime}
                         </div>
-                        <div style="
-                            font-size: ${isUltraMobile ? '12px' : isMobile ? '13px' : '14px'}; 
-                            opacity: 0.7;
-                            word-break: break-word;
-                        ">
+                        <div style="font-size: ${isSmallMobile ? '11px' : isMobile ? '12px' : '14px'}; opacity: 0.7; word-break: break-word;">
                             <strong>Location:</strong> ${eventData.location}
                         </div>
                         
-                        <!-- QR Code Button (disabled) -->
-                        <button disabled class="touch-button" style="
-                            background: #666;
-                            color: rgba(255,255,255,0.5);
-                            border: none;
-                            padding: ${isMobile ? '12px 16px' : '10px 20px'};
-                            border-radius: 8px;
-                            font-size: ${isUltraMobile ? '13px' : isMobile ? '14px' : '14px'};
-                            font-weight: 600;
-                            cursor: not-allowed;
-                            margin-top: ${isMobile ? '12px' : '10px'};
-                            width: ${isMobile ? '100%' : 'auto'};
-                            min-height: ${isMobile ? '44px' : 'auto'};
-                            box-sizing: border-box;
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-                            gap: 8px;
-                            -webkit-appearance: none;
-                            -webkit-user-select: none;
-                            user-select: none;
-                            -webkit-touch-callout: none;
-                        ">
-                            <i class="fas fa-qrcode" style="font-size: ${isMobile ? '14px' : '14px'};"></i>
+                        <!-- QR Code Button -->
+                        <button disabled style="background: #666; color: rgba(255,255,255,0.5); border: none; padding: ${isMobile ? '12px 16px' : '10px 20px'}; border-radius: 8px; font-size: ${isSmallMobile ? '12px' : isMobile ? '13px' : '14px'}; font-weight: 600; cursor: not-allowed; margin-top: ${isMobile ? '12px' : '10px'}; width: ${isMobile ? '100%' : 'auto'}; min-height: ${isMobile ? '44px' : 'auto'}; box-sizing: border-box; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                            <i class="fas fa-qrcode" style="font-size: ${isSmallMobile ? '12px' : '14px'};"></i>
                             <span>QR Code (${ticket.boughtticketstatus === 'used' ? 'Used' : 'Expired'})</span>
                         </button>
                     </div>
@@ -42043,7 +41977,7 @@ function generateOldPhyEventTicketCard(ticket) {
         </div>
     `;
 }
-
+        
 // Update the other close functions to include function definitions that might be missing
 function closePhysicalEventTicketPage() {
     const page = document.getElementById('physical-event-ticket-page');
