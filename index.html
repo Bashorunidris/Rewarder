@@ -43432,51 +43432,9 @@ function showQRScanner() {
                             border-radius: 10px;
                             pointer-events: none;
                         "></div>
-                    </div>
-                    
-                    <div style="display: flex; gap: 10px; justify-content: center; margin-bottom: 20px;">
-                        <button onclick="startCamera()" style="
-                            background: #27ae60;
-                            color: white;
-                            border: none;
-                            padding: 12px 20px;
-                            border-radius: 8px;
-                            font-size: 14px;
-                            font-weight: 600;
-                            cursor: pointer;
-                        ">
-                            <i class="fas fa-camera"></i> Start Camera
-                        </button>
-                        
-                        <button onclick="stopCamera()" style="
-                            background: #e74c3c;
-                            color: white;
-                            border: none;
-                            padding: 12px 20px;
-                            border-radius: 8px;
-                            font-size: 14px;
-                            font-weight: 600;
-                            cursor: pointer;
-                        ">
-                            <i class="fas fa-stop"></i> Stop Camera
-                        </button>
-                        
-                        <input type="file" id="qr-file-input" accept="image/*" style="display: none;" onchange="handleFileUpload(event)">
-                        <button onclick="document.getElementById('qr-file-input').click()" style="
-                            background: #f39c12;
-                            color: white;
-                            border: none;
-                            padding: 12px 20px;
-                            border-radius: 8px;
-                            font-size: 14px;
-                            font-weight: 600;
-                            cursor: pointer;
-                        ">
-                            <i class="fas fa-upload"></i> Upload QR
-                        </button>
-                    </div>
-                    
-                    <div id="qr-scan-status" style="
+
+
+                        <div id="qr-scan-status" style="
                         color: white;
                         font-size: 14px;
                         margin-bottom: 20px;
@@ -43487,6 +43445,16 @@ function showQRScanner() {
                     
                     <!-- Validation Result -->
                     <div id="qr-validation-result" style="margin-bottom: 20px;"></div>
+                    </div>
+                    
+                    
+                        
+                       
+                        
+                       
+                    </div>
+                    
+                    
                 </div>
                 
                 <div style="text-align: center;">
