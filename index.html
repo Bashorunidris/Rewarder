@@ -41834,16 +41834,18 @@ function generateOldPhyEventTicketCard(ticket) {
         minute: '2-digit' 
     })}`;
 
-    // Generate background style (grayed out)
-    let backgroundStyle = 'background: linear-gradient(135deg, #999 0%, #666 100%); filter: grayscale(100%);';
+    // Generate background style (same as new event but grayed out)
+    let backgroundStyle = 'background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); filter: grayscale(100%);';
     if (ticket.eventbackground) {
         if (ticket.eventbackground.type === 'media') {
-            backgroundStyle = `background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('${ticket.eventbackground.data}'); background-size: cover; background-position: center; filter: grayscale(100%);`;
+            backgroundStyle = `background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('${ticket.eventbackground.data}'); background-size: cover; background-position: center; filter: grayscale(100%);`;
         } else if (ticket.eventbackground.type === 'gradient') {
             backgroundStyle = `background: ${ticket.eventbackground.gradient}; filter: grayscale(100%);`;
         } else if (ticket.eventbackground.type === 'color') {
             backgroundStyle = `background-color: ${ticket.eventbackground.color}; filter: grayscale(100%);`;
         }
+    } else if (ticket.boughtticketbackground) {
+        backgroundStyle = `background: ${ticket.boughtticketbackground}; filter: grayscale(100%);`;
     }
 
     // Status badge
@@ -41899,6 +41901,9 @@ function generateOldPhyEventTicketCard(ticket) {
         `;
     }
 
+    // Get the actual ticket buyer name
+    const savedBuyerName = ticket.ticketbuyername || 'No name provided';
+
     return `
         <div style="
             background: rgba(255, 255, 255, 0.05);
@@ -41943,7 +41948,7 @@ function generateOldPhyEventTicketCard(ticket) {
                     <!-- User Name (Always Visible) -->
                     <div style="margin-bottom: ${isMobile ? '12px' : '15px'};">
                         <div style="width: 100%; padding: ${isMobile ? '12px' : '10px'}; border: 2px solid rgba(255, 255, 255, 0.1); border-radius: 8px; background: rgba(255, 255, 255, 0.05); color: rgba(255,255,255,0.7); font-size: ${isSmallMobile ? '14px' : isMobile ? '15px' : '16px'}; font-weight: 600; box-sizing: border-box;">
-                            ${ticket.userName || 'No name provided'}
+                            ${savedBuyerName}
                         </div>
                     </div>
                     
@@ -41969,6 +41974,7 @@ function generateOldPhyEventTicketCard(ticket) {
                         box-sizing: border-box;
                         -webkit-user-select: none;
                         user-select: none;
+                        -webkit-appearance: none;
                     " onmouseover="this.style.background='rgba(76, 217, 196, 0.3)'" onmouseout="this.style.background='rgba(76, 217, 196, 0.2)'">
                         <i class="fas fa-chevron-down" id="${cardId}-icon" style="transition: transform 0.3s ease;"></i>
                         <span id="${cardId}-text">Show Ticket Details</span>
@@ -41999,7 +42005,7 @@ function generateOldPhyEventTicketCard(ticket) {
                         </div>
                         
                         <!-- QR Code Button -->
-                        <button disabled style="background: #666; color: rgba(255,255,255,0.5); border: none; padding: ${isMobile ? '12px 16px' : '10px 20px'}; border-radius: 8px; font-size: ${isSmallMobile ? '12px' : isMobile ? '13px' : '14px'}; font-weight: 600; cursor: not-allowed; margin-top: ${isMobile ? '12px' : '10px'}; width: ${isMobile ? '100%' : 'auto'}; min-height: ${isMobile ? '44px' : 'auto'}; box-sizing: border-box; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                        <button disabled style="background: #666; color: rgba(255,255,255,0.5); border: none; padding: ${isMobile ? '12px 16px' : '10px 20px'}; border-radius: 8px; font-size: ${isSmallMobile ? '12px' : isMobile ? '13px' : '14px'}; font-weight: 600; cursor: not-allowed; margin-top: ${isMobile ? '12px' : '10px'}; width: ${isMobile ? '100%' : 'auto'}; min-height: ${isMobile ? '44px' : 'auto'}; box-sizing: border-box; display: flex; align-items: center; justify-content: center; gap: 8px; -webkit-appearance: none;">
                             <i class="fas fa-qrcode" style="font-size: ${isSmallMobile ? '12px' : '14px'};"></i>
                             <span>QR Code (${ticket.boughtticketstatus === 'used' ? 'Used' : 'Expired'})</span>
                         </button>
@@ -42013,28 +42019,6 @@ function generateOldPhyEventTicketCard(ticket) {
             </div>
         </div>
     `;
-}
-
-// Add this toggle function to your JavaScript
-function toggleTicketDetails(cardId) {
-    const detailsDiv = document.getElementById(cardId + '-details');
-    const sponsorsDiv = document.getElementById(cardId + '-sponsors');
-    const icon = document.getElementById(cardId + '-icon');
-    const text = document.getElementById(cardId + '-text');
-    
-    if (detailsDiv.style.display === 'none') {
-        // Show details
-        detailsDiv.style.display = 'flex';
-        sponsorsDiv.style.display = 'block';
-        icon.style.transform = 'rotate(180deg)';
-        text.textContent = 'Hide Ticket Details';
-    } else {
-        // Hide details
-        detailsDiv.style.display = 'none';
-        sponsorsDiv.style.display = 'none';
-        icon.style.transform = 'rotate(0deg)';
-        text.textContent = 'Show Ticket Details';
-    }
 }
 
 // Update the other close functions to include function definitions that might be missing
