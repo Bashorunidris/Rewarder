@@ -42149,18 +42149,14 @@ function openPhysicalEventTicketPage() {
 
     const pageHTML = `
         <div id="physical-event-ticket-page" style="
-           .physical-event-ticket-page {
-     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #ffffff;
-    z-index: 1001;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-
-
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            z-index: 10000;
+            overflow-y: auto;
         ">
             <!-- Header -->
             <div style="
