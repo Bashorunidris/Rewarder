@@ -41808,10 +41808,14 @@ async function loadOldEventTickets() {
 }
 
 // Generate old physical event ticket card (same layout but grayed out)
+
 function generateOldPhyEventTicketCard(ticket) {
     const eventData = ticket.eventData;
     const isMobile = window.innerWidth <= 768;
     const isSmallMobile = window.innerWidth <= 480;
+    
+    // Generate unique ID for this card
+    const cardId = 'ticket-card-' + ticket.ticketid.replace(/[^a-zA-Z0-9]/g, '');
     
     // Format date and time
     const startDate = new Date(eventData.startDateTime);
@@ -41936,15 +41940,48 @@ function generateOldPhyEventTicketCard(ticket) {
                 
                 <!-- Ticket Details -->
                 <div style="${isMobile ? 'width: 100%;' : 'flex: 1;'} color: rgba(255,255,255,0.8);">
-                    <!-- User Name -->
+                    <!-- User Name (Always Visible) -->
                     <div style="margin-bottom: ${isMobile ? '12px' : '15px'};">
                         <div style="width: 100%; padding: ${isMobile ? '12px' : '10px'}; border: 2px solid rgba(255, 255, 255, 0.1); border-radius: 8px; background: rgba(255, 255, 255, 0.05); color: rgba(255,255,255,0.7); font-size: ${isSmallMobile ? '14px' : isMobile ? '15px' : '16px'}; font-weight: 600; box-sizing: border-box;">
                             ${ticket.userName || 'No name provided'}
                         </div>
                     </div>
                     
-                    <!-- Ticket Info -->
-                    <div style="display: flex; flex-direction: column; gap: ${isMobile ? '6px' : '8px'};">
+                    ${isMobile ? `
+                    <!-- Mobile Toggle Button -->
+                    <button onclick="toggleTicketDetails('${cardId}')" style="
+                        background: rgba(76, 217, 196, 0.2);
+                        border: 2px solid #4CD9C4;
+                        color: #4CD9C4;
+                        padding: 10px 16px;
+                        border-radius: 8px;
+                        font-size: 14px;
+                        font-weight: 600;
+                        cursor: pointer;
+                        width: 100%;
+                        margin-bottom: 12px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        gap: 8px;
+                        transition: all 0.3s ease;
+                        min-height: 44px;
+                        box-sizing: border-box;
+                        -webkit-user-select: none;
+                        user-select: none;
+                    " onmouseover="this.style.background='rgba(76, 217, 196, 0.3)'" onmouseout="this.style.background='rgba(76, 217, 196, 0.2)'">
+                        <i class="fas fa-chevron-down" id="${cardId}-icon" style="transition: transform 0.3s ease;"></i>
+                        <span id="${cardId}-text">Show Ticket Details</span>
+                    </button>
+                    ` : ''}
+                    
+                    <!-- Ticket Info (Collapsible on Mobile) -->
+                    <div id="${cardId}-details" style="
+                        display: ${isMobile ? 'none' : 'flex'}; 
+                        flex-direction: column; 
+                        gap: ${isMobile ? '6px' : '8px'};
+                        ${isMobile ? 'overflow: hidden; transition: all 0.3s ease;' : ''}
+                    ">
                         <div style="font-size: ${isSmallMobile ? '11px' : isMobile ? '12px' : '14px'}; opacity: 0.6; word-break: break-all;">
                             <strong>Ticket ID:</strong> ${ticket.ticketid}
                         </div>
@@ -41970,10 +42007,34 @@ function generateOldPhyEventTicketCard(ticket) {
                 </div>
             </div>
             
-            <!-- Sponsors Section -->
-            ${sponsorsHTML}
+            <!-- Sponsors Section (Hidden on Mobile when details are collapsed) -->
+            <div id="${cardId}-sponsors" style="display: ${isMobile ? 'none' : 'block'};">
+                ${sponsorsHTML}
+            </div>
         </div>
     `;
+}
+
+// Add this toggle function to your JavaScript
+function toggleTicketDetails(cardId) {
+    const detailsDiv = document.getElementById(cardId + '-details');
+    const sponsorsDiv = document.getElementById(cardId + '-sponsors');
+    const icon = document.getElementById(cardId + '-icon');
+    const text = document.getElementById(cardId + '-text');
+    
+    if (detailsDiv.style.display === 'none') {
+        // Show details
+        detailsDiv.style.display = 'flex';
+        sponsorsDiv.style.display = 'block';
+        icon.style.transform = 'rotate(180deg)';
+        text.textContent = 'Hide Ticket Details';
+    } else {
+        // Hide details
+        detailsDiv.style.display = 'none';
+        sponsorsDiv.style.display = 'none';
+        icon.style.transform = 'rotate(0deg)';
+        text.textContent = 'Show Ticket Details';
+    }
 }
 
 // Update the other close functions to include function definitions that might be missing
@@ -41990,8 +42051,6 @@ function openOnlineEventTicketPage() {
     closeTicketsSelectionModal();
     alert('Online Event Tickets feature will be implemented soon!');
 }
-
-
 
 // ================================
 // TICKETS SYSTEM - COMPLETE IMPLEMENTATION
