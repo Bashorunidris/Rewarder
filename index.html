@@ -37934,9 +37934,11 @@ async function createPhysicalEventCard(eventData) {
     cardDiv.className = 'physical-event-card';
     cardDiv.setAttribute('data-event-id', eventData.physicalEventId);
     
-    // Calculate 
-    const totalRevenue = await calculateTotalRevenue(eventData.physicalEventId);
-const totalSold = await calculateTotalSold(eventData.physicalEventId);
+    // Calculate stats
+   const totalRevenue = await calculateTotalRevenue(eventData.physicalEventId);
+
+    const totalBuyers = calculateTotalBuyers(eventData.tickets);
+    const ticketStats = calculateTicketStats(eventData.tickets);
     const totalWithdrawn = eventData.totalWithdrawn || 0;
     const likesCount = eventData.likesCount || 0;
     const currentUser = firebase.auth().currentUser;
@@ -38946,19 +38948,37 @@ async function calculateTotalRevenue(eventId) {
     }
 }
 
-// Helper function to calculate total tickets sold from BoughtTicket collection  
-async function calculateTotalSold(eventId) {
-    try {
-        const ticketsSnapshot = await db.collection('BoughtTicket')
-            .where('physicaleventid', '==', eventId)
-            .where('boughtticketstatus', 'in', ['unused', 'used']) // Exclude terminated tickets
-            .get();
-        
-        return ticketsSnapshot.size; // Count of tickets
-    } catch (error) {
-        console.error('Error calculating total sold:', error);
-        return 0;
+// Helper function to calculate total buyers
+function calculateTotalBuyers(tickets) {
+    if (!tickets || !Array.isArray(tickets)) return 0;
+    
+    return tickets.reduce((total, ticket) => {
+        return total + (ticket.sold || 0);
+    }, 0);
+}
+
+// Helper function to calculate ticket stats
+function calculateTicketStats(tickets) {
+    if (!tickets || !Array.isArray(tickets)) {
+        return { vipSold: 0, regularSold: 0 };
     }
+
+    let vipSold = 0;
+    let regularSold = 0;
+
+    tickets.forEach(ticket => {
+        const sold = ticket.sold || 0;
+        // Determine if VIP based on name or price
+        if (ticket.name.toLowerCase().includes('vip') || 
+            ticket.name.toLowerCase().includes('premium') ||
+            (ticket.price && ticket.price > 5000)) {
+            vipSold += sold;
+        } else {
+            regularSold += sold;
+        }
+    });
+
+    return { vipSold, regularSold };
 }
 
 // Helper function to generate individual ticket breakdown
