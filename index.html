@@ -4036,7 +4036,7 @@ body {
 .form-group textarea:focus {
     border-color: #6c5ce7;
     outline: none;
-    background-color: #1a1a2e;
+    background-color: #fff;
 }
 
 .form-group textarea {
@@ -4047,12 +4047,10 @@ body {
 /* Password input styling */
 .password-input {
     position: relative;
-    color:#333;
 }
 
 .password-input input {
     padding-right: 40px;
-    color:#333;
 }
 
 .toggle-password {
@@ -33804,24 +33802,29 @@ function processPhyBankPayment() {
             description: `Purchase tickets for ${currentPhyEventData.eventName}`,
             logo: "https://i.ibb.co/VpC27tbt/Rewarder-logo.png"
         },
-        callback: (response) => {
-            console.log('🔔 Flutterwave callback response:', response);
-            if (response.status === "successful") {
-                console.log('💳 Payment successful, transaction ID:', response.transaction_id);
-                processPhyTicketPurchase('phybankpayment', response.transaction_id)
-                    .then(() => {
-                        alert('Payment successful! Tickets purchased.');
-                        closePhyEventDetailPage();
-                    })
-                    .catch(error => {
-                        console.error('Error processing ticket purchase:', error);
-                        alert('Payment successful but error saving tickets. Contact support.');
-                    });
-            } else {
-                console.log('❌ Payment failed:', response);
-                alert('Payment failed. Please try again.');
-            }
-        },
+       callback: (response) => {
+    console.log('🔔 Flutterwave callback response:', response);
+    
+    // Check for successful payment - Flutterwave can return different success statuses
+    if (response.status === "successful" || response.status === "completed" || response.tx_ref) {
+        console.log('💳 Payment successful, transaction ID:', response.transaction_id);
+        processPhyTicketPurchase('phybankpayment', response.transaction_id || response.flw_ref)
+            .then(() => {
+                alert('Payment successful! Tickets purchased.');
+                closePhyEventDetailPage();
+            })
+            .catch(error => {
+                console.error('Error processing ticket purchase:', error);
+                alert('Payment successful but error saving tickets. Contact support.');
+            });
+    } else if (response.status === "cancelled") {
+        console.log('🚫 Payment cancelled by user');
+        alert('Payment was cancelled.');
+    } else {
+        console.log('❌ Payment failed:', response);
+        alert('Payment failed. Please try again.');
+    }
+},
         onclose: () => {
             console.log('Payment modal closed');
         }
@@ -50099,7 +50102,7 @@ const footballControl = {
                                 <div class="activity-icon">
                                     <i class="fas fa-plus text-success"></i>
                                 </div>
-                                  <div class="activity-content">
+                                   <div class="activity-content">
                                     <p><strong>New match created:</strong> Team A vs Team B</p>
                                     <span class="activity-time">2 minutes ago</span>
                                 </div>
