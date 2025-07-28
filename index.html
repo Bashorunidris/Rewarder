@@ -1796,15 +1796,6 @@ body {
     padding: 20px;
 }
 
-.event-title {
-    color: white;
-    font-size: 20px;
-    font-weight: 600;
-    margin: 0;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-    flex: 1;
-    word-break: break-word;
-}
 
 .expand-indicator {
     color: white;
@@ -1813,7 +1804,123 @@ body {
     opacity: 0.8;
     transition: transform 0.3s ease;
 }
+/* Fix for Event Title Responsiveness */
+.event-title {
+    color: white !important;
+    font-weight: 600 !important;
+    margin: 0 !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5) !important;
+    flex: 1 !important;
+    word-break: break-word !important;
+    line-height: 1.2 !important;
+    max-width: 100% !important;
+    overflow-wrap: break-word !important;
+    hyphens: auto !important;
+    
+    /* Default desktop size */
+    font-size: 20px !important;
+}
 
+/* Tablet responsiveness */
+@media (max-width: 992px) {
+    .event-title {
+        font-size: 18px !important;
+        line-height: 1.3 !important;
+    }
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .event-title {
+        font-size: 16px !important;
+        line-height: 1.3 !important;
+        padding-right: 10px !important;
+    }
+    
+    .event-card-overlay {
+        padding: 12px 15px !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 8px !important;
+    }
+    
+    .expand-indicator {
+        align-self: flex-end !important;
+        margin-left: 0 !important;
+    }
+}
+
+/* Small mobile responsiveness */
+@media (max-width: 480px) {
+    .event-title {
+        font-size: 14px !important;
+        line-height: 1.4 !important;
+        padding-right: 8px !important;
+    }
+    
+    .event-card-overlay {
+        padding: 10px 12px !important;
+    }
+    
+    .expand-indicator {
+        font-size: 14px !important;
+    }
+}
+
+/* Extra small screens */
+@media (max-width: 360px) {
+    .event-title {
+        font-size: 13px !important;
+        line-height: 1.4 !important;
+    }
+    
+    .event-card-overlay {
+        padding: 8px 10px !important;
+    }
+}
+
+/* Alternative flex layout for very long titles */
+@media (max-width: 768px) {
+    .event-card-overlay {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        flex-wrap: wrap !important;
+    }
+    
+    .event-title {
+        flex: 1 1 auto !important;
+        min-width: 0 !important;
+        margin-right: 10px !important;
+    }
+    
+    .expand-indicator {
+        flex: 0 0 auto !important;
+        margin-left: auto !important;
+    }
+}
+
+/* For ultra-long titles */
+@media (max-width: 480px) {
+    .event-title {
+        display: -webkit-box !important;
+        -webkit-line-clamp: 2 !important;
+        -webkit-box-orient: vertical !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        max-height: 2.8em !important;
+    }
+}
+
+/* iOS specific fixes */
+@supports (-webkit-touch-callout: none) {
+    .event-title {
+        -webkit-user-select: none !important;
+        user-select: none !important;
+        -webkit-text-size-adjust: 100% !important;
+    }
+}
 .event-card.expanded .expand-indicator {
     transform: rotate(180deg);
 }
