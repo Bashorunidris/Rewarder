@@ -33918,15 +33918,27 @@ async function processPhyTicketPurchase(paymentMethod, paymentId) {
         // Commit all ticket saves to separate collection
         await batch.commit();
         
-        // Update promo code usage if applied
-        if (phyPromoApplied) {
-            const eventRef = db.collection('physicalEvents').doc(currentPhyEventData.id);
-            const eventDoc = await eventRef.get();
-            const currentUsage = eventDoc.data().promousagecount || 0;
-            
-            await eventRef.update({
-                promousagecount: currentUsage + 1
-            });
+        
+// UPDATE SOLD STATS - ADD THIS SECTION:
+console.log('📊 Updating sold stats in physical event...');
+const purchasedTicketCounts = [];
+Object.entries(phyTicketCart).forEach(([ticketId, quantity]) => {
+    const ticketIndex = parseInt(ticketId.split('_')[1]);
+    purchasedTicketCounts.push([ticketIndex, quantity]);
+});
+
+await updatePhysicalEventSoldStats(currentPhyEventData.id, purchasedTicketCounts);
+
+      
+// Update promo code usage if applied (EXISTING CODE - keep this)
+if (phyPromoApplied) {
+    const eventRef = db.collection('physicalEvents').doc(currentPhyEventData.id);
+    const eventDoc = await eventRef.get();
+    const currentUsage = eventDoc.data().promousagecount || 0;
+    
+    await eventRef.update({
+        promousagecount: currentUsage + 1
+    });
         }
         
         console.log(`✅ Successfully purchased ${tickets.length} tickets:`, tickets);
@@ -33936,6 +33948,42 @@ async function processPhyTicketPurchase(paymentMethod, paymentId) {
     } catch (error) {
         console.error('❌ Error processing ticket purchase:', error);
         throw error;
+    }
+}
+
+// ADD THIS FUNCTION before processPhyTicketPurchase:
+async function updatePhysicalEventSoldStats(eventId, purchasedTickets) {
+    try {
+        const db = firebase.firestore();
+        const eventRef = db.collection('physicalEvents').doc(eventId);
+        
+        await db.runTransaction(async (transaction) => {
+            const eventDoc = await transaction.get(eventRef);
+            
+            if (eventDoc.exists) {
+                const eventData = eventDoc.data();
+                const tickets = [...eventData.tickets]; // Copy the tickets array
+                
+                // Count purchases by ticket index
+                purchasedTickets.forEach(([ticketIndex, quantity]) => {
+                    if (tickets[ticketIndex]) {
+                        tickets[ticketIndex].sold = (tickets[ticketIndex].sold || 0) + quantity;
+                        console.log(`✅ Updated ticket ${ticketIndex} sold count: +${quantity}`);
+                    }
+                });
+                
+                // Update the document
+                transaction.update(eventRef, {
+                    tickets: tickets,
+                    updatedAt: new Date().toISOString()
+                });
+            }
+        });
+        
+        console.log('✅ Physical event sold stats updated successfully');
+        
+    } catch (error) {
+        console.error('❌ Error updating physical event sold stats:', error);
     }
 }
 
