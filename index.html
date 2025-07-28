@@ -22598,12 +22598,13 @@ rgb(81, 67, 55)rgb(81, 61, 55)rgb(81, 58, 55)rgb(184, 50, 32);
                     
             </div>
             
-            <div class="action-btn tickets-btns">
+           <div class="action-btn tickets-btns" onclick="openTicketsModal()">
                 <div class="action-icon">
                     <i class="fas fa-ticket-alt"></i>
                 </div>
                 <span>Tickets</span>
             </div>
+           
 
             
             
@@ -22635,20 +22636,7 @@ rgb(81, 67, 55)rgb(81, 61, 55)rgb(81, 58, 55)rgb(184, 50, 32);
                    
             </div>
             
-            <div class="action-btn tickets-btns" onclick="openTicketsModal()">
-                <div class="action-icon">
-                    <i class="fas fa-ticket-alt"></i>
-                </div>
-                <span>Tickets</span>
-            </div>
             
-            <div class="action-btn tickets-btns" onclick="openTicketsModal()">
-                <div class="action-icon">
-                    <i class="fas fa-ticket-alt"></i>
-                </div>
-                <span>Tickets</span>
-            </div>
-           
 
         </div>
 
@@ -22661,7 +22649,7 @@ rgb(81, 67, 55)rgb(81, 61, 55)rgb(81, 58, 55)rgb(184, 50, 32);
                       <i class="fas fa-calendar-alt"></i>
                         Physical Events
                         <button class="see-more-events-btn" onclick="showAllEvents()">
-                        <i class="fas fa-plus"></i>
+                       
                         See More Events
                     </button>
                      </h2>
@@ -31845,7 +31833,8 @@ function createPhyCategoryCard(eventData) {
                     `<div style="background: #666; color: #ccc; border: none; padding: 12px 20px; border-radius: 10px; font-weight: 600; font-size: 15px; width: 100%; text-align: center; cursor: not-allowed;">
                         <i class="fas fa-calendar-times" style="margin-right: 8px;"></i> Ended
                     </div>` :
-                    `<button onclick="openPhyCategoryTicketModal('${eventData.id}')" style="background: linear-gradient(135deg, #6c5ce7 0%, #764ba2 100%); color: white; border: none; padding: 12px 20px; border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 15px; width: 100%; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(108, 92, 231, 0.3);">
+                    `<button  onclick="openTicketModal('${eventData.id || eventData.physicalEventId}')"
+                    style="background: linear-gradient(135deg, #6c5ce7 0%, #764ba2 100%); color: white; border: none; padding: 12px 20px; border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 15px; width: 100%; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(108, 92, 231, 0.3);">
                         <i class="fas fa-ticket-alt" style="margin-right: 8px;"></i> Get Tickets
                     </button>`
                 }
