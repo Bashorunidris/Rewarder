@@ -33837,7 +33837,8 @@ function processPhyBankPayment() {
         alert('Payment system not available. Please try again later.');
     }
 }
-
+const ticketPrice = ticket.price || 0;
+await updateEventRevenue(currentPhyEventData.id, ticketPrice);
 // Process Ticket Purchase (Individual Tickets)
 async function processPhyTicketPurchase(paymentMethod, paymentId) {
     const currentUser = firebase.auth().currentUser;
@@ -33936,6 +33937,34 @@ async function processPhyTicketPurchase(paymentMethod, paymentId) {
     } catch (error) {
         console.error('❌ Error processing ticket purchase:', error);
         throw error;
+    }
+}
+
+
+// Add this function after payment is successful
+async function updateEventRevenue(eventId, ticketPrice) {
+    try {
+        const db = firebase.firestore();
+        const eventRef = db.collection('physicalEvents').doc(eventId);
+        
+        // Use Firestore transaction to safely update revenue
+        await db.runTransaction(async (transaction) => {
+            const eventDoc = await transaction.get(eventRef);
+            
+            if (eventDoc.exists) {
+                const currentRevenue = eventDoc.data().totalRevenue || 0;
+                const newRevenue = currentRevenue + ticketPrice;
+                
+                transaction.update(eventRef, {
+                    totalRevenue: newRevenue,
+                    updatedAt: new Date().toISOString()
+                });
+            }
+        });
+        
+        console.log(`Updated event ${eventId} revenue by +₦${ticketPrice}`);
+    } catch (error) {
+        console.error('Error updating event revenue:', error);
     }
 }
 
@@ -37935,7 +37964,7 @@ function createPhysicalEventCard(eventData) {
     cardDiv.setAttribute('data-event-id', eventData.physicalEventId);
     
     // Calculate stats
-    const totalRevenue = calculateTotalRevenue(eventData.tickets);
+  const totalRevenue = calculateTotalRevenue(eventData); // Pass eventData, not eventId
     const totalBuyers = calculateTotalBuyers(eventData.tickets);
     const ticketStats = calculateTicketStats(eventData.tickets);
     const totalWithdrawn = eventData.totalWithdrawn || 0;
@@ -38924,37 +38953,9 @@ function generateBackgroundStyle(background) {
             return 'background: linear-gradient(135deg, #FF6B6B, #4ECDC4);';
     }
 }
-// Helper function to calculate total revenue from BoughtTicket collection
-function calculateTotalRevenue(eventId) {
-    // Return 0 immediately, then update in background
-    let totalRevenue = 0;
-    
-    // Fetch from BoughtTicket collection in background
-    if (typeof firebase !== 'undefined' && firebase.firestore) {
-        firebase.firestore()
-            .collection('BoughtTicket')
-            .where('physicaleventid', '==', eventId)
-            .where('boughtticketstatus', 'in', ['unused', 'used'])
-            .get()
-            .then(snapshot => {
-                let revenue = 0;
-                snapshot.forEach(doc => {
-                    const ticket = doc.data();
-                    revenue += ticket.boughtticketprice || 0;
-                });
-                
-                // Update the display
-                const statValue = document.querySelector(`[data-event-id="${eventId}"] .stat-value`);
-                if (statValue) {
-                    statValue.textContent = `₦${revenue.toLocaleString()}`;
-                }
-            })
-            .catch(error => {
-                console.error('Error calculating revenue:', error);
-            });
-    }
-    
-    return totalRevenue; // Returns 0 initially
+// Helper function to get total revenue from physicalEvents doc
+function calculateTotalRevenue(eventData) {
+    return eventData.totalRevenue || 0;
 }
 
 // Helper function to calculate total buyers
