@@ -37929,14 +37929,13 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Enhanced function to create individual physical event card with security
-async function createPhysicalEventCard(eventData) {
+function createPhysicalEventCard(eventData) {
     const cardDiv = document.createElement('div');
     cardDiv.className = 'physical-event-card';
     cardDiv.setAttribute('data-event-id', eventData.physicalEventId);
     
     // Calculate stats
-   const totalRevenue = await calculateTotalRevenue(eventData.physicalEventId);
-
+    const totalRevenue = calculateTotalRevenue(eventData.tickets);
     const totalBuyers = calculateTotalBuyers(eventData.tickets);
     const ticketStats = calculateTicketStats(eventData.tickets);
     const totalWithdrawn = eventData.totalWithdrawn || 0;
@@ -38926,26 +38925,36 @@ function generateBackgroundStyle(background) {
     }
 }
 // Helper function to calculate total revenue from BoughtTicket collection
-async function calculateTotalRevenue(eventId) {
-    try {
-        const ticketsSnapshot = await db.collection('BoughtTicket')
+function calculateTotalRevenue(eventId) {
+    // Return 0 immediately, then update in background
+    let totalRevenue = 0;
+    
+    // Fetch from BoughtTicket collection in background
+    if (typeof firebase !== 'undefined' && firebase.firestore) {
+        firebase.firestore()
+            .collection('BoughtTicket')
             .where('physicaleventid', '==', eventId)
-            .where('boughtticketstatus', 'in', ['unused', 'used']) // Exclude terminated tickets
-            .get();
-        
-        let totalRevenue = 0;
-        
-        ticketsSnapshot.forEach(doc => {
-            const ticket = doc.data();
-            const price = ticket.boughtticketprice || 0;
-            totalRevenue += price;
-        });
-        
-        return totalRevenue;
-    } catch (error) {
-        console.error('Error calculating total revenue:', error);
-        return 0;
+            .where('boughtticketstatus', 'in', ['unused', 'used'])
+            .get()
+            .then(snapshot => {
+                let revenue = 0;
+                snapshot.forEach(doc => {
+                    const ticket = doc.data();
+                    revenue += ticket.boughtticketprice || 0;
+                });
+                
+                // Update the display
+                const statValue = document.querySelector(`[data-event-id="${eventId}"] .stat-value`);
+                if (statValue) {
+                    statValue.textContent = `₦${revenue.toLocaleString()}`;
+                }
+            })
+            .catch(error => {
+                console.error('Error calculating revenue:', error);
+            });
     }
+    
+    return totalRevenue; // Returns 0 initially
 }
 
 // Helper function to calculate total buyers
