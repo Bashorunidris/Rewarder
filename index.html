@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -1592,7 +1592,6 @@ body {
     padding: 20px;
     background-color: var(--background-color);
     margin-top: 15px;
-    height:250hv;
 }
 
 .section-header {
@@ -1613,7 +1612,7 @@ body {
     padding: 8px 16px;
     border-radius: 20px;
     font-size: 0.85rem;
-    font-weight: 200;
+    font-weight: 500;
     display: flex;
     align-items: center;
     gap: 6px;
@@ -1633,7 +1632,7 @@ body {
 
 .physical-events-section .section-title {
     font-size: 1.4rem;
-    font-weight: 400;
+    font-weight: 600;
     color: white !important;
     display: flex;
     align-items: center;
@@ -1654,7 +1653,6 @@ body {
 
 .physical-events-container {
     width: 100%;
-    
     overflow: hidden;
 }
 
@@ -1735,6 +1733,17 @@ body {
     flex-direction: column;
 }
 
+.event-card-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 8px;
+    line-height: 1.3;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
 
 .event-card-details {
     flex: 1;
@@ -1756,740 +1765,31 @@ body {
     color: var(--primary-color);
     font-size: 0.8rem;
 }
-/* Event Card Responsive Styles */
-.event-card {
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 15px;
-    margin-bottom: 20px;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    overflow: hidden;
-    transition: all 0.3s ease;
-}
 
-.event-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-}
-
-.event-card-header {
-    position: relative;
-    min-height: 120px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-}
-
-.event-card-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.4);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 20px;
-}
-
-
-.expand-indicator {
-    color: white;
-    font-size: 18px;
-    margin-left: 10px;
-    opacity: 0.8;
-    transition: transform 0.3s ease;
-}
-/* Fix for Event Title Responsiveness */
-.event-title {
-    color: white !important;
-    font-weight: 600 !important;
-    margin: 0 !important;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5) !important;
-    flex: 1 !important;
-    word-break: break-word !important;
-    line-height: 1.2 !important;
-    max-width: 100% !important;
-    overflow-wrap: break-word !important;
-    hyphens: auto !important;
-    
-    /* Default desktop size */
-    font-size: 20px !important;
-}
-
-/* Tablet responsiveness */
-@media (max-width: 992px) {
-    .event-title {
-        font-size: 18px !important;
-        line-height: 1.3 !important;
-    }
-}
-
-/* Mobile responsiveness */
-@media (max-width: 768px) {
-    .event-title {
-        font-size: 16px !important;
-        line-height: 1.3 !important;
-        padding-right: 10px !important;
-    }
-    
-    .event-card-overlay {
-        padding: 12px 15px !important;
-        flex-direction: column !important;
-        align-items: flex-start !important;
-        gap: 8px !important;
-    }
-    
-    .expand-indicator {
-        align-self: flex-end !important;
-        margin-left: 0 !important;
-    }
-}
-
-/* Small mobile responsiveness */
-@media (max-width: 480px) {
-    .event-title {
-        font-size: 14px !important;
-        line-height: 1.4 !important;
-        padding-right: 8px !important;
-    }
-    
-    .event-card-overlay {
-        padding: 10px 12px !important;
-    }
-    
-    .expand-indicator {
-        font-size: 14px !important;
-    }
-}
-
-/* Extra small screens */
-@media (max-width: 360px) {
-    .event-title {
-        font-size: 13px !important;
-        line-height: 1.4 !important;
-    }
-    
-    .event-card-overlay {
-        padding: 8px 10px !important;
-    }
-}
-
-/* Alternative flex layout for very long titles */
-@media (max-width: 768px) {
-    .event-card-overlay {
-        display: flex !important;
-        flex-direction: row !important;
-        align-items: center !important;
-        justify-content: space-between !important;
-        flex-wrap: wrap !important;
-    }
-    
-    .event-title {
-        flex: 1 1 auto !important;
-        min-width: 0 !important;
-        margin-right: 10px !important;
-    }
-    
-    .expand-indicator {
-        flex: 0 0 auto !important;
-        margin-left: auto !important;
-    }
-}
-
-/* For ultra-long titles */
-@media (max-width: 480px) {
-    .event-title {
-        display: -webkit-box !important;
-        -webkit-line-clamp: 2 !important;
-        -webkit-box-orient: vertical !important;
-        overflow: hidden !important;
-        text-overflow: ellipsis !important;
-        max-height: 2.8em !important;
-    }
-}
-
-/* iOS specific fixes */
-@supports (-webkit-touch-callout: none) {
-    .event-title {
-        -webkit-user-select: none !important;
-        user-select: none !important;
-        -webkit-text-size-adjust: 100% !important;
-    }
-}
-.event-card.expanded .expand-indicator {
-    transform: rotate(180deg);
-}
-
-.event-card-content {
-    padding: 20px;
-    background: rgba(255, 255, 255, 0.02);
-}
-
-/* Event ID Section */
-.event-id-section {
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 10px;
-    padding: 15px;
-    margin-bottom: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.event-id-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.event-id-header:hover {
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 6px;
-    padding: 8px;
-    margin: -8px;
-}
-
-.event-id-label {
-    color: rgba(255, 255, 255, 0.9);
-    font-weight: 600;
-    font-size: 16px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.security-icon {
-    color: #ffd700;
-    font-size: 12px;
-}
-
-.event-id-controls {
-    display: flex;
-    gap: 10px;
-}
-
-.security-toggle-btn,
-.eye-toggle-btn {
-    background: rgba(255, 255, 255, 0.1);
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    color: white;
-    padding: 6px 8px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.security-toggle-btn:hover,
-.eye-toggle-btn:hover {
-    background: rgba(255, 255, 255, 0.2);
-    transform: translateY(-1px);
-}
-
-.eye-toggle-btn.disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
-.event-id-container {
-    margin-top: 12px;
-    padding-top: 12px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.event-id-content {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 8px;
-}
-
-.event-id-code {
-    background: rgba(0, 0, 0, 0.3);
-    color: #4ECDC4;
-    padding: 6px 10px;
-    border-radius: 6px;
-    font-family: 'Courier New', monospace;
-    font-size: 13px;
-    flex: 1;
-    min-width: 0;
-    word-break: break-all;
-}
-
-.copy-id-btn {
-    background: #4ECDC4;
-    color: white;
-    border: none;
-    padding: 8px 10px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.copy-id-btn:hover {
-    background: #45a9a9;
-    transform: translateY(-1px);
-}
-
-.copy-id-btn.disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
-.event-id-note {
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 12px;
-    line-height: 1.4;
-}
-
-/* Stats Grid */
-.ticket-stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 15px;
-    margin-bottom: 20px;
-}
-
-.stat-card {
-    background: rgba(255, 255, 255, 0.05);
-    padding: 15px;
-    border-radius: 10px;
-    text-align: center;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    transition: all 0.3s ease;
-}
-
-.stat-card:hover {
-    background: rgba(255, 255, 255, 0.08);
-    transform: translateY(-2px);
-}
-
-.stat-value {
-    font-size: 24px;
-    font-weight: 600;
-    color: #4ECDC4;
-    margin-bottom: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-}
-
-.stat-label {
-    font-size: 14px;
-    color: rgba(255, 255, 255, 0.7);
-}
-
-/* Individual Ticket Sales */
-.individual-ticket-sales {
-    grid-column: 1 / -1;
-    margin-top: 15px;
-}
-
-.individual-ticket-sales h4 {
-    color: white;
-    font-size: 18px;
-    margin-bottom: 12px;
-    font-weight: 600;
-}
-
-.ticket-breakdown-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 10px;
-}
-
-/* Sponsors Section */
-.sponsors-section {
-    background: rgba(255, 255, 255, 0.05);
-    padding: 15px;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.sponsors-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 12px;
-}
-
-.sponsors-header h4 {
-    color: white;
-    font-size: 18px;
-    margin: 0;
-    font-weight: 600;
-}
-
-.add-sponsors-btn {
-    background: #4ECDC4;
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: all 0.3s ease;
+.event-sponsors {
     display: flex;
     align-items: center;
     gap: 6px;
-    font-size: 13px;
+    margin-top: 8px;
 }
 
-.add-sponsors-btn:hover {
-    background: #45a9a9;
-    transform: translateY(-1px);
-}
-
-/* Action Buttons */
-.event-action-buttons {
-    display: flex;
-    gap: 8px;
-    margin-top: 12px;
-}
-
-.setup-bank-btn,
-.withdraw-pee-btn {
-    flex: 1;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: all 0.3s ease;
+.sponsor-logo {
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    background: var(--bg-light);
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
-    font-size: 13px;
-    color: white;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--primary-color);
 }
 
-.setup-bank-btn {
-    background: linear-gradient(135deg, #007bff, #0056b3);
-}
-
-.withdraw-pee-btn {
-    background: linear-gradient(135deg, #28a745, #20c997);
-}
-
-.setup-bank-btn:hover,
-.withdraw-pee-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-}
-
-/* Mobile Responsive Styles */
-@media (max-width: 768px) {
-    .event-card-header {
-        min-height: 100px;
-    }
-    
-    .event-card-overlay {
-        padding: 15px;
-    }
-    
-    .event-title {
-        font-size: 18px;
-    }
-    
-    .expand-indicator {
-        font-size: 16px;
-    }
-    
-    .event-card-content {
-        padding: 15px;
-    }
-    
-    .event-id-section {
-        padding: 12px;
-        margin-bottom: 15px;
-    }
-    
-    .event-id-header {
-        flex-wrap: wrap;
-        gap: 10px;
-    }
-    
-    .event-id-label {
-        font-size: 14px;
-        flex: 1;
-        min-width: 0;
-    }
-    
-    .event-id-controls {
-        gap: 8px;
-        flex-shrink: 0;
-    }
-    
-    .security-toggle-btn,
-    .eye-toggle-btn {
-        padding: 8px;
-        min-width: 40px;
-        min-height: 40px;
-    }
-    
-    .security-toggle-btn i,
-    .eye-toggle-btn i {
-        font-size: 14px;
-    }
-    
-    .event-id-content {
-        flex-wrap: wrap;
-    }
-    
-    .event-id-code {
-        font-size: 12px;
-        padding: 8px 12px;
-    }
-    
-    .copy-id-btn {
-        padding: 10px;
-        min-width: 44px;
-        min-height: 44px;
-    }
-    
-    .copy-id-btn i {
-        font-size: 14px;
-    }
-    
-    .event-id-note {
-        font-size: 11px;
-    }
-    
-    /* Stats Grid Mobile */
-    .ticket-stats-grid {
-        display: block;
-        gap: 12px;
-        margin-bottom: 15px;
-    }
-    
-    .stat-card {
-        padding: 12px;
-        margin-bottom: 12px;
-    }
-    
-    .stat-value {
-        font-size: 20px;
-        flex-wrap: wrap;
-    }
-    
-    .stat-label {
-        font-size: 12px;
-    }
-    
-    /* Individual Ticket Sales Mobile */
-    .individual-ticket-sales {
-        margin-top: 12px;
-    }
-    
-    .individual-ticket-sales h4 {
-        font-size: 16px;
-        margin-bottom: 10px;
-    }
-    
-    .ticket-breakdown-grid {
-        display: block;
-        gap: 8px;
-    }
-    
-    /* Sponsors Section Mobile */
-    .sponsors-section {
-        padding: 12px;
-        margin-bottom: 15px;
-    }
-    
-    .sponsors-header {
-        flex-wrap: wrap;
-        gap: 10px;
-    }
-    
-    .sponsors-header h4 {
-        font-size: 16px;
-    }
-    
-    .add-sponsors-btn {
-        padding: 10px 16px;
-        font-size: 14px;
-        min-height: 44px;
-    }
-    
-    /* Action Buttons Mobile */
-    .event-action-buttons {
-        display: block;
-        gap: 10px;
-    }
-    
-    .setup-bank-btn,
-    .withdraw-pee-btn {
-        width: 100%;
-        padding: 12px 16px;
-        font-size: 14px;
-        min-height: 44px;
-        margin-bottom: 10px;
-        box-sizing: border-box;
-    }
-}
-
-@media (max-width: 480px) {
-    .event-card-header {
-        min-height: 80px;
-    }
-    
-    .event-card-overlay {
-        padding: 12px;
-    }
-    
-    .event-title {
-        font-size: 16px;
-    }
-    
-    .event-card-content {
-        padding: 12px;
-    }
-    
-    .event-id-section {
-        padding: 10px;
-    }
-    
-    .event-id-label {
-        font-size: 13px;
-    }
-    
-    .event-id-code {
-        font-size: 11px;
-        padding: 6px 8px;
-    }
-    
-    .event-id-note {
-        font-size: 10px;
-    }
-    
-    .stat-value {
-        font-size: 18px;
-    }
-    
-    .stat-label {
-        font-size: 11px;
-    }
-    
-    .individual-ticket-sales h4 {
-        font-size: 15px;
-    }
-    
-    .sponsors-header h4 {
-        font-size: 15px;
-    }
-    
-    .add-sponsors-btn {
-        font-size: 13px;
-    }
-    
-    .setup-bank-btn,
-    .withdraw-pee-btn {
-        font-size: 13px;
-    }
-}
-
-/* iOS Specific Styles */
-@supports (-webkit-touch-callout: none) {
-    .security-toggle-btn,
-    .eye-toggle-btn,
-    .copy-id-btn,
-    .add-sponsors-btn,
-    .setup-bank-btn,
-    .withdraw-pee-btn {
-        -webkit-appearance: none;
-        -webkit-user-select: none;
-        -webkit-touch-callout: none;
-    }
-    
-    .event-id-code {
-        -webkit-user-select: all;
-        user-select: all;
-    }
-}
-
-/* Touch Device Optimizations */
-@media (hover: none) and (pointer: coarse) {
-    .event-card:hover,
-    .stat-card:hover,
-    .security-toggle-btn:hover,
-    .eye-toggle-btn:hover,
-    .copy-id-btn:hover,
-    .add-sponsors-btn:hover,
-    .setup-bank-btn:hover,
-    .withdraw-pee-btn:hover {
-        transform: none;
-        box-shadow: none;
-    }
-    
-    .event-card:active,
-    .stat-card:active {
-        transform: scale(0.98);
-    }
-    
-    .security-toggle-btn:active,
-    .eye-toggle-btn:active,
-    .copy-id-btn:active,
-    .add-sponsors-btn:active,
-    .setup-bank-btn:active,
-    .withdraw-pee-btn:active {
-        transform: scale(0.95);
-    }
-}
-
-/* Focus States for Accessibility */
-.security-toggle-btn:focus,
-.eye-toggle-btn:focus,
-.copy-id-btn:focus,
-.add-sponsors-btn:focus,
-.setup-bank-btn:focus,
-.withdraw-pee-btn:focus {
-    outline: 2px solid #4ECDC4;
-    outline-offset: 2px;
-}
-
-/* Animation Classes */
-.fade-in {
-    animation: fadeIn 0.3s ease-in-out;
-}
-
-.slide-down {
-    animation: slideDown 0.3s ease-in-out;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes slideDown {
-    from {
-        max-height: 0;
-        opacity: 0;
-    }
-    to {
-        max-height: 200px;
-        opacity: 1;
-    }
+.sponsors-count {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    margin-left: 4px;
 }
 
 .buy-ticket-btn {
@@ -4853,7 +4153,8 @@ input:checked + .slider:before {
     font-size: 1.2rem;
 }
 
-/* Search Section */
+
+/* Search Section - Mobile Responsive */
 .liveevent-search-section {
     margin-bottom: 25px;
     padding: 0 10px;
@@ -4864,6 +4165,7 @@ input:checked + .slider:before {
     border-radius: 15px;
     padding: 20px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
 }
 
 .liveevent-search-input-wrapper {
@@ -4878,6 +4180,7 @@ input:checked + .slider:before {
     transform: translateY(-50%);
     color: #10b981;
     font-size: 1.1rem;
+    z-index: 2;
 }
 
 .liveevent-search-input {
@@ -4890,6 +4193,7 @@ input:checked + .slider:before {
     font-size: 1rem;
     outline: none;
     transition: all 0.3s ease;
+    box-sizing: border-box;
 }
 
 .liveevent-search-input:focus {
@@ -4918,6 +4222,11 @@ input:checked + .slider:before {
     font-weight: 500;
     cursor: pointer;
     transition: all 0.3s ease;
+    white-space: nowrap;
+    min-height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .liveevent-search-filter-btn:hover {
@@ -4930,6 +4239,205 @@ input:checked + .slider:before {
     border-color: #3b82f6;
 }
 
+/* Tablet Responsive (768px and below) */
+@media (max-width: 768px) {
+    .liveevent-search-section {
+        margin-bottom: 20px;
+        padding: 0 8px;
+    }
+    
+    .liveevent-search-container {
+        padding: 16px;
+        border-radius: 12px;
+    }
+    
+    .liveevent-search-input-wrapper {
+        margin-bottom: 12px;
+    }
+    
+    .liveevent-search-input-wrapper i {
+        left: 12px;
+        font-size: 1rem;
+    }
+    
+    .liveevent-search-input {
+        padding: 14px 12px 14px 40px;
+        font-size: 16px; /* Prevents zoom on iOS */
+        border-radius: 20px;
+        min-height: 48px; /* Touch-friendly height */
+    }
+    
+    .liveevent-search-filters {
+        gap: 6px;
+        justify-content: flex-start;
+    }
+    
+    .liveevent-search-filter-btn {
+        padding: 8px 12px;
+        font-size: 0.75rem;
+        border-radius: 12px;
+        min-height: 36px;
+        min-width: 60px;
+    }
+}
+
+/* Mobile Responsive (480px and below) */
+@media (max-width: 480px) {
+    .liveevent-search-section {
+        margin-bottom: 15px;
+        padding: 0 5px;
+    }
+    
+    .liveevent-search-container {
+        padding: 12px;
+        border-radius: 10px;
+        margin: 0 5px;
+    }
+    
+    .liveevent-search-input-wrapper {
+        margin-bottom: 10px;
+    }
+    
+    .liveevent-search-input-wrapper i {
+        left: 10px;
+        font-size: 0.9rem;
+    }
+    
+    .liveevent-search-input {
+        padding: 12px 10px 12px 35px;
+        font-size: 16px;
+        border-radius: 18px;
+        min-height: 44px;
+    }
+    
+    .liveevent-search-filters {
+        gap: 4px;
+        justify-content: flex-start;
+        margin-top: 8px;
+    }
+    
+    .liveevent-search-filter-btn {
+        padding: 6px 10px;
+        font-size: 0.7rem;
+        border-radius: 10px;
+        min-height: 32px;
+        min-width: 50px;
+        flex-shrink: 0;
+    }
+}
+
+/* Extra Small Mobile (360px and below) */
+@media (max-width: 360px) {
+    .liveevent-search-section {
+        padding: 0 2px;
+    }
+    
+    .liveevent-search-container {
+        padding: 10px;
+        margin: 0 2px;
+    }
+    
+    .liveevent-search-input {
+        padding: 10px 8px 10px 30px;
+        min-height: 40px;
+    }
+    
+    .liveevent-search-input-wrapper i {
+        left: 8px;
+        font-size: 0.8rem;
+    }
+    
+    .liveevent-search-filter-btn {
+        padding: 5px 8px;
+        font-size: 0.65rem;
+        min-height: 28px;
+        min-width: 45px;
+    }
+}
+
+/* iOS Specific Optimizations */
+@supports (-webkit-touch-callout: none) {
+    .liveevent-search-input {
+        -webkit-appearance: none;
+        -webkit-border-radius: 25px;
+        font-size: 16px !important; /* Prevents zoom */
+    }
+    
+    .liveevent-search-filter-btn {
+        -webkit-appearance: none;
+        -webkit-user-select: none;
+        -webkit-touch-callout: none;
+    }
+}
+
+/* Touch Device Optimizations */
+@media (hover: none) and (pointer: coarse) {
+    .liveevent-search-filter-btn:hover {
+        transform: none;
+    }
+    
+    .liveevent-search-filter-btn:active {
+        transform: scale(0.95);
+        background: #10b981;
+    }
+    
+    .liveevent-search-input:focus {
+        transform: scale(1.02);
+    }
+}
+
+/* Focus States for Accessibility */
+.liveevent-search-input:focus,
+.liveevent-search-filter-btn:focus {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+    .liveevent-search-container {
+        border: 2px solid #ffffff;
+    }
+    
+    .liveevent-search-input {
+        border-width: 3px;
+    }
+    
+    .liveevent-search-filter-btn {
+        border-width: 2px;
+    }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+    .liveevent-search-input,
+    .liveevent-search-filter-btn,
+    .liveevent-search-container {
+        transition: none;
+    }
+    
+    .liveevent-search-filter-btn:hover {
+        transform: none;
+    }
+}
+
+/* Dark Mode Adjustments */
+@media (prefers-color-scheme: dark) {
+    .liveevent-search-container {
+        background: #0f172a;
+        border: 1px solid #1e293b;
+    }
+    
+    .liveevent-search-input {
+        background: #020617;
+        border-color: #059669;
+    }
+    
+    .liveevent-search-filter-btn {
+        background: #020617;
+        border-color: #059669;
+    }
+}
 /* Cards Container */
 .liveevent-cards-container {
     min-height: 400px;
@@ -23296,13 +22804,12 @@ rgb(81, 67, 55)rgb(81, 61, 55)rgb(81, 58, 55)rgb(184, 50, 32);
                     
             </div>
             
-           <div class="action-btn tickets-btns" onclick="openTicketsModal()">
+            <div class="action-btn tickets-btns">
                 <div class="action-icon">
                     <i class="fas fa-ticket-alt"></i>
                 </div>
                 <span>Tickets</span>
             </div>
-           
 
             
             
@@ -23334,7 +22841,20 @@ rgb(81, 67, 55)rgb(81, 61, 55)rgb(81, 58, 55)rgb(184, 50, 32);
                    
             </div>
             
+            <div class="action-btn tickets-btns" onclick="openTicketsModal()">
+                <div class="action-icon">
+                    <i class="fas fa-ticket-alt"></i>
+                </div>
+                <span>Tickets</span>
+            </div>
             
+            <div class="action-btn tickets-btns" onclick="openTicketsModal()">
+                <div class="action-icon">
+                    <i class="fas fa-ticket-alt"></i>
+                </div>
+                <span>Tickets</span>
+            </div>
+           
 
         </div>
 
@@ -23347,11 +22867,12 @@ rgb(81, 67, 55)rgb(81, 61, 55)rgb(81, 58, 55)rgb(184, 50, 32);
                       <i class="fas fa-calendar-alt"></i>
                         Physical Events
                         <button class="see-more-events-btn" onclick="showAllEvents()">
-                       
+                        <i class="fas fa-plus"></i>
                         See More Events
                     </button>
                      </h2>
                 </div>
+                <div class="section-subtitle">Discover amazing events near you</div>
             </div>
             
             <div class="physical-events-container" id="physicalEventsContainer">
@@ -26496,7 +26017,7 @@ rgb(81, 67, 55)rgb(81, 61, 55)rgb(81, 58, 55)rgb(184, 50, 32);
 <script src="https://checkout.flutterwave.com/v3.js"></script>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6058145320758437"
      crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
+
 <script>
  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
@@ -32531,8 +32052,7 @@ function createPhyCategoryCard(eventData) {
                     `<div style="background: #666; color: #ccc; border: none; padding: 12px 20px; border-radius: 10px; font-weight: 600; font-size: 15px; width: 100%; text-align: center; cursor: not-allowed;">
                         <i class="fas fa-calendar-times" style="margin-right: 8px;"></i> Ended
                     </div>` :
-                    `<button  onclick="openTicketModal('${eventData.id || eventData.physicalEventId}')"
-                    style="background: linear-gradient(135deg, #6c5ce7 0%, #764ba2 100%); color: white; border: none; padding: 12px 20px; border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 15px; width: 100%; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(108, 92, 231, 0.3);">
+                    `<button onclick="openPhyCategoryTicketModal('${eventData.id}')" style="background: linear-gradient(135deg, #6c5ce7 0%, #764ba2 100%); color: white; border: none; padding: 12px 20px; border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 15px; width: 100%; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(108, 92, 231, 0.3);">
                         <i class="fas fa-ticket-alt" style="margin-right: 8px;"></i> Get Tickets
                     </button>`
                 }
@@ -32992,7 +32512,10 @@ function createAdvancedPhysicalEventCard(eventData) {
             <span class="likes-count" id="likes-count-${eventData.id || eventData.physicalEventId}">${likesCount}</span>
         </div>
         
-      
+        <div class="advanced-tickets-badge">
+            <i class="fas fa-fire"></i>
+            ${ticketsSold} sold
+        </div>
         
         <button class="sharephy-btn" ${hasEnded ? 'disabled style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.3); color: #666; border: none; width: 35px; height: 35px; border-radius: 50%; cursor: not-allowed; display: flex; align-items: center; justify-content: center; z-index: 4; opacity: 0.5;"' : `onclick="openSharephyModal('${eventData.eventLink || eventData.id || eventData.physicalEventId}')" style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.6); color: white; border: none; width: 35px; height: 35px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 4; transition: all 0.3s ease;"`}>
             <i class="fas fa-share-alt" style="font-size: 14px;"></i>
@@ -33461,29 +32984,6 @@ async function showPhyEventDetailPage(eventId) {
     }
 }
 
-
-function closePhyEventDetailPage() {
-    const detailPage = document.getElementById('phyevent-detail-page');
-    if (detailPage) {
-        // Add fade-out animation
-        detailPage.style.transition = 'opacity 0.3s ease';
-        detailPage.style.opacity = '0';
-        
-        // Remove after animation completes
-        setTimeout(() => {
-            detailPage.remove();
-        }, 300);
-    }
-    
-    // Restore body scroll
-    document.body.style.overflow = 'auto';
-    
-    // Show dashboard if hidden
-    const dashboardPage = document.querySelector('.dashboard-page.active');
-    if (dashboardPage) {
-        dashboardPage.style.display = 'flex';
-    }
-}
 // Generate Tickets HTML
 function generatePhyTicketsHTML() {
     if (!currentPhyEventData || !currentPhyEventData.tickets) {
@@ -37969,7 +37469,8 @@ function createPhysicalEventCard(eventData) {
            
             <div class="event-card-overlay">
                 <h3 class="event-title">${eventData.eventName}</h3>
-               <div class="expand-indicator">
+                <p class="event-description">${truncateText(eventData.description, 100)}</p>
+                <div class="expand-indicator">
                     <i class="fas fa-chevron-down"></i>
                 </div>
             </div>
@@ -38020,7 +37521,17 @@ function createPhysicalEventCard(eventData) {
                 </div>
             </div>
 
-           
+            <!-- Rest of the event card content remains the same -->
+            <div class="event-status-section">
+                <div class="status-badge status-${eventStatus.class}">
+                    <i class="fas ${eventStatus.icon}"></i>
+                    ${eventStatus.text}
+                </div>
+                <button class="launch-btn ${eventStatus.buttonClass}" onclick="toggleEventStatus('${eventData.physicalEventId}', '${eventStatus.nextAction}')">
+                    <i class="fas ${eventStatus.buttonIcon}"></i>
+                    ${eventStatus.buttonText}
+                </button>
+            </div>
             
             <div class="ticket-stats-grid">
                 <div class="stat-card">
@@ -41943,11 +41454,6 @@ console.log('Bank Details Setup System loaded successfully');
 // Generate new physical event ticket card (your requested format)
 function generateNewPhyEventTicketCard(ticket) {
     const eventData = ticket.eventData;
-    const isMobile = window.innerWidth <= 768;
-    const isSmallMobile = window.innerWidth <= 480;
-    
-    // Generate unique ID for this card
-    const cardId = 'new-ticket-card-' + ticket.id.replace(/[^a-zA-Z0-9]/g, '');
     
     // Format date and time
     const startDate = new Date(eventData.startDateTime);
@@ -42026,32 +41532,27 @@ function generateNewPhyEventTicketCard(ticket) {
     }
 
     // Get stored user name or placeholder
-    const savedBuyerName = ticket.ticketbuyername || '';
+    const storedName = ticket.userName || '';
 
     return `
         <div style="
             background: rgba(255, 255, 255, 0.1);
             border-radius: 20px;
-            padding: ${isMobile ? '15px' : '20px'};
-            margin-bottom: ${isMobile ? '15px' : '20px'};
+            padding: 20px;
+            margin-bottom: 20px;
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.2);
             transition: all 0.3s ease;
-            box-sizing: border-box;
-        " onmouseover="${!isMobile ? `this.style.transform='translateY(-5px)'; this.style.boxShadow='0 20px 40px rgba(0,0,0,0.2)'` : ''}" 
-           onmouseout="${!isMobile ? `this.style.transform='translateY(0)'; this.style.boxShadow='none'` : ''}">
+        " onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 20px 40px rgba(0,0,0,0.2)'" 
+           onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
             
             <!-- Main Card Content -->
-            <div style="
-                display: ${isMobile ? 'block' : 'flex'}; 
-                gap: ${isMobile ? '0' : '20px'}; 
-                margin-bottom: ${isMobile ? '15px' : '20px'};
-            ">
+            <div style="display: flex; gap: 20px; margin-bottom: 20px;">
                 
-                <!-- Event Background Container -->
+                <!-- Left: PhyEvent Background Container -->
                 <div style="
-                    ${isMobile ? 'width: 100%; margin-bottom: 15px;' : 'flex: 0 0 200px;'}
-                    height: ${isSmallMobile ? '120px' : isMobile ? '140px' : '150px'};
+                    flex: 0 0 200px;
+                    height: 150px;
                     border-radius: 15px;
                     ${backgroundStyle}
                     display: flex;
@@ -42074,106 +41575,47 @@ function generateNewPhyEventTicketCard(ticket) {
                         align-items: center;
                         justify-content: center;
                     ">
-                        <i class="fas fa-ticket-alt" style="font-size: ${isSmallMobile ? '20px' : isMobile ? '24px' : '32px'}; opacity: 0.8;"></i>
+                        <i class="fas fa-ticket-alt" style="font-size: 32px; opacity: 0.8;"></i>
                     </div>
                 </div>
                 
-                <!-- Ticket Details -->
-                <div style="${isMobile ? 'width: 100%;' : 'flex: 1;'} color: white;">
-                    <!-- User Name Input (Always Visible) -->
-                    <div style="margin-bottom: ${isMobile ? '12px' : '15px'};">
+                <!-- Right: Ticket Details -->
+                <div style="flex: 1; color: white;">
+                    <!-- User Name Input -->
+                    <div style="margin-bottom: 15px;">
                         <input 
                             type="text" 
-                            id="ticketName_${ticket.id}"
                             placeholder="Enter your name for this ticket" 
-                            value="${savedBuyerName}"
-                            ${ticket.boughtticketstatus !== 'unused' ? 'readonly' : ''}
+                            value="${storedName}"
+                            onchange="updateTicketUserName('${ticket.id}', this.value)"
                             style="
                                 width: 100%;
-                                padding: ${isMobile ? '12px' : '10px'};
+                                padding: 10px;
                                 border: 2px solid rgba(255, 255, 255, 0.3);
                                 border-radius: 8px;
                                 background: rgba(255, 255, 255, 0.1);
                                 color: white;
-                                font-size: ${isSmallMobile ? '14px' : isMobile ? '15px' : '16px'};
+                                font-size: 16px;
                                 font-weight: 600;
-                                box-sizing: border-box;
-                                ${ticket.boughtticketstatus !== 'unused' ? 'opacity: 0.6; cursor: not-allowed;' : ''}
-                                -webkit-appearance: none;
                             "
                         />
                     </div>
                     
-                    ${ticket.boughtticketstatus === 'unused' ? `
-                    <!-- Save Button (Always Visible) -->
-                    <button onclick="saveTicketBuyerName('${ticket.id}')" style="
-                        background: #4ECDC4;
-                        color: white;
-                        border: none;
-                        padding: ${isMobile ? '10px 16px' : '8px 15px'};
-                        border-radius: 6px;
-                        font-size: ${isMobile ? '13px' : '12px'};
-                        font-weight: 600;
-                        cursor: pointer;
-                        margin-bottom: ${isMobile ? '12px' : '0'};
-                        ${isMobile ? 'width: 100%; min-height: 44px;' : 'margin-left: 10px;'}
-                        transition: all 0.3s ease;
-                        box-sizing: border-box;
-                        -webkit-appearance: none;
-                    " onmouseover="this.style.background='#45a9a9'" onmouseout="this.style.background='#4ECDC4'">
-                        Save Name
-                    </button>
-                    ` : ''}
-
-                    ${isMobile ? `
-                    <!-- Mobile Toggle Button -->
-                    <button onclick="toggleNewTicketDetails('${cardId}')" style="
-                        background: rgba(76, 217, 196, 0.2);
-                        border: 2px solid #4CD9C4;
-                        color: #4CD9C4;
-                        padding: 10px 16px;
-                        border-radius: 8px;
-                        font-size: 14px;
-                        font-weight: 600;
-                        cursor: pointer;
-                        width: 100%;
-                        margin-bottom: 12px;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        gap: 8px;
-                        transition: all 0.3s ease;
-                        min-height: 44px;
-                        box-sizing: border-box;
-                        -webkit-user-select: none;
-                        user-select: none;
-                        -webkit-appearance: none;
-                    " onmouseover="this.style.background='rgba(76, 217, 196, 0.3)'" onmouseout="this.style.background='rgba(76, 217, 196, 0.2)'">
-                        <i class="fas fa-chevron-down" id="${cardId}-icon" style="transition: transform 0.3s ease;"></i>
-                        <span id="${cardId}-text">Show Ticket Details</span>
-                    </button>
-                    ` : ''}
-
-                    <!-- Ticket Info (Collapsible on Mobile) -->
-                    <div id="${cardId}-details" style="
-                        display: ${isMobile ? 'none' : 'flex'}; 
-                        flex-direction: column; 
-                        gap: ${isMobile ? '6px' : '8px'};
-                        ${isMobile ? 'overflow: hidden; transition: all 0.3s ease;' : ''}
-                    ">
-                        <div style="font-size: ${isSmallMobile ? '11px' : isMobile ? '12px' : '14px'}; opacity: 0.8; word-break: break-all;">
+                    <!-- Ticket Info -->
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="font-size: 14px; opacity: 0.8;">
                             <strong>Ticket ID:</strong> ${ticket.ticketid}
                         </div>
-                        <div style="font-size: ${isSmallMobile ? '13px' : isMobile ? '14px' : '16px'}; font-weight: 600;">
+                        <div style="font-size: 16px; font-weight: 600;">
                             <strong>Type:</strong> ${ticket.boughtticketname}
                         </div>
-                        <div style="font-size: ${isSmallMobile ? '11px' : isMobile ? '12px' : '14px'};">
+                        <div style="font-size: 14px;">
                             <strong>Date:</strong> ${formattedDate}
                         </div>
-                        <div style="font-size: ${isSmallMobile ? '11px' : isMobile ? '12px' : '14px'};">
+                        <div style="font-size: 14px;">
                             <strong>Time:</strong> ${formattedTime}
                         </div>
-                        <div style="font-size: ${isSmallMobile ? '11px' : isMobile ? '12px' : '14px'}; word-break: break-word;">
+                        <div style="font-size: 14px;">
                             <strong>Location:</strong> ${eventData.location}
                         </div>
                         
@@ -42182,98 +41624,25 @@ function generateNewPhyEventTicketCard(ticket) {
                             background: #4ECDC4;
                             color: white;
                             border: none;
-                            padding: ${isMobile ? '12px 16px' : '10px 20px'};
+                            padding: 10px 20px;
                             border-radius: 8px;
-                            font-size: ${isSmallMobile ? '12px' : isMobile ? '13px' : '14px'};
+                            font-size: 14px;
                             font-weight: 600;
                             cursor: pointer;
-                            margin-top: ${isMobile ? '12px' : '10px'};
-                            width: ${isMobile ? '100%' : 'auto'};
-                            min-height: ${isMobile ? '44px' : 'auto'};
+                            margin-top: 10px;
                             transition: all 0.3s ease;
-                            box-sizing: border-box;
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-                            gap: 8px;
-                            -webkit-appearance: none;
                         " onmouseover="this.style.background='#45a9a9'" onmouseout="this.style.background='#4ECDC4'">
-                            <i class="fas fa-qrcode" style="font-size: ${isSmallMobile ? '12px' : '14px'};"></i>
-                            <span>View QR Code</span>
+                            <i class="fas fa-qrcode" style="margin-right: 8px;"></i>
+                            View QR Code
                         </button>
                     </div>
                 </div>
             </div>
             
-            <!-- Sponsors Section (Hidden on Mobile when details are collapsed) -->
-            <div id="${cardId}-sponsors" style="display: ${isMobile ? 'none' : 'block'};">
-                ${sponsorsHTML}
-            </div>
+            <!-- Sponsors Section -->
+            ${sponsorsHTML}
         </div>
     `;
-}
-
-// Add this toggle function for new ticket cards
-function toggleNewTicketDetails(cardId) {
-    const detailsDiv = document.getElementById(cardId + '-details');
-    const sponsorsDiv = document.getElementById(cardId + '-sponsors');
-    const icon = document.getElementById(cardId + '-icon');
-    const text = document.getElementById(cardId + '-text');
-    
-    if (detailsDiv && sponsorsDiv && icon && text) {
-        if (detailsDiv.style.display === 'none') {
-            // Show details
-            detailsDiv.style.display = 'flex';
-            sponsorsDiv.style.display = 'block';
-            icon.style.transform = 'rotate(180deg)';
-            text.textContent = 'Hide Ticket Details';
-        } else {
-            // Hide details
-            detailsDiv.style.display = 'none';
-            sponsorsDiv.style.display = 'none';
-            icon.style.transform = 'rotate(0deg)';
-            text.textContent = 'Show Ticket Details';
-        }
-    }
-}
-         
-     // Save ticket buyer name with debugging
-async function saveTicketBuyerName(ticketId) {
-    try {
-        const nameInput = document.getElementById(`ticketName_${ticketId}`);
-        const buyerName = nameInput.value.trim();
-        
-        if (!buyerName) {
-            alert('Please enter a name first');
-            return;
-        }
-        
-        const currentUser = firebase.auth().currentUser;
-        if (!currentUser) {
-            alert('Please sign in to save changes');
-            return;
-        }
-
-        // Update in Firebase BoughtTicket collection
-        await db.collection('BoughtTicket').doc(ticketId).update({
-            ticketbuyername: buyerName
-        });
-
-        console.log('✅ Name saved to Firebase:', buyerName);
-        console.log('✅ Ticket ID:', ticketId);
-        
-        // Verify it was saved by reading it back
-        const ticketDoc = await db.collection('BoughtTicket').doc(ticketId).get();
-        console.log('✅ Saved ticket data:', ticketDoc.data());
-
-        alert('Name saved successfully!');
-        
-        // Reload the tickets to show updated data
-        loadNewEventTickets();
-    } catch (error) {
-        console.error('❌ Error saving ticket buyer name:', error);
-        alert('Error: ' + error.message);
-    }
 }
 
 // Update ticket user name
@@ -42410,44 +41779,37 @@ function showTicketQRCode(ticketId, qrCodeData) {
     generateQRCodeDisplay(qrCodeData);
 }
 
-        // Generate proper scannable QR code with ticket information
+// Generate QR code display (placeholder function)
 function generateQRCodeDisplay(qrCodeData) {
+    // This is a placeholder - you'll need to integrate a QR code library like qrcode.js
     const qrContainer = document.getElementById('qr-code-display');
     if (qrContainer) {
-        // Decode the base64 QR data to get the actual ticket info
-        let ticketInfo;
-        try {
-            ticketInfo = JSON.parse(atob(qrCodeData));
-        } catch (error) {
-            // If decoding fails, use the raw data
-            ticketInfo = qrCodeData;
-        }
-        
-        // Create scannable ticket verification string
-        const ticketVerificationData = JSON.stringify({
-            ticketId: ticketInfo.ticketId,
-           ticketBuyerName: ticketInfo.ticketBuyerName || 'Not provided',
-        
-            eventName: ticketInfo.eventName,
-            ticketName: ticketInfo.ticketName,
-            status: ticketInfo.status,
-            eventDate: ticketInfo.eventStartDate,
-            location: ticketInfo.eventLocation
-        });
-        
-        // Generate QR code with the verification data
-        const qrCodeURL = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(ticketVerificationData)}`;
-        
         qrContainer.innerHTML = `
-            <img src="${qrCodeURL}" alt="Scannable Ticket QR Code" style="
+            <div style="
                 width: 200px;
                 height: 200px;
+                background: url('data:image/svg+xml;base64,${btoa(`
+                    <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200">
+                        <rect width="200" height="200" fill="white"/>
+                        <text x="100" y="100" text-anchor="middle" dominant-baseline="middle" font-family="monospace" font-size="12" fill="black">
+                            QR Code
+                        </text>
+                        <text x="100" y="120" text-anchor="middle" dominant-baseline="middle" font-family="monospace" font-size="8" fill="gray">
+                            ${qrCodeData.substring(0, 20)}...
+                        </text>
+                    </svg>
+                `)}');
+                background-size: contain;
+                background-repeat: no-repeat;
+                background-position: center;
                 border: 2px solid #ddd;
                 border-radius: 10px;
-            " />
+            ">
+            </div>
         `;
     }
-}          
+}
+
 // Close QR code modal
 function closeQRCodeModal() {
     const modal = document.getElementById('qrCodeModal');
@@ -42585,8 +41947,6 @@ async function loadOldEventTickets() {
 // Generate old physical event ticket card (same layout but grayed out)
 function generateOldPhyEventTicketCard(ticket) {
     const eventData = ticket.eventData;
-    const isMobile = window.innerWidth <= 768;
-    const isSmallMobile = window.innerWidth <= 480;
     
     // Format date and time
     const startDate = new Date(eventData.startDateTime);
@@ -42605,19 +41965,17 @@ function generateOldPhyEventTicketCard(ticket) {
         minute: '2-digit' 
     })}`;
 
-    // Generate background style (same as new event but grayed out)
-let backgroundStyle = 'background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); filter: grayscale(100%);';
-if (ticket.eventbackground) {
-    if (ticket.eventbackground.type === 'media') {
-        backgroundStyle = `background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('${ticket.eventbackground.data}'); background-size: cover; background-position: center; filter: grayscale(100%);`;
-    } else if (ticket.eventbackground.type === 'gradient') {
-        backgroundStyle = `background: ${ticket.eventbackground.gradient}; filter: grayscale(100%);`;
-    } else if (ticket.eventbackground.type === 'color') {
-        backgroundStyle = `background-color: ${ticket.eventbackground.color}; filter: grayscale(100%);`;
+    // Generate background style (grayed out)
+    let backgroundStyle = 'background: linear-gradient(135deg, #999 0%, #666 100%); filter: grayscale(100%);';
+    if (ticket.eventbackground) {
+        if (ticket.eventbackground.type === 'media') {
+            backgroundStyle = `background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('${ticket.eventbackground.data}'); background-size: cover; background-position: center; filter: grayscale(100%);`;
+        } else if (ticket.eventbackground.type === 'gradient') {
+            backgroundStyle = `background: ${ticket.eventbackground.gradient}; filter: grayscale(100%);`;
+        } else if (ticket.eventbackground.type === 'color') {
+            backgroundStyle = `background-color: ${ticket.eventbackground.color}; filter: grayscale(100%);`;
+        }
     }
-} else if (ticket.boughtticketbackground) {
-    backgroundStyle = `background: ${ticket.boughtticketbackground}; filter: grayscale(100%);`;
-}
 
     // Status badge
     const statusBadge = ticket.boughtticketstatus === 'used' ? 
@@ -42676,25 +42034,25 @@ if (ticket.eventbackground) {
         <div style="
             background: rgba(255, 255, 255, 0.05);
             border-radius: 20px;
-            padding: ${isMobile ? '15px' : '20px'};
-            margin-bottom: ${isMobile ? '15px' : '20px'};
+            padding: 20px;
+            margin-bottom: 20px;
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             opacity: 0.8;
-            box-sizing: border-box;
         ">
+            
             <!-- Status Badge -->
-            <div style="display: flex; justify-content: flex-end; margin-bottom: ${isMobile ? '12px' : '15px'};">
+            <div style="display: flex; justify-content: flex-end; margin-bottom: 15px;">
                 ${statusBadge}
             </div>
             
             <!-- Main Card Content -->
-            <div style="display: ${isMobile ? 'block' : 'flex'}; gap: ${isMobile ? '0' : '20px'}; margin-bottom: ${isMobile ? '15px' : '20px'};">
+            <div style="display: flex; gap: 20px; margin-bottom: 20px;">
                 
-                <!-- Event Background Container -->
+                <!-- Left: PhyEvent Background Container -->
                 <div style="
-                    ${isMobile ? 'width: 100%; margin-bottom: 15px;' : 'flex: 0 0 200px;'}
-                    height: ${isSmallMobile ? '120px' : isMobile ? '140px' : '150px'};
+                    flex: 0 0 200px;
+                    height: 150px;
                     border-radius: 15px;
                     ${backgroundStyle}
                     display: flex;
@@ -42706,42 +42064,71 @@ if (ticket.eventbackground) {
                     position: relative;
                     overflow: hidden;
                 ">
-                    <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center;">
-                        <i class="fas fa-ticket-alt" style="font-size: ${isSmallMobile ? '20px' : isMobile ? '24px' : '32px'}; opacity: 0.6;"></i>
+                    <div style="
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        right: 0;
+                        bottom: 0;
+                        background: rgba(0,0,0,0.4);
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                    ">
+                        <i class="fas fa-ticket-alt" style="font-size: 32px; opacity: 0.6;"></i>
                     </div>
                 </div>
                 
-                <!-- Ticket Details -->
-                <div style="${isMobile ? 'width: 100%;' : 'flex: 1;'} color: rgba(255,255,255,0.8);">
-                    <!-- User Name -->
-                    <div style="margin-bottom: ${isMobile ? '12px' : '15px'};">
-                        <div style="width: 100%; padding: ${isMobile ? '12px' : '10px'}; border: 2px solid rgba(255, 255, 255, 0.1); border-radius: 8px; background: rgba(255, 255, 255, 0.05); color: rgba(255,255,255,0.7); font-size: ${isSmallMobile ? '14px' : isMobile ? '15px' : '16px'}; font-weight: 600; box-sizing: border-box;">
-                            ${ticket.ticketbuyername|| 'No name provided'}
+                <!-- Right: Ticket Details -->
+                <div style="flex: 1; color: rgba(255,255,255,0.8);">
+                    <!-- User Name (read-only) -->
+                    <div style="margin-bottom: 15px;">
+                        <div style="
+                            width: 100%;
+                            padding: 10px;
+                            border: 2px solid rgba(255, 255, 255, 0.1);
+                            border-radius: 8px;
+                            background: rgba(255, 255, 255, 0.05);
+                            color: rgba(255,255,255,0.7);
+                            font-size: 16px;
+                            font-weight: 600;
+                        ">
+                            ${ticket.userName || 'No name provided'}
                         </div>
                     </div>
                     
                     <!-- Ticket Info -->
-                    <div style="display: flex; flex-direction: column; gap: ${isMobile ? '6px' : '8px'};">
-                        <div style="font-size: ${isSmallMobile ? '11px' : isMobile ? '12px' : '14px'}; opacity: 0.6; word-break: break-all;">
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="font-size: 14px; opacity: 0.6;">
                             <strong>Ticket ID:</strong> ${ticket.ticketid}
                         </div>
-                        <div style="font-size: ${isSmallMobile ? '13px' : isMobile ? '14px' : '16px'}; font-weight: 600; opacity: 0.8;">
+                        <div style="font-size: 16px; font-weight: 600; opacity: 0.8;">
                             <strong>Type:</strong> ${ticket.boughtticketname}
                         </div>
-                        <div style="font-size: ${isSmallMobile ? '11px' : isMobile ? '12px' : '14px'}; opacity: 0.7;">
+                        <div style="font-size: 14px; opacity: 0.7;">
                             <strong>Date:</strong> ${formattedDate}
                         </div>
-                        <div style="font-size: ${isSmallMobile ? '11px' : isMobile ? '12px' : '14px'}; opacity: 0.7;">
+                        <div style="font-size: 14px; opacity: 0.7;">
                             <strong>Time:</strong> ${formattedTime}
                         </div>
-                        <div style="font-size: ${isSmallMobile ? '11px' : isMobile ? '12px' : '14px'}; opacity: 0.7; word-break: break-word;">
+                        <div style="font-size: 14px; opacity: 0.7;">
                             <strong>Location:</strong> ${eventData.location}
                         </div>
                         
-                        <!-- QR Code Button -->
-                        <button disabled style="background: #666; color: rgba(255,255,255,0.5); border: none; padding: ${isMobile ? '12px 16px' : '10px 20px'}; border-radius: 8px; font-size: ${isSmallMobile ? '12px' : isMobile ? '13px' : '14px'}; font-weight: 600; cursor: not-allowed; margin-top: ${isMobile ? '12px' : '10px'}; width: ${isMobile ? '100%' : 'auto'}; min-height: ${isMobile ? '44px' : 'auto'}; box-sizing: border-box; display: flex; align-items: center; justify-content: center; gap: 8px;">
-                            <i class="fas fa-qrcode" style="font-size: ${isSmallMobile ? '12px' : '14px'};"></i>
-                            <span>QR Code (${ticket.boughtticketstatus === 'used' ? 'Used' : 'Expired'})</span>
+                        <!-- QR Code Button (disabled) -->
+                        <button disabled style="
+                            background: #666;
+                            color: rgba(255,255,255,0.5);
+                            border: none;
+                            padding: 10px 20px;
+                            border-radius: 8px;
+                            font-size: 14px;
+                            font-weight: 600;
+                            cursor: not-allowed;
+                            margin-top: 10px;
+                        ">
+                            <i class="fas fa-qrcode" style="margin-right: 8px;"></i>
+                            QR Code (${ticket.boughtticketstatus === 'used' ? 'Used' : 'Expired'})
                         </button>
                     </div>
                 </div>
@@ -42753,7 +42140,7 @@ if (ticket.eventbackground) {
     `;
 }
 
-// Update the other close functions to include function definitions that might be missing
+// Close physical event ticket page
 function closePhysicalEventTicketPage() {
     const page = document.getElementById('physical-event-ticket-page');
     if (page) {
@@ -42897,1097 +42284,8 @@ function openPhysicalEventTicketPage() {
         existingPage.remove();
     }
 
-    
-    // Check if mobile device
-    const isMobile = window.innerWidth <= 768;
-    const isUltraMobile = window.innerWidth <= 480;
-    
     const pageHTML = `
         <div id="physical-event-ticket-page" style="
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            background: #1a1a2e;
-            z-index: 10000;
-            overflow-y: auto;
-     -webkit-overflow-scrolling: touch;
-        ">
-
- <!-- Header -->
-            <div class="${isMobile ? 'mobile-header' : ''} ${isUltraMobile ? 'ultra-mobile-header' : ''}" style="
-                background: rgba(255, 255, 255, 0.95);
-                backdrop-filter: blur(10px);
-                padding: ${isMobile ? '10px 15px' : '15px 20px'};
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                position: sticky;
-                top: 0;
-                z-index: 100;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-            ">
-                <h1 style="color: #333; font-size: ${isUltraMobile ? '16px' : isMobile ? '18px' : '24px'}; font-weight: 600; margin: 0;">My Tickets</h1>
-                <button onclick="closePhysicalEventTicketPage()" class="touch-button no-select" style="
-                    background: #ff4757;
-                    color: white;
-                    border: none;
-                    padding: ${isMobile ? '8px 12px' : '10px 15px'};
-                    border-radius: 8px;
-                    cursor: pointer;
-                    font-size: ${isMobile ? '14px' : '16px'};
-                    transition: all 0.3s ease;
-                    min-width: 44px;
-                    min-height: 44px;
-                ">
-                    <i class="fas fa-times"></i> ${isMobile ? '' : 'Close'}
-                </button>
-            </div>
-
-            <!-- Auto-scrolling Banners -->
-            <div style="
-                background: rgba(255, 255, 255, 0.1);
-                padding: ${isMobile ? '15px 0' : '20px 0'};
-                overflow: hidden;
-                margin-bottom: ${isMobile ? '20px' : '30px'};
-            ">
-                <div id="ticket-banners-container" style="
-                    display: flex;
-                    gap: ${isMobile ? '15px' : '20px'};
-                    animation: scrollBanners 30s linear infinite;
-                    padding: 0 ${isMobile ? '10px' : '0'};
-                ">
-                    ${generateResponsiveTicketBannersHTML(isMobile, isUltraMobile)}
-                </div>
-                <div style="padding: 0 ${isMobile ? '15px' : '20px'}; margin-top: 20px;">
-                    <button id="ticket-validator-scanner-btn" onclick="openTicketValidatorOptions()" class="touch-button no-select" style="
-                        width: 100%;
-                        background: rgba(255, 255, 255, 0.9);
-                        color: #333;
-                        border: none;
-                        padding: ${isMobile ? '12px 16px' : '15px 20px'};
-                        border-radius: 10px;
-                        font-size: ${isMobile ? '14px' : '16px'};
-                        font-weight: 600;
-                        cursor: pointer;
-                        transition: all 0.3s ease;
-                        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-                        min-height: 44px;
-                    ">
-                        <i class="fas fa-qrcode" style="margin-right: 8px;"></i>
-                        Ticket Validator Scanner
-                    </button>
-                </div>
-            </div>
-
-
-            <!-- Tabs -->
-            <div style="padding: 0 ${isMobile ? '15px' : '20px'}; margin-bottom: ${isMobile ? '20px' : '30px'};">
-                <div style="
-                    display: flex;
-                    background: rgba(255, 255, 255, 0.1);
-                    border-radius: 15px;
-                    padding: 5px;
-                    gap: 5px;
-                ">
-                    <button id="new-event-ticket-tab" onclick="switchPhysicalTicketTab('new')" class="touch-button no-select mobile-tab" style="
-                        flex: 1;
-                        background: rgba(255, 255, 255, 0.9);
-                        color: #333;
-                        border: none;
-                        padding: ${isMobile ? '12px 10px' : '15px 20px'};
-                        border-radius: 10px;
-                        font-size: ${isMobile ? '14px' : '16px'};
-                        font-weight: 600;
-                        cursor: pointer;
-                        transition: all 0.3s ease;
-                        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-                        min-height: 44px;
-                        text-align: center;
-                    ">
-                        ${isMobile ? 'New Tickets' : 'New Event Tickets'}
-                    </button>
-                    <button id="old-event-ticket-tab" onclick="switchPhysicalTicketTab('old')" class="touch-button no-select mobile-tab" style="
-                        flex: 1;
-                        background: transparent;
-                        color: white;
-                        border: none;
-                        padding: ${isMobile ? '12px 10px' : '15px 20px'};
-                        border-radius: 10px;
-                        font-size: ${isMobile ? '14px' : '16px'};
-                        font-weight: 600;
-                        cursor: pointer;
-                        transition: all 0.3s ease;
-                        min-height: 44px;
-                        text-align: center;
-                    ">
-                        ${isMobile ? 'Old Tickets' : 'Old Event Tickets'}
-                    </button>
-                </div>
-            </div>
-
-            <!-- Tab Content -->
-            <div id="new-event-content" style="display: block; padding: 0 ${isMobile ? '15px' : '20px'};">
-                <div id="new-tickets-container">
-                    <div style="text-align: center; color: white; padding: ${isMobile ? '30px' : '40px'};">
-                        <i class="fas fa-spinner fa-spin" style="font-size: ${isMobile ? '24px' : '32px'}; margin-bottom: 15px;"></i>
-                        <p style="font-size: ${isMobile ? '16px' : '18px'};">Loading your tickets...</p>
-                    </div>
-                </div>
-            </div>
-
-            <div id="old-event-content" style="display: none; padding: 0 ${isMobile ? '15px' : '20px'};">
-                <div id="old-tickets-container">
-                    <div style="text-align: center; color: white; padding: ${isMobile ? '30px' : '40px'};">
-                        <i class="fas fa-spinner fa-spin" style="font-size: ${isMobile ? '24px' : '32px'}; margin-bottom: 15px;"></i>
-                        <p style="font-size: ${isMobile ? '16px' : '18px'};">Loading your old tickets...</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <style>
-            @keyframes scrollBanners {
-                0% { transform: translateX(0); }
-                100% { transform: translateX(-50%); }
-            }
-            
-            /* Mobile scroll optimization */
-            @media (max-width: 768px) {
-                #physical-event-ticket-page {
-                    -webkit-overflow-scrolling: touch;
-                }
-            }
-            /* Base responsive styles */
-        * {
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
-        
-        /* Mobile-first responsive design */
-        @media (max-width: 768px) {
-            .mobile-optimized {
-                font-size: 14px !important;
-                padding: 12px 16px !important;
-            }
-            
-            .mobile-header {
-                padding: 10px 15px !important;
-                flex-direction: row !important;
-                gap: 10px !important;
-            }
-            
-            .mobile-header h1 {
-                font-size: 18px !important;
-                margin: 0 !important;
-            }
-            
-            .mobile-header button {
-                padding: 8px 12px !important;
-                font-size: 14px !important;
-                min-width: 44px !important;
-                min-height: 44px !important;
-            }
-            
-            .mobile-tab {
-                padding: 12px 10px !important;
-                font-size: 14px !important;
-                min-height: 44px !important;
-            }
-            
-            .mobile-banner {
-                min-width: 220px !important;
-                padding: 20px !important;
-            }
-            
-            .mobile-banner h4 {
-                font-size: 16px !important;
-            }
-            
-            .mobile-banner p {
-                font-size: 12px !important;
-            }
-            
-            .mobile-banner i {
-                font-size: 28px !important;
-            }
-            
-            .mobile-modal {
-                margin: 10px !important;
-                padding: 25px !important;
-                max-height: 90vh !important;
-                overflow-y: auto !important;
-            }
-            
-            .mobile-modal h2 {
-                font-size: 22px !important;
-            }
-            
-            .mobile-modal h3 {
-                font-size: 20px !important;
-            }
-            
-            .mobile-input {
-                padding: 12px !important;
-                font-size: 16px !important;
-                border-radius: 8px !important;
-            }
-            
-            .mobile-button {
-                padding: 12px 20px !important;
-                font-size: 16px !important;
-                min-height: 44px !important;
-                border-radius: 8px !important;
-            }
-            
-            .mobile-qr-controls {
-                flex-direction: column !important;
-                gap: 10px !important;
-            }
-            
-            .mobile-qr-controls button {
-                width: 100% !important;
-                min-height: 44px !important;
-            }
-            
-            .mobile-validation-row {
-                flex-direction: column !important;
-                gap: 10px !important;
-            }
-            
-            .mobile-validation-row input {
-                width: 100% !important;
-            }
-            
-            .mobile-validation-row button {
-                width: 100% !important;
-                min-height: 44px !important;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .ultra-mobile {
-                padding: 8px 12px !important;
-                font-size: 12px !important;
-            }
-            
-            .ultra-mobile-header h1 {
-                font-size: 16px !important;
-            }
-            
-            .ultra-mobile-modal {
-                margin: 5px !important;
-                padding: 20px !important;
-            }
-            
-            .ultra-mobile-banner {
-                min-width: 180px !important;
-                padding: 15px !important;
-            }
-        }
-        
-        /* Touch-friendly styles */
-        .touch-button {
-            min-width: 44px;
-            min-height: 44px;
-            cursor: pointer;
-            user-select: none;
-            -webkit-user-select: none;
-            -webkit-touch-callout: none;
-        }
-        
-        /* iOS specific styles */
-        @supports (-webkit-appearance: none) {
-            .ios-input {
-                -webkit-appearance: none;
-                border-radius: 8px;
-            }
-            
-            .ios-button {
-                -webkit-appearance: none;
-                border-radius: 8px;
-            }
-        }
-        
-        /* Prevent text selection on interactive elements */
-        .no-select {
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
-    
-        </style>
-    `;
-    document.body.insertAdjacentHTML('beforeend', pageHTML);
-    document.body.style.overflow = 'hidden';
-    
-    // Load tickets immediately
-    loadNewEventTickets();
-     // Add touch event listeners for mobile
-    if (isMobile) {
-        addMobileTouchHandlers();
-    }
-}
-
-// Responsive ticket banners
-function generateResponsiveTicketBannersHTML(isMobile, isUltraMobile) {
-    const banners = [
-        { title: 'Premium Sound', desc: 'Crystal clear audio', color: '#FF6B6B', icon: 'fas fa-volume-up' },
-        { title: 'Event Photos', desc: 'Professional photography', color: '#4ECDC4', icon: 'fas fa-camera' },
-        { title: 'VIP Access', desc: 'Exclusive backstage access', color: '#45B7D1', icon: 'fas fa-crown' },
-        { title: 'Food & Drinks', desc: 'Premium catering service', color: '#96CEB4', icon: 'fas fa-utensils' },
-        { title: 'Transportation', desc: 'Shuttle service available', color: '#FFEAA7', icon: 'fas fa-bus' },
-        { title: 'Merchandise', desc: 'Official event merchandise', color: '#DDA0DD', icon: 'fas fa-tshirt' }
-    ];
-    
-    const duplicatedBanners = [...banners, ...banners];
-    
-    return duplicatedBanners.map(banner => `
-        <div class="touch-button no-select" style="
-            min-width: ${isUltraMobile ? '180px' : isMobile ? '220px' : '280px'};
-            background: ${banner.color};
-            border-radius: 15px;
-            padding: ${isUltraMobile ? '15px' : isMobile ? '20px' : '25px'};
-            color: white;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        ">
-            <div style="
-                position: absolute;
-                top: -20px;
-                right: -20px;
-                width: 60px;
-                height: 60px;
-                background: rgba(255,255,255,0.1);
-                border-radius: 50%;
-            "></div>
-            <i class="${banner.icon}" style="font-size: ${isUltraMobile ? '24px' : isMobile ? '28px' : '36px'}; margin-bottom: 15px; display: block;"></i>
-            <h4 style="font-size: ${isUltraMobile ? '14px' : isMobile ? '16px' : '18px'}; font-weight: 600; margin-bottom: 8px;">${banner.title}</h4>
-            <p style="font-size: ${isUltraMobile ? '11px' : isMobile ? '12px' : '14px'}; opacity: 0.9; margin: 0;">${banner.desc}</p>
-        </div>
-    `).join('');
-}
-
-
-// Switch physical ticket tabs with responsive handling
-function switchPhysicalTicketTab(tabType) {
-    const newTab = document.getElementById('new-event-ticket-tab');
-    const oldTab = document.getElementById('old-event-ticket-tab');
-    const newContent = document.getElementById('new-event-content');
-    const oldContent = document.getElementById('old-event-content');
-    
-    const isMobile = window.innerWidth <= 768;
-    
-    if (tabType === 'new') {
-        newTab.style.background = 'rgba(255, 255, 255, 0.9)';
-        newTab.style.color = '#333';
-        newTab.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.1)';
-        
-        oldTab.style.background = 'transparent';
-        oldTab.style.color = 'white';
-        oldTab.style.boxShadow = 'none';
-        
-        newContent.style.display = 'block';
-        oldContent.style.display = 'none';
-        
-        if (typeof loadNewEventTickets === 'function') {
-            loadNewEventTickets();
-        }
-    } else {
-        oldTab.style.background = 'rgba(255, 255, 255, 0.9)';
-        oldTab.style.color = '#333';
-        oldTab.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.1)';
-        
-        newTab.style.background = 'transparent';
-        newTab.style.color = 'white';
-        newTab.style.boxShadow = 'none';
-        
-        oldContent.style.display = 'block';
-        newContent.style.display = 'none';
-        
-        if (typeof loadOldEventTickets === 'function') {
-            loadOldEventTickets();
-        }
-    }
-}
-       
-// Add window resize handler to update mobile state
-window.addEventListener('resize', function() {
-    // Debounce resize events
-    clearTimeout(window.resizeTimeout);
-    window.resizeTimeout = setTimeout(function() {
-        // You could add logic here to update mobile styles if needed
-        console.log('Window resized, new width:', window.innerWidth);
-    }, 250);
-});
-function openTicketValidatorOptions() {
-    closeTicketsSelectionModal();
-    
-    const existingModal = document.getElementById('validatorOptionsModal');
-    if (existingModal) {
-        existingModal.remove();
-    }
-
-    const isMobile = window.innerWidth <= 768;
-    const isUltraMobile = window.innerWidth <= 480;
-
-    const modalHTML = `
-         <div id="validatorOptionsModal" style="
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            background: rgba(0, 0, 0, 0.8);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 10000;
-            backdrop-filter: blur(5px);
-            padding: ${isMobile ? '10px' : '0'};
-        ">
-            <div class="${isMobile ? 'mobile-modal' : ''} ${isUltraMobile ? 'ultra-mobile-modal' : ''}" style="
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                border-radius: 20px;
-                padding: ${isUltraMobile ? '20px' : isMobile ? '25px' : '40px'};
-                width: 100%;
-                max-width: ${isMobile ? '400px' : '500px'};
-                text-align: center;
-                position: relative;
-                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-                max-height: ${isMobile ? '90vh' : 'auto'};
-                overflow-y: auto;
-            ">
-                <button onclick="closeValidatorOptionsModal()" class="touch-button" style="
-                    position: absolute;
-                    top: 15px;
-                    right: 20px;
-                    background: none;
-                    border: none;
-                    color: white;
-                    font-size: 24px;
-                    cursor: pointer;
-                    opacity: 0.7;
-                    transition: opacity 0.3s ease;
-                    min-width: 44px;
-                    min-height: 44px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                ">
-                    <i class="fas fa-times"></i>
-                </button>
-                
-                <h2 style="color: white; font-size: ${isUltraMobile ? '20px' : isMobile ? '22px' : '28px'}; margin-bottom: 30px; font-weight: 600; margin-top: ${isMobile ? '20px' : '0'};">
-                    Ticket Validator
-                </h2>
-                
-                <div style="display: flex; flex-direction: column; gap: ${isMobile ? '15px' : '20px'};">
-                    <button onclick="openTicketInputScanner()" class="touch-button mobile-button no-select" style="
-                        background: rgba(255, 255, 255, 0.1);
-                        border: 2px solid rgba(255, 255, 255, 0.3);
-                        color: white;
-                        padding: ${isMobile ? '16px 24px' : '20px 30px'};
-                        border-radius: 15px;
-                        font-size: ${isMobile ? '16px' : '18px'};
-                        font-weight: 600;
-                        cursor: pointer;
-                        transition: all 0.3s ease;
-                        backdrop-filter: blur(10px);
-                        min-height: 44px;
-                        width: 100%;
-                    ">
-                        <i class="fas fa-keyboard" style="margin-right: 10px;"></i>
-                        Ticket Input Scanner
-                    </button>
-                    
-                    <button onclick="openTicketQRScanner()" class="touch-button mobile-button no-select" style="
-                        background: rgba(255, 255, 255, 0.1);
-                        border: 2px solid rgba(255, 255, 255, 0.3);
-                        color: white;
-                        padding: ${isMobile ? '16px 24px' : '20px 30px'};
-                        border-radius: 15px;
-                        font-size: ${isMobile ? '16px' : '18px'};
-                        font-weight: 600;
-                        cursor: pointer;
-                        transition: all 0.3s ease;
-                        backdrop-filter: blur(10px);
-                        min-height: 44px;
-                        width: 100%;
-                    ">
-                        <i class="fas fa-camera" style="margin-right: 10px;"></i>
-                        Ticket QR Scanner
-                    </button>
-                </div>
-                
-                <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.2);">
-                    <p style="color: rgba(255,255,255,0.8); font-size: ${isMobile ? '12px' : '14px'}; margin: 0;">
-                        Powered by <strong style="color: white;">Rewarder</strong>
-                    </p>
-                </div>
-            </div>
-        </div>
-                
-               
-    `;
-    
-    document.body.insertAdjacentHTML('beforeend', modalHTML);
-    document.body.style.overflow = 'hidden';
-     // Add touch event listeners for mobile
-    if (isMobile) {
-        addMobileTouchHandlers();
-    }
-}
-
-
-
-
-function addMobileTouchHandlers() {
-    const buttons = document.querySelectorAll('.touch-button');
-    buttons.forEach(button => {
-        // Remove hover effects on mobile and add touch feedback
-        button.addEventListener('touchstart', function() {
-            this.style.opacity = '0.8';
-        });
-        
-        button.addEventListener('touchend', function() {
-            this.style.opacity = '1';
-        });
-        
-        button.addEventListener('touchcancel', function() {
-            this.style.opacity = '1';
-        });
-    });
-}
-
-function closeValidatorOptionsModal() {
-    const modal = document.getElementById('validatorOptionsModal');
-    if (modal) {
-        modal.remove();
-        document.body.style.overflow = 'auto';
-    }
-}
-
-
-// Web Audio API for validation sounds
-class ValidationAudio {
-    constructor() {
-        this.audioContext = null;
-        this.initAudio();
-    }
-    
-    initAudio() {
-        try {
-            this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        } catch (error) {
-            console.log('Web Audio API not supported');
-        }
-    }
-    
-    playSuccessSound() {
-        if (!this.audioContext) return;
-        
-        const oscillator = this.audioContext.createOscillator();
-        const gainNode = this.audioContext.createGain();
-        
-        oscillator.connect(gainNode);
-        gainNode.connect(this.audioContext.destination);
-        
-        oscillator.frequency.setValueAtTime(800, this.audioContext.currentTime);
-        oscillator.frequency.setValueAtTime(1000, this.audioContext.currentTime + 0.1);
-        
-        gainNode.gain.setValueAtTime(0.3, this.audioContext.currentTime);
-        gainNode.gain.exponentialRampToValueAtTime(0.01, this.audioContext.currentTime + 0.3);
-        
-        oscillator.start(this.audioContext.currentTime);
-        oscillator.stop(this.audioContext.currentTime + 0.3);
-    }
-    
-    playFailureSound() {
-        if (!this.audioContext) return;
-        
-        const oscillator = this.audioContext.createOscillator();
-        const gainNode = this.audioContext.createGain();
-        
-        oscillator.connect(gainNode);
-        gainNode.connect(this.audioContext.destination);
-        
-        oscillator.frequency.setValueAtTime(400, this.audioContext.currentTime);
-        oscillator.frequency.setValueAtTime(200, this.audioContext.currentTime + 0.2);
-        
-        gainNode.gain.setValueAtTime(0.3, this.audioContext.currentTime);
-        gainNode.gain.exponentialRampToValueAtTime(0.01, this.audioContext.currentTime + 0.4);
-        
-        oscillator.start(this.audioContext.currentTime);
-        oscillator.stop(this.audioContext.currentTime + 0.4);
-    }
-}
-
-const validationAudio = new ValidationAudio();
-
-// Global variables for session management
-let currentValidationEventId = null;
-let validationSessionStart = null;
-let validationSessionDuration = 30 * 60 * 1000; // 30 minutes
-
-function openTicketInputScanner() {
-    closeValidatorOptionsModal();
-    
-    // Check if session is still valid
-    if (currentValidationEventId && validationSessionStart && 
-        (Date.now() - validationSessionStart < validationSessionDuration)) {
-        showTicketQuantitySelector();
-        return;
-    }
-    
-    showEventIdInput('input');
-}
-
-function showEventIdInput(scannerType) {
-    const existingModal = document.getElementById('eventIdInputModal');
-    if (existingModal) {
-        existingModal.remove();
-    }
-
-    const isMobile = window.innerWidth <= 768;
-    const isUltraMobile = window.innerWidth <= 480;
-
-    const modalHTML = `
-         <div id="eventIdInputModal" style="
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            background: rgba(0, 0, 0, 0.9);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 10000;
-            backdrop-filter: blur(10px);
-            padding: ${isMobile ? '10px' : '0'};
-        ">
-            <div class="${isMobile ? 'mobile-modal' : ''} ${isUltraMobile ? 'ultra-mobile-modal' : ''}" style="
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                border-radius: 20px;
-                padding: ${isUltraMobile ? '20px' : isMobile ? '25px' : '40px'};
-                width: 100%;
-                max-width: ${isMobile ? '380px' : '450px'};
-                text-align: center;
-                position: relative;
-                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-                max-height: ${isMobile ? '90vh' : 'auto'};
-                overflow-y: auto;
-            ">
-                <button onclick="closeEventIdInputModal()" class="touch-button" style="
-                    position: absolute;
-                    top: 15px;
-                    right: 20px;
-                    background: none;
-                    border: none;
-                    color: white;
-                    font-size: 24px;
-                    cursor: pointer;
-                    opacity: 0.7;
-                    min-width: 44px;
-                    min-height: 44px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                ">
-                    <i class="fas fa-times"></i>
-                </button>
-                
-                <h3 style="color: white; font-size: ${isUltraMobile ? '18px' : isMobile ? '20px' : '24px'}; margin-bottom: 30px; font-weight: 600; margin-top: ${isMobile ? '20px' : '0'};">
-                    Enter Event ID
-                </h3>
-                
-                <input type="text" id="eventIdInput" placeholder="Enter Event ID" class="mobile-input ios-input" style="
-                    width: 100%;
-                    padding: ${isMobile ? '12px' : '15px'};
-                    border: 2px solid rgba(255, 255, 255, 0.3);
-                    border-radius: 10px;
-                    background: rgba(255, 255, 255, 0.1);
-                    color: white;
-                    font-size: ${isMobile ? '16px' : '16px'};
-                    margin-bottom: 20px;
-                    text-align: center;
-                    box-sizing: border-box;
-                " />
-                
-                <button onclick="verifyEventId('${scannerType}')" class="touch-button mobile-button ios-button no-select" style="
-                    background: #4ECDC4;
-                    color: white;
-                    border: none;
-                    padding: ${isMobile ? '12px 24px' : '15px 30px'};
-                    border-radius: 10px;
-                    font-size: ${isMobile ? '16px' : '16px'};
-                    font-weight: 600;
-                    cursor: pointer;
-                    transition: all 0.3s ease;
-                    width: 100%;
-                    min-height: 44px;
-                ">
-                    Verify Event ID
-                </button>
-                
-                <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.2);">
-                    <p style="color: rgba(255,255,255,0.8); font-size: ${isMobile ? '11px' : '12px'}; margin: 0;">
-                        Powered by <strong style="color: white;">Rewarder</strong>
-                    </p>
-                </div>
-            </div>
-        </div>
-    `;
-    
-    document.body.insertAdjacentHTML('beforeend', modalHTML);
-    document.body.style.overflow = 'hidden';
-    
-    // Focus input and show keyboard on mobile
-    if (isMobile) {
-        setTimeout(() => {
-            const input = document.getElementById('eventIdInput');
-            if (input) {
-                input.focus();
-            }
-        }, 300);
-        addMobileTouchHandlers();
-    }
-}
-
-// Responsive ticket quantity selector
-function showTicketQuantitySelector() {
-    const existingModal = document.getElementById('quantitySelectorModal');
-    if (existingModal) {
-        existingModal.remove();
-    }
-
-    const isMobile = window.innerWidth <= 768;
-    const isUltraMobile = window.innerWidth <= 480;
-
-    const modalHTML = `
-        <div id="quantitySelectorModal" style="
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            background: rgba(0, 0, 0, 0.9);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 10000;
-            backdrop-filter: blur(10px);
-            padding: ${isMobile ? '10px' : '0'};
-        ">
-            <div class="${isMobile ? 'mobile-modal' : ''} ${isUltraMobile ? 'ultra-mobile-modal' : ''}" style="
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                border-radius: 20px;
-                padding: ${isUltraMobile ? '20px' : isMobile ? '25px' : '40px'};
-                width: 100%;
-                max-width: ${isMobile ? '380px' : '450px'};
-                text-align: center;
-                position: relative;
-                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-                max-height: ${isMobile ? '90vh' : 'auto'};
-                overflow-y: auto;
-            ">
-                <button onclick="closeQuantitySelectorModal()" class="touch-button" style="
-                    position: absolute;
-                    top: 15px;
-                    right: 20px;
-                    background: none;
-                    border: none;
-                    color: white;
-                    font-size: 24px;
-                    cursor: pointer;
-                    opacity: 0.7;
-                    min-width: 44px;
-                    min-height: 44px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                ">
-                    <i class="fas fa-times"></i>
-                </button>
-                
-                <h3 style="color: white; font-size: ${isUltraMobile ? '18px' : isMobile ? '20px' : '24px'}; margin-bottom: 30px; font-weight: 600; margin-top: ${isMobile ? '20px' : '0'};">
-                    How many tickets to validate?
-                </h3>
-                
-                <input type="number" id="ticketQuantityInput" min="1" max="15" value="1" class="mobile-input ios-input" style="
-                    width: 100%;
-                    padding: ${isMobile ? '12px' : '15px'};
-                    border: 2px solid rgba(255, 255, 255, 0.3);
-                    border-radius: 10px;
-                    background: rgba(255, 255, 255, 0.1);
-                    color: white;
-                    font-size: ${isMobile ? '18px' : '18px'};
-                    margin-bottom: 20px;
-                    text-align: center;
-                    box-sizing: border-box;
-                " />
-                
-                <button onclick="openInputValidationPage()" class="touch-button mobile-button ios-button no-select" style="
-                    background: #4ECDC4;
-                    color: white;
-                    border: none;
-                    padding: ${isMobile ? '12px 24px' : '15px 30px'};
-                    border-radius: 10px;
-                    font-size: ${isMobile ? '16px' : '16px'};
-                    font-weight: 600;
-                    cursor: pointer;
-                    transition: all 0.3s ease;
-                    width: 100%;
-                    min-height: 44px;
-                ">
-                    Start Validation
-                </button>
-                
-                <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.2);">
-                    <p style="color: rgba(255,255,255,0.8); font-size: ${isMobile ? '11px' : '12px'}; margin: 0;">
-                        Powered by <strong style="color: white;">Rewarder</strong>
-                    </p>
-                </div>
-            </div>
-        </div>
-    `;
-    
-    document.body.insertAdjacentHTML('beforeend', modalHTML);
-    document.body.style.overflow = 'hidden';
-    
-    if (isMobile) {
-        addMobileTouchHandlers();
-    }
-}
-
-async function verifyEventId(scannerType) {
-    const eventIdInput = document.getElementById('eventIdInput');
-    const eventId = eventIdInput.value.trim();
-    
-    if (!eventId) {
-        alert('Please enter an Event ID');
-        return;
-    }
-    
-    try {
-        // Check if event exists in physicalEvents
-        const eventDoc = await db.collection('physicalEvents').doc(eventId).get();
-        
-        if (!eventDoc.exists) {
-            alert('Event ID not found');
-            return;
-        }
-        
-        const eventData = eventDoc.data();
-        const eventEndDate = new Date(eventData.endDateTime);
-        const now = new Date();
-        
-        // Check if event has ended
-        if (eventEndDate <= now) {
-            alert('This event has already ended');
-            return;
-        }
-        
-        // Check if there are tickets for this event
-        const ticketsSnapshot = await db.collection('BoughtTicket')
-            .where('physicaleventid', '==', eventId)
-            .limit(1)
-            .get();
-            
-        if (ticketsSnapshot.empty) {
-            alert('No tickets found for this event');
-            return;
-        }
-        
-        // Set session variables
-        currentValidationEventId = eventId;
-        validationSessionStart = Date.now();
-        
-        closeEventIdInputModal();
-        
-        if (scannerType === 'input') {
-            showTicketQuantitySelector();
-        } else {
-            showQRScanner();
-        }
-        
-    } catch (error) {
-        console.error('Error verifying event ID:', error);
-        alert('Error verifying event. Please try again.');
-    }
-}
-
-function showTicketQuantitySelector() {
-    const existingModal = document.getElementById('quantitySelectorModal');
-    if (existingModal) {
-        existingModal.remove();
-    }
-
-    const modalHTML = `
-        <div id="quantitySelectorModal" style="
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            background: rgba(0, 0, 0, 0.9);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 10000;
-            backdrop-filter: blur(10px);
-        ">
-            <div style="
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                border-radius: 20px;
-                padding: 40px;
-                width: 90%;
-                max-width: 450px;
-                text-align: center;
-                position: relative;
-                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            ">
-                <button onclick="closeQuantitySelectorModal()" style="
-                    position: absolute;
-                    top: 15px;
-                    right: 20px;
-                    background: none;
-                    border: none;
-                    color: white;
-                    font-size: 24px;
-                    cursor: pointer;
-                    opacity: 0.7;
-                " onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'">
-                    <i class="fas fa-times"></i>
-                </button>
-                
-                <h3 style="color: white; font-size: 24px; margin-bottom: 30px; font-weight: 600;">
-                    How many tickets to validate?
-                </h3>
-                
-                <input type="number" id="ticketQuantityInput" min="1" max="15" value="1" style="
-                    width: 100%;
-                    padding: 15px;
-                    border: 2px solid rgba(255, 255, 255, 0.3);
-                    border-radius: 10px;
-                    background: rgba(255, 255, 255, 0.1);
-                    color: white;
-                    font-size: 18px;
-                    margin-bottom: 20px;
-                    text-align: center;
-                " />
-                
-                <button onclick="openInputValidationPage()" style="
-                    background: #4ECDC4;
-                    color: white;
-                    border: none;
-                    padding: 15px 30px;
-                    border-radius: 10px;
-                    font-size: 16px;
-                    font-weight: 600;
-                    cursor: pointer;
-                    transition: all 0.3s ease;
-                    width: 100%;
-                " onmouseover="this.style.background='#45a9a9'" onmouseout="this.style.background='#4ECDC4'">
-                    Start Validation
-                </button>
-                
-                <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.2);">
-                    <p style="color: rgba(255,255,255,0.8); font-size: 12px; margin: 0;">
-                        Powered by <strong style="color: white;">Rewarder</strong>
-                    </p>
-                </div>
-            </div>
-        </div>
-    `;
-    
-    document.body.insertAdjacentHTML('beforeend', modalHTML);
-    document.body.style.overflow = 'hidden';
-}
-
-function openInputValidationPage() {
-    const quantityInput = document.getElementById('ticketQuantityInput');
-    const quantity = parseInt(quantityInput.value);
-    
-    if (quantity < 1 || quantity > 15) {
-        alert('Please enter a number between 1 and 15');
-        return;
-    }
-    
-    closeQuantitySelectorModal();
-    showInputValidationPage(quantity);
-}
-
-
-function closeEventIdInputModal() {
-    const modal = document.getElementById('eventIdInputModal');
-    if (modal) {
-        modal.remove();
-        document.body.style.overflow = 'auto';
-    }
-}
-
-function closeQuantitySelectorModal() {
-    const modal = document.getElementById('quantitySelectorModal');
-    if (modal) {
-        modal.remove();
-        document.body.style.overflow = 'auto';
-    }
-}
-
-
-function showInputValidationPage(quantity) {
-    const existingPage = document.getElementById('inputValidationPage');
-    if (existingPage) {
-        existingPage.remove();
-    }
-
-    // Generate input fields
-    let inputFieldsHTML = '';
-    for (let i = 1; i <= quantity; i++) {
-        inputFieldsHTML += `
-            <div class="validation-input-row" style="
-                display: flex;
-                gap: 10px;
-                margin-bottom: 15px;
-                align-items: center;
-            ">
-                <span style="color: white; font-weight: 600; min-width: 30px;">${i}.</span>
-                <input type="text" id="ticketInput_${i}" placeholder="Enter Ticket ID" style="
-                    flex: 1;
-                    padding: 12px;
-                    border: 2px solid rgba(255, 255, 255, 0.3);
-                    border-radius: 8px;
-                    background: rgba(255, 255, 255, 0.1);
-                    color: white;
-                    font-size: 14px;
-                " />
-                <button onclick="validateSingleTicket(${i})" style="
-                    background: #4ECDC4;
-                    color: white;
-                    border: none;
-                    padding: 12px 20px;
-                    border-radius: 8px;
-                    font-size: 14px;
-                    font-weight: 600;
-                    cursor: pointer;
-                    transition: all 0.3s ease;
-                    white-space: nowrap;
-                " onmouseover="this.style.background='#45a9a9'" onmouseout="this.style.background='#4ECDC4'">
-                    Validate
-                </button>
-            </div>
-            <div id="validationResult_${i}" style="margin-bottom: 20px;"></div>
-        `;
-    }
-
-    const pageHTML = `
-        <div id="inputValidationPage" style="
             position: fixed;
             top: 0;
             left: 0;
@@ -43997,6 +42295,7 @@ function showInputValidationPage(quantity) {
             z-index: 10000;
             overflow-y: auto;
         ">
+            <!-- Header -->
             <div style="
                 background: rgba(255, 255, 255, 0.95);
                 backdrop-filter: blur(10px);
@@ -44009,8 +42308,8 @@ function showInputValidationPage(quantity) {
                 z-index: 100;
                 border-bottom: 1px solid rgba(255, 255, 255, 0.2);
             ">
-                <h1 style="color: #333; font-size: 24px; font-weight: 600; margin: 0;">Ticket Validation</h1>
-                <button onclick="closeInputValidationPage()" style="
+                <h1 style="color: #333; font-size: 24px; font-weight: 600; margin: 0;">My Tickets</h1>
+                <button onclick="closePhysicalEventTicketPage()" style="
                     background: #ff4757;
                     color: white;
                     border: none;
@@ -44024,993 +42323,175 @@ function showInputValidationPage(quantity) {
                 </button>
             </div>
 
-            <div style="padding: 20px; max-width: 800px; margin: 0 auto;">
-                <div style="
-                    background: rgba(255, 255, 255, 0.1);
-                    border-radius: 15px;
-                    padding: 20px;
-                    margin-bottom: 20px;
-                    backdrop-filter: blur(10px);
-                ">
-                    <h3 style="color: white; margin-bottom: 20px; text-align: center;">
-                        Event ID: ${currentValidationEventId}
-                    </h3>
-                    ${inputFieldsHTML}
-                </div>
-                
-                <div style="text-align: center; margin-top: 20px;">
-                    <p style="color: rgba(255,255,255,0.8); font-size: 12px;">
-                        Powered by <strong style="color: white;">Rewarder</strong>
-                    </p>
-                </div>
-            </div>
-        </div>
-    `;
-    
-    document.body.insertAdjacentHTML('beforeend', pageHTML);
-    document.body.style.overflow = 'hidden';
-}
-
-     async function validateSingleTicket(inputNumber) {
-    const ticketInput = document.getElementById(`ticketInput_${inputNumber}`);
-    const resultDiv = document.getElementById(`validationResult_${inputNumber}`);
-    const ticketId = ticketInput.value.trim();
-    
-    if (!ticketId) {
-        alert('Please enter a ticket ID');
-        return;
-    }
-    
-    try {
-        // Get current event data first
-        const currentEventDoc = await db.collection('physicalEvents').doc(currentValidationEventId).get();
-        const currentEventName = currentEventDoc.exists ? currentEventDoc.data().eventName : 'Unknown Event';
-        
-        // Get ticket from BoughtTicket collection
-        const ticketDoc = await db.collection('BoughtTicket').doc(ticketId).get();
-        
-        if (!ticketDoc.exists) {
-            validationAudio.playFailureSound();
-            resultDiv.innerHTML = `
-                <div style="
-                    background: #ff4757;
-                    color: white;
-                    padding: 15px;
-                    border-radius: 10px;
-                    text-align: center;
-                ">
-                    <i class="fas fa-times-circle" style="font-size: 20px; margin-bottom: 10px;"></i>
-                    <div>Ticket not found</div>
-                    <button onclick="cancelTicketValidation(${inputNumber})" style="
-                        background: #95a5a6;
-                        color: white;
-                        border: none;
-                        padding: 8px 15px;
-                        border-radius: 6px;
-                        font-size: 12px;
-                        cursor: pointer;
-                        margin-top: 10px;
-                    ">
-                        <i class="fas fa-times"></i> Cancel
-                    </button>
-                </div>
-            `;
-            return;
-        }
-        
-        const ticketData = ticketDoc.data();
-        const buyerName = ticketData.ticketbuyername || 'No name provided';
-        
-        // Verify ticket belongs to current event
-        if (ticketData.physicaleventid !== currentValidationEventId) {
-            // Get the actual event this ticket belongs to
-            const actualEventDoc = await db.collection('physicalEvents').doc(ticketData.physicaleventid).get();
-            const actualEventName = actualEventDoc.exists ? actualEventDoc.data().eventName : 'Unknown Event';
-            
-            validationAudio.playFailureSound();
-            resultDiv.innerHTML = `
-                <div style="
-                    background: #ff4757;
-                    color: white;
-                    padding: 15px;
-                    border-radius: 10px;
-                    text-align: center;
-                ">
-                    <i class="fas fa-exclamation-triangle" style="font-size: 20px; margin-bottom: 10px;"></i>
-                    <div style="font-weight: 600; margin-bottom: 5px;">No part of this event</div>
-                    <div style="font-size: 14px; margin-bottom: 5px;">User: ${buyerName}</div>
-                    <div style="font-size: 14px; margin-bottom: 15px;">This ticket is for: ${actualEventName}</div>
-                    <button onclick="cancelTicketValidation(${inputNumber})" style="
-                        background: #95a5a6;
-                        color: white;
-                        border: none;
-                        padding: 8px 15px;
-                        border-radius: 6px;
-                        font-size: 12px;
-                        cursor: pointer;
-                    ">
-                        <i class="fas fa-times"></i> Cancel
-                    </button>
-                </div>
-            `;
-            return;
-        }
-        
-        validationAudio.playSuccessSound();
-        
-        // Display ticket validation box based on status (rest of function remains the same)
-        const status = ticketData.boughtticketstatus;
-        
-        let actionButtons = '';
-        let statusColor = '#4ECDC4';
-        let statusText = status.toUpperCase();
-        
-        if (status === 'unused') {
-            statusColor = '#4ECDC4';
-            statusText = 'VERIFIED';
-            actionButtons = `
-                <button onclick="stampTicket('${ticketId}', ${inputNumber})" style="
-                    background: #27ae60;
-                    color: white;
-                    border: none;
-                    padding: 8px 15px;
-                    border-radius: 6px;
-                    font-size: 12px;
-                    cursor: pointer;
-                    margin-right: 5px;
-                ">
-                    <i class="fas fa-stamp"></i> Stamp
-                </button>
-                <button onclick="deletePhyTicketValidation('${ticketId}', ${inputNumber})" style="
-                    background: #e74c3c;
-                    color: white;
-                    border: none;
-                    padding: 8px 15px;
-                    border-radius: 6px;
-                    font-size: 12px;
-                    cursor: pointer;
-                    margin-right: 5px;
-                ">
-                    <i class="fas fa-trash"></i> Delete
-                </button>
-                <button onclick="cancelTicketValidation(${inputNumber})" style="
-                    background: #95a5a6;
-                    color: white;
-                    border: none;
-                    padding: 8px 15px;
-                    border-radius: 6px;
-                    font-size: 12px;
-                    cursor: pointer;
-                ">
-                    <i class="fas fa-times"></i> Cancel
-                </button>
-            `;
-        } else if (status === 'used') {
-            statusColor = '#f39c12';
-            statusText = 'USED';
-            actionButtons = `
-                <button onclick="deletePhyTicketValidation('${ticketId}', ${inputNumber})" style="
-                    background: #e74c3c;
-                    color: white;
-                    border: none;
-                    padding: 8px 15px;
-                    border-radius: 6px;
-                    font-size: 12px;
-                    cursor: pointer;
-                    margin-right: 5px;
-                ">
-                    <i class="fas fa-trash"></i> Delete
-                </button>
-                <button onclick="cancelTicketValidation(${inputNumber})" style="
-                    background: #95a5a6;
-                    color: white;
-                    border: none;
-                    padding: 8px 15px;
-                    border-radius: 6px;
-                    font-size: 12px;
-                    cursor: pointer;
-                ">
-                    <i class="fas fa-times"></i> Cancel
-                </button>
-            `;
-        } else if (status === 'terminated') {
-            statusColor = '#e74c3c';
-            statusText = 'TERMINATED';
-            actionButtons = `
-                <button onclick="cancelTicketValidation(${inputNumber})" style="
-                    background: #95a5a6;
-                    color: white;
-                    border: none;
-                    padding: 8px 15px;
-                    border-radius: 6px;
-                    font-size: 12px;
-                    cursor: pointer;
-                ">
-                    <i class="fas fa-times"></i> Cancel
-                </button>
-            `;
-        }
-        
-        resultDiv.innerHTML = `
-            <div class="ticketvalidationbox" style="
+            <!-- Auto-scrolling Banners -->
+            <div style="
                 background: rgba(255, 255, 255, 0.1);
-                border: 2px solid ${statusColor};
-                border-radius: 10px;
-                padding: 15px;
-                backdrop-filter: blur(10px);
+                padding: 20px 0;
+                overflow: hidden;
+                margin-bottom: 30px;
             ">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                    <span style="color: white; font-weight: 600;">${buyerName}</span>
-                    <span style="
-                        background: ${statusColor};
-                        color: white;
-                        padding: 4px 8px;
-                        border-radius: 12px;
-                        font-size: 12px;
-                        font-weight: 600;
-                    ">${statusText}</span>
-                </div>
-                <div style="color: rgba(255,255,255,0.8); font-size: 14px; margin-bottom: 15px;">
-                    Event: ${currentEventName}<br>
-                    Ticket ID: ${ticketId}
-                </div>
-                <div class="ticketvalidation-tools" style="display: flex; gap: 5px; flex-wrap: wrap;">
-                    ${actionButtons}
+                <div id="ticket-banners-container" style="
+                    display: flex;
+                    gap: 20px;
+                    animation: scrollBanners 30s linear infinite;
+                ">
+                    ${generateTicketBannersHTML()}
                 </div>
             </div>
-        `;
-        
-    } catch (error) {
-        console.error('Error validating ticket:', error);
-        validationAudio.playFailureSound();
-        resultDiv.innerHTML = `
-            <div style="
-                background: #ff4757;
-                color: white;
-                padding: 15px;
-                border-radius: 10px;
-                text-align: center;
-            ">
-                <i class="fas fa-exclamation-triangle" style="font-size: 20px; margin-bottom: 10px;"></i>
-                <div>Error validating ticket</div>
-                <button onclick="cancelTicketValidation(${inputNumber})" style="
-                    background: #95a5a6;
-                    color: white;
-                    border: none;
-                    padding: 8px 15px;
-                    border-radius: 6px;
-                    font-size: 12px;
-                    cursor: pointer;
-                    margin-top: 10px;
-                ">
-                    <i class="fas fa-times"></i> Cancel
-                </button>
-            </div>
-        `;
-    }
-}
 
-
-function addEventIdResetButton() {
-    return `
-        <button onclick="resetEventId()" style="
-            background: #f39c12;
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 12px;
-            margin-left: 10px;
-        ">
-            <i class="fas fa-sync"></i> Change Event
-        </button>
-    `;
-}
-
-function resetEventId() {
-    if (confirm('Are you sure you want to change the event ID? This will restart the validation session.')) {
-        currentValidationEventId = null;
-        validationSessionStart = null;
-        
-        // Close current page and restart
-        const qrPage = document.getElementById('qrScannerPage');
-        const inputPage = document.getElementById('inputValidationPage');
-        
-        if (qrPage) {
-            closeQRScannerPage();
-            openTicketQRScanner();
-        } else if (inputPage) {
-            closeInputValidationPage();
-            openTicketInputScanner();
-        }
-    }
-}
-        
-  
-function closeInputValidationPage() {
-    const page = document.getElementById('inputValidationPage');
-    if (page) {
-        page.remove();
-        document.body.style.overflow = 'auto';
-    }
-}
-
-// Stamp ticket - change status from unused to used
-async function stampTicket(ticketId, inputNumber) {
-    try {
-        await db.collection('BoughtTicket').doc(ticketId).update({
-            boughtticketstatus: 'used'
-        });
-        
-        validationAudio.playSuccessSound();
-        
-        // Update the validation box
-        const resultDiv = document.getElementById(`validationResult_${inputNumber}`);
-        const currentBox = resultDiv.querySelector('.ticketvalidationbox');
-        if (currentBox) {
-            const statusSpan = currentBox.querySelector('span:last-child');
-            statusSpan.style.background = '#f39c12';
-            statusSpan.textContent = 'USED';
-            
-            // Update border color
-            currentBox.style.borderColor = '#f39c12';
-            
-            // Update action buttons
-            const toolsDiv = currentBox.querySelector('.ticketvalidation-tools');
-            toolsDiv.innerHTML = `
-                <button onclick="deletePhyTicketValidation('${ticketId}', ${inputNumber})" style="
-                    background: #e74c3c;
-                    color: white;
-                    border: none;
-                    padding: 8px 15px;
-                    border-radius: 6px;
-                    font-size: 12px;
-                    cursor: pointer;
-                    margin-right: 5px;
-                ">
-                    <i class="fas fa-trash"></i> Delete
-                </button>
-                <button onclick="cancelTicketValidation(${inputNumber})" style="
-                    background: #95a5a6;
-                    color: white;
-                    border: none;
-                    padding: 8px 15px;
-                    border-radius: 6px;
-                    font-size: 12px;
-                    cursor: pointer;
-                ">
-                    <i class="fas fa-times"></i> Cancel
-                </button>
-            `;
-        }
-        
-        console.log('Ticket stamped successfully:', ticketId);
-        
-    } catch (error) {
-        console.error('Error stamping ticket:', error);
-        validationAudio.playFailureSound();
-        alert('Error stamping ticket. Please try again.');
-    }
-}
-
-// Delete ticket - change status to terminated
-async function deletePhyTicketValidation(ticketId, inputNumber) {
-    if (!confirm('Are you sure you want to terminate this ticket? This action cannot be undone.')) {
-        return;
-    }
-    
-    try {
-        await db.collection('BoughtTicket').doc(ticketId).update({
-            boughtticketstatus: 'terminated'
-        });
-        
-        validationAudio.playFailureSound();
-        
-        // Update the validation box
-        const resultDiv = document.getElementById(`validationResult_${inputNumber}`);
-        const currentBox = resultDiv.querySelector('.ticketvalidationbox');
-        if (currentBox) {
-            const statusSpan = currentBox.querySelector('span:last-child');
-            statusSpan.style.background = '#e74c3c';
-            statusSpan.textContent = 'TERMINATED';
-            
-            // Update border color
-            currentBox.style.borderColor = '#e74c3c';
-            
-            // Update action buttons
-            const toolsDiv = currentBox.querySelector('.ticketvalidation-tools');
-            toolsDiv.innerHTML = `
-                <button onclick="cancelTicketValidation(${inputNumber})" style="
-                    background: #95a5a6;
-                    color: white;
-                    border: none;
-                    padding: 8px 15px;
-                    border-radius: 6px;
-                    font-size: 12px;
-                    cursor: pointer;
-                ">
-                    <i class="fas fa-times"></i> Cancel
-                </button>
-            `;
-        }
-        
-        console.log('Ticket terminated successfully:', ticketId);
-        
-    } catch (error) {
-        console.error('Error terminating ticket:', error);
-        validationAudio.playFailureSound();
-        alert('Error terminating ticket. Please try again.');
-    }
-}
-
-// Cancel ticket validation - clear the input and result
-function cancelTicketValidation(inputNumber) {
-    const ticketInput = document.getElementById(`ticketInput_${inputNumber}`);
-    const resultDiv = document.getElementById(`validationResult_${inputNumber}`);
-    
-    if (ticketInput) {
-        ticketInput.value = '';
-    }
-    
-    if (resultDiv) {
-        resultDiv.innerHTML = '';
-    }
-}
-
-function openTicketQRScanner() {
-    closeValidatorOptionsModal();
-    
-    // Check if session is still valid
-    if (currentValidationEventId && validationSessionStart && 
-        (Date.now() - validationSessionStart < validationSessionDuration)) {
-        showQRScanner();
-        return;
-    }
-    
-    showEventIdInput('qr');
-}
-
-function showQRScanner() {
-    const existingPage = document.getElementById('qrScannerPage');
-    if (existingPage) {
-        existingPage.remove();
-    }
-
-    const isMobile = window.innerWidth <= 768;
-    const isUltraMobile = window.innerWidth <= 480;
-const pageHTML = `
-        <div id="qrScannerPage" style="
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            z-index: 10000;
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
-        ">
-            <div class="${isMobile ? 'mobile-header' : ''} ${isUltraMobile ? 'ultra-mobile-header' : ''}" style="
-                background: rgba(255, 255, 255, 0.95);
-                backdrop-filter: blur(10px);
-                padding: ${isMobile ? '10px 15px' : '15px 20px'};
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                position: sticky;
-                top: 0;
-                z-index: 100;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-            ">
-                <h1 style="color: #333; font-size: ${isUltraMobile ? '16px' : isMobile ? '18px' : '24px'}; font-weight: 600; margin: 0;">QR Scanner</h1>
-                <button onclick="closeQRScannerPage()" class="touch-button no-select" style="
-                    background: #ff4757;
-                    color: white;
-                    border: none;
-                    padding: ${isMobile ? '8px 12px' : '10px 15px'};
-                    border-radius: 8px;
-                    cursor: pointer;
-                    font-size: ${isMobile ? '14px' : '16px'};
-                    transition: all 0.3s ease;
-                    min-width: 44px;
-                    min-height: 44px;
-                ">
-                    <i class="fas fa-times"></i> ${isMobile ? '' : 'Close'}
-                </button>
-            </div>
-
-            <div style="padding: ${isMobile ? '15px' : '20px'}; max-width: 600px; margin: 0 auto; padding-bottom: ${isMobile ? '60px' : '20px'};">
+            <!-- Tabs -->
+            <div style="padding: 0 20px; margin-bottom: 30px;">
                 <div style="
+                    display: flex;
                     background: rgba(255, 255, 255, 0.1);
                     border-radius: 15px;
-                    padding: ${isMobile ? '15px' : '20px'};
-                    margin-bottom: 20px;
-                    backdrop-filter: blur(10px);
-                    text-align: center;
+                    padding: 5px;
+                    gap: 5px;
                 ">
-                    <h3 style="color: white; margin-bottom: 20px; font-size: ${isMobile ? '16px' : '18px'};">
-                        Event ID: ${currentValidationEventId || 'Loading...'}
-                    </h3>
-                    
-                    <!-- Camera Preview -->
-                    <div id="qr-reader" style="
-                        width: 100%;
-                        max-width: ${isMobile ? '300px' : '400px'};
-                        margin: 0 auto 20px auto;
+                    <button id="new-event-ticket-tab" onclick="switchPhysicalTicketTab('new')" style="
+                        flex: 1;
+                        background: rgba(255, 255, 255, 0.9);
+                        color: #333;
+                        border: none;
+                        padding: 15px 20px;
                         border-radius: 10px;
-                        overflow: hidden;
-                        background: #000;
-                        min-height: ${isMobile ? '250px' : '300px'};
-                        position: relative;
+                        font-size: 16px;
+                        font-weight: 600;
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+                        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
                     ">
-                        <video id="qr-video" style="
-                            width: 100%;
-                            height: 100%;
-                            object-fit: cover;
-                        " autoplay muted playsinline></video>
-                        
-                        <div style="
-                            position: absolute;
-                            top: 50%;
-                            left: 50%;
-                            transform: translate(-50%, -50%);
-                            border: 2px solid #4ECDC4;
-                            width: ${isMobile ? '150px' : '200px'};
-                            height: ${isMobile ? '150px' : '200px'};
-                            border-radius: 10px;
-                            pointer-events: none;
-                        "></div>
-                    </div>
-                    
-                    <div class="${isMobile ? 'mobile-qr-controls' : ''}" style="
-                        display: flex;
-                        gap: ${isMobile ? '8px' : '10px'};
-                        justify-content: center;
-                        margin-bottom: 20px;
-                        flex-direction: ${isMobile ? 'column' : 'row'};
-                    ">
-                        <button onclick="startCamera()" class="touch-button mobile-button ios-button no-select" style="
-                            background: #27ae60;
-                            color: white;
-                            border: none;
-                            padding: ${isMobile ? '12px 20px' : '12px 20px'};
-                            border-radius: 8px;
-                            font-size: ${isMobile ? '16px' : '14px'};
-                            font-weight: 600;
-                            cursor: pointer;
-                            min-height: 44px;
-                            width: ${isMobile ? '100%' : 'auto'};
-                        ">
-                            <i class="fas fa-camera"></i> Start Camera
-                        </button>
-                        
-                        <button onclick="stopCamera()" class="touch-button mobile-button ios-button no-select" style="
-                            background: #e74c3c;
-                            color: white;
-                            border: none;
-                            padding: ${isMobile ? '12px 20px' : '12px 20px'};
-                            border-radius: 8px;
-                            font-size: ${isMobile ? '16px' : '14px'};
-                            font-weight: 600;
-                            cursor: pointer;
-                            min-height: 44px;
-                            width: ${isMobile ? '100%' : 'auto'};
-                        ">
-                            <i class="fas fa-stop"></i> Stop Camera
-                        </button>
-                        
-                        <input type="file" id="qr-file-input" accept="image/*" style="display: none;" onchange="handleFileUpload(event)">
-                        <button onclick="document.getElementById('qr-file-input').click()" class="touch-button mobile-button ios-button no-select" style="
-                            background: #f39c12;
-                            color: white;
-                            border: none;
-                            padding: ${isMobile ? '12px 20px' : '12px 20px'};
-                            border-radius: 8px;
-                            font-size: ${isMobile ? '16px' : '14px'};
-                            font-weight: 600;
-                            cursor: pointer;
-                            min-height: 44px;
-                            width: ${isMobile ? '100%' : 'auto'};
-                        ">
-                            <i class="fas fa-upload"></i> Upload QR
-                        </button>
-                    </div>
-                    
-                    <div id="qr-scan-status" style="
+                        New Event Tickets
+                    </button>
+                    <button id="old-event-ticket-tab" onclick="switchPhysicalTicketTab('old')" style="
+                        flex: 1;
+                        background: transparent;
                         color: white;
-                        font-size: ${isMobile ? '13px' : '14px'};
-                        margin-bottom: 20px;
-                        min-height: 20px;
+                        border: none;
+                        padding: 15px 20px;
+                        border-radius: 10px;
+                        font-size: 16px;
+                        font-weight: 600;
+                        cursor: pointer;
+                        transition: all 0.3s ease;
                     ">
-                        Ready to scan...
-                    </div>
-                    
-                    <!-- Validation Result -->
-                    <div id="qr-validation-result" style="margin-bottom: 20px;"></div>
+                        Old Event Tickets
+                    </button>
                 </div>
-                
-                <div style="text-align: center;">
-                    <p style="color: rgba(255,255,255,0.8); font-size: ${isMobile ? '11px' : '12px'};">
-                        Powered by <strong style="color: white;">Rewarder</strong>
-                    </p>
+            </div>
+
+            <!-- Tab Content -->
+            <div id="new-event-content" style="display: block; padding: 0 20px;">
+                <div id="new-tickets-container">
+                    <div style="text-align: center; color: white; padding: 40px;">
+                        <i class="fas fa-spinner fa-spin" style="font-size: 32px; margin-bottom: 15px;"></i>
+                        <p style="font-size: 18px;">Loading your tickets...</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="old-event-content" style="display: none; padding: 0 20px;">
+                <div id="old-tickets-container">
+                    <div style="text-align: center; color: white; padding: 40px;">
+                        <i class="fas fa-spinner fa-spin" style="font-size: 32px; margin-bottom: 15px;"></i>
+                        <p style="font-size: 18px;">Loading your old tickets...</p>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <style>
+            @keyframes scrollBanners {
+                0% { transform: translateX(0); }
+                100% { transform: translateX(-50%); }
+            }
+        </style>
     `;
     
     document.body.insertAdjacentHTML('beforeend', pageHTML);
     document.body.style.overflow = 'hidden';
     
-    if (isMobile) {
-        addMobileTouchHandlers();
-    }
-    
-    // Initialize QR scanning
-    initQRScanner();
+    // Load tickets immediately
+    loadNewEventTickets();
 }
 
+// Generate ticket banners HTML
+function generateTicketBannersHTML() {
+    const banners = [
+        { title: 'Premium Sound', desc: 'Crystal clear audio', color: '#FF6B6B', icon: 'fas fa-volume-up' },
+        { title: 'Event Photos', desc: 'Professional photography', color: '#4ECDC4', icon: 'fas fa-camera' },
+        { title: 'VIP Access', desc: 'Exclusive backstage access', color: '#45B7D1', icon: 'fas fa-crown' },
+        { title: 'Food & Drinks', desc: 'Premium catering service', color: '#96CEB4', icon: 'fas fa-utensils' },
+        { title: 'Transportation', desc: 'Shuttle service available', color: '#FFEAA7', icon: 'fas fa-bus' },
+        { title: 'Merchandise', desc: 'Official event merchandise', color: '#DDA0DD', icon: 'fas fa-tshirt' }
+    ];
     
-let qrStream = null;
-let qrScanInterval = null;
-
-async function initQRScanner() {
-    // Auto-start camera
-    setTimeout(() => {
-        startCamera();
-    }, 500);
-}
-
-async function startCamera() {
-    const video = document.getElementById('qr-video');
-    const statusDiv = document.getElementById('qr-scan-status');
+    // Duplicate banners for seamless scrolling
+    const duplicatedBanners = [...banners, ...banners];
     
-    try {
-        statusDiv.textContent = 'Starting camera...';
-        
-        qrStream = await navigator.mediaDevices.getUserMedia({ 
-            video: { 
-                facingMode: 'environment',
-                width: { ideal: 640 },
-                height: { ideal: 480 }
-            } 
-        });
-        
-        video.srcObject = qrStream;
-        statusDiv.textContent = 'Camera ready - Point at QR code';
-        
-        // Start scanning
-        startQRScanning();
-        
-    } catch (error) {
-        console.error('Error accessing camera:', error);
-        statusDiv.textContent = 'Camera access denied. Please use file upload.';
-    }
-}
-
-function stopCamera() {
-    const statusDiv = document.getElementById('qr-scan-status');
-    
-    if (qrStream) {
-        qrStream.getTracks().forEach(track => track.stop());
-        qrStream = null;
-    }
-    
-    if (qrScanInterval) {
-        clearInterval(qrScanInterval);
-        qrScanInterval = null;
-    }
-    
-    statusDiv.textContent = 'Camera stopped';
-}
-
-function startQRScanning() {
-    const video = document.getElementById('qr-video');
-    const canvas = document.createElement('canvas');
-    const context = canvas.getContext('2d');
-    
-    qrScanInterval = setInterval(() => {
-        if (video.readyState === video.HAVE_ENOUGH_DATA) {
-            canvas.height = video.videoHeight;
-            canvas.width = video.videoWidth;
-            context.drawImage(video, 0, 0, canvas.width, canvas.height);
-            
-            const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
-            const code = jsQR(imageData.data, imageData.width, imageData.height);
-            
-            if (code) {
-                processQRCode(code.data);
-            }
-        }
-    }, 300);
-}
-
-function handleFileUpload(event) {
-    const file = event.target.files[0];
-    if (!file) return;
-    
-    const reader = new FileReader();
-    reader.onload = function(e) {
-        const img = new Image();
-        img.onload = function() {
-            const canvas = document.createElement('canvas');
-            const context = canvas.getContext('2d');
-            canvas.width = img.width;
-            canvas.height = img.height;
-            context.drawImage(img, 0, 0);
-            
-            const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
-            const code = jsQR(imageData.data, imageData.width, imageData.height);
-            
-            if (code) {
-                processQRCode(code.data);
-            } else {
-                document.getElementById('qr-scan-status').textContent = 'No QR code found in image';
-            }
-        };
-        img.src = e.target.result;
-    };
-    reader.readAsDataURL(file);
-}
-
-        
-   
-    async function processQRCode(qrData) {
-    const statusDiv = document.getElementById('qr-scan-status');
-    const resultDiv = document.getElementById('qr-validation-result');
-    
-    // Start processing timer
-    const processingStart = Date.now();
-    
-    try {
-        statusDiv.innerHTML = `
-            <div style="color: #f39c12;">
-                <i class="fas fa-spinner fa-spin"></i> Scanned! Processing...
-            </div>
-        `;
-        
-        // Parse QR data with timeout
-        let ticketInfo;
-        try {
-            ticketInfo = JSON.parse(qrData);
-        } catch (error) {
-            throw new Error('Invalid QR code format');
-        }
-        
-        const ticketId = ticketInfo.ticketId;
-        if (!ticketId) {
-            throw new Error('No ticket ID found in QR code');
-        }
-        
-        // Get ticket from Firebase with timeout
-        const ticketPromise = db.collection('BoughtTicket').doc(ticketId).get();
-        const eventPromise = db.collection('physicalEvents').doc(currentValidationEventId).get();
-        
-        const [ticketDoc, currentEventDoc] = await Promise.race([
-            Promise.all([ticketPromise, eventPromise]),
-            new Promise((_, reject) => setTimeout(() => reject(new Error('Processing timeout')), 8000))
-        ]);
-        
-        if (!ticketDoc.exists) {
-            throw new Error('Ticket not found');
-        }
-        
-        const ticketData = ticketDoc.data();
-        const currentEventData = currentEventDoc.data();
-        const currentEventName = currentEventData ? currentEventData.eventName : 'Unknown Event';
-        const buyerName = ticketData.ticketbuyername || 'No name provided';
-        
-        // Check if ticket belongs to current event
-        if (ticketData.physicaleventid !== currentValidationEventId) {
-            // Get the actual event this ticket belongs to
-            const actualEventDoc = await db.collection('physicalEvents').doc(ticketData.physicaleventid).get();
-            const actualEventName = actualEventDoc.exists ? actualEventDoc.data().eventName : 'Unknown Event';
-            
-            validationAudio.playFailureSound();
-            statusDiv.textContent = 'Wrong Event';
-            
-            resultDiv.innerHTML = `
-                <div style="
-                    background: #ff4757;
-                    color: white;
-                    padding: 15px;
-                    border-radius: 10px;
-                    text-align: center;
-                ">
-                    <i class="fas fa-exclamation-triangle" style="font-size: 20px; margin-bottom: 10px;"></i>
-                    <div style="font-weight: 600; margin-bottom: 5px;">No part of this event</div>
-                    <div style="font-size: 14px; margin-bottom: 10px;">User: ${buyerName}</div>
-                    <div style="font-size: 14px; margin-bottom: 15px;">This ticket is for: ${actualEventName}</div>
-                    <button onclick="clearQRResult()" style="
-                        background: #95a5a6;
-                        color: white;
-                        border: none;
-                        padding: 8px 15px;
-                        border-radius: 6px;
-                        font-size: 12px;
-                        cursor: pointer;
-                    ">
-                        <i class="fas fa-times"></i> Cancel
-                    </button>
-                </div>
-            `;
-            return;
-        }
-        
-        const status = ticketData.boughtticketstatus;
-        
-        if (status === 'unused') {
-            // Success - show verification and change status
-            validationAudio.playSuccessSound();
-            statusDiv.innerHTML = `
-                <div style="color: #27ae60; font-weight: 600;">
-                    <i class="fas fa-check-circle"></i> Verified!
-                </div>
-            `;
-            
-            // Change status to used
-            await db.collection('BoughtTicket').doc(ticketId).update({
-                boughtticketstatus: 'used'
-            });
-            
-            resultDiv.innerHTML = `
-                <div style="
-                    background: rgba(39, 174, 96, 0.2);
-                    border: 2px solid #27ae60;
-                    color: white;
-                    padding: 15px;
-                    border-radius: 10px;
-                    text-align: center;
-                ">
-                    <i class="fas fa-check-circle" style="font-size: 24px; margin-bottom: 10px; color: #27ae60;"></i>
-                    <div style="font-weight: 600; font-size: 18px; margin-bottom: 5px;">VERIFIED</div>
-                    <div style="font-size: 16px; margin-bottom: 5px;">User: ${buyerName}</div>
-                    <div style="font-size: 14px; opacity: 0.9;">Event: ${currentEventName}</div>
-                </div>
-            `;
-            
-        } else if (status === 'used') {
-            // Already used
-            validationAudio.playFailureSound();
-            statusDiv.innerHTML = `
-                <div style="color: #f39c12; font-weight: 600;">
-                    <i class="fas fa-exclamation-circle"></i> Already Used!
-                </div>
-            `;
-            
-            resultDiv.innerHTML = `
-                <div style="
-                    background: rgba(243, 156, 18, 0.2);
-                    border: 2px solid #f39c12;
-                    color: white;
-                    padding: 15px;
-                    border-radius: 10px;
-                    text-align: center;
-                ">
-                    <i class="fas fa-exclamation-circle" style="font-size: 24px; margin-bottom: 10px; color: #f39c12;"></i>
-                    <div style="font-weight: 600; font-size: 18px; margin-bottom: 5px;">USED</div>
-                    <div style="font-size: 16px; margin-bottom: 5px;">User: ${buyerName}</div>
-                    <div style="font-size: 14px; opacity: 0.9;">Event: ${currentEventName}</div>
-                </div>
-            `;
-            
-        } else if (status === 'terminated') {
-            // Terminated ticket
-            validationAudio.playFailureSound();
-            statusDiv.innerHTML = `
-                <div style="color: #e74c3c; font-weight: 600;">
-                    <i class="fas fa-ban"></i> Terminated!
-                </div>
-            `;
-            
-            resultDiv.innerHTML = `
-                <div style="
-                    background: rgba(231, 76, 60, 0.2);
-                    border: 2px solid #e74c3c;
-                    color: white;
-                    padding: 15px;
-                    border-radius: 10px;
-                    text-align: center;
-                ">
-                    <i class="fas fa-ban" style="font-size: 24px; margin-bottom: 10px; color: #e74c3c;"></i>
-                    <div style="font-weight: 600; font-size: 18px; margin-bottom: 5px;">TERMINATED</div>
-                    <div style="font-size: 16px; margin-bottom: 5px;">User: ${buyerName}</div>
-                    <div style="font-size: 14px; opacity: 0.9;">Event: ${currentEventName}</div>
-                </div>
-            `;
-        }
-        
-        // Show processing time
-        const processingTime = ((Date.now() - processingStart) / 1000).toFixed(1);
-        console.log(`QR processed in ${processingTime}s`);
-        
-        // Auto-clear result after 3 seconds for next scan
-        setTimeout(() => {
-            clearQRResult();
-        }, 3000);
-        
-    } catch (error) {
-        validationAudio.playFailureSound();
-        statusDiv.innerHTML = `
-            <div style="color: #e74c3c; font-weight: 600;">
-                <i class="fas fa-times-circle"></i> Scan Failed
-            </div>
-        `;
-        
-        resultDiv.innerHTML = `
+    return duplicatedBanners.map(banner => `
+        <div style="
+            min-width: 280px;
+            background: ${banner.color};
+            border-radius: 15px;
+            padding: 25px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        " onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
             <div style="
-                background: #ff4757;
-                color: white;
-                padding: 15px;
-                border-radius: 10px;
-                text-align: center;
-            ">
-                <i class="fas fa-times-circle" style="font-size: 20px; margin-bottom: 10px;"></i>
-                <div style="font-weight: 600; margin-bottom: 10px;">${error.message}</div>
-                <button onclick="clearQRResult()" style="
-                    background: #95a5a6;
-                    color: white;
-                    border: none;
-                    padding: 8px 15px;
-                    border-radius: 6px;
-                    font-size: 12px;
-                    cursor: pointer;
-                ">
-                    <i class="fas fa-times"></i> Cancel
-                </button>
-            </div>
-        `;
+                position: absolute;
+                top: -20px;
+                right: -20px;
+                width: 60px;
+                height: 60px;
+                background: rgba(255,255,255,0.1);
+                border-radius: 50%;
+            "></div>
+            <i class="${banner.icon}" style="font-size: 36px; margin-bottom: 15px; display: block;"></i>
+            <h4 style="font-size: 18px; font-weight: 600; margin-bottom: 8px;">${banner.title}</h4>
+            <p style="font-size: 14px; opacity: 0.9; margin: 0;">${banner.desc}</p>
+        </div>
+    `).join('');
+}
+
+// Switch physical ticket tabs
+function switchPhysicalTicketTab(tabType) {
+    const newTab = document.getElementById('new-event-ticket-tab');
+    const oldTab = document.getElementById('old-event-ticket-tab');
+    const newContent = document.getElementById('new-event-content');
+    const oldContent = document.getElementById('old-event-content');
+    
+    if (tabType === 'new') {
+        newTab.style.background = 'rgba(255, 255, 255, 0.9)';
+        newTab.style.color = '#333';
+        newTab.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.1)';
         
-        // Auto-clear result after 5 seconds
-        setTimeout(() => {
-            clearQRResult();
-        }, 5000);
+        oldTab.style.background = 'transparent';
+        oldTab.style.color = 'white';
+        oldTab.style.boxShadow = 'none';
+        
+        newContent.style.display = 'block';
+        oldContent.style.display = 'none';
+        
+        loadNewEventTickets();
+    } else {
+        oldTab.style.background = 'rgba(255, 255, 255, 0.9)';
+        oldTab.style.color = '#333';
+        oldTab.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.1)';
+        
+        newTab.style.background = 'transparent';
+        newTab.style.color = 'white';
+        newTab.style.boxShadow = 'none';
+        
+        oldContent.style.display = 'block';
+        newContent.style.display = 'none';
+        
+        loadOldEventTickets();
     }
 }
-
-function clearQRResult() {
-    const statusDiv = document.getElementById('qr-scan-status');
-    const resultDiv = document.getElementById('qr-validation-result');
-    
-    if (statusDiv) {
-        statusDiv.textContent = 'Ready for next scan...';
-    }
-    if (resultDiv) {
-        resultDiv.innerHTML = '';
-    }
-}
-
-
-function closeQRScannerPage() {
-    // Stop camera if running
-    if (typeof stopCamera === 'function') {
-        stopCamera();
-    }
-    
-    const page = document.getElementById('qrScannerPage');
-    if (page) {
-        page.remove();
-        document.body.style.overflow = 'auto';
-    }
-}
-
-
-
-// Add viewport meta tag if not present
-function ensureViewportMeta() {
-    if (!document.querySelector('meta[name="viewport"]')) {
-        const viewport = document.createElement('meta');
-        viewport.name = 'viewport';
-        viewport.content = 'width=device-width, initial-scale=1.0, user-scalable=no';
-        document.head.appendChild(viewport);
-    }
-}
-
-// Call this when the page loads
-document.addEventListener('DOMContentLoaded', function() {
-    ensureViewportMeta();
-});
-
 
 // Load new event tickets (unused and not expired)
 async function loadNewEventTickets() {
