@@ -1588,13 +1588,95 @@ body {
 }
 
 
+/* Physical Events Section Styles - Mobile First Responsive */
+.physical-events-section {
+    padding: 15px;
+    background-color: var(--background-color);
+    margin-top: 15px;
+}
 
+.section-header {
+    margin-bottom: 15px;
+    color: #ffffff;
+}
 
+.section-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+}
 
+/* Mobile-First See More Button */
+.see-more-events-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 12px 16px;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+    min-height: 44px;
+    min-width: 120px;
+    white-space: nowrap;
+    -webkit-appearance: none;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+    flex-shrink: 0;
+}
+
+.see-more-events-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.see-more-events-btn:active {
+    transform: translateY(0);
+}
+
+.see-more-events-btn i {
+    font-size: 12px;
+}
+
+/* Mobile Section Title */
+.physical-events-section .section-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: white !important;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    flex: 1;
+    min-width: 0;
+}
+
+.physical-events-section .section-title i {
+    color: white !important;
+    font-size: 1rem;
+}
+
+.section-subtitle {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.8rem;
+    margin-left: 0;
+    margin-top: 4px;
+}
+
+/* Mobile Event Cards */
 .physical-event-display-card {
-    min-width: 280px;
-    max-width: 280px;
-    height: 340px;
+    min-width: 260px;
+    max-width: 260px;
+    height: 300px;
     background: var(--white);
     border-radius: 16px;
     overflow: hidden;
@@ -1606,13 +1688,13 @@ body {
 }
 
 .physical-event-display-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-3px);
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
 }
 
 .event-card-image {
     width: 100%;
-    height: 160px;
+    height: 120px;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     position: relative;
     display: flex;
@@ -1634,27 +1716,27 @@ body {
 
 .event-category-badge {
     position: absolute;
-    top: 12px;
-    left: 12px;
+    top: 8px;
+    left: 8px;
     background: rgba(255, 255, 255, 0.9);
     backdrop-filter: blur(10px);
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 0.75rem;
-    font-weight: 500;
+    padding: 4px 8px;
+    border-radius: 15px;
+    font-size: 0.65rem;
+    font-weight: 600;
     color: var(--text-color);
     z-index: 2;
 }
 
 .event-card-body {
-    padding: 16px;
+    padding: 12px;
     height: 180px;
     display: flex;
     flex-direction: column;
 }
 
 .event-card-title {
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 600;
     color: var(--text-color);
     margin-bottom: 8px;
@@ -1669,49 +1751,50 @@ body {
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 6px;
 }
 
 .event-detail-item {
     display: flex;
     align-items: center;
-    gap: 8px;
-    font-size: 0.85rem;
+    gap: 6px;
+    font-size: 0.75rem;
     color: var(--text-secondary);
 }
 
 .event-detail-item i {
-    width: 14px;
+    width: 12px;
     color: var(--primary-color);
-    font-size: 0.8rem;
+    font-size: 0.7rem;
 }
 
 .event-sponsors {
     display: flex;
     align-items: center;
-    gap: 6px;
-    margin-top: 8px;
+    gap: 4px;
+    margin-top: 6px;
 }
 
 .sponsor-logo {
-    width: 24px;
-    height: 24px;
+    width: 20px;
+    height: 20px;
     border-radius: 4px;
     background: var(--bg-light);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.7rem;
+    font-size: 0.6rem;
     font-weight: 600;
     color: var(--primary-color);
 }
 
 .sponsors-count {
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     color: var(--text-secondary);
-    margin-left: 4px;
+    margin-left: 2px;
 }
 
+/* Mobile Buy Button */
 .buy-ticket-btn {
     width: 100%;
     background: linear-gradient(135deg, var(--primary-color), #667eea);
@@ -1720,10 +1803,15 @@ body {
     padding: 12px;
     border-radius: 10px;
     font-weight: 600;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     cursor: pointer;
     transition: all 0.3s ease;
     margin-top: auto;
+    min-height: 44px;
+    -webkit-appearance: none;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
 }
 
 .buy-ticket-btn:hover {
@@ -1736,22 +1824,24 @@ body {
     transform: translateY(0);
 }
 
-/* Get Ticket Button Top */
+/* Mobile Get Ticket Button */
 .get-ticket-btn-top {
     position: absolute;
-    top: 12px;
-    right: 12px;
-    padding: 6px 12px;
+    top: 8px;
+    right: 8px;
+    padding: 6px 10px;
     background: rgba(255, 255, 255, 0.9);
     color: #333;
     border: none;
-    border-radius: 20px;
-    font-size: 0.75rem;
+    border-radius: 15px;
+    font-size: 0.65rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
     backdrop-filter: blur(10px);
     z-index: 2;
+    min-height: 28px;
+    -webkit-appearance: none;
 }
 
 .get-ticket-btn-top:hover {
@@ -1760,28 +1850,28 @@ body {
 }
 
 .get-ticket-btn-top i {
-    margin-right: 4px;
-    font-size: 0.7rem;
+    margin-right: 3px;
+    font-size: 0.6rem;
 }
 
-/* Event Sponsors Carousel */
+/* Mobile Event Sponsors Carousel */
 .event-sponsors-carousel {
-    margin-top: 12px;
+    margin-top: 8px;
     overflow: hidden;
-    height: 50px;
+    height: 40px;
     display: flex;
     align-items: center;
 }
 
 .sponsors-track {
     display: flex;
-    gap: 8px;
+    gap: 6px;
     animation: sponsorScroll 10s linear infinite;
 }
 
 .sponsor-circle {
-    width: 40px;
-    height: 40px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
@@ -1789,46 +1879,41 @@ body {
     align-items: center;
     justify-content: center;
     font-weight: 600;
-    font-size: 0.9rem;
+    font-size: 0.75rem;
     flex-shrink: 0;
 }
 
-@keyframes sponsorScroll {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-100%); }
-}
-
-/* Advanced Sponsors Carousel */
+/* Mobile Advanced Sponsors Carousel */
 .advanced-sponsors-carousel {
-    margin-top: 16px;
+    margin-top: 12px;
     overflow: hidden;
-    height: 45px;
+    height: 35px;
     display: flex;
     align-items: center;
-    border-radius: 12px;
+    border-radius: 10px;
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
 }
 
 .sponsors-label {
-    font-size: 0.7rem;
+    font-size: 0.65rem;
     font-weight: 600;
     color: rgba(255, 255, 255, 0.8);
     text-align: center;
-    padding: 5px 0;
+    padding: 4px 0;
     animation: sponsorLabelFade 15s ease-in-out infinite;
 }
 
 .advanced-sponsors-track {
     display: flex;
-    gap: 10px;
+    gap: 8px;
     animation: advancedSponsorScroll 15s linear infinite;
-    padding: 0 10px;
+    padding: 0 8px;
 }
 
 .advanced-sponsor-circle {
-    width: 35px;
-    height: 35px;
+    width: 28px;
+    height: 28px;
     border-radius: 50%;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
@@ -1836,7 +1921,7 @@ body {
     align-items: center;
     justify-content: center;
     font-weight: 700;
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     flex-shrink: 0;
     border: 2px solid rgba(255, 255, 255, 0.3);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
@@ -1848,113 +1933,11 @@ body {
     padding: 0;
 }
 
-@keyframes advancedSponsorScroll {
-    0%, 33% { transform: translateX(0); }
-    66%, 100% { transform: translateX(-100%); }
-}
-
-@keyframes sponsorLabelFade {
-    0%, 20% { opacity: 1; transform: translateY(0); }
-    25%, 95% { opacity: 0.7; transform: translateY(-2px); }
-    100% { opacity: 1; transform: translateY(0); }
-}
-/* Responsive Physical Events Section */
-@media (max-width: 768px) {
-    .physical-events-section {
-        padding: 20px 15px !important;
-        margin-bottom: 20px !important;
-    }
-    
-    .section-header-row {
-        flex-direction: column !important;
-        align-items: flex-start !important;
-        gap: 15px !important;
-    }
-    
-    .section-title {
-        font-size: 22px !important;
-        flex-wrap: wrap !important;
-    }
-    
-    .see-more-events-btn {
-        width: 100% !important;
-        min-height: 44px !important;
-        padding: 12px 16px !important;
-        justify-content: center !important;
-    }
-    
-    .section-subtitle {
-        font-size: 15px !important;
-    }
-    
-    .events-scroll-wrapper {
-        padding: 15px 10px !important;
-    }
-}
-
-@media (max-width: 480px) {
-    .physical-events-section {
-        padding: 15px 12px !important;
-        margin-bottom: 15px !important;
-    }
-    
-    .section-title {
-        font-size: 20px !important;
-    }
-    
-    .section-title i {
-        font-size: 18px !important;
-    }
-    
-    .see-more-events-btn {
-        font-size: 13px !important;
-        padding: 12px 14px !important;
-    }
-    
-    .section-subtitle {
-        font-size: 14px !important;
-    }
-    
-    .events-scroll-wrapper {
-        padding: 12px 8px !important;
-    }
-}
-
-/* iOS specific improvements */
-@supports (-webkit-touch-callout: none) {
-    .see-more-events-btn {
-        -webkit-appearance: none !important;
-        -webkit-user-select: none !important;
-        -webkit-touch-callout: none !important;
-    }
-    
-    .events-scroll-wrapper {
-        -webkit-overflow-scrolling: touch !important;
-    }
-}
-
-/* Hide scrollbars */
-.events-scroll-wrapper::-webkit-scrollbar {
-    display: none;
-}
-
-.events-scroll-wrapper {
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-}
-
-/* Touch feedback for mobile */
-@media (max-width: 768px) {
-    .see-more-events-btn:active {
-        transform: scale(0.98) !important;
-        transition: transform 0.1s ease !important;
-    }
-}
-/* Ad Card Styles */
+/* Mobile Ad Cards */
 .ad-display-card {
-    min-width: 280px;
-    max-width: 280px;
-    height: 340px;
+    min-width: 260px;
+    max-width: 260px;
+    height: 300px;
     background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
     border-radius: 16px;
     display: flex;
@@ -1980,32 +1963,22 @@ body {
     animation: shimmer 3s ease-in-out infinite;
 }
 
-@keyframes shimmer {
-    0%, 100% { transform: rotate(0deg); }
-    50% { transform: rotate(180deg); }
-}
-
-@keyframes scroll-banners {
-    0% { transform: translateX(100%); }
-    100% { transform: translateX(-100%); }
-}
-
 .ad-content {
     z-index: 2;
-    padding: 20px;
+    padding: 15px;
 }
 
 .ad-title {
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     font-weight: 700;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     text-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
 .ad-subtitle {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     opacity: 0.9;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 .ad-cta-btn {
@@ -2013,11 +1986,16 @@ body {
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.3);
     color: white;
-    padding: 10px 20px;
-    border-radius: 25px;
+    padding: 10px 16px;
+    border-radius: 20px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
+    min-height: 44px;
+    -webkit-appearance: none;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
 }
 
 .ad-cta-btn:hover {
@@ -2025,165 +2003,37 @@ body {
     transform: translateY(-2px);
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-    .physical-events-section {
-        padding: 15px;
-    }
-    
-    .section-title {
-        font-size: 1.2rem;
-    }
-    
-    .physical-event-display-card,
-    .ad-display-card {
-        min-width: 250px;
-        max-width: 250px;
-        height: 320px;
-    }
-    
-    .event-card-image {
-        height: 140px;
-    }
-    
-    .event-card-body {
-        height: 180px;
-        padding: 14px;
-    }
-}
-
-@media (max-width: 480px) {
-    .physical-event-display-card,
-    .ad-display-card {
-        min-width: 220px;
-        max-width: 220px;
-        height: 300px;
-    }
-    
-    .event-card-image {
-        height: 120px;
-    }
-    
-    .event-card-body {
-        height: 180px;
-        padding: 12px;
-    }
-    
-    .events-scroll-wrapper {
-        gap: 12px;
-    }
-}
-
-/* Loading and Error States for Physical Events Display */
-.loading-events-display, .no-events-display, .error-events-display {
-    text-align: center;
-    padding: 40px 20px;
-    color: var(--text-secondary);
-}
-
-.loading-events-display i {
-    font-size: 2rem;
-    color: var(--primary-color);
-    margin-bottom: 15px;
-    animation: spin 1s linear infinite;
-}
-
-.no-events-display i, .error-events-display i {
-    font-size: 2.5rem;
-    color: var(--text-secondary);
-    margin-bottom: 15px;
-}
-
-.loading-events-display h3, .no-events-display h3, .error-events-display h3 {
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: var(--text-color);
-    margin-bottom: 8px;
-}
-
-.loading-events-display p, .no-events-display p, .error-events-display p {
-    font-size: 0.9rem;
-    margin-bottom: 20px;
-}
-
-.retry-btn {
-    background: var(--primary-color);
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 8px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.retry-btn:hover {
-    background: #667eea;
-    transform: translateY(-1px);
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-/* Advanced Physical Event Card Styles */
+/* Mobile Advanced Event Cards */
 .advanced-event-card {
-    min-width: 320px;
-    max-width: 320px;
-    height: 400px;
-    border-radius: 24px;
+    min-width: 280px;
+    max-width: 280px;
+    height: 340px;
+    border-radius: 20px;
     overflow: hidden;
     position: relative;
     cursor: pointer;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
     flex-shrink: 0;
     background: #fff;
 }
 
 .advanced-event-card:hover {
-    transform: translateY(-8px) scale(1.02);
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
-}
-
-.advanced-event-background {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 1;
-    object-fit: cover;
-    border-radius: 24px;
-}
-
-.advanced-event-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-        135deg,
-        rgba(0, 0, 0, 0.2) 0%,
-        rgba(0, 0, 0, 0.4) 50%,
-        rgba(0, 0, 0, 0.7) 100%
-    );
-    z-index: 2;
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
 }
 
 .advanced-category-badge {
     position: absolute;
-    top: 16px;
-    left: 16px;
-    padding: 8px 16px;
-    border-radius: 20px;
-    font-size: 0.75rem;
+    top: 10px;
+    left: 10px;
+    padding: 6px 12px;
+    border-radius: 15px;
+    font-size: 0.65rem;
     font-weight: 700;
     color: white;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.3px;
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.2);
     z-index: 3;
@@ -2192,13 +2042,32 @@ body {
 
 .advanced-tickets-badge {
     position: absolute;
-    top: 16px;
-    right: 16px;
-    padding: 8px 12px;
+    top: 10px;
+    right: 10px;
+    padding: 6px 10px;
     background: rgba(255, 87, 87, 0.9);
     color: white;
-    border-radius: 16px;
-    font-size: 0.7rem;
+    border-radius: 12px;
+    font-size: 0.65rem;
+    font-weight: 600;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    box-shadow: 0 4px 20px rgba(255, 87, 87, 0.3);
+}
+
+.advanced-withdraw-badge {
+    position: absolute;
+    top: 45px;
+    right: 10px;
+    padding: 6px 10px;
+    background: rgba(34, 197, 94, 0.9);
+    color: white;
+    border-radius: 12px;
+    font-size: 0.65rem;
     font-weight: 600;
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.2);
@@ -2206,128 +2075,40 @@ body {
     display: flex;
     align-items: center;
     gap: 4px;
-    box-shadow: 0 4px 20px rgba(255, 87, 87, 0.3);
-}
-
-.advanced-tickets-badge i {
-    font-size: 0.6rem;
-    animation: flicker 2s ease-in-out infinite alternate;
-}
-
-@keyframes flicker {
-    0% { opacity: 1; }
-    100% { opacity: 0.7; }
-}
-
-.advanced-withdraw-badge {
-    position: absolute;
-    top: 60px;
-    right: 16px;
-    padding: 8px 12px;
-    background: rgba(34, 197, 94, 0.9);
-    color: white;
-    border-radius: 16px;
-    font-size: 0.7rem;
-    font-weight: 600;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    z-index: 3;
-    display: flex;
-    align-items: center;
-    gap: 6px;
     box-shadow: 0 4px 20px rgba(34, 197, 94, 0.3);
-}
-
-.advanced-withdraw-badge i {
-    font-size: 0.6rem;
-}
-
-.eye-toggle-btn {
-    background: none;
-    border: none;
-    color: white;
-    cursor: pointer;
-    padding: 2px;
-    margin-left: 4px;
-    border-radius: 50%;
-    transition: all 0.3s ease;
-    opacity: 0.8;
-}
-
-.eye-toggle-btn:hover {
-    opacity: 1;
-    background: rgba(255, 255, 255, 0.2);
-}
-
-.withdraw-amount.hidden {
-    display: none;
 }
 
 .advanced-likes-badge {
     position: absolute;
-    top: 60px;
-    left: 16px;
-    padding: 8px 12px;
+    top: 45px;
+    left: 10px;
+    padding: 6px 10px;
     background: rgba(255, 255, 255, 0.9);
-    border-radius: 16px;
-    font-size: 0.7rem;
+    border-radius: 12px;
+    font-size: 0.65rem;
     font-weight: 600;
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.2);
     z-index: 3;
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 4px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-}
-
-.like-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 2px;
-    border-radius: 50%;
-    transition: all 0.3s ease;
-    color: #ff4757;
-}
-
-.like-btn:hover {
-    transform: scale(1.1);
-}
-
-.like-btn.liked i {
-    color: #ff4757;
-    animation: heartBeat 0.6s ease-in-out;
-}
-
-.like-btn:not(.liked) i {
-    color: #999;
-}
-
-.likes-count {
-    color: #333;
-    font-weight: 600;
-}
-
-@keyframes heartBeat {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.2); }
-    100% { transform: scale(1); }
 }
 
 .advanced-event-content {
     position: absolute;
-    bottom: 80px;
-    left: 20px;
-    right: 20px;
+    bottom: 60px;
+    left: 15px;
+    right: 15px;
     z-index: 3;
     color: white;
 }
 
 .advanced-event-title {
-    font-size: 1.4rem;
+    font-size: 1.1rem;
     font-weight: 700;
-    margin: 0 0 16px 0;
+    margin: 0 0 12px 0;
     line-height: 1.3;
     text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
     display: -webkit-box;
@@ -2339,36 +2120,36 @@ body {
 .advanced-event-details {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 6px;
 }
 
 .advanced-detail-row {
     display: flex;
-    gap: 16px;
+    gap: 12px;
     align-items: center;
 }
 
 .advanced-detail-item {
     display: flex;
     align-items: center;
-    gap: 8px;
-    font-size: 0.85rem;
+    gap: 6px;
+    font-size: 0.75rem;
     font-weight: 500;
     color: rgba(255, 255, 255, 0.9);
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
 }
 
 .advanced-detail-item i {
-    width: 14px;
-    font-size: 0.8rem;
+    width: 12px;
+    font-size: 0.7rem;
     color: rgba(255, 255, 255, 0.8);
 }
 
 .advanced-card-actions {
     position: absolute;
-    bottom: 20px;
-    left: 20px;
-    right: 20px;
+    bottom: 15px;
+    left: 15px;
+    right: 15px;
     z-index: 3;
 }
 
@@ -2377,21 +2158,23 @@ body {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
     border: none;
-    padding: 14px 20px;
-    border-radius: 16px;
+    padding: 12px 16px;
+    border-radius: 12px;
     font-weight: 700;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     cursor: pointer;
     transition: all 0.3s ease;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: 6px;
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.3px;
+    min-height: 44px;
+    -webkit-appearance: none;
 }
 
 .advanced-buy-btn:hover {
@@ -2404,40 +2187,114 @@ body {
     transform: translateY(0);
 }
 
-/* Enhanced Ad Cards */
-.ad-display-card {
-    min-width: 320px;
-    max-width: 320px;
-    height: 400px;
-    border-radius: 24px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-    flex-shrink: 0;
-    cursor: pointer;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+/* Tablet Responsive (768px and up) */
+@media (min-width: 768px) {
+    .physical-events-section {
+        padding: 20px;
+    }
+    
+    .section-header-row {
+        gap: 20px;
+        flex-wrap: nowrap;
+    }
+    
+    .see-more-events-btn {
+        padding: 10px 16px;
+        font-size: 0.85rem;
+        min-width: auto;
+    }
+    
+    .physical-events-section .section-title {
+        font-size: 1.4rem;
+    }
+    
+    .physical-events-section .section-title i {
+        font-size: 1.2rem;
+    }
+    
+    .section-subtitle {
+        font-size: 0.9rem;
+    }
+    
+    .physical-event-display-card,
+    .ad-display-card {
+        min-width: 280px;
+        max-width: 280px;
+        height: 340px;
+    }
+    
+    .event-card-image {
+        height: 160px;
+    }
+    
+    .event-card-body {
+        height: 180px;
+        padding: 16px;
+    }
+    
+    .advanced-event-card {
+        min-width: 320px;
+        max-width: 320px;
+        height: 400px;
+    }
 }
 
-.ad-display-card:hover {
-    transform: translateY(-8px) scale(1.02);
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+/* Desktop Responsive (1024px and up) */
+@media (min-width: 1024px) {
+    .physical-events-section {
+        padding: 25px;
+    }
+    
+    .see-more-events-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    }
+    
+    .physical-event-display-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+    }
+    
+    .advanced-event-card:hover {
+        transform: translateY(-8px) scale(1.02);
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+    }
+    
+    .ad-display-card:hover {
+        transform: translateY(-8px) scale(1.02);
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+    }
 }
 
-.ad-display-card::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-    animation: shimmer 4s ease-in-out infinite;
+/* iOS Specific Optimizations */
+@supports (-webkit-touch-callout: none) {
+    .see-more-events-btn,
+    .buy-ticket-btn,
+    .get-ticket-btn-top,
+    .ad-cta-btn,
+    .advanced-buy-btn {
+        -webkit-appearance: none;
+        -webkit-user-select: none;
+        -webkit-touch-callout: none;
+        border-radius: 8px;
+    }
+}
+
+/* Animations */
+@keyframes sponsorScroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-100%); }
+}
+
+@keyframes advancedSponsorScroll {
+    0%, 33% { transform: translateX(0); }
+    66%, 100% { transform: translateX(-100%); }
+}
+
+@keyframes sponsorLabelFade {
+    0%, 20% { opacity: 1; transform: translateY(0); }
+    25%, 95% { opacity: 0.7; transform: translateY(-2px); }
+    100% { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes shimmer {
@@ -2445,106 +2302,79 @@ body {
     50% { transform: rotate(180deg); }
 }
 
-.ad-content {
-    z-index: 2;
-    padding: 30px;
+@keyframes flicker {
+    0% { opacity: 1; }
+    100% { opacity: 0.7; }
 }
 
-.ad-title {
+@keyframes heartBeat {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+/* Loading States */
+.loading-events-display, 
+.no-events-display, 
+.error-events-display {
+    text-align: center;
+    padding: 30px 15px;
+    color: var(--text-secondary);
+}
+
+.loading-events-display i {
     font-size: 1.5rem;
-    font-weight: 800;
+    color: var(--primary-color);
     margin-bottom: 12px;
-    text-shadow: 0 2px 10px rgba(0,0,0,0.3);
-    text-transform: uppercase;
-    letter-spacing: 1px;
+    animation: spin 1s linear infinite;
 }
 
-.ad-subtitle {
-    font-size: 1rem;
-    opacity: 0.9;
-    margin-bottom: 24px;
-    line-height: 1.4;
-    text-shadow: 0 1px 5px rgba(0,0,0,0.2);
+.no-events-display i, 
+.error-events-display i {
+    font-size: 2rem;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
 }
 
-.ad-cta-btn {
-    background: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(15px);
-    border: 2px solid rgba(255, 255, 255, 0.3);
+.loading-events-display h3, 
+.no-events-display h3, 
+.error-events-display h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 6px;
+}
+
+.loading-events-display p, 
+.no-events-display p, 
+.error-events-display p {
+    font-size: 0.85rem;
+    margin-bottom: 15px;
+}
+
+.retry-btn {
+    background: var(--primary-color);
     color: white;
-    padding: 12px 24px;
-    border-radius: 30px;
-    font-weight: 700;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: 500;
     cursor: pointer;
     transition: all 0.3s ease;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    font-size: 0.85rem;
+    min-height: 44px;
+    -webkit-appearance: none;
 }
 
-.ad-cta-btn:hover {
-    background: rgba(255, 255, 255, 0.3);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-    border-color: rgba(255, 255, 255, 0.5);
+.retry-btn:hover {
+    background: #667eea;
+    transform: translateY(-1px);
 }
 
-/* Responsive Design for Advanced Cards */
-@media (max-width: 768px) {
-    .advanced-event-card,
-    .ad-display-card {
-        min-width: 280px;
-        max-width: 280px;
-        height: 360px;
-    }
-    
-    .advanced-event-title {
-        font-size: 1.2rem;
-    }
-    
-    .advanced-event-content {
-        bottom: 70px;
-        left: 16px;
-        right: 16px;
-    }
-    
-    .advanced-card-actions {
-        bottom: 16px;
-        left: 16px;
-        right: 16px;
-    }
-    
-    .advanced-buy-btn {
-        padding: 12px 16px;
-        font-size: 0.85rem;
-    }
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
-@media (max-width: 480px) {
-    .advanced-event-card,
-    .ad-display-card {
-        min-width: 260px;
-        max-width: 260px;
-        height: 340px;
-    }
-    
-    .advanced-category-badge,
-    .advanced-tickets-badge {
-        top: 12px;
-    }
-    
-    .advanced-category-badge {
-        left: 12px;
-        padding: 6px 12px;
-        font-size: 0.7rem;
-    }
-    
-    .advanced-tickets-badge {
-        right: 12px;
-        padding: 6px 10px;
-        font-size: 0.65rem;
-    }
-}
 
 .action-btn.Game-btn:active {
   transform: translateY(1px);
@@ -22661,106 +22491,29 @@ rgb(81, 67, 55)rgb(81, 61, 55)rgb(81, 58, 55)rgb(184, 50, 32);
 
         </div>
 
-       <!-- Physical Events Section - Responsive Version -->
-<div class="physical-events-section" style="
-    padding: ${window.innerWidth <= 768 ? '20px 15px' : '30px 20px'};
-    margin-bottom: ${window.innerWidth <= 768 ? '20px' : '30px'};
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 20px;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-sizing: border-box;
-">
-    <div class="section-header" style="
-        margin-bottom: ${window.innerWidth <= 768 ? '20px' : '25px'};
-    ">
-        <div class="section-header-row" style="
-            display: flex;
-            flex-direction: ${window.innerWidth <= 768 ? 'column' : 'row'};
-            justify-content: space-between;
-            align-items: ${window.innerWidth <= 768 ? 'flex-start' : 'center'};
-            gap: ${window.innerWidth <= 768 ? '15px' : '20px'};
-            margin-bottom: ${window.innerWidth <= 768 ? '12px' : '15px'};
-        ">
-            <h2 class="section-title" style="
-                color: white;
-                font-size: ${window.innerWidth <= 480 ? '20px' : window.innerWidth <= 768 ? '22px' : '28px'};
-                font-weight: 600;
-                margin: 0;
-                display: flex;
-                align-items: center;
-                gap: ${window.innerWidth <= 768 ? '8px' : '12px'};
-                flex-wrap: ${window.innerWidth <= 768 ? 'wrap' : 'nowrap'};
-            ">
-                <i class="fas fa-calendar-alt" style="
-                    font-size: ${window.innerWidth <= 480 ? '18px' : window.innerWidth <= 768 ? '20px' : '24px'};
-                    color: #4ECDC4;
-                "></i>
-                <span style="
-                    ${window.innerWidth <= 768 ? 'margin-bottom: 0;' : ''}
-                ">Physical Events</span>
-            </h2>
+        <!-- Physical Events Section -->
+        <div class="physical-events-section">
+            <div class="section-header">
+                <div class="section-header-row">
+                    
+                    <h2 class="section-title">
+                      <i class="fas fa-calendar-alt"></i>
+                        Physical Events
+                        <button class="see-more-events-btn" onclick="showAllEvents()">
+                        <i class="fas fa-plus"></i>
+                        See More Events
+                    </button>
+                     </h2>
+                </div>
+                <div class="section-subtitle">Discover amazing events near you</div>
+            </div>
             
-            <button class="see-more-events-btn" onclick="showAllEvents()" style="
-                background: linear-gradient(135deg, #4ECDC4 0%, #45B7D1 100%);
-                color: white;
-                border: none;
-                padding: ${window.innerWidth <= 768 ? '12px 16px' : '10px 20px'};
-                border-radius: 8px;
-                font-size: ${window.innerWidth <= 480 ? '13px' : window.innerWidth <= 768 ? '14px' : '14px'};
-                font-weight: 600;
-                cursor: pointer;
-                display: flex;
-                align-items: center;
-                gap: 8px;
-                transition: all 0.3s ease;
-                box-shadow: 0 4px 15px rgba(76, 217, 196, 0.3);
-                min-height: ${window.innerWidth <= 768 ? '44px' : 'auto'};
-                width: ${window.innerWidth <= 768 ? '100%' : 'auto'};
-                justify-content: center;
-                box-sizing: border-box;
-                -webkit-appearance: none;
-                -webkit-user-select: none;
-                user-select: none;
-            " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 25px rgba(76, 217, 196, 0.4)'" 
-               onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(76, 217, 196, 0.3)'">
-                <i class="fas fa-plus" style="
-                    font-size: ${window.innerWidth <= 768 ? '12px' : '12px'};
-                "></i>
-                <span>See More Events</span>
-            </button>
+            <div class="physical-events-container" id="physicalEventsContainer">
+                <div class="events-scroll-wrapper">
+                    <!-- Events will be dynamically loaded here -->
+                </div>
+            </div>
         </div>
-        
-        <div class="section-subtitle" style="
-            color: rgba(255, 255, 255, 0.7);
-            font-size: ${window.innerWidth <= 480 ? '14px' : window.innerWidth <= 768 ? '15px' : '16px'};
-            margin: 0;
-            font-weight: 400;
-        ">
-            Discover amazing events near you
-        </div>
-    </div>
-    
-    <div class="physical-events-container" id="physicalEventsContainer" style="
-        width: 100%;
-        overflow: hidden;
-        border-radius: 15px;
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid rgba(255, 255, 255, 0.05);
-    ">
-        <div class="events-scroll-wrapper" style="
-            overflow-x: auto;
-            overflow-y: hidden;
-            padding: ${window.innerWidth <= 768 ? '15px 10px' : '20px'};
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-        ">
-            <!-- Events will be dynamically loaded here -->
-        </div>
-    </div>
-</div>
-
 
 
         
