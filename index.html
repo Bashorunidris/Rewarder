@@ -1735,17 +1735,6 @@ body {
     flex-direction: column;
 }
 
-.event-card-title {
-    font-size: 2px;
-    font-weight: 300;
-    color: var(--text-color);
-    margin-bottom: 8px;
-    line-height: 1.3;
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-}
 
 .event-card-details {
     flex: 1;
@@ -1767,31 +1756,633 @@ body {
     color: var(--primary-color);
     font-size: 0.8rem;
 }
-
-.event-sponsors {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    margin-top: 8px;
+/* Event Card Responsive Styles */
+.event-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    margin-bottom: 20px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+    transition: all 0.3s ease;
 }
 
-.sponsor-logo {
-    width: 24px;
-    height: 24px;
-    border-radius: 4px;
-    background: var(--bg-light);
+.event-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.event-card-header {
+    position: relative;
+    min-height: 120px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.7rem;
-    font-weight: 600;
-    color: var(--primary-color);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
-.sponsors-count {
-    font-size: 0.75rem;
-    color: var(--text-secondary);
-    margin-left: 4px;
+.event-card-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.event-title {
+    color: white;
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    flex: 1;
+    word-break: break-word;
+}
+
+.expand-indicator {
+    color: white;
+    font-size: 18px;
+    margin-left: 10px;
+    opacity: 0.8;
+    transition: transform 0.3s ease;
+}
+
+.event-card.expanded .expand-indicator {
+    transform: rotate(180deg);
+}
+
+.event-card-content {
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.02);
+}
+
+/* Event ID Section */
+.event-id-section {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.event-id-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.event-id-header:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 6px;
+    padding: 8px;
+    margin: -8px;
+}
+
+.event-id-label {
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 600;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.security-icon {
+    color: #ffd700;
+    font-size: 12px;
+}
+
+.event-id-controls {
+    display: flex;
+    gap: 10px;
+}
+
+.security-toggle-btn,
+.eye-toggle-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 6px 8px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.security-toggle-btn:hover,
+.eye-toggle-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-1px);
+}
+
+.eye-toggle-btn.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.event-id-container {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.event-id-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.event-id-code {
+    background: rgba(0, 0, 0, 0.3);
+    color: #4ECDC4;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    flex: 1;
+    min-width: 0;
+    word-break: break-all;
+}
+
+.copy-id-btn {
+    background: #4ECDC4;
+    color: white;
+    border: none;
+    padding: 8px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.copy-id-btn:hover {
+    background: #45a9a9;
+    transform: translateY(-1px);
+}
+
+.copy-id-btn.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.event-id-note {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+/* Stats Grid */
+.ticket-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.stat-card {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-2px);
+}
+
+.stat-value {
+    font-size: 24px;
+    font-weight: 600;
+    color: #4ECDC4;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.stat-label {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Individual Ticket Sales */
+.individual-ticket-sales {
+    grid-column: 1 / -1;
+    margin-top: 15px;
+}
+
+.individual-ticket-sales h4 {
+    color: white;
+    font-size: 18px;
+    margin-bottom: 12px;
+    font-weight: 600;
+}
+
+.ticket-breakdown-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+}
+
+/* Sponsors Section */
+.sponsors-section {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sponsors-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.sponsors-header h4 {
+    color: white;
+    font-size: 18px;
+    margin: 0;
+    font-weight: 600;
+}
+
+.add-sponsors-btn {
+    background: #4ECDC4;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+}
+
+.add-sponsors-btn:hover {
+    background: #45a9a9;
+    transform: translateY(-1px);
+}
+
+/* Action Buttons */
+.event-action-buttons {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.setup-bank-btn,
+.withdraw-pee-btn {
+    flex: 1;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-size: 13px;
+    color: white;
+}
+
+.setup-bank-btn {
+    background: linear-gradient(135deg, #007bff, #0056b3);
+}
+
+.withdraw-pee-btn {
+    background: linear-gradient(135deg, #28a745, #20c997);
+}
+
+.setup-bank-btn:hover,
+.withdraw-pee-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+    .event-card-header {
+        min-height: 100px;
+    }
+    
+    .event-card-overlay {
+        padding: 15px;
+    }
+    
+    .event-title {
+        font-size: 18px;
+    }
+    
+    .expand-indicator {
+        font-size: 16px;
+    }
+    
+    .event-card-content {
+        padding: 15px;
+    }
+    
+    .event-id-section {
+        padding: 12px;
+        margin-bottom: 15px;
+    }
+    
+    .event-id-header {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    
+    .event-id-label {
+        font-size: 14px;
+        flex: 1;
+        min-width: 0;
+    }
+    
+    .event-id-controls {
+        gap: 8px;
+        flex-shrink: 0;
+    }
+    
+    .security-toggle-btn,
+    .eye-toggle-btn {
+        padding: 8px;
+        min-width: 40px;
+        min-height: 40px;
+    }
+    
+    .security-toggle-btn i,
+    .eye-toggle-btn i {
+        font-size: 14px;
+    }
+    
+    .event-id-content {
+        flex-wrap: wrap;
+    }
+    
+    .event-id-code {
+        font-size: 12px;
+        padding: 8px 12px;
+    }
+    
+    .copy-id-btn {
+        padding: 10px;
+        min-width: 44px;
+        min-height: 44px;
+    }
+    
+    .copy-id-btn i {
+        font-size: 14px;
+    }
+    
+    .event-id-note {
+        font-size: 11px;
+    }
+    
+    /* Stats Grid Mobile */
+    .ticket-stats-grid {
+        display: block;
+        gap: 12px;
+        margin-bottom: 15px;
+    }
+    
+    .stat-card {
+        padding: 12px;
+        margin-bottom: 12px;
+    }
+    
+    .stat-value {
+        font-size: 20px;
+        flex-wrap: wrap;
+    }
+    
+    .stat-label {
+        font-size: 12px;
+    }
+    
+    /* Individual Ticket Sales Mobile */
+    .individual-ticket-sales {
+        margin-top: 12px;
+    }
+    
+    .individual-ticket-sales h4 {
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
+    
+    .ticket-breakdown-grid {
+        display: block;
+        gap: 8px;
+    }
+    
+    /* Sponsors Section Mobile */
+    .sponsors-section {
+        padding: 12px;
+        margin-bottom: 15px;
+    }
+    
+    .sponsors-header {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    
+    .sponsors-header h4 {
+        font-size: 16px;
+    }
+    
+    .add-sponsors-btn {
+        padding: 10px 16px;
+        font-size: 14px;
+        min-height: 44px;
+    }
+    
+    /* Action Buttons Mobile */
+    .event-action-buttons {
+        display: block;
+        gap: 10px;
+    }
+    
+    .setup-bank-btn,
+    .withdraw-pee-btn {
+        width: 100%;
+        padding: 12px 16px;
+        font-size: 14px;
+        min-height: 44px;
+        margin-bottom: 10px;
+        box-sizing: border-box;
+    }
+}
+
+@media (max-width: 480px) {
+    .event-card-header {
+        min-height: 80px;
+    }
+    
+    .event-card-overlay {
+        padding: 12px;
+    }
+    
+    .event-title {
+        font-size: 16px;
+    }
+    
+    .event-card-content {
+        padding: 12px;
+    }
+    
+    .event-id-section {
+        padding: 10px;
+    }
+    
+    .event-id-label {
+        font-size: 13px;
+    }
+    
+    .event-id-code {
+        font-size: 11px;
+        padding: 6px 8px;
+    }
+    
+    .event-id-note {
+        font-size: 10px;
+    }
+    
+    .stat-value {
+        font-size: 18px;
+    }
+    
+    .stat-label {
+        font-size: 11px;
+    }
+    
+    .individual-ticket-sales h4 {
+        font-size: 15px;
+    }
+    
+    .sponsors-header h4 {
+        font-size: 15px;
+    }
+    
+    .add-sponsors-btn {
+        font-size: 13px;
+    }
+    
+    .setup-bank-btn,
+    .withdraw-pee-btn {
+        font-size: 13px;
+    }
+}
+
+/* iOS Specific Styles */
+@supports (-webkit-touch-callout: none) {
+    .security-toggle-btn,
+    .eye-toggle-btn,
+    .copy-id-btn,
+    .add-sponsors-btn,
+    .setup-bank-btn,
+    .withdraw-pee-btn {
+        -webkit-appearance: none;
+        -webkit-user-select: none;
+        -webkit-touch-callout: none;
+    }
+    
+    .event-id-code {
+        -webkit-user-select: all;
+        user-select: all;
+    }
+}
+
+/* Touch Device Optimizations */
+@media (hover: none) and (pointer: coarse) {
+    .event-card:hover,
+    .stat-card:hover,
+    .security-toggle-btn:hover,
+    .eye-toggle-btn:hover,
+    .copy-id-btn:hover,
+    .add-sponsors-btn:hover,
+    .setup-bank-btn:hover,
+    .withdraw-pee-btn:hover {
+        transform: none;
+        box-shadow: none;
+    }
+    
+    .event-card:active,
+    .stat-card:active {
+        transform: scale(0.98);
+    }
+    
+    .security-toggle-btn:active,
+    .eye-toggle-btn:active,
+    .copy-id-btn:active,
+    .add-sponsors-btn:active,
+    .setup-bank-btn:active,
+    .withdraw-pee-btn:active {
+        transform: scale(0.95);
+    }
+}
+
+/* Focus States for Accessibility */
+.security-toggle-btn:focus,
+.eye-toggle-btn:focus,
+.copy-id-btn:focus,
+.add-sponsors-btn:focus,
+.setup-bank-btn:focus,
+.withdraw-pee-btn:focus {
+    outline: 2px solid #4ECDC4;
+    outline-offset: 2px;
+}
+
+/* Animation Classes */
+.fade-in {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.slide-down {
+    animation: slideDown 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideDown {
+    from {
+        max-height: 0;
+        opacity: 0;
+    }
+    to {
+        max-height: 200px;
+        opacity: 1;
+    }
 }
 
 .buy-ticket-btn {
@@ -37266,175 +37857,54 @@ function createPhysicalEventCard(eventData) {
     
 
     cardDiv.innerHTML = `
-        
-        
-<div class="event-card-header" style="
-            ${backgroundStyle}
-            padding: ${isMobile ? '15px' : '20px'};
-            border-radius: ${isMobile ? '12px' : '15px'};
-            position: relative;
-        ">
-            <div class="event-card-overlay" style="
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background: rgba(0,0,0,0.4);
-                border-radius: inherit;
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                padding: ${isMobile ? '15px' : '20px'};
-            ">
-                <h3 class="event-title" style="
-                    color: white;
-                    font-size: ${isSmallMobile ? '16px' : isMobile ? '18px' : '20px'};
-                    font-weight: 600;
-                    margin: 0;
-                    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-                    flex: 1;
-                    word-break: break-word;
-                ">${eventData.eventName}</h3>
-                <div class="expand-indicator" style="
-                    color: white;
-                    font-size: ${isMobile ? '16px' : '18px'};
-                    margin-left: 10px;
-                    opacity: 0.8;
-                ">
+        <div class="event-card-header" style="${backgroundStyle}">
+           
+           
+            <div class="event-card-overlay">
+                <h3 class="event-title">${eventData.eventName}</h3>
+               <div class="expand-indicator">
                     <i class="fas fa-chevron-down"></i>
                 </div>
             </div>
         </div>
                 
-        <div class="event-card-content" style="
-            padding: ${isMobile ? '15px' : '20px'};
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 0 0 ${isMobile ? '12px' : '15px'} ${isMobile ? '12px' : '15px'};
-        ">
+        <div class="event-card-content">
             <!-- Secure Event ID Container -->
-            <div class="event-id-section" style="
-                margin-bottom: ${isMobile ? '15px' : '20px'};
-                background: rgba(255, 255, 255, 0.05);
-                border-radius: 10px;
-                padding: ${isMobile ? '12px' : '15px'};
-            ">
-                <div class="event-id-header" onclick="handleEventIdHeaderClick('${eventData.physicalEventId}')" style="
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                    cursor: pointer;
-                    ${isMobile ? 'flex-wrap: wrap; gap: 10px;' : ''}
-                ">
-                    <span class="event-id-label" style="
-                        color: rgba(255,255,255,0.9);
-                        font-weight: 600;
-                        font-size: ${isMobile ? '14px' : '16px'};
-                        display: flex;
-                        align-items: center;
-                        gap: 8px;
-                        ${isMobile ? 'flex: 1; min-width: 0;' : ''}
-                    ">
+            <div class="event-id-section">
+                <div class="event-id-header" onclick="handleEventIdHeaderClick('${eventData.physicalEventId}')">
+                    <span class="event-id-label">
                         Event ID 
-                        ${isLocked ? '<i class="fas fa-lock security-icon" style="color: #ffd700; font-size: 12px;" title="Protected"></i>' : ''}
+                        ${isLocked ? '<i class="fas fa-lock security-icon" title="Protected"></i>' : ''}
                     </span>
-                    <div class="event-id-controls" style="
-                        display: flex;
-                        gap: ${isMobile ? '8px' : '10px'};
-                        ${isMobile ? 'flex-shrink: 0;' : ''}
-                    ">
+                    <div class="event-id-controls">
                         <!-- Security Toggle Button -->
                         <button class="security-toggle-btn" onclick="event.stopPropagation(); toggleEventSecurity('${eventData.physicalEventId}')" 
-                                title="${isLocked ? 'Remove Protection' : 'Add Protection'}" type="button" style="
-                            background: rgba(255,255,255,0.1);
-                            border: 2px solid rgba(255,255,255,0.3);
-                            color: white;
-                            padding: ${isMobile ? '8px' : '6px 8px'};
-                            border-radius: 6px;
-                            cursor: pointer;
-                            transition: all 0.3s ease;
-                            min-width: ${isMobile ? '40px' : 'auto'};
-                            min-height: ${isMobile ? '40px' : 'auto'};
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-                        ">
-                            <i class="fas ${isLocked ? 'fa-lock' : 'fa-lock-open'}" style="font-size: ${isMobile ? '14px' : '12px'};"></i>
+                                title="${isLocked ? 'Remove Protection' : 'Add Protection'}" type="button">
+                            <i class="fas ${isLocked ? 'fa-lock' : 'fa-lock-open'}"></i>
                         </button>
                         
                         <!-- Eye Toggle Button -->
                         <button class="eye-toggle-btn ${isLocked && !isSessionUnlocked ? 'disabled' : ''}" 
                                 onclick="event.stopPropagation(); toggleEventIdVisibility('${eventData.physicalEventId}')" 
-                                type="button" ${isLocked && !isSessionUnlocked ? 'disabled' : ''} style="
-                            background: rgba(255,255,255,0.1);
-                            border: 2px solid rgba(255,255,255,0.3);
-                            color: white;
-                            padding: ${isMobile ? '8px' : '6px 8px'};
-                            border-radius: 6px;
-                            cursor: ${isLocked && !isSessionUnlocked ? 'not-allowed' : 'pointer'};
-                            transition: all 0.3s ease;
-                            min-width: ${isMobile ? '40px' : 'auto'};
-                            min-height: ${isMobile ? '40px' : 'auto'};
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-                            opacity: ${isLocked && !isSessionUnlocked ? '0.5' : '1'};
-                        ">
-                            <i class="fas fa-eye" id="eye-icon-${eventData.physicalEventId}" style="font-size: ${isMobile ? '14px' : '12px'};"></i>
+                                type="button" ${isLocked && !isSessionUnlocked ? 'disabled' : ''}>
+                            <i class="fas fa-eye" id="eye-icon-${eventData.physicalEventId}"></i>
                         </button>
                     </div>
                 </div>
                 
-                <div class="event-id-container" id="event-id-container-${eventData.physicalEventId}" style="
-                    display: none;
-                    margin-top: 12px;
-                    padding-top: 12px;
-                    border-top: 1px solid rgba(255,255,255,0.1);
-                ">
-                    <div class="event-id-content" style="
-                        display: flex;
-                        align-items: center;
-                        gap: 10px;
-                        margin-bottom: 8px;
-                        ${isMobile ? 'flex-wrap: wrap;' : ''}
-                    ">
-                        <code class="event-id-code" id="event-id-code-${eventData.physicalEventId}" style="
-                            background: rgba(0,0,0,0.3);
-                            color: #4ECDC4;
-                            padding: ${isMobile ? '8px 12px' : '6px 10px'};
-                            border-radius: 6px;
-                            font-family: 'Courier New', monospace;
-                            font-size: ${isSmallMobile ? '11px' : isMobile ? '12px' : '13px'};
-                            ${isMobile ? 'flex: 1; min-width: 0; word-break: break-all;' : ''}
-                        ">
+                <div class="event-id-container" id="event-id-container-${eventData.physicalEventId}" style="display: none;">
+                    <div class="event-id-content">
+                        <code class="event-id-code" id="event-id-code-${eventData.physicalEventId}">
                             ${(isLocked && !isSessionUnlocked) ? '••••••••••••••••••••' : (eventData.physicalEventId || 'N/A')}
                         </code>
                         <button class="copy-id-btn ${(isLocked && !isSessionUnlocked) ? 'disabled' : ''}" 
                                 onclick="copyEventId('${eventData.physicalEventId}')" 
                                 title="Copy Event ID"
-                                ${(isLocked && !isSessionUnlocked) ? 'disabled' : ''} style="
-                            background: #4ECDC4;
-                            color: white;
-                            border: none;
-                            padding: ${isMobile ? '10px' : '8px 10px'};
-                            border-radius: 6px;
-                            cursor: ${(isLocked && !isSessionUnlocked) ? 'not-allowed' : 'pointer'};
-                            transition: all 0.3s ease;
-                            min-width: ${isMobile ? '44px' : 'auto'};
-                            min-height: ${isMobile ? '44px' : 'auto'};
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-                            opacity: ${(isLocked && !isSessionUnlocked) ? '0.5' : '1'};
-                        ">
-                            <i class="fas fa-copy" style="font-size: ${isMobile ? '14px' : '12px'};"></i>
+                                ${(isLocked && !isSessionUnlocked) ? 'disabled' : ''}>
+                            <i class="fas fa-copy"></i>
                         </button>
                     </div>
-                    <small class="event-id-note" style="
-                        color: rgba(255,255,255,0.7);
-                        font-size: ${isMobile ? '11px' : '12px'};
-                        line-height: 1.4;
-                    ">
+                    <small class="event-id-note">
                         ${isLocked ? 
                             (isSessionUnlocked ? 'Protected ID - Unlocked for this session' : 'Protected ID - Enter password to view') : 
                             'Use this ID for API integration or support'
@@ -37443,143 +37913,39 @@ function createPhysicalEventCard(eventData) {
                 </div>
             </div>
 
-            <div class="ticket-stats-grid" style="
-                display: ${isMobile ? 'block' : 'grid'};
-                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-                gap: ${isMobile ? '12px' : '15px'};
-                margin-bottom: ${isMobile ? '15px' : '20px'};
-            ">
-                <div class="stat-card" style="
-                    background: rgba(255,255,255,0.05);
-                    padding: ${isMobile ? '12px' : '15px'};
-                    border-radius: 10px;
-                    text-align: center;
-                    border: 1px solid rgba(255,255,255,0.1);
-                ">
-                    <div class="stat-value" style="
-                        font-size: ${isSmallMobile ? '18px' : isMobile ? '20px' : '24px'};
-                        font-weight: 600;
-                        color: #4ECDC4;
-                        margin-bottom: 4px;
-                    ">₦${totalRevenue.toLocaleString()}</div>
-                    <div class="stat-label" style="
-                        font-size: ${isMobile ? '12px' : '14px'};
-                        color: rgba(255,255,255,0.7);
-                    ">Total Revenue</div>
+           
+            
+            <div class="ticket-stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value">₦${totalRevenue.toLocaleString()}</div>
+                    <div class="stat-label">Total Revenue</div>
                 </div>
-                <div class="stat-card" style="
-                    background: rgba(255,255,255,0.05);
-                    padding: ${isMobile ? '12px' : '15px'};
-                    border-radius: 10px;
-                    text-align: center;
-                    border: 1px solid rgba(255,255,255,0.1);
-                ">
-                    <div class="stat-value" style="
-                        font-size: ${isSmallMobile ? '18px' : isMobile ? '20px' : '24px'};
-                        font-weight: 600;
-                        color: #4ECDC4;
-                        margin-bottom: 4px;
-                    ">${totalBuyers}</div>
-                    <div class="stat-label" style="
-                        font-size: ${isMobile ? '12px' : '14px'};
-                        color: rgba(255,255,255,0.7);
-                    ">Total Buyers</div>
+                <div class="stat-card">
+                    <div class="stat-value">${totalBuyers}</div>
+                    <div class="stat-label">Total Buyers</div>
                 </div>
-                <div class="stat-card" style="
-                    background: rgba(255,255,255,0.05);
-                    padding: ${isMobile ? '12px' : '15px'};
-                    border-radius: 10px;
-                    text-align: center;
-                    border: 1px solid rgba(255,255,255,0.1);
-                ">
-                    <div class="stat-value" style="
-                        font-size: ${isSmallMobile ? '16px' : isMobile ? '18px' : '20px'};
-                        font-weight: 600;
-                        color: #4ECDC4;
-                        margin-bottom: 4px;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        gap: 8px;
-                        ${isMobile ? 'flex-wrap: wrap;' : ''}
-                    ">
+                <div class="stat-card">
+                    <div class="stat-value">
                         <span class="withdraw-amount" id="withdraw-${eventData.physicalEventId}">₦${totalWithdrawn.toLocaleString()}</span>
-                        <button class="eye-toggle-btn" onclick="toggleWithdrawVisibility('${eventData.physicalEventId}')" style="
-                            background: rgba(255,255,255,0.1);
-                            border: 1px solid rgba(255,255,255,0.3);
-                            color: white;
-                            padding: ${isMobile ? '6px' : '4px 6px'};
-                            border-radius: 4px;
-                            cursor: pointer;
-                            min-width: ${isMobile ? '32px' : 'auto'};
-                            min-height: ${isMobile ? '32px' : 'auto'};
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-                        ">
-                            <i class="fas fa-eye" id="eye-icon-${eventData.physicalEventId}" style="font-size: ${isMobile ? '12px' : '10px'};"></i>
+                        <button class="eye-toggle-btn" onclick="toggleWithdrawVisibility('${eventData.physicalEventId}')" style="margin-left: 8px;">
+                            <i class="fas fa-eye" id="eye-icon-${eventData.physicalEventId}"></i>
                         </button>
                     </div>
-                    <div class="stat-label" style="
-                        font-size: ${isMobile ? '12px' : '14px'};
-                        color: rgba(255,255,255,0.7);
-                    ">Total Withdrawn</div>
+                    <div class="stat-label">Total Withdrawn</div>
                 </div>
                  
-                <div class="individual-ticket-sales" style="
-                    ${isMobile ? 'margin-top: 12px;' : ''}
-                    grid-column: ${isMobile ? 'auto' : '1 / -1'};
-                ">
-                    <h4 style="
-                        color: white;
-                        font-size: ${isMobile ? '16px' : '18px'};
-                        margin-bottom: ${isMobile ? '10px' : '12px'};
-                        font-weight: 600;
-                    ">Tickets Sold by Type</h4>
-                    <div class="ticket-breakdown-grid" style="
-                        display: ${isMobile ? 'block' : 'grid'};
-                        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-                        gap: ${isMobile ? '8px' : '10px'};
-                    ">
+                <div class="individual-ticket-sales">
+                    <h4>Tickets Sold by Type</h4>
+                    <div class="ticket-breakdown-grid">
                         ${generateTicketBreakdown(eventData.tickets || [])}
                     </div>
                 </div>
             </div>
 
-            <div class="sponsors-section" style="
-                background: rgba(255,255,255,0.05);
-                padding: ${isMobile ? '12px' : '15px'};
-                border-radius: 10px;
-                margin-bottom: ${isMobile ? '15px' : '20px'};
-            ">
-                <div class="sponsors-header" style="
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                    margin-bottom: 12px;
-                    ${isMobile ? 'flex-wrap: wrap; gap: 10px;' : ''}
-                ">
-                    <h4 style="
-                        color: white;
-                        font-size: ${isMobile ? '16px' : '18px'};
-                        margin: 0;
-                        font-weight: 600;
-                    ">Event Sponsors</h4>
-                    <button class="add-sponsors-btn" onclick="openSponsorsModal('${eventData.physicalEventId}')" style="
-                        background: #4ECDC4;
-                        color: white;
-                        border: none;
-                        padding: ${isMobile ? '10px 16px' : '8px 12px'};
-                        border-radius: 6px;
-                        cursor: pointer;
-                        font-weight: 600;
-                        transition: all 0.3s ease;
-                        display: flex;
-                        align-items: center;
-                        gap: 6px;
-                        font-size: ${isMobile ? '14px' : '13px'};
-                        min-height: ${isMobile ? '44px' : 'auto'};
-                    ">
+            <div class="sponsors-section">
+                <div class="sponsors-header">
+                    <h4>Event Sponsors</h4>
+                    <button class="add-sponsors-btn" onclick="openSponsorsModal('${eventData.physicalEventId}')">
                         <i class="fas fa-plus"></i>
                         Add Sponsors
                     </button>
@@ -37589,11 +37955,7 @@ function createPhysicalEventCard(eventData) {
                 </div>
             </div>
            
-            <div class="event-action-buttons" style="
-                display: ${isMobile ? 'block' : 'flex'};
-                gap: ${isMobile ? '10px' : '8px'};
-                margin-top: 12px;
-            ">
+            <div class="event-action-buttons" style="display: flex; gap: 8px; margin-top: 12px;">
                 <button class="setup-bank-btn" 
                         onclick="openBankSetupForm('${eventData.physicalEventId}')"
                         title="Setup Bank Details for Withdrawals"
@@ -37601,21 +37963,16 @@ function createPhysicalEventCard(eventData) {
                             background: linear-gradient(135deg, #007bff, #0056b3);
                             color: white;
                             border: none;
-                            padding: ${isMobile ? '12px 16px' : '8px 12px'};
+                            padding: 8px 12px;
                             border-radius: 6px;
                             cursor: pointer;
                             font-weight: 600;
                             transition: all 0.3s ease;
                             display: flex;
                             align-items: center;
-                            justify-content: center;
                             gap: 6px;
-                            font-size: ${isMobile ? '14px' : '13px'};
+                            font-size: 13px;
                             flex: 1;
-                            min-height: ${isMobile ? '44px' : 'auto'};
-                            width: ${isMobile ? '100%' : 'auto'};
-                            margin-bottom: ${isMobile ? '10px' : '0'};
-                            box-sizing: border-box;
                         ">
                     <i class="fas fa-university"></i>
                     Setup Bank
@@ -37628,24 +37985,24 @@ function createPhysicalEventCard(eventData) {
                             background: linear-gradient(135deg, #28a745, #20c997);
                             color: white;
                             border: none;
-                            padding: ${isMobile ? '12px 16px' : '8px 12px'};
+                            padding: 8px 12px;
                             border-radius: 6px;
                             cursor: pointer;
                             font-weight: 600;
                             transition: all 0.3s ease;
                             display: flex;
                             align-items: center;
-                            justify-content: center;
                             gap: 6px;
-                            font-size: ${isMobile ? '14px' : '13px'};
+                            font-size: 13px;
                             flex: 1;
-                            min-height: ${isMobile ? '44px' : 'auto'};
-                            width: ${isMobile ? '100%' : 'auto'};
-                            box-sizing: border-box;
                         ">
                     <i class="fas fa-money-bill-wave"></i>
                     Withdraw PEE
                 </button>
+                
+              
+             
+               
         </div>
     `;
 
