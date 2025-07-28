@@ -1736,8 +1736,8 @@ body {
 }
 
 .event-card-title {
-    font-size: 1.1rem;
-    font-weight: 600;
+    font-size: 2px;
+    font-weight: 300;
     color: var(--text-color);
     margin-bottom: 8px;
     line-height: 1.3;
@@ -32294,10 +32294,7 @@ function createAdvancedPhysicalEventCard(eventData) {
             <span class="likes-count" id="likes-count-${eventData.id || eventData.physicalEventId}">${likesCount}</span>
         </div>
         
-        <div class="advanced-tickets-badge">
-            <i class="fas fa-fire"></i>
-            ${ticketsSold} sold
-        </div>
+      
         
         <button class="sharephy-btn" ${hasEnded ? 'disabled style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.3); color: #666; border: none; width: 35px; height: 35px; border-radius: 50%; cursor: not-allowed; display: flex; align-items: center; justify-content: center; z-index: 4; opacity: 0.5;"' : `onclick="openSharephyModal('${eventData.eventLink || eventData.id || eventData.physicalEventId}')" style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.6); color: white; border: none; width: 35px; height: 35px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 4; transition: all 0.3s ease;"`}>
             <i class="fas fa-share-alt" style="font-size: 14px;"></i>
@@ -32766,6 +32763,29 @@ async function showPhyEventDetailPage(eventId) {
     }
 }
 
+
+function closePhyEventDetailPage() {
+    const detailPage = document.getElementById('phyevent-detail-page');
+    if (detailPage) {
+        // Add fade-out animation
+        detailPage.style.transition = 'opacity 0.3s ease';
+        detailPage.style.opacity = '0';
+        
+        // Remove after animation completes
+        setTimeout(() => {
+            detailPage.remove();
+        }, 300);
+    }
+    
+    // Restore body scroll
+    document.body.style.overflow = 'auto';
+    
+    // Show dashboard if hidden
+    const dashboardPage = document.querySelector('.dashboard-page.active');
+    if (dashboardPage) {
+        dashboardPage.style.display = 'flex';
+    }
+}
 // Generate Tickets HTML
 function generatePhyTicketsHTML() {
     if (!currentPhyEventData || !currentPhyEventData.tickets) {
@@ -37251,8 +37271,7 @@ function createPhysicalEventCard(eventData) {
            
             <div class="event-card-overlay">
                 <h3 class="event-title">${eventData.eventName}</h3>
-                <p class="event-description">${truncateText(eventData.description, 100)}</p>
-                <div class="expand-indicator">
+               <div class="expand-indicator">
                     <i class="fas fa-chevron-down"></i>
                 </div>
             </div>
@@ -37303,17 +37322,7 @@ function createPhysicalEventCard(eventData) {
                 </div>
             </div>
 
-            <!-- Rest of the event card content remains the same -->
-            <div class="event-status-section">
-                <div class="status-badge status-${eventStatus.class}">
-                    <i class="fas ${eventStatus.icon}"></i>
-                    ${eventStatus.text}
-                </div>
-                <button class="launch-btn ${eventStatus.buttonClass}" onclick="toggleEventStatus('${eventData.physicalEventId}', '${eventStatus.nextAction}')">
-                    <i class="fas ${eventStatus.buttonIcon}"></i>
-                    ${eventStatus.buttonText}
-                </button>
-            </div>
+           
             
             <div class="ticket-stats-grid">
                 <div class="stat-card">
