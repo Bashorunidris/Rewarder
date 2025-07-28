@@ -33938,178 +33938,7 @@ async function processPhyTicketPurchase(paymentMethod, paymentId) {
         throw error;
     }
 }
-function showPaymentSuccessMessage() {
-    // Create success modal
-    const successModal = document.createElement('div');
-    successModal.style.cssText = `
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100vh;
-        background: rgba(0, 0, 0, 0.8);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 10000;
-        backdrop-filter: blur(5px);
-    `;
-    
-    successModal.innerHTML = `
-        <div style="
-            background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
-            border-radius: 20px;
-            padding: 40px;
-            text-align: center;
-            max-width: 450px;
-            width: 90%;
-            color: white;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            animation: successPop 0.5s ease forwards;
-        ">
-            <div style="font-size: 64px; margin-bottom: 20px;">🎉</div>
-            <h2 style="font-size: 28px; font-weight: 600; margin-bottom: 15px;">
-                Payment Successful!
-            </h2>
-            <p style="font-size: 18px; margin-bottom: 25px; opacity: 0.9;">
-                Your tickets have been purchased successfully
-            </p>
-            
-            <div style="
-                background: rgba(255, 255, 255, 0.2);
-                border-radius: 12px;
-                padding: 20px;
-                margin-bottom: 25px;
-                text-align: left;
-            ">
-                <h4 style="font-size: 16px; margin-bottom: 15px; display: flex; align-items: center;">
-                    <i class="fas fa-info-circle" style="margin-right: 8px;"></i>
-                    Next Steps:
-                </h4>
-                <div style="display: flex; align-items: center; margin-bottom: 10px;">
-                    <span style="
-                        background: white;
-                        color: #27ae60;
-                        width: 24px;
-                        height: 24px;
-                        border-radius: 50%;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        font-weight: 600;
-                        font-size: 12px;
-                        margin-right: 12px;
-                    ">1</span>
-                    <span>Reload the app/page</span>
-                </div>
-                <div style="display: flex; align-items: center;">
-                    <span style="
-                        background: white;
-                        color: #27ae60;
-                        width: 24px;
-                        height: 24px;
-                        border-radius: 50%;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        font-weight: 600;
-                        font-size: 12px;
-                        margin-right: 12px;
-                    ">2</span>
-                    <span>Find your tickets in <strong>"My Tickets"</strong></span>
-                </div>
-            </div>
-            
-            <button onclick="reloadApp()" style="
-                background: white;
-                color: #27ae60;
-                border: none;
-                padding: 15px 30px;
-                border-radius: 10px;
-                font-size: 16px;
-                font-weight: 600;
-                cursor: pointer;
-                transition: all 0.3s ease;
-                margin-right: 10px;
-            " onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
-                <i class="fas fa-sync-alt" style="margin-right: 8px;"></i>
-                Reload App
-            </button>
-            
-            <button onclick="closeSuccessModal()" style="
-                background: transparent;
-                color: white;
-                border: 2px solid white;
-                padding: 15px 30px;
-                border-radius: 10px;
-                font-size: 16px;
-                font-weight: 600;
-                cursor: pointer;
-                transition: all 0.3s ease;
-            " onmouseover="this.style.background='white'; this.style.color='#27ae60'" onmouseout="this.style.background='transparent'; this.style.color='white'">
-                Close
-            </button>
-            
-            <!-- Powered by Rewarder -->
-            <div style="
-                margin-top: 30px;
-                padding-top: 20px;
-                border-top: 1px solid rgba(255, 255, 255, 0.3);
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                gap: 10px;
-                opacity: 0.9;
-            ">
-                <img src="https://i.ibb.co/VpC27tbt/Rewarder-logo.png" alt="Rewarder Logo" style="
-                    width: 24px;
-                    height: 24px;
-                    border-radius: 4px;
-                    background: white;
-                    padding: 2px;
-                " />
-                <span style="
-                    font-size: 14px;
-                    font-weight: 500;
-                    color: rgba(255, 255, 255, 0.9);
-                ">
-                    Powered by <strong style="color: white;">Rewarder</strong>
-                </span>
-            </div>
-        </div>
-        
-        <style>
-            @keyframes successPop {
-                0% {
-                    opacity: 0;
-                    transform: scale(0.8) translateY(20px);
-                }
-                100% {
-                    opacity: 1;
-                    transform: scale(1) translateY(0);
-                }
-            }
-        </style>
-    `;
-    
-    document.body.appendChild(successModal);
-    
-    // Add global functions for the buttons
-    window.reloadApp = function() {
-        window.location.reload();
-    };
-    
-    window.closeSuccessModal = function() {
-        document.body.removeChild(successModal);
-    };
-    
-    // Auto-close after 10 seconds
-    setTimeout(() => {
-        if (document.body.contains(successModal)) {
-            closeSuccessModal();
-        }
-    }, 10000);
-}
+
 // Banner Ad Click Handler
 function handlePhyBannerClick(adTitle) {
     console.log('Banner ad clicked:', adTitle);
@@ -38100,15 +37929,14 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Enhanced function to create individual physical event card with security
-function createPhysicalEventCard(eventData) {
+async function createPhysicalEventCard(eventData) {
     const cardDiv = document.createElement('div');
     cardDiv.className = 'physical-event-card';
     cardDiv.setAttribute('data-event-id', eventData.physicalEventId);
     
-    // Calculate stats
-    const totalRevenue = calculateTotalRevenue(eventData.tickets);
-    const totalBuyers = calculateTotalBuyers(eventData.tickets);
-    const ticketStats = calculateTicketStats(eventData.tickets);
+    // Calculate 
+    const totalRevenue = await calculateTotalRevenue(eventData.physicalEventId);
+const totalSold = await calculateTotalSold(eventData.physicalEventId);
     const totalWithdrawn = eventData.totalWithdrawn || 0;
     const likesCount = eventData.likesCount || 0;
     const currentUser = firebase.auth().currentUser;
@@ -39095,49 +38923,42 @@ function generateBackgroundStyle(background) {
             return 'background: linear-gradient(135deg, #FF6B6B, #4ECDC4);';
     }
 }
-
-// Helper function to calculate total revenue
-function calculateTotalRevenue(tickets) {
-    if (!tickets || !Array.isArray(tickets)) return 0;
-    
-    return tickets.reduce((total, ticket) => {
-        const sold = ticket.sold || 0;
-        const price = ticket.price || 0;
-        return total + (sold * price);
-    }, 0);
-}
-
-// Helper function to calculate total buyers
-function calculateTotalBuyers(tickets) {
-    if (!tickets || !Array.isArray(tickets)) return 0;
-    
-    return tickets.reduce((total, ticket) => {
-        return total + (ticket.sold || 0);
-    }, 0);
-}
-
-// Helper function to calculate ticket stats
-function calculateTicketStats(tickets) {
-    if (!tickets || !Array.isArray(tickets)) {
-        return { vipSold: 0, regularSold: 0 };
+// Helper function to calculate total revenue from BoughtTicket collection
+async function calculateTotalRevenue(eventId) {
+    try {
+        const ticketsSnapshot = await db.collection('BoughtTicket')
+            .where('physicaleventid', '==', eventId)
+            .where('boughtticketstatus', 'in', ['unused', 'used']) // Exclude terminated tickets
+            .get();
+        
+        let totalRevenue = 0;
+        
+        ticketsSnapshot.forEach(doc => {
+            const ticket = doc.data();
+            const price = ticket.boughtticketprice || 0;
+            totalRevenue += price;
+        });
+        
+        return totalRevenue;
+    } catch (error) {
+        console.error('Error calculating total revenue:', error);
+        return 0;
     }
+}
 
-    let vipSold = 0;
-    let regularSold = 0;
-
-    tickets.forEach(ticket => {
-        const sold = ticket.sold || 0;
-        // Determine if VIP based on name or price
-        if (ticket.name.toLowerCase().includes('vip') || 
-            ticket.name.toLowerCase().includes('premium') ||
-            (ticket.price && ticket.price > 5000)) {
-            vipSold += sold;
-        } else {
-            regularSold += sold;
-        }
-    });
-
-    return { vipSold, regularSold };
+// Helper function to calculate total tickets sold from BoughtTicket collection  
+async function calculateTotalSold(eventId) {
+    try {
+        const ticketsSnapshot = await db.collection('BoughtTicket')
+            .where('physicaleventid', '==', eventId)
+            .where('boughtticketstatus', 'in', ['unused', 'used']) // Exclude terminated tickets
+            .get();
+        
+        return ticketsSnapshot.size; // Count of tickets
+    } catch (error) {
+        console.error('Error calculating total sold:', error);
+        return 0;
+    }
 }
 
 // Helper function to generate individual ticket breakdown
