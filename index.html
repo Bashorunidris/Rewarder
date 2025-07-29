@@ -38138,7 +38138,7 @@ function createPhysicalEventCard(eventData) {
                     Setup Bank
                 </button>
                 
-                <button class="withdraw-pee-btn" 
+               <button class="withdraw-pee-btn" 
                         onclick="openWithdrawPEEForm('${eventData.physicalEventId}', '${eventData.eventName}', ${totalRevenue})"
                         title="Withdraw Physical Event Earnings"
                         style="
@@ -38159,7 +38159,6 @@ function createPhysicalEventCard(eventData) {
                     <i class="fas fa-money-bill-wave"></i>
                     Withdraw PEE
                 </button>
-                
               
              
                
@@ -40209,6 +40208,360 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }, 500);
 });
+    
+
+
+
+
+
+
+
+// ========================================
+// AUTO BRAND SPONSOR & PROMO CODE SYSTEM
+// ========================================
+// Add Rewarder brand sponsor with promo code (optional)
+function addRewarderSponsor() {
+    const rewarderSponsor = {
+        id: 'rewarder_sponsor_' + Date.now(),
+        name: 'Rewarder',
+        website: 'https://rewarder-hub.vercel.app/',
+        logo: {
+            data: 'https://i.ibb.co/VpC27tbt/Rewarder-logo.png',
+            fileName: 'Rewarder-logo.png',
+            fileType: 'image/png',
+            isUrl: true // Flag to indicate this is a URL, not base64
+        },
+        isBrandSponsor: true,
+        promoCode: generatePromoCode(),
+        promoUsageCount: 0,
+        promoMaxUsage: 10,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+    };
+    
+    // Check if Rewarder sponsor already exists
+    const existingRewarderIndex = physicalEventSponsors.findIndex(sponsor => sponsor.isBrandSponsor);
+   
+     if (existingRewarderIndex === -1) {
+        // Add Rewarder sponsor if it doesn't exist
+        physicalEventSponsors.unshift(rewarderSponsor); // Add at the beginning
+        console.log('Rewarder sponsor added with promo code:', rewarderSponsor.promoCode);
+        return rewarderSponsor.promoCode;
+    } else {
+        // Return existing promo code
+        return physicalEventSponsors[existingBrandIndex].promoCode;
+        console.log('Rewarder sponsor already exists with promo code:', physicalEventSponsors[existingRewarderIndex].promoCode);
+        return physicalEventSponsors[existingRewarderIndex].promoCode;
+   
+    }
+}
+
+// Generate promo code
+function generatePromoCode() {
+    const prefix = 'SPONSOR';
+    const randomCode = Math.random().toString(36).substring(2, 8).toUpperCase();
+    return `${prefix}${randomCode}`;
+}
+
+// Validate and use promo code
+function validatePromoCode(promoCode, eventId) {
+    try {
+        // Find the sponsor with this promo code
+        const sponsor = physicalEventSponsors.find(s => s.promoCode === promoCode && s.isBrandSponsor);
+        
+        if (!sponsor) {
+            return { isValid: false, message: 'Invalid promo code' };
+        }
+        
+        if (sponsor.promoUsageCount >= sponsor.promoMaxUsage) {
+            return { isValid: false, message: 'Promo code usage limit exceeded' };
+        }
+        
+        return { 
+            isValid: true, 
+            message: 'Promo code valid - No service fee!',
+            discount: 100, // 100% discount on service fee
+            promoCode: promoCode
+        };
+        
+    } catch (error) {
+        console.error('Error validating promo code:', error);
+        return { isValid: false, message: 'Error validating promo code' };
+    }
+}
+
+// Use promo code (call this when ticket is purchased)
+async function usePromoCode(promoCode, eventId) {
+    try {
+        const sponsorIndex = physicalEventSponsors.findIndex(s => s.promoCode === promoCode && s.isBrandSponsor);
+        
+        if (sponsorIndex !== -1) {
+            physicalEventSponsors[sponsorIndex].promoUsageCount++;
+            physicalEventSponsors[sponsorIndex].updatedAt = new Date().toISOString();
+            
+            // Update in Firebase if we have an event ID
+            if (eventId) {
+                await saveSponsorsToFirebase(eventId, physicalEventSponsors);
+            }
+            
+            console.log(`Promo code ${promoCode} used. Remaining uses: ${physicalEventSponsors[sponsorIndex].promoMaxUsage - physicalEventSponsors[sponsorIndex].promoUsageCount}`);
+            
+            return {
+                success: true,
+                remainingUses: physicalEventSponsors[sponsorIndex].promoMaxUsage - physicalEventSponsors[sponsorIndex].promoUsageCount
+            };
+        }
+        
+        return { success: false, message: 'Promo code not found' };
+        
+    } catch (error) {
+        console.error('Error using promo code:', error);
+        return { success: false, message: 'Error processing promo code' };
+    }
+}
+
+// Get promo code info
+function getPromoCodeInfo(promoCode) {
+    const sponsor = physicalEventSponsors.find(s => s.promoCode === promoCode && s.isBrandSponsor);
+    
+    if (sponsor) {
+        return {
+            exists: true,
+            usageCount: sponsor.promoUsageCount,
+            maxUsage: sponsor.promoMaxUsage,
+            remainingUses: sponsor.promoMaxUsage - sponsor.promoUsageCount,
+            isExpired: sponsor.promoUsageCount >= sponsor.promoMaxUsage
+        };
+    }
+    
+    return { exists: false };
+}
+
+// Display promo code notification
+function showPromoCodeNotification(promoCode) {
+    const notification = document.createElement('div');
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        z-index: 10000;
+        max-width: 300px;
+        font-family: Arial, sans-serif;
+    `;
+    
+    notification.innerHTML = `
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;">
+            <h4 style="margin: 0; color: #fff;">🎉 Promo Code Generated!</h4>
+            <button onclick="this.parentElement.parentElement.remove()" style="background: none; border: none; color: white; font-size: 18px; cursor: pointer;">&times;</button>
+        </div>
+          <p style="margin: 0 0 10px 0; font-size: 14px;">Rewarder sponsor added with promo code:</p>
+      
+       
+          <div onclick="copyPromoCode('${promoCode}')" style="background: rgba(255,255,255,0.2); padding: 10px; border-radius: 5px; text-align: center; margin: 10px 0; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.background='rgba(255,255,255,0.3)'" onmouseout="this.style.background='rgba(255,255,255,0.2)'">
+      
+          <strong style="font-size: 16px; letter-spacing: 1px;">${promoCode}</strong>
+             <i class="fas fa-copy" style="margin-left: 8px; opacity: 0.8;"></i>
+     
+          </div>
+         <p style="margin: 0; font-size: 12px; opacity: 0.9;">Valid for 10 uses - No service fee on tickets! Click to copy.</p>
+  
+          `;
+    
+    document.body.appendChild(notification);
+    
+    // Auto remove after 10 seconds
+    setTimeout(() => {
+        if (notification.parentElement) {
+            notification.remove();
+        }
+    }, 10000);
+}
+
+
+
+// Add Rewarder sponsor to current event
+async function addRewarderSponsorToEvent() {
+    try {
+        // Check if Rewarder sponsor already exists
+        const existingRewarder = physicalEventSponsors.find(sponsor => sponsor.isBrandSponsor);
+        
+        if (existingRewarder) {
+            alert('Rewarder sponsor is already added to this event!');
+            return;
+        }
+        
+        // Add Rewarder sponsor
+        const promoCode = addRewarderSponsor();
+        
+        // Update sponsors list display
+        updateSponsorsList();
+        
+        // Save to Firebase if editing an existing event
+        if (currentEditingEventId) {
+            await saveSponsorsToFirebase(currentEditingEventId, physicalEventSponsors);
+        }
+        
+        // Show success notification
+        showPromoCodeNotification(promoCode);
+        
+        console.log('Rewarder sponsor added to event with promo code:', promoCode);
+        
+    } catch (error) {
+        console.error('Error adding Rewarder sponsor:', error);
+        alert('Error adding Rewarder sponsor: ' + error.message);
+    }
+}
+
+// Copy promo code to clipboard
+function copyPromoCode(promoCode) {
+    // Try using the modern clipboard API first
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(promoCode).then(function() {
+            showCopySuccess(promoCode);
+        }).catch(function(err) {
+            console.error('Could not copy text: ', err);
+            fallbackCopyTextToClipboard(promoCode);
+        });
+    } else {
+        // Fallback for older browsers
+        fallbackCopyTextToClipboard(promoCode);
+    }
+}
+
+// Fallback copy method
+function fallbackCopyTextToClipboard(text) {
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    
+    // Avoid scrolling to bottom
+    textArea.style.top = "0";
+    textArea.style.left = "0";
+    textArea.style.position = "fixed";
+    
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    
+    try {
+        const successful = document.execCommand('copy');
+        if (successful) {
+            showCopySuccess(text);
+        } else {
+            console.error('Fallback: Unable to copy');
+            alert('Unable to copy promo code: ' + text);
+        }
+    } catch (err) {
+        console.error('Fallback: Unable to copy', err);
+        alert('Unable to copy promo code: ' + text);
+    }
+    
+    document.body.removeChild(textArea);
+}
+
+// Show copy success feedback
+function showCopySuccess(promoCode) {
+    // Create a small success message
+    const successMsg = document.createElement('div');
+    successMsg.style.cssText = `
+        position: fixed;
+        top: 50px;
+        right: 20px;
+        background: #10b981;
+        color: white;
+        padding: 8px 16px;
+        border-radius: 6px;
+        z-index: 10001;
+        font-size: 14px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        animation: slideIn 0.3s ease;
+    `;
+    
+    successMsg.innerHTML = `
+        <i class="fas fa-check"></i> Copied: ${promoCode}
+    `;
+    
+    document.body.appendChild(successMsg);
+    
+    // Remove after 2 seconds
+    setTimeout(() => {
+        if (successMsg.parentElement) {
+            successMsg.remove();
+        }
+    }, 2000);
+}
+
+// Simple function to create sponsors modal - add this HTML to your page manually
+function createSponsorsModalHTML() {
+    return `
+    <!-- Sponsors Management Modal -->
+    <div id="sponsorsModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Manage Sponsors</h2>
+                <button type="button" class="close-btn" onclick="closeSponsorsModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="modal-body">
+                <!-- Add New Sponsor Button -->
+                <div class="sponsors-header">
+                    <button type="button" class="btn btn-primary" onclick="showSponsorForm()">
+                        <i class="fas fa-plus"></i> Add New Sponsor
+                    </button>
+                </div>
+                
+                <!-- Sponsor Form Section -->
+                <div id="sponsorFormSection" style="display: none;">
+                    <form id="sponsorForm">
+                        <div class="form-group">
+                            <label for="sponsorName">Sponsor Name *</label>
+                            <input type="text" id="sponsorName" name="sponsorName" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="sponsorWebsite">Website URL (optional)</label>
+                            <input type="url" id="sponsorWebsite" name="sponsorWebsite" placeholder="https://example.com">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="sponsorLogo">Logo Upload (optional)</label>
+                            <input type="file" id="sponsorLogo" name="sponsorLogo" 
+                                   accept="image/*" onchange="handleSponsorLogoUpload(this)">
+                            <small>Max file size: 5MB. Formats: JPG, PNG, GIF, WebP</small>
+                        </div>
+                        
+                        <div id="sponsorLogoPreview" style="display: none;"></div>
+                        
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-primary" id="saveSponsorBtn" onclick="saveSponsor()">
+                                Add Sponsor
+                            </button>
+                            <button type="button" class="btn btn-secondary" onclick="closeSponsorForm()">
+                                Cancel
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                
+                <!-- Sponsors List -->
+                <div class="sponsors-list-section">
+                    <h3>Current Sponsors</h3>
+                    <div id="noSponsorsMessage" style="display: block;">
+                        <p>No sponsors added yet</p>
+                    </div>
+                    <div id="sponsorsList"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    `;
+}
 
        // Complete Withdraw PEE JavaScript - Add this to your existing JS file
 
@@ -40226,24 +40579,15 @@ const withdrawPEESystem = {
     async getDailyWithdrawalCount(userId) {
         try {
             const today = new Date().toISOString().split('T')[0];
-            const db = firebase.firestore();
+            const withdrawalsRef = collection(db, 'withdrawPEE_requests');
+            const q = query(
+                withdrawalsRef,
+                where('userId', '==', userId),
+                where('requestDate', '==', today)
+            );
             
-            // Get all physical events to check withdrawal requests
-            const snapshot = await db.collection('physicalEvents').get();
-            let count = 0;
-            
-            snapshot.forEach(doc => {
-                const data = doc.data();
-                if (data.withdrawalRequests && Array.isArray(data.withdrawalRequests)) {
-                    data.withdrawalRequests.forEach(request => {
-                        if (request.userId === userId && request.createdAt.startsWith(today)) {
-                            count++;
-                        }
-                    });
-                }
-            });
-            
-            return count;
+            const snapshot = await getDocs(q);
+            return snapshot.size;
         } catch (error) {
             console.error('Error getting daily count:', error);
             return 0;
@@ -40396,19 +40740,7 @@ async function openWithdrawPEEForm(physicalEventId, eventName, totalRevenue) {
                                 <i class="fas fa-university" style="color: #007bff; margin-right: 8px;"></i>
                                 Saved Bank Details
                             </h4>
-                            <button type="button" onclick="openBankSetup(); window.currentEventId='${physicalEventId}'" style="
-                                padding: 6px 12px;
-                                background: #007bff;
-                                color: white;
-                                border: none;
-                                border-radius: 4px;
-                                cursor: pointer;
-                                font-size: 12px;
-                                font-weight: 500;
-                                transition: all 0.2s ease;
-                            " onmouseover="this.style.background='#0056b3'" onmouseout="this.style.background='#007bff'">
-                                <i class="fas fa-cog" style="margin-right: 4px;"></i>Setup Bank
-                            </button>
+                           
                         </div>
                         <div id="bankDetailsDisplay" style="
                             font-size: 14px;
@@ -40425,7 +40757,7 @@ async function openWithdrawPEEForm(physicalEventId, eventName, totalRevenue) {
                         </div>
                     </div>
                     
-                    <form class="withdraw-pee-form" onsubmit="handleWithdrawPEESubmit(event, '${physicalEventId}', ${totalRevenue}); return false;" style="
+                    <form class="withdraw-pee-form" onsubmit="handleWithdrawPEESubmit(event, '${physicalEventId}', ${totalRevenue}, ${!requestStatus.canRequest})" style="
                         display: flex;
                         flex-direction: column;
                         gap: 16px;
@@ -40439,9 +40771,8 @@ async function openWithdrawPEEForm(physicalEventId, eventName, totalRevenue) {
                                     border-radius: 6px;
                                     font-size: 14px;
                                     background: #f8f9fa;
-                                    color: #333;
+                                    color: #6c757d;
                                     cursor: not-allowed;
-                                    font-weight: 500;
                                 ">
                             </div>
                             
@@ -40453,49 +40784,13 @@ async function openWithdrawPEEForm(physicalEventId, eventName, totalRevenue) {
                                     border-radius: 6px;
                                     font-size: 14px;
                                     background: #f8f9fa;
-                                    color: #333;
+                                    color: #6c757d;
                                     cursor: not-allowed;
-                                    font-weight: 500;
                                 ">
                             </div>
                         </div>
                         
-                        
-                        
-                        <div class="form-group" style="display: flex; flex-direction: column; gap: 6px;">
-                            <label style="font-weight: 600; color: #495057; font-size: 14px;">
-                                Account Name: <span style="color: #dc3545;">*</span>
-                            </label>
-                            <input type="text" id="withdraw-account-name" placeholder="Enter account holder name" required readonly style="
-                                padding: 10px 12px;
-                                border: 2px solid #e9ecef;
-                                border-radius: 6px;
-                                font-size: 14px;
-                                transition: border-color 0.2s ease;
-                                background: #f8f9fa;
-                                color: #333;
-                                cursor: not-allowed;
-                                font-weight: 500;
-                            ">
-                        </div>
-                        
-                        <div class="form-group" style="display: flex; flex-direction: column; gap: 6px;">
-                            <label style="font-weight: 600; color: #495057; font-size: 14px;">
-                                Account Number: <span style="color: #dc3545;">*</span>
-                            </label>
-                            <input type="text" id="withdraw-account-number" placeholder="Enter 10-digit account number" 
-                                   pattern="[0-9]{10}" maxlength="10" required readonly style="
-                                padding: 10px 12px;
-                                border: 2px solid #e9ecef;
-                                border-radius: 6px;
-                                font-size: 14px;
-                                transition: border-color 0.2s ease;
-                                background: #f8f9fa;
-                                color: #333;
-                                cursor: not-allowed;
-                                font-weight: 500;
-                            ">
-                        </div>
+                  
                         
                         <div class="form-group" style="display: flex; flex-direction: column; gap: 6px;">
                             <label style="font-weight: 600; color: #495057; font-size: 14px;">
@@ -40512,9 +40807,6 @@ async function openWithdrawPEEForm(physicalEventId, eventName, totalRevenue) {
                                     font-size: 14px;
                                     transition: border-color 0.2s ease;
                                     width: 100%;
-                                    color: #333;
-                                cursor: allowed;
-                                font-weight: 500;
                                 ">
                             </div>
                             <small style="color: #6c757d; font-size: 12px;">
@@ -40684,8 +40976,9 @@ function calculateWithdrawPEEFee(isExtraRequest = false) {
 }
 
 // Handle withdrawal form submission
-async function handleWithdrawPEESubmit(event, physicalEventId, totalRevenue) {
+async function handleWithdrawPEESubmit(event, physicalEventId, totalRevenue, isExtraRequest) {
     event.preventDefault();
+    console.log('Submitting withdrawal request...');
     
     const submitBtn = event.target.querySelector('button[type="submit"]');
     const originalText = submitBtn.innerHTML;
@@ -40694,128 +40987,78 @@ async function handleWithdrawPEESubmit(event, physicalEventId, totalRevenue) {
         submitBtn.disabled = true;
         submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
         
-        const currentUser = firebase.auth().currentUser;
+        const currentUser = auth.currentUser;
         if (!currentUser) {
-            alert('User not authenticated');
-            return;
+            throw new Error('User not authenticated');
         }
         
-        const amount = parseFloat(document.getElementById('withdraw-amount').value);
-        
-        // Simple validation
-        if (!amount || amount < 500) {
-            alert('Minimum withdrawal amount is ₦500');
-            return;
-        }
-        
-        if (amount > totalRevenue) {
-            alert('Withdrawal amount exceeds available revenue');
-            return;
-        }
-        
-        // Check daily request limits
-        const requestStatus = await withdrawPEESystem.canMakeRequest(currentUser.uid);
-        const dailyCount = requestStatus.count;
-        const isExtraRequest = requestStatus.isExtraRequest;
-        
-        // Get saved bank details
-        const db = firebase.firestore();
-        const eventDoc = await db.collection('physicalEvents').doc(physicalEventId).get();
-        
-        if (!eventDoc.exists) {
-            alert('Physical event not found');
-            return;
-        }
-        
-        const eventData = eventDoc.data();
-        const userBankDetails = eventData.userBankDetails && eventData.userBankDetails[currentUser.uid];
-        
-        if (!userBankDetails) {
-            alert('Please setup your bank details first by clicking "Setup Bank" button');
-            return;
-        }
-        
-        // Calculate fee based on daily request count
-        const processingFee = calculateDailyFee(dailyCount + 1, amount);
-        const extraFee = isExtraRequest ? withdrawPEESystem.extraRequestFee : 0;
-        const totalFee = processingFee + extraFee;
-        
-        // Generate unique request ID
-        const requestId = 'withdraw_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-        
-        // Create withdrawal request data
-        const withdrawalData = {
-            requestId: requestId,
-            userId: currentUser.uid,
-            userEmail: currentUser.email,
-            eventName: eventData.eventName || 'Physical Event',
+        const formData = {
+            eventName: event.target.querySelector('input[readonly]').value,
             physicalEventId: physicalEventId,
-            bank: userBankDetails.bankName,
-            accountName: userBankDetails.accountName,
-            accountNumber: userBankDetails.accountNumber,
-            requestedAmount: amount,
-            totalRevenue: totalRevenue,
-            processingFee: processingFee,
-            extraFee: extraFee,
-            totalFee: totalFee,
-            netAmount: amount - totalFee,
-            dailyRequestNumber: dailyCount + 1,
-            isExtraRequest: isExtraRequest,
-            status: 'pending',
-            createdAt: new Date().toISOString()
+            bank: document.getElementById('withdraw-bank').value,
+            accountName: document.getElementById('withdraw-account-name').value.trim(),
+            accountNumber: document.getElementById('withdraw-account-number').value.trim(),
+            amount: parseFloat(document.getElementById('withdraw-amount').value),
+            acceptedTerms: document.getElementById('pee-accept-terms').checked
         };
         
-        // Store withdrawal request in the physical event document
-        const eventRef = db.collection('physicalEvents').doc(physicalEventId);
-        const currentRequests = eventData.withdrawalRequests || [];
-        currentRequests.push(withdrawalData);
+        console.log('Form data:', formData);
         
-        // Update total withdrawn (assuming immediate approval for this implementation)
-        const currentTotalWithdrawn = eventData.totalWithdrawn || 0;
-        const newTotalWithdrawn = currentTotalWithdrawn + amount;
+        // Validate form
+        const validation = await validateWithdrawPEERequest(formData, physicalEventId, totalRevenue, currentUser.uid);
+        if (!validation.isValid) {
+            throw new Error(validation.error);
+        }
         
-        await eventRef.update({
-            withdrawalRequests: currentRequests,
-            totalWithdrawn: newTotalWithdrawn,
-            updatedAt: new Date().toISOString()
-        });
+        // Calculate fees
+        const processingFee = withdrawPEESystem.getFee(formData.amount);
+        const extraFee = isExtraRequest ? withdrawPEESystem.extraRequestFee : 0;
+        const totalFee = processingFee + extraFee;
+        const netAmount = formData.amount - totalFee;
+        
+        // Create withdrawal request
+        const withdrawalRequest = {
+            userId: currentUser.uid,
+            userEmail: currentUser.email,
+            eventName: formData.eventName,
+            physicalEventId: formData.physicalEventId,
+            bank: formData.bank,
+            accountName: formData.accountName,
+            accountNumber: formData.accountNumber,
+            requestedAmount: formData.amount,
+            processingFee: processingFee,
+            extraRequestFee: extraFee,
+            totalFee: totalFee,
+            netAmount: netAmount,
+            isExtraRequest: isExtraRequest,
+            status: 'pending',
+            requestDate: new Date().toISOString().split('T')[0],
+            requestTimestamp: new Date().toISOString(),
+            createdAt: serverTimestamp()
+        };
+        
+        console.log('Saving withdrawal request:', withdrawalRequest);
+        
+        // Save to Firebase
+        await addDoc(collection(db, 'withdrawPEE_requests'), withdrawalRequest);
         
         closeWithdrawPEEModal();
-        
-        // Use global notification system
-        const netAmount = amount - totalFee;
-        const details = `
-            <div style="color: rgba(255, 255, 255, 0.8); font-size: 14px;">
-                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                    <span>Requested Amount:</span>
-                    <span style="color: white; font-weight: 600;">₦${amount.toLocaleString()}</span>
-                </div>
-                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                    <span>Total Fees:</span>
-                    <span style="color: #ffc107; font-weight: 600;">₦${totalFee.toLocaleString()}</span>
-                </div>
-                <div style="display: flex; justify-content: space-between; padding-top: 8px; border-top: 1px solid rgba(255, 255, 255, 0.2); color: white; font-weight: 700;">
-                    <span>You'll Receive:</span>
-                    <span style="color: #28a745;">₦${netAmount.toLocaleString()}</span>
-                </div>
-            </div>
-        `;
-        
-        showSuccess(
-            'Withdrawal Request Submitted!',
-            'Your request has been successfully submitted for processing.',
-            details,
-            () => loadUserPhysicalEvents() // Refresh events when closed
-        );
+        showNotification('Withdrawal request submitted successfully!', 'success');
         
     } catch (error) {
         console.error('Withdrawal submission error:', error);
-        showError('Withdrawal Failed', error.message || 'An unexpected error occurred while processing your withdrawal request.');
+        showNotification(error.message || 'Failed to submit withdrawal request', 'error');
     } finally {
         submitBtn.disabled = false;
         submitBtn.innerHTML = originalText;
     }
 }
+
+        
+   
+
+
+
 
 // Get daily withdrawal count for fee calculation
 async function getDailyWithdrawalCount(userId) {
