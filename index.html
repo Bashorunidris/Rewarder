@@ -25457,7 +25457,7 @@ rgb(81, 67, 55)rgb(81, 61, 55)rgb(81, 58, 55)rgb(184, 50, 32);
            <!-- PHYSICAL EVENT SECTIONS -->
 <div id="physicalEventSections">
     <!-- Physical Event Category Selection -->
-    <div class="form-group" id="physicalCategoryGroup">
+    <div class="phyform-group" id="physicalCategoryGroup">
         <label for="physicalEventCategory">Event Category</label>
         <select id="physicalEventCategory" class="form-select" onchange="updatePhysicalCategory()">
             <option value="">Select Category</option>
@@ -25493,14 +25493,14 @@ rgb(81, 67, 55)rgb(81, 61, 55)rgb(81, 58, 55)rgb(184, 50, 32);
     </div>
 
     <!-- Event Name -->
-    <div class="form-group" id="physicalEventNameGroup">
+    <div class="phyform-group" id="physicalEventNameGroup">
         <label for="physicalEventName">Event Name</label>
         <input type="text" id="physicalEventName" class="form-input" placeholder="Enter event name" minlength="3" maxlength="50">
         <small class="form-help">3-50 characters required</small>
     </div>
 
     <!-- Physical Event Background -->
-    <div class="form-group" id="physicalBackgroundGroup">
+    <div class="phyform-group" id="physicalBackgroundGroup">
         <label>Event Background</label>
         <div class="background-options">
             <div class="background-tabs">
@@ -25556,7 +25556,7 @@ rgb(81, 67, 55)rgb(81, 61, 55)rgb(81, 58, 55)rgb(184, 50, 32);
     </div>
 
     <!-- Event Description -->
-    <div class="form-group" id="physicalDescriptionGroup">
+    <div class="phyform-group" id="physicalDescriptionGroup">
         <label for="physicalEventDescription">Event Description</label>
         <textarea id="physicalEventDescription" class="form-textarea" placeholder="Describe your event (minimum 5 words)" rows="4" onkeyup="updatePhysicalWordCount()"></textarea>
         <small class="form-help">
@@ -25565,7 +25565,7 @@ rgb(81, 67, 55)rgb(81, 61, 55)rgb(81, 58, 55)rgb(184, 50, 32);
     </div>
 
     <!-- Event Location -->
-    <div class="form-group" id="physicalLocationGroup">
+    <div class="phyform-group" id="physicalLocationGroup">
         <label for="physicalEventLocation">
             <i class="fas fa-map-marker-alt"></i>
             Event Location
@@ -25574,10 +25574,21 @@ rgb(81, 67, 55)rgb(81, 61, 55)rgb(81, 58, 55)rgb(184, 50, 32);
         <small class="form-help">Provide complete address including city, state for easy navigation</small>
     </div>
 
-    <!-- Event Scheduling -->
-    <div class="form-group" id="physicalSchedulingGroup">
-        <label>Event Schedule</label>
-        <div class="scheduling-section">
+   <!-- Event Scheduling -->
+<div class="phyform-group" id="physicalSchedulingGroup">
+    <label>Event Schedule</label>
+    <div class="scheduling-section">
+        <!-- TBA Option -->
+        <div class="tba-option">
+            <label class="tba-checkbox">
+                <input type="checkbox" id="physicalTBASchedule" onchange="toggleTBASchedule()">
+                <span>To Be Announced (TBA)</span>
+            </label>
+            <small class="form-help">Check this if event date and time are not yet confirmed</small>
+        </div>
+        
+        <!-- Regular Date/Time Fields -->
+        <div class="datetime-fields" id="physicalDateTimeFields">
             <div class="datetime-row">
                 <div class="datetime-field">
                     <label for="physicalStartDate">Start Date</label>
@@ -25603,10 +25614,19 @@ rgb(81, 67, 55)rgb(81, 61, 55)rgb(81, 58, 55)rgb(184, 50, 32);
                 <span>Duration: <strong id="physicalCalculatedDuration">-</strong></span>
             </div>
         </div>
+        
+        <!-- TBA Display -->
+        <div class="tba-display" id="physicalTBADisplay" style="display: none;">
+            <div class="tba-message">
+                <i class="fas fa-calendar-times"></i>
+                <span>Event date and time: <strong>To Be Announced</strong></span>
+            </div>
+        </div>
     </div>
+</div>
 
     <!-- Event Link -->
-    <div class="form-group" id="physicalEventLinkGroup">
+    <div class="phyform-group" id="physicalEventLinkGroup">
         <label for="physicalEventLink">
             <i class="fas fa-link"></i>
             Event Link
@@ -25625,7 +25645,7 @@ rgb(81, 67, 55)rgb(81, 61, 55)rgb(81, 58, 55)rgb(184, 50, 32);
     </div>
 
     <!-- Ticket Configuration -->
-    <div class="form-group" id="physicalTicketConfigGroup">
+    <div class="phyform-group" id="physicalTicketConfigGroup">
         <label>Ticket Configuration</label>
         <div class="ticket-config-section">
             <div class="ticket-types-list" id="physicalTicketTypesList">
@@ -26391,17 +26411,18 @@ rgb(81, 67, 55)rgb(81, 61, 55)rgb(81, 58, 55)rgb(184, 50, 32);
 
 
 <!-- Firebase SDK -->
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-analytics-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics-compat.js"></script>
 <script src="https://checkout.flutterwave.com/v3.js"></script>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6058145320758437"
      crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
+<!-- Replace your current Firebase scripts with: -->
 <script>
- // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+// Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyDW8V2SjNITrA4LcdmeILh944mTbOKnM0c",
   authDomain: "rewarderhub.firebaseapp.com",
@@ -26412,15 +26433,12 @@ const firebaseConfig = {
   measurementId: "G-F2ERB5NGN0"
 };
 
-
-
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
+const storage = firebase.storage();
 const analytics = firebase.analytics();
-
-
 
 // Constants
 const ADMIN_EMAIL = 'rewarderprivate@gmail.com';
@@ -27793,6 +27811,18 @@ function initProfileModal() {
     .form-group textarea {
         width: 100%;
         color:#333;
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 0.95rem;
+        transition: border-color 0.3s ease;
+    }
+
+    .phyform-group input,
+    .phyform-group select,
+    .phyform-group textarea {
+        width: 100%;
+        color:#ffffff;
         padding: 12px 15px;
         border: 1px solid #ddd;
         border-radius: 8px;
