@@ -25493,14 +25493,14 @@ rgb(81, 67, 55)rgb(81, 61, 55)rgb(81, 58, 55)rgb(184, 50, 32);
     </div>
 
     <!-- Event Name -->
-    <div class="phyform-group" id="physicalEventNameGroup">
+    <div class="form-group" id="physicalEventNameGroup">
         <label for="physicalEventName">Event Name</label>
         <input type="text" id="physicalEventName" class="form-input" placeholder="Enter event name" minlength="3" maxlength="50">
         <small class="form-help">3-50 characters required</small>
     </div>
 
     <!-- Physical Event Background -->
-    <div class="phyform-group" id="physicalBackgroundGroup">
+    <div class="form-group" id="physicalBackgroundGroup">
         <label>Event Background</label>
         <div class="background-options">
             <div class="background-tabs">
@@ -25556,7 +25556,7 @@ rgb(81, 67, 55)rgb(81, 61, 55)rgb(81, 58, 55)rgb(184, 50, 32);
     </div>
 
     <!-- Event Description -->
-    <div class="phyform-group" id="physicalDescriptionGroup">
+    <div class="form-group" id="physicalDescriptionGroup">
         <label for="physicalEventDescription">Event Description</label>
         <textarea id="physicalEventDescription" class="form-textarea" placeholder="Describe your event (minimum 5 words)" rows="4" onkeyup="updatePhysicalWordCount()"></textarea>
         <small class="form-help">
@@ -25565,7 +25565,7 @@ rgb(81, 67, 55)rgb(81, 61, 55)rgb(81, 58, 55)rgb(184, 50, 32);
     </div>
 
     <!-- Event Location -->
-    <div class="phyform-group" id="physicalLocationGroup">
+    <div class="form-group" id="physicalLocationGroup">
         <label for="physicalEventLocation">
             <i class="fas fa-map-marker-alt"></i>
             Event Location
@@ -25574,21 +25574,10 @@ rgb(81, 67, 55)rgb(81, 61, 55)rgb(81, 58, 55)rgb(184, 50, 32);
         <small class="form-help">Provide complete address including city, state for easy navigation</small>
     </div>
 
-   <!-- Event Scheduling -->
-<div class="phyform-group" id="physicalSchedulingGroup">
-    <label>Event Schedule</label>
-    <div class="scheduling-section">
-        <!-- TBA Option -->
-        <div class="tba-option">
-            <label class="tba-checkbox">
-                <input type="checkbox" id="physicalTBASchedule" onchange="toggleTBASchedule()">
-                <span>To Be Announced (TBA)</span>
-            </label>
-            <small class="form-help">Check this if event date and time are not yet confirmed</small>
-        </div>
-        
-        <!-- Regular Date/Time Fields -->
-        <div class="datetime-fields" id="physicalDateTimeFields">
+    <!-- Event Scheduling -->
+    <div class="form-group" id="physicalSchedulingGroup">
+        <label>Event Schedule</label>
+        <div class="scheduling-section">
             <div class="datetime-row">
                 <div class="datetime-field">
                     <label for="physicalStartDate">Start Date</label>
@@ -25614,19 +25603,10 @@ rgb(81, 67, 55)rgb(81, 61, 55)rgb(81, 58, 55)rgb(184, 50, 32);
                 <span>Duration: <strong id="physicalCalculatedDuration">-</strong></span>
             </div>
         </div>
-        
-        <!-- TBA Display -->
-        <div class="tba-display" id="physicalTBADisplay" style="display: none;">
-            <div class="tba-message">
-                <i class="fas fa-calendar-times"></i>
-                <span>Event date and time: <strong>To Be Announced</strong></span>
-            </div>
-        </div>
     </div>
-</div>
 
     <!-- Event Link -->
-    <div class="phyform-group" id="physicalEventLinkGroup">
+    <div class="form-group" id="physicalEventLinkGroup">
         <label for="physicalEventLink">
             <i class="fas fa-link"></i>
             Event Link
@@ -25645,7 +25625,7 @@ rgb(81, 67, 55)rgb(81, 61, 55)rgb(81, 58, 55)rgb(184, 50, 32);
     </div>
 
     <!-- Ticket Configuration -->
-    <div class="phyform-group" id="physicalTicketConfigGroup">
+    <div class="form-group" id="physicalTicketConfigGroup">
         <label>Ticket Configuration</label>
         <div class="ticket-config-section">
             <div class="ticket-types-list" id="physicalTicketTypesList">
@@ -27816,18 +27796,7 @@ function initProfileModal() {
         border-radius: 8px;
         font-size: 0.95rem;
         transition: border-color 0.3s ease;
-    }
-
-    .phyform-group input,
-    .phyform-group select,
-    .phyform-group textarea {
-        width: 100%;
-        color:#ffffff;
-        padding: 12px 15px;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        font-size: 0.95rem;
-        transition: border-color 0.3s ease;
+        background-color:#ffffff;
     }
 
     .form-group input:focus,
