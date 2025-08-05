@@ -25574,10 +25574,21 @@ rgb(81, 67, 55)rgb(81, 61, 55)rgb(81, 58, 55)rgb(184, 50, 32);
         <small class="form-help">Provide complete address including city, state for easy navigation</small>
     </div>
 
-    <!-- Event Scheduling -->
-    <div class="form-group" id="physicalSchedulingGroup">
-        <label>Event Schedule</label>
-        <div class="scheduling-section">
+   <!-- Event Scheduling -->
+<div class="form-group" id="physicalSchedulingGroup">
+    <label>Event Schedule</label>
+    <div class="scheduling-section">
+        <!-- TBA Option -->
+        <div class="tba-option">
+            <label class="tba-checkbox">
+                <input type="checkbox" id="physicalTBASchedule" onchange="toggleTBASchedule()">
+                <span>To Be Announced (TBA)</span>
+            </label>
+            <small class="form-help">Check this if event date and time are not yet confirmed</small>
+        </div>
+        
+        <!-- Regular Date/Time Fields -->
+        <div class="datetime-fields" id="physicalDateTimeFields">
             <div class="datetime-row">
                 <div class="datetime-field">
                     <label for="physicalStartDate">Start Date</label>
@@ -25603,7 +25614,16 @@ rgb(81, 67, 55)rgb(81, 61, 55)rgb(81, 58, 55)rgb(184, 50, 32);
                 <span>Duration: <strong id="physicalCalculatedDuration">-</strong></span>
             </div>
         </div>
+        
+        <!-- TBA Display -->
+        <div class="tba-display" id="physicalTBADisplay" style="display: none;">
+            <div class="tba-message">
+                <i class="fas fa-calendar-times"></i>
+                <span>Event date and time: <strong>To Be Announced</strong></span>
+            </div>
+        </div>
     </div>
+</div>
 
     <!-- Event Link -->
     <div class="form-group" id="physicalEventLinkGroup">
