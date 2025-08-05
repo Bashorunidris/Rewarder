@@ -55700,49 +55700,54 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-// ===== EVENT PUBLIC PAGE FUNCTIONALITY =====
-
-// Global variables for Event Page
-let currentEventData = null;
-
-// Check if URL is for Event page
-function checkEventPageURL() {
-    const path = window.location.pathname;
-    const isEventPage = path.startsWith('/event/');
     
-    if (isEventPage) {
+    // ===== EVENTPHY PUBLIC PAGE FUNCTIONALITY =====
+
+// Global variables for Eventphy
+let currentEventphyData = null;
+
+// Check if URL is for Eventphy page
+function checkEventphyPageURL() {
+    const path = window.location.pathname;
+      const isEventphyPage = path.startsWith('/event/');
+    
+       if (isEventphyPage) {
         const eventLink = path.replace('/event/', '');
-        if (eventLink) {
-            showEventPage();
-            loadEventPageData(eventLink);
+         if (eventLink) {
+           showEventphyPage();
+            loadEventphyPageData(eventLink);
             return true;
-        }
+         }
     }
     return false;
 }
 
-// Show Event page
-function showEventPage() {
-    document.getElementById('eventPageContainer').style.display = 'block';
+// Show Eventphy page
+function showEventphyPage() {
+    document.getElementById('eventphyPageContainer').style.display = 'block';
     document.getElementById('mainAppContainer').style.display = 'none';
 }
 
-// Hide Event page
-function hideEventPage() {
-    document.getElementById('eventPageContainer').style.display = 'none';
+// Hide Eventphy page
+function hideEventphyPage() {
+    document.getElementById('eventphyPageContainer').style.display = 'none';
     document.getElementById('mainAppContainer').style.display = 'block';
 }
 
-// Load event data for public page
-async function loadEventPageData(eventLink) {
-    const contentContainer = document.getElementById('eventPageContent');
-    const loadingState = document.getElementById('eventLoadingState');
+// Load event data for Eventphy public page
+async function loadEventphyPageData(eventLink) {
+    const contentContainer = document.getElementById('eventphyPageContent');
     
     try {
-        // Show enhanced loading state
-        loadingState.style.display = 'flex';
-        
-        console.log('Loading event with link:', eventLink);
+        // Show loading
+        contentContainer.innerHTML = `
+            <div class="eventphy-loading">
+                <i class="fas fa-spinner"></i>
+                <h2>Loading Event...</h2>
+            </div>
+        `;
+
+        console.log('Loading Eventphy event with link:', eventLink);
         
         // Wait for Firebase to be ready
         if (typeof firebase === 'undefined') {
@@ -55758,210 +55763,148 @@ async function loadEventPageData(eventLink) {
         
         const db = firebase.firestore();
         
-        // Query for the event
+        // Try multiple query approaches for better compatibility
         let querySnapshot;
         try {
             querySnapshot = await db.collection('physicalEvents')
                 .where('eventLink', '==', eventLink)
-                .where('status', '==', 'active')
                 .limit(1)
                 .get();
         } catch (error) {
             console.log('First query failed, trying alternative approach:', error);
+            // Try querying all events and filter client-side as fallback
             const allEvents = await db.collection('physicalEvents').get();
-            const matchingDocs = allEvents.docs.filter(doc => 
-                doc.data().eventLink === eventLink && 
-                (doc.data().status === 'active' || !doc.data().closedevent)
-            );
+            const matchingDocs = allEvents.docs.filter(doc => doc.data().eventLink === eventLink);
             querySnapshot = { empty: matchingDocs.length === 0, docs: matchingDocs };
         }
 
-        // Hide loading state
-        loadingState.style.display = 'none';
-
         if (querySnapshot.empty) {
             console.log('No event found with link:', eventLink);
-            showEventNotFound();
+            contentContainer.innerHTML = `
+                <div class="eventphy-error">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <h2>Event Not Found</h2>
+                    <p>Sorry, we couldn't find the event you're looking for. Please check the link and try again.</p>
+                </div>
+            `;
             return;
         }
 
         const eventDoc = querySnapshot.docs[0];
         const eventData = eventDoc.data();
-        currentEventData = eventData;
+        currentEventphyData = eventData;
 
         console.log('Event data loaded:', eventData);
-        displayEventPage(eventData);
+        displayEventphyPage(eventData);
 
     } catch (error) {
         console.error('Error loading event data:', error);
-        loadingState.style.display = 'none';
-        showEventError(error, eventLink);
+        console.error('Error details:', {
+            message: error.message,
+            code: error.code,
+            stack: error.stack
+        });
+        contentContainer.innerHTML = `
+            <div class="eventphy-error">
+                <i class="fas fa-exclamation-triangle"></i>
+                <h2>Error Loading Event</h2>
+                <p>There was an error loading the event: ${error.message}</p>
+                <p style="font-size: 0.9rem; margin-top: 10px; opacity: 0.8;">
+                    Event Link: ${eventLink}<br>
+                    Error Code: ${error.code || 'Unknown'}
+                </p>
+                <button onclick="loadEventphyPageData('${eventLink}')" style="
+                    background: #ff6b6b; 
+                    color: white; 
+                    border: none; 
+                    padding: 10px 20px; 
+                    border-radius: 8px; 
+                    cursor: pointer; 
+                    margin-top: 15px;
+                ">
+                    Try Again
+                </button>
+            </div>
+        `;
     }
 }
 
-// Show event not found
-function showEventNotFound() {
-    const contentContainer = document.getElementById('eventPageContent');
-    contentContainer.innerHTML = `
-        <div class="event-error-container">
-            <div class="error-animation">
-                <i class="fas fa-search"></i>
-            </div>
-            <h2>Event Not Found</h2>
-            <p>Sorry, we couldn't find the event you're looking for.</p>
-            <div class="error-actions">
-                <button onclick="window.location.href='/'" class="error-btn primary">
-                    <i class="fas fa-home"></i> Go Home
-                </button>
-                <button onclick="window.location.reload()" class="error-btn secondary">
-                    <i class="fas fa-redo"></i> Try Again
-                </button>
-            </div>
-        </div>
-    `;
-}
-
-// Show event error
-function showEventError(error, eventLink) {
-    const contentContainer = document.getElementById('eventPageContent');
-    contentContainer.innerHTML = `
-        <div class="event-error-container">
-            <div class="error-animation">
-                <i class="fas fa-exclamation-triangle"></i>
-            </div>
-            <h2>Error Loading Event</h2>
-            <p>There was an error loading the event: ${error.message}</p>
-            <div class="error-details">
-                <p>Event Link: ${eventLink}</p>
-                <p>Error Code: ${error.code || 'Unknown'}</p>
-            </div>
-            <div class="error-actions">
-                <button onclick="loadEventPageData('${eventLink}')" class="error-btn primary">
-                    <i class="fas fa-redo"></i> Try Again
-                </button>
-                <button onclick="window.location.href='/'" class="error-btn secondary">
-                    <i class="fas fa-home"></i> Go Home
-                </button>
-            </div>
-        </div>
-    `;
-}
-
-// Display Event page content
-function displayEventPage(event) {
-    const contentContainer = document.getElementById('eventPageContent');
+// Display Eventphy page content
+function displayEventphyPage(event) {
+    const contentContainer = document.getElementById('eventphyPageContent');
     
-    console.log('Displaying event data:', event);
+    console.log('Displaying event data:', event); // Debug log
     
     // Update page meta tags for social sharing
-    updateEventMetaTags(event);
+    updateEventphyMetaTags(event);
     
     // Generate background style
-    const backgroundStyle = generateEventBackgroundStyle(event);
+    const backgroundStyle = generateEventphyBackgroundStyle(event);
     
-    // Generate tickets HTML
-    const ticketsHTML = generateEventTicketsHTML(event.tickets);
+    // Generate tickets HTML with background styles
+    const ticketsHTML = generateEventphyTicketsHTML(event.tickets || event.eventTickets);
     
     // Generate sponsors HTML
-    const sponsorsHTML = generateEventSponsorsHTML(event.sponsors);
-
-    // Check if event is TBA
-    const isTBA = event.isTBA || event.schedulingStatus === 'TBA' || 
-                  event.startDateTime === 'TBA' || event.endDateTime === 'TBA';
+    const sponsorsHTML = generateEventphySponsorsHTML(event.sponsors || event.eventSponsors);
 
     const eventHTML = `
-        <!-- Back Button -->
-        <div class="event-back-button">
-            <button onclick="window.location.href='/'" class="back-btn">
-                <i class="fas fa-arrow-left"></i> Back to Events
-            </button>
-        </div>
-
         <!-- Hero Section -->
-        <div class="event-hero-section" style="${backgroundStyle}">
-            <div class="event-hero-overlay"></div>
-            ${isTBA ? '<div class="event-tba-badge">TBA</div>' : ''}
-            <div class="event-powered-by">
-                <img src="https://i.ibb.co/VpC27tbt/Rewarder-logo.png" alt="Rewarder">
-                <span>Powered by Rewarder</span>
+        <div class="eventphy-hero-section" style="${backgroundStyle}">
+            <div class="eventphy-hero-overlay"></div>
+            <div class="eventphy-powered-by" style="position: absolute; bottom: 10px; right: 10px; display: flex; align-items: center; background: rgba(0,0,0,0.6); padding: 8px 12px; border-radius: 20px; z-index: 3;">
+                <img src="https://i.ibb.co/VpC27tbt/Rewarder-logo.png" alt="Rewarder" style="width: 20px; height: 20px; margin-right: 6px;">
+                <span style="color: white; font-size: 12px; font-weight: 500;">Powered by Rewarder</span>
             </div>
-            <div class="event-hero-content">
-                <h1 class="event-title">${event.eventName || 'Event'}</h1>
-                <p class="event-description">${event.description || 'Join us for an amazing event!'}</p>
-                <button class="event-get-tickets-btn" onclick="openEventModal()">
-                    <i class="fas fa-ticket-alt"></i> 
-                    <span>Get Tickets</span>
+            <div class="eventphy-hero-content">
+                <h1 class="eventphy-title">${event.eventName || event.name || 'Event'}</h1>
+                <p class="eventphy-description">${event.eventDescription || event.description || 'Join us for an amazing event!'}</p>
+                <button class="eventphy-get-tickets-btn" onclick="openEventphyTicketsModal()">
+                    <i class="fas fa-ticket-alt"></i> Get Tickets
                 </button>
             </div>
         </div>
 
         <!-- Event Details Section -->
-        <div class="event-details-section">
-            <h2 class="event-section-title">Event Details</h2>
+        <div class="eventphy-details-section">
+            <h2 class="eventphy-section-title">Event Details</h2>
             
-            <div class="event-info-grid">
-                <div class="event-info-card">
-                    <div class="info-icon">
-                        <i class="fas fa-calendar-alt"></i>
-                    </div>
-                    <div class="info-content">
-                        <h3>Date & Time</h3>
-                        <p>${formatEventDateTime(event)}</p>
-                    </div>
+            <div class="eventphy-info-grid">
+                <div class="eventphy-info-card">
+                    <h3><i class="fas fa-calendar-alt"></i> Date & Time</h3>
+                    <p>${formatEventphyDateTime(event)}</p>
                 </div>
                 
-                <div class="event-info-card">
-                    <div class="info-icon">
-                        <i class="fas fa-map-marker-alt"></i>
-                    </div>
-                    <div class="info-content">
-                        <h3>Location</h3>
-                        <p>${event.location || 'Location TBA'}</p>
-                    </div>
+                <div class="eventphy-info-card">
+                    <h3><i class="fas fa-map-marker-alt"></i> Location</h3>
+                    <p>${event.eventLocation || event.location || event.venue || 'Location TBA'}</p>
                 </div>
                 
-                <div class="event-info-card">
-                    <div class="info-icon">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <div class="info-content">
-                        <h3>Capacity</h3>
-                        <p>${event.tickets && event.tickets.length > 0 ? 
-                            event.tickets.reduce((total, ticket) => total + (ticket.quantity || 0), 0) : 
-                            'Unlimited'} attendees</p>
-                    </div>
+                <div class="eventphy-info-card">
+                    <h3><i class="fas fa-users"></i> Capacity</h3>
+                    <p>${event.tickets && event.tickets.length > 0 ? event.tickets.reduce((total, ticket) => total + (ticket.quantity || 0), 0) : 'Unlimited'} attendees</p>
                 </div>
                 
-                <div class="event-info-card">
-                    <div class="info-icon">
-                        <i class="fas fa-tag"></i>
-                    </div>
-                    <div class="info-content">
-                        <h3>Category</h3>
-                        <p>${event.category || 'General Event'}</p>
-                    </div>
+                <div class="eventphy-info-card">
+                    <h3><i class="fas fa-info-circle"></i> Category</h3>
+                    <p>${event.eventCategory || event.category || event.type || 'General Event'}</p>
                 </div>
             </div>
 
             ${ticketsHTML}
             ${sponsorsHTML}
 
-            <!-- Enhanced Rewarder Branding -->
-            <div class="event-rewarder-brand">
-                <div class="brand-content">
-                    <div class="brand-logo">
-                        <div class="logo-container">
-                            <img src="https://i.ibb.co/VpC27tbt/Rewarder-logo.png" alt="Rewarder">
-                            <h3>Rewarder</h3>
-                        </div>
-                        <p class="brand-tagline">This event is created on Rewarder</p>
+            <!-- Enhanced Rewarder Branding & Marketing -->
+            <div class="eventphy-rewarder-brand">
+                <div class="eventphy-brand-content">
+                    <div class="eventphy-brand-logo">
+                        <h3>🏆 Rewarder</h3>
+                        <p class="eventphy-brand-tagline">This event is created on Rewarder</p>
                     </div>
                     
-                    <div class="brand-cta">
-                        <p class="cta-text">Create amazing events like this one!</p>
-                        <button class="signup-btn" onclick="redirectToSignUp()">
-                            <i class="fas fa-plus-circle"></i> 
-                            <span>Sign Up & Create Events</span>
+                    <div class="eventphy-brand-cta">
+                        <p class="eventphy-cta-text">Sign Up - Click Creator Button and Create Your Event Too</p>
+                        <button class="eventphy-signup-btn" onclick="redirectToEventphySignUp()">
+                            <i class="fas fa-plus-circle"></i> Sign Up & Create Events
                         </button>
                     </div>
                 </div>
@@ -55972,10 +55915,15 @@ function displayEventPage(event) {
     contentContainer.innerHTML = eventHTML;
 }
 
+
+
 // Generate background style for event
-function generateEventBackgroundStyle(event) {
+function generateEventphyBackgroundStyle(event) {
+    console.log('Background data:', event.background);
+
+    // Use the same structure as working code
     if (!event.background) {
-        return 'background: linear-gradient(135deg, #6c5ce7 0%, #fd79a8 100%);';
+        return 'background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);';
     }
 
     switch (event.background.type) {
@@ -55986,50 +55934,43 @@ function generateEventBackgroundStyle(event) {
         case 'color':
             return `background-color: ${event.background.color};`;
         default:
-            return 'background: linear-gradient(135deg, #6c5ce7 0%, #fd79a8 100%);';
+            return 'background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);';
     }
 }
 
 // Generate tickets HTML
-function generateEventTicketsHTML(tickets) {
+function generateEventphyTicketsHTML(tickets) {
     if (!tickets || tickets.length === 0) {
         return `
-            <div class="event-tickets-section">
-                <h2 class="event-section-title">Tickets</h2>
-                <div class="event-info-card special">
-                    <div class="info-icon">
-                        <i class="fas fa-gift"></i>
-                    </div>
-                    <div class="info-content">
-                        <h3>Free Entry</h3>
-                        <p>This event is free to attend!</p>
-                    </div>
+            <div class="eventphy-tickets-section">
+                <h2 class="eventphy-section-title">Tickets</h2>
+                <div class="eventphy-info-card">
+                    <h3><i class="fas fa-ticket-alt"></i> Free Entry</h3>
+                    <p>This event is free to attend!</p>
                 </div>
             </div>
         `;
     }
 
     let ticketsHTML = `
-        <div class="event-tickets-section">
-            <h2 class="event-section-title">Available Tickets</h2>
-            <div class="event-tickets-grid">
+        <div class="eventphy-tickets-section">
+            <h2 class="eventphy-section-title">Available Tickets</h2>
+            <div class="eventphy-tickets-grid">
     `;
 
     tickets.forEach(ticket => {
-        const ticketBg = generateTicketBackgroundStyle(ticket.background);
-        const status = ticket.status === 'Coming Soon' ? 'coming-soon' : 'available';
-        
+        const ticketBg = ticket.background ? 
+            (ticket.background.type === 'media' ? `background-image: url('${ticket.background.data}') !important; background-size: cover !important; background-position: center !important;` :
+             ticket.background.type === 'gradient' ? `background: ${ticket.background.gradient} !important;` :
+             ticket.background.type === 'color' ? `background-color: ${ticket.background.color} !important;` :
+             'background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;') :
+            'background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;';
+            
         ticketsHTML += `
-            <div class="event-ticket-card ${status}" style="${ticketBg}">
-                <div class="ticket-content">
-                    <div class="ticket-type">${ticket.name || 'General'}</div>
-                    <div class="ticket-price">₦${parseFloat(ticket.price || 0).toLocaleString()}</div>
-                    ${ticket.status === 'Coming Soon' ? 
-                        '<div class="ticket-status">Coming Soon</div>' : 
-                        '<div class="ticket-available">Available Now</div>'
-                    }
-                </div>
-                ${ticket.status === 'Coming Soon' ? '<div class="coming-soon-overlay">TBA</div>' : ''}
+            <div class="eventphy-ticket-card" style="${ticketBg}">
+                <div class="eventphy-ticket-type">${ticket.name || ticket.type || 'General'}</div>
+                <div class="eventphy-ticket-price">₦${parseFloat(ticket.price || 0).toLocaleString()}</div>
+                <p>${ticket.description || ticket.name || 'Event ticket'}</p>
             </div>
         `;
     });
@@ -56042,49 +55983,28 @@ function generateEventTicketsHTML(tickets) {
     return ticketsHTML;
 }
 
-// Generate ticket background style
-function generateTicketBackgroundStyle(background) {
-    if (!background) {
-        return 'background: linear-gradient(135deg, #6c5ce7 0%, #fd79a8 100%);';
-    }
-
-    switch (background.type) {
-        case 'media':
-            return `background-image: url('${background.data}'); background-size: cover; background-position: center;`;
-        case 'gradient':
-            return `background: ${background.gradient};`;
-        case 'color':
-            return `background-color: ${background.color};`;
-        default:
-            return 'background: linear-gradient(135deg, #6c5ce7 0%, #fd79a8 100%);';
-    }
-}
-
 // Generate sponsors HTML
-function generateEventSponsorsHTML(sponsors) {
+function generateEventphySponsorsHTML(sponsors) {
     if (!sponsors || sponsors.length === 0) {
         return '';
     }
 
     let sponsorsHTML = `
-        <div class="event-sponsors-section">
-            <h2 class="event-section-title">Our Sponsors</h2>
-            <div class="event-sponsors-grid">
+        <div class="eventphy-sponsors-section">
+            <h2 class="eventphy-section-title">Our Sponsors</h2>
+            <div class="eventphy-sponsors-grid">
     `;
 
     sponsors.forEach(sponsor => {
         const sponsorName = sponsor.name || sponsor;
         
         sponsorsHTML += `
-            <div class="event-sponsor-item">
-                <div class="sponsor-logo-container">
-                    ${sponsor.logo && sponsor.logo.data ? 
-                        `<img src="${sponsor.logo.data}" alt="${sponsorName}" class="sponsor-logo">` : 
-                        `<div class="sponsor-logo-placeholder">${sponsorName.charAt(0)}</div>`
-                    }
-                </div>
-                <div class="sponsor-name">${sponsorName}</div>
-                ${sponsor.website ? `<a href="${sponsor.website}" target="_blank" class="sponsor-link">Visit Website</a>` : ''}
+            <div class="eventphy-sponsor-item">
+                ${sponsor.logo && sponsor.logo.data ? 
+                    `<img src="${sponsor.logo.data}" alt="${sponsorName}" class="eventphy-sponsor-logo">` : 
+                    `<div class="eventphy-sponsor-logo" style="background: #4ecdc4; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">${sponsorName.charAt(0)}</div>`
+                }
+                <div class="eventphy-sponsor-name">${sponsorName}</div>
             </div>
         `;
     });
@@ -56097,14 +56017,9 @@ function generateEventSponsorsHTML(sponsors) {
     return sponsorsHTML;
 }
 
-// Format date and time for display
-function formatEventDateTime(eventData) {
-    // Check for TBA first
-    if (eventData.isTBA || eventData.schedulingStatus === 'TBA' || 
-        eventData.startDateTime === 'TBA' || eventData.endDateTime === 'TBA') {
-        return 'To Be Announced';
-    }
-
+// Format date and time for Eventphy display
+function formatEventphyDateTime(eventData) {
+    // Use startDateTime like in working code
     if (eventData.startDateTime) {
         try {
             const eventDate = new Date(eventData.startDateTime);
@@ -56128,77 +56043,92 @@ function formatEventDateTime(eventData) {
         }
     }
     
+    // Fallback to separate date/time fields
+    if (eventData.eventDate || eventData.date) {
+        const date = new Date(eventData.eventDate || eventData.date);
+        const options = { 
+            weekday: 'long', 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric' 
+        };
+        
+        let formatted = date.toLocaleDateString('en-US', options);
+        
+        if (eventData.eventTime || eventData.time) {
+            formatted += ` at ${eventData.eventTime || eventData.time}`;
+        }
+        
+        return formatted;
+    }
+    
     return 'Date TBA';
 }
 
-// Open tickets modal (uses the improved modal structure)
-function openEventModal() {
-    if (!currentEventData) return;
+// Open Eventphy tickets modal
+function openEventphyTicketsModal() {
+    if (!currentEventphyData) return;
     
-    const modal = document.getElementById('eventTicketsModal');
-    const eventNameSpan = document.getElementById('modalEventName');
+    const modal = document.getElementById('eventphyTicketsModal');
+    const eventNameSpan = document.getElementById('eventphyEventName');
     
-    eventNameSpan.textContent = currentEventData.eventName || 'Event';
-    modal.classList.add('active');
+    eventNameSpan.textContent = currentEventphyData.eventName || 'Event';
+    modal.style.display = 'flex';
 }
 
-// Close modal (uses the improved modal structure)
-function closeEventModal() {
-    const modal = document.getElementById('eventTicketsModal');
-    modal.classList.remove('active');
+// Close Eventphy modal
+function closeEventphyModal() {
+    const modal = document.getElementById('eventphyTicketsModal');
+    modal.style.display = 'none';
 }
 
 // Copy event name from modal
-function copyEventNameFromModal() {
-    const eventNameSpan = document.getElementById('modalEventName');
+function copyEventphyNameFromModal() {
+    const eventNameSpan = document.getElementById('eventphyEventName');
     const eventName = eventNameSpan.textContent;
     
     navigator.clipboard.writeText(eventName).then(function() {
-        showCopySuccess();
+        showEventphyCopySuccess();
     }).catch(function(err) {
         console.error('Could not copy text: ', err);
-        fallbackCopy(eventName);
+        // Fallback for older browsers
+        const textArea = document.createElement("textarea");
+        textArea.value = eventName;
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        try {
+            document.execCommand('copy');
+            showEventphyCopySuccess();
+        } catch (err) {
+            console.error('Fallback: Could not copy text: ', err);
+        }
+        document.body.removeChild(textArea);
     });
 }
 
-// Fallback copy method
-function fallbackCopy(text) {
-    const textArea = document.createElement("textarea");
-    textArea.value = text;
-    document.body.appendChild(textArea);
-    textArea.focus();
-    textArea.select();
-    try {
-        document.execCommand('copy');
-        showCopySuccess();
-    } catch (err) {
-        console.error('Fallback: Could not copy text: ', err);
-    }
-    document.body.removeChild(textArea);
-}
-
-// Show copy success
-function showCopySuccess() {
-    const copyBtn = document.querySelector('.event-copy-btn');
+// Show copy success message
+function showEventphyCopySuccess() {
+    const copyBtn = document.querySelector('.eventphy-copy-btn');
     const originalText = copyBtn.innerHTML;
     
     copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
-    copyBtn.style.background = 'linear-gradient(135deg, #00b894, #00a085)';
+    copyBtn.style.background = '#28a745';
     
     setTimeout(() => {
         copyBtn.innerHTML = originalText;
-        copyBtn.style.background = 'linear-gradient(135deg, #6c5ce7, #5549c0)';
+        copyBtn.style.background = '#4ecdc4';
     }, 2000);
 }
 
 // Update meta tags for social media sharing
-function updateEventMetaTags(event) {
-    const eventTitle = event.eventName || 'Amazing Event';
-    const eventDescription = event.description || 'Join us for an amazing event experience!';
+function updateEventphyMetaTags(event) {
+    const eventTitle = event.eventName || event.name || 'Amazing Event';
+    const eventDescription = event.eventDescription || event.description || 'Join us for an amazing event experience!';
     const eventUrl = window.location.href;
     
     // Get event background image
-    let eventImage = 'https://i.ibb.co/VpC27tbt/Rewarder-logo.png';
+    let eventImage = 'https://i.ibb.co/VpC27tbt/Rewarder-logo.png'; // Default Rewarder logo
     if (event.background && event.background.type === 'media' && event.background.data) {
         eventImage = event.background.data;
     }
@@ -56206,24 +56136,34 @@ function updateEventMetaTags(event) {
     // Update page title
     document.title = `${eventTitle} - Powered by Rewarder`;
     
-    // Create meta tags for social sharing
+    // Remove existing meta tags
+    const existingMetas = document.querySelectorAll('meta[property^="og:"], meta[name^="twitter:"], meta[property="description"], meta[name="description"]');
+    existingMetas.forEach(meta => meta.remove());
+    
+    // Create new meta tags for social sharing
     const metaTags = [
+        // Open Graph tags
         { property: 'og:title', content: eventTitle },
         { property: 'og:description', content: eventDescription },
         { property: 'og:image', content: eventImage },
         { property: 'og:url', content: eventUrl },
         { property: 'og:type', content: 'event' },
+        { property: 'og:site_name', content: 'Rewarder - Event Platform' },
+        
+        // Twitter Card tags
         { name: 'twitter:card', content: 'summary_large_image' },
         { name: 'twitter:title', content: eventTitle },
         { name: 'twitter:description', content: eventDescription },
         { name: 'twitter:image', content: eventImage },
-        { name: 'description', content: eventDescription }
+        { name: 'twitter:site', content: '@Rewarder' },
+        
+        // General meta tags
+        { name: 'description', content: eventDescription },
+        { name: 'keywords', content: `event, ${event.category || 'general'}, tickets, ${eventTitle}` },
+        { name: 'author', content: 'Rewarder Event Platform' }
     ];
     
-    // Remove existing meta tags and add new ones
-    const existingMetas = document.querySelectorAll('meta[property^="og:"], meta[name^="twitter:"], meta[name="description"]');
-    existingMetas.forEach(meta => meta.remove());
-    
+    // Add meta tags to head
     const head = document.head;
     metaTags.forEach(tagData => {
         const meta = document.createElement('meta');
@@ -56236,30 +56176,84 @@ function updateEventMetaTags(event) {
         meta.setAttribute('content', tagData.content);
         head.appendChild(meta);
     });
+    
+    console.log('Updated meta tags for social sharing:', { eventTitle, eventDescription, eventImage });
 }
 
 // Redirect to sign up
-function redirectToSignUp() {
+function redirectToEventphySignUp() {
     window.open('https://rewarder-hub.vercel.app/', '_blank');
 }
 
-// Initialize Event Page on load
+// Initialize Eventphy on page load
 document.addEventListener('DOMContentLoaded', function() {
+    // Wait a bit for Firebase to fully initialize
     setTimeout(() => {
-        const isEventPage = checkEventPageURL();
-        if (!isEventPage) {
-            // Initialize main app components
+        // Add Eventphy page container to body if not exists
+        if (!document.getElementById('eventphyPageContainer')) {
+        const eventphyContainer = document.createElement('div');
+        eventphyContainer.id = 'eventphyPageContainer';
+        eventphyContainer.innerHTML = `
+            <div id="eventphyPageContent">
+                <!-- Content will be loaded here -->
+            </div>
+
+            <!-- Get Tickets Modal -->
+            <div class="eventphy-modal-overlay" id="eventphyTicketsModal">
+                <div class="eventphy-modal">
+                    <h3><i class="fas fa-ticket-alt"></i> Get Tickets</h3>
+                    <p><strong>Copy this event name and paste it in the search bar of the Rewarder app</strong></p>
+                    
+                    <div class="eventphy-copy-section">
+                        <div class="eventphy-copy-text" id="eventphyEventName">Event Name</div>
+                        <button class="eventphy-copy-btn" onclick="copyEventphyNameFromModal()">
+                            <i class="fas fa-copy"></i> Copy Event Name
+                        </button>
+                    </div>
+                    
+                    <div class="eventphy-modal-instructions">
+                        <h4><i class="fas fa-info-circle"></i> How to Get Tickets:</h4>
+                        <ol>
+                            <li>Copy the event name above</li>
+                            <li>Open or sign up for the Rewarder app</li>
+                            <li>Paste the event name in the search bar</li>
+                            <li>Purchase your tickets directly in the app</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="eventphy-modal-actions">
+                        <button class="eventphy-modal-btn eventphy-primary-btn" onclick="redirectToEventphySignUp()">
+                            <i class="fas fa-external-link-alt"></i> Sign Up for Rewarder
+                        </button>
+                        <button class="eventphy-modal-btn eventphy-secondary-btn" onclick="closeEventphyModal()">
+                            <i class="fas fa-times"></i> Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(eventphyContainer);
+    }
+
+        // Check if current URL is for Eventphy page
+        const isEventphyPage = checkEventphyPageURL();
+        
+        // Only initialize main app if not on Eventphy page
+        if (!isEventphyPage) {
+            // Initialize main app components here
         }
-    }, 1000);
+    }, 1000); // Wait 1 second for Firebase to initialize
 });
 
-// Handle browser navigation
+// Handle browser navigation for Eventphy
 window.addEventListener('popstate', function(event) {
-    const isEventPage = checkEventPageURL();
-    if (!isEventPage) {
-        hideEventPage();
+    const isEventphyPage = checkEventphyPageURL();
+    if (!isEventphyPage) {
+        hideEventphyPage();
+        // Reinitialize main app if needed
     }
 });
+
 
        </script>
 
