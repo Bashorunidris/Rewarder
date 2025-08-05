@@ -13509,7 +13509,62 @@ rgb(81, 67, 55)rgb(81, 61, 55)rgb(81, 58, 55)rgb(184, 50, 32);
 #physicalEventSections {
     animation: slideInUp 0.5s ease-out;
 }
+tba-option {
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    border: 2px dashed #dee2e6;
+}
 
+.tba-checkbox {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.tba-checkbox input[type="checkbox"] {
+    margin-right: 8px;
+    transform: scale(1.2);
+}
+
+.tba-display {
+    text-align: center;
+    padding: 20px;
+    background-color: #e3f2fd;
+    border-radius: 8px;
+    border: 2px solid #2196f3;
+}
+
+.tba-message {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    color: #1976d2;
+}
+
+.tba-message i {
+    margin-right: 8px;
+    font-size: 18px;
+}
+
+.tba-ticket-note {
+    background-color: #fff3cd;
+    border: 1px solid #ffeaa7;
+    color: #856404;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.tba-ticket-note i {
+    margin-right: 8px;
+    color: #f39c12;
+}
 @keyframes slideInUp {
     from {
         opacity: 0;
@@ -25574,10 +25629,21 @@ rgb(81, 67, 55)rgb(81, 61, 55)rgb(81, 58, 55)rgb(184, 50, 32);
         <small class="form-help">Provide complete address including city, state for easy navigation</small>
     </div>
 
-    <!-- Event Scheduling -->
-    <div class="form-group" id="physicalSchedulingGroup">
-        <label>Event Schedule</label>
-        <div class="scheduling-section">
+           <!-- Event Scheduling -->
+<div class="form-group" id="physicalSchedulingGroup">
+    <label>Event Schedule</label>
+    <div class="scheduling-section">
+        <!-- TBA Option -->
+        <div class="tba-option">
+            <label class="tba-checkbox">
+                <input type="checkbox" id="physicalTBASchedule" onchange="toggleTBASchedule()">
+                <span>To Be Announced (TBA)</span>
+            </label>
+            <small class="form-help">Check this if event date and time are not yet confirmed</small>
+        </div>
+        
+        <!-- Regular Date/Time Fields -->
+        <div class="datetime-fields" id="physicalDateTimeFields">
             <div class="datetime-row">
                 <div class="datetime-field">
                     <label for="physicalStartDate">Start Date</label>
@@ -25603,7 +25669,16 @@ rgb(81, 67, 55)rgb(81, 61, 55)rgb(81, 58, 55)rgb(184, 50, 32);
                 <span>Duration: <strong id="physicalCalculatedDuration">-</strong></span>
             </div>
         </div>
+        
+        <!-- TBA Display -->
+        <div class="tba-display" id="physicalTBADisplay" style="display: none;">
+            <div class="tba-message">
+                <i class="fas fa-calendar-times"></i>
+                <span>Event date and time: <strong>To Be Announced</strong></span>
+            </div>
+        </div>
     </div>
+</div>
 
     <!-- Event Link -->
     <div class="form-group" id="physicalEventLinkGroup">
@@ -27586,26 +27661,26 @@ function initProfileModal() {
                 </div>
                 
                 <form id="profileForm">
-                    <div class="form-group">
+                    <div class="pform-group">
                         <label for="profileFullName">Full Name</label>
                         <input type="text" id="profileFullName" placeholder="Your full name">
                     </div>
                     
-                    <div class="form-group">
+                    <div class="pform-group">
                         <label for="profileEmail">Email</label>
                         <input type="email" id="profileEmail" readonly>
                     </div>
                     
-                    <div class="form-group">
+                    <div class="pform-group">
                         <label for="profileUserType">Account Type</label>
                         <select id="profileUserType">
-                            <option value="contestant">Contestant</option>
-                            <option value="voter">Voter</option>
-                            <option value="both">Both</option>
+                            <option value="contestant">Gender</option>
+                            <option value="voter">Male</option>
+                            <option value="both">Female</option>
                         </select>
                     </div>
                     
-                    <div class="form-group">
+                    <div class="pform-group">
                         <label for="profileBio">Bio</label>
                         <textarea id="profileBio" placeholder="Tell us about yourself" rows="3"></textarea>
                     </div>
@@ -27620,7 +27695,7 @@ function initProfileModal() {
                 <div id="changePasswordSection" class="change-password-section hidden">
                     <h3>Change Password</h3>
                     <form id="changePasswordForm">
-                        <div class="form-group">
+                        <div class="pform-group">
                             <label for="currentPassword">Current Password</label>
                             <div class="password-input">
                                 <input type="password" id="currentPassword" placeholder="Enter current password" required>
@@ -27628,7 +27703,7 @@ function initProfileModal() {
                             </div>
                         </div>
                         
-                        <div class="form-group">
+                        <div class="pform-group">
                             <label for="newPassword">New Password</label>
                             <div class="password-input">
                                 <input type="password" id="newPassword" placeholder="Enter new password" required>
@@ -27645,7 +27720,7 @@ function initProfileModal() {
                             </div>
                         </div>
                         
-                        <div class="form-group">
+                        <div class="pform-group">
                             <label for="confirmPassword">Confirm Password</label>
                             <div class="password-input">
                                 <input type="password" id="confirmPassword" placeholder="Confirm new password" required>
@@ -27792,8 +27867,7 @@ function initProfileModal() {
     .form-group select,
     .form-group textarea {
         width: 100%;
-        color:#333;
-        padding: 12px 15px;
+       padding: 12px 15px;
         border: 1px solid #ddd;
         border-radius: 8px;
         font-size: 0.95rem;
@@ -27812,6 +27886,41 @@ function initProfileModal() {
         cursor: not-allowed;
     }
 
+    .pform-group {
+        margin-bottom: 20px;
+    }
+
+    .pform-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+        color: #333;
+        font-size: 0.9rem;
+    }
+
+    .pform-group input,
+    .pform-group select,
+    .pform-group textarea {
+        width: 100%;
+        color:#333;
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 0.95rem;
+        transition: border-color 0.3s ease;
+    }
+
+    .pform-group input:focus,
+    .pform-group select:focus,
+    .pform-group textarea:focus {
+        border-color: #6c5ce7;
+        outline: none;
+    }
+
+    .pform-group input[readonly] {
+        background-color: #f8f9fa;
+        cursor: not-allowed;
+    }
     .profile-actions {
         display: flex;
         justify-content: space-between;
@@ -36473,24 +36582,15 @@ function handleEventCreationSuccess(eventData) {
     }, 2000);
 }
 
-
-   // Replace your existing validatePhysicalEventForm function with this
-function validatePhysicalEventForm() {
+                  
+ function validatePhysicalEventForm() {
     const eventName = document.getElementById('physicalEventName').value.trim();
     const categorySelect = document.getElementById('physicalEventCategory');
     const category = categorySelect.value;
     const description = document.getElementById('physicalEventDescription').value.trim();
     const location = document.getElementById('physicalEventLocation').value.trim();
     const eventLink = document.getElementById('physicalEventLink').value.trim();
-    const startDate = document.getElementById('physicalStartDate').value;
-    const startTime = document.getElementById('physicalStartTime').value;
-    const endDate = document.getElementById('physicalEndDate').value;
-    const endTime = document.getElementById('physicalEndTime').value;
-
-    // Debug logging
-    console.log('Category value:', category);
-    console.log('Category selected index:', categorySelect.selectedIndex);
-    console.log('Category selected text:', categorySelect.selectedOptions[0]?.text);
+    const isTBA = document.getElementById('physicalTBASchedule').checked;
 
     // Check required fields
     if (!eventName) {
@@ -36501,7 +36601,6 @@ function validatePhysicalEventForm() {
         return { isValid: false, message: 'Event name must be between 3-50 characters' };
     }
 
-    // FIXED: Better category validation
     if (!category || category === '' || category === 'select-category') {
         return { isValid: false, message: 'Please select an event category' };
     }
@@ -36510,7 +36609,6 @@ function validatePhysicalEventForm() {
         return { isValid: false, message: 'Event description is required' };
     }
 
-    // Check minimum word count
     const wordCount = description.split(/\s+/).length;
     if (wordCount < 5) {
         return { isValid: false, message: 'Description must contain at least 5 words' };
@@ -36524,38 +36622,46 @@ function validatePhysicalEventForm() {
         return { isValid: false, message: 'Event link is required' };
     }
 
-    if (!startDate || !startTime) {
-        return { isValid: false, message: 'Start date and time are required' };
+    // Only validate dates if not TBA
+    if (!isTBA) {
+        const startDate = document.getElementById('physicalStartDate').value;
+        const startTime = document.getElementById('physicalStartTime').value;
+        const endDate = document.getElementById('physicalEndDate').value;
+        const endTime = document.getElementById('physicalEndTime').value;
+
+        if (!startDate || !startTime) {
+            return { isValid: false, message: 'Start date and time are required (or check TBA)' };
+        }
+
+        if (!endDate || !endTime) {
+            return { isValid: false, message: 'End date and time are required (or check TBA)' };
+        }
+
+        // Check if end time is after start time
+        const startDateTime = new Date(`${startDate}T${startTime}`);
+        const endDateTime = new Date(`${endDate}T${endTime}`);
+            
+        if (endDateTime <= startDateTime) {
+            return { isValid: false, message: 'End time must be after start time' };
+        }
+
+        // Check if event is in the future
+        const now = new Date();
+        if (startDateTime <= now) {
+            return { isValid: false, message: 'Event must be scheduled for a future date' };
+        }
     }
 
-    if (!endDate || !endTime) {
-        return { isValid: false, message: 'End date and time are required' };
-    }
-
-    // Check if end time is after start time
-    const startDateTime = new Date(`${startDate}T${startTime}`);
-    const endDateTime = new Date(`${endDate}T${endTime}`);
-        
-    if (endDateTime <= startDateTime) {
-        return { isValid: false, message: 'End time must be after start time' };
-    }
-
-    // Check if event is in the future
-    const now = new Date();
-    if (startDateTime <= now) {
-        return { isValid: false, message: 'Event must be scheduled for a future date' };
-    }
-
-    // Check if at least one ticket type is added
-    if (physicalTicketTypes.length === 0) {
-        return { isValid: false, message: 'Please add at least one ticket type' };
+    // For TBA events, tickets are optional
+    // For regular events, at least one ticket is required
+    if (!isTBA && physicalTicketTypes.length === 0) {
+        return { isValid: false, message: 'Please add at least one ticket type or select TBA' };
     }
 
     return { isValid: true };
-}
+}          
 
 
-// Fix the collectPhysicalEventData function
 async function collectPhysicalEventData() {
     try {
         const eventName = document.getElementById('physicalEventName').value.trim();
@@ -36563,19 +36669,15 @@ async function collectPhysicalEventData() {
         const description = document.getElementById('physicalEventDescription').value.trim();
         const location = document.getElementById('physicalEventLocation').value.trim();
         const eventLink = document.getElementById('physicalEventLink').value.trim();
-        const startDate = document.getElementById('physicalStartDate').value;
-        const startTime = document.getElementById('physicalStartTime').value;
-        const endDate = document.getElementById('physicalEndDate').value;
-        const endTime = document.getElementById('physicalEndTime').value;
+        const isTBA = document.getElementById('physicalTBASchedule').checked;
 
-        // Handle background data with error handling
+        // Handle background data
         let background;
         try {
             background = await getPhysicalEventBackground();
             console.log('Background processed successfully:', background);
         } catch (error) {
             console.error('Error processing background:', error);
-            // Provide default background
             background = {
                 type: 'gradient',
                 color1: '#FF6B6B',
@@ -36584,14 +36686,28 @@ async function collectPhysicalEventData() {
             };
         }
 
-        // Create start and end DateTime objects
-        const startDateTime = new Date(`${startDate}T${startTime}`);
-        const endDateTime = new Date(`${endDate}T${endTime}`);
+        // Handle scheduling
+        let startDateTime, endDateTime, schedulingStatus;
+        
+        if (isTBA) {
+            startDateTime = 'TBA';
+            endDateTime = 'TBA';
+            schedulingStatus = 'TBA';
+        } else {
+            const startDate = document.getElementById('physicalStartDate').value;
+            const startTime = document.getElementById('physicalStartTime').value;
+            const endDate = document.getElementById('physicalEndDate').value;
+            const endTime = document.getElementById('physicalEndTime').value;
+            
+            startDateTime = new Date(`${startDate}T${startTime}`).toISOString();
+            endDateTime = new Date(`${endDate}T${endTime}`).toISOString();
+            schedulingStatus = 'scheduled';
+        }
 
-        // Process tickets data with error handling
+        // Process tickets data
         const processedTickets = physicalTicketTypes.map(ticket => {
             try {
-                return {
+                const ticketData = {
                     id: ticket.id,
                     name: ticket.name,
                     type: ticket.type,
@@ -36602,13 +36718,37 @@ async function collectPhysicalEventData() {
                     background: ticket.background || null,
                     createdAt: ticket.createdAt || new Date().toISOString()
                 };
+
+                // Set status based on TBA
+                if (isTBA) {
+                    ticketData.status = 'Coming Soon';
+                    ticketData.available = false; // Not available for purchase yet
+                } else {
+                    // Normal status based on ticket type
+                    switch(ticket.type) {
+                        case 'free':
+                            ticketData.status = 'Free Ticket';
+                            break;
+                        case 'paid':
+                            ticketData.status = `Paid Ticket - ₦${ticket.price.toLocaleString()}`;
+                            break;
+                        case 'donation':
+                            ticketData.status = ticket.suggestedAmount > 0 ? 
+                                `Donation Ticket - Suggested: ₦${ticket.suggestedAmount.toLocaleString()}` :
+                                'Donation Ticket - Pay What You Want';
+                            break;
+                    }
+                    ticketData.available = true;
+                }
+
+                return ticketData;
             } catch (error) {
                 console.error('Error processing ticket:', ticket, error);
                 return null;
             }
-        }).filter(ticket => ticket !== null); // Remove any failed tickets
+        }).filter(ticket => ticket !== null);
 
-        // Get user ID with error handling
+        // Get user ID
         let creatorId;
         try {
             creatorId = await getCurrentUserId();
@@ -36624,8 +36764,10 @@ async function collectPhysicalEventData() {
             location,
             eventLink,
             background,
-            startDateTime: startDateTime.toISOString(),
-            endDateTime: endDateTime.toISOString(),
+            startDateTime,
+            endDateTime,
+            schedulingStatus, // 'TBA' or 'scheduled'
+            isTBA, // boolean flag
             tickets: processedTickets,
             eventType: 'physical',
             ticketsId: [],
@@ -36633,12 +36775,9 @@ async function collectPhysicalEventData() {
             physicalEventId: null,
             createdAt: new Date().toISOString(),
             updatedAt: new Date().toISOString(),
-            status: 'active',
+            status: isTBA ? 'coming_soon' : 'active',
             sponsors: physicalEventSponsors || [],
-         
             totalRevenue: 0
-
-            
         };
     } catch (error) {
         console.error('Error in collectPhysicalEventData:', error);
@@ -36646,6 +36785,52 @@ async function collectPhysicalEventData() {
     }
 }
 
+
+// TBA Schedule Toggle
+function toggleTBASchedule() {
+    const tbaCheckbox = document.getElementById('physicalTBASchedule');
+    const dateTimeFields = document.getElementById('physicalDateTimeFields');
+    const tbaDisplay = document.getElementById('physicalTBADisplay');
+    const ticketConfigGroup = document.getElementById('physicalTicketConfigGroup');
+    
+    if (tbaCheckbox.checked) {
+        // Hide date/time fields
+        dateTimeFields.style.display = 'none';
+        tbaDisplay.style.display = 'block';
+        
+        // Clear date/time values
+        document.getElementById('physicalStartDate').value = '';
+        document.getElementById('physicalStartTime').value = '';
+        document.getElementById('physicalEndDate').value = '';
+        document.getElementById('physicalEndTime').value = '';
+        document.getElementById('physicalDurationDisplay').style.display = 'none';
+        
+        // Update ticket configuration note
+        const ticketNote = document.createElement('div');
+        ticketNote.id = 'tbaTicketNote';
+        ticketNote.className = 'tba-ticket-note';
+        ticketNote.innerHTML = `
+            <i class="fas fa-info-circle"></i>
+            <span>Tickets for TBA events will show as "Coming Soon" until date is confirmed</span>
+        `;
+        
+        // Add note to ticket section if not already there
+        if (ticketConfigGroup && !document.getElementById('tbaTicketNote')) {
+            ticketConfigGroup.insertBefore(ticketNote, ticketConfigGroup.firstChild);
+        }
+        
+    } else {
+        // Show date/time fields
+        dateTimeFields.style.display = 'block';
+        tbaDisplay.style.display = 'none';
+        
+        // Remove TBA ticket note
+        const existingNote = document.getElementById('tbaTicketNote');
+        if (existingNote) {
+            existingNote.remove();
+        }
+    }
+}
 // Fix the getPhysicalEventBackground function with better error handling
 async function getPhysicalEventBackground() {
     try {
@@ -37543,7 +37728,16 @@ function resetPhysicalEventForm() {
     document.getElementById('physicalStartTime').value = '';
     document.getElementById('physicalEndDate').value = '';
     document.getElementById('physicalEndTime').value = '';
+    // Reset TBA option
+    document.getElementById('physicalTBASchedule').checked = false;
+    document.getElementById('physicalDateTimeFields').style.display = 'block';
+    document.getElementById('physicalTBADisplay').style.display = 'none';
     
+    // Remove TBA ticket note if exists
+    const existingNote = document.getElementById('tbaTicketNote');
+    if (existingNote) {
+        existingNote.remove();
+    }
     // Reset word count
     document.getElementById('physicalWordCount').textContent = '0';
     
