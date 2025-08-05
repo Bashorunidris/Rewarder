@@ -219,32 +219,6 @@
         font-size: 0.9rem;
     }
     
-    .form-group {
-        margin-bottom: 20px;
-    }
-    
-    .form-group label {
-        display: block;
-        margin-bottom: 8px;
-        font-weight: 500;
-        font-size: 0.9rem;
-    }
-    
-    .form-group input,
-    .form-group select {
-        width: 100%;
-        padding: 12px 15px;
-        border: 1px solid var(--border-color);
-        border-radius: 8px;
-        font-size: 1rem;
-        transition: all 0.3s ease;
-    }
-    
-    .form-group input:focus,
-    .form-group select:focus {
-        border-color: var(--primary-color);
-        outline: none;
-    }
     
     .password-input {
         position: relative;
@@ -657,26 +631,8 @@
             font-size: 0.9rem;
             margin-bottom: 20px;
         }
-        
-        .form-group {
-            margin-bottom: 15px;
-        }
-        
-        .form-group label {
-            font-size: 0.85rem;
-        }
-        
-        .form-group input,
-        .form-group select {
-            padding: 10px 12px;
-            font-size: 0.9rem;
-        }
-        
-        .form-options {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 10px;
-        }
+       
+       
         
         .auth-btn {
             padding: 12px;
@@ -697,11 +653,6 @@
             font-size: 16px !important; /* Prevents zoom on focus in iOS */
         }
         
-        .form-group input,
-        .form-group select {
-            -webkit-appearance: none; /* Removes default styling */
-            border-radius: 8px;
-        }
         
         .auth-btn {
             -webkit-appearance: none;
@@ -731,16 +682,7 @@
             background-color: #444;
         }
         
-        .form-group input,
-        .form-group select {
-            background-color: #2a2a42;
-            color: var(--text-color);
-        }
-        
-        .form-group input::placeholder,
-        .form-group select::placeholder {
-            color: #777;
-        }
+      
     }
     
     /* Animations */
@@ -4002,47 +3944,8 @@ body {
     padding: 0 20px 20px;
 }
 
-.form-group {
-    margin-bottom: 16px;
 }
 
-.form-group label {
-    display: block;
-    margin-bottom: 6px;
-    font-weight: 500;
-    color: #0c0000;
-    font-size: 0.9rem;
-}
-
-.form-group input, 
-.form-group select, 
-.form-group textarea {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-size: 16px; /* Prevent zoom on iOS */
-    background-color: #1a1a2e;
-    transition: border-color 0.3s;
-    box-sizing: border-box;
-    -webkit-appearance: none; /* Remove default styling on iOS */
-    appearance: none;
-    
-   
-}
-
-.form-group input:focus, 
-.form-group select:focus, 
-.form-group textarea:focus {
-    border-color: #6c5ce7;
-    outline: none;
-    background-color: #fff;
-}
-
-.form-group textarea {
-    resize: vertical;
-    min-height: 80px;
-}
 
 /* Password input styling */
 .password-input {
@@ -4212,11 +4115,6 @@ body {
         padding: 12px 16px;
     }
     
-    .form-group input, 
-    .form-group select, 
-    .form-group textarea {
-        padding: 14px 12px;
-    }
 }
 
 /* Fix for iOS input zoom */
@@ -27867,7 +27765,8 @@ function initProfileModal() {
     .form-group select,
     .form-group textarea {
         width: 100%;
-       padding: 12px 15px;
+        color:#ffffff;
+        padding: 12px 15px;
         border: 1px solid #ddd;
         border-radius: 8px;
         font-size: 0.95rem;
@@ -53472,58 +53371,6 @@ const addTeamModal = {
             display: flex;
             gap: 15px;
             margin-bottom: 15px;
-        }
-
-        .form-group {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .form-group label {
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 14px;
-            font-weight: 500;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .form-group label .required {
-            color: #ff6b6b;
-            font-size: 12px;
-        }
-
-        .form-group input,
-        .form-group textarea,
-        .form-group select {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
-            padding: 12px 15px;
-            color: white;
-            font-size: 14px;
-            transition: all 0.3s ease;
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus,
-        .form-group select:focus {
-            outline: none;
-            background: rgba(255, 255, 255, 0.15);
-            border-color: rgba(255, 255, 255, 0.4);
-            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
-        }
-
-        .form-group input::placeholder,
-        .form-group textarea::placeholder {
-            color: rgba(255, 255, 255, 0.5);
-        }
-
-        .form-group textarea {
-            resize: vertical;
-            min-height: 80px;
         }
 
         .color-input-wrapper {
