@@ -31436,8 +31436,8 @@ function createAdvancedPhysicalEventCard(eventData) {
             ${category}
         </div>
         
-       <div class="advanced-likes-badge"  style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.3); color: #666; border: none; width: 35px; height: 35px; border-radius: 50%; cursor: not-allowed; display: flex; align-items: center; justify-content: center; z-index: 4; opacity: 0.5;"' : `onclick="openSharephyModal('${eventData.eventLink || eventData.id || eventData.physicalEventId}')" style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.6); color: white; border: none; width: 35px; height: 35px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 4; transition: all 0.3s ease;"`}>
-           
+       <div class="advanced-likes-badge"  style="background:}">
+       
        <button onclick="togglePhyCategoryEventLike('${eventData.id}')" style="background: none; border: none; color: ${userLiked ? '#e74c3c' : '#fff'}; cursor: pointer; font-size: 18px; padding: 0; display: flex; align-items: center;">
                         <i class="${userLiked ? 'fas' : 'far'} fa-heart" id="phy-heart-${eventData.id}"></i>
                     </button>
