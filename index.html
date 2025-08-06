@@ -1402,7 +1402,7 @@ body {
 /* Media Banner Styles */
 .media2-banner-container {
     width: 100%;
-    height: 70px;
+    height: 150px;
     overflow: hidden;
     position: relative;
     
@@ -31436,8 +31436,9 @@ function createAdvancedPhysicalEventCard(eventData) {
             ${category}
         </div>
         
-       <div class="advanced-likes-badge"style="position: absolute; top: 12px; right: 12px; background: rgba(0,0,0,0.7); border-radius: 25px; padding: 10px 15px; display: flex; align-items: center; gap: 10px; backdrop-filter: blur(5px);">
-                    <button onclick="togglePhyCategoryEventLike('${eventData.id}')" style="background: none; border: none; color: ${userLiked ? '#e74c3c' : '#fff'}; cursor: pointer; font-size: 18px; padding: 0; display: flex; align-items: center;">
+       <div class="advanced-likes-badge"  style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.3); color: #666; border: none; width: 35px; height: 35px; border-radius: 50%; cursor: not-allowed; display: flex; align-items: center; justify-content: center; z-index: 4; opacity: 0.5;"' : `onclick="openSharephyModal('${eventData.eventLink || eventData.id || eventData.physicalEventId}')" style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.6); color: white; border: none; width: 35px; height: 35px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 4; transition: all 0.3s ease;"`}>
+           
+       <button onclick="togglePhyCategoryEventLike('${eventData.id}')" style="background: none; border: none; color: ${userLiked ? '#e74c3c' : '#fff'}; cursor: pointer; font-size: 18px; padding: 0; display: flex; align-items: center;">
                         <i class="${userLiked ? 'fas' : 'far'} fa-heart" id="phy-heart-${eventData.id}"></i>
                     </button>
                     <span style="color: white; font-size: 14px; font-weight: 600;" id="phy-likes-${eventData.id}">${likesCount}</span>
