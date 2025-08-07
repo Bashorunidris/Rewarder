@@ -32,7 +32,746 @@
         color: var(--text-color);
         line-height: 1.6;
     }
-    
+  
+ @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+.openpage {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 9999;
+    background: radial-gradient(circle at 20% 80%, #1a1a2e 0%, #16213e 25%, #0f3460 50%, #1a1a2e 100%);
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+    overflow-y: auto;
+    overflow-x: hidden;
+    font-family: 'Inter', sans-serif;
+}
+
+.openpage::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 10% 20%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 90% 80%, rgba(108, 92, 231, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(253, 121, 168, 0.08) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* Floating Particles */
+.openpage-particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.particle {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: linear-gradient(45deg, #ffd700, #6c5ce7, #fd79a8);
+    border-radius: 50%;
+    animation: float 15s infinite linear;
+    opacity: 0.6;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.8;
+    }
+    90% {
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(-10vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+.openpage.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+/* Glassmorphism Header */
+.openpage-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10000;
+    background: rgba(26, 26, 46, 0.1);
+    backdrop-filter: blur(20px) saturate(180%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1.5rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.openpage-logo-section {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.openpage-logo {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #ffd700 0%, #ff6b6b 50%, #6c5ce7 100%);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: white;
+    box-shadow: 
+        0 20px 40px rgba(255, 215, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    animation: logoGlow 3s ease-in-out infinite alternate;
+    position: relative;
+    overflow: hidden;
+}
+
+.openpage-logo::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(transparent, rgba(255, 255, 255, 0.3), transparent);
+    animation: logoSpin 4s linear infinite;
+}
+
+@keyframes logoGlow {
+    0% { box-shadow: 0 20px 40px rgba(255, 215, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3); }
+    100% { box-shadow: 0 30px 60px rgba(255, 215, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.5); }
+}
+
+@keyframes logoSpin {
+    100% { transform: rotate(360deg); }
+}
+
+.openpage-app-name {
+    font-size: 2.5rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, #fff 0%, #ffd700 50%, #6c5ce7 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+    letter-spacing: -1px;
+    position: relative;
+}
+
+.openpage-theme-toggle {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50px;
+    padding: 0.8rem 1.5rem;
+    color: #ffffff;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    font-size: 1rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.openpage-theme-toggle::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.6s;
+}
+
+.openpage-theme-toggle:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 20px 40px rgba(108, 92, 231, 0.4);
+    background: rgba(108, 92, 231, 0.2);
+}
+
+.openpage-theme-toggle:hover::before {
+    left: 100%;
+}
+
+.openpage-container {
+    width: 100%;
+    min-height: 100vh;
+    padding-bottom: 2rem;
+    position: relative;
+}
+
+/* Insane Slideshow */
+.openpage-slideshow {
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+    margin-top: 90px;
+}
+
+.openpage-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, 
+        #1a1a2e 0%, 
+        #16213e 25%, 
+        #0f3460 50%, 
+        #1a1a2e 75%,
+        #16213e 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: all 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: scale(1.1);
+}
+
+.openpage-slide.active {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.openpage-slide-content {
+    text-align: center;
+    color: #ffffff;
+    max-width: 900px;
+    padding: 3rem;
+    position: relative;
+    z-index: 10;
+}
+
+.openpage-slide-title {
+    font-size: 5.5rem;
+    font-weight: 900;
+    margin-bottom: 2rem;
+    background: linear-gradient(135deg, #fff 0%, #ffd700 25%, #6c5ce7 50%, #fd79a8 75%, #fff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 0 50px rgba(255, 215, 0, 0.3);
+    animation: titleGlow 4s ease-in-out infinite alternate;
+    letter-spacing: -2px;
+    line-height: 1.1;
+}
+
+@keyframes titleGlow {
+    0% { 
+        text-shadow: 0 0 20px rgba(255, 215, 0, 0.3), 0 0 40px rgba(108, 92, 231, 0.2);
+    }
+    100% { 
+        text-shadow: 0 0 40px rgba(255, 215, 0, 0.6), 0 0 80px rgba(108, 92, 231, 0.4);
+    }
+}
+
+.openpage-slide-caption {
+    font-size: 1.8rem;
+    font-weight: 400;
+    opacity: 0.9;
+    margin-bottom: 3rem;
+    line-height: 1.6;
+    letter-spacing: 0.5px;
+}
+
+.openpage-slide-slogan {
+    font-size: 3.5rem;
+    font-weight: 800;
+    background: linear-gradient(45deg, #ffd700 0%, #ff6b6b 25%, #6c5ce7 50%, #fd79a8 75%, #ffd700 100%);
+    background-size: 400% 400%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientShift 3s ease-in-out infinite;
+    margin: 3rem 0;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+}
+
+@keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+/* Crazy Get Started Button */
+.openpage-get-started {
+    background: linear-gradient(135deg, #6c5ce7 0%, #fd79a8 50%, #ffd700 100%);
+    background-size: 300% 300%;
+    color: #ffffff;
+    padding: 1.5rem 4rem;
+    border: none;
+    border-radius: 50px;
+    font-size: 1.4rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 
+        0 20px 40px rgba(108, 92, 231, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    margin-top: 3rem;
+    position: relative;
+    overflow: hidden;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    animation: buttonPulse 2s ease-in-out infinite alternate;
+}
+
+.openpage-get-started::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(transparent, rgba(255, 255, 255, 0.3), transparent);
+    animation: buttonSpin 3s linear infinite;
+}
+
+.openpage-get-started::after {
+    content: 'Enter the Revolution';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: all 0.3s ease;
+    font-weight: 800;
+}
+
+.openpage-get-started:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 
+        0 30px 60px rgba(108, 92, 231, 0.6),
+        0 0 100px rgba(255, 215, 0, 0.3);
+    background-position: 100% 0;
+}
+
+.openpage-get-started:hover::after {
+    opacity: 1;
+}
+
+@keyframes buttonPulse {
+    0% { 
+        box-shadow: 0 20px 40px rgba(108, 92, 231, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    }
+    100% { 
+        box-shadow: 0 25px 50px rgba(108, 92, 231, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    }
+}
+
+@keyframes buttonSpin {
+    100% { transform: rotate(360deg); }
+}
+
+/* Premium Sections */
+.openpage-section {
+    padding: 8rem 3rem;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(100px);
+    transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.openpage-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.5), transparent);
+}
+
+.openpage-section.animate {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.openpage-quotes {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 50%, #f8f9fa 100%);
+    color: #1a1a2e;
+    position: relative;
+}
+
+.openpage-quotes::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 30% 70%, rgba(108, 92, 231, 0.05) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+.openpage-quotes h2 {
+    font-size: 4rem;
+    font-weight: 900;
+    margin-bottom: 4rem;
+    background: linear-gradient(135deg, #1a1a2e 0%, #6c5ce7 50%, #1a1a2e 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -1px;
+}
+
+.openpage-quote-item {
+    font-size: 2.2rem;
+    font-weight: 600;
+    margin: 3rem auto;
+    max-width: 700px;
+    color: #0f3460;
+    opacity: 0;
+    transform: translateX(-50px);
+    transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.openpage-quote-item::before {
+    content: '"';
+    position: absolute;
+    top: -10px;
+    left: 20px;
+    font-size: 8rem;
+    color: rgba(108, 92, 231, 0.1);
+    font-weight: 900;
+    line-height: 1;
+}
+
+.openpage-quote-item.animate {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.openpage-quote-item:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
+}
+
+/* Sponsors Section */
+.openpage-sponsors {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 50%, #ffffff 100%);
+    color: #1a1a2e;
+}
+
+.openpage-sponsors h2 {
+    font-size: 4rem;
+    font-weight: 900;
+    margin-bottom: 4rem;
+    background: linear-gradient(135deg, #1a1a2e 0%, #fd79a8 50%, #1a1a2e 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.openpage-sponsors-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 3rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.openpage-sponsor-logo {
+    width: 180px;
+    height: 120px;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    box-shadow: 
+        0 20px 40px rgba(26, 26, 46, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    color: #0f3460;
+    font-weight: 700;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.openpage-sponsor-logo::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(transparent, rgba(108, 92, 231, 0.1), transparent);
+    transition: all 0.6s ease;
+    opacity: 0;
+}
+
+.openpage-sponsor-logo:hover {
+    transform: translateY(-15px) scale(1.05);
+    box-shadow: 
+        0 40px 80px rgba(26, 26, 46, 0.2),
+        0 0 100px rgba(108, 92, 231, 0.1);
+}
+
+.openpage-sponsor-logo:hover::before {
+    animation: spin 1s linear infinite;
+    opacity: 1;
+}
+
+/* Reviews Section - Next Level */
+.openpage-reviews {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 25%, #f8f9fa 50%, #e9ecef 75%, #f8f9fa 100%);
+    color: #1a1a2e;
+}
+
+.openpage-reviews h2 {
+    font-size: 4rem;
+    font-weight: 900;
+    margin-bottom: 4rem;
+    background: linear-gradient(135deg, #1a1a2e 0%, #6c5ce7 25%, #fd79a8 50%, #ffd700 75%, #1a1a2e 100%);
+    background-size: 400% 400%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientShift 4s ease-in-out infinite;
+}
+
+.openpage-reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 3rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.openpage-review-card {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(20px);
+    padding: 3rem;
+    border-radius: 30px;
+    box-shadow: 
+        0 30px 60px rgba(26, 26, 46, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0;
+    transform: translateY(50px) rotateX(15deg);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.openpage-review-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(108, 92, 231, 0.1), transparent);
+    transition: left 0.8s ease;
+}
+
+.openpage-review-card.animate {
+    opacity: 1;
+    transform: translateY(0) rotateX(0deg);
+}
+
+.openpage-review-card:hover {
+    transform: translateY(-20px) scale(1.03);
+    box-shadow: 
+        0 50px 100px rgba(26, 26, 46, 0.2),
+        0 0 100px rgba(108, 92, 231, 0.1);
+}
+
+.openpage-review-card:hover::before {
+    left: 100%;
+}
+
+.openpage-review-text {
+    font-size: 1.4rem;
+    line-height: 1.8;
+    margin-bottom: 2rem;
+    color: #0f3460;
+    font-style: italic;
+    font-weight: 500;
+}
+
+.openpage-review-author {
+    font-weight: 800;
+    font-size: 1.2rem;
+    background: linear-gradient(135deg, #1a1a2e 0%, #6c5ce7 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Insane Action Buttons */
+.openpage-actions {
+    padding: 8rem 3rem;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 25%, #0f3460 50%, #1a1a2e 75%, #16213e 100%);
+    color: #ffffff;
+    position: relative;
+}
+
+.openpage-actions::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 20% 20%, rgba(108, 92, 231, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(253, 121, 168, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+.openpage-actions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 4rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 10;
+}
+
+.openpage-action-button {
+    background: linear-gradient(135deg, #ffd700 0%, #ff6b6b 25%, #6c5ce7 50%, #fd79a8 75%, #ffd700 100%);
+    background-size: 400% 400%;
+    color: #1a1a2e;
+    padding: 3rem;
+    border-radius: 30px;
+    text-decoration: none;
+    font-size: 1.8rem;
+    font-weight: 800;
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 
+        0 30px 60px rgba(255, 215, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    display: block;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    animation: actionButtonFloat 6s ease-in-out infinite;
+    transform-style: preserve-3d;
+}
+
+.openpage-action-button::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(transparent, rgba(255, 255, 255, 0.3), transparent);
+    animation: actionButtonSpin 4s linear infinite;
+}
+
+.openpage-action-button::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transition: left 0.8s ease;
+}
+
+.openpage-action-button:hover {
+    transform: translateY(-20px) scale(1.05) rotateX(-10deg);
+    box-shadow: 
+        0 50px 100px rgba(255, 215, 0, 0.5),
+        0 0 150px rgba(108, 92, 231, 0.3);
+    background-position: 100% 0;
+    animation-play-state: paused;
+}
+
+.openpage-action-button:hover::after {
+    left: 100%;
+}
+
+@keyframes actionButtonFloat {
+    0%, 100% { transform: translateY(0px); }
+    25% { transform: translateY(-10px); }
+    50% { transform: translateY(-5px); }
+    75% { transform: translateY(-15px); }
+}
+
+@keyframes actionButtonSpin {
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes spin {
+    100% { transform: rotate(360deg); }
+}
+
+/* Hide main app initially */
+#mainAppContainer {
+    display: none;
+}
+
+#mainAppContainer.show {
+    display: flex;
+}
+
+/* Responsive - Still Crazy */
+@media (max-width: 768px) {
+    .openpage-slide-title { font-size: 3.5rem; }
+    .openpage-slide-caption { font-size: 1.3rem; }
+    .openpage-slide-slogan { font-size: 2rem; }
+    .openpage-quotes h2, .openpage-sponsors h2, .openpage-reviews h2 { font-size: 2.5rem; }
+    .openpage-quote-item { font-size: 1.5rem; }
+    .openpage-action-button { font-size: 1.3rem; padding: 2rem; }
+}
+
+@media (max-width: 480px) {
+    .openpage-slide-title { font-size: 2.5rem; }
+    .openpage-slide-slogan { font-size: 1.5rem; }
+}
+
+
     .container {
         min-height: 100vh;
         display: flex;
@@ -3045,8 +3784,7 @@ body {
     top: 60px;
     left: 16px;
     padding: 8px 12px;
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 16px;
+   border-radius: 16px;
     font-size: 0.7rem;
     font-weight: 600;
     backdrop-filter: blur(10px);
@@ -19594,6 +20332,118 @@ tba-option {
         </div>
     </div>
     
+     <div class="openpage" id="openingPage">
+    <!-- Floating Particles -->
+    <div class="openpage-particles" id="particlesContainer"></div>
+    
+    <!-- Glassmorphism Header -->
+    <header class="openpage-header">
+        <div class="openpage-logo-section">
+            <div class="openpage-logo">R</div>
+            <h1 class="openpage-app-name">Rewarder</h1>
+        </div>
+        <button class="openpage-theme-toggle" onclick="toggleOpenPageTheme()">
+            <span id="openpage-theme-icon">🌙</span>
+            <span id="openpage-theme-text">Premium Mode</span>
+        </button>
+    </header>
+
+    <div class="openpage-container">
+        <!-- Insane Slideshow -->
+        <section class="openpage-slideshow">
+            <div class="openpage-slide active">
+                <div class="openpage-slide-content">
+                    <h2 class="openpage-slide-title">Welcome to Rewarder</h2>
+                    <p class="openpage-slide-caption">The Future of Event Management Has Arrived</p>
+                    <div class="openpage-slide-slogan">Life of the Party</div>
+                    <button class="openpage-get-started" onclick="enterApp()">
+                        <span>Get Started</span>
+                    </button>
+                </div>
+            </div>
+            <div class="openpage-slide">
+                <div class="openpage-slide-content">
+                    <h2 class="openpage-slide-title">Create Epic Events</h2>
+                    <p class="openpage-slide-caption">From Underground Battles to Stadium Concerts</p>
+                    <div class="openpage-slide-slogan">Life of the Party</div>
+                    <button class="openpage-get-started" onclick="enterApp()">
+                        <span>Join Revolution</span>
+                    </button>
+                </div>
+            </div>
+            <div class="openpage-slide">
+                <div class="openpage-slide-content">
+                    <h2 class="openpage-slide-title">100K+ Users Waiting</h2>
+                    <p class="openpage-slide-caption">Be Part of the Most Anticipated Launch</p>
+                    <div class="openpage-slide-slogan">Life of the Party</div>
+                    <button class="openpage-get-started" onclick="enterApp()">
+                        <span>Enter Now</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Premium Quotes -->
+        <section class="openpage-section openpage-quotes">
+            <h2>What Legends Say</h2>
+            <div class="openpage-quote-item">"This isn't just an app, it's a cultural revolution."</div>
+            <div class="openpage-quote-item">"Rewarder made our underground event legendary."</div>
+            <div class="openpage-quote-item">"100K users can't be wrong - this is the future."</div>
+        </section>
+
+        <!-- Elite Sponsors -->
+        <section class="openpage-section openpage-sponsors">
+            <h2>Backed by Giants</h2>
+            <div class="openpage-sponsors-grid">
+                <div class="openpage-sponsor-logo">SPOTIFY</div>
+                <div class="openpage-sponsor-logo">APPLE</div>
+                <div class="openpage-sponsor-logo">NETFLIX</div>
+                <div class="openpage-sponsor-logo">AMAZON</div>
+                <div class="openpage-sponsor-logo">META</div>
+                <div class="openpage-sponsor-logo">GOOGLE</div>
+            </div>
+        </section>
+
+        <!-- Insane Reviews -->
+        <section class="openpage-section openpage-reviews">
+            <h2>100K+ Users Speak</h2>
+            <div class="openpage-reviews-grid">
+                <div class="openpage-review-card">
+                    <p class="openpage-review-text">"I've been waiting 6 months for this update. Finally, an app that understands creators!"</p>
+                    <p class="openpage-review-author">- Lagos Creative Director</p>
+                </div>
+                <div class="openpage-review-card">
+                    <p class="openpage-review-text">"This update is insane! The UI is so smooth, I can't stop using it."</p>
+                    <p class="openpage-review-author">- FUTA Tech Student</p>
+                </div>
+                <div class="openpage-review-card">
+                    <p class="openpage-review-text">"My event sold out in 2 minutes using Rewarder. This is next level!"</p>
+                    <p class="openpage-review-author">- Abuja Event Mogul</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Epic Action Buttons -->
+        <section class="openpage-section openpage-actions">
+            <div class="openpage-actions-grid">
+                <div class="openpage-action-button" onclick="enterApp()">
+                    🎪 Create Epic Events
+                </div>
+                <div class="openpage-action-button" onclick="enterApp()">
+                    💎 Sell Premium Products
+                </div>
+                <div class="openpage-action-button" onclick="enterApp()">
+                    🚀 Get Million Dollar Sponsorship
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+
+
+
+
     <div class="container" id="mainAppContainer">
         
         <div class="split-screen">
@@ -20350,17 +21200,16 @@ tba-option {
         <div class="media2-banner-track">
            <div class="media2-item image-item">
              
-            <img src="https://i.ibb.co/Tx9F0qws/Dark-Blue-Purple-White-Modern-Gradient-Football-Match-Day-Instagram-Story-20250804-052758-0000.png" alt="Dark-Blue-Purple-White-Modern-Gradient-Football-Match-Day-Instagram-Story-20250804-052758-0000" border="0">  
-           </div> 
-            <div class="media2-item image-item">
-             
-            <!-- Image Items -->
-              <img src="https://i.ibb.co/0j7x3p83/Dark-Blue-Purple-White-Modern-Gradient-Football-Match-Day-Instagram-Story-20250804-060142-0000.png" alt="Dark-Blue-Purple-White-Modern-Gradient-Football-Match-Day-Instagram-Story-20250804-060142-0000" border="0">
-              </div>    
-           
+           <img src="https://i.ibb.co/5hrNmSgM/Fast-Withdrawal-s-20250806-044026-0000.png" alt="Fast-Withdrawal-s-20250806-044026-0000" border="0"><img src="https://i.ibb.co/DH8J39my/Fast-Withdrawal-s-20250806-042833-0000.png" alt="Fast-Withdrawal-s-20250806-042833-0000" border="0">
+        
             
            
         </div>
+             <div class="media2-item image-item">
+          
+            <!-- Image Items -->
+              <img src="https://i.ibb.co/0j7x3p83/Dark-Blue-Purple-White-Modern-Gradient-Football-Match-Day-Instagram-Story-20250804-060142-0000.png" alt="Dark-Blue-Purple-White-Modern-Gradient-Football-Match-Day-Instagram-Story-20250804-060142-0000" border="0">
+              </div>   
     </div>
         
 
@@ -21071,139 +21920,7 @@ tba-option {
 </div>
 
    
-                   
-<div id="profileModal" class="profile-modal">
-    <div class="profile-modal-content">
-        <div class="profile-modal-header">
-            <h2>My Profile</h2>
-            <button class="close-profile">&times;</button>
-        </div>
-        
-        <!-- Scrollable Content Wrapper -->
-        <div class="profile-modal-body">
-            <!-- Emoji Avatar Section (replaces the profile image section) -->
-            <div class="emoji-avatar-wrapper" id="emojiAvatarWrapper">
-                <div class="current-emoji-avatar" id="currentEmojiAvatar">🤖</div>
-                <div class="emoji-selector" id="emojiSelector">
-                    <div class="emoji-option" data-emoji="🎶">🎶</div>
-                    <div class="emoji-option" data-emoji="🤖">🤖</div>
-                    <div class="emoji-option" data-emoji="🕸️">🕸️</div>
-                    <div class="emoji-option" data-emoji="🛼">🛼</div>
-                    <div class="emoji-option" data-emoji="🎨">🎨</div>
-                    <div class="emoji-option" data-emoji="🦺">🦺</div>
-                    <div class="emoji-option" data-emoji="⛑️">⛑️</div>
-                </div>
-            </div>
-            
-            <form id="profileForm">
-                <div class="form-group">
-                    <label for="profileFullName">Full Name</label>
-                    <input type="text" id="profileFullName" placeholder="Your full name">
-                </div>
-                
-                <div class="form-group">
-                    <label for="profileEmail">Email</label>
-                    <input type="email" id="profileEmail" readonly>
-                </div>
-                
-                <div class="form-group">
-                    <label for="profileUserType">Gender</label>
-                    <select id="profileUserType">
-                        <option value="contestant">Gender</option>
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label for="profileBio">Bio</label>
-                    <textarea id="profileBio" placeholder="Tell us about yourself" rows="3"></textarea>
-                </div>
-                
-                <div class="form-group">
-                    <a href="#" id="logoutBtn" class="logout-btn">
-                        <i class="fas fa-sign-out-alt"></i>
-                        <span>Logout</span>
-                    </a>
-                    
-                    <li class="menu-item">
-                       <a href="#" id="termsBtn" style="
-                    color: rgba(255, 255, 255, 0.6);
-                    text-decoration: none;
-                    font-size: 14px;
-                    transition: color 0.3s ease;
-                " onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255, 255, 255, 0.6)'">
-                    Terms & Condition
-                </a>
-              
-                    </li>
-                    
-                    <li class="menu-item">
-                        <a href="#" id="privacyBtn" style="
-                    color: rgba(255, 255, 255, 0.6);
-                    text-decoration: none;
-                    font-size: 14px;
-                    transition: color 0.3s ease;
-                " onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255, 255, 255, 0.6)'">
-                    Privacy Policy
-                </a>
-                
-                    </li>
-                </div>
-
-                <div class="profile-actions">
-                    <button type="button" id="changePasswordBtn" class="secondary-btn">Change Password</button>
-                    <button type="submit" id="saveProfileBtn" class="primary-btn">Save Changes</button>
-                </div>
-            </form>
-            
-            <!-- Change Password Section (Hidden by default) -->
-            <div id="changePasswordSection" class="change-password-section hidden">
-                <h3>Change Password</h3>
-                <form id="changePasswordForm">
-                    <div class="form-group">
-                        <label for="currentPassword">Current Password</label>
-                        <div class="password-input">
-                            <input type="password" id="currentPassword" placeholder="Enter current password" required>
-                            <i class="fas fa-eye-slash toggle-password"></i>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="newPassword">New Password</label>
-                        <div class="password-input">
-                            <input type="password" id="newPassword" placeholder="Enter new password" required>
-                            <i class="fas fa-eye-slash toggle-password"></i>
-                        </div>
-                        <div class="password-strength">
-                            <div class="strength-meter">
-                                <div class="strength-segment"></div>
-                                <div class="strength-segment"></div>
-                                <div class="strength-segment"></div>
-                                <div class="strength-segment"></div>
-                            </div>
-                            <span class="strength-text">Password strength</span>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="confirmPassword">Confirm Password</label>
-                        <div class="password-input">
-                            <input type="password" id="confirmPassword" placeholder="Confirm new password" required>
-                            <i class="fas fa-eye-slash toggle-password"></i>
-                        </div>
-                    </div>
-                    
-                    <div class="profile-actions">
-                        <button type="button" id="cancelPasswordChange" class="secondary-btn">Cancel</button>
-                        <button type="submit" class="primary-btn">Update Password</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
+     
 <!-- Sidebar Menu -->
 <div class="sidebar-menu" id="sidebarMenu">
     <div class="sidebar-header">
@@ -24587,94 +25304,86 @@ googleBtns.forEach(btn => {
 });
 
 // Email/Password Sign In
-
 if (loginForm) {
-  loginForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    const email = document.getElementById('loginEmail').value;
-    const password = document.getElementById('loginPassword').value;
-    
-    // Basic validation
-    if (!email || !password) {
-      showToast('Please enter your email and password', 'error');
-      return;
-    }
-    
-    const rememberMe = document.getElementById('remember') ? document.getElementById('remember').checked : false;
-    
-    // Show loading animation
-    showAuthLoading('Verifying your credentials...');
-    
-    // Show loading state on button
-    const submitBtn = this.querySelector('button[type="submit"]');
-    setButtonLoading(submitBtn, true);
-    
-    // Check for admin login
-    const isAdminLogin = email === ADMIN_EMAIL && password === ADMIN_PASSWORD;
-    
-    auth.signInWithEmailAndPassword(email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
+    loginForm.addEventListener('submit', function(e) {
+        e.preventDefault();
         
-        // Update loading message
-        document.querySelector('.loading-text').textContent = 'Updating your profile...';
+        // Mark as intentional signin
+        sessionStorage.setItem('intentionalSignin', 'true');
         
-        // Update last login timestamp
-        return db.collection('users').doc(user.uid).update({
-          lastLogin: firebase.firestore.FieldValue.serverTimestamp()
-        }).catch(err => {
-          console.log('Error updating user data:', err);
-          // Continue despite error
-          return user;
-        }).then(() => {
-          // Update loading message
-          document.querySelector('.loading-text').textContent = 'Setting up your session...';
-          
-          // Set persistence based on remember me
-          const persistence = rememberMe ? 
-            firebase.auth.Auth.Persistence.LOCAL : 
-            firebase.auth.Auth.Persistence.SESSION;
-          
-          return auth.setPersistence(persistence);
-        }).then(() => {
-          // Update loading message
-          document.querySelector('.loading-text').textContent = 'Loading your dashboard...';
-          
-          // Check if wallet exists for this user
-          return db.collection('wallets').doc(user.uid).get()
-            .then(walletDoc => {
-              if (!walletDoc.exists) {
-                // Create wallet if it doesn't exist
-                return createUserWallet(user.uid).catch(error => {
-                  console.warn('Could not create wallet, but continuing sign in:', error);
-                  // Continue despite wallet creation error
-                  return null;
+        const email = document.getElementById('loginEmail').value;
+        const password = document.getElementById('loginPassword').value;
+        
+        if (!email || !password) {
+            showToast('Please enter your email and password', 'error');
+            return;
+        }
+        
+        const rememberMe = document.getElementById('remember') ? document.getElementById('remember').checked : false;
+        
+        showAuthLoading('Verifying your credentials...');
+        
+        const submitBtn = this.querySelector('button[type="submit"]');
+        setButtonLoading(submitBtn, true);
+        
+        const isAdminLogin = email === ADMIN_EMAIL && password === ADMIN_PASSWORD;
+        
+        auth.signInWithEmailAndPassword(email, password)
+            .then((userCredential) => {
+                const user = userCredential.user;
+                
+                document.querySelector('.loading-text').textContent = 'Updating your profile...';
+                
+                return db.collection('users').doc(user.uid).update({
+                    lastLogin: firebase.firestore.FieldValue.serverTimestamp()
+                }).catch(err => {
+                    console.log('Error updating user data:', err);
+                    return user;
+                }).then(() => {
+                    document.querySelector('.loading-text').textContent = 'Setting up your session...';
+                    
+                    const persistence = rememberMe ? 
+                        firebase.auth.Auth.Persistence.LOCAL : 
+                        firebase.auth.Auth.Persistence.SESSION;
+                    
+                    return auth.setPersistence(persistence);
+                }).then(() => {
+                    document.querySelector('.loading-text').textContent = 'Loading your dashboard...';
+                    
+                    return db.collection('wallets').doc(user.uid).get()
+                        .then(walletDoc => {
+                            if (!walletDoc.exists) {
+                                return createUserWallet(user.uid).catch(error => {
+                                    console.warn('Could not create wallet, but continuing sign in:', error);
+                                    return null;
+                                });
+                            }
+                            return null;
+                        });
+                }).then(() => {
+                    setTimeout(() => {
+                        hideAuthLoading();
+                        showToast('Successfully signed in!');
+                        navigateToDashboard(user, isAdminLogin);
+                    }, 1500);
+                    
+                    return user;
                 });
-              }
-              return null;
+            })
+            .catch((error) => {
+                console.error('Sign in error:', error);
+                sessionStorage.removeItem('intentionalSignin');
+                hideAuthLoading();
+                showToast(error.message, 'error');
+            })
+            .finally(() => {
+                setButtonLoading(submitBtn, false);
             });
-        }).then(() => {
-          // Hide loading after a minimum time for better UX
-          setTimeout(() => {
-            hideAuthLoading();
-            showToast('Successfully signed in!');
-            navigateToDashboard(user, isAdminLogin);
-          }, 1500); // Minimum 1.5 seconds to show loading
-          
-          return user;
-        });
-      })
-      .catch((error) => {
-        console.error('Sign in error:', error);
-        hideAuthLoading();
-        showToast(error.message, 'error');
-      })
-      .finally(() => {
-        setButtonLoading(submitBtn, false);
-      });
-  });
+    });
 }
+          
+        
+     
 
 // Make sure these helper functions are defined
 if (typeof showAuthLoading !== 'function') {
@@ -24968,80 +25677,116 @@ setupAuthLoadingAnimation();
 
 
 // Logout function
-function logout() {
-  auth.signOut()
-    .then(() => {
-      // Clear admin status
-      localStorage.removeItem('isAdmin');
+
       
-      // Hide dashboards
-      if (dashboardPage) {
-        dashboardPage.classList.remove('active');
-      }
-      
-      const adminDashboard = document.getElementById('dashboard');
-      if (adminDashboard) {
-        adminDashboard.classList.add('hidden');
-      }
-      
-      // Hide all feature sections
-      const featureSections = document.querySelectorAll('.feature-section');
-      featureSections.forEach(section => {
-        section.classList.add('hidden');
-      });
-      
-      // Show login screen
-      if (splitScreen) {
-        splitScreen.style.display = 'flex';
-      }
-      
-      // Allow body scrolling
-      document.body.style.overflow = 'auto';
-      
-      showToast('Successfully logged out');
-    })
-    .catch((error) => {
-      console.error('Logout error:', error);
-      showToast('Error logging out: ' + error.message, 'error');
-    });
+    function logout() {
+    // Clear activity timer
+    clearTimeout(activityTimeout);
+    
+    // Set auth persistence to NONE before signing out
+    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE)
+        .then(() => {
+            return firebase.auth().signOut();
+        })
+        .then(() => {
+            // Clear all stored authentication data
+            localStorage.removeItem('isAdmin');
+            localStorage.removeItem('firebase:authUser:' + firebase.app().options.apiKey + ':[DEFAULT]');
+            sessionStorage.clear();
+            
+            // Clear any cached user data
+            if (typeof indexedDB !== 'undefined') {
+                const deleteReq = indexedDB.deleteDatabase('firebaseLocalStorageDb');
+                deleteReq.onsuccess = () => console.log('Firebase cache cleared');
+            }
+            
+            // Hide dashboards
+            if (dashboardPage) {
+                dashboardPage.classList.remove('active');
+            }
+            
+            const adminDashboard = document.getElementById('dashboard');
+            if (adminDashboard) {
+                adminDashboard.classList.add('hidden');
+            }
+            
+            // Show login screen
+            if (splitScreen) {
+                splitScreen.style.display = 'flex';
+            }
+            
+            document.body.style.overflow = 'auto';
+            
+            showToast('Successfully logged out');
+            
+            // Force page reload after short delay to ensure clean state
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000);
+        })
+        .catch((error) => {
+            console.error('Logout error:', error);
+            // Force reload even on error
+            window.location.reload();
+        });
 }
+
 
 
 // Auth state change handler
 auth.onAuthStateChanged(function(user) {
-  if (user) {
-    // User is signed in
-    console.log('User is signed in:', user.email);
-    
-    // Check if admin from localStorage or email
-    const isAdminUser = localStorage.getItem('isAdmin') === 'true' || isAdmin(user.email);
-    
-    // If we're on the login page, navigate to appropriate dashboard
-    if (splitScreen && splitScreen.style.display !== 'none') {
-      navigateToDashboard(user, isAdminUser);
-    }
-  } else {
-    // User is signed out
-    console.log('User is signed out');
-    
-    // Show login screen
-    if (splitScreen) {
-      splitScreen.style.display = 'flex';
-    }
-    
-    // Hide dashboards
-    if (dashboardPage) {
-      dashboardPage.classList.remove('active');
-    }
-    
-    const adminDashboard = document.getElementById('dashboard');
-    if (adminDashboard) {
-      adminDashboard.classList.add('hidden');
-    }
-    
-    // Allow body scrolling
-    document.body.style.overflow = 'auto';
-  }
+    if (user) {
+        console.log('User is signed in:', user.email);
+        
+        // Start activity tracking
+        resetActivityTimer();
+        
+        // Check if this is an unwanted auto-signin
+        const isIntentionalSignin = sessionStorage.getItem('intentionalSignin');
+        if (!isIntentionalSignin) {
+            // This might be an auto-signin, check last logout time
+            const lastLogout = localStorage.getItem('lastLogout');
+            if (lastLogout && (Date.now() - parseInt(lastLogout)) < 5000) {
+                // User logged out recently, this is unwanted auto-signin
+                console.log('Preventing unwanted auto-signin');
+                performAutoLogout();
+                return;
+            }
+        }
+        
+        // Clear intentional signin flag
+        sessionStorage.removeItem('intentionalSignin');
+        
+        const isAdminUser = localStorage.getItem('isAdmin') === 'true' || isAdmin(user.email);
+        
+        if (splitScreen && splitScreen.style.display !== 'none') {
+            navigateToDashboard(user, isAdminUser);
+        }
+    } else {
+        console.log('User is signed out');
+        
+        // Clear activity timer
+        clearTimeout(activityTimeout);
+        
+        // Store logout timestamp
+        localStorage.setItem('lastLogout', Date.now().toString());
+        
+        // Show login screen
+        if (splitScreen) {
+            splitScreen.style.display = 'flex';
+        }
+        
+        if (dashboardPage) {
+            dashboardPage.classList.remove('active');
+        }
+        
+        const adminDashboard = document.getElementById('dashboard');
+        if (adminDashboard) {
+            adminDashboard.classList.add('hidden');
+        }
+        
+        document.body.style.overflow = 'auto';
+    }
 });
 
 
@@ -25075,17 +25820,55 @@ logoutBtns.forEach(btn => {
   btn.addEventListener('click', logout);
 });
 
-
-
-
-
-
-
-
-
 // Initialize the app
 console.log('Firebase Auth initialized');
 
+// Session timeout and activity tracking
+let activityTimeout;
+let lastActivity = Date.now();
+const INACTIVITY_LIMIT = 10 * 60 * 1000; // 10 minutes in milliseconds
+
+// Track user activity
+function resetActivityTimer() {
+    lastActivity = Date.now();
+    clearTimeout(activityTimeout);
+    
+    activityTimeout = setTimeout(() => {
+        const user = firebase.auth().currentUser;
+        if (user) {
+            console.log('User inactive for 10 minutes, signing out...');
+            showToast('Session expired due to inactivity', 'info');
+            performAutoLogout();
+        }
+    }, INACTIVITY_LIMIT);
+}
+
+// Activity event listeners
+const activityEvents = ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart', 'click'];
+activityEvents.forEach(event => {
+    document.addEventListener(event, resetActivityTimer, true);
+});
+
+// Auto logout function
+function performAutoLogout() {
+    firebase.auth().signOut()
+        .then(() => {
+            // Clear all persistence
+            localStorage.removeItem('isAdmin');
+            localStorage.removeItem('firebase:authUser:' + firebase.app().options.apiKey + ':[DEFAULT]');
+            sessionStorage.clear();
+            
+            // Clear activity timer
+            clearTimeout(activityTimeout);
+            
+            // Force reload to login page
+            window.location.reload();
+        })
+        .catch(error => {
+            console.error('Auto logout error:', error);
+            window.location.reload();
+        });
+}
 
 
 // Profile functionality
@@ -28202,6 +28985,170 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+    
+// Create floating particles
+function createParticles() {
+    const container = document.getElementById('particlesContainer');
+    if (!container) return;
+    
+    for (let i = 0; i < 50; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 15 + 's';
+        particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+        container.appendChild(particle);
+    }
+}
+
+// Enhanced slideshow with crazy transitions
+let openPageCurrentSlide = 0;
+const openPageSlides = document.querySelectorAll('.openpage-slide');
+
+function showOpenPageSlide(index) {
+    openPageSlides.forEach((slide, i) => {
+        slide.classList.remove('active');
+        if (i === index) {
+            slide.classList.add('active');
+        }
+    });
+}
+
+function nextOpenPageSlide() {
+    openPageCurrentSlide = (openPageCurrentSlide + 1) % openPageSlides.length;
+    showOpenPageSlide(openPageCurrentSlide);
+}
+
+// Auto-advance with style
+setInterval(nextOpenPageSlide, 6000);
+
+// Crazy theme toggle
+function toggleOpenPageTheme() {
+    const openingPage = document.getElementById('openingPage');
+    const themeIcon = document.getElementById('openpage-theme-icon');
+    const themeText = document.getElementById('openpage-theme-text');
+    
+    openingPage.classList.toggle('dark-mode');
+    
+    if (openingPage.classList.contains('dark-mode')) {
+        themeIcon.textContent = '✨';
+        themeText.textContent = 'Ultra Mode';
+    } else {
+        themeIcon.textContent = '🌙';
+        themeText.textContent = 'Premium Mode';
+    }
+}
+
+// Enhanced scroll animations
+function isOpenPageElementInViewport(el, threshold = 0.3) {
+    if (!el) return false;
+    const rect = el.getBoundingClientRect();
+    const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+    
+    return rect.top < windowHeight * (1 - threshold) && rect.bottom > windowHeight * threshold;
+}
+
+function animateOpenPageOnScroll() {
+    const sections = document.querySelectorAll('.openpage-section');
+    const quoteItems = document.querySelectorAll('.openpage-quote-item');
+    const reviewCards = document.querySelectorAll('.openpage-review-card');
+    const sponsorLogos = document.querySelectorAll('.openpage-sponsor-logo');
+
+    sections.forEach((section, index) => {
+        if (isOpenPageElementInViewport(section)) {
+            setTimeout(() => {
+                section.classList.add('animate');
+            }, index * 200);
+        }
+    });
+
+    quoteItems.forEach((item, index) => {
+        if (isOpenPageElementInViewport(item)) {
+            setTimeout(() => {
+                item.classList.add('animate');
+            }, index * 300);
+        }
+    });
+
+    reviewCards.forEach((card, index) => {
+        if (isOpenPageElementInViewport(card)) {
+            setTimeout(() => {
+                card.classList.add('animate');
+            }, index * 400);
+        }
+    });
+
+    sponsorLogos.forEach((logo, index) => {
+        if (isOpenPageElementInViewport(logo.parentElement)) {
+            setTimeout(() => {
+                logo.style.animation = `logoFloat 3s ease-in-out infinite ${index * 0.2}s`;
+            }, index * 100);
+        }
+    });
+}
+
+// Crazy app entrance
+function enterApp() {
+    const openingPage = document.getElementById('openingPage');
+    const mainAppContainer = document.getElementById('mainAppContainer');
+    
+    // Epic exit animation
+    openingPage.style.transform = 'scale(0.8)';
+    openingPage.style.filter = 'blur(10px)';
+    openingPage.classList.add('hidden');
+    
+    setTimeout(() => {
+        mainAppContainer.classList.add('show');
+        mainAppContainer.style.animation = 'fadeInScale 1s ease-out';
+        
+        // Remove particles
+        const particles = document.getElementById('particlesContainer');
+        if (particles) {
+            particles.remove();
+        }
+    }, 800);
+}
+
+// Initialize everything when DOM loads
+document.addEventListener('DOMContentLoaded', function() {
+    // Create particles immediately
+    createParticles();
+    
+    // Enhanced scroll listener
+    const openingPageContainer = document.querySelector('.openpage');
+    if (openingPageContainer) {
+        let ticking = false;
+        openingPageContainer.addEventListener('scroll', () => {
+            if (!ticking) {
+                requestAnimationFrame(() => {
+                    animateOpenPageOnScroll();
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        });
+    }
+    
+    // Initial animation check
+    setTimeout(() => {
+        animateOpenPageOnScroll();
+    }, 1000);
+});
+
+// Add some extra CSS animations
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes fadeInScale {
+        0% { opacity: 0; transform: scale(0.9); }
+        100% { opacity: 1; transform: scale(1); }
+    }
+    
+    @keyframes logoFloat {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+    }
+`;
+document.head.appendChild(style);
 
 document.addEventListener('DOMContentLoaded', function() {
     // DOM Elements
