@@ -402,23 +402,6 @@
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
 }
 
-/* AUTO-SCROLLING TRACK - IMPROVED MOBILE */
-.curved-track {
-    display: flex;
-    gap: 1.5rem;
-    padding: 1rem;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    scroll-behavior: smooth;
-}
-
-.curved-track::-webkit-scrollbar {
-    display: none;
-}
-
 /* AUTO-SCROLL ANIMATION - MOBILE OPTIMIZED */
 .curved-track.auto-scroll {
     animation: autoScroll 30s linear infinite;
@@ -20910,16 +20893,19 @@ tba-option {
                 <h3 class="gallery-title">Create Event </h3>
                 <p class="gallery-subtitle">See what's coming</p>
             </div>
-            <div class="curved-track" id="appGallery">
-                <div class="galleryonly-item">
-                    <img src="https://i.ibb.co/tpNVMDrZ/Fast-Withdrawal-s-20250806-044937-0000.png" alt="App Screenshot">
-                       <div class="gallery-caption">Create Event</div>
-                        <div class="gallery-description">Bring Your Party and Creativity  to life</div>
-                    
-                </div>
-               </div>
+           
                
-              
+               <div class="gallery-item">
+                   <img src="https://i.ibb.co/DH8J39my/Fast-Withdrawal-s-20250806-042833-0000.png" alt="Fast-Withdrawal-s-20250806-042833-0000" border="0">
+                <div class="gallery-overlay">
+                        <div class="gallery-caption">Award&Faaji Night</div>
+                        <div class="gallery-description"> Owanbe Edition </div>
+                         <div class="gallery-date">Anticipating</div>
+                        <div class="gallery-ticket"> Not Free </div>
+                               <div class="gallery-contact"> Contact Us +234 8029941678 to Connect You  </div>
+                 
+                    </div>
+                </div>
         </section>
  <!-- DJ Music Player Section -->
         <section class="dj-section">
@@ -20996,46 +20982,7 @@ tba-option {
         </section>
 
 
-        <section class="curved-gallery">
-    <div class="gallery-header">
-        <h3 class="gallery-title">Recent Events</h3>
-        <p class="gallery-subtitle">From Last Weekend's Madness 🔥</p>
-    </div>
-    <div class="curved-track auto-scroll" id="eventsGallery">
-        <div class="gallery-item">
-            <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&h=300&fit=crop" alt="Concert">
-            <div class="gallery-overlay">
-                <div class="gallery-caption">Lagos Music Fest</div>
-                <div class="gallery-description">10K attendees</div>
-            </div>
-        </div>
-        <div class="gallery-item">
-            <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop" alt="DJ">
-            <div class="gallery-overlay">
-                <div class="gallery-caption">Underground Battle</div>
-                <div class="gallery-description">Epic showdown</div>
-            </div>
-        </div>
-        <div class="gallery-item">
-            <video autoplay muted loop>
-                <source src="https://sample-videos.com/zip/10/mp4/SampleVideo_360x240_1mb.mp4" type="video/mp4">
-            </video>
-            <div class="gallery-overlay">
-                <div class="gallery-caption">Dance Competition</div>
-                <div class="gallery-description">Live video highlights</div>
-            </div>
-        </div>
-        <!-- Duplicate items for seamless loop -->
-        <div class="gallery-item">
-            <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&h=300&fit=crop" alt="Concert">
-            <div class="gallery-overlay">
-                <div class="gallery-caption">Lagos Music Fest</div>
-                <div class="gallery-description">10K attendees</div>
-            </div>
-        </div>
-    </div>
-</section>
-
+        
         <!-- Premium Quotes -->
         <section class="openpage-section openpage-quotes">
            
@@ -21053,11 +21000,11 @@ tba-option {
                 
                 <div class="gallery-item">
                     <img src="https://i.ibb.co/5hrNmSgM/Fast-Withdrawal-s-20250806-044026-0000.png" alt="Ticket Booking">
-                       
-                </div>
-              <div class="gallery-caption">Purchase Ticket</div>
+                    <div class="gallery-caption">Purchase Ticket</div>
                         <div class="gallery-description">Seamless experience with Low fee </div>
-                    
+                   
+                </div>
+                  
         </section>
         <!-- Live Photo Strip -->
         <section class="live-strip">
@@ -21069,9 +21016,10 @@ tba-option {
                 <div class="strip-photo">
               <img src=" https://i.ibb.co/tp6T2hjc/Fast-Withdrawal-s-20250806-040305-0000.png"alt="Event 1">
                     <div class="photo-overlay">Tarf Foundation</div>
-                </div>
-               <p class="strip-subtitle">NGO doings/p>
+                <p class="strip-subtitle">NGO doings</p>
                 
+                    </div>
+              
                 
                
             </div>
