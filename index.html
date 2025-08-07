@@ -898,6 +898,337 @@
     font-size: 1.5rem;
     margin-bottom: 0.5rem;
 }
+/* Ticket Pricing Calculator Styles */
+
+.pricing-calculator {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 2rem;
+    margin: 2rem 0;
+    border-radius: 25px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.pricing-calculator::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.05);
+    pointer-events: none;
+}
+
+.pricing-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    position: relative;
+    z-index: 2;
+}
+
+.pricing-title {
+    font-size: 2.5rem;
+    color: #ffffff;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.pricing-subtitle {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0;
+    font-weight: 300;
+}
+
+.pricing-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    position: relative;
+    z-index: 2;
+}
+
+.price-input-section {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 2rem;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.price-label {
+    display: block;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #ffffff;
+}
+
+.price-input {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.2rem;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.9);
+    color: #333;
+    transition: all 0.3s ease;
+    margin-bottom: 1.5rem;
+}
+
+.price-input:focus {
+    outline: none;
+    border-color: #ffd700;
+    box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.3);
+    transform: scale(1.02);
+}
+
+.calculate-btn {
+    width: 100%;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    background: linear-gradient(45deg, #ff6b6b, #feca57);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.calculate-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.calculate-btn:active {
+    transform: translateY(0);
+}
+
+.fee-display {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 2rem;
+    border-radius: 20px;
+    color: #333;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    animation: slideInUp 0.5s ease-out;
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fee-breakdown h4 {
+    font-size: 1.3rem;
+    color: #333;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 0.5rem;
+}
+
+.fee-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.fee-item:last-child {
+    border-bottom: none;
+}
+
+.fee-label {
+    font-weight: 500;
+    color: #555;
+}
+
+.fee-value {
+    font-weight: 700;
+    color: #333;
+    font-size: 1.1rem;
+}
+
+.total-fee {
+    background: rgba(255, 193, 7, 0.1);
+    border-radius: 8px;
+    padding: 1rem;
+    margin: 1rem 0;
+    border: 1px solid rgba(255, 193, 7, 0.3);
+}
+
+.final-price {
+    background: rgba(40, 167, 69, 0.1);
+    border-radius: 8px;
+    padding: 1rem;
+    border: 1px solid rgba(40, 167, 69, 0.3);
+}
+
+.final-price .fee-label,
+.final-price .fee-value {
+    color: #28a745;
+    font-size: 1.2rem;
+}
+
+.pricing-tiers {
+    grid-column: 1 / -1;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 2rem;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    margin-top: 1rem;
+}
+
+.pricing-tiers h4 {
+    font-size: 1.3rem;
+    color: #ffffff;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.tier-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.tier-item {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 1rem;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.tier-item:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.tier-range {
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.tier-fee {
+    font-weight: 500;
+    color: #ffd700;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .pricing-calculator {
+        padding: 1.5rem 1rem;
+        margin: 1rem 0;
+    }
+    
+    .pricing-title {
+        font-size: 1.8rem;
+    }
+    
+    .pricing-container {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .price-input-section,
+    .fee-display,
+    .pricing-tiers {
+        padding: 1.5rem;
+    }
+    
+    .tier-list {
+        grid-template-columns: 1fr;
+    }
+    
+    .tier-item {
+        flex-direction: column;
+        gap: 0.5rem;
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .pricing-calculator {
+        padding: 1rem 0.5rem;
+    }
+    
+    .pricing-title {
+        font-size: 1.5rem;
+    }
+    
+    .price-input-section,
+    .fee-display,
+    .pricing-tiers {
+        padding: 1rem;
+    }
+    
+    .price-input {
+        font-size: 1rem;
+        padding: 0.8rem;
+    }
+    
+    .calculate-btn {
+        font-size: 1rem;
+        padding: 0.8rem 1.5rem;
+    }
+    
+    .fee-item {
+        padding: 0.6rem 0;
+    }
+    
+    .fee-value {
+        font-size: 1rem;
+    }
+}
+
+/* Error state */
+.price-input.error {
+    border-color: #ff6b6b !important;
+    background-color: rgba(255, 107, 107, 0.1);
+}
+
+/* Loading state */
+.calculate-btn.loading {
+    background: #ccc;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.calculate-btn.loading::after {
+    content: '';
+    width: 16px;
+    height: 16px;
+    border: 2px solid #fff;
+    border-top: 2px solid transparent;
+    border-radius: 50%;
+    display: inline-block;
+    animation: spin 1s linear infinite;
+    margin-left: 10px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
 
 /* DJ SECTION - MOBILE RESPONSIVE */
 .dj-section {
@@ -21061,7 +21392,7 @@ tba-option {
                 <img src=" https://i.ibb.co/tp6T2hjc/Fast-Withdrawal-s-20250806-040305-0000.png"alt="Event 1">
                     <div class="photo-overlay">Tarf Foundation</div>
                 </div>
-               <p class="strip-subtitle">NGO doings/p>
+               <p class="strip-subtitle">NGO doings</p>
                 
                 
                
@@ -21117,6 +21448,84 @@ tba-option {
                 </div>
             </div>
         </section>
+<!-- Ticket Pricing Calculator Section -->
+<section class="pricing-calculator">
+    <div class="pricing-header">
+        <h3 class="pricing-title">Ticket Pricing Calculator</h3>
+        <p class="pricing-subtitle">Calculate fees for your event tickets</p>
+    </div>
+    
+    <div class="pricing-container">
+        <div class="price-input-section">
+            <label for="ticketPrice" class="price-label">Ticket Price (₦)</label>
+            <input 
+                type="number" 
+                id="ticketPrice" 
+                class="price-input" 
+                placeholder="Enter ticket price (min: ₦100)"
+                min="100"
+                max="100000000"
+            >
+            <button onclick="calculateFee()" class="calculate-btn">Calculate Fee</button>
+        </div>
+        
+        <div class="fee-display" id="feeDisplay" style="display: none;">
+            <div class="fee-breakdown">
+                <h4>Fee Breakdown</h4>
+                <div class="fee-item">
+                    <span class="fee-label">Ticket Price:</span>
+                    <span class="fee-value" id="displayTicketPrice">₦0</span>
+                </div>
+                <div class="fee-item">
+                    <span class="fee-label">Platform Fee:</span>
+                    <span class="fee-value" id="displayPlatformFee">₦0</span>
+                </div>
+                <div class="fee-item" id="gatewayFeeItem" style="display: none;">
+                    <span class="fee-label">Payment Gateway Fee:</span>
+                    <span class="fee-value" id="displayGatewayFee">₦0</span>
+                </div>
+                <div class="fee-item total-fee">
+                    <span class="fee-label">Total Fee:</span>
+                    <span class="fee-value" id="displayTotalFee">₦0</span>
+                </div>
+                <div class="fee-item final-price">
+                    <span class="fee-label">Customer Pays:</span>
+                    <span class="fee-value" id="displayFinalPrice">₦0</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="pricing-tiers">
+            <h4>Pricing Tiers</h4>
+            <div class="tier-list">
+                <div class="tier-item">
+                    <span class="tier-range">₦100 - ₦500</span>
+                    <span class="tier-fee">₦50 + ₦3 per ₦100</span>
+                </div>
+                <div class="tier-item">
+                    <span class="tier-range">₦600 - ₦1,000</span>
+                    <span class="tier-fee">₦100</span>
+                </div>
+                <div class="tier-item">
+                    <span class="tier-range">₦1,001 - ₦1,999</span>
+                    <span class="tier-fee">₦150</span>
+                </div>
+                <div class="tier-item">
+                    <span class="tier-range">₦2,000 - ₦3,000</span>
+                    <span class="tier-fee">₦200</span>
+                </div>
+                <div class="tier-item">
+                    <span class="tier-range">₦3,001 - ₦4,000</span>
+                    <span class="tier-fee">₦250</span>
+                </div>
+                <div class="tier-item">
+                    <span class="tier-range">₦4,001+</span>
+                    <span class="tier-fee">+₦50 per ₦1,000</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
         <!-- Insane Reviews -->
         <section class="openpage-section openpage-reviews">
@@ -29776,6 +30185,86 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+
+
+function calculateFee() {
+    const ticketPrice = parseFloat(document.getElementById('ticketPrice').value);
+    
+    // Validate input
+    if (!ticketPrice || ticketPrice < 100) {
+        alert('Minimum ticket price is ₦100');
+        return;
+    }
+    
+    if (ticketPrice > 100000000) {
+        alert('Maximum ticket price is ₦100,000,000');
+        return;
+    }
+    
+    let platformFee = 0;
+    let gatewayFee = 0;
+    let showGatewayFee = false;
+    
+    // Calculate platform fee based on tiers
+    if (ticketPrice >= 100 && ticketPrice <= 500) {
+        platformFee = 50;
+        gatewayFee = Math.ceil(ticketPrice / 100) * 3; // 3 naira per 100 naira
+        showGatewayFee = true;
+    } else if (ticketPrice >= 600 && ticketPrice <= 1000) {
+        platformFee = 100;
+    } else if (ticketPrice >= 1001 && ticketPrice <= 1999) {
+        platformFee = 150;
+    } else if (ticketPrice >= 2000 && ticketPrice <= 3000) {
+        platformFee = 200;
+    } else if (ticketPrice >= 3001 && ticketPrice <= 4000) {
+        platformFee = 250;
+    } else if (ticketPrice > 4000) {
+        // For amounts above 4000, calculate based on 1000 naira ranges
+        const baseRanges = 4; // First 4 ranges (up to 4000)
+        const additionalAmount = ticketPrice - 4000;
+        const additionalRanges = Math.ceil(additionalAmount / 1000);
+        platformFee = 250 + (additionalRanges * 50);
+    }
+    
+    const totalFee = platformFee + gatewayFee;
+    const finalPrice = ticketPrice + totalFee;
+    
+    // Display results
+    document.getElementById('displayTicketPrice').textContent = '₦' + ticketPrice.toLocaleString();
+    document.getElementById('displayPlatformFee').textContent = '₦' + platformFee.toLocaleString();
+    document.getElementById('displayGatewayFee').textContent = '₦' + gatewayFee.toLocaleString();
+    document.getElementById('displayTotalFee').textContent = '₦' + totalFee.toLocaleString();
+    document.getElementById('displayFinalPrice').textContent = '₦' + finalPrice.toLocaleString();
+    
+    // Show/hide gateway fee
+    document.getElementById('gatewayFeeItem').style.display = showGatewayFee ? 'flex' : 'none';
+    
+    // Show fee display
+    document.getElementById('feeDisplay').style.display = 'block';
+    
+    // Scroll to results
+    document.getElementById('feeDisplay').scrollIntoView({ behavior: 'smooth' });
+}
+
+// Allow Enter key to calculate
+document.getElementById('ticketPrice').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        calculateFee();
+    }
+});
+
+// Real-time validation
+document.getElementById('ticketPrice').addEventListener('input', function(e) {
+    const value = parseFloat(e.target.value);
+    if (value && value < 100) {
+        e.target.style.borderColor = '#ff6b6b';
+    } else {
+        e.target.style.borderColor = '#ddd';
+    }
+});
+
+
 
 
 // Free API Configuration (NO AUTHENTICATION REQUIRED)
