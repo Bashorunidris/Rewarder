@@ -25919,9 +25919,862 @@ tba-option {
     </div>
 </div>
     
+<!-- Nomination/Awards Choice Modal -->
+<div id="nominsChoiceModal" class="modal-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: rgba(0,0,0,0.8); z-index: 10000; justify-content: center; align-items: center;">
+    <div class="choice-modal-content" style="
+        background: white;
+        border-radius: 20px;
+        padding: 40px;
+        max-width: 500px;
+        width: 90%;
+        text-align: center;
+        position: relative;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    ">
+        <button onclick="closeNominsChoiceModal()" style="
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #6c757d;
+        ">&times;</button>
+        
+        <h2 style="margin: 0 0 20px 0; color: #495057;">
+            <i class="fas fa-trophy" style="color: #ffc107; margin-right: 10px;"></i>
+            Choose Event Type
+        </h2>
+        <p style="color: #6c757d; margin-bottom: 30px;">What type of event would you like to create?</p>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <button onclick="openNominsModal()" style="
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                border: none;
+                padding: 30px 20px;
+                border-radius: 15px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                text-align: center;
+            " onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                <i class="fas fa-vote-yea" style="font-size: 32px; margin-bottom: 10px; display: block;"></i>
+                <strong style="font-size: 18px; display: block; margin-bottom: 5px;">Nominations</strong>
+                <small style="opacity: 0.9;">Create nomination forms</small>
+            </button>
+            
+            <button onclick="openAwardsModal()" style="
+                background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%);
+                color: #212529;
+                border: none;
+                padding: 30px 20px;
+                border-radius: 15px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                text-align: center;
+            " onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                <i class="fas fa-award" style="font-size: 32px; margin-bottom: 10px; display: block;"></i>
+                <strong style="font-size: 18px; display: block; margin-bottom: 5px;">Awards</strong>
+                <small style="opacity: 0.9;">Create awards ceremony</small>
+            </button>
+        </div>
+    </div>
+</div>
 
+<!-- Nominations Modal -->
+<div id="nominsModal" class="modal-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: rgba(0,0,0,0.8); z-index: 10001; justify-content: center; align-items: center; overflow-y: auto;">
+    <div class="nomins-modal-content" style="
+        background: white;
+        border-radius: 20px;
+        max-width: 800px;
+        width: 95%;
+        max-height: 95vh;
+        overflow-y: auto;
+        position: relative;
+        margin: 20px;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    ">
+        <!-- Header -->
+        <div style="
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 20px 20px 0 0;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        ">
+            <h2 style="margin: 0; display: flex; align-items: center; gap: 10px;">
+                <i class="fas fa-vote-yea"></i>
+                Create Nomination Form
+            </h2>
+            <button onclick="closeNominsModal()" style="
+                position: absolute;
+                top: 15px;
+                right: 15px;
+                background: rgba(255,255,255,0.2);
+                border: none;
+                color: white;
+                width: 35px;
+                height: 35px;
+                border-radius: 50%;
+                cursor: pointer;
+                font-size: 18px;
+            ">&times;</button>
+        </div>
+        
+        <!-- Form Content -->
+        <div style="padding: 30px;">
+            <form id="nominsForm" onsubmit="createNominsEvent(event)">
+                <!-- Event Name -->
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #495057;">
+                        <i class="fas fa-signature" style="color: #667eea; margin-right: 5px;"></i>
+                        Nomination Event Name *
+                    </label>
+                    <input type="text" id="nominsEventName" required style="
+                        width: 100%;
+                        padding: 12px;
+                        border: 2px solid #e9ecef;
+                        border-radius: 8px;
+                        font-size: 14px;
+                        transition: border-color 0.3s ease;
+                    " placeholder="Enter nomination event name">
+                </div>
 
+                <!-- Background -->
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #495057;">
+                        <i class="fas fa-image" style="color: #667eea; margin-right: 5px;"></i>
+                        Event Background
+                    </label>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                        <div>
+                            <label>Background Type:</label>
+                            <select id="nominsBackgroundType" onchange="toggleNominsBackgroundType()" style="
+                                width: 100%;
+                                padding: 10px;
+                                border: 2px solid #e9ecef;
+                                border-radius: 6px;
+                            ">
+                                <option value="gradient">Gradient</option>
+                                <option value="image">Image Upload</option>
+                            </select>
+                        </div>
+                        <div id="nominsGradientSection">
+                            <label>Gradient Colors:</label>
+                            <div style="display: flex; gap: 10px;">
+                                <input type="color" id="nominsColor1" value="#667eea" style="width: 50px; height: 40px; border: none; border-radius: 6px;">
+                                <input type="color" id="nominsColor2" value="#764ba2" style="width: 50px; height: 40px; border: none; border-radius: 6px;">
+                            </div>
+                        </div>
+                        <div id="nominsImageSection" style="display: none;">
+                            <label>Upload Image:</label>
+                            <input type="file" id="nominsBackgroundImage" accept="image/*" style="width: 100%; padding: 8px; border: 2px solid #e9ecef; border-radius: 6px;">
+                        </div>
+                    </div>
+                </div>
 
+                <!-- Extra Media -->
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #495057;">
+                        <i class="fas fa-photo-video" style="color: #667eea; margin-right: 5px;"></i>
+                        Extra Media (Max 15)
+                    </label>
+                    <input type="file" id="nominsExtraMedia" accept="image/*,video/*" multiple style="
+                        width: 100%;
+                        padding: 12px;
+                        border: 2px solid #e9ecef;
+                        border-radius: 8px;
+                    ">
+                    <small style="color: #6c757d;">Upload additional images or videos for your nomination event</small>
+                </div>
+
+                <!-- Description -->
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #495057;">
+                        <i class="fas fa-align-left" style="color: #667eea; margin-right: 5px;"></i>
+                        Description *
+                    </label>
+                    <textarea id="nominsDescription" required rows="4" style="
+                        width: 100%;
+                        padding: 12px;
+                        border: 2px solid #e9ecef;
+                        border-radius: 8px;
+                        font-size: 14px;
+                        resize: vertical;
+                    " placeholder="Describe your nomination event"></textarea>
+                </div>
+
+                <!-- Date and Time -->
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #495057;">
+                        <i class="fas fa-calendar" style="color: #667eea; margin-right: 5px;"></i>
+                        Nomination Period *
+                    </label>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div>
+                            <label>Start Date & Time:</label>
+                            <input type="datetime-local" id="nominsStartDateTime" required style="
+                                width: 100%;
+                                padding: 10px;
+                                border: 2px solid #e9ecef;
+                                border-radius: 6px;
+                            ">
+                        </div>
+                        <div>
+                            <label>End Date & Time:</label>
+                            <input type="datetime-local" id="nominsEndDateTime" required style="
+                                width: 100%;
+                                padding: 10px;
+                                border: 2px solid #e9ecef;
+                                border-radius: 6px;
+                            ">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Event Link -->
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #495057;">
+                        <i class="fas fa-link" style="color: #667eea; margin-right: 5px;"></i>
+                        Nomination Event Link *
+                    </label>
+                    <div style="display: flex; align-items: center; border: 2px solid #e9ecef; border-radius: 8px; overflow: hidden;">
+                        <span style="background: #f8f9fa; padding: 12px; color: #6c757d; border-right: 1px solid #e9ecef;">
+                            reward-hub.vercel.app/nomins/
+                        </span>
+                        <input type="text" id="nominsEventLink" required style="
+                            flex: 1;
+                            padding: 12px;
+                            border: none;
+                            outline: none;
+                        " placeholder="my-nomination-event">
+                    </div>
+                </div>
+
+                <!-- Nomination Categories -->
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #495057;">
+                        <i class="fas fa-list" style="color: #667eea; margin-right: 5px;"></i>
+                        Nomination Categories
+                    </label>
+                    <div id="nominsCategoriesList" style="margin-bottom: 10px;">
+                        <!-- Categories will be added here -->
+                    </div>
+                    <button type="button" onclick="addNominsCategory()" style="
+                        background: #28a745;
+                        color: white;
+                        border: none;
+                        padding: 8px 16px;
+                        border-radius: 6px;
+                        cursor: pointer;
+                        font-size: 14px;
+                    ">
+                        <i class="fas fa-plus"></i> Add Category
+                    </button>
+                </div>
+
+                <!-- Response Type -->
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #495057;">
+                        <i class="fas fa-question-circle" style="color: #667eea; margin-right: 5px;"></i>
+                        Response Type *
+                    </label>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                        <label style="
+                            display: flex;
+                            align-items: center;
+                            padding: 12px;
+                            border: 2px solid #e9ecef;
+                            border-radius: 8px;
+                            cursor: pointer;
+                            transition: all 0.3s ease;
+                        ">
+                            <input type="radio" name="nominsResponseType" value="multiple_choice" checked style="margin-right: 8px;">
+                            <span>Multiple Choice</span>
+                        </label>
+                        <label style="
+                            display: flex;
+                            align-items: center;
+                            padding: 12px;
+                            border: 2px solid #e9ecef;
+                            border-radius: 8px;
+                            cursor: pointer;
+                            transition: all 0.3s ease;
+                        ">
+                            <input type="radio" name="nominsResponseType" value="short_text" style="margin-right: 8px;">
+                            <span>Short Text Answer</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Nomination Type -->
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #495057;">
+                        <i class="fas fa-money-bill" style="color: #667eea; margin-right: 5px;"></i>
+                        Nomination Type *
+                    </label>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                        <label style="
+                            display: flex;
+                            align-items: center;
+                            padding: 12px;
+                            border: 2px solid #e9ecef;
+                            border-radius: 8px;
+                            cursor: pointer;
+                        ">
+                            <input type="radio" name="nominsType" value="free" checked onchange="toggleNominsPayment()" style="margin-right: 8px;">
+                            <span>Free</span>
+                        </label>
+                        <label style="
+                            display: flex;
+                            align-items: center;
+                            padding: 12px;
+                            border: 2px solid #e9ecef;
+                            border-radius: 8px;
+                            cursor: pointer;
+                        ">
+                            <input type="radio" name="nominsType" value="paid" onchange="toggleNominsPayment()" style="margin-right: 8px;">
+                            <span>Paid</span>
+                        </label>
+                    </div>
+                    
+                    <div id="nominsPaymentSection" style="display: none; margin-top: 15px;">
+                        <label>Nomination Fee (₦):</label>
+                        <input type="number" id="nominsNominationFee" min="100" step="50" style="
+                            width: 100%;
+                            padding: 10px;
+                            border: 2px solid #e9ecef;
+                            border-radius: 6px;
+                            margin-top: 5px;
+                        " placeholder="Enter nomination fee">
+                    </div>
+                </div>
+
+                <!-- Number of People -->
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #495057;">
+                        <i class="fas fa-users" style="color: #667eea; margin-right: 5px;"></i>
+                        Maximum Nominations per Category
+                    </label>
+                    <input type="number" id="nominsMaxPeople" min="1" value="100" style="
+                        width: 100%;
+                        padding: 12px;
+                        border: 2px solid #e9ecef;
+                        border-radius: 8px;
+                    " placeholder="Enter maximum number of nominations">
+                </div>
+
+                <!-- Optional Sponsors -->
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #495057;">
+                        <i class="fas fa-handshake" style="color: #667eea; margin-right: 5px;"></i>
+                        Sponsors (Optional)
+                    </label>
+                    <div id="nominsSponsorsList" style="margin-bottom: 10px;">
+                        <!-- Sponsors will be added here -->
+                    </div>
+                    <button type="button" onclick="addNominsSponsor()" style="
+                        background: #17a2b8;
+                        color: white;
+                        border: none;
+                        padding: 8px 16px;
+                        border-radius: 6px;
+                        cursor: pointer;
+                        font-size: 14px;
+                    ">
+                        <i class="fas fa-plus"></i> Add Sponsor
+                    </button>
+                </div>
+
+                <!-- Host Details -->
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #495057;">
+                        <i class="fas fa-user" style="color: #667eea; margin-right: 5px;"></i>
+                        Host Information *
+                    </label>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div>
+                            <label>Host Name:</label>
+                            <input type="text" id="nominsHostName" required style="
+                                width: 100%;
+                                padding: 10px;
+                                border: 2px solid #e9ecef;
+                                border-radius: 6px;
+                                margin-top: 5px;
+                            " placeholder="Enter host name">
+                        </div>
+                        <div>
+                            <label>Contact (Optional):</label>
+                            <input type="text" id="nominsHostContact" style="
+                                width: 100%;
+                                padding: 10px;
+                                border: 2px solid #e9ecef;
+                                border-radius: 6px;
+                                margin-top: 5px;
+                            " placeholder="Phone or email">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Social Media -->
+                <div class="form-group" style="margin-bottom: 30px;">
+                    <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #495057;">
+                        <i class="fas fa-share-alt" style="color: #667eea; margin-right: 5px;"></i>
+                        Social Media Links (Optional)
+                    </label>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <input type="url" id="nominsTwitter" style="
+                            padding: 10px;
+                            border: 2px solid #e9ecef;
+                            border-radius: 6px;
+                        " placeholder="Twitter URL">
+                        <input type="url" id="nominsInstagram" style="
+                            padding: 10px;
+                            border: 2px solid #e9ecef;
+                            border-radius: 6px;
+                        " placeholder="Instagram URL">
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div style="text-align: center; padding-top: 20px; border-top: 1px solid #e9ecef;">
+                    <button type="submit" style="
+                        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                        color: white;
+                        border: none;
+                        padding: 15px 40px;
+                        border-radius: 10px;
+                        cursor: pointer;
+                        font-size: 16px;
+                        font-weight: 600;
+                        transition: all 0.3s ease;
+                    " onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+                        <i class="fas fa-rocket"></i>
+                        Create Nomination Form
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+!-- Awards Modal (Complete) -->
+<div id="awardsModal" class="modal-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: rgba(0,0,0,0.8); z-index: 10001; justify-content: center; align-items: center; overflow-y: auto;">
+    <div class="awards-modal-content" style="
+        background: white;
+        border-radius: 20px;
+        max-width: 800px;
+        width: 95%;
+        max-height: 95vh;
+        overflow-y: auto;
+        position: relative;
+        margin: 20px;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    ">
+        <!-- Header -->
+        <div style="
+            background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%);
+            color: #212529;
+            padding: 25px;
+            border-radius: 20px 20px 0 0;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        ">
+            <h2 style="margin: 0; display: flex; align-items: center; gap: 10px;">
+                <i class="fas fa-award"></i>
+                Create Awards Ceremony
+            </h2>
+            <button onclick="closeAwardsModal()" style="
+                position: absolute;
+                top: 15px;
+                right: 15px;
+                background: rgba(0,0,0,0.2);
+                border: none;
+                color: #212529;
+                width: 35px;
+                height: 35px;
+                border-radius: 50%;
+                cursor: pointer;
+                font-size: 18px;
+            ">&times;</button>
+        </div>
+        
+        <!-- Form Content -->
+        <div style="padding: 30px;">
+            <form id="awardsForm" onsubmit="createAwardsEvent(event)">
+                <!-- Event Name -->
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #495057;">
+                        <i class="fas fa-trophy" style="color: #ffc107; margin-right: 5px;"></i>
+                        Awards Event Name *
+                    </label>
+                    <input type="text" id="awardsEventName" required style="
+                        width: 100%;
+                        padding: 12px;
+                        border: 2px solid #e9ecef;
+                        border-radius: 8px;
+                        font-size: 14px;
+                        color: #495057;
+                        background-color: #fff;
+                        transition: border-color 0.3s ease;
+                    " placeholder="Enter awards event name">
+                </div>
+
+                <!-- Background -->
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #495057;">
+                        <i class="fas fa-image" style="color: #ffc107; margin-right: 5px;"></i>
+                        Event Background
+                    </label>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                        <div>
+                            <label style="color: #495057;">Background Type:</label>
+                            <select id="awardsBackgroundType" onchange="toggleAwardsBackgroundType()" style="
+                                width: 100%;
+                                padding: 10px;
+                                border: 2px solid #e9ecef;
+                                border-radius: 6px;
+                                color: #495057;
+                                background-color: #fff;
+                            ">
+                                <option value="gradient">Gradient</option>
+                                <option value="image">Image Upload</option>
+                            </select>
+                        </div>
+                        <div id="awardsGradientSection">
+                            <label style="color: #495057;">Gradient Colors:</label>
+                            <div style="display: flex; gap: 10px;">
+                                <input type="color" id="awardsColor1" value="#ffc107" style="width: 50px; height: 40px; border: none; border-radius: 6px;">
+                                <input type="color" id="awardsColor2" value="#e0a800" style="width: 50px; height: 40px; border: none; border-radius: 6px;">
+                            </div>
+                        </div>
+                        <div id="awardsImageSection" style="display: none;">
+                            <label style="color: #495057;">Upload Image:</label>
+                            <input type="file" id="awardsBackgroundImage" accept="image/*" style="
+                                width: 100%; 
+                                padding: 8px; 
+                                border: 2px solid #e9ecef; 
+                                border-radius: 6px;
+                                color: #495057;
+                                background-color: #fff;
+                            ">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Extra Media -->
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #495057;">
+                        <i class="fas fa-photo-video" style="color: #ffc107; margin-right: 5px;"></i>
+                        Extra Media (Max 15)
+                    </label>
+                    <input type="file" id="awardsExtraMedia" accept="image/*,video/*" multiple style="
+                        width: 100%;
+                        padding: 12px;
+                        border: 2px solid #e9ecef;
+                        border-radius: 8px;
+                        color: #495057;
+                        background-color: #fff;
+                    ">
+                    <small style="color: #6c757d;">Upload additional images or videos for your awards event</small>
+                </div>
+
+                <!-- Description -->
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #495057;">
+                        <i class="fas fa-align-left" style="color: #ffc107; margin-right: 5px;"></i>
+                        Description *
+                    </label>
+                    <textarea id="awardsDescription" required rows="4" style="
+                        width: 100%;
+                        padding: 12px;
+                        border: 2px solid #e9ecef;
+                        border-radius: 8px;
+                        font-size: 14px;
+                        resize: vertical;
+                        color: #495057;
+                        background-color: #fff;
+                    " placeholder="Describe your awards event"></textarea>
+                </div>
+
+                <!-- Date and Time -->
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #495057;">
+                        <i class="fas fa-calendar" style="color: #ffc107; margin-right: 5px;"></i>
+                        Awards Period *
+                    </label>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div>
+                            <label style="color: #495057;">Start Date & Time:</label>
+                            <input type="datetime-local" id="awardsStartDateTime" required style="
+                                width: 100%;
+                                padding: 10px;
+                                border: 2px solid #e9ecef;
+                                border-radius: 6px;
+                                color: #495057;
+                                background-color: #fff;
+                            ">
+                        </div>
+                        <div>
+                            <label style="color: #495057;">End Date & Time:</label>
+                            <input type="datetime-local" id="awardsEndDateTime" required style="
+                                width: 100%;
+                                padding: 10px;
+                                border: 2px solid #e9ecef;
+                                border-radius: 6px;
+                                color: #495057;
+                                background-color: #fff;
+                            ">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Event Link -->
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #495057;">
+                        <i class="fas fa-link" style="color: #ffc107; margin-right: 5px;"></i>
+                        Awards Event Link *
+                    </label>
+                    <div style="display: flex; align-items: center; border: 2px solid #e9ecef; border-radius: 8px; overflow: hidden;">
+                        <span style="background: #f8f9fa; padding: 12px; color: #6c757d; border-right: 1px solid #e9ecef;">
+                            reward-hub.vercel.app/awards/
+                        </span>
+                        <input type="text" id="awardsEventLink" required style="
+                            flex: 1;
+                            padding: 12px;
+                            border: none;
+                            outline: none;
+                            color: #495057;
+                            background-color: #fff;
+                        " placeholder="my-awards-event">
+                    </div>
+                </div>
+
+                <!-- Awards Categories -->
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #495057;">
+                        <i class="fas fa-list" style="color: #ffc107; margin-right: 5px;"></i>
+                        Awards Categories
+                    </label>
+                    <div id="awardsCategoriesList" style="margin-bottom: 10px;">
+                        <!-- Categories will be added here -->
+                    </div>
+                    <button type="button" onclick="addAwardsCategory()" style="
+                        background: #28a745;
+                        color: white;
+                        border: none;
+                        padding: 8px 16px;
+                        border-radius: 6px;
+                        cursor: pointer;
+                        font-size: 14px;
+                    ">
+                        <i class="fas fa-plus"></i> Add Category
+                    </button>
+                </div>
+
+                <!-- Response Type -->
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #495057;">
+                        <i class="fas fa-question-circle" style="color: #ffc107; margin-right: 5px;"></i>
+                        Response Type *
+                    </label>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                        <label style="
+                            display: flex;
+                            align-items: center;
+                            padding: 12px;
+                            border: 2px solid #e9ecef;
+                            border-radius: 8px;
+                            cursor: pointer;
+                            transition: all 0.3s ease;
+                            color: #495057;
+                        ">
+                            <input type="radio" name="awardsResponseType" value="multiple_choice" checked style="margin-right: 8px;">
+                            <span>Multiple Choice</span>
+                        </label>
+                        <label style="
+                            display: flex;
+                            align-items: center;
+                            padding: 12px;
+                            border: 2px solid #e9ecef;
+                            border-radius: 8px;
+                            cursor: pointer;
+                            transition: all 0.3s ease;
+                            color: #495057;
+                        ">
+                            <input type="radio" name="awardsResponseType" value="short_text" style="margin-right: 8px;">
+                            <span>Short Text Answer</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Awards Type -->
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #495057;">
+                        <i class="fas fa-money-bill" style="color: #ffc107; margin-right: 5px;"></i>
+                        Awards Type *
+                    </label>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                        <label style="
+                            display: flex;
+                            align-items: center;
+                            padding: 12px;
+                            border: 2px solid #e9ecef;
+                            border-radius: 8px;
+                            cursor: pointer;
+                            color: #495057;
+                        ">
+                            <input type="radio" name="awardsType" value="free" checked onchange="toggleAwardsPayment()" style="margin-right: 8px;">
+                            <span>Free</span>
+                        </label>
+                        <label style="
+                            display: flex;
+                            align-items: center;
+                            padding: 12px;
+                            border: 2px solid #e9ecef;
+                            border-radius: 8px;
+                            cursor: pointer;
+                            color: #495057;
+                        ">
+                            <input type="radio" name="awardsType" value="paid" onchange="toggleAwardsPayment()" style="margin-right: 8px;">
+                            <span>Paid</span>
+                        </label>
+                    </div>
+                    
+                    <div id="awardsPaymentSection" style="display: none; margin-top: 15px;">
+                        <label style="color: #495057;">Awards Fee (₦):</label>
+                        <input type="number" id="awardsNominationFee" min="100" step="50" style="
+                            width: 100%;
+                            padding: 10px;
+                            border: 2px solid #e9ecef;
+                            border-radius: 6px;
+                            margin-top: 5px;
+                            color: #495057;
+                            background-color: #fff;
+                        " placeholder="Enter awards fee">
+                    </div>
+                </div>
+
+                <!-- Number of People -->
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #495057;">
+                        <i class="fas fa-users" style="color: #ffc107; margin-right: 5px;"></i>
+                        Maximum Entries per Category
+                    </label>
+                    <input type="number" id="awardsMaxPeople" min="1" value="100" style="
+                        width: 100%;
+                        padding: 12px;
+                        border: 2px solid #e9ecef;
+                        border-radius: 8px;
+                        color: #495057;
+                        background-color: #fff;
+                    " placeholder="Enter maximum number of entries">
+                </div>
+
+                <!-- Optional Sponsors -->
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #495057;">
+                        <i class="fas fa-handshake" style="color: #ffc107; margin-right: 5px;"></i>
+                        Sponsors (Optional)
+                    </label>
+                    <div id="awardsSponsorsList" style="margin-bottom: 10px;">
+                        <!-- Sponsors will be added here -->
+                    </div>
+                    <button type="button" onclick="addAwardsSponsor()" style="
+                        background: #17a2b8;
+                        color: white;
+                        border: none;
+                        padding: 8px 16px;
+                        border-radius: 6px;
+                        cursor: pointer;
+                        font-size: 14px;
+                    ">
+                        <i class="fas fa-plus"></i> Add Sponsor
+                    </button>
+                </div>
+
+                <!-- Host Details -->
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #495057;">
+                        <i class="fas fa-user" style="color: #ffc107; margin-right: 5px;"></i>
+                        Host Information *
+                    </label>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div>
+                            <label style="color: #495057;">Host Name:</label>
+                            <input type="text" id="awardsHostName" required style="
+                                width: 100%;
+                                padding: 10px;
+                                border: 2px solid #e9ecef;
+                                border-radius: 6px;
+                                margin-top: 5px;
+                                color: #495057;
+                                background-color: #fff;
+                            " placeholder="Enter host name">
+                        </div>
+                        <div>
+                            <label style="color: #495057;">Contact (Optional):</label>
+                            <input type="text" id="awardsHostContact" style="
+                                width: 100%;
+                                padding: 10px;
+                                border: 2px solid #e9ecef;
+                                border-radius: 6px;
+                                margin-top: 5px;
+                                color: #495057;
+                                background-color: #fff;
+                            " placeholder="Phone or email">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Social Media -->
+                <div class="form-group" style="margin-bottom: 30px;">
+                    <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #495057;">
+                        <i class="fas fa-share-alt" style="color: #ffc107; margin-right: 5px;"></i>
+                        Social Media Links (Optional)
+                    </label>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <input type="url" id="awardsTwitter" style="
+                            padding: 10px;
+                            border: 2px solid #e9ecef;
+                            border-radius: 6px;
+                            color: #495057;
+                            background-color: #fff;
+                        " placeholder="Twitter URL">
+                        <input type="url" id="awardsInstagram" style="
+                            padding: 10px;
+                            border: 2px solid #e9ecef;
+                            border-radius: 6px;
+                            color: #495057;
+                            background-color: #fff;
+                        " placeholder="Instagram URL">
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div style="text-align: center; padding-top: 20px; border-top: 1px solid #e9ecef;">
+                    <button type="submit" style="
+                        background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%);
+                        color: #212529;
+                        border: none;
+                        padding: 15px 40px;
+                        border-radius: 10px;
+                        cursor: pointer;
+                        font-size: 16px;
+                        font-weight: 600;
+                        transition: all 0.3s ease;
+                    " onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+                        <i class="fas fa-trophy"></i>
+                        Create Awards Event
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 <!-- Firebase SDK -->
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
@@ -44074,7 +44927,123 @@ function closeSuccessModal() {
         modal.remove();
     }
 }
-
+// Function to open edit event popup
+async function openPhyEventEdit(eventId) {
+    try {
+        console.log('Opening edit for event:', eventId);
+        
+        // Get event data from Firebase
+        if (typeof firebase === 'undefined') {
+            throw new Error('Firebase not available');
+        }
+        
+        const db = firebase.firestore();
+        const eventDoc = await db.collection('physicalEvents').doc(eventId).get();
+        
+        if (!eventDoc.exists) {
+            showNotification('Event not found', 'error');
+            return;
+        }
+        
+        const eventData = eventDoc.data();
+        console.log('Event data loaded:', eventData);
+        
+        // Create edit modal
+        const modal = document.createElement('div');
+        modal.className = 'phyeventedit-modal-overlay';
+        modal.id = 'phyeventedit-modal';
+        
+        // Handle dates safely
+        let startDateValue = '';
+        let startTimeValue = '';
+        let endDateValue = '';
+        let endTimeValue = '';
+        
+        if (eventData.startDateTime && eventData.startDateTime !== 'TBA') {
+            const startDate = new Date(eventData.startDateTime);
+            startDateValue = startDate.toISOString().split('T')[0];
+            startTimeValue = startDate.toTimeString().slice(0, 5);
+        }
+        
+        if (eventData.endDateTime && eventData.endDateTime !== 'TBA') {
+            const endDate = new Date(eventData.endDateTime);
+            endDateValue = endDate.toISOString().split('T')[0];
+            endTimeValue = endDate.toTimeString().slice(0, 5);
+        }
+        
+        modal.innerHTML = `
+            <div class="phyeventedit-modal">
+                <div class="modal-header">
+                    <h3><i class="fas fa-edit"></i> Edit Physical Event</h3>
+                    <button class="close-modal-btn" onclick="closePhyEventEdit()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                
+                <div class="modal-body">
+                    <form id="editEventForm">
+                        <!-- Event Name -->
+                        <div class="form-group">
+                            <label>Event Name</label>
+                            <input type="text" id="editEventName" class="form-input" value="${eventData.eventName || ''}" required>
+                        </div>
+                        
+                        <!-- Event Link -->
+                        <div class="form-group">
+                            <label>Event Link</label>
+                            <input type="text" id="editEventLink" class="form-input" value="${eventData.eventLink || ''}" required>
+                        </div>
+                        
+                        <!-- Location -->
+                        <div class="form-group">
+                            <label>Location</label>
+                            <textarea id="editEventLocation" class="form-textarea" rows="3" required>${eventData.location || ''}</textarea>
+                        </div>
+                        
+                        <!-- Date and Time -->
+                        <div class="datetime-section">
+                            <h4>Event Schedule</h4>
+                            <div class="datetime-row">
+                                <div class="datetime-field">
+                                    <label>Start Date</label>
+                                    <input type="date" id="editStartDate" class="form-input" value="${startDateValue}">
+                                </div>
+                                <div class="datetime-field">
+                                    <label>Start Time</label>
+                                    <input type="time" id="editStartTime" class="form-input" value="${startTimeValue}">
+                                </div>
+                            </div>
+                            <div class="datetime-row">
+                                <div class="datetime-field">
+                                    <label>End Date</label>
+                                    <input type="date" id="editEndDate" class="form-input" value="${endDateValue}">
+                                </div>
+                                <div class="datetime-field">
+                                    <label>End Time</label>
+                                    <input type="time" id="editEndTime" class="form-input" value="${endTimeValue}">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Modal Actions -->
+                        <div class="modal-actions">
+                            <button type="button" onclick="closePhyEventEdit()" class="cancel-btn">Cancel</button>
+                            <button type="button" onclick="updatePhysicalEvent('${eventId}')" class="update-btn">
+                                <i class="fas fa-save"></i> Update Event
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        `;
+        
+        document.body.appendChild(modal);
+        
+    } catch (error) {
+        console.error('Error opening edit modal:', error);
+        showNotification('Error loading event data: ' + error.message, 'error');
+    }
+}
 // Global notification system for all app messages
 function showGlobalNotification(options) {
     const {
@@ -57265,8 +58234,1175 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
   
+// ========================================
+// NOMINATIONS & AWARDS SYSTEM - COMPLETE
+// ========================================
 
-   
+// Global variables
+let nominsCategories = [];
+let nominsSponsors = [];
+let awardsCategories = [];
+let awardsSponsors = [];
+
+// Initialize the nomination system
+function initializeNominsSystem() {
+    console.log('Initializing Nominations & Awards system...');
+    
+    // Add event listener to host button
+    const hostButton = document.getElementById('hostNominationform');
+    if (hostButton) {
+        hostButton.addEventListener('click', openNominsChoiceModal);
+    }
+    
+    console.log('Nominations & Awards system initialized');
+}
+
+// Open choice modal (Nominations vs Awards)
+function openNominsChoiceModal() {
+    console.log('Opening nomination/awards choice modal');
+    const modal = document.getElementById('nominsChoiceModal');
+    if (modal) {
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+// Close choice modal
+function closeNominsChoiceModal() {
+    const modal = document.getElementById('nominsChoiceModal');
+    if (modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = '';
+    }
+}
+
+// Open nominations modal
+function openNominsModal() {
+    closeNominsChoiceModal();
+    const modal = document.getElementById('nominsModal');
+    if (modal) {
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+        resetNominsForm();
+    }
+}
+
+// Close nominations modal
+function closeNominsModal() {
+    const modal = document.getElementById('nominsModal');
+    if (modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = '';
+    }
+}
+
+// Open awards modal
+function openAwardsModal() {
+    closeNominsChoiceModal();
+    const modal = document.getElementById('awardsModal');
+    if (modal) {
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+        resetAwardsForm();
+    }
+}
+
+// Close awards modal
+function closeAwardsModal() {
+    const modal = document.getElementById('awardsModal');
+    if (modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = '';
+    }
+}
+
+// Toggle background type for nominations
+function toggleNominsBackgroundType() {
+    const type = document.getElementById('nominsBackgroundType').value;
+    const gradientSection = document.getElementById('nominsGradientSection');
+    const imageSection = document.getElementById('nominsImageSection');
+    
+    if (type === 'gradient') {
+        gradientSection.style.display = 'block';
+        imageSection.style.display = 'none';
+    } else {
+        gradientSection.style.display = 'none';
+        imageSection.style.display = 'block';
+    }
+}
+
+// Toggle background type for awards
+function toggleAwardsBackgroundType() {
+    const type = document.getElementById('awardsBackgroundType').value;
+    const gradientSection = document.getElementById('awardsGradientSection');
+    const imageSection = document.getElementById('awardsImageSection');
+    
+    if (type === 'gradient') {
+        gradientSection.style.display = 'block';
+        imageSection.style.display = 'none';
+    } else {
+        gradientSection.style.display = 'none';
+        imageSection.style.display = 'block';
+    }
+}
+
+// Toggle payment section for nominations
+function toggleNominsPayment() {
+    const type = document.querySelector('input[name="nominsType"]:checked').value;
+    const paymentSection = document.getElementById('nominsPaymentSection');
+    
+    if (type === 'paid') {
+        paymentSection.style.display = 'block';
+    } else {
+        paymentSection.style.display = 'none';
+    }
+}
+
+// Toggle payment section for awards
+function toggleAwardsPayment() {
+    const type = document.querySelector('input[name="awardsType"]:checked').value;
+    const paymentSection = document.getElementById('awardsPaymentSection');
+    
+    if (type === 'paid') {
+        paymentSection.style.display = 'block';
+    } else {
+        paymentSection.style.display = 'none';
+    }
+}
+
+// Add nomination category
+function addNominsCategory() {
+    const categoryId = 'nomins_category_' + Date.now();
+    const categoryDiv = document.createElement('div');
+    categoryDiv.className = 'nomins-category-item';
+    categoryDiv.style.cssText = `
+        border: 1px solid #e9ecef;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 10px;
+        background: #f8f9fa;
+    `;
+    
+    categoryDiv.innerHTML = `
+        <div style="display: grid; grid-template-columns: 1fr auto; gap: 15px; align-items: start;">
+            <div>
+                <input type="text" placeholder="Category Name" required style="
+                    width: 100%;
+                    padding: 8px;
+                    border: 1px solid #dee2e6;
+                    border-radius: 4px;
+                    margin-bottom: 10px;
+                    color: #495057;
+                    background-color: #fff;
+                " data-category-name>
+                <input type="file" accept="image/*" style="
+                    width: 100%;
+                    padding: 6px;
+                    border: 1px solid #dee2e6;
+                    border-radius: 4px;
+                    color: #495057;
+                    background-color: #fff;
+                " data-category-image>
+                <small style="color: #6c757d;">Image is optional</small>
+            </div>
+            <button type="button" onclick="removeNominsCategory(this)" style="
+                background: #dc3545;
+                color: white;
+                border: none;
+                padding: 8px 12px;
+                border-radius: 4px;
+                cursor: pointer;
+            ">
+                <i class="fas fa-trash"></i>
+            </button>
+        </div>
+    `;
+    
+    document.getElementById('nominsCategoriesList').appendChild(categoryDiv);
+}
+
+// Add awards category
+function addAwardsCategory() {
+    const categoryId = 'awards_category_' + Date.now();
+    const categoryDiv = document.createElement('div');
+    categoryDiv.className = 'awards-category-item';
+    categoryDiv.style.cssText = `
+        border: 1px solid #e9ecef;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 10px;
+        background: #f8f9fa;
+    `;
+    
+    categoryDiv.innerHTML = `
+        <div style="display: grid; grid-template-columns: 1fr auto; gap: 15px; align-items: start;">
+            <div>
+                <input type="text" placeholder="Category Name" required style="
+                    width: 100%;
+                    padding: 8px;
+                    border: 1px solid #dee2e6;
+                    border-radius: 4px;
+                    margin-bottom: 10px;
+                    color: #495057;
+                    background-color: #fff;
+                " data-category-name>
+                <input type="file" accept="image/*" style="
+                    width: 100%;
+                    padding: 6px;
+                    border: 1px solid #dee2e6;
+                    border-radius: 4px;
+                    color: #495057;
+                    background-color: #fff;
+                " data-category-image>
+                <small style="color: #6c757d;">Image is optional</small>
+            </div>
+            <button type="button" onclick="removeAwardsCategory(this)" style="
+                background: #dc3545;
+                color: white;
+                border: none;
+                padding: 8px 12px;
+                border-radius: 4px;
+                cursor: pointer;
+            ">
+                <i class="fas fa-trash"></i>
+            </button>
+        </div>
+    `;
+    
+    document.getElementById('awardsCategoriesList').appendChild(categoryDiv);
+}
+
+// Remove nomination category
+function removeNominsCategory(button) {
+    button.closest('.nomins-category-item').remove();
+}
+
+// Remove awards category
+function removeAwardsCategory(button) {
+    button.closest('.awards-category-item').remove();
+}
+
+// Add nomination sponsor
+function addNominsSponsor() {
+    const sponsorDiv = document.createElement('div');
+    sponsorDiv.className = 'nomins-sponsor-item';
+    sponsorDiv.style.cssText = `
+        border: 1px solid #e9ecef;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 10px;
+        background: #f8f9fa;
+    `;
+    
+    sponsorDiv.innerHTML = `
+        <div style="display: grid; grid-template-columns: 1fr 1fr auto; gap: 15px; align-items: start;">
+            <input type="text" placeholder="Sponsor Name" style="
+                padding: 8px;
+                border: 1px solid #dee2e6;
+                border-radius: 4px;
+                color: #495057;
+                background-color: #fff;
+            " data-sponsor-name>
+            <input type="url" placeholder="Sponsor Website (Optional)" style="
+                padding: 8px;
+                border: 1px solid #dee2e6;
+                border-radius: 4px;
+                color: #495057;
+                background-color: #fff;
+            " data-sponsor-website>
+            <button type="button" onclick="removeNominsSponsor(this)" style="
+                background: #dc3545;
+                color: white;
+                border: none;
+                padding: 8px 12px;
+                border-radius: 4px;
+                cursor: pointer;
+            ">
+                <i class="fas fa-trash"></i>
+            </button>
+        </div>
+        <input type="file" accept="image/*" style="
+            width: 100%;
+            padding: 6px;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            margin-top: 10px;
+            color: #495057;
+            background-color: #fff;
+        " data-sponsor-logo>
+        <small style="color: #6c757d;">Logo is optional</small>
+    `;
+    
+    document.getElementById('nominsSponsorsList').appendChild(sponsorDiv);
+}
+
+// Add awards sponsor
+function addAwardsSponsor() {
+    const sponsorDiv = document.createElement('div');
+    sponsorDiv.className = 'awards-sponsor-item';
+    sponsorDiv.style.cssText = `
+        border: 1px solid #e9ecef;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 10px;
+        background: #f8f9fa;
+    `;
+    
+    sponsorDiv.innerHTML = `
+        <div style="display: grid; grid-template-columns: 1fr 1fr auto; gap: 15px; align-items: start;">
+            <input type="text" placeholder="Sponsor Name" style="
+                padding: 8px;
+                border: 1px solid #dee2e6;
+                border-radius: 4px;
+                color: #495057;
+                background-color: #fff;
+            " data-sponsor-name>
+            <input type="url" placeholder="Sponsor Website (Optional)" style="
+                padding: 8px;
+                border: 1px solid #dee2e6;
+                border-radius: 4px;
+                color: #495057;
+                background-color: #fff;
+            " data-sponsor-website>
+            <button type="button" onclick="removeAwardsSponsor(this)" style="
+                background: #dc3545;
+                color: white;
+                border: none;
+                padding: 8px 12px;
+                border-radius: 4px;
+                cursor: pointer;
+            ">
+                <i class="fas fa-trash"></i>
+            </button>
+        </div>
+        <input type="file" accept="image/*" style="
+            width: 100%;
+            padding: 6px;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            margin-top: 10px;
+            color: #495057;
+            background-color: #fff;
+        " data-sponsor-logo>
+        <small style="color: #6c757d;">Logo is optional</small>
+    `;
+    
+    document.getElementById('awardsSponsorsList').appendChild(sponsorDiv);
+}
+
+// Remove nomination sponsor
+function removeNominsSponsor(button) {
+    button.closest('.nomins-sponsor-item').remove();
+}
+
+// Remove awards sponsor
+function removeAwardsSponsor(button) {
+    button.closest('.awards-sponsor-item').remove();
+}
+
+// Reset nominations form
+function resetNominsForm() {
+    const form = document.getElementById('nominsForm');
+    if (form) {
+        form.reset();
+    }
+    document.getElementById('nominsCategoriesList').innerHTML = '';
+    document.getElementById('nominsSponsorsList').innerHTML = '';
+    nominsCategories = [];
+    nominsSponsors = [];
+    toggleNominsBackgroundType();
+    toggleNominsPayment();
+}
+
+// Reset awards form
+function resetAwardsForm() {
+    const form = document.getElementById('awardsForm');
+    if (form) {
+        form.reset();
+    }
+    document.getElementById('awardsCategoriesList').innerHTML = '';
+    document.getElementById('awardsSponsorsList').innerHTML = '';
+    awardsCategories = [];
+    awardsSponsors = [];
+    toggleAwardsBackgroundType();
+    toggleAwardsPayment();
+}
+
+// Create nominations event
+async function createNominsEvent(event) {
+    event.preventDefault();
+    
+    const submitBtn = event.target.querySelector('button[type="submit"]');
+    const originalText = submitBtn.innerHTML;
+    
+    try {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating...';
+        
+        console.log('Creating nomination event...');
+        
+        // Collect form data
+        const formData = await collectNominsData();
+        console.log('Collected nomination data:', formData);
+        
+        // Validate data
+        const validation = validateNominsData(formData);
+        if (!validation.isValid) {
+            showNominsError(validation.message);
+            return;
+        }
+        
+        console.log('Validation passed');
+        
+        // Check Firebase availability
+        if (typeof firebase === 'undefined') {
+            throw new Error('Firebase is not available');
+        }
+        
+        // Save to Firebase
+        const eventId = await saveNominsToFirebase(formData);
+        
+        if (eventId) {
+            console.log('Nomination event created successfully:', eventId);
+            closeNominsModal();
+            showNominsSuccess('Nomination form created successfully!');
+            // Refresh the nominations list
+            loadNominsEvents();
+        }
+        
+    } catch (error) {
+        console.error('Error creating nomination event:', error);
+        showNominsError('Error creating nomination form: ' + error.message);
+    } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalText;
+    }
+}
+
+// Create awards event
+async function createAwardsEvent(event) {
+    event.preventDefault();
+    
+    const submitBtn = event.target.querySelector('button[type="submit"]');
+    const originalText = submitBtn.innerHTML;
+    
+    try {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating...';
+        
+        console.log('Creating awards event...');
+        
+        // Collect form data
+        const formData = await collectAwardsData();
+        console.log('Collected awards data:', formData);
+        
+        // Validate data
+        const validation = validateAwardsData(formData);
+        if (!validation.isValid) {
+            showNominsError(validation.message);
+            return;
+        }
+        
+        console.log('Validation passed');
+        
+        // Check Firebase availability
+        if (typeof firebase === 'undefined') {
+            throw new Error('Firebase is not available');
+        }
+        
+        // Save to Firebase
+        const eventId = await saveAwardsToFirebase(formData);
+        
+        if (eventId) {
+            console.log('Awards event created successfully:', eventId);
+            closeAwardsModal();
+            showNominsSuccess('Awards event created successfully!');
+            // Refresh the awards list
+            loadAwardsEvents();
+        }
+        
+    } catch (error) {
+        console.error('Error creating awards event:', error);
+        showNominsError('Error creating awards event: ' + error.message);
+    } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalText;
+    }
+}
+
+// Collect nominations data
+async function collectNominsData() {
+    try {
+        const eventName = document.getElementById('nominsEventName').value.trim();
+        const description = document.getElementById('nominsDescription').value.trim();
+        const startDateTime = document.getElementById('nominsStartDateTime').value;
+        const endDateTime = document.getElementById('nominsEndDateTime').value;
+        const eventLink = document.getElementById('nominsEventLink').value.trim();
+        const responseType = document.querySelector('input[name="nominsResponseType"]:checked').value;
+        const nominationType = document.querySelector('input[name="nominsType"]:checked').value;
+        const maxPeople = parseInt(document.getElementById('nominsMaxPeople').value) || 100;
+        const hostName = document.getElementById('nominsHostName').value.trim();
+        const hostContact = document.getElementById('nominsHostContact').value.trim();
+        const twitter = document.getElementById('nominsTwitter').value.trim();
+        const instagram = document.getElementById('nominsInstagram').value.trim();
+        
+        // Collect background
+        const backgroundType = document.getElementById('nominsBackgroundType').value;
+        let background;
+        
+        if (backgroundType === 'gradient') {
+            const color1 = document.getElementById('nominsColor1').value;
+            const color2 = document.getElementById('nominsColor2').value;
+            background = {
+                type: 'gradient',
+                color1: color1,
+                color2: color2,
+                gradient: `linear-gradient(135deg, ${color1}, ${color2})`
+            };
+        } else {
+            const imageFile = document.getElementById('nominsBackgroundImage').files[0];
+            if (imageFile) {
+                background = await processImageFile(imageFile);
+                background.type = 'image';
+            } else {
+                // Default gradient if no image selected
+                background = {
+                    type: 'gradient',
+                    color1: '#667eea',
+                    color2: '#764ba2',
+                    gradient: 'linear-gradient(135deg, #667eea, #764ba2)'
+                };
+            }
+        }
+        
+        // Collect extra media
+        const extraMediaFiles = document.getElementById('nominsExtraMedia').files;
+        const extraMedia = [];
+        if (extraMediaFiles && extraMediaFiles.length > 0) {
+            const maxMedia = Math.min(extraMediaFiles.length, 15);
+            for (let i = 0; i < maxMedia; i++) {
+                const mediaFile = await processImageFile(extraMediaFiles[i]);
+                extraMedia.push(mediaFile);
+            }
+        }
+        
+        // Collect categories
+        const categoryItems = document.querySelectorAll('.nomins-category-item');
+        const categories = [];
+        for (const item of categoryItems) {
+            const name = item.querySelector('[data-category-name]').value.trim();
+            const imageFile = item.querySelector('[data-category-image]').files[0];
+            
+            if (name) {
+                const category = { 
+                    id: 'cat_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9),
+                    name 
+                };
+                if (imageFile) {
+                    category.image = await processImageFile(imageFile);
+                }
+                categories.push(category);
+            }
+        }
+        
+        // Collect sponsors
+        const sponsorItems = document.querySelectorAll('.nomins-sponsor-item');
+        const sponsors = [];
+        for (const item of sponsorItems) {
+            const name = item.querySelector('[data-sponsor-name]').value.trim();
+            const website = item.querySelector('[data-sponsor-website]').value.trim();
+            const logoFile = item.querySelector('[data-sponsor-logo]').files[0];
+            
+            if (name) {
+                const sponsor = { 
+                    id: 'sponsor_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9),
+                    name 
+                };
+                if (website) sponsor.website = website;
+                if (logoFile) {
+                    sponsor.logo = await processImageFile(logoFile);
+                }
+                sponsors.push(sponsor);
+            }
+        }
+        
+        // Handle nomination fee
+        let nominationFee = 0;
+        if (nominationType === 'paid') {
+            nominationFee = parseFloat(document.getElementById('nominsNominationFee').value) || 0;
+        }
+        
+        // Get current user ID
+        let creatorId;
+        try {
+            creatorId = await getCurrentUserId();
+        } catch (error) {
+            console.error('Error getting user ID:', error);
+            creatorId = 'anonymous_user_' + Date.now();
+        }
+        
+        return {
+            eventName,
+            description,
+            startDateTime,
+            endDateTime,
+            eventLink,
+            background,
+            extraMedia,
+            categories,
+            responseType,
+            nominationType,
+            nominationFee,
+            maxPeople,
+            sponsors,
+            hostName,
+            hostContact: hostContact || null,
+            socialMedia: {
+                twitter: twitter || null,
+                instagram: instagram || null
+            },
+            eventType: 'nomination',
+            creatorId,
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
+            status: 'active'
+        };
+        
+    } catch (error) {
+        console.error('Error collecting nomination data:', error);
+        throw new Error('Failed to collect form data: ' + error.message);
+    }
+}
+
+// Collect awards data
+async function collectAwardsData() {
+    try {
+        const eventName = document.getElementById('awardsEventName').value.trim();
+        const description = document.getElementById('awardsDescription').value.trim();
+        const startDateTime = document.getElementById('awardsStartDateTime').value;
+        const endDateTime = document.getElementById('awardsEndDateTime').value;
+        const eventLink = document.getElementById('awardsEventLink').value.trim();
+        const responseType = document.querySelector('input[name="awardsResponseType"]:checked').value;
+        const awardsType = document.querySelector('input[name="awardsType"]:checked').value;
+        const maxPeople = parseInt(document.getElementById('awardsMaxPeople').value) || 100;
+        const hostName = document.getElementById('awardsHostName').value.trim();
+        const hostContact = document.getElementById('awardsHostContact').value.trim();
+        const twitter = document.getElementById('awardsTwitter').value.trim();
+        const instagram = document.getElementById('awardsInstagram').value.trim();
+        
+        // Collect background
+        const backgroundType = document.getElementById('awardsBackgroundType').value;
+        let background;
+        
+        if (backgroundType === 'gradient') {
+            const color1 = document.getElementById('awardsColor1').value;
+            const color2 = document.getElementById('awardsColor2').value;
+            background = {
+                type: 'gradient',
+                color1: color1,
+                color2: color2,
+                gradient: `linear-gradient(135deg, ${color1}, ${color2})`
+            };
+        } else {
+            const imageFile = document.getElementById('awardsBackgroundImage').files[0];
+            if (imageFile) {
+                background = await processImageFile(imageFile);
+                background.type = 'image';
+            } else {
+                // Default gradient if no image selected
+                background = {
+                    type: 'gradient',
+                    color1: '#ffc107',
+                    color2: '#e0a800',
+                    gradient: 'linear-gradient(135deg, #ffc107, #e0a800)'
+                };
+            }
+        }
+        
+        // Collect extra media
+        const extraMediaFiles = document.getElementById('awardsExtraMedia').files;
+        const extraMedia = [];
+        if (extraMediaFiles && extraMediaFiles.length > 0) {
+            const maxMedia = Math.min(extraMediaFiles.length, 15);
+            for (let i = 0; i < maxMedia; i++) {
+                const mediaFile = await processImageFile(extraMediaFiles[i]);
+                extraMedia.push(mediaFile);
+            }
+        }
+        
+        // Collect categories
+        const categoryItems = document.querySelectorAll('.awards-category-item');
+        const categories = [];
+        for (const item of categoryItems) {
+            const name = item.querySelector('[data-category-name]').value.trim();
+            const imageFile = item.querySelector('[data-category-image]').files[0];
+            
+            if (name) {
+                const category = { 
+                    id: 'cat_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9),
+                    name 
+                };
+                if (imageFile) {
+                    category.image = await processImageFile(imageFile);
+                }
+                categories.push(category);
+            }
+        }
+        
+        // Collect sponsors
+        const sponsorItems = document.querySelectorAll('.awards-sponsor-item');
+        const sponsors = [];
+        for (const item of sponsorItems) {
+            const name = item.querySelector('[data-sponsor-name]').value.trim();
+            const website = item.querySelector('[data-sponsor-website]').value.trim();
+            const logoFile = item.querySelector('[data-sponsor-logo]').files[0];
+            
+            if (name) {
+                const sponsor = { 
+                    id: 'sponsor_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9),
+                    name 
+                };
+                if (website) sponsor.website = website;
+                if (logoFile) {
+                    sponsor.logo = await processImageFile(logoFile);
+                }
+                sponsors.push(sponsor);
+            }
+        }
+        
+        // Handle awards fee
+        let awardsFee = 0;
+        if (awardsType === 'paid') {
+            awardsFee = parseFloat(document.getElementById('awardsNominationFee').value) || 0;
+        }
+        
+        // Get current user ID
+        let creatorId;
+        try {
+            creatorId = await getCurrentUserId();
+        } catch (error) {
+            console.error('Error getting user ID:', error);
+            creatorId = 'anonymous_user_' + Date.now();
+        }
+        
+        return {
+            eventName,
+            description,
+            startDateTime,
+            endDateTime,
+            eventLink,
+            background,
+            extraMedia,
+            categories,
+            responseType,
+            awardsType,
+            awardsFee,
+            maxPeople,
+            sponsors,
+            hostName,
+            hostContact: hostContact || null,
+            socialMedia: {
+                twitter: twitter || null,
+                instagram: instagram || null
+            },
+            eventType: 'awards',
+            creatorId,
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
+            status: 'active'
+        };
+        
+    } catch (error) {
+        console.error('Error collecting awards data:', error);
+        throw new Error('Failed to collect form data: ' + error.message);
+    }
+}
+
+// Validate nominations data
+function validateNominsData(data) {
+    // Required fields validation
+    if (!data.eventName) {
+        return { isValid: false, message: 'Event name is required' };
+    }
+    
+    if (data.eventName.length < 3) {
+        return { isValid: false, message: 'Event name must be at least 3 characters' };
+    }
+    
+    if (!data.description) {
+        return { isValid: false, message: 'Description is required' };
+    }
+    
+    if (data.description.length < 10) {
+        return { isValid: false, message: 'Description must be at least 10 characters' };
+    }
+    
+    if (!data.startDateTime || !data.endDateTime) {
+        return { isValid: false, message: 'Start and end dates are required' };
+    }
+    
+    if (new Date(data.startDateTime) >= new Date(data.endDateTime)) {
+        return { isValid: false, message: 'End date must be after start date' };
+    }
+    
+    if (new Date(data.startDateTime) <= new Date()) {
+        return { isValid: false, message: 'Start date must be in the future' };
+    }
+    
+    if (!data.eventLink) {
+        return { isValid: false, message: 'Event link is required' };
+    }
+    
+    if (!/^[a-z0-9-]+$/.test(data.eventLink)) {
+        return { isValid: false, message: 'Event link can only contain lowercase letters, numbers, and hyphens' };
+    }
+    
+    if (data.categories.length === 0) {
+        return { isValid: false, message: 'At least one category is required' };
+    }
+    
+    if (!data.hostName) {
+        return { isValid: false, message: 'Host name is required' };
+    }
+    
+    // Payment validation
+    if (data.nominationType === 'paid') {
+        if (!data.nominationFee || data.nominationFee < 100) {
+            return { isValid: false, message: 'Nomination fee must be at least ₦100 for paid events' };
+        }
+    }
+    
+    // Optional fields validation (check if filled properly)
+    if (data.hostContact && data.hostContact.length < 5) {
+        return { isValid: false, message: 'Host contact must be at least 5 characters if provided' };
+    }
+    
+    if (data.socialMedia.twitter && !isValidUrl(data.socialMedia.twitter)) {
+        return { isValid: false, message: 'Twitter URL is not valid' };
+    }
+    
+    if (data.socialMedia.instagram && !isValidUrl(data.socialMedia.instagram)) {
+        return { isValid: false, message: 'Instagram URL is not valid' };
+    }
+    
+    return { isValid: true };
+}
+
+// Validate awards data
+function validateAwardsData(data) {
+    // Required fields validation
+    if (!data.eventName) {
+        return { isValid: false, message: 'Event name is required' };
+    }
+    
+    if (data.eventName.length < 3) {
+        return { isValid: false, message: 'Event name must be at least 3 characters' };
+    }
+    
+    if (!data.description) {
+        return { isValid: false, message: 'Description is required' };
+    }
+    
+    if (data.description.length < 10) {
+        return { isValid: false, message: 'Description must be at least 10 characters' };
+    }
+    
+    if (!data.startDateTime || !data.endDateTime) {
+        return { isValid: false, message: 'Start and end dates are required' };
+    }
+    
+    if (new Date(data.startDateTime) >= new Date(data.endDateTime)) {
+        return { isValid: false, message: 'End date must be after start date' };
+    }
+    
+    if (new Date(data.startDateTime) <= new Date()) {
+        return { isValid: false, message: 'Start date must be in the future' };
+    }
+    
+    if (!data.eventLink) {
+        return { isValid: false, message: 'Event link is required' };
+    }
+    
+    if (!/^[a-z0-9-]+$/.test(data.eventLink)) {
+        return { isValid: false, message: 'Event link can only contain lowercase letters, numbers, and hyphens' };
+    }
+    
+    if (data.categories.length === 0) {
+        return { isValid: false, message: 'At least one category is required' };
+    }
+    
+    if (!data.hostName) {
+        return { isValid: false, message: 'Host name is required' };
+    }
+    
+    // Payment validation
+    if (data.awardsType === 'paid') {
+        if (!data.awardsFee || data.awardsFee < 100) {
+            return { isValid: false, message: 'Awards fee must be at least ₦100 for paid events' };
+        }
+    }
+    
+    // Optional fields validation (check if filled properly)
+    if (data.hostContact && data.hostContact.length < 5) {
+        return { isValid: false, message: 'Host contact must be at least 5 characters if provided' };
+    }
+    
+    if (data.socialMedia.twitter && !isValidUrl(data.socialMedia.twitter)) {
+        return { isValid: false, message: 'Twitter URL is not valid' };
+    }
+    
+    if (data.socialMedia.instagram && !isValidUrl(data.socialMedia.instagram)) {
+        return { isValid: false, message: 'Instagram URL is not valid' };
+    }
+    
+    return { isValid: true };
+}
+
+// Save nominations to Firebase
+async function saveNominsToFirebase(data) {
+    try {
+        console.log('Saving nomination to Firebase...');
+        
+        const eventId = 'nomins_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+        data.nominsEventId = eventId;
+        
+        const db = firebase.firestore();
+        await db.collection('nomination form').doc(eventId).set(data);
+        
+        console.log('Nomination event saved successfully:', eventId);
+        return eventId;
+        
+    } catch (error) {
+        console.error('Error saving nomination event:', error);
+        throw new Error('Failed to save nomination: ' + error.message);
+    }
+}
+
+// Save awards to Firebase
+async function saveAwardsToFirebase(data) {
+    try {
+        console.log('Saving awards event to Firebase...');
+        
+        const eventId = 'awards_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+        data.awardsEventId = eventId;
+        
+        const db = firebase.firestore();
+        await db.collection('award choice event').doc(eventId).set(data);
+        
+        console.log('Awards event saved successfully:', eventId);
+        return eventId;
+        
+    } catch (error) {
+        console.error('Error saving awards event:', error);
+        throw new Error('Failed to save awards event: ' + error.message);
+    }
+}
+
+// Helper function to get current user ID
+async function getCurrentUserId() {
+    return new Promise((resolve, reject) => {
+        if (typeof firebase === 'undefined' || !firebase.auth) {
+            resolve('anonymous_user_' + Date.now());
+            return;
+        }
+
+        const currentUser = firebase.auth().currentUser;
+        if (currentUser) {
+            resolve(currentUser.uid);
+            return;
+        }
+
+        const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
+            unsubscribe();
+            
+            if (user) {
+                resolve(user.uid);
+            } else {
+                resolve('anonymous_user_' + Date.now());
+            }
+        }, (error) => {
+            unsubscribe();
+            resolve('anonymous_user_' + Date.now());
+        });
+    });
+}
+
+// Process image file to base64
+function processImageFile(file) {
+    return new Promise((resolve, reject) => {
+        // Validate file size (max 5MB)
+        if (file.size > 5 * 1024 * 1024) {
+            reject(new Error('File size must be less than 5MB'));
+            return;
+        }
+        
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            resolve({
+                data: e.target.result,
+                fileName: file.name,
+                fileType: file.type,
+                fileSize: file.size
+            });
+        };
+        reader.onerror = function(error) {
+            reject(new Error('Failed to read file'));
+        };
+        reader.readAsDataURL(file);
+    });
+}
+
+// Validate URL
+function isValidUrl(string) {
+    try {
+        new URL(string);
+        return true;
+    } catch (_) {
+        return false;
+    }
+}
+
+// Show success notification
+function showNominsSuccess(message) {
+    const notification = document.createElement('div');
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: linear-gradient(135deg, #28a745, #20c997);
+        color: white;
+        padding: 15px 20px;
+        border-radius: 10px;
+        z-index: 10002;
+        font-weight: 600;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        animation: slideInRight 0.3s ease;
+    `;
+    notification.innerHTML = `
+        <i class="fas fa-check-circle" style="margin-right: 8px;"></i>
+        ${message}
+    `;
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.style.animation = 'slideOutRight 0.3s ease';
+        setTimeout(() => notification.remove(), 300);
+    }, 4000);
+}
+
+// Show error notification
+function showNominsError(message) {
+    const notification = document.createElement('div');
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: linear-gradient(135deg, #dc3545, #c82333);
+        color: white;
+        padding: 15px 20px;
+        border-radius: 10px;
+        z-index: 10002;
+        font-weight: 600;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        animation: slideInRight 0.3s ease;
+    `;
+    notification.innerHTML = `
+        <i class="fas fa-exclamation-circle" style="margin-right: 8px;"></i>
+        ${message}
+    `;
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.style.animation = 'slideOutRight 0.3s ease';
+        setTimeout(() => notification.remove(), 300);
+    }, 5000);
+}
+
+// Load nominations events (placeholder)
+function loadNominsEvents() {
+    console.log('Loading nomination events...');
+    // Implementation for loading and displaying nomination events
+}
+
+// Load awards events (placeholder)
+function loadAwardsEvents() {
+    console.log('Loading awards events...');
+    // Implementation for loading and displaying awards events
+}
+
+// Initialize on DOM load
+document.addEventListener('DOMContentLoaded', function() {
+    initializeNominsSystem();
+});
+
+// Close modals when clicking outside
+document.addEventListener('click', function(event) {
+    if (event.target.classList.contains('modal-overlay')) {
+        closeNominsChoiceModal();
+        closeNominsModal();
+        closeAwardsModal();
+    }
+});
+
+// CSS animations
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes slideInRight {
+        from { transform: translateX(100%); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+    }
+    @keyframes slideOutRight {
+        from { transform: translateX(0); opacity: 1; }
+        to { transform: translateX(100%); opacity: 0; }
+    }
+    /* Fix for text visibility in nomination/awards forms */
+#nominsModal input,
+#nominsModal textarea,
+#nominsModal select,
+#awardsModal input,
+#awardsModal textarea,
+#awardsModal select {
+    color: #495057 !important;
+    background-color: #fff !important;
+}
+
+#nominsModal input::placeholder,
+#nominsModal textarea::placeholder,
+#awardsModal input::placeholder,
+#awardsModal textarea::placeholder {
+    color: #6c757d !important;
+    opacity: 0.7;
+}
+
+#nominsModal input:focus,
+#nominsModal textarea:focus,
+#nominsModal select:focus,
+#awardsModal input:focus,
+#awardsModal textarea:focus,
+#awardsModal select:focus {
+    border-color: #667eea !important;
+    color: #495057 !important;
+    background-color: #fff !important;
+}
+
+/* Fix for radio button labels */
+#nominsModal label,
+#awardsModal label {
+    color: #495057 !important;
+}
+
+/* Fix for small text */
+#nominsModal small,
+#awardsModal small {
+    color: #6c757d !important;
+}
+`;
+document.head.appendChild(style);
+
+console.log('Nominations & Awards System loaded successfully');
+  
 // Social media links
 function openSocialLink(platform) {
     const links = {
