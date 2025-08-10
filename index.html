@@ -21382,15 +21382,6 @@ rgb(81, 67, 55)rgb(81, 61, 55)rgb(81, 58, 55)rgb(184, 50, 32);
     border-radius: 24px;
 }
 
-.eventphy-hero-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(10, 10, 15, 0.8);
-    
-}
 
 .eventphy-hero-content {
     position: relative;
@@ -54106,17 +54097,19 @@ function displayEventphyPage(event) {
     const eventHTML = `
         <!-- Hero Section -->
         <div class="eventphy-hero-section" style="${backgroundStyle}">
-            div class="eventphy-powered-by" style="position: absolute; bottom: 10px; right: 10px; display: flex; align-items: center; background: rgba(0,0,0,0.6); padding: 8px 12px; border-radius: 20px; z-index: 3;">
+            <div class="eventphy-hero-overlay"></div>
+             
+            <div class="eventphy-powered-by" style="position: absolute; bottom: 10px; right: 10px; display: flex; align-items: center; background: rgba(0,0,0,0.6); padding: 8px 12px; border-radius: 20px; z-index: 3;">
                 <img src="https://i.ibb.co/VpC27tbt/Rewarder-logo.png" alt="Rewarder" style="width: 20px; height: 20px; margin-right: 6px;">
                 <span style="color: white; font-size: 12px; font-weight: 500;">Powered by Rewarder</span>
             </div>
             <div class="eventphy-hero-content">
                 <h1 class="eventphy-title">${event.eventName || event.name || 'Event'}</h1>
                
-                    <button class="eventphy-signup-btn" onclick="redirectToEventphySignUp()">
+                    `<button class="eventphy-signup-btn" onclick="redirectToEventphySignUp()">
                             <i class="fas fa-plus-circle"></i> Sign Up & Create Events
-                        </button>
-                    </div>
+                        </button>`
+
                 }
             </div>
         </div>
