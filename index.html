@@ -54107,6 +54107,9 @@ function displayEventphyPage(event) {
         <!-- Hero Section -->
         <div class="eventphy-hero-section" style="${backgroundStyle}">
             <div class="eventphy-hero-overlay"></div>
+             <button class="eventphy-signup-btn" onclick="redirectToEventphySignUp()">
+                            <i class="fas fa-plus-circle"></i> Sign Up & Create Events
+                        </button>
             <div class="eventphy-powered-by" style="position: absolute; bottom: 10px; right: 10px; display: flex; align-items: center; background: rgba(0,0,0,0.6); padding: 8px 12px; border-radius: 20px; z-index: 3;">
                 <img src="https://i.ibb.co/VpC27tbt/Rewarder-logo.png" alt="Rewarder" style="width: 20px; height: 20px; margin-right: 6px;">
                 <span style="color: white; font-size: 12px; font-weight: 500;">Powered by Rewarder</span>
@@ -54121,6 +54124,7 @@ function displayEventphyPage(event) {
                     `<button class="eventphy-get-tickets-btn" onclick="openEventphyTicketsModal()">
                         <i class="fas fa-ticket-alt"></i> Get Tickets
                     </button>`
+
                 }
             </div>
         </div>
