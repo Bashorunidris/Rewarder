@@ -54086,23 +54086,22 @@ async function loadEventphyPageData(eventLink) {
     }
 }
 
+
 // Display Eventphy page content
 function displayEventphyPage(event) {
     const contentContainer = document.getElementById('eventphyPageContent');
     
-    console.log('Displaying event data:', event); // Debug log
+    console.log('Displaying event data:', event);
     
-    // Update page meta tags for social sharing
     updateEventphyMetaTags(event);
     
-    // Generate background style
     const backgroundStyle = generateEventphyBackgroundStyle(event);
-    
-    // Generate tickets HTML with background styles
-    const ticketsHTML = generateEventphyTicketsHTML(event.tickets || event.eventTickets);
-    
-    // Generate sponsors HTML
+    const ticketsHTML = generateEventphyTicketsHTML(event.tickets || event.eventTickets, event);
     const sponsorsHTML = generateEventphySponsorsHTML(event.sponsors || event.eventSponsors);
+    const contactHTML = generateEventphyContactHTML(event);
+    
+    // Check if event has no tickets
+    const hasNoTickets = !event.tickets || event.tickets.length === 0 || event.noTickets === true || event.hasNoTickets === true;
 
     const eventHTML = `
         <!-- Hero Section -->
@@ -54115,9 +54114,14 @@ function displayEventphyPage(event) {
             <div class="eventphy-hero-content">
                 <h1 class="eventphy-title">${event.eventName || event.name || 'Event'}</h1>
                 <p class="eventphy-description">${event.eventDescription || event.description || 'Join us for an amazing event!'}</p>
-                <button class="eventphy-get-tickets-btn" onclick="openEventphyTicketsModal()">
-                    <i class="fas fa-ticket-alt"></i> Get Tickets
-                </button>
+                ${hasNoTickets ? 
+                    `<button class="eventphy-get-tickets-btn" onclick="showNoTicketInfo()" style="background: linear-gradient(135deg, #28a745, #20c997);">
+                        <i class="fas fa-door-open"></i> Get In
+                    </button>` : 
+                    `<button class="eventphy-get-tickets-btn" onclick="openEventphyTicketsModal()">
+                        <i class="fas fa-ticket-alt"></i> Get Tickets
+                    </button>`
+                }
             </div>
         </div>
 
@@ -54148,6 +54152,7 @@ function displayEventphyPage(event) {
             </div>
 
             ${ticketsHTML}
+            ${contactHTML}
             ${sponsorsHTML}
 
             <!-- Enhanced Rewarder Branding & Marketing -->
@@ -54164,14 +54169,502 @@ function displayEventphyPage(event) {
                             <i class="fas fa-plus-circle"></i> Sign Up & Create Events
                         </button>
                     </div>
+                    
                 </div>
             </div>
         </div>
+            
+<!-- Footer for Rewarder Event & Ticket App -->
+<footer style="
+    background: linear-gradient(135deg, #1a1a2e 100%, #16213e 0%, #0f3460 100%);
+    color: white;
+    padding: 60px 0 20px 0;
+    margin-top: 80px;
+    position: relative;
+    overflow: hidden;
+">
+    <!-- Background Elements -->
+    <div style="
+        position: absolute;
+        top: -50px;
+        right: -50px;
+        width: 200px;
+        height: 200px;
+        background: rgba(108, 92, 231, 0.1);
+        border-radius: 50%;
+        z-index: 0;
+    "></div>
+    <div style="
+        position: absolute;
+        bottom: -30px;
+        left: -30px;
+        width: 150px;
+        height: 150px;
+        background: rgba(253, 121, 168, 0.1);
+        border-radius: 50%;
+        z-index: 0;
+    "></div>
+
+    <div style="
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+        position: relative;
+        z-index: 1;
+    ">
+        <!-- Main Footer Content -->
+        <div style="
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        ">
+            
+            <!-- Brand Section -->
+            <div style="
+                background: rgba(255, 255, 255, 0.05);
+                padding: 30px;
+                border-radius: 15px;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                backdrop-filter: blur(10px);
+            ">
+                <div style="
+                    display: flex;
+                    align-items: center;
+                    margin-bottom: 20px;
+                ">
+                    <div style="
+                        width: 50px;
+                        height: 50px;
+                        background: linear-gradient(135deg, #6c5ce7, #fd79a8);
+                        border-radius: 12px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        margin-right: 15px;
+                    ">
+                        <i class="fas fa-ticket-alt" style="font-size: 24px; color: white;"></i>
+                    </div>
+                    <h3 style="
+                        font-size: 28px;
+                        font-weight: 700;
+                        margin: 0;
+                        background: linear-gradient(135deg, #6c5ce7, #fd79a8);
+                        -webkit-background-clip: text;
+                        -webkit-text-fill-color: transparent;
+                        background-clip: text;
+                    ">Rewarder</h3>
+                </div>
+                <p style="
+                    color: rgba(255, 255, 255, 0.8);
+                    line-height: 1.6;
+                    margin-bottom: 20px;
+                    font-size: 14px;
+                ">
+                    The ultimate platform for monetized talent competitions and event management. 
+                    Create, discover, and participate in amazing events with seamless ticket booking.
+                </p>
+                
+                <!-- Social Media Links -->
+                <div style="display: flex; gap: 15px; margin-top: 20px;">
+                    <a href="#" onclick="openSocialLink('facebook')" style="
+                        width: 40px;
+                        height: 40px;
+                        background: rgba(255, 255, 255, 0.1);
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        color: white;
+                        text-decoration: none;
+                        transition: all 0.3s ease;
+                        border: 1px solid rgba(255, 255, 255, 0.2);
+                    " onmouseover="this.style.background='#3b5998'; this.style.transform='translateY(-3px)'" 
+                       onmouseout="this.style.background='rgba(255, 255, 255, 0.1)'; this.style.transform='translateY(0)'">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" onclick="openSocialLink('twitter')" style="
+                        width: 40px;
+                        height: 40px;
+                        background: rgba(255, 255, 255, 0.1);
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        color: white;
+                        text-decoration: none;
+                        transition: all 0.3s ease;
+                        border: 1px solid rgba(255, 255, 255, 0.2);
+                    " onmouseover="this.style.background='#1da1f2'; this.style.transform='translateY(-3px)'" 
+                       onmouseout="this.style.background='rgba(255, 255, 255, 0.1)'; this.style.transform='translateY(0)'">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" onclick="openSocialLink('instagram')" style="
+                        width: 40px;
+                        height: 40px;
+                        background: rgba(255, 255, 255, 0.1);
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        color: white;
+                        text-decoration: none;
+                        transition: all 0.3s ease;
+                        border: 1px solid rgba(255, 255, 255, 0.2);
+                    " onmouseover="this.style.background='linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%)'; this.style.transform='translateY(-3px)'" 
+                       onmouseout="this.style.background='rgba(255, 255, 255, 0.1)'; this.style.transform='translateY(0)'">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" onclick="openSocialLink('linkedin')" style="
+                        width: 40px;
+                        height: 40px;
+                        background: rgba(255, 255, 255, 0.1);
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        color: white;
+                        text-decoration: none;
+                        transition: all 0.3s ease;
+                        border: 1px solid rgba(255, 255, 255, 0.2);
+                    " onmouseover="this.style.background='#0077b5'; this.style.transform='translateY(-3px)'" 
+                       onmouseout="this.style.background='rgba(255, 255, 255, 0.1)'; this.style.transform='translateY(0)'">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Quick Links -->
+            <div>
+                <h4 style="
+                    color: white;
+                    font-size: 18px;
+                    font-weight: 600;
+                    margin-bottom: 20px;
+                    display: flex;
+                    align-items: center;
+                ">
+                    <i class="fas fa-link" style="margin-right: 10px; color: #6c5ce7;"></i>
+                    Quick Links
+                </h4>
+                <ul style="
+                    list-style: none;
+                    padding: 0;
+                    margin: 0;
+                ">
+                    <li style="margin-bottom: 12px;">
+                        <a href="#" onclick="navigateToPage('events')" style="
+                            color: rgba(255, 255, 255, 0.8);
+                            text-decoration: none;
+                            font-size: 14px;
+                            transition: all 0.3s ease;
+                            display: flex;
+                            align-items: center;
+                        " onmouseover="this.style.color='#6c5ce7'; this.style.paddingLeft='10px'" 
+                           onmouseout="this.style.color='rgba(255, 255, 255, 0.8)'; this.style.paddingLeft='0'">
+                            <i class="fas fa-calendar-alt" style="margin-right: 8px; width: 15px;"></i>
+                            Browse Events
+                        </a>
+                    </li>
+                    <li style="margin-bottom: 12px;">
+                        <a href="#" onclick="navigateToPage('create-event')" style="
+                            color: rgba(255, 255, 255, 0.8);
+                            text-decoration: none;
+                            font-size: 14px;
+                            transition: all 0.3s ease;
+                            display: flex;
+                            align-items: center;
+                        " onmouseover="this.style.color='#6c5ce7'; this.style.paddingLeft='10px'" 
+                           onmouseout="this.style.color='rgba(255, 255, 255, 0.8)'; this.style.paddingLeft='0'">
+                            <i class="fas fa-plus-circle" style="margin-right: 8px; width: 15px;"></i>
+                            Create Event
+                        </a>
+                    </li>
+                    <li style="margin-bottom: 12px;">
+                        <a href="#" onclick="navigateToPage('my-tickets')" style="
+                            color: rgba(255, 255, 255, 0.8);
+                            text-decoration: none;
+                            font-size: 14px;
+                            transition: all 0.3s ease;
+                            display: flex;
+                            align-items: center;
+                        " onmouseover="this.style.color='#6c5ce7'; this.style.paddingLeft='10px'" 
+                           onmouseout="this.style.color='rgba(255, 255, 255, 0.8)'; this.style.paddingLeft='0'">
+                            <i class="fas fa-ticket-alt" style="margin-right: 8px; width: 15px;"></i>
+                            My Tickets
+                        </a>
+                    </li>
+                    <li style="margin-bottom: 12px;">
+                        <a href="#" onclick="navigateToPage('dashboard')" style="
+                            color: rgba(255, 255, 255, 0.8);
+                            text-decoration: none;
+                            font-size: 14px;
+                            transition: all 0.3s ease;
+                            display: flex;
+                            align-items: center;
+                        " onmouseover="this.style.color='#6c5ce7'; this.style.paddingLeft='10px'" 
+                           onmouseout="this.style.color='rgba(255, 255, 255, 0.8)'; this.style.paddingLeft='0'">
+                            <i class="fas fa-tachometer-alt" style="margin-right: 8px; width: 15px;"></i>
+                            Dashboard
+                        </a>
+                    </li>
+                    <li style="margin-bottom: 12px;">
+                        <a href="#" onclick="navigateToPage('help')" style="
+                            color: rgba(255, 255, 255, 0.8);
+                            text-decoration: none;
+                            font-size: 14px;
+                            transition: all 0.3s ease;
+                            display: flex;
+                            align-items: center;
+                        " onmouseover="this.style.color='#6c5ce7'; this.style.paddingLeft='10px'" 
+                           onmouseout="this.style.color='rgba(255, 255, 255, 0.8)'; this.style.paddingLeft='0'">
+                            <i class="fas fa-question-circle" style="margin-right: 8px; width: 15px;"></i>
+                            Help Center
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Event Categories -->
+            <div>
+                <h4 style="
+                    color: white;
+                    font-size: 18px;
+                    font-weight: 600;
+                    margin-bottom: 20px;
+                    display: flex;
+                    align-items: center;
+                ">
+                    <i class="fas fa-tags" style="margin-right: 10px; color: #fd79a8;"></i>
+                    Event Categories
+                </h4>
+                <ul style="
+                    list-style: none;
+                    padding: 0;
+                    margin: 0;
+                ">
+                    <li style="margin-bottom: 12px;">
+                        <a href="#" onclick="filterEvents('music')" style="
+                            color: rgba(255, 255, 255, 0.8);
+                            text-decoration: none;
+                            font-size: 14px;
+                            transition: all 0.3s ease;
+                            display: flex;
+                            align-items: center;
+                        " onmouseover="this.style.color='#fd79a8'; this.style.paddingLeft='10px'" 
+                           onmouseout="this.style.color='rgba(255, 255, 255, 0.8)'; this.style.paddingLeft='0'">
+                            <i class="fas fa-music" style="margin-right: 8px; width: 15px;"></i>
+                            Music & Concerts
+                        </a>
+                    </li>
+                    <li style="margin-bottom: 12px;">
+                        <a href="#" onclick="filterEvents('sports')" style="
+                            color: rgba(255, 255, 255, 0.8);
+                            text-decoration: none;
+                            font-size: 14px;
+                            transition: all 0.3s ease;
+                            display: flex;
+                            align-items: center;
+                        " onmouseover="this.style.color='#fd79a8'; this.style.paddingLeft='10px'" 
+                           onmouseout="this.style.color='rgba(255, 255, 255, 0.8)'; this.style.paddingLeft='0'">
+                            <i class="fas fa-futbol" style="margin-right: 8px; width: 15px;"></i>
+                            Sports & Fitness
+                        </a>
+                    </li>
+                    <li style="margin-bottom: 12px;">
+                        <a href="#" onclick="filterEvents('business')" style="
+                            color: rgba(255, 255, 255, 0.8);
+                            text-decoration: none;
+                            font-size: 14px;
+                            transition: all 0.3s ease;
+                            display: flex;
+                            align-items: center;
+                        " onmouseover="this.style.color='#fd79a8'; this.style.paddingLeft='10px'" 
+                           onmouseout="this.style.color='rgba(255, 255, 255, 0.8)'; this.style.paddingLeft='0'">
+                            <i class="fas fa-briefcase" style="margin-right: 8px; width: 15px;"></i>
+                            Business & Networking
+                        </a>
+                    </li>
+                    <li style="margin-bottom: 12px;">
+                        <a href="#" onclick="filterEvents('arts')" style="
+                            color: rgba(255, 255, 255, 0.8);
+                            text-decoration: none;
+                            font-size: 14px;
+                            transition: all 0.3s ease;
+                            display: flex;
+                            align-items: center;
+                        " onmouseover="this.style.color='#fd79a8'; this.style.paddingLeft='10px'" 
+                           onmouseout="this.style.color='rgba(255, 255, 255, 0.8)'; this.style.paddingLeft='0'">
+                            <i class="fas fa-palette" style="margin-right: 8px; width: 15px;"></i>
+                            Arts & Culture
+                        </a>
+                    </li>
+                    <li style="margin-bottom: 12px;">
+                        <a href="#" onclick="filterEvents('food')" style="
+                            color: rgba(255, 255, 255, 0.8);
+                            text-decoration: none;
+                            font-size: 14px;
+                            transition: all 0.3s ease;
+                            display: flex;
+                            align-items: center;
+                        " onmouseover="this.style.color='#fd79a8'; this.style.paddingLeft='10px'" 
+                           onmouseout="this.style.color='rgba(255, 255, 255, 0.8)'; this.style.paddingLeft='0'">
+                            <i class="fas fa-utensils" style="margin-right: 8px; width: 15px;"></i>
+                            Food & Drink
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Newsletter & Contact -->
+            <div>
+                <h4 style="
+                    color: white;
+                    font-size: 18px;
+                    font-weight: 600;
+                    margin-bottom: 20px;
+                    display: flex;
+                    align-items: center;
+                ">
+                    <i class="fas fa-envelope" style="margin-right: 10px; color: #4ECDC4;"></i>
+                    Stay Connected
+                </h4>
+                
+                <!-- Newsletter Signup -->
+                <div style="
+                    background: rgba(255, 255, 255, 0.05);
+                    padding: 20px;
+                    border-radius: 12px;
+                    border: 1px solid rgba(255, 255, 255, 0.1);
+                    margin-bottom: 20px;
+                ">
+                    <p style="
+                        color: rgba(255, 255, 255, 0.8);
+                        font-size: 14px;
+                        margin-bottom: 15px;
+                        line-height: 1.4;
+                    ">Get updates on new events and exclusive offers!</p>
+                    
+                    <div style="display: flex; gap: 8px;">
+                        <input type="email" id="newsletterEmail" placeholder="Your email address" style="
+                            flex: 1;
+                            padding: 12px;
+                            border: 1px solid rgba(255, 255, 255, 0.2);
+                            border-radius: 8px;
+                            background: rgba(255, 255, 255, 0.1);
+                            color: white;
+                            font-size: 14px;
+                        " />
+                        <button onclick="subscribeNewsletter()" style="
+                            background: linear-gradient(135deg, #4ECDC4, #44A08D);
+                            color: white;
+                            border: none;
+                            padding: 12px 16px;
+                            border-radius: 8px;
+                            cursor: pointer;
+                            font-size: 14px;
+                            font-weight: 600;
+                            transition: all 0.3s ease;
+                            white-space: nowrap;
+                        " onmouseover="this.style.transform='translateY(-2px)'" 
+                           onmouseout="this.style.transform='translateY(0)'">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Contact Info -->
+                <div style="margin-top: 20px;">
+                    <div style="
+                        display: flex;
+                        align-items: center;
+                        margin-bottom: 10px;
+                        color: rgba(255, 255, 255, 0.8);
+                        font-size: 14px;
+                    ">
+                        <i class="fas fa-phone" style="margin-right: 10px; color: #4ECDC4; width: 15px;"></i>
+                   Whatsapp (only); +234 8029941678
+                    </div>
+                    <div style="
+                        display: flex;
+                        align-items: center;
+                        margin-bottom: 10px;
+                        color: rgba(255, 255, 255, 0.8);
+                        font-size: 14px;
+                    ">
+                        <i class="fas fa-envelope" style="margin-right: 10px; color: #4ECDC4; width: 15px;"></i>
+                        support ; rewarderhub@gmail.com
+                    </div>
+                    <div style="
+                        display: flex;
+                        align-items: flex-start;
+                        color: rgba(255, 255, 255, 0.8);
+                        font-size: 14px;
+                    ">
+                        <i class="fas fa-map-marker-alt" style="margin-right: 10px; color: #4ECDC4; width: 15px; margin-top: 2px;"></i>
+                        <span>Lagos, Nigeria</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Bottom Section -->
+        <div style="
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        ">
+            <!-- Copyright -->
+            <div style="
+                color: rgba(255, 255, 255, 0.6);
+                font-size: 14px;
+            ">
+                © 2024 Rewarder. All rights reserved. | Built with ❤️ in Nigeria by Ismart Digital Connect 
+            </div>
+            
+            <!-- Legal Links -->
+            <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                
+                <a href="#" id="privacyBtn" style="
+                    color: rgba(255, 255, 255, 0.6);
+                    text-decoration: none;
+                    font-size: 14px;
+                    transition: color 0.3s ease;
+                " onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255, 255, 255, 0.6)'">
+                    Privacy Policy
+                </a>
+                <a href="#" id="termsBtn" style="
+                    color: rgba(255, 255, 255, 0.6);
+                    text-decoration: none;
+                    font-size: 14px;
+                    transition: color 0.3s ease;
+                " onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255, 255, 255, 0.6)'">
+                    Terms & Condition
+                </a>
+              
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+                
+        <!-- Footer -->
+        ${getEventphyFooter()}
     `;
 
     contentContainer.innerHTML = eventHTML;
 }
 
+// Show no ticket info
+function showNoTicketInfo() {
+    alert('This event does not require tickets. Just show up at the venue on the event date!');
+}
 
 
 // Generate background style for event
@@ -54195,15 +54688,49 @@ function generateEventphyBackgroundStyle(event) {
     }
 }
 
+
 // Generate tickets HTML
-function generateEventphyTicketsHTML(tickets) {
-    if (!tickets || tickets.length === 0) {
+function generateEventphyTicketsHTML(tickets, eventData) {
+    // Check if event has no tickets or tickets are empty
+    if (!tickets || tickets.length === 0 || eventData.noTickets === true || eventData.hasNoTickets === true) {
         return `
             <div class="eventphy-tickets-section">
-                <h2 class="eventphy-section-title">Tickets</h2>
-                <div class="eventphy-info-card">
-                    <h3><i class="fas fa-ticket-alt"></i> Free Entry</h3>
-                    <p>This event is free to attend!</p>
+                <h2 class="eventphy-section-title">Event Access</h2>
+                <div class="eventphy-no-tickets-card" style="
+                    background: rgba(255, 255, 255, 0.95);
+                    backdrop-filter: blur(10px);
+                    border-radius: 20px;
+                    padding: 2rem;
+                    text-align: center;
+                    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+                    border: 1px solid rgba(255, 255, 255, 0.3);
+                ">
+                    <div style="
+                        width: 80px;
+                        height: 80px;
+                        background: linear-gradient(135deg, #28a745, #20c997);
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        margin: 0 auto 1.5rem auto;
+                    ">
+                        <i class="fas fa-door-open" style="font-size: 2rem; color: white;"></i>
+                    </div>
+                    <h3 style="color: #1a1a2e; font-size: 1.8rem; margin-bottom: 1rem; font-weight: 700;">No Ticket Required</h3>
+                    <p style="color: #6c757d; font-size: 1.1rem; margin-bottom: 1.5rem;">This event does not require tickets. Just show up and enjoy!</p>
+                    <div style="
+                        background: linear-gradient(135deg, #28a745, #20c997);
+                        color: white;
+                        padding: 0.8rem 2rem;
+                        border-radius: 25px;
+                        display: inline-block;
+                        font-weight: 600;
+                        font-size: 1rem;
+                    ">
+                        <i class="fas fa-check-circle" style="margin-right: 0.5rem;"></i>
+                        Free Entry
+                    </div>
                 </div>
             </div>
         `;
@@ -54238,6 +54765,109 @@ function generateEventphyTicketsHTML(tickets) {
     `;
 
     return ticketsHTML;
+}
+
+
+// Generate contact info HTML for public page
+function generateEventphyContactHTML(eventData) {
+    const contacts = eventData.contactInfo || eventData.contacts || [];
+    
+    if (!contacts || contacts.length === 0) {
+        return '';
+    }
+
+    let contactHTML = `
+        <div class="eventphy-contact-section" style="margin: 2rem 0;">
+            <h2 class="eventphy-section-title">Contact Information</h2>
+            <div class="eventphy-contact-grid" style="
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 1rem;
+                margin-top: 1rem;
+            ">
+    `;
+
+    contacts.forEach(contact => {
+        const contactType = contact.type || 'general';
+        const contactIcon = getContactIcon(contactType);
+        
+        contactHTML += `
+            <div class="eventphy-contact-card" onclick="handleEventphyContactClick('${eventData.physicalEventId}', '${contactType}', '${contact.url}')" style="
+                background: rgba(255, 255, 255, 0.95);
+                backdrop-filter: blur(10px);
+                border-radius: 15px;
+                padding: 1.5rem;
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                border: 1px solid rgba(255, 255, 255, 0.3);
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            " onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 15px 30px rgba(0, 0, 0, 0.2)'" 
+               onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 20px rgba(0, 0, 0, 0.1)'">
+                <div style="
+                    width: 50px;
+                    height: 50px;
+                    background: linear-gradient(135deg, #6c5ce7, #fd79a8);
+                    border-radius: 12px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: white;
+                    font-size: 1.2rem;
+                ">
+                    <i class="${contactIcon}"></i>
+                </div>
+                <div style="flex: 1;">
+                    <h4 style="margin: 0 0 0.5rem 0; color: #1a1a2e; font-size: 1rem; font-weight: 600;">${contact.label || contact.type}</h4>
+                    <p style="margin: 0; color: #6c757d; font-size: 0.9rem;">${contact.displayText || contact.url}</p>
+                </div>
+                <div style="color: #6c5ce7;">
+                    <i class="fas fa-external-link-alt"></i>
+                </div>
+            </div>
+        `;
+    });
+
+    contactHTML += `
+            </div>
+        </div>
+    `;
+
+    return contactHTML;
+}
+
+// Handle contact click on public page
+function handleEventphyContactClick(eventId, contactType, contactUrl) {
+    // Track the click if tracking function exists
+    if (typeof trackContactClick === 'function') {
+        trackContactClick(eventId, contactType, contactUrl);
+    }
+    
+    // Open the contact URL
+    if (contactUrl) {
+        window.open(contactUrl, '_blank');
+    }
+}
+
+// Get contact icon based on type
+function getContactIcon(type) {
+    const iconMap = {
+        'whatsapp': 'fab fa-whatsapp',
+        'telegram': 'fab fa-telegram',
+        'email': 'fas fa-envelope',
+        'phone': 'fas fa-phone',
+        'website': 'fas fa-globe',
+        'facebook': 'fab fa-facebook',
+        'twitter': 'fab fa-twitter',
+        'instagram': 'fab fa-instagram',
+        'linkedin': 'fab fa-linkedin',
+        'discord': 'fab fa-discord',
+        'general': 'fas fa-link'
+    };
+    
+    return iconMap[type.toLowerCase()] || iconMap['general'];
 }
 
 // Generate sponsors HTML
@@ -54439,7 +55069,7 @@ function updateEventphyMetaTags(event) {
 
 // Redirect to sign up
 function redirectToEventphySignUp() {
-    window.open('https://rewarder-hub.vercel.app/', '_blank');
+    window.open('https://rewarderhub.vercel.app/', '_blank');
 }
 
 // Initialize Eventphy on page load
