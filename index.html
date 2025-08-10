@@ -21201,6 +21201,7 @@ tba-option {
             </div>
         </div>
     </div>
+
     <!-- ========== ULTRA-PREMIUM OPENING PAGE v2.0 ========== -->
 <div class="openpage" id="openingPage">
    
@@ -22648,410 +22649,6 @@ tba-option {
           
         </div>
        
-    <div class="liveevent-page">
-        <div class="liveevent-container">
-            <!-- Header -->
-            <header class="liveevent-header">
-                <h1><i class="fas fa-broadcast-tower"></i> Live Events</h1>
-            </header>
-<!-- Add this inside your liveevent-page div, preferably at the top -->
-<button class="liveevent-close-btn">
-    <i class="fas fa-times"></i>
-</button>
-
-            <!-- Tab Navigation -->
-            <div class="liveevent-tab-navigation">
-                <button class="liveevent-tab-btn liveevent-active" data-tab="sports">
-                    <i class="fas fa-futbol"></i>
-                    <span>Sport Events</span>
-                </button>
-                <button class="liveevent-tab-btn" data-tab="talent">
-                    <i class="fas fa-star"></i>
-                    <span>Talent Show</span>
-                </button>
-            </div>
-
-            <!-- Sports Events Tab -->
-            <div class="liveevent-tab-content liveevent-active" id="liveevent-sports-tab">
-                <!-- Sports Icons -->
-                <div class="liveevent-sports-icons">
-                    <div class="liveevent-sport-icon" data-sport="football">
-                        <i class="fas fa-futbol"></i>
-                        <span>Football</span>
-                    </div>
-                    <div class="liveevent-sport-icon" data-sport="basketball">
-                        <i class="fas fa-basketball-ball"></i>
-                        <span>Basketball</span>
-                    </div>
-                    <div class="liveevent-sport-icon" data-sport="tennis">
-                        <i class="fas fa-table-tennis"></i>
-                        <span>Tennis</span>
-                    </div>
-                    <div class="liveevent-sport-icon" data-sport="race">
-                        <i class="fas fa-running"></i>
-                        <span>Race</span>
-                    </div>
-                    <div class="liveevent-sport-icon" data-sport="tabletennis">
-                        <i class="fas fa-ping-pong-paddle-ball"></i>
-                        <span>Table Tennis</span>
-                    </div>
-                    <div class="liveevent-sport-icon" data-sport="volleyball">
-                        <i class="fas fa-volleyball-ball"></i>
-                        <span>Volleyball</span>
-                    </div>
-                    <div class="liveevent-sport-icon" data-sport="badminton">
-                        <i class="fas fa-shuttlecock"></i>
-                        <span>Badminton</span>
-                    </div>
-                </div>
-
-                <!-- Filters -->
-                <div class="liveevent-filters-container">
-                    <div class="liveevent-filter-group">
-                        <button class="liveevent-filter-btn liveevent-active" data-filter="latest">Latest Events</button>
-                        <button class="liveevent-filter-btn" data-filter="old">Old</button>
-                        <button class="liveevent-filter-btn" data-filter="48hrs">48hrs</button>
-                        <button class="liveevent-filter-btn" data-filter="3days">3 Days</button>
-                        <button class="liveevent-filter-btn" data-filter="14days">14 Days</button>
-                        <button class="liveevent-filter-btn" data-filter="finished">Finished</button>
-                        <button class="liveevent-filter-btn" data-filter="about-to-end">About to End</button>
-                        <button class="liveevent-filter-btn" data-filter="just-started">Just Started</button>
-                    </div>
-                </div>
-
-                <!-- Banner Ad -->
-                <div class="liveevent-banner-ad">
-                    <div class="liveevent-ad-placeholder">
-                        <i class="fas fa-ad"></i>
-                        <span>Advertisement Banner (480px x 70px)</span>
-                    </div>
-                </div>
-
-                <!-- Search Section -->
-                <div class="liveevent-search-section">
-                    <div class="liveevent-search-container">
-                        <div class="liveevent-search-input-wrapper">
-                            <i class="fas fa-search"></i>
-                            <input type="text" class="liveevent-search-input" placeholder="Search teams, leagues, players, events...">
-                        </div>
-                        <div class="liveevent-search-filters">
-                            <button class="liveevent-search-filter-btn liveevent-active" data-search="all">All</button>
-                            <button class="liveevent-search-filter-btn" data-search="teams">Teams</button>
-                            <button class="liveevent-search-filter-btn" data-search="leagues">Leagues</button>
-                            <button class="liveevent-search-filter-btn" data-search="players">Players</button>
-                            <button class="liveevent-search-filter-btn" data-search="events">Events</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Cards Container -->
-                <div class="liveevent-cards-container" id="liveevent-sports-cards">
-                    <div class="liveevent-loading-message">
-                        <i class="fas fa-spinner"></i>
-                        <p>Loading live events...</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Talent Show Tab -->
-            <div class="liveevent-tab-content" id="liveevent-talent-tab">
-                <!-- Talent Icons -->
-                <div class="liveevent-talent-icons">
-                    <div class="liveevent-talent-icon" data-talent="singing">
-                        <i class="fas fa-microphone"></i>
-                        <span>Singing</span>
-                    </div>
-                    <div class="liveevent-talent-icon" data-talent="dancing">
-                        <i class="fas fa-music"></i>
-                        <span>Dancing</span>
-                    </div>
-                    <div class="liveevent-talent-icon" data-talent="drawing">
-                        <i class="fas fa-paint-brush"></i>
-                        <span>Drawing</span>
-                    </div>
-                    <div class="liveevent-talent-icon" data-talent="comedy">
-                        <i class="fas fa-laugh"></i>
-                        <span>Comedy</span>
-                    </div>
-                    <div class="liveevent-talent-icon" data-talent="magic">
-                        <i class="fas fa-magic"></i>
-                        <span>Magic</span>
-                    </div>
-                    <div class="liveevent-talent-icon" data-talent="poetry">
-                        <i class="fas fa-feather-alt"></i>
-                        <span>Poetry</span>
-                    </div>
-                    <div class="liveevent-talent-icon" data-talent="acting">
-                        <i class="fas fa-theater-masks"></i>
-                        <span>Acting</span>
-                    </div>
-                    <div class="liveevent-talent-icon" data-talent="music">
-                        <i class="fas fa-guitar"></i>
-                        <span>Music</span>
-                    </div>
-                    <div class="liveevent-talent-icon" data-talent="photography">
-                        <i class="fas fa-camera"></i>
-                        <span>Photography</span>
-                    </div>
-                    <div class="liveevent-talent-icon" data-talent="crafts">
-                        <i class="fas fa-hammer"></i>
-                        <span>Crafts</span>
-                    </div>
-                    <div class="liveevent-talent-icon" data-talent="storytelling">
-                        <i class="fas fa-book-open"></i>
-                        <span>Storytelling</span>
-                    </div>
-                    <div class="liveevent-talent-icon" data-talent="other">
-                        <i class="fas fa-plus-circle"></i>
-                        <span>Other</span>
-                    </div>
-                </div>
-
-                <!-- Banner Ad -->
-                <div class="liveevent-banner-ad">
-                    <div class="liveevent-ad-placeholder">
-                        <i class="fas fa-ad"></i>
-                        <span>Advertisement Banner (480px x 70px)</span>
-                    </div>
-                </div>
-
-                <!-- Search Section -->
-                <div class="liveevent-search-section">
-                    <div class="liveevent-search-container">
-                        <div class="liveevent-search-input-wrapper">
-                            <i class="fas fa-search"></i>
-                            <input type="text" class="liveevent-search-input" placeholder="Search talent shows, performers, events...">
-                        </div>
-                        <div class="liveevent-search-filters">
-                            <button class="liveevent-search-filter-btn liveevent-active" data-search="all">All</button>
-                       <button class="liveevent-search-filter-btn liveevent-active" data-search="all">All</button>
-                            <button class="liveevent-search-filter-btn" data-search="performers">Performers</button>
-                            <button class="liveevent-search-filter-btn" data-search="shows">Shows</button>
-                            <button class="liveevent-search-filter-btn" data-search="events">Events</button>
-                            <button class="liveevent-search-filter-btn" data-search="competitions">Competitions</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Cards Container -->
-                <div class="liveevent-cards-container" id="liveevent-talent-cards">
-                    <div class="liveevent-loading-message">
-                        <i class="fas fa-spinner"></i>
-                        <p>Loading talent shows...</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>  
-
-
-    <div class="newevent-page">
-    <div class="newevent-container">
-        
-      <!-- Header -->
-        <header class="newevent-header">
-         
-            <h1><i class="fas fa-broadcast-tower"></i> New Events</h1>
-          <button class="newevent-close-btn " type="button" aria-label="Close New Events">
-        <i class="fas fa-times"></i>
-        
-    </button>
-          </header>
-        
-        <!-- Tab Navigation -->
-        <div class="newevent-tab-navigation">
-            <button class="newevent-tab-btn newevent-active" data-tab="sports">
-                <i class="fas fa-futbol"></i>
-                <span>Sport Events</span>
-            </button>
-            <button class="newevent-tab-btn" data-tab="talent">
-                <i class="fas fa-star"></i>
-                <span>Talent Show</span>
-            </button>
-        </div>
-        
-        <!-- Sports Events Tab -->
-        <div class="newevent-tab-content newevent-active" id="newevent-sports-tab">
-            <!-- Sports Icons -->
-            <div class="newevent-sports-icons">
-                <div class="newevent-sport-icon" data-sport="football">
-                    <i class="fas fa-futbol"></i>
-                    <span>Football</span>
-                </div>
-                <div class="newevent-sport-icon" data-sport="basketball">
-                    <i class="fas fa-basketball-ball"></i>
-                    <span>Basketball</span>
-                </div>
-                <div class="newevent-sport-icon" data-sport="tennis">
-                    <i class="fas fa-table-tennis"></i>
-                    <span>Tennis</span>
-                </div>
-                <div class="newevent-sport-icon" data-sport="race">
-                    <i class="fas fa-running"></i>
-                    <span>Race</span>
-                </div>
-                <div class="newevent-sport-icon" data-sport="tabletennis">
-                    <i class="fas fa-ping-pong-paddle-ball"></i>
-                    <span>Table Tennis</span>
-                </div>
-                <div class="newevent-sport-icon" data-sport="volleyball">
-                    <i class="fas fa-volleyball-ball"></i>
-                    <span>Volleyball</span>
-                </div>
-                <div class="newevent-sport-icon" data-sport="badminton">
-                    <i class="fas fa-shuttlecock"></i>
-                    <span>Badminton</span>
-                </div>
-            </div>
-            
-            <!-- Filters -->
-            <div class="newevent-filters-container">
-                <div class="newevent-filter-group">
-                    <button class="newevent-filter-btn newevent-active" data-filter="latest">Latest Events</button>
-                    <button class="newevent-filter-btn" data-filter="old">Old</button>
-                    <button class="newevent-filter-btn" data-filter="48hrs">48hrs</button>
-                    <button class="newevent-filter-btn" data-filter="3days">3 Days</button>
-                    <button class="newevent-filter-btn" data-filter="14days">14 Days</button>
-                    <button class="newevent-filter-btn" data-filter="finished">Finished</button>
-                    <button class="newevent-filter-btn" data-filter="about-to-end">About to End</button>
-                    <button class="newevent-filter-btn" data-filter="just-started">Just Started</button>
-                </div>
-            </div>
-            
-            <!-- Banner Ad -->
-            <div class="newevent-banner-ad">
-                <div class="newevent-ad-placeholder">
-                    <i class="fas fa-ad"></i>
-                    <span>Advertisement Banner (480px x 70px)</span>
-                </div>
-            </div>
-            
-            <!-- Search Section -->
-            <div class="newevent-search-section">
-                <div class="newevent-search-container">
-                    <div class="newevent-search-input-wrapper">
-                        <i class="fas fa-search"></i>
-                        <input type="text" class="newevent-search-input" placeholder="Search teams, leagues, players, events...">
-                    </div>
-                    <div class="newevent-search-filters">
-                        <button class="newevent-search-filter-btn newevent-active" data-search="all">All</button>
-                        <button class="newevent-search-filter-btn" data-search="teams">Teams</button>
-                        <button class="newevent-search-filter-btn" data-search="leagues">Leagues</button>
-                        <button class="newevent-search-filter-btn" data-search="players">Players</button>
-                        <button class="newevent-search-filter-btn" data-search="events">Events</button>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Cards Container -->
-            <div class="newevent-cards-container" id="newevent-sports-cards">
-                <div class="newevent-loading-message">
-                    <i class="fas fa-spinner"></i>
-                    <p>Loading new events...</p>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Talent Show Tab -->
-        <div class="newevent-tab-content" id="newevent-talent-tab">
-            <!-- Talent Icons -->
-            <div class="newevent-talent-icons">
-                <div class="newevent-talent-icon" data-talent="singing">
-                    <i class="fas fa-microphone"></i>
-                    <span>Singing</span>
-                </div>
-                <div class="newevent-talent-icon" data-talent="dancing">
-                    <i class="fas fa-music"></i>
-                    <span>Dancing</span>
-                </div>
-                <div class="newevent-talent-icon" data-talent="drawing">
-                    <i class="fas fa-paint-brush"></i>
-                    <span>Drawing</span>
-                </div>
-                <div class="newevent-talent-icon" data-talent="comedy">
-                    <i class="fas fa-laugh"></i>
-                    <span>Comedy</span>
-                </div>
-                <div class="newevent-talent-icon" data-talent="magic">
-                    <i class="fas fa-magic"></i>
-                    <span>Magic</span>
-                </div>
-                <div class="newevent-talent-icon" data-talent="poetry">
-                    <i class="fas fa-feather-alt"></i>
-                    <span>Poetry</span>
-                </div>
-                <div class="newevent-talent-icon" data-talent="acting">
-                    <i class="fas fa-theater-masks"></i>
-                    <span>Acting</span>
-                </div>
-                <div class="newevent-talent-icon" data-talent="music">
-                    <i class="fas fa-guitar"></i>
-                    <span>Music</span>
-                </div>
-                <div class="newevent-talent-icon" data-talent="photography">
-                    <i class="fas fa-camera"></i>
-                    <span>Photography</span>
-                </div>
-                <div class="newevent-talent-icon" data-talent="crafts">
-                    <i class="fas fa-hammer"></i>
-                    <span>Crafts</span>
-                </div>
-                <div class="newevent-talent-icon" data-talent="storytelling">
-                    <i class="fas fa-book-open"></i>
-                    <span>Storytelling</span>
-                </div>
-                <div class="newevent-talent-icon" data-talent="other">
-                    <i class="fas fa-plus-circle"></i>
-                    <span>Other</span>
-                </div>
-            </div>
-            
-            <!-- Banner Ad -->
-            <div class="newevent-banner-ad">
-                <div class="newevent-ad-placeholder">
-                    <i class="fas fa-ad"></i>
-                    <span>Advertisement Banner (480px x 70px)</span>
-                </div>
-            </div>
-            
-            <!-- Search Section -->
-            <div class="newevent-search-section">
-                <div class="newevent-search-container">
-                    <div class="newevent-search-input-wrapper">
-                        <i class="fas fa-search"></i>
-                        <input type="text" class="newevent-search-input" placeholder="Search talent shows, performers, events...">
-                    </div>
-                    <div class="newevent-search-filters">
-                        <button class="newevent-search-filter-btn newevent-active" data-search="all">All</button>
-                        <button class="newevent-search-filter-btn" data-search="performers">Performers</button>
-                        <button class="newevent-search-filter-btn" data-search="shows">Shows</button>
-                        <button class="newevent-search-filter-btn" data-search="events">Events</button>
-                        <button class="newevent-search-filter-btn" data-search="competitions">Competitions</button>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Cards Container -->
-            <div class="newevent-cards-container" id="newevent-talent-cards">
-                <div class="newevent-loading-message">
-                    <i class="fas fa-spinner"></i>
-                    <p>Loading talent shows...</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-    </div>
-  
-         
-        
-        
-      </div>
-    </div>
-  </div>
-  
-</div>
 
    
                    
@@ -61949,23 +61546,29 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-    // ===== EVENTPHY PUBLIC PAGE FUNCTIONALITY =====
+so now i want to connect it to this eventphy public page functionality this is the code just check it out i pasted it below 
+   do not add anything i have not told u to  // ===== EVENTPHY PUBLIC PAGE FUNCTIONALITY =====
 
 // Global variables for Eventphy
 let currentEventphyData = null;
-
-// Check if URL is for Eventphy page
+// Modified checkEventphyPageURL function to prevent disruption
 function checkEventphyPageURL() {
     const path = window.location.pathname;
-      const isEventphyPage = path.startsWith('/event/');
+    const isEventphyPage = path.startsWith('/event/');
     
-       if (isEventphyPage) {
+    if (isEventphyPage) {
         const eventLink = path.replace('/event/', '');
-         if (eventLink) {
-           showEventphyPage();
+        if (eventLink) {
+            // Hide opening page immediately for event links
+            const openingPage = document.getElementById('openingPage');
+            if (openingPage) {
+                openingPage.style.display = 'none';
+            }
+            
+            showEventphyPage();
             loadEventphyPageData(eventLink);
             return true;
-         }
+        }
     }
     return false;
 }
@@ -62076,7 +61679,6 @@ async function loadEventphyPageData(eventLink) {
         `;
     }
 }
-
 // Display Eventphy page content
 function displayEventphyPage(event) {
     const contentContainer = document.getElementById('eventphyPageContent');
@@ -62089,11 +61691,14 @@ function displayEventphyPage(event) {
     // Generate background style
     const backgroundStyle = generateEventphyBackgroundStyle(event);
     
-    // Generate tickets HTML with background styles
-    const ticketsHTML = generateEventphyTicketsHTML(event.tickets || event.eventTickets);
+    // Generate tickets HTML with event data for no-ticket check
+    const ticketsHTML = generateEventphyTicketsHTML(event.tickets || event.eventTickets, event);
     
     // Generate sponsors HTML
     const sponsorsHTML = generateEventphySponsorsHTML(event.sponsors || event.eventSponsors);
+    
+    // Generate contact info HTML
+    const contactHTML = generateEventphyContactHTML(event);
 
     const eventHTML = `
         <!-- Hero Section -->
@@ -62106,9 +61711,14 @@ function displayEventphyPage(event) {
             <div class="eventphy-hero-content">
                 <h1 class="eventphy-title">${event.eventName || event.name || 'Event'}</h1>
                 <p class="eventphy-description">${event.eventDescription || event.description || 'Join us for an amazing event!'}</p>
-                <button class="eventphy-get-tickets-btn" onclick="openEventphyTicketsModal()">
-                    <i class="fas fa-ticket-alt"></i> Get Tickets
-                </button>
+                ${event.noTickets !== true && event.hasNoTickets !== true ? 
+                    `<button class="eventphy-get-tickets-btn" onclick="openEventphyTicketsModal()">
+                        <i class="fas fa-ticket-alt"></i> Get Tickets
+                    </button>` : 
+                    `<div class="eventphy-no-tickets-hero">
+                        <i class="fas fa-door-open"></i> No Tickets Required
+                    </div>`
+                }
             </div>
         </div>
 
@@ -62139,6 +61749,7 @@ function displayEventphyPage(event) {
             </div>
 
             ${ticketsHTML}
+            ${contactHTML}
             ${sponsorsHTML}
 
             <!-- Enhanced Rewarder Branding & Marketing -->
@@ -62164,7 +61775,6 @@ function displayEventphyPage(event) {
 }
 
 
-
 // Generate background style for event
 function generateEventphyBackgroundStyle(event) {
     console.log('Background data:', event.background);
@@ -62186,8 +61796,27 @@ function generateEventphyBackgroundStyle(event) {
     }
 }
 
-// Generate tickets HTML
-function generateEventphyTicketsHTML(tickets) {
+   // Generate tickets HTML
+function generateEventphyTicketsHTML(tickets, eventData) {
+    // Check if event has no-ticket option enabled
+    if (eventData.noTickets === true || eventData.hasNoTickets === true) {
+        return `
+            <div class="eventphy-tickets-section">
+                <h2 class="eventphy-section-title">Event Access</h2>
+                <div class="eventphy-no-tickets-card">
+                    <div class="no-tickets-icon">
+                        <i class="fas fa-door-open"></i>
+                    </div>
+                    <h3>No Tickets Required</h3>
+                    <p>This event does not require tickets. Just show up and enjoy!</p>
+                    <div class="no-tickets-badge">
+                        <span>Free Entry</span>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
     if (!tickets || tickets.length === 0) {
         return `
             <div class="eventphy-tickets-section">
@@ -62230,6 +61859,81 @@ function generateEventphyTicketsHTML(tickets) {
 
     return ticketsHTML;
 }
+
+
+// Generate contact info HTML for public page
+function generateEventphyContactHTML(eventData) {
+    const contacts = eventData.contactInfo || eventData.contacts || [];
+    
+    if (!contacts || contacts.length === 0) {
+        return '';
+    }
+
+    let contactHTML = `
+        <div class="eventphy-contact-section">
+            <h2 class="eventphy-section-title">Contact Information</h2>
+            <div class="eventphy-contact-grid">
+    `;
+
+    contacts.forEach(contact => {
+        const contactType = contact.type || 'general';
+        const contactIcon = getContactIcon(contactType);
+        
+        contactHTML += `
+            <div class="eventphy-contact-card" onclick="handleEventphyContactClick('${eventData.physicalEventId}', '${contactType}', '${contact.url}')">
+                <div class="contact-icon">
+                    <i class="${contactIcon}"></i>
+                </div>
+                <div class="contact-info">
+                    <h4>${contact.label || contact.type}</h4>
+                    <p>${contact.displayText || contact.url}</p>
+                </div>
+                <div class="contact-action">
+                    <i class="fas fa-external-link-alt"></i>
+                </div>
+            </div>
+        `;
+    });
+
+    contactHTML += `
+            </div>
+        </div>
+    `;
+
+    return contactHTML;
+}
+
+// Handle contact click on public page
+function handleEventphyContactClick(eventId, contactType, contactUrl) {
+    // Track the click
+    trackContactClick(eventId, contactType, contactUrl);
+    
+    // Open the contact URL
+    if (contactUrl) {
+        window.open(contactUrl, '_blank');
+    }
+}
+
+// Get contact icon based on type
+function getContactIcon(type) {
+    const iconMap = {
+        'whatsapp': 'fab fa-whatsapp',
+        'telegram': 'fab fa-telegram',
+        'email': 'fas fa-envelope',
+        'phone': 'fas fa-phone',
+        'website': 'fas fa-globe',
+        'facebook': 'fab fa-facebook',
+        'twitter': 'fab fa-twitter',
+        'instagram': 'fab fa-instagram',
+        'linkedin': 'fab fa-linkedin',
+        'discord': 'fab fa-discord',
+        'general': 'fas fa-link'
+    };
+    
+    return iconMap[type.toLowerCase()] || iconMap['general'];
+}
+
+
 
 // Generate sponsors HTML
 function generateEventphySponsorsHTML(sponsors) {
@@ -62432,65 +62136,142 @@ function updateEventphyMetaTags(event) {
 function redirectToEventphySignUp() {
     window.open('https://rewarder-hub.vercel.app/', '_blank');
 }
-
-// Initialize Eventphy on page load
 document.addEventListener('DOMContentLoaded', function() {
-    // Wait a bit for Firebase to fully initialize
-    setTimeout(() => {
-        // Add Eventphy page container to body if not exists
-        if (!document.getElementById('eventphyPageContainer')) {
-        const eventphyContainer = document.createElement('div');
-        eventphyContainer.id = 'eventphyPageContainer';
-        eventphyContainer.innerHTML = `
-            <div id="eventphyPageContent">
-                <!-- Content will be loaded here -->
-            </div>
+    // Check for event page first
+    const isEventphyPage = checkEventphyPageURL();
+    
+    // Only show opening page if not on event page
+    if (!isEventphyPage) {
+        // Show opening page for 3 seconds, then redirect based on auth
+        const openingPage = document.getElementById('openingPage');
+        if (openingPage) {
+            openingPage.style.display = 'block';
+            setTimeout(() => {
+                openingPage.style.display = 'none';
+                
+                // Continue with normal auth flow
+                firebase.auth().onAuthStateChanged(function(user) {
+                    if (user) {
+                        console.log('User is signed in:', user.uid);
+                        showMainApp();
+                        loadUserProfile();
+                    } else {
+                        console.log('User is not signed in');
+                        showSplitScreen();
+                    }
+                });
+            }, 3000);
+        } else {
+            // If no opening page, proceed with normal auth flow immediately
+            firebase.auth().onAuthStateChanged(function(user) {
+                if (user) {
+                    console.log('User is signed in:', user.uid);
+                    showMainApp();
+                    loadUserProfile();
+                } else {
+                    console.log('User is not signed in');
+                    showSplitScreen();
+                }
+            });
+        }
+    } else {
+        // For event pages, wait for Firebase to initialize
+        setTimeout(() => {
+            // Add Eventphy page container to body if not exists
+            if (!document.getElementById('eventphyPageContainer')) {
+                const eventphyContainer = document.createElement('div');
+                eventphyContainer.id = 'eventphyPageContainer';
+                eventphyContainer.innerHTML = `
+                    <div id="eventphyPageContent">
+                        <!-- Content will be loaded here -->
+                    </div>
 
-            <!-- Get Tickets Modal -->
-            <div class="eventphy-modal-overlay" id="eventphyTicketsModal">
-                <div class="eventphy-modal">
-                    <h3><i class="fas fa-ticket-alt"></i> Get Tickets</h3>
-                    <p><strong>Copy this event name and paste it in the search bar of the Rewarder app</strong></p>
-                    
-                    <div class="eventphy-copy-section">
-                        <div class="eventphy-copy-text" id="eventphyEventName">Event Name</div>
-                        <button class="eventphy-copy-btn" onclick="copyEventphyNameFromModal()">
-                            <i class="fas fa-copy"></i> Copy Event Name
-                        </button>
+                    <!-- Get Tickets Modal -->
+                    <div class="eventphy-modal-overlay" id="eventphyTicketsModal">
+                        <div class="eventphy-modal">
+                            <h3><i class="fas fa-ticket-alt"></i> Get Tickets</h3>
+                            <p><strong>Copy this event name and paste it in the search bar of the Rewarder app</strong></p>
+                            
+                            <div class="eventphy-copy-section">
+                                <div class="eventphy-copy-text" id="eventphyEventName">Event Name</div>
+                                <button class="eventphy-copy-btn" onclick="copyEventphyNameFromModal()">
+                                    <i class="fas fa-copy"></i> Copy Event Name
+                                </button>
+                            </div>
+                            
+                            <div class="eventphy-modal-instructions">
+                                <h4><i class="fas fa-info-circle"></i> How to Get Tickets:</h4>
+                                <ol>
+                                    <li>Copy the event name above</li>
+                                    <li>Open or sign up for the Rewarder app</li>
+                                    <li>Paste the event name in the search bar</li>
+                                    <li>Purchase your tickets directly in the app</li>
+                                </ol>
+                            </div>
+                            
+                            <div class="eventphy-modal-actions">
+                                <button class="eventphy-modal-btn eventphy-primary-btn" onclick="redirectToEventphySignUp()">
+                                    <i class="fas fa-external-link-alt"></i> Sign Up for Rewarder
+                                </button>
+                                <button class="eventphy-modal-btn eventphy-secondary-btn" onclick="closeEventphyModal()">
+                                    <i class="fas fa-times"></i> Close
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                    
-                    <div class="eventphy-modal-instructions">
-                        <h4><i class="fas fa-info-circle"></i> How to Get Tickets:</h4>
-                        <ol>
-                            <li>Copy the event name above</li>
-                            <li>Open or sign up for the Rewarder app</li>
-                            <li>Paste the event name in the search bar</li>
-                            <li>Purchase your tickets directly in the app</li>
-                        </ol>
-                    </div>
-                    
-                    <div class="eventphy-modal-actions">
-                        <button class="eventphy-modal-btn eventphy-primary-btn" onclick="redirectToEventphySignUp()">
-                            <i class="fas fa-external-link-alt"></i> Sign Up for Rewarder
-                        </button>
-                        <button class="eventphy-modal-btn eventphy-secondary-btn" onclick="closeEventphyModal()">
-                            <i class="fas fa-times"></i> Close
-                        </button>
-                    </div>
-                </div>
-            </div>
-        `;
-        document.body.appendChild(eventphyContainer);
+                `;
+                document.body.appendChild(eventphyContainer);
+            }
+        }, 1000);
     }
 
-        // Check if current URL is for Eventphy page
-        const isEventphyPage = checkEventphyPageURL();
-        
-        // Only initialize main app if not on Eventphy page
-        if (!isEventphyPage) {
-            // Initialize main app components here
-        }
-    }, 1000); // Wait 1 second for Firebase to initialize
+    // Set minimum date to today for physical event forms
+    const today = new Date().toISOString().split('T')[0];
+    const startDateInput = document.getElementById('physicalStartDate');
+    const endDateInput = document.getElementById('physicalEndDate');
+    
+    if (startDateInput) startDateInput.min = today;
+    if (endDateInput) endDateInput.min = today;
+
+    // Initialize gradient preview
+    if (typeof updatePhysicalGradientPreview === 'function') {
+        updatePhysicalGradientPreview();
+    }
+
+    // Add event listeners for real-time updates
+    const eventNameInput = document.getElementById('physicalEventName');
+    const categorySelect = document.getElementById('physicalEventCategory');
+    
+    if (eventNameInput && typeof updatePhysicalPreview === 'function') {
+        eventNameInput.addEventListener('input', updatePhysicalPreview);
+    }
+    if (categorySelect && typeof updatePhysicalPreview === 'function') {
+        categorySelect.addEventListener('change', updatePhysicalPreview);
+    }
+
+    // Load events only if the container exists and not on event page
+    if (!isEventphyPage) {
+        setTimeout(() => {
+            if (typeof safeLoadUserPhysicalEvents === 'function') {
+                safeLoadUserPhysicalEvents();
+            }
+        }, 1000);
+    }
+
+    // Initialize security system
+    if (typeof eventIdSecurity !== 'undefined' && eventIdSecurity.init) {
+        eventIdSecurity.init();
+    }
+
+    // Initialize other components
+    if (typeof initializeTicketPricing === 'function') {
+        initializeTicketPricing();
+    }
+
+    // Initialize modal handlers
+    if (typeof initializeModals === 'function') {
+        initializeModals();
+    }
 });
 
 // Handle browser navigation for Eventphy
