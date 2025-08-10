@@ -25157,26 +25157,232 @@ tba-option {
     </div>
 
     <!-- Ticket Configuration -->
-    <div class="form-group" id="physicalTicketConfigGroup">
-        <label>Ticket Configuration</label>
-        <div class="ticket-config-section">
-            <div class="ticket-types-list" id="physicalTicketTypesList">
-                <!-- Ticket types will be added here dynamically -->
-                <div class="no-tickets-message" id="physicalNoTicketsMessage">
-                    <i class="fas fa-ticket-alt"></i>
-                    <p>No tickets added yet. Click "Add Ticket Type" to create your first ticket.</p>
-                </div>
+<div class="form-group" id="physicalTicketConfigGroup">
+    <label>Ticket Configuration</label>
+    
+    <!-- No Tickets Option -->
+    <div class="no-tickets-option">
+        <label class="no-tickets-checkbox">
+            <input type="checkbox" id="physicalNoTickets" onchange="toggleNoTicketsMode()">
+            <span>No Tickets Required</span>
+        </label>
+        <small class="form-help">Check this if your event doesn't require tickets (free entry, open event, etc.)</small>
+    </div>
+    
+    <div class="ticket-config-section">
+        <div class="ticket-types-list" id="physicalTicketTypesList">
+            <!-- Ticket types will be added here dynamically -->
+            <div class="no-tickets-message" id="physicalNoTicketsMessage">
+                <i class="fas fa-ticket-alt"></i>
+                <p>No tickets added yet. Click "Add Ticket Type" to create your first ticket.</p>
             </div>
-           
-<!-- Change your button temporarily to: -->
-<button type="button" class="add-ticket-type-btn" onclick="debugAddTicket()">
-    <i class="fas fa-plus"></i>
-    Add Ticket Type
-</button>
+        </div>
+       
+        <button type="button" class="add-ticket-type-btn" id="addPhysicalTicketBtn" onclick="debugAddTicket()">
+            <i class="fas fa-plus"></i>
+            Add Ticket Type
+        </button>
+        
+        <!-- No Tickets Mode Message -->
+        <div id="noTicketsModeMessage" class="no-tickets-mode-message" style="display: none;">
+            <i class="fas fa-info-circle"></i>
+            <p>This event doesn't require tickets. Attendees can contact you directly using the contact information provided above.</p>
         </div>
     </div>
-
+</div>
+<!-- Event Contact Information (Optional) -->
+<div class="form-group" id="phyeveContactGroup">
+    <label>
+        <i class="fas fa-address-book"></i>
+        Contact Information (Optional)
+    </label>
+    <small class="form-help">Add contact details to help attendees reach you</small>
+    <div id="phyeveContactRequiredNote" class="contact-required-note" style="display: none;">
+        <i class="fas fa-exclamation-triangle"></i>
+        <span>At least one contact method is required when "No Tickets" is selected</span>
+    </div>
     
+    <div class="contact-info-section">
+        <!-- Host/Contact Name -->
+        <div class="form-group">
+            <label for="phyeveHostName">Host/Contact Name</label>
+            <input type="text" id="phyeveHostName" class="form-input" placeholder="Enter host or contact person name" maxlength="50">
+            <small class="form-help">Name of the person organizing or hosting the event</small>
+        </div>
+
+        <!-- Phone Number -->
+        <div class="form-group">
+            <label for="phyevePhoneNumber">
+                <i class="fas fa-phone"></i>
+                Phone Number
+            </label>
+            <input type="tel" id="phyevePhoneNumber" class="form-input" placeholder="+234 xxx xxx xxxx" onblur="validatePhyevePhoneNumber()">
+            <div class="url-validation-message" id="phyevePhoneNumberMessage"></div>
+            <small class="form-help">Contact phone number for attendees</small>
+        </div>
+
+        <!-- Contact Links Grid -->
+        <div class="contact-links-grid">
+            <!-- Website URL -->
+            <div class="contact-field">
+                <label for="phyeveWebsiteUrl">
+                    <i class="fas fa-globe"></i>
+                    Website URL
+                </label>
+                <input type="url" id="phyeveWebsiteUrl" class="form-input" placeholder="https://yourwebsite.com" onblur="validatePhyeveUrl('phyeveWebsiteUrl')">
+                <div class="url-validation-message" id="phyeveWebsiteUrlMessage"></div>
+            </div>
+
+            <!-- Instagram -->
+            <div class="contact-field">
+                <label for="phyeveInstagramUrl">
+                    <i class="fab fa-instagram"></i>
+                    Instagram
+                </label>
+                <input type="url" id="phyeveInstagramUrl" class="form-input" placeholder="https://instagram.com/username" onblur="validatePhyeveUrl('phyeveInstagramUrl', 'instagram')">
+                <div class="url-validation-message" id="phyeveInstagramUrlMessage"></div>
+            </div>
+
+            <!-- TikTok -->
+            <div class="contact-field">
+                <label for="phyeveTiktokUrl">
+                    <i class="fab fa-tiktok"></i>
+                    TikTok
+                </label>
+                <input type="url" id="phyeveTiktokUrl" class="form-input" placeholder="https://tiktok.com/@username" onblur="validatePhyeveUrl('phyeveTiktokUrl', 'tiktok')">
+                <div class="url-validation-message" id="phyeveTiktokUrlMessage"></div>
+            </div>
+
+            <!-- Facebook -->
+            <div class="contact-field">
+                <label for="phyeveFacebookUrl">
+                    <i class="fab fa-facebook"></i>
+                    Facebook
+                </label>
+                <input type="url" id="phyeveFacebookUrl" class="form-input" placeholder="https://facebook.com/page" onblur="validatePhyeveUrl('phyeveFacebookUrl', 'facebook')">
+                <div class="url-validation-message" id="phyeveFacebookUrlMessage"></div>
+            </div>
+
+            <!-- Twitter/X -->
+            <div class="contact-field">
+                <label for="phyeveTwitterUrl">
+                    <i class="fab fa-twitter"></i>
+                    Twitter/X
+                </label>
+                <input type="url" id="phyeveTwitterUrl" class="form-input" placeholder="https://twitter.com/username" onblur="validatePhyeveUrl('phyeveTwitterUrl', 'twitter')">
+                <div class="url-validation-message" id="phyeveTwitterUrlMessage"></div>
+            </div>
+
+            <!-- YouTube -->
+            <div class="contact-field">
+                <label for="phyeveYoutubeUrl">
+                    <i class="fab fa-youtube"></i>
+                    YouTube
+                </label>
+                <input type="url" id="phyeveYoutubeUrl" class="form-input" placeholder="https://youtube.com/channel" onblur="validatePhyeveUrl('phyeveYoutubeUrl', 'youtube')">
+                <div class="url-validation-message" id="phyeveYoutubeUrlMessage"></div>
+            </div>
+
+            <!-- LinkedIn -->
+            <div class="contact-field">
+                <label for="phyeveLinkedinUrl">
+                    <i class="fab fa-linkedin"></i>
+                    LinkedIn
+                </label>
+                <input type="url" id="phyeveLinkedinUrl" class="form-input" placeholder="https://linkedin.com/in/profile" onblur="validatePhyeveUrl('phyeveLinkedinUrl', 'linkedin')">
+                <div class="url-validation-message" id="phyeveLinkedinUrlMessage"></div>
+            </div>
+
+            <!-- WhatsApp -->
+            <div class="contact-field">
+                <label for="phyeveWhatsappUrl">
+                    <i class="fab fa-whatsapp"></i>
+                    WhatsApp
+                </label>
+                <input type="text" id="phyeveWhatsappUrl" class="form-input" placeholder="https://wa.me/1234567890" onblur="validatePhyeveUrl('phyeveWhatsappUrl', 'whatsapp')">
+                <div class="url-validation-message" id="phyeveWhatsappUrlMessage"></div>
+                <small class="form-help">Use format: https://wa.me/yourcountrycodephonenumber</small>
+            </div>
+        </div>
+
+        <!-- Multiple Custom Links -->
+        <div class="custom-links-section">
+            <h4 style="margin: 20px 0 15px 0; color: #495057; font-size: 16px;">Custom Links</h4>
+            
+            <!-- Custom Link 1 -->
+            <div class="custom-link-group">
+                <div class="custom-link-row">
+                    <div class="contact-field custom-link-field">
+                        <label for="phyeveCustomLinkName1">
+                            <i class="fas fa-external-link-alt"></i>
+                            Custom Link 1 Name
+                        </label>
+                        <input type="text" id="phyeveCustomLinkName1" class="form-input" placeholder="e.g. My Portfolio, Store, etc." maxlength="30" onblur="updatePhyeveContactPreview()">
+                    </div>
+                    <div class="contact-field custom-link-field">
+                        <label for="phyeveCustomUrl1">
+                            <i class="fas fa-link"></i>
+                            Custom Link 1 URL
+                        </label>
+                        <input type="url" id="phyeveCustomUrl1" class="form-input" placeholder="https://yourlink.com" onblur="validatePhyeveUrl('phyeveCustomUrl1')">
+                        <div class="url-validation-message" id="phyeveCustomUrl1Message"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Custom Link 2 -->
+            <div class="custom-link-group">
+                <div class="custom-link-row">
+                    <div class="contact-field custom-link-field">
+                        <label for="phyeveCustomLinkName2">
+                            <i class="fas fa-external-link-alt"></i>
+                            Custom Link 2 Name
+                        </label>
+                        <input type="text" id="phyeveCustomLinkName2" class="form-input" placeholder="e.g. My Store, Blog, etc." maxlength="30" onblur="updatePhyeveContactPreview()">
+                    </div>
+                    <div class="contact-field custom-link-field">
+                        <label for="phyeveCustomUrl2">
+                            <i class="fas fa-link"></i>
+                            Custom Link 2 URL
+                        </label>
+                        <input type="url" id="phyeveCustomUrl2" class="form-input" placeholder="https://yourlink.com" onblur="validatePhyeveUrl('phyeveCustomUrl2')">
+                        <div class="url-validation-message" id="phyeveCustomUrl2Message"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Custom Link 3 -->
+            <div class="custom-link-group">
+                <div class="custom-link-row">
+                    <div class="contact-field custom-link-field">
+                        <label for="phyeveCustomLinkName3">
+                            <i class="fas fa-external-link-alt"></i>
+                            Custom Link 3 Name
+                        </label>
+                        <input type="text" id="phyeveCustomLinkName3" class="form-input" placeholder="e.g. My Channel, App, etc." maxlength="30" onblur="updatePhyeveContactPreview()">
+                    </div>
+                    <div class="contact-field custom-link-field">
+                        <label for="phyeveCustomUrl3">
+                            <i class="fas fa-link"></i>
+                            Custom Link 3 URL
+                        </label>
+                        <input type="url" id="phyeveCustomUrl3" class="form-input" placeholder="https://yourlink.com" onblur="validatePhyeveUrl('phyeveCustomUrl3')">
+                        <div class="url-validation-message" id="phyeveCustomUrl3Message"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Preview -->
+        <div class="contact-preview" id="phyeveContactPreview" style="display: none;">
+            <h4>Contact Information Preview</h4>
+            <div class="contact-preview-content" id="phyeveContactPreviewContent">
+                <!-- Will be populated dynamically -->
+            </div>
+        </div>
+    </div>
+</div>
+ 
 
     <!-- Physical Event Submit Button -->
     <div class="form-actions" id="physicalSubmitGroup">
@@ -35225,6 +35431,293 @@ function createPhysicalEventDisplayCard(eventData) {
     return card;
 }
 
+
+
+// Open Contact Modal
+function openPhyEventContactModal(eventId) {
+    const contactInfo = currentPhyEventData.phyeveContactInfo;
+    if (!contactInfo) return;
+    
+    // Remove existing modal if present
+    const existingModal = document.getElementById('phyContactModal');
+    if (existingModal) {
+        existingModal.remove();
+    }
+    
+    // Count available contact methods
+    const contactMethods = [];
+    
+    if (contactInfo.hostName) {
+        contactMethods.push({
+            type: 'host',
+            icon: 'fas fa-user',
+            label: 'Host',
+            value: contactInfo.hostName,
+            action: null
+        });
+    }
+    
+    if (contactInfo.phoneNumber) {
+        contactMethods.push({
+            type: 'phone',
+            icon: 'fas fa-phone',
+            label: 'Phone',
+            value: contactInfo.phoneNumber,
+            action: `tel:${contactInfo.phoneNumber}`
+        });
+    }
+    
+    if (contactInfo.websiteUrl) {
+        contactMethods.push({
+            type: 'website',
+            icon: 'fas fa-globe',
+            label: 'Website',
+            value: 'Visit Website',
+            action: contactInfo.websiteUrl
+        });
+    }
+    
+    if (contactInfo.instagramUrl) {
+        contactMethods.push({
+            type: 'instagram',
+            icon: 'fab fa-instagram',
+            label: 'Instagram',
+            value: 'Follow on Instagram',
+            action: contactInfo.instagramUrl
+        });
+    }
+    
+    if (contactInfo.tiktokUrl) {
+        contactMethods.push({
+            type: 'tiktok',
+            icon: 'fab fa-tiktok',
+            label: 'TikTok',
+            value: 'Follow on TikTok',
+            action: contactInfo.tiktokUrl
+        });
+    }
+    
+    if (contactInfo.facebookUrl) {
+        contactMethods.push({
+            type: 'facebook',
+            icon: 'fab fa-facebook',
+            label: 'Facebook',
+            value: 'Visit Facebook Page',
+            action: contactInfo.facebookUrl
+        });
+    }
+    
+    if (contactInfo.twitterUrl) {
+        contactMethods.push({
+            type: 'twitter',
+            icon: 'fab fa-twitter',
+            label: 'Twitter/X',
+            value: 'Follow on X',
+            action: contactInfo.twitterUrl
+        });
+    }
+    
+    if (contactInfo.youtubeUrl) {
+        contactMethods.push({
+            type: 'youtube',
+            icon: 'fab fa-youtube',
+            label: 'YouTube',
+            value: 'Visit YouTube Channel',
+            action: contactInfo.youtubeUrl
+        });
+    }
+    
+    if (contactInfo.linkedinUrl) {
+        contactMethods.push({
+            type: 'linkedin',
+            icon: 'fab fa-linkedin',
+            label: 'LinkedIn',
+            value: 'Connect on LinkedIn',
+            action: contactInfo.linkedinUrl
+        });
+    }
+    
+    if (contactInfo.whatsappUrl) {
+        contactMethods.push({
+            type: 'whatsapp',
+            icon: 'fab fa-whatsapp',
+            label: 'WhatsApp',
+            value: 'Message on WhatsApp',
+            action: contactInfo.whatsappUrl
+        });
+    }
+    
+    // Add custom links
+    if (contactInfo.customLink1Url && contactInfo.customLink1Name) {
+        contactMethods.push({
+            type: 'custom1',
+            icon: 'fas fa-external-link-alt',
+            label: contactInfo.customLink1Name,
+            value: `Visit ${contactInfo.customLink1Name}`,
+            action: contactInfo.customLink1Url
+        });
+    }
+    
+    if (contactInfo.customLink2Url && contactInfo.customLink2Name) {
+        contactMethods.push({
+            type: 'custom2',
+            icon: 'fas fa-link',
+            label: contactInfo.customLink2Name,
+            value: `Visit ${contactInfo.customLink2Name}`,
+            action: contactInfo.customLink2Url
+        });
+    }
+    
+    if (contactInfo.customLink3Url && contactInfo.customLink3Name) {
+        contactMethods.push({
+            type: 'custom3',
+            icon: 'fas fa-share-alt',
+            label: contactInfo.customLink3Name,
+            value: `Visit ${contactInfo.customLink3Name}`,
+            action: contactInfo.customLink3Url
+        });
+    }
+    
+    // Generate contact items HTML
+    const contactItemsHTML = contactMethods.map(contact => {
+        if (contact.action) {
+            const isExternal = contact.action.startsWith('http') || contact.action.startsWith('https');
+            const target = isExternal ? 'target="_blank"' : '';
+            
+            return `
+                <a href="${contact.action}" ${target} style="display: flex; align-items: center; gap: 15px; padding: 15px; background: rgba(255,255,255,0.05); border-radius: 12px; text-decoration: none; color: white; transition: all 0.3s ease; border: 1px solid rgba(255,255,255,0.1);" onmouseover="this.style.background='rgba(108,92,231,0.1)'; this.style.borderColor='#6c5ce7';" onmouseout="this.style.background='rgba(255,255,255,0.05)'; this.style.borderColor='rgba(255,255,255,0.1)';">
+                    <div style="background: #6c5ce7; width: 45px; height: 45px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                        <i class="${contact.icon}" style="color: white; font-size: 18px;"></i>
+                    </div>
+                    <div style="flex: 1;">
+                        <div style="font-weight: 600; font-size: 16px; margin-bottom: 2px;">${contact.label}</div>
+                        <div style="color: rgba(255,255,255,0.7); font-size: 14px;">${contact.value}</div>
+                    </div>
+                    <i class="fas fa-chevron-right" style="color: rgba(255,255,255,0.5); font-size: 14px;"></i>
+                </a>
+            `;
+        } else {
+            return `
+                <div style="display: flex; align-items: center; gap: 15px; padding: 15px; background: rgba(255,255,255,0.05); border-radius: 12px; color: white; border: 1px solid rgba(255,255,255,0.1);">
+                    <div style="background: #6c5ce7; width: 45px; height: 45px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                        <i class="${contact.icon}" style="color: white; font-size: 18px;"></i>
+                    </div>
+                    <div style="flex: 1;">
+                        <div style="font-weight: 600; font-size: 16px; margin-bottom: 2px;">${contact.label}</div>
+                        <div style="color: rgba(255,255,255,0.7); font-size: 14px;">${contact.value}</div>
+                    </div>
+                </div>
+            `;
+        }
+    }).join('');
+    
+    // Create modal
+    const modal = document.createElement('div');
+    modal.id = 'phyContactModal';
+    modal.style.cssText = `
+        position: fixed; 
+        top: 0; 
+        left: 0; 
+        width: 100%; 
+        height: 100%; 
+        background: rgba(0,0,0,0.8); 
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
+        z-index: 10001;
+        animation: fadeIn 0.3s ease-in-out;
+    `;
+    
+    modal.innerHTML = `
+        <div style="background: #1a1a2e; border-radius: 20px; padding: 0; max-width: 500px; width: 90%; max-height: 80vh; overflow: hidden; position: relative; box-shadow: 0 20px 40px rgba(0,0,0,0.3); border: 1px solid rgba(108,92,231,0.3); animation: slideInUp 0.3s ease-in-out;">
+            
+            <!-- Header -->
+            <div style="background: linear-gradient(135deg, #6c5ce7, #a29bfe); padding: 25px 30px; color: white; position: relative;">
+                <button onclick="closePhyContactModal()" style="position: absolute; top: 15px; right: 15px; background: rgba(255,255,255,0.2); border: none; color: white; width: 35px; height: 35px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px; transition: all 0.3s ease;" onmouseover="this.style.background='rgba(255,255,255,0.3)'" onmouseout="this.style.background='rgba(255,255,255,0.2)'">
+                    <i class="fas fa-times"></i>
+                </button>
+                
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <div style="background: rgba(255,255,255,0.2); width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-address-book" style="font-size: 22px;"></i>
+                    </div>
+                    <div>
+                        <h2 style="margin: 0; font-size: 24px; font-weight: 700;">Contact Information</h2>
+                        <p style="margin: 5px 0 0 0; opacity: 0.9; font-size: 14px;">Get in touch with the event organizer</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Content -->
+            <div style="padding: 25px 30px; max-height: 400px; overflow-y: auto;">
+                <div style="display: flex; flex-direction: column; gap: 12px;">
+                    ${contactItemsHTML}
+                </div>
+                
+                ${contactMethods.length === 0 ? `
+                    <div style="text-align: center; padding: 40px 20px; color: rgba(255,255,255,0.6);">
+                        <i class="fas fa-info-circle" style="font-size: 48px; margin-bottom: 15px; color: rgba(255,255,255,0.3);"></i>
+                        <p style="margin: 0; font-size: 16px;">No contact information available for this event.</p>
+                    </div>
+                ` : ''}
+            </div>
+            
+            <!-- Footer -->
+            <div style="background: rgba(255,255,255,0.02); padding: 20px 30px; border-top: 1px solid rgba(255,255,255,0.1); text-align: center;">
+                <p style="margin: 0; color: rgba(255,255,255,0.6); font-size: 13px;">
+                    <i class="fas fa-shield-alt" style="margin-right: 5px; color: #6c5ce7;"></i>
+                    Contact information is provided by the event organizer
+                </p>
+            </div>
+        </div>
+    `;
+    
+    // Add to page
+    document.body.appendChild(modal);
+    
+    // Prevent body scroll
+    document.body.style.overflow = 'hidden';
+}
+
+// Close Contact Modal
+function closePhyContactModal() {
+    const modal = document.getElementById('phyContactModal');
+    if (modal) {
+        modal.style.animation = 'fadeOut 0.3s ease-in-out';
+        setTimeout(() => {
+            modal.remove();
+            document.body.style.overflow = 'auto';
+        }, 300);
+    }
+}
+
+// Close modal when clicking outside
+document.addEventListener('click', function(event) {
+    const modal = document.getElementById('phyContactModal');
+    if (modal && event.target === modal) {
+        closePhyContactModal();
+    }
+});
+
+// For Advanced Event Card Contact Modal
+function openAdvancedEventContactModal(eventId) {
+    // First, fetch the event data if not available
+    if (typeof db !== 'undefined') {
+        db.collection('physicalEvents').doc(eventId).get().then(doc => {
+            if (doc.exists) {
+                const eventData = doc.data();
+                if (eventData.phyeveContactInfo) {
+                    // Set currentPhyEventData temporarily for the modal
+                    const tempCurrentData = currentPhyEventData;
+                    currentPhyEventData = { ...eventData, id: eventId };
+                    openPhyEventContactModal(eventId);
+                    // Restore original data
+                    currentPhyEventData = tempCurrentData;
+                }
+            }
+        });
+    }
+}
 // Advanced Physical Event Card with Modern Design
 function createAdvancedPhysicalEventCard(eventData) {
     const card = document.createElement('div');
@@ -35760,6 +36253,113 @@ async function showPhyEventDetailPage(eventId) {
                                     </div>
                                 </div>
                             ` : ''}
+          
+    ${currentPhyEventData.phyeveContactInfo ? `
+    <div style="display: flex; align-items: center; gap: 10px; grid-column: 1/-1; margin-top: 10px;">
+        <div style="background: #6c5ce7; width: 35px; height: 35px; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+            <i class="fas fa-address-book" style="color: white; font-size: 14px;"></i>
+        </div>
+        <div style="flex: 1;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <div style="color: rgba(255,255,255,0.7); font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">Contact Information</div>
+                <div style="color: rgba(255,255,255,0.5); font-size: 10px;">
+                    Total Clicks: ${getTotalContactClicks(currentPhyEventData)}
+                </div>
+            </div>
+            <div style="color: white; font-weight: 600; font-size: 13px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center;">
+                ${currentPhyEventData.phyeveContactInfo.hostName ? `
+                    <span style="padding: 4px 8px; background: rgba(255,255,255,0.1); border-radius: 4px; font-size: 11px;">
+                        <i class="fas fa-user" style="margin-right: 4px;"></i>${currentPhyEventData.phyeveContactInfo.hostName}
+                    </span>
+                ` : ''}
+                ${currentPhyEventData.phyeveContactInfo.phoneNumber ? `
+                    <a onclick="trackContactClick('${currentPhyEventData.id}', 'phone', '${currentPhyEventData.phyeveContactInfo.phoneNumber}')" style="color: #28a745; text-decoration: none; padding: 4px 8px; background: rgba(40,167,69,0.1); border-radius: 4px; font-size: 11px; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; gap: 4px;" onmouseover="this.style.background='rgba(40,167,69,0.2)'" onmouseout="this.style.background='rgba(40,167,69,0.1)'">
+                        <i class="fas fa-phone"></i>
+                        <span>Call</span>
+                    </a>
+                ` : ''}
+                ${currentPhyEventData.phyeveContactInfo.websiteUrl ? `
+                    <a onclick="trackContactClick('${currentPhyEventData.id}', 'website', '${currentPhyEventData.phyeveContactInfo.websiteUrl}')" style="color: #6c5ce7; text-decoration: none; padding: 4px 8px; background: rgba(108,92,231,0.1); border-radius: 4px; font-size: 11px; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; gap: 4px;" onmouseover="this.style.background='rgba(108,92,231,0.2)'" onmouseout="this.style.background='rgba(108,92,231,0.1)'">
+                        <i class="fas fa-globe"></i>
+                        <span>Website</span>
+                        <small style="opacity: 0.7;">(${getContactClicks(currentPhyEventData, 'website')})</small>
+                    </a>
+                ` : ''}
+                ${currentPhyEventData.phyeveContactInfo.instagramUrl ? `
+                    <a onclick="trackContactClick('${currentPhyEventData.id}', 'instagram', '${currentPhyEventData.phyeveContactInfo.instagramUrl}')" style="color: #E4405F; text-decoration: none; padding: 4px 8px; background: rgba(228,64,95,0.1); border-radius: 4px; font-size: 11px; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; gap: 4px;" onmouseover="this.style.background='rgba(228,64,95,0.2)'" onmouseout="this.style.background='rgba(228,64,95,0.1)'">
+                        <i class="fab fa-instagram"></i>
+                        <span>IG</span>
+                        <small style="opacity: 0.7;">(${getContactClicks(currentPhyEventData, 'instagram')})</small>
+                    </a>
+                ` : ''}
+                ${currentPhyEventData.phyeveContactInfo.tiktokUrl ? `
+                    <a onclick="trackContactClick('${currentPhyEventData.id}', 'tiktok', '${currentPhyEventData.phyeveContactInfo.tiktokUrl}')" style="color: #000; background: white; text-decoration: none; padding: 4px 8px; border-radius: 4px; font-size: 11px; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; gap: 4px;" onmouseover="this.style.background='rgba(255,255,255,0.9)'" onmouseout="this.style.background='white'">
+                        <i class="fab fa-tiktok"></i>
+                        <span>TikTok</span>
+                        <small style="opacity: 0.7;">(${getContactClicks(currentPhyEventData, 'tiktok')})</small>
+                    </a>
+                ` : ''}
+                ${currentPhyEventData.phyeveContactInfo.facebookUrl ? `
+                    <a onclick="trackContactClick('${currentPhyEventData.id}', 'facebook', '${currentPhyEventData.phyeveContactInfo.facebookUrl}')" style="color: #4267B2; text-decoration: none; padding: 4px 8px; background: rgba(66,103,178,0.1); border-radius: 4px; font-size: 11px; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; gap: 4px;" onmouseover="this.style.background='rgba(66,103,178,0.2)'" onmouseout="this.style.background='rgba(66,103,178,0.1)'">
+                        <i class="fab fa-facebook"></i>
+                        <span>FB</span>
+                        <small style="opacity: 0.7;">(${getContactClicks(currentPhyEventData, 'facebook')})</small>
+                    </a>
+                ` : ''}
+                ${currentPhyEventData.phyeveContactInfo.twitterUrl ? `
+                    <a onclick="trackContactClick('${currentPhyEventData.id}', 'twitter', '${currentPhyEventData.phyeveContactInfo.twitterUrl}')" style="color: #1DA1F2; text-decoration: none; padding: 4px 8px; background: rgba(29,161,242,0.1); border-radius: 4px; font-size: 11px; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; gap: 4px;" onmouseover="this.style.background='rgba(29,161,242,0.2)'" onmouseout="this.style.background='rgba(29,161,242,0.1)'">
+                        <i class="fab fa-twitter"></i>
+                        <span>X</span>
+                        <small style="opacity: 0.7;">(${getContactClicks(currentPhyEventData, 'twitter')})</small>
+                    </a>
+                ` : ''}
+                ${currentPhyEventData.phyeveContactInfo.youtubeUrl ? `
+                    <a onclick="trackContactClick('${currentPhyEventData.id}', 'youtube', '${currentPhyEventData.phyeveContactInfo.youtubeUrl}')" style="color: #FF0000; text-decoration: none; padding: 4px 8px; background: rgba(255,0,0,0.1); border-radius: 4px; font-size: 11px; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; gap: 4px;" onmouseover="this.style.background='rgba(255,0,0,0.2)'" onmouseout="this.style.background='rgba(255,0,0,0.1)'">
+                        <i class="fab fa-youtube"></i>
+                        <span>YT</span>
+                        <small style="opacity: 0.7;">(${getContactClicks(currentPhyEventData, 'youtube')})</small>
+                    </a>
+                ` : ''}
+                ${currentPhyEventData.phyeveContactInfo.linkedinUrl ? `
+                    <a onclick="trackContactClick('${currentPhyEventData.id}', 'linkedin', '${currentPhyEventData.phyeveContactInfo.linkedinUrl}')" style="color: #0077B5; text-decoration: none; padding: 4px 8px; background: rgba(0,119,181,0.1); border-radius: 4px; font-size: 11px; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; gap: 4px;" onmouseover="this.style.background='rgba(0,119,181,0.2)'" onmouseout="this.style.background='rgba(0,119,181,0.1)'">
+                        <i class="fab fa-linkedin"></i>
+                        <span>LI</span>
+                        <small style="opacity: 0.7;">(${getContactClicks(currentPhyEventData, 'linkedin')})</small>
+                    </a>
+                ` : ''}
+                ${currentPhyEventData.phyeveContactInfo.whatsappUrl ? `
+                    <a onclick="trackContactClick('${currentPhyEventData.id}', 'whatsapp', '${currentPhyEventData.phyeveContactInfo.whatsappUrl}')" style="color: #25D366; text-decoration: none; padding: 4px 8px; background: rgba(37,211,102,0.1); border-radius: 4px; font-size: 11px; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; gap: 4px;" onmouseover="this.style.background='rgba(37,211,102,0.2)'" onmouseout="this.style.background='rgba(37,211,102,0.1)'">
+                        <i class="fab fa-whatsapp"></i>
+                        <span>WA</span>
+                        <small style="opacity: 0.7;">(${getContactClicks(currentPhyEventData, 'whatsapp')})</small>
+                    </a>
+                ` : ''}
+                ${currentPhyEventData.phyeveContactInfo.customLink1Url && currentPhyEventData.phyeveContactInfo.customLink1Name ? `
+                    <a onclick="trackContactClick('${currentPhyEventData.id}', 'custom1', '${currentPhyEventData.phyeveContactInfo.customLink1Url}')" style="color: #6c5ce7; text-decoration: none; padding: 4px 8px; background: rgba(108,92,231,0.1); border-radius: 4px; font-size: 11px; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; gap: 4px;" onmouseover="this.style.background='rgba(108,92,231,0.2)'" onmouseout="this.style.background='rgba(108,92,231,0.1)'">
+                        <i class="fas fa-external-link-alt"></i>
+                        <span>${currentPhyEventData.phyeveContactInfo.customLink1Name}</span>
+                        <small style="opacity: 0.7;">(${getContactClicks(currentPhyEventData, 'custom1')})</small>
+                    </a>
+                ` : ''}
+                ${currentPhyEventData.phyeveContactInfo.customLink2Url && currentPhyEventData.phyeveContactInfo.customLink2Name ? `
+                    <a onclick="trackContactClick('${currentPhyEventData.id}', 'custom2', '${currentPhyEventData.phyeveContactInfo.customLink2Url}')" style="color: #17a2b8; text-decoration: none; padding: 4px 8px; background: rgba(23,162,184,0.1); border-radius: 4px; font-size: 11px; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; gap: 4px;" onmouseover="this.style.background='rgba(23,162,184,0.2)'" onmouseout="this.style.background='rgba(23,162,184,0.1)'">
+                        <i class="fas fa-link"></i>
+                        <span>${currentPhyEventData.phyeveContactInfo.customLink2Name}</span>
+                        <small style="opacity: 0.7;">(${getContactClicks(currentPhyEventData, 'custom2')})</small>
+                    </a>
+                ` : ''}
+                ${currentPhyEventData.phyeveContactInfo.customLink3Url && currentPhyEventData.phyeveContactInfo.customLink3Name ? `
+                    <a onclick="trackContactClick('${currentPhyEventData.id}', 'custom3', '${currentPhyEventData.phyeveContactInfo.customLink3Url}')" style="color: #fd7e14; text-decoration: none; padding: 4px 8px; background: rgba(253,126,20,0.1); border-radius: 4px; font-size: 11px; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; gap: 4px;" onmouseover="this.style.background='rgba(253,126,20,0.2)'" onmouseout="this.style.background='rgba(253,126,20,0.1)'">
+                        <i class="fas fa-share-alt"></i>
+                        <span>${currentPhyEventData.phyeveContactInfo.customLink3Name}</span>
+                        <small style="opacity: 0.7;">(${getContactClicks(currentPhyEventData, 'custom3')})</small>
+                    </a>
+                ` : ''}
+            </div>
+        </div>
+    </div>
+` : ''}
+       
                         </div>
                         
                         <div style="background: rgba(255,255,255,0.03); padding: 16px; border-radius: 12px; border-left: 3px solid #6c5ce7; margin: 18px 0;">
@@ -39077,7 +39677,238 @@ function handleEventCreationSuccess(eventData) {
 }          
 
 
-async function collectPhysicalEventData() {
+function validatePhyevePhoneNumber() {
+    const phoneInput = document.getElementById('phyevePhoneNumber');
+    const messageDiv = document.getElementById('phyevePhoneNumberMessage');
+    const value = phoneInput.value.trim();
+    
+    if (!value) {
+        messageDiv.innerHTML = '';
+        phoneInput.classList.remove('url-valid', 'url-invalid');
+        updatePhyeveContactPreview();
+        return true;
+    }
+    
+    // Simple phone number validation (international format)
+    const phonePattern = /^(\+\d{1,3}[- ]?)?\d{10,14}$/;
+    const isValid = phonePattern.test(value.replace(/\s/g, ''));
+    
+    const message = isValid ? 
+        '<i class="fas fa-check"></i> Valid phone number' : 
+        '<i class="fas fa-times"></i> Please enter a valid phone number (+234 xxx xxx xxxx)';
+    
+    messageDiv.innerHTML = `<span class="${isValid ? 'url-valid' : 'url-invalid'}">${message}</span>`;
+    phoneInput.classList.remove('url-valid', 'url-invalid');
+    phoneInput.classList.add(isValid ? 'url-valid' : 'url-invalid');
+    
+    updatePhyeveContactPreview();
+    return isValid;
+}
+
+function toggleNoTicketsMode() {
+    const noTicketsCheckbox = document.getElementById('physicalNoTickets');
+    const addTicketBtn = document.getElementById('addPhysicalTicketBtn');
+    const ticketsList = document.getElementById('physicalTicketTypesList');
+    const noTicketsMessage = document.getElementById('physicalNoTicketsMessage');
+    const noTicketsModeMessage = document.getElementById('noTicketsModeMessage');
+    const contactRequiredNote = document.getElementById('phyeveContactRequiredNote');
+    
+    if (noTicketsCheckbox.checked) {
+        // Enable no tickets mode
+        addTicketBtn.disabled = true;
+        addTicketBtn.title = 'Ticket creation is disabled when "No Tickets Required" is selected';
+        
+        // Clear existing tickets
+        physicalTicketTypes = [];
+        updatePhysicalTicketsList();
+        
+        // Show no tickets mode message
+        noTicketsModeMessage.style.display = 'block';
+        noTicketsMessage.style.display = 'none';
+        
+        // Show contact required note
+        contactRequiredNote.style.display = 'block';
+        
+        // Mark contact section as required
+        const contactGroup = document.getElementById('phyeveContactGroup');
+        contactGroup.classList.add('contact-required');
+        
+    } else {
+        // Disable no tickets mode
+        addTicketBtn.disabled = false;
+        addTicketBtn.title = '';
+        
+        // Hide no tickets mode message
+        noTicketsModeMessage.style.display = 'none';
+        noTicketsMessage.style.display = 'block';
+        
+        // Hide contact required note
+        contactRequiredNote.style.display = 'none';
+        
+        // Remove required from contact section
+        const contactGroup = document.getElementById('phyeveContactGroup');
+        contactGroup.classList.remove('contact-required');
+    }
+}
+
+function collectPhyeveContactData() {
+    const contactFields = {
+        hostName: document.getElementById('phyeveHostName').value.trim(),
+        phoneNumber: document.getElementById('phyevePhoneNumber').value.trim(),
+        websiteUrl: document.getElementById('phyeveWebsiteUrl').value.trim(),
+        instagramUrl: document.getElementById('phyeveInstagramUrl').value.trim(),
+        tiktokUrl: document.getElementById('phyeveTiktokUrl').value.trim(),
+        facebookUrl: document.getElementById('phyeveFacebookUrl').value.trim(),
+        twitterUrl: document.getElementById('phyeveTwitterUrl').value.trim(),
+        youtubeUrl: document.getElementById('phyeveYoutubeUrl').value.trim(),
+        linkedinUrl: document.getElementById('phyeveLinkedinUrl').value.trim(),
+        whatsappUrl: document.getElementById('phyeveWhatsappUrl').value.trim(),
+        customLink1Name: document.getElementById('phyeveCustomLinkName1').value.trim(),
+        customLink1Url: document.getElementById('phyeveCustomUrl1').value.trim(),
+        customLink2Name: document.getElementById('phyeveCustomLinkName2').value.trim(),
+        customLink2Url: document.getElementById('phyeveCustomUrl2').value.trim(),
+        customLink3Name: document.getElementById('phyeveCustomLinkName3').value.trim(),
+        customLink3Url: document.getElementById('phyeveCustomUrl3').value.trim()
+    };
+    
+    // Only include non-empty values
+    const contactInfo = {};
+    Object.keys(contactFields).forEach(key => {
+        if (contactFields[key]) {
+            contactInfo[key] = contactFields[key];
+        }
+    });
+    
+    return Object.keys(contactInfo).length > 0 ? contactInfo : null;
+}
+
+function validatePhysicalEventForm() {
+    const eventName = document.getElementById('physicalEventName').value.trim();
+    const categorySelect = document.getElementById('physicalEventCategory');
+    const category = categorySelect.value;
+    const description = document.getElementById('physicalEventDescription').value.trim();
+    const location = document.getElementById('physicalEventLocation').value.trim();
+    const eventLink = document.getElementById('physicalEventLink').value.trim();
+    const isTBA = document.getElementById('physicalTBASchedule').checked;
+    const noTickets = document.getElementById('physicalNoTickets').checked;
+
+    // Basic field validation (same as before)
+    if (!eventName) {
+        return { isValid: false, message: 'Event name is required' };
+    }
+        
+    if (eventName.length < 3 || eventName.length > 50) {
+        return { isValid: false, message: 'Event name must be between 3-50 characters' };
+    }
+
+    if (!category || category === '' || category === 'select-category') {
+        return { isValid: false, message: 'Please select an event category' };
+    }
+
+    if (!description) {
+        return { isValid: false, message: 'Event description is required' };
+    }
+
+    const wordCount = description.split(/\s+/).length;
+    if (wordCount < 5) {
+        return { isValid: false, message: 'Description must contain at least 5 words' };
+    }
+
+    if (!location) {
+        return { isValid: false, message: 'Event location is required' };
+    }
+
+    if (!eventLink) {
+        return { isValid: false, message: 'Event link is required' };
+    }
+
+    // Date validation only if not TBA
+    if (!isTBA) {
+        const startDate = document.getElementById('physicalStartDate').value;
+        const startTime = document.getElementById('physicalStartTime').value;
+        const endDate = document.getElementById('physicalEndDate').value;
+        const endTime = document.getElementById('physicalEndTime').value;
+
+        if (!startDate || !startTime) {
+            return { isValid: false, message: 'Start date and time are required (or check TBA)' };
+        }
+
+        if (!endDate || !endTime) {
+            return { isValid: false, message: 'End date and time are required (or check TBA)' };
+        }
+
+        const startDateTime = new Date(`${startDate}T${startTime}`);
+        const endDateTime = new Date(`${endDate}T${endTime}`);
+            
+        if (endDateTime <= startDateTime) {
+            return { isValid: false, message: 'End time must be after start time' };
+        }
+
+        const now = new Date();
+        if (startDateTime <= now) {
+            return { isValid: false, message: 'Event must be scheduled for a future date' };
+        }
+    }
+
+    // Ticket validation
+    if (noTickets) {
+        // If no tickets mode, validate contact information
+        const contactInfo = collectPhyeveContactData();
+        if (!contactInfo) {
+            return { isValid: false, message: 'Please provide at least one contact method when "No Tickets Required" is selected' };
+        }
+    } else {
+        // If tickets mode, require at least one ticket
+        if (!isTBA && physicalTicketTypes.length === 0) {
+            return { isValid: false, message: 'Please add at least one ticket type or select "No Tickets Required"' };
+        }
+    }
+
+    return { isValid: true };
+}
+
+function resetPhyeveContactFields() {
+    const fieldIds = [
+        'phyeveHostName', 'phyevePhoneNumber', 'phyeveWebsiteUrl', 'phyeveInstagramUrl', 
+        'phyeveTiktokUrl', 'phyeveFacebookUrl', 'phyeveTwitterUrl', 'phyeveYoutubeUrl', 
+        'phyeveLinkedinUrl', 'phyeveWhatsappUrl', 'phyeveCustomLinkName1', 'phyeveCustomUrl1',
+        'phyeveCustomLinkName2', 'phyeveCustomUrl2', 'phyeveCustomLinkName3', 'phyeveCustomUrl3'
+    ];
+    
+    fieldIds.forEach(id => {
+        const element = document.getElementById(id);
+        if (element) element.value = '';
+    });
+    
+    // Clear validation messages
+    const messageIds = [
+        'phyevePhoneNumberMessage', 'phyeveWebsiteUrlMessage', 'phyeveInstagramUrlMessage', 
+        'phyeveTiktokUrlMessage', 'phyeveFacebookUrlMessage', 'phyeveTwitterUrlMessage', 
+        'phyeveYoutubeUrlMessage', 'phyeveLinkedinUrlMessage', 'phyeveWhatsappUrlMessage',
+        'phyeveCustomUrl1Message', 'phyeveCustomUrl2Message', 'phyeveCustomUrl3Message'
+    ];
+    
+    messageIds.forEach(id => {
+        const element = document.getElementById(id);
+        if (element) element.innerHTML = '';
+    });
+    
+    // Reset no tickets mode
+    document.getElementById('physicalNoTickets').checked = false;
+    toggleNoTicketsMode();
+    
+    // Hide preview and remove validation classes
+    document.getElementById('phyeveContactPreview').style.display = 'none';
+    
+    fieldIds.forEach(id => {
+        const element = document.getElementById(id);
+        if (element) {
+            element.classList.remove('url-valid', 'url-invalid');
+        }
+    });
+}
+
+        async function collectPhysicalEventData() {
     try {
         const eventName = document.getElementById('physicalEventName').value.trim();
         const category = document.getElementById('physicalEventCategory').value;
@@ -39085,6 +39916,9 @@ async function collectPhysicalEventData() {
         const location = document.getElementById('physicalEventLocation').value.trim();
         const eventLink = document.getElementById('physicalEventLink').value.trim();
         const isTBA = document.getElementById('physicalTBASchedule').checked;
+
+        // Collect contact information
+        const contactInfo = collectPhyeveContactData();
 
         // Handle background data
         let background;
@@ -39137,9 +39971,8 @@ async function collectPhysicalEventData() {
                 // Set status based on TBA
                 if (isTBA) {
                     ticketData.status = 'Coming Soon';
-                    ticketData.available = false; // Not available for purchase yet
+                    ticketData.available = false;
                 } else {
-                    // Normal status based on ticket type
                     switch(ticket.type) {
                         case 'free':
                             ticketData.status = 'Free Ticket';
@@ -39172,7 +40005,7 @@ async function collectPhysicalEventData() {
             creatorId = 'anonymous_user_' + Date.now();
         }
 
-        return {
+        const eventData = {
             category,
             eventName,
             description,
@@ -39181,8 +40014,8 @@ async function collectPhysicalEventData() {
             background,
             startDateTime,
             endDateTime,
-            schedulingStatus, // 'TBA' or 'scheduled'
-            isTBA, // boolean flag
+            schedulingStatus,
+            isTBA,
             tickets: processedTickets,
             eventType: 'physical',
             ticketsId: [],
@@ -39194,6 +40027,14 @@ async function collectPhysicalEventData() {
             sponsors: physicalEventSponsors || [],
             totalRevenue: 0
         };
+
+        // Add contact information if provided
+        if (contactInfo) {
+            eventData.phyeveContactInfo = contactInfo;
+        }
+
+        return eventData;
+
     } catch (error) {
         console.error('Error in collectPhysicalEventData:', error);
         throw new Error(`Failed to collect event data: ${error.message}`);
@@ -40518,7 +41359,7 @@ function createPhysicalEventCard(eventData) {
 
 // Create simplified TBA event card
 
-       function createTBAEventCard(cardDiv, eventData, backgroundStyle) {
+           function createTBAEventCard(cardDiv, eventData, backgroundStyle) {
     cardDiv.classList.add('tba-event-card');
     
     cardDiv.innerHTML = `
@@ -40536,7 +41377,7 @@ function createPhysicalEventCard(eventData) {
         </div>
                 
         <div class="event-card-content tba-content">
-            <!-- Event Description (Main focus for TBA events) -->
+            <!-- Event Description -->
             <div class="tba-description-section">
                 <h4 style="margin: 0 0 10px 0; color: #495057; display: flex; align-items: center; gap: 8px;">
                     <i class="fas fa-info-circle" style="color: #17a2b8;"></i>
@@ -40581,6 +41422,35 @@ function createPhysicalEventCard(eventData) {
                 </div>
             </div>
 
+            <!-- Contact Information Section for TBA Events -->
+            ${eventData.phyeveContactInfo ? `
+                <div class="tba-contact-section" style="margin-bottom: 16px;">
+                    <div class="contact-header" style="
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        margin-bottom: 12px;
+                        padding-bottom: 8px;
+                        border-bottom: 2px solid #e9ecef;
+                    ">
+                        <h4 style="margin: 0; color: #495057; display: flex; align-items: center; gap: 8px;">
+                            <i class="fas fa-address-book" style="color: #007bff;"></i>
+                            Contact Information
+                        </h4>
+                        <span style="font-size: 12px; color: #6c757d;">
+                            Total Clicks: ${getTotalContactClicks(eventData)}
+                        </span>
+                    </div>
+                    <div class="contact-items-grid" style="
+                        display: grid;
+                        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                        gap: 8px;
+                    ">
+                        ${generateContactItemsWithClicks(eventData)}
+                    </div>
+                </div>
+            ` : ''}
+
             <!-- TBA Status Banner -->
             <div class="tba-status-banner" style="
                 background: linear-gradient(135deg, #ffc107, #e0a800);
@@ -40596,7 +41466,7 @@ function createPhysicalEventCard(eventData) {
                 Date & Time: To Be Announced
             </div>
 
-            <!-- Sponsors Section for TBA Events -->
+            <!-- Sponsors Section -->
             <div class="sponsors-section tba-sponsors" style="margin-bottom: 16px;">
                 <div class="sponsors-header" style="
                     display: flex;
@@ -40660,18 +41530,13 @@ function createPhysicalEventCard(eventData) {
                 </p>
             </div>
 
-            <!-- Minimal Event Management -->
+            <!-- Event Management -->
             <div class="tba-management-section" style="
                 border-top: 1px solid #e9ecef;
                 padding-top: 16px;
             ">
-                <div class="tba-actions" style="
-                    display: flex;
-                    gap: 8px;
-                    justify-content: center;
-                    margin-bottom: 16px;
-                ">
-                    <button class="tba-edit-btn" onclick="openPhyEventEdit('${eventData.physicalEventId}')" style="
+                <div class="event-action-tools" style="display: flex; gap: 8px; margin-bottom: 16px;">
+                    <button class="edit-event-btn" onclick="openPhyEventEdit('${eventData.physicalEventId}')" title="Edit Event" style="
                         background: linear-gradient(135deg, #007bff, #0056b3);
                         color: white;
                         border: none;
@@ -40684,12 +41549,12 @@ function createPhysicalEventCard(eventData) {
                         align-items: center;
                         gap: 6px;
                         transition: all 0.3s ease;
-                    " onmouseover="this.style.transform='translateY(-1px)'" onmouseout="this.style.transform='translateY(0)'">
+                        flex: 1;
+                    ">
                         <i class="fas fa-edit"></i>
-                        Update Event
+                        Edit Event
                     </button>
-                    
-                    <button class="tba-close-btn" onclick="openPhyEventClose('${eventData.physicalEventId}')" style="
+                    <button class="close-event-btn" onclick="openPhyEventClose('${eventData.physicalEventId}')" title="Close Event" style="
                         background: linear-gradient(135deg, #dc3545, #c82333);
                         color: white;
                         border: none;
@@ -40702,12 +41567,13 @@ function createPhysicalEventCard(eventData) {
                         align-items: center;
                         gap: 6px;
                         transition: all 0.3s ease;
-                    " onmouseover="this.style.transform='translateY(-1px)'" onmouseout="this.style.transform='translateY(0)'">
+                        flex: 1;
+                    ">
                         <i class="fas fa-times-circle"></i>
                         Close Event
                     </button>
                 </div>
-                
+
                 <!-- Event Link for Sharing -->
                 <div class="tba-sharing" style="
                     text-align: center;
@@ -40729,7 +41595,7 @@ function createPhysicalEventCard(eventData) {
                     " onclick="copyEventLink('${eventData.eventLink}')" title="Click to copy link"
                        onmouseover="this.style.background='#e9ecef'; this.style.borderColor='#ced4da'"
                        onmouseout="this.style.background='#f8f9fa'; this.style.borderColor='#dee2e6'">
-                        reward-hub.vercel.app/${eventData.eventLink}
+                        reward-hub.vercel.app/event/${eventData.eventLink}
                         <i class="fas fa-copy" style="margin-left: 6px; opacity: 0.7;"></i>
                     </div>
                 </div>
@@ -40741,14 +41607,210 @@ function createPhysicalEventCard(eventData) {
     addExpandCollapseForTBA(cardDiv);
     
     return cardDiv;
-}            
+}
 
-// Create full event card with all features (existing functionality)
+              
+         
+// Contact Click Tracking System
+async function trackContactClick(eventId, contactType, contactUrl) {
+    try {
+        console.log('Tracking contact click:', contactType, 'for event:', eventId);
+        
+        // Get current user
+        const currentUser = firebase.auth().currentUser;
+        if (!currentUser) {
+            console.log('User not authenticated, opening contact anyway');
+        }
+        
+        // Update click count in Firebase
+        const db = firebase.firestore();
+        const eventRef = db.collection('physicalEvents').doc(eventId);
+        
+        // Get current event data
+        const eventDoc = await eventRef.get();
+        if (eventDoc.exists) {
+            const eventData = eventDoc.data();
+            const currentClicks = eventData.contactClicks || {};
+            
+            // Initialize contact clicks if not exists
+            if (!currentClicks[contactType]) {
+                currentClicks[contactType] = 0;
+            }
+            
+            // Increment click count
+            currentClicks[contactType]++;
+            
+            // Update in Firebase
+            await eventRef.update({
+                contactClicks: currentClicks,
+                updatedAt: new Date().toISOString()
+            });
+            
+            console.log(`Click tracked for ${contactType}: ${currentClicks[contactType]} total clicks`);
+            
+            // Update UI immediately
+            updateContactClicksUI(eventId, contactType, currentClicks[contactType]);
+        }
+        
+        // Open the contact based on type
+        openContact(contactType, contactUrl);
+        
+    } catch (error) {
+        console.error('Error tracking contact click:', error);
+        // Still open the contact even if tracking fails
+        openContact(contactType, contactUrl);
+    }
+}
+
+// Open contact based on type
+function openContact(contactType, contactUrl) {
+    switch (contactType) {
+        case 'phone':
+            window.open(`tel:${contactUrl}`, '_self');
+            break;
+        case 'website':
+        case 'instagram':
+        case 'tiktok':
+        case 'facebook':
+        case 'twitter':
+        case 'youtube':
+        case 'linkedin':
+        case 'whatsapp':
+        case 'custom1':
+        case 'custom2':
+        case 'custom3':
+            window.open(contactUrl, '_blank');
+            break;
+        default:
+            console.log('Unknown contact type:', contactType);
+    }
+}
+
+// Update contact clicks in UI immediately
+function updateContactClicksUI(eventId, contactType, newClickCount) {
+    const eventCard = document.querySelector(`[data-event-id="${eventId}"]`);
+    if (!eventCard) return;
+    
+    // Find the specific contact item and update its click count
+    const contactItems = eventCard.querySelectorAll('.contact-clickable-item');
+    contactItems.forEach(item => {
+        const onclick = item.getAttribute('onclick');
+        if (onclick && onclick.includes(`'${contactType}'`)) {
+            const clickCountSpan = item.querySelector('small');
+            if (clickCountSpan) {
+                clickCountSpan.textContent = `${newClickCount} clicks`;
+            }
+        }
+    });
+    
+    // Update total clicks
+    const totalClicksSpan = eventCard.querySelector('.contact-header span');
+    if (totalClicksSpan) {
+        // Recalculate total from all contact types
+        let totalClicks = 0;
+        contactItems.forEach(item => {
+            const clickText = item.querySelector('small')?.textContent || '0 clicks';
+            const clickCount = parseInt(clickText.match(/\d+/)?.[0] || '0');
+            totalClicks += clickCount;
+        });
+        totalClicksSpan.textContent = `Total Clicks: ${totalClicks}`;
+    }
+}
+
+// Helper function to get contact clicks count
+function getContactClicks(contactInfo, contactType) {
+    return contactInfo.contactClicks?.[contactType] || 0;
+}
+
+// Helper function to get total contact clicks
+function getTotalContactClicks(contactInfo) {
+    if (!contactInfo.contactClicks) return 0;
+    
+    return Object.values(contactInfo.contactClicks).reduce((total, clicks) => total + clicks, 0);
+}
+     
+// Function to open close event confirmation
+async function openPhyEventClose(eventId) {
+    try {
+        console.log('Opening close confirmation for event:', eventId);
+        
+        // Get event data to show in confirmation
+        const db = firebase.firestore();
+        const eventDoc = await db.collection('physicalEvents').doc(eventId).get();
+        
+        if (!eventDoc.exists) {
+            showNotification('Event not found', 'error');
+            return;
+        }
+        
+        const eventData = eventDoc.data();
+        
+        // Create close confirmation modal
+        const modal = document.createElement('div');
+        modal.className = 'phyeventclose-modal-overlay';
+        modal.id = 'phyeventclose-modal';
+        
+        modal.innerHTML = `
+            <div class="phyeventclose-modal">
+                <div class="modal-header">
+                    <h3><i class="fas fa-exclamation-triangle" style="color: #dc3545;"></i> Close Physical Event</h3>
+                    <button class="close-modal-btn" onclick="closePhyEventClose()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                
+                <div class="modal-body">
+                    <div class="warning-section">
+                        <div class="warning-icon">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="warning-content">
+                            <h4>Are you sure you want to close this event?</h4>
+                            <p><strong>Event:</strong> ${eventData.eventName}</p>
+                            <p><strong>Warning:</strong> Closing this event will:</p>
+                            <ul>
+                                <li>Stop ticket sales immediately</li>
+                                <li>Mark the event as permanently closed</li>
+                                <li>This action cannot be undone</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="confirmation-actions">
+                        <button type="button" onclick="closePhyEventClose()" class="cancel-btn">
+                            <i class="fas fa-times"></i> Cancel
+                        </button>
+                        <button type="button" onclick="confirmCloseEvent('${eventId}')" class="confirm-close-btn">
+                            <i class="fas fa-times-circle"></i> Yes, Close Event
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        document.body.appendChild(modal);
+        
+    } catch (error) {
+        console.error('Error opening close confirmation:', error);
+        showNotification('Error opening close confirmation: ' + error.message, 'error');
+    }
+}
+
+
 function createFullEventCard(cardDiv, eventData, backgroundStyle) {
-    // Calculate stats
-    const totalRevenue = calculateTotalRevenue(eventData.tickets);
-    const totalBuyers = calculateTotalBuyers(eventData.tickets);
-    const ticketStats = calculateTicketStats(eventData.tickets);
+    // Calculate stats only if tickets exist
+    const hasNoTickets = eventData.noTicketsRequired || (eventData.tickets && eventData.tickets.length === 0);
+    
+    let totalRevenue = 0;
+    let totalBuyers = 0;
+    let ticketStats = { vipSold: 0, regularSold: 0 };
+    
+    if (!hasNoTickets) {
+        totalRevenue = calculateTotalRevenue(eventData.tickets);
+        totalBuyers = calculateTotalBuyers(eventData.tickets);
+        ticketStats = calculateTicketStats(eventData.tickets);
+    }
+    
     const totalWithdrawn = eventData.totalWithdrawn || 0;
     const likesCount = eventData.likesCount || 0;
     const currentUser = firebase.auth().currentUser;
@@ -40826,44 +41888,90 @@ function createFullEventCard(cardDiv, eventData, backgroundStyle) {
                 </div>
             </div>
 
-           <div class="event-action-tools">
-    <button class="edit-event-btn" onclick="openPhyEventEdit('${eventData.physicalEventId}')" title="Edit Event">
-        <i class="fas fa-edit"></i>
-        Edit Event
-    </button>
-    <button class="close-event-btn" onclick="openPhyEventClose('${eventData.physicalEventId}')" title="Close Event">
-        <i class="fas fa-times-circle"></i>
-        Close Event
-    </button>
-</div>
-            
-            <div class="ticket-stats-grid">
-                <div class="stat-card">
-                    <div class="stat-value">₦${totalRevenue.toLocaleString()}</div>
-                    <div class="stat-label">Total Revenue</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value">${totalBuyers}</div>
-                    <div class="stat-label">Total Buyers</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value">
-                        <span class="withdraw-amount" id="withdraw-${eventData.physicalEventId}">₦${totalWithdrawn.toLocaleString()}</span>
-                        <button class="eye-toggle-btn" onclick="toggleWithdrawVisibility('${eventData.physicalEventId}')" style="margin-left: 8px;">
-                            <i class="fas fa-eye" id="eye-icon-${eventData.physicalEventId}"></i>
-                        </button>
-                    </div>
-                    <div class="stat-label">Total Withdrawn</div>
-                </div>
-                 
-                <div class="individual-ticket-sales">
-                    <h4>Tickets Sold by Type</h4>
-                    <div class="ticket-breakdown-grid">
-                        ${generateTicketBreakdown(eventData.tickets || [])}
-                    </div>
-                </div>
+            <div class="event-action-tools">
+                <button class="edit-event-btn" onclick="openPhyEventEdit('${eventData.physicalEventId}')" title="Edit Event">
+                    <i class="fas fa-edit"></i>
+                    Edit Event
+                </button>
+                <button class="close-event-btn" onclick="openPhyEventClose('${eventData.physicalEventId}')" title="Close Event">
+                    <i class="fas fa-times-circle"></i>
+                    Close Event
+                </button>
             </div>
-
+            
+            ${!hasNoTickets ? `
+                <div class="ticket-stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value">₦${totalRevenue.toLocaleString()}</div>
+                        <div class="stat-label">Total Revenue</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">${totalBuyers}</div>
+                        <div class="stat-label">Total Buyers</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">
+                            <span class="withdraw-amount" id="withdraw-${eventData.physicalEventId}">₦${totalWithdrawn.toLocaleString()}</span>
+                            <button class="eye-toggle-btn" onclick="toggleWithdrawVisibility('${eventData.physicalEventId}')" style="margin-left: 8px;">
+                                <i class="fas fa-eye" id="eye-icon-${eventData.physicalEventId}"></i>
+                            </button>
+                        </div>
+                        <div class="stat-label">Total Withdrawn</div>
+                    </div>
+                     
+                    <div class="individual-ticket-sales">
+                        <h4>Tickets Sold by Type</h4>
+                        <div class="ticket-breakdown-grid">
+                            ${generateTicketBreakdown(eventData.tickets || [])}
+                        </div>
+                    </div>
+                </div>
+            ` : `
+                <div class="no-tickets-stats" style="
+                    background: #e3f2fd;
+                    border: 1px solid #bbdefb;
+                    border-radius: 8px;
+                    padding: 20px;
+                    text-align: center;
+                    margin: 15px 0;
+                ">
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 8px;">
+                        <i class="fas fa-info-circle" style="color: #1976d2; font-size: 18px;"></i>
+                        <strong style="color: #1976d2;">No Tickets Required</strong>
+                    </div>
+                    <p style="margin: 0; color: #0d47a1; font-size: 14px;">
+                        This event doesn't require tickets. Contact the organizer directly for attendance.
+                    </p>
+                </div>
+            `}
+            
+${eventData.phyeveContactInfo ? `
+    <div class="contact-section" style="margin-bottom: 16px;">
+        <div class="contact-header" style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #e9ecef;
+        ">
+            <h4 style="margin: 0; color: #495057; display: flex; align-items: center; gap: 8px;">
+                <i class="fas fa-address-book" style="color: #007bff;"></i>
+                Contact Information
+            </h4>
+            <span style="font-size: 12px; color: #6c757d;">
+                Total Clicks: ${getTotalContactClicks(eventData)}
+            </span>
+        </div>
+        <div class="contact-items-grid" style="
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 8px;
+        ">
+            ${generateContactItemsWithClicks(eventData)}
+        </div>
+    </div>
+` : ''}
             <div class="sponsors-section">
                 <div class="sponsors-header">
                     <h4>Event Sponsors</h4>
@@ -40900,44 +42008,44 @@ function createFullEventCard(cardDiv, eventData, backgroundStyle) {
                     Setup Bank
                 </button>
                 
-               <button class="withdraw-pee-btn" 
-                        onclick="openWithdrawPEEForm('${eventData.physicalEventId}', '${eventData.eventName}', ${totalRevenue})"
-                        title="Withdraw Physical Event Earnings"
-                        style="
-                            background: linear-gradient(135deg, #28a745, #20c997);
-                            color: white;
-                            border: none;
-                            padding: 8px 12px;
-                            border-radius: 6px;
-                            cursor: pointer;
-                            font-weight: 600;
-                            transition: all 0.3s ease;
-                            display: flex;
-                            align-items: center;
-                            gap: 6px;
-                            font-size: 13px;
-                            flex: 1;
-                        ">
-                    <i class="fas fa-money-bill-wave"></i>
-                    Withdraw PEE
-                </button>
+                ${!hasNoTickets ? `
+                    <button class="withdraw-pee-btn" 
+                            onclick="openWithdrawPEEForm('${eventData.physicalEventId}', '${eventData.eventName}', ${totalRevenue})"
+                            title="Withdraw Physical Event Earnings"
+                            style="
+                                background: linear-gradient(135deg, #28a745, #20c997);
+                                color: white;
+                                border: none;
+                                padding: 8px 12px;
+                                border-radius: 6px;
+                                cursor: pointer;
+                                font-weight: 600;
+                                transition: all 0.3s ease;
+                                display: flex;
+                                align-items: center;
+                                gap: 6px;
+                                font-size: 13px;
+                                flex: 1;
+                            ">
+                        <i class="fas fa-money-bill-wave"></i>
+                        Withdraw PEE
+                    </button>
+                ` : ''}
 
-                           
-            <!-- Add this button near your other withdrawal controls -->
-<button onclick="openWithdrawalHistory()" style="
-    background: #6c5ce7;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 600;
-    margin: 10px 0;
-">
-    <i class="fas fa-history"></i> View Withdrawal History
-</button>
-               
+                <button onclick="openWithdrawalHistory()" style="
+                    background: #6c5ce7;
+                    color: white;
+                    border: none;
+                    padding: 10px 20px;
+                    border-radius: 8px;
+                    cursor: pointer;
+                    font-size: 14px;
+                    font-weight: 600;
+                    margin: 10px 0;
+                ">
+                    <i class="fas fa-history"></i> View Withdrawal History
+                </button>
+            </div>
         </div>
     `;
 
@@ -40947,6 +42055,395 @@ function createFullEventCard(cardDiv, eventData, backgroundStyle) {
     return cardDiv;
 }
 
+// Only show stats if user has tickets
+if (!hasNoTickets) {
+    cardDiv.innerHTML += `
+        <div class="ticket-stats-grid">
+            <div class="stat-card">
+                <div class="stat-value">₦${totalRevenue.toLocaleString()}</div>
+                <div class="stat-label">Total Revenue</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">${totalBuyers}</div>
+                <div class="stat-label">Total Buyers</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">
+                    <span class="withdraw-amount" id="withdraw-${eventData.physicalEventId}">₦${totalWithdrawn.toLocaleString()}</span>
+                    <button class="eye-toggle-btn" onclick="toggleWithdrawVisibility('${eventData.physicalEventId}')" style="margin-left: 8px;">
+                        <i class="fas fa-eye" id="eye-icon-${eventData.physicalEventId}"></i>
+                    </button>
+                </div>
+                <div class="stat-label">Total Withdrawn</div>
+            </div>
+             
+            <div class="individual-ticket-sales">
+                <h4>Tickets Sold by Type</h4>
+                <div class="ticket-breakdown-grid">
+                    ${generateTicketBreakdown(eventData.tickets || [])}
+                </div>
+            </div>
+        </div>
+    `;
+} else {
+    // Show no tickets message instead of stats
+    cardDiv.innerHTML += `
+        <div class="no-tickets-stats" style="
+            background: #e3f2fd;
+            border: 1px solid #bbdefb;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            margin: 15px 0;
+        ">
+            <div style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 8px;">
+                <i class="fas fa-info-circle" style="color: #1976d2; font-size: 18px;"></i>
+                <strong style="color: #1976d2;">No Tickets Required</strong>
+            </div>
+            <p style="margin: 0; color: #0d47a1; font-size: 14px;">
+                This event doesn't require tickets. Contact the organizer directly for attendance.
+            </p>
+        </div>
+    `;
+}
+// Generate contact items with click tracking
+function generateContactItemsWithClicks(eventData) {
+    const contactInfo = eventData.phyeveContactInfo;
+    if (!contactInfo) return '';
+    
+    let contactItems = '';
+    
+    // Host Name (not clickable)
+    if (contactInfo.hostName) {
+        contactItems += `
+            <div class="contact-item" style="
+                background: #f8f9fa;
+                border: 1px solid #e9ecef;
+                border-radius: 6px;
+                padding: 8px 12px;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                font-size: 13px;
+            ">
+                <i class="fas fa-user" style="color: #6c757d; width: 16px;"></i>
+                <span style="color: #495057; font-weight: 500;">${contactInfo.hostName}</span>
+            </div>
+        `;
+    }
+    
+    // Phone Number
+    if (contactInfo.phoneNumber) {
+        const clicks = getContactClicks(eventData, 'phone');
+        contactItems += `
+            <div class="contact-clickable-item" onclick="trackContactClick('${eventData.physicalEventId}', 'phone', '${contactInfo.phoneNumber}')" style="
+                background: #f8f9fa;
+                border: 1px solid #e9ecef;
+                border-radius: 6px;
+                padding: 8px 12px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                cursor: pointer;
+                transition: all 0.2s ease;
+                font-size: 13px;
+            " onmouseover="this.style.background='#e9ecef'" onmouseout="this.style.background='#f8f9fa'">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <i class="fas fa-phone" style="color: #28a745; width: 16px;"></i>
+                    <span style="color: #495057; font-weight: 500;">Phone</span>
+                </div>
+                <small style="color: #6c757d;">${clicks} clicks</small>
+            </div>
+        `;
+    }
+    
+    // Website
+    if (contactInfo.websiteUrl) {
+        const clicks = getContactClicks(eventData, 'website');
+        contactItems += `
+            <div class="contact-clickable-item" onclick="trackContactClick('${eventData.physicalEventId}', 'website', '${contactInfo.websiteUrl}')" style="
+                background: #f8f9fa;
+                border: 1px solid #e9ecef;
+                border-radius: 6px;
+                padding: 8px 12px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                cursor: pointer;
+                transition: all 0.2s ease;
+                font-size: 13px;
+            " onmouseover="this.style.background='#e9ecef'" onmouseout="this.style.background='#f8f9fa'">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <i class="fas fa-globe" style="color: #007bff; width: 16px;"></i>
+                    <span style="color: #495057; font-weight: 500;">Website</span>
+                </div>
+                <small style="color: #6c757d;">${clicks} clicks</small>
+            </div>
+        `;
+    }
+    
+    // Instagram
+    if (contactInfo.instagramUrl) {
+        const clicks = getContactClicks(eventData, 'instagram');
+        contactItems += `
+            <div class="contact-clickable-item" onclick="trackContactClick('${eventData.physicalEventId}', 'instagram', '${contactInfo.instagramUrl}')" style="
+                background: #f8f9fa;
+                border: 1px solid #e9ecef;
+                border-radius: 6px;
+                padding: 8px 12px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                cursor: pointer;
+                transition: all 0.2s ease;
+                font-size: 13px;
+            " onmouseover="this.style.background='#e9ecef'" onmouseout="this.style.background='#f8f9fa'">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <i class="fab fa-instagram" style="color: #E4405F; width: 16px;"></i>
+                    <span style="color: #495057; font-weight: 500;">Instagram</span>
+                </div>
+                <small style="color: #6c757d;">${clicks} clicks</small>
+            </div>
+        `;
+    }
+    
+    // TikTok
+    if (contactInfo.tiktokUrl) {
+        const clicks = getContactClicks(eventData, 'tiktok');
+        contactItems += `
+            <div class="contact-clickable-item" onclick="trackContactClick('${eventData.physicalEventId}', 'tiktok', '${contactInfo.tiktokUrl}')" style="
+                background: #f8f9fa;
+                border: 1px solid #e9ecef;
+                border-radius: 6px;
+                padding: 8px 12px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                cursor: pointer;
+                transition: all 0.2s ease;
+                font-size: 13px;
+            " onmouseover="this.style.background='#e9ecef'" onmouseout="this.style.background='#f8f9fa'">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <i class="fab fa-tiktok" style="color: #000; width: 16px;"></i>
+                    <span style="color: #495057; font-weight: 500;">TikTok</span>
+                </div>
+                <small style="color: #6c757d;">${clicks} clicks</small>
+            </div>
+        `;
+    }
+    
+    // Facebook
+    if (contactInfo.facebookUrl) {
+        const clicks = getContactClicks(eventData, 'facebook');
+        contactItems += `
+            <div class="contact-clickable-item" onclick="trackContactClick('${eventData.physicalEventId}', 'facebook', '${contactInfo.facebookUrl}')" style="
+                background: #f8f9fa;
+                border: 1px solid #e9ecef;
+                border-radius: 6px;
+                padding: 8px 12px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                cursor: pointer;
+                transition: all 0.2s ease;
+                font-size: 13px;
+            " onmouseover="this.style.background='#e9ecef'" onmouseout="this.style.background='#f8f9fa'">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <i class="fab fa-facebook" style="color: #4267B2; width: 16px;"></i>
+                    <span style="color: #495057; font-weight: 500;">Facebook</span>
+                </div>
+                <small style="color: #6c757d;">${clicks} clicks</small>
+            </div>
+        `;
+    }
+    
+    // Twitter
+    if (contactInfo.twitterUrl) {
+        const clicks = getContactClicks(eventData, 'twitter');
+        contactItems += `
+            <div class="contact-clickable-item" onclick="trackContactClick('${eventData.physicalEventId}', 'twitter', '${contactInfo.twitterUrl}')" style="
+                background: #f8f9fa;
+                border: 1px solid #e9ecef;
+                border-radius: 6px;
+                padding: 8px 12px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                cursor: pointer;
+                transition: all 0.2s ease;
+                font-size: 13px;
+            " onmouseover="this.style.background='#e9ecef'" onmouseout="this.style.background='#f8f9fa'">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <i class="fab fa-twitter" style="color: #1DA1F2; width: 16px;"></i>
+                    <span style="color: #495057; font-weight: 500;">Twitter</span>
+                </div>
+                <small style="color: #6c757d;">${clicks} clicks</small>
+            </div>
+        `;
+    }
+    
+    // YouTube
+    if (contactInfo.youtubeUrl) {
+        const clicks = getContactClicks(eventData, 'youtube');
+        contactItems += `
+            <div class="contact-clickable-item" onclick="trackContactClick('${eventData.physicalEventId}', 'youtube', '${contactInfo.youtubeUrl}')" style="
+                background: #f8f9fa;
+                border: 1px solid #e9ecef;
+                border-radius: 6px;
+                padding: 8px 12px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                cursor: pointer;
+                transition: all 0.2s ease;
+                font-size: 13px;
+            " onmouseover="this.style.background='#e9ecef'" onmouseout="this.style.background='#f8f9fa'">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <i class="fab fa-youtube" style="color: #FF0000; width: 16px;"></i>
+                    <span style="color: #495057; font-weight: 500;">YouTube</span>
+                </div>
+                <small style="color: #6c757d;">${clicks} clicks</small>
+            </div>
+        `;
+    }
+    
+    // LinkedIn
+    if (contactInfo.linkedinUrl) {
+        const clicks = getContactClicks(eventData, 'linkedin');
+        contactItems += `
+            <div class="contact-clickable-item" onclick="trackContactClick('${eventData.physicalEventId}', 'linkedin', '${contactInfo.linkedinUrl}')" style="
+                background: #f8f9fa;
+                border: 1px solid #e9ecef;
+                border-radius: 6px;
+                padding: 8px 12px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                cursor: pointer;
+                transition: all 0.2s ease;
+                font-size: 13px;
+            " onmouseover="this.style.background='#e9ecef'" onmouseout="this.style.background='#f8f9fa'">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <i class="fab fa-linkedin" style="color: #0077B5; width: 16px;"></i>
+                    <span style="color: #495057; font-weight: 500;">LinkedIn</span>
+                </div>
+                <small style="color: #6c757d;">${clicks} clicks</small>
+            </div>
+        `;
+    }
+    
+    // WhatsApp
+    if (contactInfo.whatsappUrl) {
+        const clicks = getContactClicks(eventData, 'whatsapp');
+        contactItems += `
+            <div class="contact-clickable-item" onclick="trackContactClick('${eventData.physicalEventId}', 'whatsapp', '${contactInfo.whatsappUrl}')" style="
+                background: #f8f9fa;
+                border: 1px solid #e9ecef;
+                border-radius: 6px;
+                padding: 8px 12px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                cursor: pointer;
+                transition: all 0.2s ease;
+                font-size: 13px;
+            " onmouseover="this.style.background='#e9ecef'" onmouseout="this.style.background='#f8f9fa'">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <i class="fab fa-whatsapp" style="color: #25D366; width: 16px;"></i>
+                    <span style="color: #495057; font-weight: 500;">WhatsApp</span>
+                </div>
+                <small style="color: #6c757d;">${clicks} clicks</small>
+            </div>
+        `;
+    }
+    
+    // Custom Links
+    if (contactInfo.customLink1Url && contactInfo.customLink1Name) {
+        const clicks = getContactClicks(eventData, 'custom1');
+        contactItems += `
+            <div class="contact-clickable-item" onclick="trackContactClick('${eventData.physicalEventId}', 'custom1', '${contactInfo.customLink1Url}')" style="
+                background: #f8f9fa;
+                border: 1px solid #e9ecef;
+                border-radius: 6px;
+                padding: 8px 12px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                cursor: pointer;
+                transition: all 0.2s ease;
+                font-size: 13px;
+            " onmouseover="this.style.background='#e9ecef'" onmouseout="this.style.background='#f8f9fa'">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <i class="fas fa-external-link-alt" style="color: #6c5ce7; width: 16px;"></i>
+                    <span style="color: #495057; font-weight: 500;">${contactInfo.customLink1Name}</span>
+                </div>
+                <small style="color: #6c757d;">${clicks} clicks</small>
+            </div>
+        `;
+    }
+    
+    if (contactInfo.customLink2Url && contactInfo.customLink2Name) {
+        const clicks = getContactClicks(eventData, 'custom2');
+        contactItems += `
+            <div class="contact-clickable-item" onclick="trackContactClick('${eventData.physicalEventId}', 'custom2', '${contactInfo.customLink2Url}')" style="
+                background: #f8f9fa;
+                border: 1px solid #e9ecef;
+                border-radius: 6px;
+                padding: 8px 12px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                cursor: pointer;
+                transition: all 0.2s ease;
+                font-size: 13px;
+            " onmouseover="this.style.background='#e9ecef'" onmouseout="this.style.background='#f8f9fa'">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <i class="fas fa-link" style="color: #17a2b8; width: 16px;"></i>
+                    <span style="color: #495057; font-weight: 500;">${contactInfo.customLink2Name}</span>
+                </div>
+                <small style="color: #6c757d;">${clicks} clicks</small>
+            </div>
+        `;
+    }
+    
+    if (contactInfo.customLink3Url && contactInfo.customLink3Name) {
+        const clicks = getContactClicks(eventData, 'custom3');
+        contactItems += `
+            <div class="contact-clickable-item" onclick="trackContactClick('${eventData.physicalEventId}', 'custom3', '${contactInfo.customLink3Url}')" style="
+                background: #f8f9fa;
+                border: 1px solid #e9ecef;
+                border-radius: 6px;
+                padding: 8px 12px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                cursor: pointer;
+                transition: all 0.2s ease;
+                font-size: 13px;
+            " onmouseover="this.style.background='#e9ecef'" onmouseout="this.style.background='#f8f9fa'">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <i class="fas fa-share-alt" style="color: #fd7e14; width: 16px;"></i>
+                    <span style="color: #495057; font-weight: 500;">${contactInfo.customLink3Name}</span>
+                </div>
+                <small style="color: #6c757d;">${clicks} clicks</small>
+            </div>
+        `;
+    }
+    
+    return contactItems;
+}
+
+// Helper function to get contact clicks count (already exists but ensure it's there)
+function getContactClicks(eventData, contactType) {
+    return eventData.contactClicks?.[contactType] || 0;
+}
+
+// Helper function to get total contact clicks (already exists but ensure it's there)  
+function getTotalContactClicks(eventData) {
+    if (!eventData.contactClicks) return 0;
+    
+    return Object.values(eventData.contactClicks).reduce((total, clicks) => total + clicks, 0);
+}
 // Add expand/collapse functionality for TBA cards
 function addExpandCollapseForTBA(cardDiv) {
     const cardHeader = cardDiv.querySelector('.event-card-header');
@@ -42667,7 +44164,7 @@ function showPromoCodeNotification(promoCode) {
 }
 
 
-// Function to open edit event popup with enhanced features
+// Function to open edit event popup with enhanced features including contact info
 async function openPhyEventEdit(eventId) {
     try {
         console.log('Opening edit for event:', eventId);
@@ -42720,9 +44217,8 @@ async function openPhyEventEdit(eventId) {
                 <div class="modal-header">
                     <h3><i class="fas fa-edit"></i> Edit Physical Event</h3>
                     <button class="close-modal-btn" onclick="closePhyEventEdit()" type="button">
-    <i class="fas fa-times"></i>
-</button>
-
+                        <i class="fas fa-times"></i>
+                    </button>
                 </div>
                 
                 <div class="modal-body">
@@ -42780,6 +44276,131 @@ async function openPhyEventEdit(eventId) {
                                 <div class="datetime-field">
                                     <label>End Time</label>
                                     <input type="time" id="editEndTime" class="form-input" value="${endTimeValue}">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Contact Information Section -->
+                        <div class="form-group">
+                            <h4 style="margin: 20px 0 15px 0; color: #495057; display: flex; align-items: center; gap: 8px;">
+                                <i class="fas fa-address-book" style="color: #007bff;"></i>
+                                Contact Information (Optional)
+                            </h4>
+                            <div class="contact-edit-section" style="
+                                background: #f8f9fa;
+                                border: 1px solid #e9ecef;
+                                border-radius: 8px;
+                                padding: 20px;
+                                margin-bottom: 20px;
+                            ">
+                                <!-- Host Name -->
+                                <div class="form-group">
+                                    <label>Host Name</label>
+                                    <input type="text" id="editHostName" class="form-input" value="${eventData.phyeveContactInfo?.hostName || ''}" placeholder="Host or contact person name" maxlength="50">
+                                </div>
+                                
+                                <!-- Phone Number -->
+                                <div class="form-group">
+                                    <label>Phone Number</label>
+                                    <input type="tel" id="editPhoneNumber" class="form-input" value="${eventData.phyeveContactInfo?.phoneNumber || ''}" placeholder="+234 xxx xxx xxxx">
+                                </div>
+                                
+                                <!-- Contact Links Grid -->
+                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-top: 15px;">
+                                    <!-- Website URL -->
+                                    <div class="form-group">
+                                        <label>Website URL</label>
+                                        <input type="url" id="editWebsiteUrl" class="form-input" value="${eventData.phyeveContactInfo?.websiteUrl || ''}" placeholder="https://website.com">
+                                    </div>
+                                    
+                                    <!-- Instagram -->
+                                    <div class="form-group">
+                                        <label>Instagram URL</label>
+                                        <input type="url" id="editInstagramUrl" class="form-input" value="${eventData.phyeveContactInfo?.instagramUrl || ''}" placeholder="https://instagram.com/username">
+                                    </div>
+                                    
+                                    <!-- TikTok -->
+                                    <div class="form-group">
+                                        <label>TikTok URL</label>
+                                        <input type="url" id="editTiktokUrl" class="form-input" value="${eventData.phyeveContactInfo?.tiktokUrl || ''}" placeholder="https://tiktok.com/@username">
+                                    </div>
+                                    
+                                    <!-- Facebook -->
+                                    <div class="form-group">
+                                        <label>Facebook URL</label>
+                                        <input type="url" id="editFacebookUrl" class="form-input" value="${eventData.phyeveContactInfo?.facebookUrl || ''}" placeholder="https://facebook.com/page">
+                                    </div>
+                                    
+                                    <!-- Twitter -->
+                                    <div class="form-group">
+                                        <label>Twitter/X URL</label>
+                                        <input type="url" id="editTwitterUrl" class="form-input" value="${eventData.phyeveContactInfo?.twitterUrl || ''}" placeholder="https://twitter.com/username">
+                                    </div>
+                                    
+                                    <!-- YouTube -->
+                                    <div class="form-group">
+                                        <label>YouTube URL</label>
+                                        <input type="url" id="editYoutubeUrl" class="form-input" value="${eventData.phyeveContactInfo?.youtubeUrl || ''}" placeholder="https://youtube.com/channel">
+                                    </div>
+                                    
+                                    <!-- LinkedIn -->
+                                    <div class="form-group">
+                                        <label>LinkedIn URL</label>
+                                        <input type="url" id="editLinkedinUrl" class="form-input" value="${eventData.phyeveContactInfo?.linkedinUrl || ''}" placeholder="https://linkedin.com/in/profile">
+                                    </div>
+                                    
+                                    <!-- WhatsApp -->
+                                    <div class="form-group">
+                                        <label>WhatsApp URL</label>
+                                        <input type="text" id="editWhatsappUrl" class="form-input" value="${eventData.phyeveContactInfo?.whatsappUrl || ''}" placeholder="https://wa.me/1234567890">
+                                    </div>
+                                </div>
+                                
+                                <!-- Custom Links Section -->
+                                <div style="margin-top: 20px;">
+                                    <h5 style="margin-bottom: 15px; color: #495057;">Custom Links</h5>
+                                    
+                                    <!-- Custom Link 1 -->
+                                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                                        <div class="form-group">
+                                            <label>Custom Link 1 Name</label>
+                                            <input type="text" id="editCustomLink1Name" class="form-input" value="${eventData.phyeveContactInfo?.customLink1Name || ''}" placeholder="e.g. My Portfolio" maxlength="30">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Custom Link 1 URL</label>
+                                            <input type="url" id="editCustomLink1Url" class="form-input" value="${eventData.phyeveContactInfo?.customLink1Url || ''}" placeholder="https://yourlink.com">
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Custom Link 2 -->
+                                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                                        <div class="form-group">
+                                            <label>Custom Link 2 Name</label>
+                                            <input type="text" id="editCustomLink2Name" class="form-input" value="${eventData.phyeveContactInfo?.customLink2Name || ''}" placeholder="e.g. My Store" maxlength="30">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Custom Link 2 URL</label>
+                                            <input type="url" id="editCustomLink2Url" class="form-input" value="${eventData.phyeveContactInfo?.customLink2Url || ''}" placeholder="https://yourlink.com">
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Custom Link 3 -->
+                                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                                        <div class="form-group">
+                                            <label>Custom Link 3 Name</label>
+                                            <input type="text" id="editCustomLink3Name" class="form-input" value="${eventData.phyeveContactInfo?.customLink3Name || ''}" placeholder="e.g. My Channel" maxlength="30">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Custom Link 3 URL</label>
+                                            <input type="url" id="editCustomLink3Url" class="form-input" value="${eventData.phyeveContactInfo?.customLink3Url || ''}" placeholder="https://yourlink.com">
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Contact Preview -->
+                                <div style="margin-top: 20px; padding: 15px; background: white; border: 1px solid #dee2e6; border-radius: 8px;">
+                                    <h6 style="margin: 0 0 10px 0; color: #495057;">Contact Preview</h6>
+                                    <small style="color: #6c757d;">Contact information will be displayed in your event cards for attendees to reach you.</small>
                                 </div>
                             </div>
                         </div>
@@ -43174,6 +44795,61 @@ async function updateAdvancedPhysicalEvent(eventId) {
             }
         }
         
+        // Handle Contact Information
+        const contactInfo = {};
+        
+        // Collect all contact fields
+        const hostName = document.getElementById('editHostName').value.trim();
+        const phoneNumber = document.getElementById('editPhoneNumber').value.trim();
+        const websiteUrl = document.getElementById('editWebsiteUrl').value.trim();
+        const instagramUrl = document.getElementById('editInstagramUrl').value.trim();
+        const tiktokUrl = document.getElementById('editTiktokUrl').value.trim();
+        const facebookUrl = document.getElementById('editFacebookUrl').value.trim();
+        const twitterUrl = document.getElementById('editTwitterUrl').value.trim();
+        const youtubeUrl = document.getElementById('editYoutubeUrl').value.trim();
+        const linkedinUrl = document.getElementById('editLinkedinUrl').value.trim();
+        const whatsappUrl = document.getElementById('editWhatsappUrl').value.trim();
+        const customLink1Name = document.getElementById('editCustomLink1Name').value.trim();
+        const customLink1Url = document.getElementById('editCustomLink1Url').value.trim();
+        const customLink2Name = document.getElementById('editCustomLink2Name').value.trim();
+        const customLink2Url = document.getElementById('editCustomLink2Url').value.trim();
+        const customLink3Name = document.getElementById('editCustomLink3Name').value.trim();
+        const customLink3Url = document.getElementById('editCustomLink3Url').value.trim();
+        
+        // Only add non-empty contact information
+        if (hostName) contactInfo.hostName = hostName;
+        if (phoneNumber) contactInfo.phoneNumber = phoneNumber;
+        if (websiteUrl) contactInfo.websiteUrl = websiteUrl;
+        if (instagramUrl) contactInfo.instagramUrl = instagramUrl;
+        if (tiktokUrl) contactInfo.tiktokUrl = tiktokUrl;
+        if (facebookUrl) contactInfo.facebookUrl = facebookUrl;
+        if (twitterUrl) contactInfo.twitterUrl = twitterUrl;
+        if (youtubeUrl) contactInfo.youtubeUrl = youtubeUrl;
+        if (linkedinUrl) contactInfo.linkedinUrl = linkedinUrl;
+        if (whatsappUrl) contactInfo.whatsappUrl = whatsappUrl;
+        if (customLink1Name && customLink1Url) {
+            contactInfo.customLink1Name = customLink1Name;
+            contactInfo.customLink1Url = customLink1Url;
+        }
+        if (customLink2Name && customLink2Url) {
+            contactInfo.customLink2Name = customLink2Name;
+            contactInfo.customLink2Url = customLink2Url;
+        }
+        if (customLink3Name && customLink3Url) {
+            contactInfo.customLink3Name = customLink3Name;
+            contactInfo.customLink3Url = customLink3Url;
+        }
+        
+        // Add contact info to update data (even if empty to clear existing data)
+        if (Object.keys(contactInfo).length > 0) {
+            updateData.phyeveContactInfo = contactInfo;
+        } else {
+            // Explicitly remove contact info if all fields are empty
+            updateData.phyeveContactInfo = firebase.firestore.FieldValue.delete();
+        }
+        
+        console.log('Contact info being saved:', contactInfo);
+        
         // Handle background
         const activeTab = document.querySelector('.bg-tab.active');
         if (activeTab) {
@@ -43271,6 +44947,101 @@ async function updateAdvancedPhysicalEvent(eventId) {
     }
 }
 
+
+// Helper function to collect contact information from edit form
+function collectEditContactInformation() {
+    const contactInfo = {};
+    
+    // Collect all contact fields from edit form
+    const contactFields = {
+        hostName: document.getElementById('editHostName'),
+        phoneNumber: document.getElementById('editPhoneNumber'),
+        websiteUrl: document.getElementById('editWebsiteUrl'),
+        instagramUrl: document.getElementById('editInstagramUrl'),
+        tiktokUrl: document.getElementById('editTiktokUrl'),
+        facebookUrl: document.getElementById('editFacebookUrl'),
+        twitterUrl: document.getElementById('editTwitterUrl'),
+        youtubeUrl: document.getElementById('editYoutubeUrl'),
+        linkedinUrl: document.getElementById('editLinkedinUrl'),
+        whatsappUrl: document.getElementById('editWhatsappUrl'),
+        customLink1Name: document.getElementById('editCustomLink1Name'),
+        customLink1Url: document.getElementById('editCustomLink1Url'),
+        customLink2Name: document.getElementById('editCustomLink2Name'),
+        customLink2Url: document.getElementById('editCustomLink2Url'),
+        customLink3Name: document.getElementById('editCustomLink3Name'),
+        customLink3Url: document.getElementById('editCustomLink3Url')
+    };
+    
+    // Only add non-empty values
+    Object.keys(contactFields).forEach(key => {
+        const element = contactFields[key];
+        if (element && element.value.trim()) {
+            contactInfo[key] = element.value.trim();
+        }
+    });
+    
+    console.log('Collected contact info:', contactInfo);
+    return Object.keys(contactInfo).length > 0 ? contactInfo : null;
+}
+
+// Enhanced validation for contact information
+function validateContactInformation(contactInfo) {
+    const errors = [];
+    
+    if (contactInfo) {
+        // Validate URLs
+        const urlFields = [
+            'websiteUrl', 'instagramUrl', 'tiktokUrl', 'facebookUrl', 
+            'twitterUrl', 'youtubeUrl', 'linkedinUrl', 'whatsappUrl',
+            'customLink1Url', 'customLink2Url', 'customLink3Url'
+        ];
+        
+        urlFields.forEach(field => {
+            if (contactInfo[field]) {
+                try {
+                    new URL(contactInfo[field]);
+                } catch (error) {
+                    errors.push(`Invalid URL format for ${field.replace('Url', '')}`);
+                }
+            }
+        });
+        
+        // Validate phone number format
+        if (contactInfo.phoneNumber) {
+            const phonePattern = /^(\+\d{1,3}[- ]?)?\d{10,14}$/;
+            if (!phonePattern.test(contactInfo.phoneNumber.replace(/\s/g, ''))) {
+                errors.push('Invalid phone number format. Use international format like +234 xxx xxx xxxx');
+            }
+        }
+        
+        // Validate custom links have both name and URL
+        if (contactInfo.customLink1Name && !contactInfo.customLink1Url) {
+            errors.push('Custom Link 1 URL is required when name is provided');
+        }
+        if (contactInfo.customLink1Url && !contactInfo.customLink1Name) {
+            errors.push('Custom Link 1 Name is required when URL is provided');
+        }
+        
+        if (contactInfo.customLink2Name && !contactInfo.customLink2Url) {
+            errors.push('Custom Link 2 URL is required when name is provided');
+        }
+        if (contactInfo.customLink2Url && !contactInfo.customLink2Name) {
+            errors.push('Custom Link 2 Name is required when URL is provided');
+        }
+        
+        if (contactInfo.customLink3Name && !contactInfo.customLink3Url) {
+            errors.push('Custom Link 3 URL is required when name is provided');
+        }
+        if (contactInfo.customLink3Url && !contactInfo.customLink3Name) {
+            errors.push('Custom Link 3 Name is required when URL is provided');
+        }
+    }
+   
+    return {
+        isValid: errors.length === 0,
+        errors: errors
+    };
+} 
 // Fixed close function
 function closePhyEventEdit() {
     const modal = document.getElementById('phyeventedit-modal');
@@ -44926,124 +46697,10 @@ function closeSuccessModal() {
     if (modal) {
         modal.remove();
     }
-}
-// Function to open edit event popup
-async function openPhyEventEdit(eventId) {
-    try {
-        console.log('Opening edit for event:', eventId);
-        
-        // Get event data from Firebase
-        if (typeof firebase === 'undefined') {
-            throw new Error('Firebase not available');
-        }
-        
-        const db = firebase.firestore();
-        const eventDoc = await db.collection('physicalEvents').doc(eventId).get();
-        
-        if (!eventDoc.exists) {
-            showNotification('Event not found', 'error');
-            return;
-        }
-        
-        const eventData = eventDoc.data();
-        console.log('Event data loaded:', eventData);
-        
-        // Create edit modal
-        const modal = document.createElement('div');
-        modal.className = 'phyeventedit-modal-overlay';
-        modal.id = 'phyeventedit-modal';
-        
-        // Handle dates safely
-        let startDateValue = '';
-        let startTimeValue = '';
-        let endDateValue = '';
-        let endTimeValue = '';
-        
-        if (eventData.startDateTime && eventData.startDateTime !== 'TBA') {
-            const startDate = new Date(eventData.startDateTime);
-            startDateValue = startDate.toISOString().split('T')[0];
-            startTimeValue = startDate.toTimeString().slice(0, 5);
-        }
-        
-        if (eventData.endDateTime && eventData.endDateTime !== 'TBA') {
-            const endDate = new Date(eventData.endDateTime);
-            endDateValue = endDate.toISOString().split('T')[0];
-            endTimeValue = endDate.toTimeString().slice(0, 5);
-        }
-        
-        modal.innerHTML = `
-            <div class="phyeventedit-modal">
-                <div class="modal-header">
-                    <h3><i class="fas fa-edit"></i> Edit Physical Event</h3>
-                    <button class="close-modal-btn" onclick="closePhyEventEdit()">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-                
-                <div class="modal-body">
-                    <form id="editEventForm">
-                        <!-- Event Name -->
-                        <div class="form-group">
-                            <label>Event Name</label>
-                            <input type="text" id="editEventName" class="form-input" value="${eventData.eventName || ''}" required>
-                        </div>
-                        
-                        <!-- Event Link -->
-                        <div class="form-group">
-                            <label>Event Link</label>
-                            <input type="text" id="editEventLink" class="form-input" value="${eventData.eventLink || ''}" required>
-                        </div>
-                        
-                        <!-- Location -->
-                        <div class="form-group">
-                            <label>Location</label>
-                            <textarea id="editEventLocation" class="form-textarea" rows="3" required>${eventData.location || ''}</textarea>
-                        </div>
-                        
-                        <!-- Date and Time -->
-                        <div class="datetime-section">
-                            <h4>Event Schedule</h4>
-                            <div class="datetime-row">
-                                <div class="datetime-field">
-                                    <label>Start Date</label>
-                                    <input type="date" id="editStartDate" class="form-input" value="${startDateValue}">
-                                </div>
-                                <div class="datetime-field">
-                                    <label>Start Time</label>
-                                    <input type="time" id="editStartTime" class="form-input" value="${startTimeValue}">
-                                </div>
-                            </div>
-                            <div class="datetime-row">
-                                <div class="datetime-field">
-                                    <label>End Date</label>
-                                    <input type="date" id="editEndDate" class="form-input" value="${endDateValue}">
-                                </div>
-                                <div class="datetime-field">
-                                    <label>End Time</label>
-                                    <input type="time" id="editEndTime" class="form-input" value="${endTimeValue}">
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Modal Actions -->
-                        <div class="modal-actions">
-                            <button type="button" onclick="closePhyEventEdit()" class="cancel-btn">Cancel</button>
-                            <button type="button" onclick="updatePhysicalEvent('${eventId}')" class="update-btn">
-                                <i class="fas fa-save"></i> Update Event
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        `;
-        
-        document.body.appendChild(modal);
-        
-    } catch (error) {
-        console.error('Error opening edit modal:', error);
-        showNotification('Error loading event data: ' + error.message, 'error');
-    }
-}
+}          
+                         
+
+
 // Global notification system for all app messages
 function showGlobalNotification(options) {
     const {
@@ -46502,8 +48159,120 @@ function showBankNotification(message, type = 'info') {
 console.log('Bank Details Setup System loaded successfully');
 
 
+// Function to open close event confirmation modal
+async function openPhyEventClose(eventId) {
+    try {
+        console.log('Opening close confirmation for event:', eventId);
+        
+        // Get event data from Firebase
+        if (typeof firebase === 'undefined') {
+            throw new Error('Firebase not available');
+        }
+        
+        const db = firebase.firestore();
+        const eventDoc = await db.collection('physicalEvents').doc(eventId).get();
+        
+        if (!eventDoc.exists) {
+            showNotification('Event not found', 'error');
+            return;
+        }
+        
+        const eventData = eventDoc.data();
+        console.log('Event data loaded for closing:', eventData);
+        
+        // Create close confirmation modal
+        const modal = document.createElement('div');
+        modal.className = 'phyeventclose-modal-overlay';
+        modal.id = 'phyeventclose-modal';
+        
+        modal.innerHTML = `
+            <div class="phyeventclose-modal">
+                <div class="modal-header">
+                    <h3><i class="fas fa-times-circle"></i> Close Physical Event</h3>
+                    <button class="close-modal-btn" onclick="closePhyEventClose()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                
+                <div class="modal-body">
+                    <div class="warning-section" style="
+                        background: #fff3cd;
+                        border: 1px solid #ffeaa7;
+                        border-radius: 8px;
+                        padding: 20px;
+                        margin-bottom: 20px;
+                        text-align: center;
+                    ">
+                        <i class="fas fa-exclamation-triangle" style="font-size: 48px; color: #856404; margin-bottom: 15px;"></i>
+                        <h4 style="margin: 0 0 10px 0; color: #856404;">Are you sure you want to close this event?</h4>
+                        <p style="margin: 0; color: #856404; font-size: 14px;">This action cannot be undone. The event will be permanently closed.</p>
+                    </div>
+                    
+                    <div class="event-details" style="
+                        background: #f8f9fa;
+                        border: 1px solid #e9ecef;
+                        border-radius: 8px;
+                        padding: 16px;
+                        margin-bottom: 20px;
+                    ">
+                        <h5 style="margin: 0 0 10px 0; color: #495057;">Event Details:</h5>
+                        <div style="display: grid; grid-template-columns: auto 1fr; gap: 8px; align-items: center;">
+                            <strong>Name:</strong>
+                            <span>${eventData.eventName || 'Unknown Event'}</span>
+                            <strong>ID:</strong>
+                            <span>${eventId}</span>
+                            <strong>Status:</strong>
+                            <span>${eventData.status || 'Active'}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="modal-actions" style="
+                        display: flex;
+                        gap: 12px;
+                        justify-content: flex-end;
+                        padding-top: 16px;
+                        border-top: 1px solid #e9ecef;
+                    ">
+                        <button type="button" onclick="closePhyEventClose()" class="cancel-btn" style="
+                            background: #f8f9fa;
+                            color: #6c757d;
+                            border: 1px solid #e9ecef;
+                            padding: 10px 20px;
+                            border-radius: 6px;
+                            cursor: pointer;
+                            font-weight: 600;
+                            transition: all 0.2s ease;
+                        ">Cancel</button>
+                        <button type="button" onclick="confirmCloseEvent('${eventId}')" class="close-btn" style="
+                            background: #dc3545;
+                            color: white;
+                            border: none;
+                            padding: 10px 20px;
+                            border-radius: 6px;
+                            cursor: pointer;
+                            font-weight: 600;
+                            transition: all 0.2s ease;
+                            display: flex;
+                            align-items: center;
+                            gap: 8px;
+                        ">
+                            <i class="fas fa-times-circle"></i>
+                            Close Event Permanently
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        document.body.appendChild(modal);
+        
+    } catch (error) {
+        console.error('Error opening close modal:', error);
+        showNotification('Error loading event data: ' + error.message, 'error');
+    }
+}
 
-   
+
    
 
                        
@@ -58660,7 +60429,8 @@ async function createNominsEvent(event) {
         }
         
         // Save to Firebase
-        const eventId = await saveNominsToFirebase(formData);
+        const eventId = await db.collection('nomination_form').doc(eventId).set(data);
+
         
         if (eventId) {
             console.log('Nomination event created successfully:', eventId);
@@ -61266,10 +63036,176 @@ window.addEventListener('popstate', function(event) {
         align-items: flex-start;
         gap: 8px;
     }
+    
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+@keyframes slideInUp {
+    from { 
+        opacity: 0; 
+        transform: translateY(30px) scale(0.95); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0) scale(1); 
+    }
+}
+
+/* Scrollbar styling for modal content */
+#phyContactModal div::-webkit-scrollbar {
+    width: 6px;
+}
+
+#phyContactModal div::-webkit-scrollbar-track {
+    background: rgba(255,255,255,0.1);
+    border-radius: 3px;
+}
+
+#phyContactModal div::-webkit-scrollbar-thumb {
+    background: #6c5ce7;
+    border-radius: 3px;
+}
+
+#phyContactModal div::-webkit-scrollbar-thumb:hover {
+    background: #a29bfe;
+}
+
+.contact-section {
+    margin-bottom: 16px;
+    padding: 12px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+}
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: 6px;
+}
+
+.contact-clickable-item {
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.contact-clickable-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.contact-clickable-item:active {
+    transform: scale(0.98);
+}
+
+/* Close event modal styles */
+.phyeventclose-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+}
+
+.phyeventclose-modal {
+    background: white;
+    border-radius: 12px;
+    max-width: 500px;
+    width: 90%;
+    position: relative;
+}
+
+.warning-section {
+    background: #fff3cd;
+    border: 1px solid #ffeaa7;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    gap: 15px;
+}
+
+.warning-icon {
+    color: #856404;
+    font-size: 24px;
+}
+
+.confirmation-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+}
+
+.confirm-close-btn {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.confirm-close-btn:hover {
+    background: #c82333;
+}
+
+
+
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+@keyframes slideInUp {
+    from { 
+        opacity: 0; 
+        transform: translateY(30px) scale(0.95); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0) scale(1); 
+    }
+}
+
+/* Scrollbar styling for modal content */
+#phyContactModal div::-webkit-scrollbar {
+    width: 6px;
+}
+
+#phyContactModal div::-webkit-scrollbar-track {
+    background: rgba(255,255,255,0.1);
+    border-radius: 3px;
+}
+
+#phyContactModal div::-webkit-scrollbar-thumb {
+    background: #6c5ce7;
+    border-radius: 3px;
+}
+
+#phyContactModal div::-webkit-scrollbar-thumb:hover {
+    background: #a29bfe;
+}
 }
 </style>
 
 </body>
 </html>
-
-
