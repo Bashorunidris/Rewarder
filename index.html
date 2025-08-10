@@ -26578,6 +26578,34 @@ tba-option {
         </div>
     </div>
 </div>
+
+<!-- Welcome Modal -->
+<div class="welcome-modal-overlay" id="welcomeModal">
+    <div class="welcome-modal">
+        <div class="welcome-content">
+            <div class="welcome-logo">
+                🏆
+            </div>
+            <h2 class="welcome-title" id="welcomeTitle">Welcome to Rewarder!</h2>
+            <p class="welcome-subtitle" id="welcomeSubtitle">
+                The ultimate platform for monetized talent competitions and event management. 
+                Ready to create amazing events and discover incredible talents?
+            </p>
+            <div class="welcome-buttons">
+                <button class="welcome-btn primary" onclick="startTutorial()">
+                    <i class="fas fa-play"></i> Start Tutorial
+                </button>
+                <button class="welcome-btn secondary" onclick="skipWelcome()">
+                    <i class="fas fa-times"></i> Skip
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Tutorial Overlay -->
+<div class="tutorial-overlay" id="tutorialOverlay"></div>
+
 <!-- Firebase SDK -->
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
@@ -61546,7 +61574,325 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
+// Welcome & Tutorial System for Rewarder
+class RewarderWelcomeSystem {
+    constructor() {
+        this.lastVisit = localStorage.getItem('rewarder_last_visit');
+        this.hasSeenWelcome = localStorage.getItem('rewarder_seen_welcome');
+        this.tutorialSteps = [
+            {
+                target: '#createEventBtn',
+                title: 'Create Events',
+                content: 'Click here to create your own amazing events and competitions. Set up tickets, sponsors, and more!',
+                position: 'bottom'
+            },
+            {
+                target: '#dashboardBtn',
+                title: 'Dashboard',
+                content: 'View and manage all your created events, track sales, and see analytics here.',
+                position: 'bottom'
+            },
+            {
+                target: '#eventsBtn',
+                title: 'Browse Events',
+                content: 'Discover exciting events happening around you. Filter by category, date, and location.',
+                position: 'bottom'
+            },
+            {
+                target: '#ticketsBtn',
+                title: 'My Tickets',
+                content: 'View all your purchased tickets and event confirmations in one place.',
+                position: 'bottom'
+            },
+            {
+                target: '#profileBtn',
+                title: 'Profile Settings',
+                content: 'Manage your account, update preferences, and customize your Rewarder experience.',
+                position: 'left'
+            },
+            {
+                target: '#searchBtn',
+                title: 'Search Events',
+                content: 'Quickly find specific events by name, category, or location using our smart search.',
+                position: 'bottom'
+            }
+        ];
+        this.currentStep = 0;
+        this.isNewUser = !this.lastVisit;
+        this.isReturningUser = this.lastVisit && this.daysSinceLastVisit() >= 3;
+    }
 
+    daysSinceLastVisit() {
+        if (!this.lastVisit) return Infinity;
+        const lastVisitDate = new Date(this.lastVisit);
+        const today = new Date();
+        const diffTime = Math.abs(today - lastVisitDate);
+        return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    }
+
+    shouldShowWelcome() {
+        return this.isNewUser || (this.isReturningUser && !this.hasSeenWelcome);
+    }
+
+    showWelcomeModal() {
+        const modal = document.getElementById('welcomeModal');
+        const title = document.getElementById('welcomeTitle');
+        const subtitle = document.getElementById('welcomeSubtitle');
+
+        if (this.isNewUser) {
+            title.textContent = 'Welcome to Rewarder!';
+            subtitle.textContent = 'The ultimate platform for monetized talent competitions and event management. Ready to create amazing events and discover incredible talents?';
+        } else if (this.isReturningUser) {
+            title.textContent = 'Welcome Back to Rewarder!';
+            subtitle.textContent = `It's been ${this.daysSinceLastVisit()} days since your last visit. Ready to dive back into amazing events and competitions?`;
+        }
+
+        modal.style.display = 'flex';
+        
+        // Add welcome animation
+        setTimeout(() => {
+            modal.querySelector('.welcome-modal').style.transform = 'scale(1)';
+        }, 100);
+    }
+
+    hideWelcomeModal() {
+        const modal = document.getElementById('welcomeModal');
+        modal.style.display = 'none';
+        
+        // Mark as seen and update last visit
+        localStorage.setItem('rewarder_seen_welcome', 'true');
+        localStorage.setItem('rewarder_last_visit', new Date().toISOString());
+    }
+
+    startTutorial() {
+        this.hideWelcomeModal();
+        this.currentStep = 0;
+        this.showTutorialStep();
+    }
+
+    showTutorialStep() {
+        if (this.currentStep >= this.tutorialSteps.length) {
+            this.endTutorial();
+            return;
+        }
+
+        const step = this.tutorialSteps[this.currentStep];
+        const targetElement = document.querySelector(step.target);
+        
+        if (!targetElement) {
+            console.warn(`Tutorial target not found: ${step.target}`);
+            this.nextStep();
+            return;
+        }
+
+        // Show tutorial overlay
+        document.getElementById('tutorialOverlay').style.display = 'block';
+
+        // Highlight target element
+        this.highlightElement(targetElement);
+
+        // Create and show tooltip
+        this.showTooltip(targetElement, step);
+    }
+
+    highlightElement(element) {
+        // Remove previous highlights
+        document.querySelectorAll('.tutorial-highlight').forEach(el => {
+            el.classList.remove('tutorial-highlight');
+        });
+
+        // Add highlight to current element
+        element.classList.add('tutorial-highlight');
+        
+        // Scroll element into view
+        element.scrollIntoView({ 
+            behavior: 'smooth', 
+            block: 'center',
+            inline: 'center'
+        });
+    }
+
+    showTooltip(targetElement, step) {
+        // Remove existing tooltip
+        const existingTooltip = document.querySelector('.tutorial-tooltip');
+        if (existingTooltip) {
+            existingTooltip.remove();
+        }
+
+        // Create tooltip
+        const tooltip = document.createElement('div');
+        tooltip.className = `tutorial-tooltip ${step.position}`;
+        tooltip.innerHTML = `
+            <div class="tutorial-content">
+                <h4>🏆 ${step.title}</h4>
+                <p>${step.content}</p>
+                <div class="tutorial-controls">
+                    <span class="tutorial-progress">${this.currentStep + 1} of ${this.tutorialSteps.length}</span>
+                    <div>
+                        <button class="tutorial-btn skip" onclick="rewarderWelcome.skipTutorial()">
+                            Skip Tour
+                        </button>
+                        <button class="tutorial-btn next" onclick="rewarderWelcome.nextStep()">
+                            ${this.currentStep === this.tutorialSteps.length - 1 ? 'Finish' : 'Next'}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        // Position tooltip relative to target
+        document.body.appendChild(tooltip);
+        this.positionTooltip(tooltip, targetElement, step.position);
+    }
+
+    positionTooltip(tooltip, target, position) {
+        const targetRect = target.getBoundingClientRect();
+        const tooltipRect = tooltip.getBoundingClientRect();
+        
+        let top, left;
+
+        switch (position) {
+            case 'bottom':
+                top = targetRect.bottom + 15;
+                left = targetRect.left + (targetRect.width / 2) - (tooltipRect.width / 2);
+                break;
+            case 'top':
+                top = targetRect.top - tooltipRect.height - 15;
+                left = targetRect.left + (targetRect.width / 2) - (tooltipRect.width / 2);
+                break;
+            case 'left':
+                top = targetRect.top + (targetRect.height / 2) - (tooltipRect.height / 2);
+                left = targetRect.left - tooltipRect.width - 15;
+                break;
+            case 'right':
+                top = targetRect.top + (targetRect.height / 2) - (tooltipRect.height / 2);
+                left = targetRect.right + 15;
+                break;
+        }
+
+        // Ensure tooltip stays within viewport
+        const margin = 10;
+        top = Math.max(margin, Math.min(top, window.innerHeight - tooltipRect.height - margin));
+        left = Math.max(margin, Math.min(left, window.innerWidth - tooltipRect.width - margin));
+
+        tooltip.style.position = 'fixed';
+        tooltip.style.top = `${top}px`;
+        tooltip.style.left = `${left}px`;
+    }
+
+    nextStep() {
+        this.currentStep++;
+        this.showTutorialStep();
+    }
+
+    skipTutorial() {
+        this.endTutorial();
+    }
+
+    endTutorial() {
+        // Hide tutorial overlay
+        document.getElementById('tutorialOverlay').style.display = 'none';
+        
+        // Remove highlights and tooltips
+        document.querySelectorAll('.tutorial-highlight').forEach(el => {
+            el.classList.remove('tutorial-highlight');
+        });
+        
+        document.querySelectorAll('.tutorial-tooltip').forEach(el => {
+            el.remove();
+        });
+
+        // Mark tutorial as completed
+        localStorage.setItem('rewarder_tutorial_completed', 'true');
+        localStorage.setItem('rewarder_last_visit', new Date().toISOString());
+
+        // Show completion message
+        this.showCompletionMessage();
+    }
+
+    showCompletionMessage() {
+        // Create a temporary success message
+        const message = document.createElement('div');
+        message.style.cssText = `
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            z-index: 10003;
+            text-align: center;
+            max-width: 400px;
+            animation: fadeIn 0.5s ease;
+        `;
+        
+        message.innerHTML = `
+            <div style="font-size: 3rem; margin-bottom: 1rem;">🎉</div>
+            <h3 style="margin-bottom: 1rem; font-size: 1.5rem;">Welcome to Rewarder!</h3>
+            <p style="margin-bottom: 1.5rem;">You're all set to start creating and discovering amazing events!</p>
+            <button onclick="this.parentElement.remove()" style="
+                background: rgba(255, 255, 255, 0.2);
+                color: white;
+                border: none;
+                padding: 0.8rem 1.5rem;
+                border-radius: 10px;
+                cursor: pointer;
+                font-weight: 600;
+            ">Let's Go!</button>
+        `;
+
+        document.body.appendChild(message);
+
+        // Auto-remove after 5 seconds
+        setTimeout(() => {
+            if (message.parentElement) {
+                message.remove();
+            }
+        }, 5000);
+    }
+
+    init() {
+        // Wait for DOM to be fully loaded
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => {
+                setTimeout(() => this.checkAndShowWelcome(), 1000);
+            });
+        } else {
+            setTimeout(() => this.checkAndShowWelcome(), 1000);
+        }
+    }
+
+    checkAndShowWelcome() {
+        if (this.shouldShowWelcome()) {
+            this.showWelcomeModal();
+        } else {
+            // Just update last visit for existing users
+            localStorage.setItem('rewarder_last_visit', new Date().toISOString());
+        }
+    }
+}
+
+// Global functions for welcome modal
+function startTutorial() {
+    rewarderWelcome.startTutorial();
+}
+
+function skipWelcome() {
+    rewarderWelcome.hideWelcomeModal();
+}
+
+// Initialize the welcome system
+const rewarderWelcome = new RewarderWelcomeSystem();
+rewarderWelcome.init();
+
+// Optional: Add manual tutorial trigger
+function startManualTutorial() {
+    rewarderWelcome.currentStep = 0;
+    rewarderWelcome.showTutorialStep();
+}
 
 
 
@@ -62260,6 +62606,285 @@ document.addEventListener('DOMContentLoaded', function() {
     opacity: 0 !important;
     visibility: hidden !important;
     pointer-events: none !important;
+}
+
+
+
+/* Welcome Modal & Tutorial System */
+.welcome-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(26, 26, 46, 0.95);
+    backdrop-filter: blur(20px);
+    z-index: 10000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.5s ease;
+}
+
+.welcome-modal {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    border-radius: 25px;
+    padding: 3rem;
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.welcome-modal::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(108, 92, 231, 0.1), transparent);
+    animation: shimmer 3s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+    0%, 100% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+    50% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+}
+
+.welcome-content {
+    position: relative;
+    z-index: 2;
+}
+
+.welcome-logo {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #6c5ce7, #fd79a8);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 2rem auto;
+    font-size: 2rem;
+    color: white;
+    box-shadow: 0 15px 30px rgba(108, 92, 231, 0.3);
+}
+
+.welcome-title {
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: #1a1a2e;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, #1a1a2e 0%, #6c5ce7 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.welcome-subtitle {
+    font-size: 1.2rem;
+    color: #6c757d;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.welcome-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.welcome-btn {
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 15px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 120px;
+}
+
+.welcome-btn.primary {
+    background: linear-gradient(135deg, #6c5ce7, #fd79a8);
+    color: white;
+    box-shadow: 0 10px 20px rgba(108, 92, 231, 0.3);
+}
+
+.welcome-btn.primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px rgba(108, 92, 231, 0.5);
+}
+
+.welcome-btn.secondary {
+    background: rgba(108, 92, 231, 0.1);
+    color: #6c5ce7;
+    border: 2px solid rgba(108, 92, 231, 0.2);
+}
+
+.welcome-btn.secondary:hover {
+    background: rgba(108, 92, 231, 0.2);
+    transform: translateY(-2px);
+}
+
+/* Tutorial System */
+.tutorial-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 9999;
+    display: none;
+}
+
+.tutorial-highlight {
+    position: relative;
+    z-index: 10001;
+    box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.8), 0 0 20px rgba(108, 92, 231, 0.8) !important;
+    border-radius: 10px !important;
+    transition: all 0.3s ease;
+}
+
+.tutorial-tooltip {
+    position: absolute;
+    background: linear-gradient(135deg, #1a1a2e, #6c5ce7);
+    color: white;
+    padding: 1.5rem;
+    border-radius: 15px;
+    max-width: 300px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+    z-index: 10002;
+    opacity: 0;
+    transform: translateY(10px);
+    animation: tooltipFadeIn 0.5s ease forwards;
+}
+
+@keyframes tooltipFadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.tutorial-tooltip::before {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    border: 10px solid transparent;
+}
+
+.tutorial-tooltip.bottom::before {
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-bottom-color: #1a1a2e;
+}
+
+.tutorial-tooltip.top::before {
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-top-color: #1a1a2e;
+}
+
+.tutorial-tooltip.left::before {
+    right: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-left-color: #1a1a2e;
+}
+
+.tutorial-tooltip.right::before {
+    left: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-right-color: #1a1a2e;
+}
+
+.tutorial-content h4 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, #fff, #ffd700);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.tutorial-content p {
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+    opacity: 0.9;
+}
+
+.tutorial-controls {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.tutorial-progress {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.tutorial-btn {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.tutorial-btn.skip {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.tutorial-btn.next {
+    background: linear-gradient(135deg, #fd79a8, #ffd700);
+    color: #1a1a2e;
+}
+
+.tutorial-btn:hover {
+    transform: translateY(-2px);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .welcome-modal {
+        padding: 2rem;
+        margin: 1rem;
+    }
+    
+    .welcome-title {
+        font-size: 2rem;
+    }
+    
+    .welcome-buttons {
+        flex-direction: column;
+    }
+    
+    .tutorial-tooltip {
+        max-width: 250px;
+        padding: 1rem;
+    }
 }
 }
 </style>
