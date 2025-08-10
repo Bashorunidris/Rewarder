@@ -54087,8 +54087,7 @@ async function loadEventphyPageData(eventLink) {
 }
 
 
-
-// Display Eventphy page content - UPDATED
+// Display Eventphy page content
 function displayEventphyPage(event) {
     const contentContainer = document.getElementById('eventphyPageContent');
     
@@ -54116,7 +54115,7 @@ function displayEventphyPage(event) {
                 <h1 class="eventphy-title">${event.eventName || event.name || 'Event'}</h1>
                 <p class="eventphy-description">${event.eventDescription || event.description || 'Join us for an amazing event!'}</p>
                 ${hasNoTickets ? 
-                    `<button class="eventphy-get-tickets-btn" onclick="openEventphyTicketsModal()" style="background: linear-gradient(135deg, #28a745, #20c997);">
+                    `<button class="eventphy-get-tickets-btn" onclick="showNoTicketInfo()" style="background: linear-gradient(135deg, #28a745, #20c997);">
                         <i class="fas fa-door-open"></i> Get In
                     </button>` : 
                     `<button class="eventphy-get-tickets-btn" onclick="openEventphyTicketsModal()">
@@ -54126,41 +54125,51 @@ function displayEventphyPage(event) {
             </div>
         </div>
 
-        ${generateEnhancedEventDetails(event)}
-        ${ticketsHTML}
-        ${contactHTML}
-        ${sponsorsHTML}
-
-        <!-- Enhanced Rewarder Branding & Marketing -->
-        <div class="eventphy-rewarder-brand" style="
-            background: linear-gradient(135deg, #1a1a2e 0%, #6c5ce7 100%);
-            color: white;
-            padding: 3rem 2rem;
-            margin: 3rem 0;
-            border-radius: 25px;
-            text-align: center;
-        ">
-            <div class="eventphy-brand-content">
-                <div class="eventphy-brand-logo">
-                    <h3 style="font-size: 2.5rem; margin-bottom: 1rem;">🏆 Rewarder</h3>
-                    <p class="eventphy-brand-tagline" style="font-size: 1.2rem; opacity: 0.9; margin-bottom: 2rem;">This event is created on Rewarder</p>
+        <!-- Event Details Section -->
+        <div class="eventphy-details-section">
+            <h2 class="eventphy-section-title">Event Details</h2>
+            
+            <div class="eventphy-info-grid">
+                <div class="eventphy-info-card">
+                    <h3><i class="fas fa-calendar-alt"></i> Date & Time</h3>
+                    <p>${formatEventphyDateTime(event)}</p>
                 </div>
                 
-                <div class="eventphy-brand-cta">
-                    <p class="eventphy-cta-text" style="font-size: 1.1rem; margin-bottom: 1.5rem;">Sign Up - Click Creator Button and Create Your Event Too</p>
-                    <button class="eventphy-signup-btn" onclick="redirectToEventphySignUp()" style="
-                        background: linear-gradient(135deg, #fd79a8, #ffd700);
-                        color: #1a1a2e;
-                        border: none;
-                        padding: 1rem 2rem;
-                        border-radius: 25px;
-                        font-size: 1.1rem;
-                        font-weight: 700;
-                        cursor: pointer;
-                        transition: all 0.3s ease;
-                    ">
-                        <i class="fas fa-plus-circle"></i> Sign Up & Create Events
-                    </button>
+                <div class="eventphy-info-card">
+                    <h3><i class="fas fa-map-marker-alt"></i> Location</h3>
+                    <p>${event.eventLocation || event.location || event.venue || 'Location TBA'}</p>
+                </div>
+                
+                <div class="eventphy-info-card">
+                    <h3><i class="fas fa-users"></i> Capacity</h3>
+                    <p>${event.tickets && event.tickets.length > 0 ? event.tickets.reduce((total, ticket) => total + (ticket.quantity || 0), 0) : 'Unlimited'} attendees</p>
+                </div>
+                
+                <div class="eventphy-info-card">
+                    <h3><i class="fas fa-info-circle"></i> Category</h3>
+                    <p>${event.eventCategory || event.category || event.type || 'General Event'}</p>
+                </div>
+            </div>
+
+            ${ticketsHTML}
+            ${contactHTML}
+            ${sponsorsHTML}
+
+            <!-- Enhanced Rewarder Branding & Marketing -->
+            <div class="eventphy-rewarder-brand">
+                <div class="eventphy-brand-content">
+                    <div class="eventphy-brand-logo">
+                        <h3>🏆 Rewarder</h3>
+                        <p class="eventphy-brand-tagline">This event is created on Rewarder</p>
+                    </div>
+                    
+                    <div class="eventphy-brand-cta">
+                        <p class="eventphy-cta-text">Sign Up - Click Creator Button and Create Your Event Too</p>
+                        <button class="eventphy-signup-btn" onclick="redirectToEventphySignUp()">
+                            <i class="fas fa-plus-circle"></i> Sign Up & Create Events
+                        </button>
+                    </div>
+                    
                 </div>
             </div>
         </div>
@@ -54171,252 +54180,6 @@ function displayEventphyPage(event) {
 
     contentContainer.innerHTML = eventHTML;
 }
-
-// Generate enhanced event details section
-function generateEnhancedEventDetails(event) {
-    return `
-        <!-- Enhanced Event Details Section -->
-        <div class="eventphy-details-section" style="
-            background: linear-gradient(135deg, #1a1a2e 0%, #2d3748 100%);
-            color: white;
-            padding: 4rem 2rem;
-            margin: 3rem 0;
-            border-radius: 25px;
-            position: relative;
-            overflow: hidden;
-        ">
-            <!-- Background decoration -->
-            <div style="
-                position: absolute;
-                top: -50px;
-                right: -50px;
-                width: 200px;
-                height: 200px;
-                background: rgba(108, 92, 231, 0.1);
-                border-radius: 50%;
-                z-index: 0;
-            "></div>
-            <div style="
-                position: absolute;
-                bottom: -30px;
-                left: -30px;
-                width: 150px;
-                height: 150px;
-                background: rgba(253, 121, 168, 0.1);
-                border-radius: 50%;
-                z-index: 0;
-            "></div>
-
-            <div style="position: relative; z-index: 1;">
-                <h2 style="
-                    text-align: center;
-                    font-size: 3rem;
-                    font-weight: 900;
-                    margin-bottom: 1rem;
-                    background: linear-gradient(135deg, #fff 0%, #ffd700 50%, #6c5ce7 100%);
-                    -webkit-background-clip: text;
-                    -webkit-text-fill-color: transparent;
-                    background-clip: text;
-                ">Event Details</h2>
-                
-                <p style="
-                    text-align: center;
-                    font-size: 1.2rem;
-                    opacity: 0.9;
-                    margin-bottom: 3rem;
-                    max-width: 600px;
-                    margin-left: auto;
-                    margin-right: auto;
-                ">Everything you need to know about this amazing event</p>
-
-                <!-- Event Description Card -->
-                <div style="
-                    background: rgba(255, 255, 255, 0.1);
-                    backdrop-filter: blur(10px);
-                    border-radius: 20px;
-                    padding: 2.5rem;
-                    margin-bottom: 3rem;
-                    border: 1px solid rgba(255, 255, 255, 0.2);
-                ">
-                    <h3 style="
-                        font-size: 1.8rem;
-                        font-weight: 700;
-                        margin-bottom: 1.5rem;
-                        display: flex;
-                        align-items: center;
-                        gap: 1rem;
-                    ">
-                        <div style="
-                            width: 50px;
-                            height: 50px;
-                            background: linear-gradient(135deg, #6c5ce7, #fd79a8);
-                            border-radius: 12px;
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-                        ">
-                            <i class="fas fa-info-circle" style="color: white; font-size: 1.2rem;"></i>
-                        </div>
-                        About This Event
-                    </h3>
-                    <p style="
-                        font-size: 1.1rem;
-                        line-height: 1.8;
-                        opacity: 0.9;
-                        margin: 0;
-                    ">
-                        ${event.eventDescription || event.description || 'Join us for an amazing event experience! This event promises to be memorable with great activities, networking opportunities, and much more.'}
-                    </p>
-                </div>
-                
-                <!-- Info Grid -->
-                <div style="
-                    display: grid;
-                    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-                    gap: 2rem;
-                ">
-                    <!-- Date & Time Card -->
-                    <div style="
-                        background: rgba(255, 255, 255, 0.1);
-                        backdrop-filter: blur(10px);
-                        border-radius: 20px;
-                        padding: 2rem;
-                        border: 1px solid rgba(255, 255, 255, 0.2);
-                        transition: all 0.3s ease;
-                    " onmouseover="this.style.transform='translateY(-5px)'; this.style.background='rgba(255, 255, 255, 0.15)'" 
-                       onmouseout="this.style.transform='translateY(0)'; this.style.background='rgba(255, 255, 255, 0.1)'">
-                        <div style="
-                            display: flex;
-                            align-items: center;
-                            gap: 1rem;
-                            margin-bottom: 1.5rem;
-                        ">
-                            <div style="
-                                width: 60px;
-                                height: 60px;
-                                background: linear-gradient(135deg, #ff6b6b, #feca57);
-                                border-radius: 15px;
-                                display: flex;
-                                align-items: center;
-                                justify-content: center;
-                            ">
-                                <i class="fas fa-calendar-alt" style="color: white; font-size: 1.5rem;"></i>
-                            </div>
-                            <h3 style="font-size: 1.5rem; font-weight: 700; margin: 0;">Date & Time</h3>
-                        </div>
-                        <p style="font-size: 1.1rem; opacity: 0.9; margin: 0; line-height: 1.6;">
-                            ${formatEventphyDateTime(event)}
-                        </p>
-                    </div>
-                    
-                    <!-- Location Card -->
-                    <div style="
-                        background: rgba(255, 255, 255, 0.1);
-                        backdrop-filter: blur(10px);
-                        border-radius: 20px;
-                        padding: 2rem;
-                        border: 1px solid rgba(255, 255, 255, 0.2);
-                        transition: all 0.3s ease;
-                    " onmouseover="this.style.transform='translateY(-5px)'; this.style.background='rgba(255, 255, 255, 0.15)'" 
-                       onmouseout="this.style.transform='translateY(0)'; this.style.background='rgba(255, 255, 255, 0.1)'">
-                        <div style="
-                            display: flex;
-                            align-items: center;
-                            gap: 1rem;
-                            margin-bottom: 1.5rem;
-                        ">
-                            <div style="
-                                width: 60px;
-                                height: 60px;
-                                background: linear-gradient(135deg, #4ecdc4, #44a08d);
-                                border-radius: 15px;
-                                display: flex;
-                                align-items: center;
-                                justify-content: center;
-                            ">
-                                <i class="fas fa-map-marker-alt" style="color: white; font-size: 1.5rem;"></i>
-                            </div>
-                            <h3 style="font-size: 1.5rem; font-weight: 700; margin: 0;">Location</h3>
-                        </div>
-                        <p style="font-size: 1.1rem; opacity: 0.9; margin: 0; line-height: 1.6;">
-                            ${event.eventLocation || event.location || event.venue || 'Location TBA'}
-                        </p>
-                    </div>
-                    
-                    <!-- Capacity Card -->
-                    <div style="
-                        background: rgba(255, 255, 255, 0.1);
-                        backdrop-filter: blur(10px);
-                        border-radius: 20px;
-                        padding: 2rem;
-                        border: 1px solid rgba(255, 255, 255, 0.2);
-                        transition: all 0.3s ease;
-                    " onmouseover="this.style.transform='translateY(-5px)'; this.style.background='rgba(255, 255, 255, 0.15)'" 
-                       onmouseout="this.style.transform='translateY(0)'; this.style.background='rgba(255, 255, 255, 0.1)'">
-                        <div style="
-                            display: flex;
-                            align-items: center;
-                            gap: 1rem;
-                            margin-bottom: 1.5rem;
-                        ">
-                            <div style="
-                                width: 60px;
-                                height: 60px;
-                                background: linear-gradient(135deg, #a8e6cf, #7fcdcd);
-                                border-radius: 15px;
-                                display: flex;
-                                align-items: center;
-                                justify-content: center;
-                            ">
-                                <i class="fas fa-users" style="color: white; font-size: 1.5rem;"></i>
-                            </div>
-                            <h3 style="font-size: 1.5rem; font-weight: 700; margin: 0;">Capacity</h3>
-                        </div>
-                        <p style="font-size: 1.1rem; opacity: 0.9; margin: 0; line-height: 1.6;">
-                            ${event.tickets && event.tickets.length > 0 ? event.tickets.reduce((total, ticket) => total + (ticket.quantity || 0), 0) : 'Unlimited'} attendees
-                        </p>
-                    </div>
-                    
-                    <!-- Category Card -->
-                    <div style="
-                        background: rgba(255, 255, 255, 0.1);
-                        backdrop-filter: blur(10px);
-                        border-radius: 20px;
-                        padding: 2rem;
-                        border: 1px solid rgba(255, 255, 255, 0.2);
-                        transition: all 0.3s ease;
-                    " onmouseover="this.style.transform='translateY(-5px)'; this.style.background='rgba(255, 255, 255, 0.15)'" 
-                       onmouseout="this.style.transform='translateY(0)'; this.style.background='rgba(255, 255, 255, 0.1)'">
-                        <div style="
-                            display: flex;
-                            align-items: center;
-                            gap: 1rem;
-                            margin-bottom: 1.5rem;
-                        ">
-                            <div style="
-                                width: 60px;
-                                height: 60px;
-                                background: linear-gradient(135deg, #ffa726, #ff7043);
-                                border-radius: 15px;
-                                display: flex;
-                                align-items: center;
-                                justify-content: center;
-                            ">
-                                <i class="fas fa-tag" style="color: white; font-size: 1.5rem;"></i>
-                            </div>
-                            <h3 style="font-size: 1.5rem; font-weight: 700; margin: 0;">Category</h3>
-                        </div>
-                        <p style="font-size: 1.1rem; opacity: 0.9; margin: 0; line-height: 1.6;">
-                            ${event.eventCategory || event.category || event.type || 'General Event'}
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    `;
-}
-            
-
 
 // Show no ticket info
 function showNoTicketInfo() {
