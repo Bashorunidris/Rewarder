@@ -54173,7 +54173,62 @@ function displayEventphyPage(event) {
                 </div>
             </div>
         </div>
-            
+
+        <!-- Footer -->
+        ${getEventphyFooter()}
+    `;
+
+    contentContainer.innerHTML = eventHTML;
+}
+
+// Show no ticket info
+function showNoTicketInfo() {
+    alert('This event does not require tickets. Just show up at the venue on the event date!');
+}
+
+
+// Generate background style for event
+function generateEventphyBackgroundStyle(event) {
+    console.log('Background data:', event.background);
+
+    // Use the same structure as working code
+    if (!event.background) {
+        return 'background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);';
+    }
+
+    switch (event.background.type) {
+        case 'media':
+            return `background-image: url('${event.background.data}'); background-size: cover; background-position: center; background-repeat: no-repeat;`;
+        case 'gradient':
+            return `background: ${event.background.gradient};`;
+        case 'color':
+            return `background-color: ${event.background.color};`;
+        default:
+            return 'background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);';
+    }
+}
+
+// Get footer HTML for eventphy page
+function getEventphyFooter() {
+    return `
+        <!-- Footer for Rewarder Event & Ticket App -->
+        <footer style="
+            background: linear-gradient(135deg, #1a1a2e 100%, #16213e 0%, #0f3460 100%);
+            color: white;
+            padding: 60px 0 20px 0;
+            margin-top: 80px;
+            position: relative;
+            overflow: hidden;
+        ">
+            <!-- Footer content as provided -->
+            ${getFullFooterHTML()}
+        </footer>
+    `;
+}
+
+// Full footer HTML function
+function getFullFooterHTML() {
+    return `            
 <!-- Footer for Rewarder Event & Ticket App -->
 <footer style="
     background: linear-gradient(135deg, #1a1a2e 100%, #16213e 0%, #0f3460 100%);
@@ -54651,43 +54706,8 @@ function displayEventphyPage(event) {
     </div>
 </footer>
 
-
-
-                
-        <!-- Footer -->
-        ${getEventphyFooter()}
-    `;
-
-    contentContainer.innerHTML = eventHTML;
+`;
 }
-
-// Show no ticket info
-function showNoTicketInfo() {
-    alert('This event does not require tickets. Just show up at the venue on the event date!');
-}
-
-
-// Generate background style for event
-function generateEventphyBackgroundStyle(event) {
-    console.log('Background data:', event.background);
-
-    // Use the same structure as working code
-    if (!event.background) {
-        return 'background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);';
-    }
-
-    switch (event.background.type) {
-        case 'media':
-            return `background-image: url('${event.background.data}'); background-size: cover; background-position: center; background-repeat: no-repeat;`;
-        case 'gradient':
-            return `background: ${event.background.gradient};`;
-        case 'color':
-            return `background-color: ${event.background.color};`;
-        default:
-            return 'background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);';
-    }
-}
-
 
 // Generate tickets HTML
 function generateEventphyTicketsHTML(tickets, eventData) {
