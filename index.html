@@ -61545,11 +61545,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
- // ===== EVENTPHY PUBLIC PAGE FUNCTIONALITY =====
+
+      
+so now i want to connect it to this eventphy public page functionality this is the code just check it out i pasted it below 
+   do not add anything i have not told u to  // ===== EVENTPHY PUBLIC PAGE FUNCTIONALITY =====
 
 // Global variables for Eventphy
 let currentEventphyData = null;
-// Modified checkEventphyPageURL function to prevent disruption
+
+
+// Fixed checkEventphyPageURL function
 function checkEventphyPageURL() {
     const path = window.location.pathname;
     const isEventphyPage = path.startsWith('/event/');
@@ -61557,10 +61562,11 @@ function checkEventphyPageURL() {
     if (isEventphyPage) {
         const eventLink = path.replace('/event/', '');
         if (eventLink) {
-            // Hide opening page immediately for event links
+            // IMMEDIATELY hide opening page for event links
             const openingPage = document.getElementById('openingPage');
             if (openingPage) {
                 openingPage.style.display = 'none';
+                openingPage.classList.add('hidden');
             }
             
             showEventphyPage();
@@ -62134,48 +62140,16 @@ function updateEventphyMetaTags(event) {
 function redirectToEventphySignUp() {
     window.open('https://rewarder-hub.vercel.app/', '_blank');
 }
+            
+   
+// Fixed DOMContentLoaded - check event page FIRST before showing opening page
 document.addEventListener('DOMContentLoaded', function() {
-    // Check for event page first
+    // Check for event page IMMEDIATELY
     const isEventphyPage = checkEventphyPageURL();
     
-    // Only show opening page if not on event page
-    if (!isEventphyPage) {
-        // Show opening page for 3 seconds, then redirect based on auth
-        const openingPage = document.getElementById('openingPage');
-        if (openingPage) {
-            openingPage.style.display = 'block';
-            setTimeout(() => {
-                openingPage.style.display = 'none';
-                
-                // Continue with normal auth flow
-                firebase.auth().onAuthStateChanged(function(user) {
-                    if (user) {
-                        console.log('User is signed in:', user.uid);
-                        showMainApp();
-                        loadUserProfile();
-                    } else {
-                        console.log('User is not signed in');
-                        showSplitScreen();
-                    }
-                });
-            }, 3000);
-        } else {
-            // If no opening page, proceed with normal auth flow immediately
-            firebase.auth().onAuthStateChanged(function(user) {
-                if (user) {
-                    console.log('User is signed in:', user.uid);
-                    showMainApp();
-                    loadUserProfile();
-                } else {
-                    console.log('User is not signed in');
-                    showSplitScreen();
-                }
-            });
-        }
-    } else {
-        // For event pages, wait for Firebase to initialize
+    if (isEventphyPage) {
+        // If it's an event page, set up eventphy container and skip everything else
         setTimeout(() => {
-            // Add Eventphy page container to body if not exists
             if (!document.getElementById('eventphyPageContainer')) {
                 const eventphyContainer = document.createElement('div');
                 eventphyContainer.id = 'eventphyPageContainer';
@@ -62220,9 +62194,45 @@ document.addEventListener('DOMContentLoaded', function() {
                 `;
                 document.body.appendChild(eventphyContainer);
             }
-        }, 1000);
+        }, 500);
+        return; // Exit early for event pages
+    }
+    
+    // Only show opening page if NOT on event page
+    const openingPage = document.getElementById('openingPage');
+    if (openingPage) {
+        openingPage.style.display = 'block';
+        setTimeout(() => {
+            openingPage.style.display = 'none';
+            openingPage.classList.add('hidden');
+            
+            // Continue with normal auth flow
+            firebase.auth().onAuthStateChanged(function(user) {
+                if (user) {
+                    console.log('User is signed in:', user.uid);
+                    showMainApp();
+                    loadUserProfile();
+                } else {
+                    console.log('User is not signed in');
+                    showSplitScreen();
+                }
+            });
+        }, 3000);
+    } else {
+        // If no opening page, proceed with normal auth flow immediately
+        firebase.auth().onAuthStateChanged(function(user) {
+            if (user) {
+                console.log('User is signed in:', user.uid);
+                showMainApp();
+                loadUserProfile();
+            } else {
+                console.log('User is not signed in');
+                showSplitScreen();
+            }
+        });
     }
 
+    // Initialize other components only if not event page
     // Set minimum date to today for physical event forms
     const today = new Date().toISOString().split('T')[0];
     const startDateInput = document.getElementById('physicalStartDate');
@@ -62247,14 +62257,12 @@ document.addEventListener('DOMContentLoaded', function() {
         categorySelect.addEventListener('change', updatePhysicalPreview);
     }
 
-    // Load events only if the container exists and not on event page
-    if (!isEventphyPage) {
-        setTimeout(() => {
-            if (typeof safeLoadUserPhysicalEvents === 'function') {
-                safeLoadUserPhysicalEvents();
-            }
-        }, 1000);
-    }
+    // Load events only if not event page
+    setTimeout(() => {
+        if (typeof safeLoadUserPhysicalEvents === 'function') {
+            safeLoadUserPhysicalEvents();
+        }
+    }, 1000);
 
     // Initialize security system
     if (typeof eventIdSecurity !== 'undefined' && eventIdSecurity.init) {
@@ -62282,6 +62290,7 @@ window.addEventListener('popstate', function(event) {
 });
 
        </script>
+
 
 <!-- Sponsors Management Modal -->
 <div id="sponsorsModal" class="modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center;">
