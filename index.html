@@ -21370,178 +21370,16 @@ rgb(81, 67, 55)rgb(81, 61, 55)rgb(81, 58, 55)rgb(184, 50, 32);
     overflow-y: auto;
     display: none;
 }
+
 .eventphy-hero-section {
-    width: 100%;
-    min-height: 100vh;
-    min-height: 100dvh; /* Dynamic viewport height for mobile browsers */
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-size: cover !important;
-    background-position: center center !important;
-    background-repeat: no-repeat !important;
-    background-attachment: fixed;
-    border-radius: 0; /* Remove border radius on mobile */
-    overflow: hidden;
-    z-index: 1;
-}
-
-/* Desktop styles */
-@media (min-width: 768px) {
-    .eventphy-hero-section {
-        min-height: 80vh;
-        border-radius: 24px;
-        background-attachment: fixed;
-    }
-}
-
-/* Tablet styles */
-@media (min-width: 481px) and (max-width: 767px) {
-    .eventphy-hero-section {
-        min-height: 85vh;
-        border-radius: 16px;
-        background-attachment: scroll; /* Fixed backgrounds can be problematic on tablets */
-    }
-}
-
-/* Mobile styles */
-@media (max-width: 480px) {
-    .eventphy-hero-section {
-        min-height: 100vh;
-        min-height: 100dvh;
-        border-radius: 0;
-        background-attachment: scroll; /* Always use scroll on mobile */
-        background-size: cover !important;
-        background-position: center !important;
-    }
-}
-
-/* iOS Safari specific fixes */
-@supports (-webkit-touch-callout: none) {
-    .eventphy-hero-section {
-        background-attachment: scroll !important;
-        -webkit-background-size: cover !important;
-        -webkit-transform: translateZ(0); /* Force hardware acceleration */
-    }
-}
-
-/* Hero overlay for better text readability */
-.eventphy-hero-overlay {
+     width: 100%;
+    height: 100%;
     position: absolute;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(
-        135deg,
-        rgba(26, 26, 46, 0.7) 0%,
-        rgba(26, 26, 46, 0.5) 50%,
-        rgba(26, 26, 46, 0.7) 100%
-    );
-    z-index: 2;
-}
-
-/* Hero content responsive positioning */
-.eventphy-hero-content {
-    position: relative;
-    z-index: 3;
-    text-align: center;
-    color: white;
-    padding: 2rem;
-    max-width: 90%;
-    width: 100%;
-    margin: 0 auto;
-}
-
-/* Mobile-specific hero content */
-@media (max-width: 480px) {
-    .eventphy-hero-content {
-        padding: 1.5rem 1rem;
-        max-width: 95%;
-    }
-}
-
-/* Powered by section - mobile responsive */
-.eventphy-powered-by {
-    position: absolute !important;
-    bottom: 15px !important;
-    right: 15px !important;
-    display: flex !important;
-    align-items: center !important;
-    background: rgba(0, 0, 0, 0.8) !important;
-    backdrop-filter: blur(10px) !important;
-    padding: 8px 12px !important;
-    border-radius: 20px !important;
-    z-index: 4 !important;
-    font-size: 12px !important;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
-}
-
-/* Mobile powered by adjustments */
-@media (max-width: 480px) {
-    .eventphy-powered-by {
-        bottom: 10px !important;
-        right: 10px !important;
-        padding: 6px 10px !important;
-        font-size: 11px !important;
-    }
-    
-    .eventphy-powered-by img {
-        width: 16px !important;
-        height: 16px !important;
-        margin-right: 4px !important;
-    }
-}
-
-/* Very small screens */
-@media (max-width: 320px) {
-    .eventphy-powered-by {
-        bottom: 8px !important;
-        right: 8px !important;
-        padding: 4px 8px !important;
-        font-size: 10px !important;
-    }
-    
-    .eventphy-powered-by img {
-        width: 14px !important;
-        height: 14px !important;
-        margin-right: 3px !important;
-    }
-}
-
-/* Landscape mobile orientation */
-@media (max-width: 896px) and (max-height: 414px) and (orientation: landscape) {
-    .eventphy-hero-section {
-        min-height: 100vh;
-        background-attachment: scroll;
-    }
-    
-    .eventphy-hero-content {
-        padding: 1rem;
-    }
-}
-
-/* High DPI mobile displays */
-@media (-webkit-min-device-pixel-ratio: 2) and (max-width: 480px) {
-    .eventphy-hero-section {
-        background-size: cover !important;
-        -webkit-background-size: cover !important;
-    }
-}
-
-/* Container for the entire hero section */
-.eventphy-hero-container {
-    position: relative;
-    width: 100%;
-    overflow: hidden;
+    z-index: 1;
+    object-fit: cover;
     border-radius: 24px;
-}
-
-@media (max-width: 480px) {
-    .eventphy-hero-container {
-        border-radius: 0;
-    }
 }
 
 .eventphy-hero-overlay {
@@ -54275,9 +54113,9 @@ function displayEventphyPage(event) {
             <div class="eventphy-hero-content">
                 <h1 class="eventphy-title">${event.eventName || event.name || 'Event'}</h1>
                
-                    <button class="eventphy-signup-btn" onclick="redirectToEventphySignUp()">
+                    `<button class="eventphy-signup-btn" onclick="redirectToEventphySignUp()">
                             <i class="fas fa-plus-circle"></i> Sign Up & Create Events
-                        </button>
+                        </button>`
                     </div>
                 }
             </div>
