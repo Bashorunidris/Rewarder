@@ -29078,111 +29078,141 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// Add this improved logout handler to your JavaScript
-document.addEventListener('DOMContentLoaded', function() {
-    const logoutBtn = document.getElementById('logoutBtn');
-    const profileModal = document.getElementById('profileModal');
-    
-    if (logoutBtn && profileModal) {
-        logoutBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            
-            // Show confirmation
-            if (confirm('Are you sure you want to logout?')) {
-                // First close the modal immediately
-                profileModal.classList.remove('active');
-                document.body.style.overflow = '';
-                
-                // Then perform logout
-                performLogout();
-            }
-        });
-    }
-    
-    // Improved logout function
-    function performLogout() {
-        try {
-            // If using Firebase Auth
-            if (typeof firebase !== 'undefined' && firebase.auth) {
-                firebase.auth().signOut()
-                    .then(() => {
-                        console.log('User signed out successfully');
-                        showToast('Logged out successfully!', 'success');
-                        
-                        // Redirect or reload page after successful logout
-                        setTimeout(() => {
-                            window.location.reload();
-                        }, 1500);
-                    })
-                    .catch((error) => {
-                        console.error('Error signing out:', error);
-                        showToast('Error logging out: ' + error.message, 'error');
-                    });
-            } else {
-                // Fallback logout (clear localStorage, etc.)
-                localStorage.clear();
-                sessionStorage.clear();
-                showToast('Logged out successfully!', 'success');
-                
-                setTimeout(() => {
-                    window.location.reload();
-                }, 1500);
-            }
-        } catch (error) {
-            console.error('Logout error:', error);
-            showToast('Error during logout', 'error');
-        }
-    }
-});
-// Simple, guaranteed-to-work logout handler
-function setupLogoutButton() {
-    const logoutBtn = document.getElementById('logoutBtn');
-    
-    if (logoutBtn) {
-        // Remove any existing listeners
-        logoutBtn.replaceWith(logoutBtn.cloneNode(true));
+    // Improved logout function to prevent auto-login
+function logout() {
+    try {
+        // Clear all local storage data
+        localStorage.removeItem('rewarder_last_visit');
+        localStorage.removeItem('rewarder_seen_welcome'); 
+        localStorage.removeItem('rewarder_tutorial_completed');
+        localStorage.removeItem('userProfile');
+        localStorage.removeItem('userPreferences');
+        localStorage.removeItem('authToken');
+        localStorage.removeItem('rememberedEmail');
+        localStorage.removeItem('rememberMe');
         
-        // Get the fresh element
-        const newLogoutBtn = document.getElementById('logoutBtn');
+        // Clear session storage as well
+        sessionStorage.clear();
         
-        newLogoutBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopImmediatePropagation();
+        // Sign out from Firebase
+        firebase.auth().signOut().then(() => {
+            console.log('User signed out successfully');
             
-            console.log('Logout clicked!'); // Debug log
+            // Force redirect to login page
+            showSplitScreen();
+            hideMainApp();
             
-            // Force close modal immediately
-            const profileModal = document.getElementById('profileModal');
-            if (profileModal) {
-                profileModal.style.display = 'none';
-                profileModal.classList.remove('active');
-                document.body.style.overflow = '';
-            }
+            // Clear any cached user data
+            currentUser = null;
             
-            // Show confirmation and logout
-            if (confirm('Are you sure you want to logout?')) {
-                // Clear any stored data
-                localStorage.clear();
-                sessionStorage.clear();
-                
-                // Show success message
-                alert('Logged out successfully!');
-                
-                // Reload page
+            // Show logout success message
+            showToast('Logged out successfully', 'success');
+            
+            // Optional: Reload page to ensure clean state
+            setTimeout(() => {
                 window.location.reload();
-            } else {
-                // If cancelled, don't reopen modal automatically
-                console.log('Logout cancelled');
-            }
+            }, 1000);
+            
+        }).catch((error) => {
+            console.error('Error during logout:', error);
+            showToast('Error logging out. Please try again.', 'error');
         });
+        
+    } catch (error) {
+        console.error('Logout error:', error);
+        showToast('Error during logout', 'error');
     }
 }
 
-// Call this after the DOM is loaded and after the profile modal is initialized
-document.addEventListener('DOMContentLoaded', function() {
-    setTimeout(setupLogoutButton, 1000); // Small delay to ensure everything is loaded
+// Fixed auth state listener that respects logout
+let isLoggingOut = false;
+
+firebase.auth().onAuthStateChanged(function(user) {
+    // Don't auto-login if user is in the process of logging out
+    if (isLoggingOut) {
+        return;
+    }
+    
+    // Check if user manually logged out (flag in localStorage)
+    const userLoggedOut = localStorage.getItem('userLoggedOut');
+    if (userLoggedOut === 'true') {
+        // User manually logged out, don't auto-login
+        localStorage.removeItem('userLoggedOut');
+        showSplitScreen();
+        return;
+    }
+     
+    if (user) {
+        console.log('User is signed in:', user.uid);
+        // Only show main app if not on logout process
+        if (!isLoggingOut) {
+            showMainApp();
+            loadUserProfile();
+        }
+    } else {
+        console.log('User is not signed in');
+        showSplitScreen();
+    }
 });
+
+// Updated logout function with proper flag setting
+function logout() {
+    // Set flag to prevent auto-login
+    isLoggingOut = true;
+    localStorage.setItem('userLoggedOut', 'true');
+    
+    try {
+        // Clear all stored data
+        localStorage.removeItem('rewarder_last_visit');
+        localStorage.removeItem('rewarder_seen_welcome'); 
+        localStorage.removeItem('rewarder_tutorial_completed');
+        localStorage.removeItem('userProfile');
+        localStorage.removeItem('userPreferences');
+        localStorage.removeItem('authToken');
+        localStorage.removeItem('rememberedEmail');
+        localStorage.removeItem('rememberMe');
+        
+        // Clear session storage
+        sessionStorage.clear();
+        
+        // Sign out from Firebase
+        firebase.auth().signOut().then(() => {
+            console.log('User signed out successfully');
+            
+            // Reset logout flag after successful logout
+            isLoggingOut = false;
+            
+            // Force show login screen
+            showSplitScreen();
+            hideMainApp();
+            
+            // Clear any cached user data
+            if (typeof currentUser !== 'undefined') {
+                currentUser = null;
+            }
+            
+            // Show success message
+            showToast('Logged out successfully', 'success');
+            
+            // Remove the logout flag after a delay
+            setTimeout(() => {
+                localStorage.removeItem('userLoggedOut');
+            }, 2000);
+            
+        }).catch((error) => {
+            console.error('Error during logout:', error);
+            isLoggingOut = false; // Reset flag on error
+            showToast('Error logging out. Please try again.', 'error');
+        });
+        
+    } catch (error) {
+        console.error('Logout error:', error);
+        isLoggingOut = false; // Reset flag on error
+        showToast('Logged out ');
+    }
+}
+    
+
 
 // When opening the profile modal, ensure logout button is properly set up
 function openProfileModal() {
