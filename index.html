@@ -54787,10 +54787,10 @@ function generateEventphyTicketsHTML(tickets, eventData) {
     return ticketsHTML;
 }
 
-   // Generate contact info HTML for public page - FIXED
+
+// Generate contact info HTML for public page
 function generateEventphyContactHTML(eventData) {
-    // Updated to use phyeveContactInfo from Firebase
-    const contacts = eventData.phyeveContactInfo || eventData.contactInfo || eventData.contacts || [];
+    const contacts = eventData.contactInfo || eventData.contacts || [];
     
     if (!contacts || contacts.length === 0) {
         return '';
@@ -54798,11 +54798,11 @@ function generateEventphyContactHTML(eventData) {
 
     let contactHTML = `
         <div class="eventphy-contact-section" style="margin: 2rem 0;">
-            <h2 class="eventphy-section-title" style="color: #1a1a2e; font-size: 2rem; font-weight: 700; margin-bottom: 1.5rem; text-align: center;">Contact Information</h2>
+            <h2 class="eventphy-section-title">Contact Information</h2>
             <div class="eventphy-contact-grid" style="
                 display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-                gap: 1.5rem;
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 1rem;
                 margin-top: 1rem;
             ">
     `;
@@ -54815,36 +54815,35 @@ function generateEventphyContactHTML(eventData) {
             <div class="eventphy-contact-card" onclick="handleEventphyContactClick('${eventData.physicalEventId}', '${contactType}', '${contact.url}')" style="
                 background: rgba(255, 255, 255, 0.95);
                 backdrop-filter: blur(10px);
-                border-radius: 20px;
-                padding: 2rem;
+                border-radius: 15px;
+                padding: 1.5rem;
                 display: flex;
                 align-items: center;
-                gap: 1.5rem;
+                gap: 1rem;
                 cursor: pointer;
                 transition: all 0.3s ease;
-                border: 1px solid rgba(26, 26, 46, 0.1);
-                box-shadow: 0 15px 35px rgba(26, 26, 46, 0.1);
-            " onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 20px 40px rgba(26, 26, 46, 0.2)'" 
-               onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 15px 35px rgba(26, 26, 46, 0.1)'">
+                border: 1px solid rgba(255, 255, 255, 0.3);
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            " onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 15px 30px rgba(0, 0, 0, 0.2)'" 
+               onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 20px rgba(0, 0, 0, 0.1)'">
                 <div style="
-                    width: 60px;
-                    height: 60px;
-                    background: linear-gradient(135deg, #1a1a2e, #6c5ce7);
-                    border-radius: 15px;
+                    width: 50px;
+                    height: 50px;
+                    background: linear-gradient(135deg, #6c5ce7, #fd79a8);
+                    border-radius: 12px;
                     display: flex;
                     align-items: center;
                     justify-content: center;
                     color: white;
-                    font-size: 1.5rem;
-                    box-shadow: 0 8px 20px rgba(26, 26, 46, 0.3);
+                    font-size: 1.2rem;
                 ">
                     <i class="${contactIcon}"></i>
                 </div>
                 <div style="flex: 1;">
-                    <h4 style="margin: 0 0 0.5rem 0; color: #1a1a2e; font-size: 1.2rem; font-weight: 700;">${contact.label || contact.type}</h4>
-                    <p style="margin: 0; color: #6c757d; font-size: 1rem; line-height: 1.4;">${contact.displayText || contact.url}</p>
+                    <h4 style="margin: 0 0 0.5rem 0; color: #1a1a2e; font-size: 1rem; font-weight: 600;">${contact.label || contact.type}</h4>
+                    <p style="margin: 0; color: #6c757d; font-size: 0.9rem;">${contact.displayText || contact.url}</p>
                 </div>
-                <div style="color: #1a1a2e; font-size: 1.2rem;">
+                <div style="color: #6c5ce7;">
                     <i class="fas fa-external-link-alt"></i>
                 </div>
             </div>
@@ -54858,6 +54857,7 @@ function generateEventphyContactHTML(eventData) {
 
     return contactHTML;
 }
+
 // Handle contact click on public page
 function handleEventphyContactClick(eventId, contactType, contactUrl) {
     // Track the click if tracking function exists
