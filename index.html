@@ -54117,12 +54117,14 @@ function displayEventphyPage(event) {
             <div class="eventphy-hero-content">
                 <h1 class="eventphy-title">${event.eventName || event.name || 'Event'}</h1>
                 ${hasNoTickets ? 
-                    `<button class="eventphy-get-tickets-btn" onclick="showNoTicketInfo()" style="background: linear-gradient(135deg, #28a745, #20c997);">
-                        <i class="fas fa-door-open"></i> Get In
-                    </button>` : 
-                    `<button class="eventphy-get-tickets-btn" onclick="openEventphyTicketsModal()">
-                        <i class="fas fa-ticket-alt"></i> Get Tickets
-                    </button>`
+                    `<div class="eventphy-brand-cta">
+                       <button class="eventphy-signup-btn" onclick="redirectToEventphySignUp()">
+                            <i class="fas fa-plus-circle"></i> Sign Up & Create Events
+                        </button>
+                    </div>` : 
+                    `<button class="eventphy-signup-btn" onclick="redirectToEventphySignUp()">
+                            <i class="fas fa-plus-circle"></i> Sign Up & Create Events
+                        </button>`
 
                 }
             </div>
