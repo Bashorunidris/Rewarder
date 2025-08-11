@@ -21356,7 +21356,6 @@ rgb(81, 67, 55)rgb(81, 61, 55)rgb(81, 58, 55)rgb(184, 50, 32);
   margin-bottom: 5px;
   color: #555;
 }
-
 /* Modal styles for Terms and Privacy */
 .modal {
     position: fixed;
@@ -22205,6 +22204,76 @@ rgb(81, 67, 55)rgb(81, 61, 55)rgb(81, 58, 55)rgb(184, 50, 32);
 @keyframes rotate {
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
+}
+
+.event-signup-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+}
+
+.event-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 11000;
+}
+
+.event-modal {
+    background: #2d2d4a;
+    border-radius: 15px;
+    padding: 40px;
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+    border: 1px solid #3a3a5c;
+}
+
+.event-modal h3 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    color: #4CAF50;
+}
+
+.event-modal p {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    opacity: 0.9;
+}
+
+.event-copy-section {
+    background: #1a1a2e;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px 0;
+    border: 2px dashed #4CAF50;
+}
+
+.event-name-display {
+    font-size: 1.4rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #4CAF50;
+}
+
+.event-copy-btn {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.3s ease;
+}
+
+.event-copy-btn:hover {
+    background: #45a049;
 }
 
 .event-modal-actions {
@@ -54124,10 +54193,13 @@ function displayEventphyPage(event) {
             </div>
             <div class="eventphy-hero-content">
                 <h1 class="eventphy-title">${event.eventName || event.name || 'Event'}</h1>
-               
-                    <button class="eventphy-signup-btn" onclick="redirectToEventphySignUp()">
+                ${hasNoTickets ? 
+                    `<button class="eventphy-signup-btn" onclick="redirectToEventphySignUp()">
                             <i class="fas fa-plus-circle"></i> Sign Up 
-                        </button>
+                        </button>` : 
+                    `<button class="eventphy-get-tickets-btn" onclick="openEventphyTicketsModal()">
+                        <i class="fas fa-ticket-alt"></i> Get Tickets
+                    </button>`
 
                 }
             </div>
