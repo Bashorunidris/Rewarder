@@ -53,89 +53,388 @@
         min-height: 600px;
     }
     
-    /* Left side styling */
+    /* Left side styling - Enhanced Modern Design */
     .left {
         flex: 1;
-        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 25%, #0f3460 50%, #16213e 75%, #1a1a2e 100%);
         color: var(--white);
-        padding: 60px 40px;
+        padding: 40px;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         position: relative;
         overflow: hidden;
+        min-height: 100vh;
     }
-    
-    .left::before {
-        content: '';
+
+    /* Floating decoration elements */
+    .floating-elements {
         position: absolute;
-        top: -50px;
-        right: -50px;
-        width: 200px;
-        height: 200px;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.1);
-    }
-    
-    .left::after {
-        content: '';
-        position: absolute;
-        bottom: -80px;
-        left: -80px;
-        width: 300px;
-        height: 300px;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.1);
-    }
-    
-    .logo h1 {
-        font-size: 2.5rem;
-        font-weight: 700;
-        margin-bottom: 10px;
-        letter-spacing: 1px;
-    }
-    
-    .tagline {
-        margin-top: 60px;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
         z-index: 1;
     }
-    
-    .tagline h2 {
+
+    .floating-circle {
+        position: absolute;
+        border-radius: 50%;
+        background: linear-gradient(45deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.15));
+        backdrop-filter: blur(2px);
+        animation: float 6s ease-in-out infinite;
+    }
+
+    .floating-circle-1 {
+        width: 120px;
+        height: 120px;
+        top: 10%;
+        right: 15%;
+        animation-delay: -2s;
+    }
+
+    .floating-circle-2 {
+        width: 80px;
+        height: 80px;
+        top: 60%;
+        right: 8%;
+        animation-delay: -4s;
+    }
+
+    .floating-circle-3 {
+        width: 60px;
+        height: 60px;
+        top: 30%;
+        left: 10%;
+        animation-delay: -1s;
+    }
+
+    .floating-ticket {
+        position: absolute;
         font-size: 2rem;
-        font-weight: 600;
-        margin-bottom: 15px;
+        opacity: 0.1;
+        animation: floatRotate 8s linear infinite;
     }
-    
-    .tagline p {
-        font-size: 1.1rem;
-        opacity: 0.9;
+
+    .floating-ticket-1 {
+        top: 20%;
+        left: 15%;
+        animation-delay: -2s;
     }
-    
-    .features {
-        margin-top: 60px;
-        z-index: 1;
+
+    .floating-ticket-2 {
+        top: 70%;
+        left: 20%;
+        animation-delay: -4s;
     }
-    
-    .feature {
-        display: flex;
-        align-items: center;
+
+    .floating-ticket-3 {
+        top: 45%;
+        right: 20%;
+        animation-delay: -6s;
+    }
+
+    @keyframes float {
+        0%, 100% { transform: translateY(0px) translateX(0px); }
+        25% { transform: translateY(-20px) translateX(10px); }
+        50% { transform: translateY(-10px) translateX(-10px); }
+        75% { transform: translateY(-25px) translateX(5px); }
+    }
+
+    @keyframes floatRotate {
+        0% { transform: translateY(0px) rotate(0deg); }
+        25% { transform: translateY(-15px) rotate(90deg); }
+        50% { transform: translateY(0px) rotate(180deg); }
+        75% { transform: translateY(-15px) rotate(270deg); }
+        100% { transform: translateY(0px) rotate(360deg); }
+    }
+
+    /* Hero Content */
+    .hero-content {
+        z-index: 2;
+        margin-bottom: 30px;
+    }
+
+    .logo-container {
+        text-align: center;
+        margin-bottom: 40px;
+        position: relative;
+    }
+
+    .logo-glow {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 200px;
+        height: 100px;
+        background: radial-gradient(ellipse, rgba(255, 255, 255, 0.1), transparent);
+        filter: blur(20px);
+        z-index: -1;
+    }
+
+    .brand-logo {
+        font-size: 3.5rem;
+        font-weight: 800;
+        margin: 0;
+        letter-spacing: 2px;
+        background: linear-gradient(135deg, #ffffff, #e0e0e0);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        text-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+    }
+
+    .logo-subtitle {
+        font-size: 0.9rem;
+        opacity: 0.7;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        margin-top: 8px;
+        font-weight: 300;
+    }
+
+    .hero-tagline {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .main-headline {
+        font-size: 2.8rem;
+        font-weight: 700;
+        line-height: 1.2;
         margin-bottom: 20px;
     }
-    
-    .feature i {
+
+    .gradient-text {
+        background: linear-gradient(135deg, #ff6b9d, #c44569, #f8b500);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .hero-description {
         font-size: 1.2rem;
-        margin-right: 15px;
-        background: rgba(255, 255, 255, 0.2);
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
+        opacity: 0.9;
+        line-height: 1.6;
+        margin-bottom: 35px;
+        max-width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .cta-buttons {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    .primary-cta {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        padding: 15px 30px;
+        border-radius: 50px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        letter-spacing: 0.5px;
+    }
+
+    .primary-cta:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 35px rgba(102, 126, 234, 0.4);
+    }
+
+    .secondary-cta {
+        background: transparent;
+        color: white;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        padding: 13px 25px;
+        border-radius: 50px;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .secondary-cta:hover {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: rgba(255, 255, 255, 0.5);
+        transform: translateY(-2px);
+    }
+
+    /* Stats Showcase */
+    .stats-showcase {
+        z-index: 2;
+        margin: 40px 0;
+    }
+
+    .stats-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 20px;
+    }
+
+    .stat-card {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border-radius: 16px;
+        padding: 25px 15px;
+        text-align: center;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        transition: all 0.3s ease;
+    }
+
+    .stat-card:hover {
+        transform: translateY(-5px);
+        background: rgba(255, 255, 255, 0.15);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .stat-icon {
+        font-size: 2rem;
+        margin-bottom: 12px;
+        color: #667eea;
+    }
+
+    .stat-number {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 5px;
+        background: linear-gradient(135deg, #ffffff, #e0e0e0);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .stat-label {
+        font-size: 0.9rem;
+        opacity: 0.8;
+        font-weight: 500;
+    }
+
+    /* Features Grid */
+    .features-grid {
+        z-index: 2;
+        margin: 40px 0;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 15px;
+    }
+
+    .feature-card {
+        background: rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(10px);
+        border-radius: 12px;
+        padding: 20px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        transition: all 0.3s ease;
+    }
+
+    .feature-card:hover {
+        transform: translateX(10px);
+        background: rgba(255, 255, 255, 0.12);
+        border-color: rgba(102, 126, 234, 0.3);
+    }
+
+    .feature-icon {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        width: 50px;
+        height: 50px;
+        border-radius: 12px;
         display: flex;
         align-items: center;
         justify-content: center;
+        font-size: 1.3rem;
+        color: white;
+        flex-shrink: 0;
     }
-    
-    .feature span {
-        font-size: 1rem;
+
+    .feature-content h4 {
+        margin: 0 0 5px 0;
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: white;
+    }
+
+    .feature-content span {
+        font-size: 0.95rem;
+        opacity: 0.8;
+        line-height: 1.4;
+    }
+
+    /* Value Proposition Modern */
+    .value-proposition-modern {
+        z-index: 2;
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(15px);
+        border-radius: 20px;
+        padding: 30px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        margin-top: 40px;
+    }
+
+    .value-header {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .value-header h3 {
+        font-size: 1.8rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+        background: linear-gradient(135deg, #ffffff, #e0e0e0);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .value-accent-line {
+        width: 60px;
+        height: 3px;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        margin: 0 auto;
+        border-radius: 2px;
+    }
+
+    .value-proposition-modern p {
+        font-size: 1.05rem;
+        line-height: 1.6;
+        opacity: 0.9;
+        text-align: center;
+        margin-bottom: 25px;
+    }
+
+    .trust-indicators {
+        display: flex;
+        justify-content: center;
+        gap: 25px;
+        flex-wrap: wrap;
+    }
+
+    .trust-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.9rem;
+        opacity: 0.8;
+    }
+
+    .trust-item i {
+        color: #667eea;
+        font-size: 1.1rem;
     }
     
     /* Right side styling */
@@ -22305,3473 +22604,145 @@ rgb(81, 67, 55)rgb(81, 61, 55)rgb(81, 58, 55)rgb(184, 50, 32);
         
         <div class="split-screen">
             <div class="left">
-                <div class="logo">
-                    <h1>Rewarder</h1>
-                </div>
-                <div class="tagline">
-                    <h2>Discover Talent. Vote. Win.</h2>
-                    <p>Join the platform where talent gets rewarded and voters earn too!</p>
-                </div>
-                <div class="features">
-                    <div class="feature">
-                        <i class="fas fa-trophy"></i>
-                        <span>Compete in exciting talent categories</span>
-                    </div>
-                    <div class="feature">
-                        <i class="fas fa-vote-yea"></i>
-                        <span>Vote for your favorites and earn rewards</span>
-                    </div>
-                    <div class="feature">
-                        <i class="fas fa-coins"></i>
-                        <span>Win cash prizes and recognition</span>
-                    </div>
-                </div>
-            </div>
-            <div class="right">
-                <div class="auth-container" id="loginForm">
-                    <h2>Welcome Back</h2>
-                    <p>Sign in to continue your journey</p>
-                    
-                    <div class="social-login">
-                        <button class="social-btn google-btn">
-                           <img src="https://i.ibb.co/wZqXcy6z/thegogglelogo.png" alt="thegogglelogo" border="0">
-                            <span>Continue with Google</span>
-                        </button>
-                    </div>
-                    
-                    <div class="divider">
-                        <span>or sign in with email</span>
-                    </div>
-                    
-                    <form id="loginFormElement">
-                        <div class="form-group">
-                            <label for="loginEmail">Email</label>
-                            <input type="email" id="loginEmail" placeholder="Enter your email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="loginPassword">Password</label>
-                            <div class="password-input">
-                                <input type="password" id="loginPassword" placeholder="Enter your password" required>
-                                <i class="fas fa-eye-slash toggle-password"></i>
-                            </div>
-                        </div>
-                        <div class="form-options">
-                            <div class="remember-me">
-                                <input type="checkbox" id="remember">
-                                <label for="remember">Remember me</label>
-                            </div>
-                            <a href="#" class="forgot-password">Forgot password?</a>
-                        </div>
-                        <button type="submit" class="auth-btn">Sign In</button>
-                    </form>
-                    
-                    <div class="auth-switch">
-                        <p>Don't have an account? <a href="#" id="showSignup">Sign up</a></p>
-                    </div>
-                </div>
-                
-                <div class="auth-container hidden" id="signupForm">
-                    <h2>Create Account</h2>
-                    <p>Join the talent revolution</p>
-                    
-                    <div class="social-login">
-                        <button class="social-btn google-btn">
-                           <img src="https://i.ibb.co/wZqXcy6z/thegogglelogo.png" alt="thegogglelogo" border="0">
-                          
-                            <span>Continue with Google</span>
-                        </button>
-                    </div>
-                    
-                    <div class="divider">
-                        <span>or sign up with email</span>
-                    </div>
-                    
-                    <form id="signupFormElement">
-                        <div class="form-group">
-                            <label for="fullName">Full Name</label>
-                            <input type="text" id="fullName" placeholder="Enter your full name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="signupEmail">Email</label>
-                            <input type="email" id="signupEmail" placeholder="Enter your email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="signupPassword">Password</label>
-                            <div class="password-input">
-                                <input type="password" id="signupPassword" placeholder="Create a password" required>
-                                <i class="fas fa-eye-slash toggle-password"></i>
-                            </div>
-                            <div class="password-strength">
-                                <div class="strength-meter">
-                                    <div class="strength-segment"></div>
-                                    <div class="strength-segment"></div>
-                                    <div class="strength-segment"></div>
-                                    <div class="strength-segment"></div>
-                                </div>
-                                <span class="strength-text">Password strength</span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="userType">I want to join as</label>
-                            <select id="userType" required>
-                                <option value="" disabled selected>Select your role</option>
-                                <option value="contestant">Contestant</option>
-                                <option value="voter">Voter</option>
-                                <option value="both">Both</option>
-                            </select>
-                        </div>
-                        <div class="form-options">
-                            <div class="terms">
-                                <input type="checkbox" id="terms" required>
-                                <label for="terms">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
-                            </div>
-                        </div>
-                        <button type="submit" class="auth-btn">Create Account</button>
-                    </form>
-                    
-                    <div class="auth-switch">
-                        <p>Already have an account? <a href="#" id="showLogin">Sign in</a></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-        
-
-        <!-- Dashboard Page -->
-<div class="dashboard-page" id="dashboardPage">
-    <!-- Top Navigation Bar -->
-    <div class="dashboard-nav">
-        <div class="user-info">
-            <div class="profile-circle">
-          <!-- User profile circle in header/navbar -->
-<div class="user-profile-image emoji-avatar" id="profileCircle">🤖</div>
-
-            </div>
-            <span class="username" id="usernameDisplay">Username</span>
-       
-        </div>
-         <span class="host-sport-category-status coming-soon">Coming Soon july 10th</span>
-          
-        <div class="trophy-btn">
-    <i class="fas fa-trophy"></i>
-    🔒
-    <div class="shine-sweep"></div>
-    
-</div>
-
-        <div class="wallet1-btn">
-          
-         <div class="walleticon-btn">
-                    <i class="fas fa-wallet"></i>
-                 </div>
-               
-            </div>
-             
-        <div class="hamburger-menu">
-            <i class="fas fa-bars"></i>
-        </div>
-    </div>
-    
-    <!-- Main Dashboard Container -->
-    <div class="dashboard-container">
-      
-    <!-- Media Banner Container -->
-    <div class="media-banner-container">
-        <div class="media-banner-track">
-            <!-- Video Items -->
-            <div class="media-item video-item">
-                <video muted loop autoplay>
-                    <source src="video1.mp4" type="video/mp4">
-                </video>
-                <div class="media-overlay">
-                    <span class="media-title">Video 1</span>
-                </div>
-            </div>
-            
-            <!-- Image Items -->
-            <div class="media-item image-item">
-                <img src="image1.jpg" alt="Image 1">
-                <div class="media-overlay">
-                    <span class="media-title">Image 1</span>
-                </div>
-            </div>
-            
-            <div class="media-item video-item">
-                <video muted loop autoplay>
-                    <source src="video2.mp4" type="video/mp4">
-                </video>
-                <div class="media-overlay">
-                    <span class="media-title">Video 2</span>
-                </div>
-            </div>
-            
-            <div class="media-item image-item">
-                <img src="image2.jpg" alt="Image 2">
-                <div class="media-overlay">
-                    <span class="media-title">Image 2</span>
-                </div>
-            </div>
-            
-            <div class="media-item video-item">
-                <video muted loop autoplay>
-                    <source src="video3.mp4" type="video/mp4">
-                </video>
-                <div class="media-overlay">
-                    <span class="media-title">Video 3</span>
-                </div>
-            </div>
-            
-            <div class="media-item image-item">
-                <img src="image3.jpg" alt="Image 3">
-                <div class="media-overlay">
-                    <span class="media-title">Image 3</span>
-                </div>
-            </div>
-            
-            <!-- Duplicate items for seamless loop -->
-            <div class="media-item video-item">
-                <video muted loop autoplay>
-                    <source src="video1.mp4" type="video/mp4">
-                </video>
-                <div class="media-overlay">
-                    <span class="media-title">Video 1</span>
-                </div>
-            </div>
-            
-            <div class="media-item image-item">
-                <img src="image1.jpg" alt="Image 1">
-                <div class="media-overlay">
-                    <span class="media-title">Image 1</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-        <!-- Action Buttons Container - Single Row -->
-        <div class="action-buttons-row">
-            
-            <div class="action-btn creator-btn">
-                <div class="action-icon">
-                    <i class="fas fa-video"></i>
-                </div>
-                <span>Creator</span>
-            </div>
-            
-            <div class="action-btn Liveevents-btn">
-                <div class="action-icon Liveevents">
-                    <i class="fas fa-broadcast-tower"></i>
-                </div>
-                <span>Live events</span>
-                    
-            </div>
-            
-            <div class="action-btn tickets-btns">
-                <div class="action-icon">
-                    <i class="fas fa-ticket-alt"></i>
-                </div>
-                <span>Tickets</span>
-            </div>
-
-            
-            
-            
-             <div class="action-btn Game-btn">
-    <div class="action-icon game-icon">
-    <i class="fa-solid fa-gamepad"></i>
-
-    </div>
-    <span>Game</span>
-          <span class="host-sport-category-status coming-soon">🔒</span>
-                   
-</div>
-
-<div class="action-btn spin-btn">
-                <div class="action-icon spin-icon">
-                    <i class="fas fa-sync-alt"></i>
-                </div>
-                <span>Spin</span>
-                      <span class="host-sport-category-status coming-soon">🔒</span>
-                   
-            </div>
-            <div class="action-btn rewarder-btn">
-                <div class="action-icon rewarder">
-                    <i class="fas fa-gem"></i>
-                </div>
-                <span>Rewarder</span>
-                      <span class="host-sport-category-status coming-soon">🔒</span>
-                   
-            </div>
-            
-            <div class="action-btn tickets-btns" onclick="openTicketsModal()">
-                <div class="action-icon">
-                    <i class="fas fa-ticket-alt"></i>
-                </div>
-                <span>Tickets</span>
-            </div>
-            
-            <div class="action-btn tickets-btns" onclick="openTicketsModal()">
-                <div class="action-icon">
-                    <i class="fas fa-ticket-alt"></i>
-                </div>
-                <span>Tickets</span>
-            </div>
-           
-
-        </div>
-
-        <!-- Physical Events Section -->
-        <div class="physical-events-section">
-            <div class="section-header">
-                <div class="section-header-row">
-                    
-                    <h2 class="section-title">
-                      <i class="fas fa-calendar-alt"></i>
-                        Physical Events
-                        <button class="see-more-events-btn" onclick="showAllEvents()">
-                        <i class="fas fa-plus"></i>
-                        See More Events
-                    </button>
-                     </h2>
-                </div>
-                <div class="section-subtitle">Discover amazing events near you</div>
-            </div>
-            
-            <div class="physical-events-container" id="physicalEventsContainer">
-                <div class="events-scroll-wrapper">
-                    <!-- Events will be dynamically loaded here -->
-                </div>
-            </div>
-        </div>
-
-
-        
-
-
-          
-        </div>
-       
-    <div class="liveevent-page">
-        <div class="liveevent-container">
-            <!-- Header -->
-            <header class="liveevent-header">
-                <h1><i class="fas fa-broadcast-tower"></i> Live Events</h1>
-            </header>
-<!-- Add this inside your liveevent-page div, preferably at the top -->
-<button class="liveevent-close-btn">
-    <i class="fas fa-times"></i>
-</button>
-
-            <!-- Tab Navigation -->
-            <div class="liveevent-tab-navigation">
-                <button class="liveevent-tab-btn liveevent-active" data-tab="sports">
-                    <i class="fas fa-futbol"></i>
-                    <span>Sport Events</span>
-                </button>
-                <button class="liveevent-tab-btn" data-tab="talent">
-                    <i class="fas fa-star"></i>
-                    <span>Talent Show</span>
-                </button>
-            </div>
-
-            <!-- Sports Events Tab -->
-            <div class="liveevent-tab-content liveevent-active" id="liveevent-sports-tab">
-                <!-- Sports Icons -->
-                <div class="liveevent-sports-icons">
-                    <div class="liveevent-sport-icon" data-sport="football">
-                        <i class="fas fa-futbol"></i>
-                        <span>Football</span>
-                    </div>
-                    <div class="liveevent-sport-icon" data-sport="basketball">
-                        <i class="fas fa-basketball-ball"></i>
-                        <span>Basketball</span>
-                    </div>
-                    <div class="liveevent-sport-icon" data-sport="tennis">
-                        <i class="fas fa-table-tennis"></i>
-                        <span>Tennis</span>
-                    </div>
-                    <div class="liveevent-sport-icon" data-sport="race">
-                        <i class="fas fa-running"></i>
-                        <span>Race</span>
-                    </div>
-                    <div class="liveevent-sport-icon" data-sport="tabletennis">
-                        <i class="fas fa-ping-pong-paddle-ball"></i>
-                        <span>Table Tennis</span>
-                    </div>
-                    <div class="liveevent-sport-icon" data-sport="volleyball">
-                        <i class="fas fa-volleyball-ball"></i>
-                        <span>Volleyball</span>
-                    </div>
-                    <div class="liveevent-sport-icon" data-sport="badminton">
-                        <i class="fas fa-shuttlecock"></i>
-                        <span>Badminton</span>
-                    </div>
-                </div>
-
-                <!-- Filters -->
-                <div class="liveevent-filters-container">
-                    <div class="liveevent-filter-group">
-                        <button class="liveevent-filter-btn liveevent-active" data-filter="latest">Latest Events</button>
-                        <button class="liveevent-filter-btn" data-filter="old">Old</button>
-                        <button class="liveevent-filter-btn" data-filter="48hrs">48hrs</button>
-                        <button class="liveevent-filter-btn" data-filter="3days">3 Days</button>
-                        <button class="liveevent-filter-btn" data-filter="14days">14 Days</button>
-                        <button class="liveevent-filter-btn" data-filter="finished">Finished</button>
-                        <button class="liveevent-filter-btn" data-filter="about-to-end">About to End</button>
-                        <button class="liveevent-filter-btn" data-filter="just-started">Just Started</button>
-                    </div>
-                </div>
-
-                <!-- Banner Ad -->
-                <div class="liveevent-banner-ad">
-                    <div class="liveevent-ad-placeholder">
-                        <i class="fas fa-ad"></i>
-                        <span>Advertisement Banner (480px x 70px)</span>
-                    </div>
-                </div>
-
-                <!-- Search Section -->
-                <div class="liveevent-search-section">
-                    <div class="liveevent-search-container">
-                        <div class="liveevent-search-input-wrapper">
-                            <i class="fas fa-search"></i>
-                            <input type="text" class="liveevent-search-input" placeholder="Search teams, leagues, players, events...">
-                        </div>
-                        <div class="liveevent-search-filters">
-                            <button class="liveevent-search-filter-btn liveevent-active" data-search="all">All</button>
-                            <button class="liveevent-search-filter-btn" data-search="teams">Teams</button>
-                            <button class="liveevent-search-filter-btn" data-search="leagues">Leagues</button>
-                            <button class="liveevent-search-filter-btn" data-search="players">Players</button>
-                            <button class="liveevent-search-filter-btn" data-search="events">Events</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Cards Container -->
-                <div class="liveevent-cards-container" id="liveevent-sports-cards">
-                    <div class="liveevent-loading-message">
-                        <i class="fas fa-spinner"></i>
-                        <p>Loading live events...</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Talent Show Tab -->
-            <div class="liveevent-tab-content" id="liveevent-talent-tab">
-                <!-- Talent Icons -->
-                <div class="liveevent-talent-icons">
-                    <div class="liveevent-talent-icon" data-talent="singing">
-                        <i class="fas fa-microphone"></i>
-                        <span>Singing</span>
-                    </div>
-                    <div class="liveevent-talent-icon" data-talent="dancing">
-                        <i class="fas fa-music"></i>
-                        <span>Dancing</span>
-                    </div>
-                    <div class="liveevent-talent-icon" data-talent="drawing">
-                        <i class="fas fa-paint-brush"></i>
-                        <span>Drawing</span>
-                    </div>
-                    <div class="liveevent-talent-icon" data-talent="comedy">
-                        <i class="fas fa-laugh"></i>
-                        <span>Comedy</span>
-                    </div>
-                    <div class="liveevent-talent-icon" data-talent="magic">
-                        <i class="fas fa-magic"></i>
-                        <span>Magic</span>
-                    </div>
-                    <div class="liveevent-talent-icon" data-talent="poetry">
-                        <i class="fas fa-feather-alt"></i>
-                        <span>Poetry</span>
-                    </div>
-                    <div class="liveevent-talent-icon" data-talent="acting">
-                        <i class="fas fa-theater-masks"></i>
-                        <span>Acting</span>
-                    </div>
-                    <div class="liveevent-talent-icon" data-talent="music">
-                        <i class="fas fa-guitar"></i>
-                        <span>Music</span>
-                    </div>
-                    <div class="liveevent-talent-icon" data-talent="photography">
-                        <i class="fas fa-camera"></i>
-                        <span>Photography</span>
-                    </div>
-                    <div class="liveevent-talent-icon" data-talent="crafts">
-                        <i class="fas fa-hammer"></i>
-                        <span>Crafts</span>
-                    </div>
-                    <div class="liveevent-talent-icon" data-talent="storytelling">
-                        <i class="fas fa-book-open"></i>
-                        <span>Storytelling</span>
-                    </div>
-                    <div class="liveevent-talent-icon" data-talent="other">
-                        <i class="fas fa-plus-circle"></i>
-                        <span>Other</span>
-                    </div>
-                </div>
-
-                <!-- Banner Ad -->
-                <div class="liveevent-banner-ad">
-                    <div class="liveevent-ad-placeholder">
-                        <i class="fas fa-ad"></i>
-                        <span>Advertisement Banner (480px x 70px)</span>
-                    </div>
-                </div>
-
-                <!-- Search Section -->
-                <div class="liveevent-search-section">
-                    <div class="liveevent-search-container">
-                        <div class="liveevent-search-input-wrapper">
-                            <i class="fas fa-search"></i>
-                            <input type="text" class="liveevent-search-input" placeholder="Search talent shows, performers, events...">
-                        </div>
-                        <div class="liveevent-search-filters">
-                            <button class="liveevent-search-filter-btn liveevent-active" data-search="all">All</button>
-                       <button class="liveevent-search-filter-btn liveevent-active" data-search="all">All</button>
-                            <button class="liveevent-search-filter-btn" data-search="performers">Performers</button>
-                            <button class="liveevent-search-filter-btn" data-search="shows">Shows</button>
-                            <button class="liveevent-search-filter-btn" data-search="events">Events</button>
-                            <button class="liveevent-search-filter-btn" data-search="competitions">Competitions</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Cards Container -->
-                <div class="liveevent-cards-container" id="liveevent-talent-cards">
-                    <div class="liveevent-loading-message">
-                        <i class="fas fa-spinner"></i>
-                        <p>Loading talent shows...</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>  
-
-
-    <div class="newevent-page">
-    <div class="newevent-container">
-        
-      <!-- Header -->
-        <header class="newevent-header">
-         
-            <h1><i class="fas fa-broadcast-tower"></i> New Events</h1>
-          <button class="newevent-close-btn " type="button" aria-label="Close New Events">
-        <i class="fas fa-times"></i>
-        
-    </button>
-          </header>
-        
-        <!-- Tab Navigation -->
-        <div class="newevent-tab-navigation">
-            <button class="newevent-tab-btn newevent-active" data-tab="sports">
-                <i class="fas fa-futbol"></i>
-                <span>Sport Events</span>
-            </button>
-            <button class="newevent-tab-btn" data-tab="talent">
-                <i class="fas fa-star"></i>
-                <span>Talent Show</span>
-            </button>
-        </div>
-        
-        <!-- Sports Events Tab -->
-        <div class="newevent-tab-content newevent-active" id="newevent-sports-tab">
-            <!-- Sports Icons -->
-            <div class="newevent-sports-icons">
-                <div class="newevent-sport-icon" data-sport="football">
-                    <i class="fas fa-futbol"></i>
-                    <span>Football</span>
-                </div>
-                <div class="newevent-sport-icon" data-sport="basketball">
-                    <i class="fas fa-basketball-ball"></i>
-                    <span>Basketball</span>
-                </div>
-                <div class="newevent-sport-icon" data-sport="tennis">
-                    <i class="fas fa-table-tennis"></i>
-                    <span>Tennis</span>
-                </div>
-                <div class="newevent-sport-icon" data-sport="race">
-                    <i class="fas fa-running"></i>
-                    <span>Race</span>
-                </div>
-                <div class="newevent-sport-icon" data-sport="tabletennis">
-                    <i class="fas fa-ping-pong-paddle-ball"></i>
-                    <span>Table Tennis</span>
-                </div>
-                <div class="newevent-sport-icon" data-sport="volleyball">
-                    <i class="fas fa-volleyball-ball"></i>
-                    <span>Volleyball</span>
-                </div>
-                <div class="newevent-sport-icon" data-sport="badminton">
-                    <i class="fas fa-shuttlecock"></i>
-                    <span>Badminton</span>
-                </div>
-            </div>
-            
-            <!-- Filters -->
-            <div class="newevent-filters-container">
-                <div class="newevent-filter-group">
-                    <button class="newevent-filter-btn newevent-active" data-filter="latest">Latest Events</button>
-                    <button class="newevent-filter-btn" data-filter="old">Old</button>
-                    <button class="newevent-filter-btn" data-filter="48hrs">48hrs</button>
-                    <button class="newevent-filter-btn" data-filter="3days">3 Days</button>
-                    <button class="newevent-filter-btn" data-filter="14days">14 Days</button>
-                    <button class="newevent-filter-btn" data-filter="finished">Finished</button>
-                    <button class="newevent-filter-btn" data-filter="about-to-end">About to End</button>
-                    <button class="newevent-filter-btn" data-filter="just-started">Just Started</button>
-                </div>
-            </div>
-            
-            <!-- Banner Ad -->
-            <div class="newevent-banner-ad">
-                <div class="newevent-ad-placeholder">
-                    <i class="fas fa-ad"></i>
-                    <span>Advertisement Banner (480px x 70px)</span>
-                </div>
-            </div>
-            
-            <!-- Search Section -->
-            <div class="newevent-search-section">
-                <div class="newevent-search-container">
-                    <div class="newevent-search-input-wrapper">
-                        <i class="fas fa-search"></i>
-                        <input type="text" class="newevent-search-input" placeholder="Search teams, leagues, players, events...">
-                    </div>
-                    <div class="newevent-search-filters">
-                        <button class="newevent-search-filter-btn newevent-active" data-search="all">All</button>
-                        <button class="newevent-search-filter-btn" data-search="teams">Teams</button>
-                        <button class="newevent-search-filter-btn" data-search="leagues">Leagues</button>
-                        <button class="newevent-search-filter-btn" data-search="players">Players</button>
-                        <button class="newevent-search-filter-btn" data-search="events">Events</button>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Cards Container -->
-            <div class="newevent-cards-container" id="newevent-sports-cards">
-                <div class="newevent-loading-message">
-                    <i class="fas fa-spinner"></i>
-                    <p>Loading new events...</p>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Talent Show Tab -->
-        <div class="newevent-tab-content" id="newevent-talent-tab">
-            <!-- Talent Icons -->
-            <div class="newevent-talent-icons">
-                <div class="newevent-talent-icon" data-talent="singing">
-                    <i class="fas fa-microphone"></i>
-                    <span>Singing</span>
-                </div>
-                <div class="newevent-talent-icon" data-talent="dancing">
-                    <i class="fas fa-music"></i>
-                    <span>Dancing</span>
-                </div>
-                <div class="newevent-talent-icon" data-talent="drawing">
-                    <i class="fas fa-paint-brush"></i>
-                    <span>Drawing</span>
-                </div>
-                <div class="newevent-talent-icon" data-talent="comedy">
-                    <i class="fas fa-laugh"></i>
-                    <span>Comedy</span>
-                </div>
-                <div class="newevent-talent-icon" data-talent="magic">
-                    <i class="fas fa-magic"></i>
-                    <span>Magic</span>
-                </div>
-                <div class="newevent-talent-icon" data-talent="poetry">
-                    <i class="fas fa-feather-alt"></i>
-                    <span>Poetry</span>
-                </div>
-                <div class="newevent-talent-icon" data-talent="acting">
-                    <i class="fas fa-theater-masks"></i>
-                    <span>Acting</span>
-                </div>
-                <div class="newevent-talent-icon" data-talent="music">
-                    <i class="fas fa-guitar"></i>
-                    <span>Music</span>
-                </div>
-                <div class="newevent-talent-icon" data-talent="photography">
-                    <i class="fas fa-camera"></i>
-                    <span>Photography</span>
-                </div>
-                <div class="newevent-talent-icon" data-talent="crafts">
-                    <i class="fas fa-hammer"></i>
-                    <span>Crafts</span>
-                </div>
-                <div class="newevent-talent-icon" data-talent="storytelling">
-                    <i class="fas fa-book-open"></i>
-                    <span>Storytelling</span>
-                </div>
-                <div class="newevent-talent-icon" data-talent="other">
-                    <i class="fas fa-plus-circle"></i>
-                    <span>Other</span>
-                </div>
-            </div>
-            
-            <!-- Banner Ad -->
-            <div class="newevent-banner-ad">
-                <div class="newevent-ad-placeholder">
-                    <i class="fas fa-ad"></i>
-                    <span>Advertisement Banner (480px x 70px)</span>
-                </div>
-            </div>
-            
-            <!-- Search Section -->
-            <div class="newevent-search-section">
-                <div class="newevent-search-container">
-                    <div class="newevent-search-input-wrapper">
-                        <i class="fas fa-search"></i>
-                        <input type="text" class="newevent-search-input" placeholder="Search talent shows, performers, events...">
-                    </div>
-                    <div class="newevent-search-filters">
-                        <button class="newevent-search-filter-btn newevent-active" data-search="all">All</button>
-                        <button class="newevent-search-filter-btn" data-search="performers">Performers</button>
-                        <button class="newevent-search-filter-btn" data-search="shows">Shows</button>
-                        <button class="newevent-search-filter-btn" data-search="events">Events</button>
-                        <button class="newevent-search-filter-btn" data-search="competitions">Competitions</button>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Cards Container -->
-            <div class="newevent-cards-container" id="newevent-talent-cards">
-                <div class="newevent-loading-message">
-                    <i class="fas fa-spinner"></i>
-                    <p>Loading talent shows...</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-    </div>
-  
-         
-        
-        
-      </div>
-    </div>
-  </div>
-  
-</div>
-
-
-<!-- Profile Modal -->
-<div id="profileModal" class="profile-modal">
-    <div class="profile-modal-content">
-        <div class="profile-modal-header">
-            <h2>My Profile</h2>
-               
-            
-             <button class="close-profile">&times;</button>
-            
-        </div>
-        
-       
-      <!-- Emoji Avatar Section (replaces the profile image section) -->
-      <div class="emoji-avatar-wrapper" id="emojiAvatarWrapper">
-        <div class="current-emoji-avatar" id="currentEmojiAvatar">🤖</div>
-        <div class="emoji-selector" id="emojiSelector">
-          <div class="emoji-option" data-emoji="🎶">🎶</div>
-          <div class="emoji-option" data-emoji="🤖">🤖</div>
-          <div class="emoji-option" data-emoji="🕸️">🕸️</div>
-          <div class="emoji-option" data-emoji="🛼">🛼</div>
-          <div class="emoji-option" data-emoji="🎨">🎨</div>
-          <div class="emoji-option" data-emoji="🦺">🦺</div>
-          <div class="emoji-option" data-emoji="⛑️">⛑️</div>
-        </div>
-      </div>
-      
-            
-            <form id="profileForm">
-                <div class="form-group">
-                    <label for="profileFullName">Full Name</label>
-                    <input type="text" id="profileFullName" placeholder="Your full name">
-                </div>
-                
-                <div class="form-group">
-                    <label for="profileEmail">Email</label>
-                    <input type="email" id="profileEmail" readonly>
-                </div>
-                
-                <div class="form-group">
-                    <label for="profileUserType">Account Type</label>
-                    <select id="profileUserType">
-                        <option value="contestant">Contestant</option>
-                        <option value="voter">Voter</option>
-                        <option value="both">Both</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label for="profileBio">Bio</label>
-                    <textarea id="profileBio" placeholder="Tell us about yourself" rows="3"></textarea>
-                </div>
-                  <div class="form-group">
-                
-                <a href="#" id="logoutBtn" class="logout-btn">
-                    <i class="fas fa-sign-out-alt"></i>
-                    <span>Logout</span>
-
-                </a>
-                 <li class="menu-item">
-                <a href="#" id="termsBtn">
-                    <i class="fas fa-file-contract"></i>
-                    <span>Terms & Conditions</span>
-                </a>
-            </li>
-            
-            <li class="menu-item">
-                <a href="#" id="privacyBtn">
-                    <i class="fas fa-shield-alt"></i>
-                    <span>Privacy Policy</span>
-                </a>
-            </li>
-            
-                </div>
-
-                <div class="profile-actions">
-                    <button type="button" id="changePasswordBtn" class="secondary-btn">Change Password</button>
-                    
-                    <button type="submit" id="saveProfileBtn" class="primary-btn">Save Changes</button>
-                </div>
-            </form>
-            
-            <!-- Change Password Section (Hidden by default) -->
-            <div id="changePasswordSection" class="change-password-section hidden">
-                <h3>Change Password</h3>
-                <form id="changePasswordForm">
-                    <div class="form-group">
-                        <label for="currentPassword">Current Password</label>
-                        <div class="password-input">
-                            <input type="password" id="currentPassword" placeholder="Enter current password" required>
-                            <i class="fas fa-eye-slash toggle-password"></i>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="newPassword">New Password</label>
-                        <div class="password-input">
-                            <input type="password" id="newPassword" placeholder="Enter new password" required>
-                            <i class="fas fa-eye-slash toggle-password"></i>
-                        </div>
-                        <div class="password-strength">
-                            <div class="strength-meter">
-                                <div class="strength-segment"></div>
-                                <div class="strength-segment"></div>
-                                <div class="strength-segment"></div>
-                                <div class="strength-segment"></div>
-                            </div>
-                            <span class="strength-text">Password strength</span>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="confirmPassword">Confirm Password</label>
-                        <div class="password-input">
-                            <input type="password" id="confirmPassword" placeholder="Confirm new password" required>
-                            <i class="fas fa-eye-slash toggle-password"></i>
-                        </div>
-                    </div>
-                    
-                    <div class="profile-actions">
-                        <button type="button" id="cancelPasswordChange" class="secondary-btn">Cancel</button>
-                        <button type="submit" class="primary-btn">Update Password</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Sidebar Menu -->
-<div class="sidebar-menu" id="sidebarMenu">
-    <div class="sidebar-header">
-       
-        <button class="close-sidebar" id="closeSidebarBtn">
-            <i class="fas fa-times"></i>
-        </button>
-    </div>
-    
-    <div class="sidebar-content">
-        <ul class="sidebar-menu-items">
-            <li class="menu-item">
-                <a href="#" id="profileMenuBtn">
-                    <i class="fas fa-user"></i>
-                    <span>My Profile</span>
-                </a>
-            </li>
-            
-          
-            
-           
-            
-        </ul>
-    </div>
-    
-    <div class="sidebar-footer">
-        <div class="app-version">Version 1.0.0</div>
-    </div>
-</div>
-
-<!-- Overlay for closing sidebar when clicking outside -->
-<div class="sidebar-overlay" id="sidebarOverlay"></div>
-
-<!-- Tickets Modal -->
-<div class="modal" id="ticketsModal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h2>Select Ticket Type</h2>
-            <button class="close-modal" onclick="closeTicketsModal()">&times;</button>
-        </div>
-        <div class="modal-body">
-            <div class="ticket-type-buttons">
-                <button class="ticket-type-btn physical-event-ticket-btn" onclick="openPhysicalEventTicketPage()">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <span>Physical Event Tickets</span>
-                </button>
-                <button class="ticket-type-btn online-event-ticket-btn" onclick="openOnlineEventTicketPage()">
-                    <i class="fas fa-globe"></i>
-                    <span>Online Event Tickets</span>
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Terms & Conditions Modal -->
-<div class="modal" id="termsModal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h2>Terms & Conditions</h2>
-            <button class="close-privacy">&times;</button>
-        </div>
-        <div class="modal-body">
-            <div class="terms-content">
-                <h3>1. Acceptance of Terms</h3>
-                <p>By accessing and using this application, you accept and agree to be bound by the terms and provisions of this agreement.</p>
-                
-                <h3>2. User Account</h3>
-                <p>To use certain features of the application, you must register for an account. You agree to provide accurate information and keep your account secure.</p>
-                
-                <h3>3. User Conduct</h3>
-                <p>You agree not to use the application for any illegal purposes or to conduct activities that may damage, disable, or impair the application's functionality.</p>
-                
-                <h3>4. Intellectual Property</h3>
-                <p>All content, features, and functionality of the application are owned by us and are protected by international copyright, trademark, and other intellectual property laws.</p>
-                
-                <h3>5. Termination</h3>
-                <p>We may terminate or suspend your account and access to the application at our sole discretion, without notice, for conduct that we believe violates these Terms or is harmful to other users or us.</p>
-                
-                <h3>6. Changes to Terms</h3>
-                <p>We reserve the right to modify these terms at any time. Your continued use of the application after such changes constitutes your acceptance of the new terms.</p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Privacy Policy Modal -->
-<div class="modal" id="privacyModal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h2>Privacy Policy</h2>
-            <button class="close-privacy">&times;</button>
-        </div>
-        <div class="modal-body">
-            <div class="privacy-content">
-                <h3>1. Information We Collect</h3>
-                <p>We collect information you provide directly to us when you register for an account, create or modify your profile, and use the features of our application.</p>
-                
-                <h3>2. How We Use Information</h3>
-                <p>We use the information we collect to provide, maintain, and improve our services, to develop new ones, and to protect our application and users.</p>
-                
-                <h3>3. Information Sharing</h3>
-                <p>We do not share your personal information with companies, organizations, or individuals outside of our organization except in the following cases: with your consent, for legal reasons, or to protect rights and safety.</p>
-                
-                <h3>4. Data Security</h3>
-                <p>We work hard to protect our users from unauthorized access to or unauthorized alteration, disclosure, or destruction of information we hold.</p>
-                
-                <h3>5. Data Retention</h3>
-                <p>We retain your information for as long as your account is active or as needed to provide you services.</p>
-                
-                <h3>6. Changes to This Policy</h3>
-                <p>We may change this privacy policy from time to time. We will notify you of any changes by posting the new privacy policy on this page.</p>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<!-- Wallet Modal -->
-<div class="wallet-modal" id="walletModal">
-    <div class="wallet-container">
-        <!-- PIN Setup/Entry Screen (shown first if no PIN exists) -->
-        <div class="wallet-screen" id="pinScreen">
-            <div class="wallet-header">
-                <h2>Wallet Access</h2>
-                <button class="close-wallet" id="closeWalletBtn">&times;</button>
-            </div>
-            
-            <div class="pin-setup" id="pinSetupSection">
-                <div class="pin-icon">
-                    <i class="fas fa-lock"></i>
-                </div>
-                <h3>Create Your Wallet PIN</h3>
-                <p>Set a 4-digit PIN to secure your wallet and transactions.</p>
-                
-                <div class="pin-input-container">
-                    <input type="password" maxlength="1" class="pin-digit" data-index="0">
-                    <input type="password" maxlength="1" class="pin-digit" data-index="1">
-                    <input type="password" maxlength="1" class="pin-digit" data-index="2">
-                    <input type="password" maxlength="1" class="pin-digit" data-index="3">
-                </div>
-                
-                <div class="pin-confirm-container hidden" id="pinConfirmContainer">
-                    <p>Confirm your PIN</p>
-                    <div class="pin-input-container">
-                        <input type="password" maxlength="1" class="pin-confirm-digit" data-index="0">
-                        <input type="password" maxlength="1" class="pin-confirm-digit" data-index="1">
-                        <input type="password" maxlength="1" class="pin-confirm-digit" data-index="2">
-                        <input type="password" maxlength="1" class="pin-confirm-digit" data-index="3">
-                    </div>
-                </div>
-                
-                <button class="wallet-btn primary-btn" id="createPinBtn">Create PIN</button>
-            </div>
-            
-            <div class="pin-entry hidden" id="pinEntrySection">
-                <div class="pin-icon">
-                    <i class="fas fa-unlock-alt"></i>
-                </div>
-                <h3>Enter Your Wallet PIN</h3>
-                <p>Enter your 4-digit PIN to access your wallet.</p>
-                
-                <div class="pin-input-container">
-                    <input type="password" maxlength="1" class="pin-login-digit" data-index="0">
-                    <input type="password" maxlength="1" class="pin-login-digit" data-index="1">
-                    <input type="password" maxlength="1" class="pin-login-digit" data-index="2">
-                    <input type="password" maxlength="1" class="pin-login-digit" data-index="3">
-                </div>
-                
-                <button class="wallet-btn primary-btn" id="loginPinBtn">Access Wallet</button>
-                <button class="wallet-btn text-btn" id="forgotPinBtn">Forgot PIN?</button>
-            </div>
-        </div>
-        
-        <!-- Main Wallet Dashboard (shown after PIN verification) -->
-        <div class="wallet-screen hidden" id="walletDashboard">
-            <div class="wallet-header">
-                <h2>My Wallet</h2>
-                <button class="close-wallet" id="closeWalletDashboardBtn">&times;</button>
-            </div>
-            
-            <div class="wallet-info">
-         
-   
-  <!-- Add this to your send money form -->
-  <div class="recipient-validation" id="recipientValidation" style="display:none;">
-    <div class="recipient-info" id="recipientInfo"></div>
-  </div>
-              
-                <div class="balance-cards">
-                    <div class="balance-card talent-coin">
-                        <div class="balance-icon">
-                            <i class="fas fa-coins"></i>
-                        </div>
-                        <div class="balance-details">
-                            <h3>Talent Coin Balance</h3>
-                            <div class="balance-amount" id="talentCoinBalance">0</div>
-                            <div class="balance-equivalent">≈ ₦<span id="nairaEquivalent">0</span></div>
-                        </div>
-                    </div>
-                    <div class="balance-card pending-coin">
-                        <div class="balance-icon">
-                            <i class="fas fa-coins"></i>
-                        </div>
-                        <div class="balance-details">
-                            <h3>Pending Coin Balance</h3>
-                            <div class="balance-amount" id="pendingCoinBalance">0</div>
-                            <div class="balance-equivalent">≈ ₦<span id="nairaEquivalent">0</span></div>
-                        </div>
-                    </div>
-                    
-                    <div class="balance-card commission">
-                        <div class="balance-icon">
-                            <i class="fas fa-hand-holding-usd"></i>
-                        </div>
-                        <div class="balance-details">
-                            <h3>Commission Balance</h3>
-                            <div class="balance-amount" id="commissionBalance">0</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-         <!-- Wallet Tag Setup Modal -->
-<div id="walletTagModal" class="modal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2>Create Wallet Tag</h2>
-        <span class="close-modal">&times;</span>
-      </div>
-      <div class="modal-body">
-        <div class="tag-icon">
-          <i class="fas fa-at"></i>
-        </div>
-        <p>Create a unique tag for your wallet to receive payments easily.</p>
-        <div class="tag-input-wrapper">
-          <span>@</span>
-          <input type="text" id="walletTagInput" placeholder="yourname" maxlength="15">
-        </div>
-        <div id="tagStatus" class="tag-status"></div>
-        <button id="createTagBtn" class="primary-btn" disabled>Create Tag</button>
-      </div>
-    </div>
-  </div>
-  
-  <!-- Buy Coin Button for Wallet Dashboard -->
-<div class="wallet-action-card">
-    <div class="wallet-action-header">
-      <h3>Buy Talent Coins</h3>
-      <i class="fas fa-coins"></i>
-    </div>
-    <div class="wallet-action-content">
-      <p>Need more Talent Coins? Purchase now and get bonus coins!</p>
-      <ul class="bonus-list">
-        <li>Buy 10 coins, get 1 free</li>
-        <li>Buy 1000+ coins, get 30% bonus</li>
-      </ul>
-    </div>
-   
-  </div>
-  
-  
-            <div class="wallet-actions">
-                <div class="action-row">
-                    
-<!-- Buy Coins Button -->
- <button class="wallet-action-btn" id="buycoinsBtn">
-                    
-    <div class="action-icon">
-        <i class="fas fa-shopping-chart"></i>
-    </div>
-    <span>Buy Talent Coin </span>
-</button>
-
-                 
-                    <button class="wallet-action-btn" id="withdrawBtn">
-                        <div class="action-icon">
-                            <i class="fas fa-money-bill-wave"></i>
-                        </div>
-                        <span>Withdraw</span>
-                    </button>
-                </div>
-                 
-                <div class="action-row">
-                    <button class="wallet-action-btn" id="transferBtn">
-                        <div class="action-icon">
-                            <i class="fas fa-paper-plane"></i>
-                        </div>
-                        <span>Transfer</span>
-                        <div class="ribbon-wrapper">
-                            <div class="ribbon">Coming Soon</div>
-                        </div>
-                    </button>
-                     
-                    <button class="wallet-action-btn" id="historyBtn">
-                                                <div class="action-icon">
-                                                    <i class="fas fa-paper-plane"></i>
-                                                </div>
-                                                <span>Transaction history</span>
-                                            </button>
-                      <button class="wallet-action-btn" id="changePinBtn">
-                            <div class="action-icon">
-                                <i class="fas fa-key"></i>
-                            </div>
-                            <span>Change PIN</span>
-                        </button>
-                </div>
-            </div>
-            
-           
-<!-- Recent Transaction History Preview -->
-<div class="transaction-history">
-    <h3>Recent Transactions</h3>
-    <div class="transaction-list" id="recentTransactionList">
-        <!-- Recent transactions will be loaded here -->
-        <div class="empty-transactions" id="emptyRecentTransactions">
-            <i class="fas fa-history"></i>
-            <p>No transactions yet</p>
-        </div>
-    </div>
-    <button class="view-all-btn" id="viewAllTransactionsBtn">View All Transactions</button>
-</div>
-        </div>
-    </div>
-</div> 
-
-<!-- Buy Coins Modal -->
-<div id="buyCoinsModal" class="buy-coins-modal">
-  <div class="buyCoins-modal-content">
-    <div class="buyCoins-modal-header">
-      <h2>Buy Talent Coins</h2>
-         <button class="close-buycoins" id="closebuycoinsmodal">&times;</button>
-            <span class="host-sport-category-status coming-soon">Coming Soon july 10th</span>
-          
-    </div>
-    
-    <div class="buyCoins-modal-tabs">
-      <button class="buyCoins-tab-btn active" data-tab="buyTab">Buy Coins</button>
-      <button class="buyCoins-tab-btn" data-tab="confirmTab">Confirm Payment</button>
-    </div>
-    
-    <!-- Tab 1: Buy Coins -->
-    <div id="buyTab" class="buyCoins-tab-content active">
-      <div class="coin-purchase-form">
-        <h3>Select Coin Package</h3>
-        <p class="coin-rate-info">1 Talent Coin = 15 Naira</p>
-        
-        <div class="coin-packages">
-          <div class="package-option">
-            <input type="radio" id="package1" name="coinPackage" value="1">
-            <label for="package1">1 Talent Coin</label>
-            <span class="buyCoins-price">₦15</span>
-          </div>
-          
-          <div class="buyCoins-package-option">
-            <input type="radio" id="package10" name="coinPackage" value="11">
-            <label for="package10">10 + 1 Bonus Talent Coins</label>
-            <span class="buyCoins-price">₦150</span>
-            <span class="buyCoins-bonus-tag">+1 Bonus</span>
-          </div>
-          
-          <div class="buyCoins-package-option">
-            <input type="radio" id="package50" name="coinPackage" value="55">
-            <label for="package50">50 + 5 Bonus Talent Coins</label>
-            <span class="buyCoins-price">₦750</span>
-            <span class="buyCoins-bonus-tag">+5 Bonus</span>
-          </div>
-          
-          <div class="buyCoins-package-option">
-            <input type="radio" id="package100" name="coinPackage" value="110">
-            <label for="package100">100 + 10 Bonus Talent Coins</label>
-            <span class="buyCoins-price">₦1,500</span>
-            <span class="buyCoins-bonus-tag">+10 Bonus</span>
-          </div>
-          
-          <div class="buyCoins-package-option">
-            <input type="radio" id="package200" name="coinPackage" value="220">
-            <label for="package200">200 + 20 Bonus Talent Coins</label>
-            <span class="buyCoins-price">₦3,000</span>
-            <span class="buyCoins-bonus-tag">+20 Bonus</span>
-          </div>
-          
-          <div class="buyCoins-package-option">
-            <input type="radio" id="package1000" name="coinPackage" value="1300">
-            <label for="package1000">1000 + 300 Bonus Talent Coins</label>
-            <span class="buyCoins-price">₦15,000</span>
-            <span class="buyCoins-bonus-tag">+300 Bonus</span>
-          </div>
-          
-          <div class="buyCoins-package-option">
-            <input type="radio" id="package2000" name="coinPackage" value="2600">
-            <label for="package2000">2000 + 600 Bonus Talent Coins</label>
-            <span class="buyCoins-price">₦30,000</span>
-            <span class="buyCoins-bonus-tag">+600 Bonus</span>
-          </div>
-        </div>
-        
-        <div class="buyCoins-summary-section">
-          <div class="buyCoins-summary-row">
-            <span>Selected Package:</span>
-            <span id="selectedPackage">None</span>
-          </div>
-          <div class="buyCoins-summary-row">
-            <span>Total Coins:</span>
-            <span id="totalCoins">0</span>
-          </div>
-          <div class="buyCoins-summary-row">
-            <span>Amount to Pay:</span>
-            <span id="amountToPay">₦0</span>
-          </div>
-        </div>
-        
-        <button id="payBtn" class="btn btn-success">Pay</button>
-      </div>
-      
-      <!-- Payment Instructions (initially hidden) -->
-      <div id="paymentInstructions" class="payment-instructions hidden">
-        <h3>Payment Instructions</h3>
-        <p>Please transfer the exact amount to the following account:</p>
-        
-        <div class="account-details">
-          <div class="buyCoins-detail-row">
-            <span class="buyCoins-detail-label">Account Name:</span>
-            <span class="buyCoins-detail-value">Rewarder Quest</span>
-          </div>
-          <div class="buyCoins-detail-row">
-            <span class="buyCoins-detail-label">Account Number (Opay):</span>
-            <span class="buyCoins-detail-value">9078139367</span>
-            <button class="buyCoins-copy-btn" data-copy="9078139367">Copy</button>
-          </div>
-          <div class="buyCoins-detail-row">
-            <span class="buyCoins-detail-label">Amount:</span>
-            <span class="buyCoins-detail-value" id="transferAmount">₦0</span>
-          </div>
-        </div>
-        
-        <div class="instruction-note">
-          <p>After making the transfer, please proceed to the "Confirm Payment" tab to complete your purchase.</p>
-        </div>
-        
-        <button class="tab-nav-btn" data-tab="confirmTab">Proceed to Confirm Payment</button>
-      </div>
-    </div>
-    
-    <!-- Tab 2: Confirm Payment -->
-    <div id="confirmTab" class="buyCoins-tab-content">
-      <div class="payment-confirmation-form">
-        <h3>Confirm Your Payment</h3>
-        <p class="buyCoins-confirmation-info">Please fill in the details of your payment to verify your transaction.</p>
-        </div>
-        <form id="paymentConfirmationForm">
-          <div class="buyCoins-form-group">
-            <label for="fullName">Full Name</label>
-            <input type="text" id="fullName" name="fullName" required>
-          </div>
-          
-          
-        
-
-          
-          <div class="buyCoins-form-group">
-            <label for="email">Email</label>
-            <input type="tel" id="email" name="email" required>
-          </div>
-          
-          
-          <div class="buyCoins-verification-notice">
-            <p>Talent Coins will be credited to your wallet within 1 to 30 minutes after successful verification.</p>
-          </div>
-         
-    
-  
-          <button type="submit" id="submitConfirmation" class="btn btn-primary">Submit Confirmation</button>
-        </form>
-      </div>
-      
-      <!-- Confirmation Success (initially hidden) -->
-      <div id="confirmationSuccess" class="confirmation-success hidden">
-        <div class="success-icon">
-          <i class="fas fa-check-circle"></i>
-        </div>
-        <h3>Payment Confirmation Submitted!</h3>
-        <p>Your payment confirmation has been submitted successfully.</p>
-        <div class="pending-info">
-          <p>Your purchase of <span id="pendingCoins">0</span> Talent Coins has been added to your pending balance.</p>
-          <p>The coins will be credited to your wallet within 1 to 30 minutes after verification.</p>
-        </div>
-        <button id="closeModalBtn" class="btn btn-secondary">Close</button>
-      </div>
-    </div>
-  </div>
-
-<!-- Withdraw Modal (Add this to your existing HTML) -->
-<div id="withdrawModal" class="withdraw-modal">
-    <div class="withdraw-modal-content">
-       
-         <!-- PIN Verification Screen -->
-        <div id="pinVerificationScreen" class="modal-screen active">
-            <div class="modal-header">
-                <h2>Verify PIN</h2>    
-                 <button class="close-withdraw-modal" id="closewithdrawmodal">&times;</button>
-           
-           </div>
-            <div class="pin-verification-content">
-                <div class="pin-icon">
-                    <i class="fas fa-lock"></i>
-                </div>
-                <h3>Enter Your Wallet PIN</h3>
-                <p>Please enter your 4-digit wallet PIN to continue</p>
-                
-                <div class="pin-input-container">
-                    <input type="password" class="pin-digit" maxlength="1" inputmode="numeric" pattern="[0-9]*">
-                    <input type="password" class="pin-digit" maxlength="1" inputmode="numeric" pattern="[0-9]*">
-                    <input type="password" class="pin-digit" maxlength="1" inputmode="numeric" pattern="[0-9]*">
-                    <input type="password" class="pin-digit" maxlength="1" inputmode="numeric" pattern="[0-9]*">
-                </div>
-                
-                <div class="error-message" id="pinError"></div>
-                
-                <button id="verifyPinBtn" class="btn btn-primary">Verify PIN</button>
-            </div>
-        </div>
-        
-       <!-- Withdrawal Form Screen -->
-        <div id="withdrawFormScreen" class="withdrawmodal-screen">
-            <div class="withdraw-modal-header">
-                <h2>Withdraw Funds</h2>
-                   <button class="close-withdraw-modal" id="closewithdrawmodal">&times;</button>
-             <span class="host-sport-category-status coming-soon">Coming Soon july 10th</span>
-          
-            </div>
-            <div class="withdraw-form-content">
-              <div class="balance-info">
-       
-                    <div class="balance-item">
-                        <span class="balance-label">Talent Coin Balance:</span>
-                        <span class="balance-value" id="talentcoinBalance">0 TC</span>
-                    </div>
-                    <div class="balance-item">
-                        <span class="balance-label">Naira Equivalent:</span>
-                        <span class="balance-value" id="nairaEquivalent">₦0</span>
-                    </div>
-                </div>
-
-                
-                <form id="withdrawForm">
-                    <div class="withdraw-form-group">
-                        <label for="withdrawAmount">Amount (Talent Coins)</label>
-                        <input type="number" id="withdrawAmount" name="withdrawAmount" min="10" step="1" required>
-                        <span class="input-note">Minimum withdrawal: 10 Talent Coins</span>
-                    </div>
-                    
-                    <div class="amount-preview">
-                       <span>You will receive:</span>
-                        
-                       <span id="nairaAmount">₦0</span>
-                    </div>
-                    
-                    <div class="withdraw-form-group">
-                        <label for="bankSelect">Select Bank</label>
-                        <select id="bankSelect" name="bankSelect" required>
-                            <option value="">-- Select Bank --</option>
-                            <option value="access">Access Bank</option>
-                            <option value="firstbank">First Bank</option>
-                            <option value="gtb">Guaranty Trust Bank</option>
-                            <option value="zenith">Zenith Bank</option>
-                            <option value="uba">United Bank for Africa</option>
-                            <option value="stanbic">Stanbic IBTC Bank</option>
-                            <option value="fcmb">First City Monument Bank</option>
-                            <option value="fidelity">Fidelity Bank</option>
-                            <option value="ecobank">Ecobank</option>
-                            <option value="union">Union Bank</option>
-                            <option value="sterling">Sterling Bank</option>
-                            <option value="polaris">Polaris Bank</option>
-                            <option value="wema">Wema Bank</option>
-                            <option value="opay">OPay</option>
-                            <option value="palmpay">PalmPay</option>
-                            <option value="kuda">Kuda Bank</option>
-                            <option value="moniepoint">Moniepoint</option>
-                        </select>
-                    </div>
-                    
-                    <div class="withdraw-form-group">
-                        <label for="accountNumber">Account Number</label>
-                        <input type="text" id="accountNumber" name="accountNumber" pattern="[0-9]{10}" maxlength="10" inputmode="numeric" required>
-                        <span class="input-note">Enter a valid 10-digit account number</span>
-                    </div>
-                    
-                    <div class="withdraw-form-group">
-                        <label for="accountName">Account Name</label>
-                        <input type="text" id="accountName" name="accountName" readonly>
-                        <button type="button" id="verifyAccountBtn" class="btn btn-secondary btn-sm">Verify Account</button>
-                    </div>
-                    
-                    <div class="withdraw-fee-summary">
-                        <div class="withdraw-summary-row">
-                            <span>Withdrawal Amount:</span>
-                            <span id="withdraw-summaryAmount">0 TC</span>
-                        </div>
-                        <div class="withdraw-summary-row">
-                            <span>Processing Fee:</span>
-                            <span id="processingFee">0 TC</span>
-                        </div>
-                        <div class="withdraw-summary-row total">
-                            <span>Total Deduction:</span>
-                            <span id="totalDeduction">0 TC</span>
-                        </div>
-                    </div>
-                    
-                    <button type="submit" id="submitWithdrawBtn" class="btn btn-success" disabled>Withdraw Funds</button>
-                </form>
-            </div>
-        </div>
-        
-        <!-- Processing Screen -->
-        <div id="processingScreen" class="withdrawmodal-screen">
-            <div class="withdrawprocessing-content">
-                <div class="loader"></div>
-                <h3>Processing Your Withdrawal</h3>
-                <p>Please wait while we process your request...</p>
-            </div>
-        </div>
-        
-        <!-- Success Screen -->
-        <div id="successScreen" class="withdrawmodal-screen">
-            <div class="withdrawsuccess-content">
-                <div class="success-icon">
-                    <i class="fas fa-check-circle"></i>
-                </div>
-                <h3>Withdrawal Successful!</h3>
-                <p>Your withdrawal request has been processed successfully.</p>
-                
-                <div class="withdrawtransaction-details">
-                    <div class="withdrawdetail-row">
-                        <span class="withdrawdetail-label">Amount:</span>
-                        <span class="withdrawdetail-value" id="successAmount">0 TC (₦0)</span>
-                    </div>
-                    <div class="withdrawdetail-row">
-                        <span class="withdrawdetail-label">Account:</span>
-                        <span class="withdrawdetail-value" id="successAccount"></span>
-                    </div>
-                    <div class="withdrawdetail-row">
-                        <span class="withdrawdetail-label">Transaction ID:</span>
-                        <span class="withdrawdetail-value" id="transactionId"></span>
-                    </div>
-                    <div class="withdrawdetail-row">
-                        <span class="withdrawdetail-label">Date & Time:</span>
-                        <span class="withdrawdetail-value" id="transactionDate"></span>
-                    </div>
-                </div>
-                
-                <p class="success-note">The funds will be credited to your account within 1min to 5 mins.</p>
-                
-                <button id="closeSuccessBtn" class="btn btn-primary">Done</button>
-            </div>
-        </div>
-        
-        <!-- Error Screen -->
-        <div id="errorScreen" class="withdrawmodal-screen">
-            <div class="withdrawerror-content">
-                <div class="withdrawerror-icon">
-                    <i class="fas fa-exclamation-circle"></i>
-                </div>
-                <h3>Withdrawal Failed</h3>
-                <p id="withdrawerrorMessage">There was an error processing your withdrawal request.</p>
-                
-                <div class="withdrawerror-actions"> <button id="tryAgainBtn" class="btn btn-primary">Try Again</button>
-                    <button id="contactSupportBtn" class="btn btn-secondary">Contact Support</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Transaction History Modal -->
-<div id="transactionHistoryModal" class="transaction-modal">
-    <div class="Historymodal-content">
-        <div class="Historymodal-header">
-            <h2>Transaction History</h2>
-                 <button class="close-History" id="closetransactionhistorymodal">&times;</button>
-           <span class="host-sport-category-status coming-soon">Coming Soon july 10th</span>
-          
-        </div>
-        
-        <div class="Historytransaction-filters">
-            <div class="Historyfilter-group">
-                <label for="transactionType">Type:</label>
-                <select id="transactionType">
-                    <option value="all">All Transactions</option>
-                    <option value="purchase">Purchases</option>
-                    <option value="withdrawal">Withdrawals</option>
-                    <option value="commission">Commissions</option>
-                    <option value="earning">Earnings</option>
-                </select>
-            </div>
-            
-            <div class="Historyfilter-group">
-                <label for="dateRange">Period:</label>
-                <select id="dateRange">
-                    <option value="all">All Time</option>
-                    <option value="today">Today</option>
-                    <option value="week">This Week</option>
-                    <option value="month">This Month</option>
-                    <option value="year">This Year</option>
-                </select>
-            </div>
-            
-            <div class="Historyfilter-group">
-                <label for="transactionStatus">Status:</label>
-                <select id="transactionStatus">
-                    <option value="all">All Status</option>
-                    <option value="completed">Completed</option>
-                    <option value="pending">Pending</option>
-                    <option value="failed">Failed</option>
-                </select>
-            </div>
-            
-            <button id="applyFilters" class="Historyfilter-btn">Apply Filters</button>
-        </div>
-        
-        <div class="transaction-summary">
-            <div class="Historysummary-card">
-                <h4>Total Purchases</h4>
-                <p id="totalPurchases">0 TC</p>
-            </div>
-            <div class="Historysummary-card">
-                <h4>Total Withdrawals</h4>
-                <p id="totalWithdrawals">0 TC</p>
-            </div>
-            <div class="Historysummary-card">
-                <h4>Total Earnings</h4>
-                <p id="totalEarnings">0 TC</p>
-            </div>
-            <div class="Historysummary-card">
-                <h4>Total Commissions</h4>
-                <p id="totalCommissions">0 TC</p>
-            </div>
-        </div>
-        
-        <div class="transaction-table-container">
-            <table class="transaction-table">
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Type</th>
-                        <th>Amount</th>
-                        <th>Status</th>
-                        <th>Details</th>
-                    </tr>
-                </thead>
-                <tbody id="transactionTableBody">
-                    <!-- Transactions will be loaded here -->
-                </tbody>
-            </table>
-            
-            <div class="empty-state" id="emptyTransactions">
-                <i class="fas fa-search"></i>
-                <p>No transactions found</p>
-                <span>Try changing your filters</span>
-            </div>
-            
-            <div class="loading-transactions" id="loadingTransactions">
-                <i class="fas fa-spinner fa-spin"></i>
-                <p>Loading transactions...</p>
-            </div>
-        </div>
-        
-        <div class="History-pagination">
-            <button id="prevPage" class="pagination-btn" disabled>
-                <i class="fas fa-chevron-left"></i> Previous
-            </button>
-            <span id="pageIndicator">Page 1 of 1</span>
-            <button id="nextPage" class="pagination-btn" disabled>
-                Next <i class="fas fa-chevron-right"></i>
-            </button>
-        </div>
-        
-        <div class="Historyexport-section">
-            <button id="exportCSV" class="export-btn">
-                <i class="fas fa-file-csv"></i> Export CSV
-            </button>
-            <button id="printTransactions" class="export-btn">
-                <i class="fas fa-print"></i> Print
-            </button>
-        </div>
-    </div>
-</div>
-
-<!-- Transaction Details Modal -->
-<div id="transactionDetailsModal" class="transaction-details-modal">
-    <div class="Historymodal-content">
-        <div class="modal-header">
-            <h2>Transaction Details</h2>
-                 <button class="close-History" id="closetransactiondetailsmodal">&times;</button>
-           <span class="host-sport-category-status coming-soon">Coming Soon july 10th</span>
-          
-        </div>
-        
-        <div class="transaction-details-content" id="transactionDetailsContent">
-            <!-- Transaction details will be loaded here -->
-        </div>
-        
-        <div class="Historymodal-footer">
-            <button id="closeDetailsBtn" class="btn btn-secondary">Close</button>
-        </div>
-    </div>
-</div>
-
-
-
-<div class="game-portal-container">
-  <!-- Game Portal Header -->
-  <div class="game-portal-header">
-    <h2>Game Portal</h2>
-    <button class="close-portal-btn">&times;</button>
-  </div>
-
-  <!-- Game Categories -->
-  <div class="game-categories">
-    <button class="category-btn active" data-category="all">All Games</button>
-    <button class="category-btn" data-category="action">Action</button>
-    <button class="category-btn" data-category="puzzle">Puzzle</button>
-    <button class="category-btn" data-category="strategy">Strategy</button>
-    <button class="category-btn" data-category="arcade">Arcade</button>
-    <button class="category-btn" data-category="card">Card Games</button>
-  </div>
-
-  <!-- Search Bar -->
-  <div class="game-search-container">
-    <input type="text" id="gameSearch" placeholder="Search games...">
-    <button class="search-btn"><i class="fas fa-search"></i></button>
-  </div>
-
-  <!-- Featured Games Carousel -->
-  <div class="featured-games-carousel">
-    <h3>Featured Games</h3>
-    <div class="carousel-container">
-      <button class="carousel-nav prev"><i class="fas fa-chevron-left"></i></button>
-      <div class="carousel-items">
-        <div class="featured-game" data-game-id="game1">
-        <div class="game-thumbnail" style="background-image: url('https://i.ibb.co/5WFQSyCD/Chat-GPT-Image-Jul-14-2025-10-50-36-AM.png');"></div>
- <div class="game-info">
-            <h4>Tic Tac Toes</h4>
-           
-          </div>
-        </div>
-        <div class="featured-game" data-game-id="game2">
-          <div class="game-thumbnail" style="background-image: url('images/games/featured-game2.jpg')"></div>
-          <div class="game-info">
-            <h4>Puzzle Master</h4>
-            <div class="game-meta">
-              <span class="game-category">Puzzle</span>
-              <span class="game-rating"><i class="fas fa-star"></i> 4.6</span>
-            </div>
-          </div>
-        </div>
-        <div class="featured-game" data-game-id="game3">
-          <div class="game-thumbnail" style="background-image: url('images/games/featured-game3.jpg')"></div>
-          <div class="game-info">
-            <h4>Card Kingdom</h4>
-            <div class="game-meta">
-              <span class="game-category">Card</span>
-              <span class="game-rating"><i class="fas fa-star"></i> 4.7</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <button class="carousel-nav next"><i class="fas fa-chevron-right"></i></button>
-    </div>
-  </div>
-
-  <!-- Game Grid -->
-  <div class="games-grid-container">
-    <h3>All Games</h3>
-    <div class="games-grid">
-      <!-- Game Card Template -->
-      <!-- These will be dynamically populated from your game data -->
-      <div class="game-card" data-game-id="game1" data-category="action">
-        <div class="game-thumbnail" style="background-image: url('images/games/game1.jpg')">
-          <div class="game-overlay">
-            <button class="play-now-btn">Play Now</button>
-          </div>
-        </div>
-        <div class="game-details">
-          <h4 class="game-title">Space Adventure</h4>
-          <div class="game-meta">
-            <span class="game-category">Action</span>
-            <span class="game-rating"><i class="fas fa-star"></i> 4.8</span>
-          </div>
-          <p class="game-description">Explore the universe and battle alien forces in this action-packed space adventure.</p>
-          <div class="game-stats">
-            <span class="plays-count"><i class="fas fa-gamepad"></i> 12.5k plays</span>
-            <span class="coin-reward"><i class="fas fa-coins"></i> Win up to 50 coins</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- More game cards will be added dynamically -->
-    </div>
-
-    <!-- Load More Games Button -->
-    <button class="load-more-btn">Load More Games</button>
-  </div>
-
-  <!-- Recently Played Games -->
-  <div class="recently-played-container">
-    <h3>Recently Played</h3>
-    <div class="recently-played-games">
-      <!-- Will be populated dynamically based on user history -->
-      <p class="no-games-message">You haven't played any games yet.</p>
-    </div>
-  </div>
-</div>
-
-<!-- Game Modal (appears when a game is selected) -->
-<div id="gameModal" class="game-modal">
-  <div class="game-modal-content">
-    <div class="game-modal-header">
-      <h2 id="modalGameTitle">Game Title</h2>
-      <button class="close-game-modal">&times;</button>
-    </div>
-    <div class="game-modal-body">
-      <div class="game-iframe-container">
-        <iframe id="gameIframe" src="" frameborder="0" allowfullscreen></iframe>
-      </div>
-      <div class="game-controls">
-        <button class="fullscreen-btn"><i class="fas fa-expand"></i></button>
-        <button class="refresh-game-btn"><i class="fas fa-redo"></i></button>
-      </div>
-      <div class="game-info-panel">
-        <div class="game-description-panel">
-          <h3>About This Game</h3>
-          <p id="modalGameDescription">Game description will appear here.</p>
-        </div>
-        <div class="game-rewards-panel">
-          <h3>Rewards</h3>
-          <p>Win up to <span id="modalGameReward">0</span> Talent Coins by achieving high scores!</p>
-          <div class="reward-tiers">
-            <div class="reward-tier">
-              <span class="tier-label">Bronze</span>
-              <span class="tier-coins">5 Coins</span>
-            </div>
-            <div class="reward-tier">
-              <span class="tier-label">Silver</span>
-              <span class="tier-coins">15 Coins</span>
-            </div>
-            <div class="reward-tier">
-              <span class="tier-label">Gold</span>
-              <span class="tier-coins">30 Coins</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<!-- Rewarder Modal - Initially hidden -->
-<div id="rewarderModal" class="rewarder-modal hidden">
-    <div class="rewarder-modal-content">
-        <div class="rewarder-modal-header">
-            <h2>Rewarder Quest</h2>
-            <span class="close-rewarder-modal">&times;</span>
-        </div>
-        <div class="rewarder-modal-body">
-            <p class="rewarder-intro">Complete quests to earn Talent Coins and bonuses</p>
-             <!--  Bonuses Card -->
-                <div class="bonus-card" id="bonusesCard">
-                    <div class="bonus-icon">
-                        <i class="fas fa-gift"></i>
-                    </div>
-                    <div class="bonus-info">
-                        <h3>Bonuses</h3>
-                        <p>Special rewards and offers</p>
-                        <div class="bonus-progress">
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: 0%"></div>
-                            </div>
-                            <span class="progress-text">0/5 bonuses</span>
-                        </div>
-                    </div>
-                    <button class="claim-btn" id="bonusesBtn">
-                        <span class="btn-text">View</span>
-                        <span class="coin-amount">+?</span>
-                    </button>
-                </div>
-            <!-- Bonus Cards Container -->
-            <div class="bonus-cards-container">
-                <!-- Daily Login Bonus Card -->
-                <div class="bonus-card" id="dailyLoginCard">
-                    <div class="bonus-icon">
-                        <i class="fas fa-calendar-check"></i>
-                    </div>
-                    <div class="bonus-info">
-                        <h3>Daily Login</h3>
-                        <p>Login daily to earn coins</p>
-                        <div class="bonus-progress">
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: 0%"></div>
-                            </div>
-                            <span class="progress-text">0/7 days</span>
-                        </div>
-                    </div>
-                    <button class="claim-btn" id="claimDailyBtn" disabled>
-                        <span class="btn-text">Claim</span>
-                        <span class="coin-amount">+1</span>
-                    </button>
-                </div>
-
-                <!-- Referral Bonus Card -->
-                <div class="bonus-card" id="referralCard">
-                    <div class="bonus-icon">
-                        <i class="fas fa-user-plus"></i>
-                    </div>
-                    <div class="bonus-info">
-                        <h3>Refer Friends</h3>
-                        <p>Earn when friends join</p>
-                        <div class="bonus-progress">
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: 0%"></div>
-                            </div>
-                            <span class="progress-text">0 referrals</span>
-                        </div>
-                    </div>
-                    <button class="claim-btn" id="referBtn">
-                        <span class="btn-text">Refer</span>
-                        <span class="coin-amount">+5</span>
-                    </button>
-                </div>
-
-                <!-- Investment Bonus Card -->
-                <div class="bonus-card" id="investmentCard">
-                    <div class="bonus-icon">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <div class="bonus-info">
-                        <h3>Invest</h3>
-                        <p>Grow your coins with interest</p>
-                        <div class="bonus-progress">
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: 0%"></div>
-                            </div>
-                            <span class="progress-text">0 coins invested</span>
-                        </div>
-                    </div>
-                    <button class="claim-btn" id="investBtn">
-                        <span class="btn-text">Invest</span>
-                        <span class="coin-amount">+10%</span>
-                    </button>
-                </div>
-
-                <!-- Journey Bonus Card -->
-                <div class="bonus-card" id="journeyCard">
-                    <div class="bonus-icon">
-                        <i class="fas fa-route"></i>
-                    </div>
-                    <div class="bonus-info">
-                        <h3>Journey</h3>
-                        <p>Complete tasks to earn rewards</p>
-                        <div class="bonus-progress">
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: 0%"></div>
-                            </div>
-                            <span class="progress-text">0/10 tasks</span>
-                        </div>
-                    </div>
-                    <button class="claim-btn" id="journeyBtn">
-                        <span class="btn-text">Start</span>
-                        <span class="coin-amount">+20</span>
-                    </button>
-                </div>
-
-               
-            </div>
-
-            <!-- Advertisement Banner -->
-            <div class="ad-banner">
-                <img src="assets/images/ad-banner.jpg" alt="Special Offer" width="400" height="60">
-            </div>
-
-            <!-- Rewarder Quests Section -->
-            <div class="rewarder-quests">
-                <h3>Available Quests</h3>
-                
-                <div class="quest-list">
-                    <!-- Quest Item 1 -->
-                    <div class="quest-item">
-                        <div class="quest-icon">
-                            <i class="fas fa-user-edit"></i>
-                        </div>
-                        <div class="quest-details">
-                            <h4>Complete Your Profile</h4>
-                            <p>Add a profile picture and complete your bio</p>
-                            <div class="quest-progress">
-                                <div class="progress-bar">
-                                    <div class="progress-fill" style="width: 30%"></div>
-                                </div>
-                                <span class="progress-text">30% complete</span>
-                            </div>
-                        </div>
-                        <div class="quest-reward">
-                            <span class="coin-amount">+3</span>
-                            <button class="quest-btn" data-quest="profile">Start</button>
-                        </div>
-                    </div>
-
-                    <!-- Quest Item 2 -->
-                    <div class="quest-item">
-                        <div class="quest-icon">
-                            <i class="fas fa-comment"></i>
-                        </div>
-                        <div class="quest-details">
-                            <h4>Post 5 Comments</h4>
-                            <p>Engage with the community by posting comments</p>
-                            <div class="quest-progress">
-                                <div class="progress-bar">
-                                    <div class="progress-fill" style="width: 20%"></div>
-                                </div>
-                                <span class="progress-text">1/5 comments</span>
-                            </div>
-                        </div>
-                        <div class="quest-reward">
-                            <span class="coin-amount">+5</span>
-                            <button class="quest-btn" data-quest="comments">Continue</button>
-                        </div>
-                    </div>
-
-                    <!-- Quest Item 3 -->
-                    <div class="quest-item">
-                        <div class="quest-icon">
-                            <i class="fas fa-share-alt"></i>
-                        </div>
-                        <div class="quest-details">
-                            <h4>Share Content</h4>
-                            <p>Share 3 posts on social media</p>
-                            <div class="quest-progress">
-                                <div class="progress-bar">
-                                    <div class="progress-fill" style="width: 0%"></div>
-                                </div>
-                                <span class="progress-text">0/3 shares</span>
-                            </div>
-                        </div>
-                        <div class="quest-reward">
-                            <span class="coin-amount">+7</span>
-                            <button class="quest-btn" data-quest="share">Start</button>
-                        </div>
-                    </div>
-
-                    <!-- Quest Item 4 -->
-                    <div class="quest-item">
-                        <div class="quest-icon">
-                            <i class="fas fa-upload"></i>
-                        </div>
-                        <div class="quest-details">
-                            <h4>Upload Content</h4>
-                            <p>Upload your first original content</p>
-                            <div class="quest-progress">
-                                <div class="progress-bar">
-                                    <div class="progress-fill" style="width: 0%"></div>
-                                </div>
-                                <span class="progress-text">0/1 uploads</span>
-                            </div>
-                        </div>
-                        <div class="quest-reward">
-                            <span class="coin-amount">+10</span>
-                            <button class="quest-btn" data-quest="upload">Start</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Referral Sub-Modal (Hidden by default) -->
-<div id="referralSubModal" class="rewarder-sub-modal hidden">
-    <div class="rewarder-sub-modal-content">
-        <div class="rewarder-sub-modal-header">
-            <h2>Refer Friends & Earn</h2>
-            <span class="close-rewarder-sub-modal">&times;</span>
-        </div>
-        <div class="rewarder-sub-modal-body">
-            <div class="referral-info">
-                <div class="referral-icon">
-                    <i class="fas fa-users"></i>
-                </div>
-                <h3>Earn 5 Talent Coins for each friend who joins!</h3>
-                <p>Share your unique referral link with friends. When they sign up, you'll both receive 5 Talent Coins.</p>
-            </div>
-            
-            <div class="referral-link-container">
-                <label for="referralLink">Your Referral Link:</label>
-                <div class="link-copy-group">
-                    <input type="text" id="referralLink" readonly>
-                    <button id="copyReferralLink" class="copy-btn">
-                        <i class="fas fa-copy"></i>
-                    </button>
-                </div>
-            </div>
-            
-            <div class="share-options">
-                <h4>Share via:</h4>
-                <div class="social-share-buttons">
-                    <button class="share-btn whatsapp">
-                        <i class="fab fa-whatsapp"></i>
-                    </button>
-                    <button class="share-btn facebook">
-                        <i class="fab fa-facebook-f"></i>
-                    </button>
-                    <button class="share-btn twitter">
-                        <i class="fab fa-twitter"></i>
-                    </button>
-                    <button class="share-btn telegram">
-                        <i class="fab fa-telegram-plane"></i>
-                    </button>
-                </div>
-            </div>
-            
-            <div class="referral-stats">
-                <div class="stat-item">
-                    <span class="stat-label">Total Referrals:</span>
-                    <span class="stat-value" id="totalReferrals">0</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-label">Coins Earned:</span>
-                    <span class="stat-value" id="referralCoinsEarned">0</span>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Investment Sub-Modal (Hidden by default) -->
-<div id="investmentSubModal" class="rewarder-sub-modal hidden">
-    <div class="rewarder-sub-modal-content">
-        <div class="rewarder-sub-modal-header">
-            <h2>Invest Your Talent Coins</h2>
-            <span class="close-rewarder-sub-modal">&times;</span>
-        </div>
-        <div class="rewarder-sub-modal-body">
-            <div class="investment-info">
-                <div class="investment-icon">
-                    <i class="fas fa-chart-line"></i>
-                </div>
-                <h3>Grow your coins with interest!</h3>
-                <p>Invest your Talent Coins and earn up to 10% interest over time.</p>
-            </div>
-            
-            <div class="investment-plans">
-                <div class="plan-option">
-                    <input type="radio" id="plan1" name="investmentPlan" value="basic">
-                    <label for="plan1">
-                        <div class="plan-details">
-                            <h4>Basic Plan</h4>
-                            <p>5% return after 7 days</p>
-                            <p class="min-amount">Min: 10 Coins</p>
-                        </div>
-                    </label>
-                </div>
-                
-                <div class="plan-option">
-                    <input type="radio" id="plan2" name="investmentPlan" value="standard">
-                    <label for="plan2">
-                        <div class="plan-details">
-                            <h4>Standard Plan</h4>
-                            <p>7% return after 14 days</p>
-                            <p class="min-amount">Min: 50 Coins</p>
-                        </div>
-                    </label>
-                </div>
-                
-                <div class="plan-option">
-                    <input type="radio" id="plan3" name="investmentPlan" value="premium">
-                    <label for="plan3">
-                        <div class="plan-details">
-                            <h4>Premium Plan</h4>
-                            <p>10% return after 30 days</p>
-                            <p class="min-amount">Min: 100 Coins</p>
-                        </div>
-                    </label>
-                </div>
-            </div>
-            
-            <div class="investment-amount">
-                <label for="coinAmount">Amount to Invest:</label>
-                <input type="number" id="coinAmount" min="10" placeholder="Enter coin amount">
-            </div>
-            
-            <div class="investment-summary">
-                <div class="summary-row">
-                    <span>Investment Amount:</span>
-                    <span id="investmentAmount">0 Coins</span>
-                </div>
-                <div class="summary-row">
-                    <span>Expected Return:</span>
-                    <span id="expectedReturn">0 Coins</span>
-                </div>
-                <div class="summary-row">
-                    <span>Maturity Date:</span>
-                    <span id="maturityDate">-</span>
-                </div>
-            </div>
-            
-            <button id="confirmInvestmentBtn" class="btn btn-primary">Invest Now</button>
-        </div>
-    </div>
-</div>
-
-        
-
-           <!-- Creator Page Modal -->
-<div class="creator-modal-overlay" id="creatorModal" onclick="closeCreatorModal(event)">
-    <div class="creator-modal-container" onclick="event.stopPropagation()">
-        <!-- Modal Header with Close Button -->
-        <div class="creator-modal-header">
-            <h2>🎬 Creator Hub</h2>
-            <button class="creator-modal-close-btn" onclick="closeCreatorModal()">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-
-        <!-- Top Banner Ad -->
-        <div class="creator-banner-ad top-banner">
-            <div class="creator-ad-content">
-                <span class="creator-ad-label">Sponsored</span>
-                <p>Create amazing events and reach thousands of participants!</p>
-            </div>
-            
-        </div>
-
-        <!-- Scrollable Content Area -->
-        <div class="creator-content-area">
-            <div class="creator-cards-container">
-                <!-- Entertainment Event Card -->
-                <div class="creator-card-btn" onclick="openEntertainmentEvent()">
-                    <div class="creator-card-icon">
-                        <i class="fas fa-theater-masks"></i>
-                    </div>
-                    <div class="creator-card-content">
-                        <h3>Entertainment Event</h3>
-                        <p>Create talent shows, performances & entertainment events</p>
-                    </div>
-                    <div class="creator-card-arrow">
-                        <i class="fas fa-chevron-right"></i>
-                    </div>
-                     <span class="host-sport-category-status coming-soon">Coming Soon july 10th</span>
-          
-                </div>
-
-                <!-- Sport Event Card -->
-                <div class="creator-card-btn" onclick="openSportEvent()">
-                    <div class="creator-card-icon">
-                        <i class="fas fa-trophy"></i>
-                    </div>
-                    <div class="creator-card-content">
-                        <h3>Sport Event</h3>
-                        <p>Organize sports competitions & tournaments</p>
-                    </div>
-                    <div class="creator-card-arrow">
-                        <i class="fas fa-chevron-right"></i>
-                    </div>
-                </div>
-
-                <!-- Award Ceremony Card -->
-                <div class="creator-card-btn" onclick="openAwardCeremony()">
-                    <div class="creator-card-icon">
-                        <i class="fas fa-award"></i>
-                    </div>
-                    <div class="creator-card-content">
-                        <h3>Award Ceremony</h3>
-                        <p>Host award ceremonies & recognition events</p>
-                    </div>
-                    <div class="creator-card-arrow">
-                        <i class="fas fa-chevron-right"></i>
-                    </div>
-                </div>
-
-               
-            </div>
-        </div>
-
-        <!-- Bottom Banner Ad -->
-        <div class="creator-banner-ad bottom-banner">
-            <div class="creator-ad-content">
-                <span class="creator-ad-label">Featured</span>
-                <p>Boost your events with premium features and wider reach!</p>
-            </div>
-        </div>
-    </div>
-</div>
-             
-                      
-       <!-- Entertainment Event Page -->
-<div class="entertainment-event-page" id="entertainmentEventPage">
-    <!-- Close Button -->
-    <div class="entertainment-page-header">
-        <h2>Entertainment Event</h2>
-        <button class="close-entertainment-event-page-btn" id="closeEntertainmentEventPageBtn">
-            <i class="fas fa-times"></i>
-        </button>
-    </div>
-
-    <!-- Banner Ad -->
-    <div class="entertainment-banner-ad">
-        <div class="entertainment-ad-content">
-            <span class="entertainment-ad-label">Sponsored</span>
-            <p>Create amazing entertainment events and showcase your talent to the world!</p>
-        </div>
-    </div>
-
-    <!-- Action Buttons -->
-    <div class="entertainment-action-buttons">
-        <button class="entertainment-action-btn host-entertainment-event" id="hostEntertainmentEvent">
-            <div class="entertainment-btn-icon">
-                <i class="fas fa-plus-circle"></i>
-            </div>
-            <span>Host</span>
-        </button>
-
-        <button class="entertainment-action-btn joined-entertainment-event" id="joinedEntertainmentEvent">
-            <div class="entertainment-btn-icon">
-                <i class="fas fa-users"></i>
-            </div>
-            <span>Joined</span>
-        </button>
-    </div>
-
-    <!-- Tabs Navigation -->
-    <div class="entertainment-tabs">
-        <div class="entertainment-tabs-header">
-            <button class="entertainment-tab-btn active live-entertainment-event" id="liveEntertainmentEvent" onclick="switchEntertainmentTab('live')">
-                <i class="fas fa-broadcast-tower"></i>
-                <span> Physical event </span>
-            </button>
-            <button class="entertainment-tab-btn new-entertainment-event" id="newEntertainmentEvent" onclick="switchEntertainmentTab('new')">
-                <i class="fas fa-calendar-plus"></i>
-                <span>online Events</span>
-            </button>
-           
-        </div>
-
-        <!-- Tab Contents -->
-        <div class="entertainment-tab-content">
-            <!-- Live Events Tab -->
-            <div class="entertainment-tab-pane active" id="entertainment-live-tab">
-                <!-- Search and Filter Controls -->
-                <div id="searchFilterControls"></div>
-                
-                <div class="entertainment-cards-container" id="liveEventsContainer">
-                    <!-- Entertainment cards will be loaded here -->
-                    <div class="entertainment-empty-state">
-                        <i class="fas fa-broadcast-tower"></i>
-                        <p>No live events of yours now</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- New Events Tab -->
-            <div class="entertainment-tab-pane" id="entertainment-new-tab">
-                <div class="entertainment-cards-container" id="newEventsContainer">
-                    <!-- Entertainment cards will be loaded here -->
-                    <div class="entertainment-empty-state">
-                        <i class="fas fa-calendar-plus"></i>
-                        <p>No entertainment card<br>Try creating</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Previous Events Tab -->
-            <div class="entertainment-tab-pane" id="entertainment-previous-tab">
-                <div class="entertainment-cards-container" id="previousEventsContainer">
-                    <!-- Entertainment cards will be loaded here -->
-                    <div class="entertainment-empty-state">
-                        <i class="fas fa-history"></i>
-                        <p>No previous events</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-     
-<!-- Host Entertainment Event Popup -->
-<div class="host-entertainment-popup-overlay" id="hostEntertainmentPopup">
-    <div class="host-entertainment-popup-container">
-        <!-- Close Button -->
-        <div class="host-entertainment-popup-header">
-            <h2>🎭 Host Entertainment Event</h2>
-            <button class="close-host-entertainment-popup-btn" id="closeHostEntertainmentPopupBtn">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        
-        <!-- Banner Ad -->
-        <div class="host-entertainment-banner-ad">
-            <div class="host-entertainment-ad-content">
-                <span class="host-entertainment-ad-label">Featured</span>
-                <p>Create your entertainment event and connect with talented participants!</p>
-            </div>
-        </div>
-        
-        <!-- Form Content -->
-        <div class="host-entertainment-form-content">
-            <form id="hostEntertainmentForm">
-                
-                <!-- Event Mode Selection -->
-                <div class="form-group" id="eventModeGroup">
-                    <label for="eventMode">Event Mode</label>
-                    <div class="event-mode-selection">
-                        <div class="mode-option">
-                            <input type="radio" id="onlineEvent" name="eventMode" value="online" checked>
-                            <label for="onlineEvent" class="mode-option-label" onclick="selectEventMode('online')">
-                                <i class="fas fa-laptop"></i>
-                                <span>Online Event</span>
-                                <small>Virtual entertainment competitions</small>
-                            </label>
-                        </div>
-                        <div class="mode-option">
-                            <input type="radio" id="physicalEvent" name="eventMode" value="physical">
-                            <label for="physicalEvent" class="mode-option-label" onclick="selectEventMode('physical')">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <span>Physical Event</span>
-                                <small>In-person events and gatherings</small>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                 <!-- ONLINE EVENT SECTIONS -->
-                <div id="onlineEventSections">
-                    
-                    <!-- Event Type Selection -->
-                    <div class="form-group">
-                        <label for="eventType">Event Type</label>
-                        <select id="eventType" class="form-select" onchange="updateEventTypeOptions()">
-                            <option value="">Select Event Type</option>
-                            <option value="medium">Medium Event</option>
-                            <option value="tactical">Tactical Event</option>
-                            <option value="bigRush">Big Rush</option>
-                        </select>
-                    </div>
-
-                    <!-- Category Selection -->
-                    <div class="form-group" id="categoryGroup" style="display: none;">
-                        <label for="eventCategory">Category</label>
-                        <select id="eventCategory" class="form-select">
-                            <option value="">Select Category</option>
-                        </select>
-                        <div class="custom-category-input" style="display: none;">
-                            <input type="text" id="customCategory" placeholder="Enter custom category" class="form-input">
-                            <button type="button" onclick="addCustomCategory()" class="add-category-btn">Add</button>
-                        </div>
-                        <button type="button" onclick="toggleCustomCategory()" class="custom-category-toggle">Add Custom Category</button>
-                    </div>
-
-                    <!-- Duration Selection -->
-                    <div class="form-group" id="durationGroup" style="display: none;">
-                        <label for="eventDuration">Event Duration</label>
-                        <select id="eventDuration" class="form-select">
-                            <option value="">Select Duration</option>
-                        </select>
-                    </div>
-
-                    <!-- Participants -->
-                    <div class="form-group" id="participantsGroup" style="display: none;">
-                        <label for="maxParticipants">Maximum Participants</label>
-                        <input type="number" id="maxParticipants" class="form-input" min="10" max="50">
-                        <small class="form-help" id="participantsHelp">Minimum: 10, Maximum: 50</small>
-                    </div>
-
-                    <!-- Entry Fee -->
-                    <div class="form-group" id="entryFeeGroup" style="display: none;">
-                        <label>Entry Fee</label>
-                        <div class="fee-options">
-                            <div class="fee-input-wrapper">
-                                <input type="number" id="entryFee" class="form-input fee-input" min="1" max="500" placeholder="30">
-                                <span class="currency-label">TC</span>
-                                <span class="naira-equivalent" id="entryFeeNaira">≈ ₦450</span>
-                            </div>
-                            <button type="button" class="no-fee-btn" id="noEntryFeeBtn" onclick="toggleEntryFee()">No Entry Fee</button>
-                        </div>
-                    </div>
-
-                    <!-- Voting Fee -->
-                    <div class="form-group" id="votingFeeGroup" style="display: none;">
-                        <label>Voting Fee</label>
-                        <div class="fee-options">
-                            <div class="fee-input-wrapper">
-                                <input type="number" id="votingFee" class="form-input fee-input" min="1" max="500" placeholder="20">
-                                <span class="currency-label">TC</span>
-                                <span class="naira-equivalent" id="votingFeeNaira">≈ ₦300</span>
-                            </div>
-                            <button type="button" class="no-fee-btn" id="noVotingFeeBtn" onclick="toggleVotingFee()">No Voting Fee</button>
-                        </div>
-                    </div>
-
-                    <!-- Event Name -->
-                    <div class="form-group" id="eventNameGroup" style="display: none;">
-                        <label for="eventName">Event Name</label>
-                        <input type="text" id="eventName" class="form-input" placeholder="Enter event name" maxlength="50">
-                    </div>
-
-                    <!-- Event Description -->
-                    <div class="form-group" id="descriptionGroup" style="display: none;">
-                        <label for="eventDescription">Event Description</label>
-                        <textarea id="eventDescription" class="form-textarea" placeholder="Describe your event (20-100 words)" rows="4"></textarea>
-                        <small class="form-help">
-                            <span id="wordCount">0</span>/100 words (minimum 20 words)
-                        </small>
-                    </div>
-
-                    <!-- Background Selection -->
-                    <div class="form-group" id="backgroundGroup" style="display: none;">
-                        <label>Event Background</label>
-                        <div class="background-options">
-                            <div class="background-tabs">
-                                <button type="button" class="bg-tab active" onclick="switchBackgroundTab('image')">Image</button>
-                                <button type="button" class="bg-tab" onclick="switchBackgroundTab('color')">Color</button>
-                            </div>
-                            <div class="background-content">
-                                <div class="bg-content active" id="imageContent">
-                                    <input type="file" id="backgroundImage" accept="image" class="file-input">
-                                    <label for="backgroundImage" class="file-label">
-                                        <i class="fas fa-upload"></i>
-                                        Choose Background Image
-                                    </label>
-                                    
-                                    <!-- Image Preview Container -->
-                                    <div id="imagePreviewContainer" class="image-preview-container">
-                                        <img id="imagePreview" class="image-preview" alt="Preview">
-                                        <div id="imagePreviewText" class="image-preview-text"></div>
-                                        <button type="button" id="removeImageBtn" class="remove-image-btn">
-                                            <i class="fas fa-trash"></i>
-                                            Remove Image
-                                        </button>
-                                    </div>
-                                </div>
-                                
-                                <div class="bg-content" id="colorContent">
-                                    <div class="color-palette">
-                                        <div class="color-option" style="background: #FF6B6B" onclick="selectColor('#FF6B6B')"></div>
-                                        <div class="color-option" style="background: #4ECDC4" onclick="selectColor('#4ECDC4')"></div>
-                                        <div class="color-option" style="background: #45B7D1" onclick="selectColor('#45B7D1')"></div>
-                                        <div class="color-option" style="background: #96CEB4" onclick="selectColor('#96CEB4')"></div>
-                                        <div class="color-option" style="background: #FFEAA7" onclick="selectColor('#FFEAA7')"></div>
-                                        <div class="color-option" style="background: #DDA0DD" onclick="selectColor('#DDA0DD')"></div>
-                                    </div>
-                                    <input type="color" id="customColor" class="custom-color-input" onchange="selectColor(this.value)">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Tags -->
-                    <div class="form-group" id="tagsGroup" style="display: none;">
-                        <label>Tags</label>
-                        <div class="tags-section">
-                            <div class="tag-input-section">
-                                <input type="text" id="hashtagInput" placeholder="Add hashtag" class="tag-input">
-                                <button type="button" onclick="addHashtag()" class="add-tag-btn"># Add</button>
-                            </div>
-                            <div class="tag-input-section">
-                                <input type="text" id="startagInput" placeholder="Add star tag" class="tag-input">
-                                <button type="button" onclick="addStartag()" class="add-tag-btn">* Add</button>
-                            </div>
-                            <div class="tags-display">
-                                <div class="hashtags" id="hashtagsDisplay"></div>
-                                <div class="startags" id="startagsDisplay"></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Event Rules -->
-                    <div class="form-group" id="rulesGroup" style="display: none;">
-                        <label>Event Rules</label>
-                        <div class="rules-section">
-                            <div class="rule-input-section">
-                                <textarea id="ruleInput" placeholder="Enter event rule" class="rule-textarea" rows="2"></textarea>
-                                <button type="button" onclick="addRule()" class="add-rule-btn">Add Rule</button>
-                            </div>
-                            <div class="rules-list" id="rulesList"></div>
-                            <small class="form-help">
-                                <span id="rulesCount">0</span>/15 rules (minimum 1 rule required)
-                            </small>
-                        </div>
-                    </div>
-
-                    <!-- Payment Section -->
-                    <div class="form-group" id="paymentGroup" style="display: none;">
-                        <label class="form-label">Payment Method</label>
+                <!-- Floating Decoration Elements -->
+                <div class="floating-elements">
+                    <div class="floating-circle floating-circle-1"></div>
+                    <div class="floating-circle floating-circle-2"></div>
+                    <div class="floating-circle floating-circle-3"></div>
+                    <div class="floating-ticket floating-ticket-1">🎫</div>
+                    <div class="floating-ticket floating-ticket-2">🎪</div>
+                    <div class="floating-ticket floating-ticket-3">🎉</div>
+                </div>
+
+                <div class="hero-content">
+                    <div class="logo-container">
+                        <div class="logo-glow"></div>
+                        <h1 class="brand-logo">Rewarder</h1>
+                        <div class="logo-subtitle">Event Management Platform</div>
+                    </div>
+
+                    <div class="hero-tagline">
+                        <h2 class="main-headline">Host Events. Sell Tickets.<br><span class="gradient-text">Be The Life of The Party.</span></h2>
+                        <p class="hero-description">Transform your vision into unforgettable experiences with the ultimate platform for seamless event hosting and ticket sales.</p>
                         
-                        <!-- Payment Method Selection -->
-                        <div class="payment-method-selection">
-                            <div class="payment-option">
-                                <input type="radio" id="tcBalancePayment" name="paymentMethod" value="tcBalance" checked>
-                                <label for="tcBalancePayment" class="payment-option-label" onclick="togglePaymentMethod('tcBalance')">
-                                    <i class="fas fa-coins"></i>
-                                    <span>Pay with TC Balance</span>
-                                </label>
+                        <div class="cta-buttons">
+                            <button class="primary-cta">Get Started Free</button>
+                            <button class="secondary-cta">
+                                <i class="fas fa-play"></i> Watch Demo
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stats-showcase">
+                    <div class="stats-container">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-calendar-check"></i>
                             </div>
-                            <div class="payment-option">
-                                <input type="radio" id="promoCodePayment" name="paymentMethod" value="promoCode">
-                                <label for="promoCodePayment" class="payment-option-label" onclick="togglePaymentMethod('promoCode')">
-                                    <i class="fas fa-ticket-alt"></i>
-                                    <span>Use Promo Code</span>
-                                </label>
+                            <div class="stat-number">30+</div>
+                            <div class="stat-label">Events Monthly</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-users"></i>
                             </div>
+                            <div class="stat-number">5,000+</div>
+                            <div class="stat-label">Happy Attendees</div>
                         </div>
-
-                        <!-- Promo Code Input -->
-                        <div class="promo-code-section" id="promoCodeSection" style="display: none;">
-                            <input type="text" id="promoCodeInput" class="form-input" placeholder="Enter promo code (Bisask19, nig2025, Ismartdc)">
-                            <small class="form-help">Valid codes: Bisask19, nig2025, Ismartdc</small>
-                        </div>
-
-                        <!-- Payment Summary -->
-                        <div class="payment-summary">
-                            <h3>Payment Summary</h3>
-                            <div class="creation-fee-breakdown">
-                                <div class="fee-item">
-                                    <span>Event Type:</span>
-                                    <span id="selectedEventType">-</span>
-                                </div>
-                                <div class="fee-item">
-                                    <span>Creation Fee:</span>
-                                    <span id="creationFee">0 TC</span>
-                                </div>
-                                <div class="fee-item" id="feeDiscountItem" style="display: none;">
-                                    <span>Discount (No Entry/Voting Fee):</span>
-                                    <span id="discountAmount">0 TC</span>
-                                </div>
-                                <div class="fee-item total-fee">
-                                    <span>Total Creation Fee:</span>
-                                    <span id="totalCreationFee">0 TC</span>
-                                </div>
-                                <div class="fee-equivalent">
-                                    <span>≈ ₦<span id="totalCreationFeeNaira">0</span></span>
-                                </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-percentage"></i>
                             </div>
-                        </div>
-                    </div>
-
-                    <!-- Submit Button -->
-                    <div class="form-actions" id="submitGroup" style="display: none;">
-                        <button type="submit" class="submit-btn" id="createphysicalEventBtn">
-                            <i class="fas fa-rocket"></i>
-                            Create Event
-                        </button>
-                    </div>
-                </div>
-           <!-- PHYSICAL EVENT SECTIONS -->
-<div id="physicalEventSections">
-    <!-- Physical Event Category Selection -->
-    <div class="form-group" id="physicalCategoryGroup">
-        <label for="physicalEventCategory">Event Category</label>
-        <select id="physicalEventCategory" class="form-select" onchange="updatePhysicalCategory()">
-            <option value="">Select Category</option>
-            <optgroup label="Performance Arts">
-                <option value="singing">Singing</option>
-                <option value="music">Music</option>
-                <option value="dance">Dance</option>
-                <option value="comedy">Comedy</option>
-                <option value="theater">Theater</option>
-            </optgroup>
-            <optgroup label="Visual Arts">
-                <option value="art-exhibition">Art Exhibition</option>
-                <option value="fashion-show">Fashion Show</option>
-            </optgroup>
-            <optgroup label="Sports & Recreation">
-                <option value="sports">Sports Events</option>
-            </optgroup>
-            <optgroup label="Business & Learning">
-                <option value="conference">Conference</option>
-                <option value="workshop">Workshop</option>
-            </optgroup>
-            <optgroup label="Social & Cultural">
-                <option value="food-drinks">Food & Drinks</option>
-                <option value="networking">Networking</option>
-                <option value="festival">Festival</option>
-            </optgroup>
-            <option value="other">Other</option>
-        </select>
-        <div class="custom-physical-category-input" style="display: none;">
-            <input type="text" id="customPhysicalCategory" placeholder="Enter custom category" class="form-input">
-            <button type="button" onclick="addCustomPhysicalCategory()" class="add-category-btn">Add</button>
-        </div>
-    </div>
-
-    <!-- Event Name -->
-    <div class="form-group" id="physicalEventNameGroup">
-        <label for="physicalEventName">Event Name</label>
-        <input type="text" id="physicalEventName" class="form-input" placeholder="Enter event name" minlength="3" maxlength="50">
-        <small class="form-help">3-50 characters required</small>
-    </div>
-
-    <!-- Physical Event Background -->
-    <div class="form-group" id="physicalBackgroundGroup">
-        <label>Event Background</label>
-        <div class="background-options">
-            <div class="background-tabs">
-                <button type="button" class="bg-tab active" onclick="switchPhysicalBackgroundTab('media')">Media</button>
-                <button type="button" class="bg-tab" onclick="switchPhysicalBackgroundTab('gradient')">Gradient</button>
-            </div>
-            <div class="background-content">
-                <div class="bg-content active" id="physicalMediaContent">
-                  <input type="file" id="physicalBackgroundMedia" accept="image/*,video/*,.gif" class="file-input" onchange="handlePhysicalMediaUpload(this)">
-
-
-                    <label for="physicalBackgroundMedia" class="file-label">
-                        <i class="fas fa-upload"></i>
-                        Choose Media (Image, GIF, Video)
-                    </label>
-                    <small class="form-help">Supported: JPG, PNG, GIF, MP4, MOV | Max: 10MB | Video: 15s max</small>
-                    <div id="physicalMediaPreviewContainer" class="media-preview-container" style="display: none;">
-                        <div id="physicalMediaPreview" class="media-preview"></div>
-                        <button type="button" id="removePhysicalMediaBtn" class="remove-media-btn" onclick="removePhysicalMedia()">
-                            <i class="fas fa-trash"></i>
-                            Remove Media
-                        </button>
-                    </div>
-                </div>
-                <div class="bg-content" id="physicalGradientContent">
-                    <div class="gradient-picker">
-                        <div class="gradient-controls">
-                            <div class="color-input-group">
-                                <label>Color 1</label>
-                                <input type="color" id="physicalGradientColor1" class="gradient-color-input" value="#FF6B6B" onchange="updatePhysicalGradientPreview()">
-                            </div>
-                            <div class="color-input-group">
-                                <label>Color 2</label>
-                                <input type="color" id="physicalGradientColor2" class="gradient-color-input" value="#4ECDC4" onchange="updatePhysicalGradientPreview()">
-                            </div>
-                        </div>
-                        <div class="gradient-preview" id="physicalGradientPreview"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Background Preview Section -->
-        <div class="background-preview-section" id="physicalBackgroundPreviewSection">
-            <label>Background Preview</label>
-            <div class="event-background-preview" id="physicalEventBackgroundPreview">
-                <div class="preview-overlay">
-                    <h3 class="preview-event-title" id="physicalPreviewEventTitle">Your Event Name</h3>
-                    <p class="preview-event-category" id="physicalPreviewEventCategory">Event Category</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Event Description -->
-    <div class="form-group" id="physicalDescriptionGroup">
-        <label for="physicalEventDescription">Event Description</label>
-        <textarea id="physicalEventDescription" class="form-textarea" placeholder="Describe your event (minimum 5 words)" rows="4" onkeyup="updatePhysicalWordCount()"></textarea>
-        <small class="form-help">
-            <span id="physicalWordCount">0</span> words (minimum 5 words required)
-        </small>
-    </div>
-
-    <!-- Event Location -->
-    <div class="form-group" id="physicalLocationGroup">
-        <label for="physicalEventLocation">
-            <i class="fas fa-map-marker-alt"></i>
-            Event Location
-        </label>
-        <textarea id="physicalEventLocation" class="form-textarea" placeholder="Enter full venue address or location details" rows="3"></textarea>
-        <small class="form-help">Provide complete address including city, state for easy navigation</small>
-    </div>
-
-    <!-- Event Scheduling -->
-    <div class="form-group" id="physicalSchedulingGroup">
-        <label>Event Schedule</label>
-        <div class="scheduling-section">
-            <div class="datetime-row">
-                <div class="datetime-field">
-                    <label for="physicalStartDate">Start Date</label>
-                    <input type="date" id="physicalStartDate" class="form-input" onchange="calculatePhysicalDuration()">
-                </div>
-                <div class="datetime-field">
-                    <label for="physicalStartTime">Start Time</label>
-                    <input type="time" id="physicalStartTime" class="form-input" onchange="calculatePhysicalDuration()">
-                </div>
-            </div>
-            <div class="datetime-row">
-                <div class="datetime-field">
-                    <label for="physicalEndDate">End Date</label>
-                    <input type="date" id="physicalEndDate" class="form-input" onchange="calculatePhysicalDuration()">
-                </div>
-                <div class="datetime-field">
-                    <label for="physicalEndTime">End Time</label>
-                    <input type="time" id="physicalEndTime" class="form-input" onchange="calculatePhysicalDuration()">
-                </div>
-            </div>
-            <div class="duration-display" id="physicalDurationDisplay" style="display: none;">
-                <i class="fas fa-clock"></i>
-                <span>Duration: <strong id="physicalCalculatedDuration">-</strong></span>
-            </div>
-        </div>
-    </div>
-
-    <!-- Event Link -->
-    <div class="form-group" id="physicalEventLinkGroup">
-        <label for="physicalEventLink">
-            <i class="fas fa-link"></i>
-            Event Link
-        </label>
-        <div class="event-link-input-group">
-            <span class="link-prefix">reward-hub.vercel.app/</span>
-            <input type="text" id="physicalEventLink" class="form-input" placeholder="my-awesome-event" 
-                   pattern="[a-z0-9-]+" title="Only lowercase letters, numbers, and hyphens allowed"
-                   onkeyup="checkPhysicalEventLinkAvailability()">
-            <button type="button" id="checkPhysicalLinkBtn" class="check-link-btn" onclick="manualCheckPhysicalEventLink()">
-                <i class="fas fa-search"></i>
-            </button>
-        </div>
-        <small class="form-help">Use lowercase letters, numbers, and hyphens only. This will be your shareable event link.</small>
-        <div id="physicalLinkAvailabilityMessage" class="link-availability-message"></div>
-    </div>
-
-    <!-- Ticket Configuration -->
-    <div class="form-group" id="physicalTicketConfigGroup">
-        <label>Ticket Configuration</label>
-        <div class="ticket-config-section">
-            <div class="ticket-types-list" id="physicalTicketTypesList">
-                <!-- Ticket types will be added here dynamically -->
-                <div class="no-tickets-message" id="physicalNoTicketsMessage">
-                    <i class="fas fa-ticket-alt"></i>
-                    <p>No tickets added yet. Click "Add Ticket Type" to create your first ticket.</p>
-                </div>
-            </div>
-           
-<!-- Change your button temporarily to: -->
-<button type="button" class="add-ticket-type-btn" onclick="debugAddTicket()">
-    <i class="fas fa-plus"></i>
-    Add Ticket Type
-</button>
-        </div>
-    </div>
-
-    
-
-    <!-- Physical Event Submit Button -->
-    <div class="form-actions" id="physicalSubmitGroup">
-        <button type="submit" class="submit-btn" id="createPhysicalEventBtn" onclick="createPhysicalEvent()">
-            <i class="fas fa-calendar-plus"></i>
-            Create Physical Event
-        </button>
-    </div>
-</div>
-    
-    <!-- Enhanced Physical Ticket Configuration Modal -->
-<div class="ticket-config-modal-overlay" id="physicalTicketConfigModal" style="display: none;">
-    <div class="ticket-config-modal-container">
-        <div class="ticket-config-modal-header">
-            <h3>Configure Ticket Type</h3>
-            <button class="close-modal-btn" onclick="closePhysicalTicketConfigModal()">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        <div class="ticket-config-modal-content">
-            <form id="physicalTicketConfigForm">
-                <!-- Ticket Name -->
-                <div class="form-group">
-                    <label for="physicalTicketName">Ticket Name *</label>
-                    <input type="text" id="physicalTicketName" class="form-input" placeholder="e.g., General Admission, VIP, Early Bird" required>
-                </div>
-
-                <!-- Ticket Type Selection -->
-                <div class="form-group">
-                    <label>Ticket Type *</label>
-                    <div class="ticket-type-options">
-                        <label class="ticket-type-option">
-                            <input type="radio" name="physicalTicketType" value="free" id="physicalFreeTicket" checked onchange="selectPhysicalTicketType('free')">
-                            <span class="ticket-type-label">
-                                <i class="fas fa-gift"></i>
-                                <strong>Free</strong>
-                                <small>No cost to attendees</small>
-                            </span>
-                        </label>
-                        
-                        <label class="ticket-type-option">
-                            <input type="radio" name="physicalTicketType" value="paid" id="physicalPaidTicket" onchange="selectPhysicalTicketType('paid')">
-                            <span class="ticket-type-label">
-                                <i class="fas fa-money-bill-wave"></i>
-                                <strong>Paid</strong>
-                                <small>Fixed price tickets</small>
-                            </span>
-                        </label>
-                        
-                        <label class="ticket-type-option">
-                            <input type="radio" name="physicalTicketType" value="donation" id="physicalDonationTicket" onchange="selectPhysicalTicketType('donation')">
-                            <span class="ticket-type-label">
-                                <i class="fas fa-heart"></i>
-                                <strong>Donation</strong>
-                                <small>Pay what you want</small>
-                            </span>
-                        </label>
-                    </div>
-                </div>
-
-                <!-- Ticket Configuration Sections -->
-                <div class="ticket-config-section" id="physicalFreeTicketConfig">
-                    <div class="form-group">
-                        <label for="physicalFreeTicketQuantity">Available Quantity *</label>
-                        <input type="number" id="physicalFreeTicketQuantity" class="form-input" min="1" placeholder="Number of free tickets" value="100">
-                    </div>
-                </div>
-
-                <div class="ticket-config-section" id="physicalPaidTicketConfig" style="display: none;">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="physicalTicketPrice">Price (₦) *</label>
-                            <input type="number" id="physicalTicketPrice" class="form-input" min="100" step="50" placeholder="Ticket price">
-                        </div>
-                        <div class="form-group">
-                            <label for="physicalPaidTicketQuantity">Quantity *</label>
-                            <input type="number" id="physicalPaidTicketQuantity" class="form-input" min="1" placeholder="Number of paid tickets">
+                            <div class="stat-number">Low</div>
+                            <div class="stat-label">Service Fees</div>
                         </div>
                     </div>
                 </div>
 
-                <div class="ticket-config-section" id="physicalDonationTicketConfig" style="display: none;">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="physicalSuggestedDonation">Suggested Amount (₦)</label>
-                            <input type="number" id="physicalSuggestedDonation" class="form-input" min="0" step="50" placeholder="Optional suggested amount">
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-map-marker-alt"></i>
                         </div>
-                        <div class="form-group">
-                            <label for="physicalDonationTicketQuantity">Quantity *</label>
-                            <input type="number" id="physicalDonationTicketQuantity" class="form-input" min="1" placeholder="Number of donation tickets">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Ticket Description (Optional) -->
-                <div class="form-group">
-                    <label for="physicalTicketDescription">Ticket Description (Optional)</label>
-                    <textarea id="physicalTicketDescription" class="form-textarea" placeholder="Describe what this ticket includes, benefits, or any special notes..." rows="3"></textarea>
-                    <small class="form-help">Help attendees understand what this ticket offers</small>
-                </div>
-
-                <!-- Ticket Background -->
-                <div class="form-group">
-                    <label>Ticket Background</label>
-                    <div class="ticket-background-options">
-                        <div class="background-tabs">
-                            <button type="button" class="bg-tab active" onclick="switchTicketBackgroundTab('color')" data-tab="color">Color</button>
-                            <button type="button" class="bg-tab" onclick="switchTicketBackgroundTab('media')" data-tab="media">Media</button>
-                        </div>
-                        
-                        <div class="background-content">
-                            <!-- Color Background -->
-                            <div class="bg-content active" id="ticketColorContent">
-                                <div class="color-picker-section">
-                                    <div class="color-input-group">
-                                        <label>Ticket Color</label>
-                                        <input type="color" id="ticketBackgroundColor" class="color-input" value="#4ECDC4" onchange="updateTicketColorPreview()">
-                                    </div>
-                                    <div class="color-preview" id="ticketColorPreview"></div>
-                                </div>
-                            </div>
-                            
-                            <!-- Media Background -->
-                            <div class="bg-content" id="ticketMediaContent">
-                                <input type="file" id="ticketBackgroundMedia" accept="image/video/mp4,video/mov,.gif" class="file-input" onchange="handleTicketMediaUpload(this)">
-                                <label for="ticketBackgroundMedia" class="file-label">
-                                    <i class="fas fa-upload"></i>
-                                    Choose Media (Image, GIF, Video)
-                                </label>
-                                <small class="form-help">Supported: JPG, PNG, GIF, MP4, MOV | Max: 5MB | Video: 15s max</small>
-                                
-                                <div id="ticketMediaPreviewContainer" class="media-preview-container" style="display: none;">
-                                    <div id="ticketMediaPreview" class="media-preview"></div>
-                                    <button type="button" class="remove-media-btn" onclick="removeTicketMedia()">
-                                        <i class="fas fa-trash"></i>
-                                        Remove Media
-                                    </button>
-                                </div>
-                            </div>
+                        <div class="feature-content">
+                            <h4>Physical Events</h4>
+                            <span>Host parties, summits & gatherings with ease</span>
                         </div>
                     </div>
-                </div>
-
-                <!-- Ticket Preview -->
-                <div class="form-group">
-                    <label>Ticket Preview</label>
-                    <div class="ticket-preview-card" id="ticketPreviewCard">
-                        <div class="ticket-preview-background" id="ticketPreviewBackground">
-                            <div class="ticket-preview-content">
-                                <h4 class="ticket-preview-name" id="ticketPreviewName">Ticket Name</h4>
-                                <p class="ticket-preview-type" id="ticketPreviewType">Free Ticket</p>
-                                <p class="ticket-preview-price" id="ticketPreviewPrice" style="display: none;">₦0</p>
-                            </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-video"></i>
+                        </div>
+                        <div class="feature-content">
+                            <h4>Virtual Events</h4>
+                            <span>Create engaging online & virtual experiences</span>
                         </div>
                     </div>
-                </div>
-
-                <!-- Modal Actions -->
-                <div class="ticket-config-modal-actions">
-                    <button type="button" class="cancel-ticket-btn" onclick="closePhysicalTicketConfigModal()">Cancel</button>
-                    <button type="button" class="save-ticket-btn" onclick="savePhysicalTicketConfiguration()">Save Ticket</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
- </div>
-                </div>
-                 </div>
-     
-                        
-
- 
-
-<div class="sport-event-page">
-    <div class="sport-event-container">
-        <!-- Page Header -->
-        <header class="sport-page-header">
-            <h2><i class="fas fa-trophy"></i> Sport Events</h2>
-            <button class="close-sport-event-page-btn" type="button" aria-label="Close Sport Events">
-                <i class="fas fa-times"></i>
-            </button>
-        </header>
-
-        <!-- Banner Ad -->
-        <div class="sport-banner-ad">
-            <div class="sport-ad-content">
-                <span class="sport-ad-label">Advertisement</span>
-                <p>Your sports ad here - 480px x 65px</p>
-            </div>
-        </div>
-
-        <!-- Action Buttons -->
-        <div class="sport-action-buttons">
-            <button class="sport-action-btn" id="host-sport-event">
-                <i class="sport-btn-icon fas fa-plus-circle"></i>
-                <span>Host Event</span>
-            </button>
-            <button class="sport-action-btn" id="joined-sport-event">
-                <i class="sport-btn-icon fas fa-users"></i>
-                <span>Joined Event</span>
-            </button>
-        </div>
-<div class="sport-events-container" id="sport-events-container">
-                <!-- Empty state when no events -->
-                <div class="sport-events-empty" id="sport-events-empty">
-                    <div class="empty-state-icon">
-                        <i class="fas fa-calendar-times"></i>
-                    </div>
-                    <h4>No Events Yet</h4>
-                    <p>Create your first sport event to get started!</p>
-                    <button class="empty-state-btn" onclick="document.getElementById('host-sport-event').click()">
-                        <i class="fas fa-plus"></i> Host Event
-                    </button>
-                </div>
-                
-                <!-- Event cards will be dynamically inserted here -->
-            </div>
-        <!-- Sponsors Footer -->
-        <div class="sport-sponsors-footer">
-            <div class="sport-sponsors-container">
-                <div class="sport-sponsors-scroll">
-                    <div class="sport-sponsor-item">
-                        <img src="https://via.placeholder.com/80x40/008B8B/white?text=Nike" alt="Nike">
-                        <span>Nike</span>
-                    </div>
-                    <div class="sport-sponsor-item">
-                        <img src="https://via.placeholder.com/80x40/008B8B/white?text=Adidas" alt="Adidas">
-                        <span>Adidas</span>
-                    </div>
-                    <div class="sport-sponsor-item">
-                        <img src="https://via.placeholder.com/80x40/008B8B/white?text=Puma" alt="Puma">
-                        <span>Puma</span>
-                    </div>
-                    <div class="sport-sponsor-item">
-                        <img src="https://via.placeholder.com/80x40/008B8B/white?text=FIFA" alt="FIFA">
-                        <span>FIFA</span>
-                    </div>
-                    <div class="sport-sponsor-item">
-                        <img src="https://via.placeholder.com/80x40/008B8B/white?text=UEFA" alt="UEFA">
-                        <span>UEFA</span>
-                    </div>
-                    <div class="sport-sponsor-item">
-                        <img src="https://via.placeholder.com/80x40/008B8B/white?text=ESPN" alt="ESPN">
-                        <span>ESPN</span>
-                    </div>
-                    <div class="sport-sponsor-item">
-                        <img src="https://via.placeholder.com/80x40/008B8B/white?text=NBC" alt="NBC Sports">
-                        <span>NBC Sports</span>
-                    </div>
-                    <div class="sport-sponsor-item">
-                        <img src="https://via.placeholder.com/80x40/008B8B/white?text=FOX" alt="FOX Sports">
-                        <span>FOX Sports</span>
-                    </div>
-                    <!-- Duplicate for seamless loop -->
-                    <div class="sport-sponsor-item">
-                        <img src="https://via.placeholder.com/80x40/008B8B/white?text=Nike" alt="Nike">
-                        <span>Nike</span>
-                    </div>
-                    <div class="sport-sponsor-item">
-                        <img src="https://via.placeholder.com/80x40/008B8B/white?text=Adidas" alt="Adidas">
-                        <span>Adidas</span>
-                    </div>
-                    <div class="sport-sponsor-item">
-                        <img src="https://via.placeholder.com/80x40/008B8B/white?text=Puma" alt="Puma">
-                        <span>Puma</span>
-                    </div>
-                    <div class="sport-sponsor-item">
-                        <img src="https://via.placeholder.com/80x40/008B8B/white?text=FIFA" alt="FIFA">
-                        <span>FIFA</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Host Sport Event Popup -->
-<div class="host-sport-popup-overlay" id="host-sport-popup">
-    <div class="host-sport-popup">
-        <div class="host-sport-popup-header">
-            <h3><i class="fas fa-plus-circle"></i> Host Sport Event</h3>
-            <button class="close-host-sport-popup-btn" type="button">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        
-        <div class="host-sport-popup-content">
-            <div class="host-sport-category-title">
-                <h4>Select Sport Category</h4>
-                <p>Choose the type of sport event you want to host</p>
-            </div>
-            
-            <div class="host-sport-categories-grid">
-                <!-- Football - Accessible -->
-                <div class="host-sport-category-card accessible" data-sport="football">
-                    <div class="host-sport-category-icon">
-                        <i class="fas fa-futbol"></i>
-                    </div>
-                    <div class="host-sport-category-info">
-                        <h5>Football</h5>
-                        <span class="host-sport-category-status available">Available</span>
-                    </div>
-                </div>
-                
-                <!-- Basketball - Coming Soon -->
-                <div class="host-sport-category-card coming-soon" data-sport="basketball">
-                    <div class="host-sport-category-icon">
-                        <i class="fas fa-basketball-ball"></i>
-                    </div>
-                    <div class="host-sport-category-info">
-                        <h5>Basketball</h5>
-                        <span class="host-sport-category-status coming-soon">Coming Soon</span>
-                    </div>
-                </div>
-                
-                <!-- Table Tennis - Coming Soon -->
-                <div class="host-sport-category-card coming-soon" data-sport="table-tennis">
-                    <div class="host-sport-category-icon">
-                        <i class="fas fa-ping-pong-paddle-ball"></i>
-                    </div>
-                    <div class="host-sport-category-info">
-                        <h5>Table Tennis</h5>
-                        <span class="host-sport-category-status coming-soon">Coming Soon</span>
-                    </div>
-                </div>
-                
-                <!-- Tennis - Coming Soon -->
-                <div class="host-sport-category-card coming-soon" data-sport="tennis">
-                    <div class="host-sport-category-icon">
-                        <i class="fas fa-table-tennis"></i>
-                    </div>
-                    <div class="host-sport-category-info">
-                        <h5>Tennis</h5>
-                        <span class="host-sport-category-status coming-soon">Coming Soon</span>
-                    </div>
-                </div>
-                
-                <!-- Volleyball - Coming Soon -->
-                <div class="host-sport-category-card coming-soon" data-sport="volleyball">
-                    <div class="host-sport-category-icon">
-                        <i class="fas fa-volleyball-ball"></i>
-                    </div>
-                    <div class="host-sport-category-info">
-                        <h5>Volleyball</h5>
-                        <span class="host-sport-category-status coming-soon">Coming Soon</span>
-                    </div>
-                </div>
-                
-                <!-- Badminton - Coming Soon -->
-                <div class="host-sport-category-card coming-soon" data-sport="badminton">
-                    <div class="host-sport-category-icon">
-                        <i class="fas fa-shuttlecock"></i>
-                    </div>
-                    <div class="host-sport-category-info">
-                        <h5>Badminton</h5>
-                        <span class="host-sport-category-status coming-soon">Coming Soon</span>
-                    </div>
-                </div>
-                
-                <!-- Running - Coming Soon -->
-                <div class="host-sport-category-card coming-soon" data-sport="running">
-                    <div class="host-sport-category-icon">
-                        <i class="fas fa-running"></i>
-                    </div>
-                    <div class="host-sport-category-info">
-                        <h5>Running</h5>
-                        <span class="host-sport-category-status coming-soon">Coming Soon</span>
-                    </div>
-                </div>
-                
-              
-                
-                
-            
-                
-                
-                <!-- Indoor Sports - Coming Soon -->
-                <div class="host-sport-category-card coming-soon" data-sport="indoor-sports">
-                    <div class="host-sport-category-icon">
-                        <i class="fas fa-home"></i>
-                    </div>
-                    <div class="host-sport-category-info">
-                        <h5>Indoor Sports</h5>
-                        <span class="host-sport-category-status coming-soon">Coming Soon</span>
-                    </div>
-                </div>
-                
-                <!-- All Events - Coming Soon -->
-                <div class="host-sport-category-card coming-soon" data-sport="all-events">
-                    <div class="host-sport-category-icon">
-                        <i class="fas fa-globe"></i>
-                    </div>
-                    <div class="host-sport-category-info">
-                        <h5>All Events</h5>
-                        <span class="host-sport-category-status coming-soon">Coming Soon</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Football Event Modal -->
-<div class="football-event-overlay" id="footballEventOverlay">
-    <div class="football-event-popup">
-        <div class="football-event-header">
-            <h3><i class="fas fa-futbol"></i> Create Football Event</h3>
-            <button class="close-football-event-btn" id="closeFootballEventBtn">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        <div class="football-event-content">
-            <!-- Step 1: Basic Event Info -->
-            <div class="football-step active" id="footballStep1">
-                <div class="football-step-header">
-                    <h4>Event Details</h4>
-                    <p>Set up your football event information</p>
-                </div>
-                
-                <div class="football-form-group">
-                    <label>Event Name</label>
-                    <input type="text" id="footballEventName" placeholder="Enter event name" maxlength="50">
-                </div>
-                
-                <div class="football-form-group">
-                    <label>Background</label>
-                    <div class="football-background-options">
-                        <div class="football-bg-option active" data-bg="color">
-                            <i class="fas fa-palette"></i>
-                            <span>Color</span>
-                        </div>
-                        <div class="football-bg-option" data-bg="image">
-                            <i class="fas fa-image"></i>
-                            <span>Image</span>
-                        </div>
-                    </div>
-                    <div class="football-color-picker" id="footballColorPicker">
-                        <input type="color" id="footballBgColor" value="#008B8B">
-                    </div>
-                    <div class="football-image-upload" id="footballImageUpload" style="display: none;">
-                        <input type="file" id="footballBgImage" accept="image">
-                        <label for="footballBgImage">
-                            <i class="fas fa-upload"></i>
-                            Choose Image
-                        </label>
-                    </div>
-                </div>
-                
-                <div class="football-form-group">
-                    <label>Event Description</label>
-                    <textarea id="footballEventDescription" placeholder="Describe your football event..." rows="4" maxlength="200"></textarea>
-                </div>
-                
-                <div class="football-form-group">
-                    <label>Match Type</label>
-                    <div class="football-match-types">
-                        <div class="football-match-type" data-type="single">
-                            <i class="fas fa-trophy"></i>
-                            <h5>Single Match</h5>
-                            <p>One-time tournament</p>
-                        </div>
-                        <div class="football-match-type" data-type="multiple">
-                            <i class="fas fa-calendar-alt"></i>
-                            <h5>Multiple Match</h5>
-                            <p>Series of matches</p>
-                        </div>
-                        <div class="football-match-type" data-type="league">
-                            <i class="fas fa-crown"></i>
-                            <h5>League</h5>
-                            <p>Full season format</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <button class="football-next-btn" id="footballNextBtn" disabled>Next Step</button>
-            </div>
-            
-            <!-- Step 2: Team Configuration -->
-            <div class="football-step" id="footballStep2">
-                <div class="football-step-header">
-                    <h4>Team Configuration</h4>
-                    <p>Configure teams and fees for your event</p>
-                </div>
-                
-                <div class="football-form-group">
-                    <label>Number of Teams</label>
-                    <div class="football-team-options" id="footballTeamOptions">
-                        <!-- Team options will be populated by JavaScript -->
-                    </div>
-                </div>
-                
-                <div class="football-form-group">
-                    <label>Team Fee</label>
-                    <div class="football-fee-options">
-                        <div class="football-fee-option active" data-fee="paid">
-                            <i class="fas fa-coins"></i>
-                            <span>Set Team Fee</span>
-                        </div>
-                        <div class="football-fee-option" data-fee="free">
-                            <i class="fas fa-gift"></i>
-                            <span>No Team Fee</span>
-                        </div>
-                    </div>
-                    <div class="football-fee-input" id="footballFeeInput">
-                        <input type="number" id="footballTeamFee" min="10" max="8000" placeholder="Enter fee (10-8000 TC)">
-                        <span class="football-currency">TC</span>
-                    </div>
-                </div>
-                
-                <div class="football-nav-buttons">
-                    <button class="football-back-btn" id="footballBackBtn">Back</button>
-                    <button class="football-next-btn" id="footballSummaryBtn" disabled>View Summary</button>
-                </div>
-            </div>
-            
-            <!-- Step 3: Summary & Payment -->
-            <div class="football-step" id="footballStep3">
-                <div class="football-step-header">
-                    <h4>Football Event Summary</h4>
-                    <p>Review your event details and complete creation</p>
-                </div>
-                
-                <div class="football-summary-card">
-                    <div class="football-summary-item">
-                        <span>Event Name:</span>
-                        <span id="summaryEventName">-</span>
-                    </div>
-                    <div class="football-summary-item">
-                        <span>Match Type:</span>
-                        <span id="summaryMatchType">-</span>
-                    </div>
-                    <div class="football-summary-item">
-                        <span>Number of Teams:</span>
-                        <span id="summaryTeamCount">-</span>
-                    </div>
-                    <div class="football-summary-item">
-                        <span>Team Fee:</span>
-                        <span id="summaryTeamFee">-</span>
-                    </div>
-                    <div class="football-summary-item highlight">
-                        <span>Creation Fee:</span>
-                        <span id="summaryCreationFee">-</span>
-                    </div>
-                </div>
-                
-                <div class="football-payment-section" id="footballPaymentSection">
-                    <h5>Payment Method</h5>
-                    <div class="football-payment-options">
-                        <div class="football-payment-option" data-payment="tc">
-                            <i class="fas fa-wallet"></i>
-                            <span>Pay with TC Balance</span>
-                            <span class="coming-soon">Coming Soon</span>
-                        </div>
-                        <div class="football-payment-option" data-payment="promo">
+                    <div class="feature-card">
+                        <div class="feature-icon">
                             <i class="fas fa-ticket-alt"></i>
-                            <span>Promo Code</span>
+                        </div>
+                        <div class="feature-content">
+                            <h4>Low Fees</h4>
+                            <span>Industry-leading fees starting from ₦10</span>
                         </div>
                     </div>
-                    <div class="football-promo-input" id="footballPromoInput" style="display: none;">
-                        <input type="text" id="footballPromoCode" placeholder="Enter promo code" maxlength="8">
-                        <button class="football-verify-btn" id="footballVerifyBtn">Verify</button>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="feature-content">
+                            <h4>Real-time Analytics</h4>
+                            <span>Track performance & manage attendees</span>
+                        </div>
                     </div>
-                    <div class="football-promo-status" id="footballPromoStatus"></div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <div class="feature-content">
+                            <h4>Mobile Optimized</h4>
+                            <span>Perfect experience on all devices</span>
+                        </div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="feature-content">
+                            <h4>Secure Payments</h4>
+                            <span>Safe processing with instant payouts</span>
+                        </div>
+                    </div>
                 </div>
-                
-                <div class="football-nav-buttons">
-                    <button class="football-back-btn" id="footballBackToStep2">Back</button>
-                    <button class="football-create-btn" id="footballCreateBtn" disabled>Create Event</button>
+
+                <div class="value-proposition-modern">
+                    <div class="value-header">
+                        <h3>Why Choose Rewarder?</h3>
+                        <div class="value-accent-line"></div>
+                    </div>
+                    <p>From intimate gatherings to massive festivals, we power over 30 successful events monthly. Our competitive fee structure (starting at just ₦10) means more money stays in your pocket while we handle the tech, so you can focus on creating unforgettable experiences.</p>
+                    
+                    <div class="trust-indicators">
+                        <div class="trust-item">
+                            <i class="fas fa-star"></i>
+                            <span>Trusted by 5,000+ attendees</span>
+                        </div>
+                        <div class="trust-item">
+                            <i class="fas fa-lock"></i>
+                            <span>Bank-level security</span>
+                        </div>
+                        <div class="trust-item">
+                            <i class="fas fa-clock"></i>
+                            <span>24/7 support</span>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-</div>
-
-<!-- Tickets Modal -->
-<div id="ticketsModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 10000; justify-content: center; align-items: center;">
-    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 20px; padding: 40px; width: 90%; max-width: 400px; text-align: center; position: relative;">
-        <button onclick="closeTicketsModal()" style="position: absolute; top: 15px; right: 20px; background: none; border: none; color: white; font-size: 24px; cursor: pointer;">&times;</button>
-        
-        <h2 style="color: white; margin-bottom: 30px; font-size: 24px;">Select Ticket Type</h2>
-        
-        <div style="display: flex; flex-direction: column; gap: 20px;">
-            <button id="physical-event-ticket-btn" onclick="openPhysicalEventTicketPage()" style="background: rgba(255,255,255,0.2); color: white; border: 2px solid rgba(255,255,255,0.3); padding: 20px; border-radius: 15px; cursor: pointer; font-size: 18px; font-weight: 600; transition: all 0.3s ease; backdrop-filter: blur(10px);">
-                <i class="fas fa-calendar-alt" style="margin-right: 10px;"></i>
-                Physical Event Tickets
-            </button>
-            
-            <button id="online-event-ticket-btn" onclick="alert('Online Event Tickets - Coming Soon!')" style="background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.6); border: 2px solid rgba(255,255,255,0.2); padding: 20px; border-radius: 15px; cursor: not-allowed; font-size: 18px; font-weight: 600; backdrop-filter: blur(10px);">
-                <i class="fas fa-laptop" style="margin-right: 10px;"></i>
-                Online Event Tickets
-                <span style="font-size: 12px; display: block; margin-top: 5px;">Coming Soon</span>
-            </button>
-        </div>
-    </div>
-</div>
-
-
-  <!-- Overlay for modals -->
-<div class="modal-overlay" id="modalOverlay"></div>
-
       
-      
-<!-- Bank Details Setup Modal -->
-<div id="bankSetupModal" class="modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1001; justify-content: center; align-items: center;">
-    <div class="modal-content" style="background: white; border-radius: 12px; width: 90%; max-width: 450px; padding: 30px;">
-        <div class="modal-header" style="text-align: center; margin-bottom: 30px;">
-            <h3 style="margin: 0; color: #333;">Setup Bank Details</h3>
-            <button type="button" onclick="closeBankSetup()" style="position: absolute; top: 15px; right: 15px; background: none; border: none; font-size: 24px; cursor: pointer; color: #666;">&times;</button>
-        </div>
-        
-        <div style="margin-bottom: 20px;">
-            <label style="display: block; margin-bottom: 8px; color: #333; font-weight: 500;">Bank:</label>
-            <select id="setupBank" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; color: #333;">
-                <option value="">Select Bank</option>
-                <option value="Access Bank">Access Bank</option>
-                <option value="GTBank">GTBank</option>
-                <option value="Zenith Bank">Zenith Bank</option>
-                <option value="UBA">UBA</option>
-                <option value="First Bank">First Bank</option>
-                <option value="Kuda Bank">Kuda Bank</option>
-                <option value="Opay">Opay</option>
-                <option value="PalmPay">PalmPay</option>
-            </select>
-        </div>
-        
-        <div style="margin-bottom: 20px;">
-            <label style="display: block; margin-bottom: 8px; color: #333; font-weight: 500;">Account Number:</label>
-            <input type="text" id="setupAccount" placeholder="1234567890" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; color: #333;">
-        </div>
-        
-        <div style="margin-bottom: 20px;">
-            <label style="display: block; margin-bottom: 8px; color: #333; font-weight: 500;">Account Name:</label>
-            <input type="text" id="setupName" placeholder="John Doe" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; color: #333;">
-        </div>
-        
-        <div id="bankSetupError" style="display: none; color: red; margin-bottom: 20px; padding: 10px; background: #ffe6e6; border-radius: 6px;"></div>
-        
-        <div style="display: flex; gap: 15px;">
-            <button onclick="closeBankSetup()" style="flex: 1; padding: 12px; background: #6c757d; color: white; border: none; border-radius: 6px; cursor: pointer;">Cancel</button>
-            <button onclick="saveBankDetails()" style="flex: 1; padding: 12px; background: #28a745; color: white; border: none; border-radius: 6px; cursor: pointer;">Save</button>
-        </div>
-    </div>
-</div>
-
+                            
+                 
 <!-- Firebase SDK -->
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
