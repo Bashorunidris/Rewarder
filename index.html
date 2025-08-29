@@ -22306,26 +22306,16 @@ rgb(81, 67, 55)rgb(81, 61, 55)rgb(81, 58, 55)rgb(184, 50, 32);
         <div class="split-screen">
             <div class="left">
                 <div class="logo">
-                    <h1>Rewarder</h1>
+                    <h1>Rewarder  Do notsign up here</h1>
                 </div>
                 <div class="tagline">
-                    <h2>Discover Talent. Vote. Win.</h2>
-                    <p>Join the platform where talent gets rewarded and voters earn too!</p>
-                </div>
-                <div class="features">
-                    <div class="feature">
-                        <i class="fas fa-trophy"></i>
-                        <span>Compete in exciting talent categories</span>
-                    </div>
-                    <div class="feature">
-                        <i class="fas fa-vote-yea"></i>
-                        <span>Vote for your favorites and earn rewards</span>
-                    </div>
-                    <div class="feature">
-                        <i class="fas fa-coins"></i>
-                        <span>Win cash prizes and recognition</span>
-                    </div>
-                </div>
+                    <h2>Create Events. Sellout Tickets. Enjoy.</h2>
+                    <p>
+                        Rewarder makes campus life unforgettable.
+We help students and organizers host events, sell tickets, and connect communities — all in one place.
+With low fees and smooth access, we truly are “The Life of the Party.” 🎉
+                    </p>
+                
             </div>
             <div class="right">
                 <div class="auth-container" id="loginForm">
@@ -22340,7 +22330,7 @@ rgb(81, 67, 55)rgb(81, 61, 55)rgb(81, 58, 55)rgb(184, 50, 32);
                     </div>
                     
                     <div class="divider">
-                        <span>or sign in with email</span>
+                        <span>Don't sign up here </span>
                     </div>
                     
                     <form id="loginFormElement">
@@ -54079,7 +54069,10 @@ function displayEventphyPage(event) {
         <!-- Hero Section -->
         <div class="eventphy-hero-section" style="${backgroundStyle}">
             <div class="eventphy-hero-overlay"></div>
-             
+             <button class="rewarder-btn" onclick="window.location.href='https://download-rewarder-app.vercel.app/'">
+  ⬇️ Download Rewarder App
+</button><!-- Floating Download Button -->
+  
             <div class="eventphy-powered-by" style="position: absolute; bottom: 10px; right: 10px; display: flex; align-items: center; background: rgba(0,0,0,0.6); padding: 8px 12px; border-radius: 20px; z-index: 3;">
                 <img src="https://i.ibb.co/VpC27tbt/Rewarder-logo.png" alt="Rewarder" style="width: 20px; height: 20px; margin-right: 6px;">
                 <span style="color: white; font-size: 12px; font-weight: 500;">Powered by Rewarder</span>
@@ -55477,11 +55470,41 @@ window.addEventListener('popstate', function(event) {
     opacity: 1;
 }
 
+.rewarder-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #0073e6;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 14px 22px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    animation: pulse 1.5s infinite;
+    transition: transform 0.2s ease-in-out;
+    z-index: 9999;
+  }
+  .rewarder-btn:hover {
+    transform: scale(1.1);
+    background: #005bb5;
+  }
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(0,115,230,0.6); }
+    70% { box-shadow: 0 0 0 15px rgba(0,115,230,0); }
+    100% { box-shadow: 0 0 0 0 rgba(0,115,230,0); }
+  }
+
+
+
 
   
 </style>
 
 </body>
 </html>
+
 
 
